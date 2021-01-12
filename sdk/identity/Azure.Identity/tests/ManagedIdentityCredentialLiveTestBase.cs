@@ -50,7 +50,6 @@ namespace Azure.Identity.Tests
                     new TestEnvVar("MSI_SECRET", env.MsiSecret),
                     new TestEnvVar("IDENTITY_HEADER", env.IdentityHeader),
                     new TestEnvVar("IDENTITY_SERVER_THUMBPRINT", env.IdentityServerThumbprint)
-
                 };
             }
 

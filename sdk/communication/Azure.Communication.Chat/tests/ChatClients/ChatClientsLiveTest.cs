@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 #region Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
 using Azure.Communication.Administration;
 using Azure.Communication.Administration.Models;
-using Azure.Communication.Identity;
+using Azure.Communication;
 //@@ using Azure.Communication.Chat;
 #endregion Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
 
@@ -48,10 +48,10 @@ namespace Azure.Communication.Chat.Tests
             //arr
             Console.WriteLine($"ThreadCGUD_MemberAUR_MessageGSU_NotificationT Running on RecordedTestMode : {Mode}");
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
-            (CommunicationUser user1, string token1) = CreateUserAndToken(communicationIdentityClient);
-            (CommunicationUser user2, string token2) = CreateUserAndToken(communicationIdentityClient);
-            (CommunicationUser user3, string token3) = CreateUserAndToken(communicationIdentityClient);
-            (CommunicationUser user4, string token4) = CreateUserAndToken(communicationIdentityClient);
+            (CommunicationUserIdentifier user1, string token1) = CreateUserAndToken(communicationIdentityClient);
+            (CommunicationUserIdentifier user2, string token2) = CreateUserAndToken(communicationIdentityClient);
+            (CommunicationUserIdentifier user3, string token3) = CreateUserAndToken(communicationIdentityClient);
+            (CommunicationUserIdentifier user4, string token4) = CreateUserAndToken(communicationIdentityClient);
 
             var topic = "Thread sync from C# sdk";
             var displayNameMessage = "DisplayName sender message 1";
@@ -134,7 +134,7 @@ namespace Azure.Communication.Chat.Tests
             var expectedPageSize = 2;
             var messagesCounterTotal = 0;
             var messagesCounter = 0;
-            foreach (Page<ChatMessage> messagesPage in messagesPaginationTest.AsPages(continuationToken,2))
+            foreach (Page<ChatMessage> messagesPage in messagesPaginationTest.AsPages(continuationToken, 2))
             {
                 messagesCounter = 0;
                 foreach (ChatMessage messagePage in messagesPage.Values)
@@ -180,7 +180,7 @@ namespace Azure.Communication.Chat.Tests
             Pageable<ChatThreadMember> chatThreadMembersAfterOneAdded = chatThreadClient.GetMembers();
             var chatThreadMembersAfterOneAddedCount = chatThreadMembersAfterOneAdded.Count();
 
-            CommunicationUser memberToBeRemoved = user4; //Better name for the snippet
+            CommunicationUserIdentifier memberToBeRemoved = user4; //Better name for the snippet
             #region Snippet:Azure_Communication_Chat_Tests_E2E_RemoveMember
             chatThreadClient.RemoveMember(user: memberToBeRemoved);
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_RemoveMember
@@ -229,8 +229,8 @@ namespace Azure.Communication.Chat.Tests
             //arr
             Console.WriteLine($"ReadReceiptGS Running on RecordedTestMode : {Mode}");
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
-            (CommunicationUser user1, string token1) = CreateUserAndToken(communicationIdentityClient);
-            (CommunicationUser user2, string token2) = CreateUserAndToken(communicationIdentityClient);
+            (CommunicationUserIdentifier user1, string token1) = CreateUserAndToken(communicationIdentityClient);
+            (CommunicationUserIdentifier user2, string token2) = CreateUserAndToken(communicationIdentityClient);
 
             var members = new List<ChatThreadMember>
             {
@@ -282,10 +282,10 @@ namespace Azure.Communication.Chat.Tests
             //arr
             Console.WriteLine($"ThreadCGUD_MemberAUR_MessageGSU_NotificationT_Async Running on RecordedTestMode : {Mode}");
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
-            (CommunicationUser user1, string token1) = await CreateUserAndTokenAsync(communicationIdentityClient);
-            (CommunicationUser user2, string token2) = await CreateUserAndTokenAsync(communicationIdentityClient);
-            (CommunicationUser user3, string token3) = await CreateUserAndTokenAsync(communicationIdentityClient);
-            (CommunicationUser user4, string token4) = await CreateUserAndTokenAsync(communicationIdentityClient);
+            (CommunicationUserIdentifier user1, string token1) = await CreateUserAndTokenAsync(communicationIdentityClient);
+            (CommunicationUserIdentifier user2, string token2) = await CreateUserAndTokenAsync(communicationIdentityClient);
+            (CommunicationUserIdentifier user3, string token3) = await CreateUserAndTokenAsync(communicationIdentityClient);
+            (CommunicationUserIdentifier user4, string token4) = await CreateUserAndTokenAsync(communicationIdentityClient);
 
             var topic = "Thread async from C# sdk";
             var displayNameMessage = "DisplayName sender message 1";
@@ -389,7 +389,7 @@ namespace Azure.Communication.Chat.Tests
             AsyncPageable<ChatThreadMember> chatThreadMembersAfterOneAdded = chatThreadClient.GetMembersAsync();
             var chatThreadMembersAfterOneAddedCount = chatThreadMembersAfterOneAdded.ToEnumerableAsync().Result.Count;
 
-            CommunicationUser memberToBeRemoved = user4;
+            CommunicationUserIdentifier memberToBeRemoved = user4;
             await chatThreadClient.RemoveMemberAsync(user: memberToBeRemoved);
             AsyncPageable<ChatThreadMember> chatThreadMembersAfterOneDeleted = chatThreadClient.GetMembersAsync();
             var chatThreadMembersAfterOneDeletedCount = chatThreadMembersAfterOneDeleted.ToEnumerableAsync().Result.Count;
@@ -432,8 +432,8 @@ namespace Azure.Communication.Chat.Tests
             //arr
             Console.WriteLine($"ReadReceiptGSAsync Running on RecordedTestMode : {Mode}");
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
-            (CommunicationUser user1, string token1) = await CreateUserAndTokenAsync(communicationIdentityClient);
-            (CommunicationUser user2, string token2) = await CreateUserAndTokenAsync(communicationIdentityClient);
+            (CommunicationUserIdentifier user1, string token1) = await CreateUserAndTokenAsync(communicationIdentityClient);
+            (CommunicationUserIdentifier user2, string token2) = await CreateUserAndTokenAsync(communicationIdentityClient);
 
             var members = new List<ChatThreadMember>
             {
@@ -468,18 +468,18 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(2, readReceiptsCount2);
         }
 
-        private (CommunicationUser user, string token) CreateUserAndToken(CommunicationIdentityClient communicationIdentityClient)
+        private (CommunicationUserIdentifier user, string token) CreateUserAndToken(CommunicationIdentityClient communicationIdentityClient)
         {
-            Response<CommunicationUser> threadMember = communicationIdentityClient.CreateUser();
+            Response<CommunicationUserIdentifier> threadMember = communicationIdentityClient.CreateUser();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
             Response<CommunicationUserToken> tokenResponseThreadMember = communicationIdentityClient.IssueToken(threadMember.Value, scopes);
 
             return (tokenResponseThreadMember.Value.User, tokenResponseThreadMember.Value.Token);
         }
 
-        private async Task<(CommunicationUser user, string token)> CreateUserAndTokenAsync(CommunicationIdentityClient communicationIdentityClient)
+        private async Task<(CommunicationUserIdentifier user, string token)> CreateUserAndTokenAsync(CommunicationIdentityClient communicationIdentityClient)
         {
-            Response<CommunicationUser> threadMember = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
             Response<CommunicationUserToken> tokenResponseThreadMember = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, scopes);
 

@@ -87,6 +87,9 @@ namespace Azure.Messaging.EventGrid
 
         internal CloudEvent(string id, string source, string type, DateTimeOffset? time, string dataSchema, string dataContentType, string subject, JsonElement serializedData, byte[] dataBase64)
         {
+            // we only validate that the type is required when deserializing since the service allows sending a CloudEvent without a Source.
+            Argument.AssertNotNull(type, nameof(type));
+
             Id = id;
             Source = source;
             Type = type;
@@ -99,42 +102,54 @@ namespace Azure.Messaging.EventGrid
             ExtensionAttributes = new Dictionary<string, object>();
         }
 
-        /// <summary> An identifier for the event. The combination of id and source must be unique for each distinct event. </summary>
+        /// <summary>
+        /// Gets or sets an identifier for the event. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.
+        /// If not explicitly set, this will default to a <see cref="Guid"/>.
+        /// </summary>
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        /// <summary> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </summary>
+        /// <summary>Gets or sets the context in which an event happened. The combination of <see cref="Id"/> and <see cref="Source"/> must be unique for each distinct event.</summary>
         public string Source { get; set; }
 
-        /// <summary> Type of event related to the originating occurrence. </summary>
+        /// <summary>Gets or sets the type of event related to the originating occurrence.</summary>
         public string Type { get; set; }
 
-        /// <summary> The time (in UTC) the event was generated, in RFC3339 format. </summary>
+        /// <summary>
+        /// Gets or sets the time (in UTC) the event was generated, in RFC3339 format.
+        /// If not explicitly set, this will default to the time that the event is constructed.
+        /// </summary>
         public DateTimeOffset? Time { get; set; } = DateTimeOffset.UtcNow;
 
-        /// <summary> Identifies the schema that data adheres to. </summary>
+        /// <summary>Gets or sets the schema that the data adheres to.</summary>
         public string DataSchema { get; set; }
 
-        /// <summary> Content type of data value. </summary>
+        /// <summary>Gets or sets the content type of the data.</summary>
         public string DataContentType { get; set; }
 
-        /// <summary> This describes the subject of the event in the context of the event producer (identified by source). </summary>
+        /// <summary>Gets or sets the subject of the event in the context of the event producer (identified by source). </summary>
         public string Subject { get; set; }
 
         /// <summary>
-        /// Extension attributes that can be additionally added to the CloudEvent envelope.
+        /// Gets extension attributes that can be additionally added to the CloudEvent envelope.
         /// </summary>
         public Dictionary<string, object> ExtensionAttributes { get; }
 
-        /// <summary> Deserialized event data specific to the event type. </summary>
+        /// <summary>Gets or sets the deserialized event data specific to the event type.</summary>
         internal object Data { get; set; }
 
-        /// <summary> Serialized event data specific to the event type. </summary>
+        /// <summary>Gets or sets the serialized event data specific to the event type.</summary>
         internal JsonElement SerializedData { get; set; }
 
-        /// <summary> Event data specific to the event type, encoded as a base64 string. </summary>
+        /// <summary>Gets or sets the event data specific to the event type, encoded as a base64 string.</summary>
         internal byte[] DataBase64 { get; set; }
 
         private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
+
+        /// <summary>
+        /// Gets whether or not the event is a System defined event.
+        /// </summary>
+        public bool IsSystemEvent =>
+            SystemEventExtensions.SystemEventDeserializers.ContainsKey(Type);
 
         /// <summary>
         /// Given JSON-encoded events, parses the event envelope and returns an array of CloudEvents.
@@ -255,7 +270,7 @@ namespace Azure.Messaging.EventGrid
             else if (SerializedData.ValueKind != JsonValueKind.Null && SerializedData.ValueKind != JsonValueKind.Undefined)
             {
                 // Try to deserialize to system event
-                if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
+                if (SystemEventExtensions.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
                 {
                     return (T)systemDeserializationFunction(SerializedData);
                 }
@@ -289,30 +304,48 @@ namespace Azure.Messaging.EventGrid
         /// Deserialized payload of the event. Returns null if there is no event data.
         /// Returns <see cref="BinaryData"/> for unknown event types.
         /// </returns>
-        public object GetData()
+        public BinaryData GetData() =>
+            GetDataInternal();
+
+        /// <summary>
+        /// Deserializes the event payload into a system event type or
+        /// returns the payload of the event wrapped as <see cref="BinaryData"/>. Using BinaryData,
+        /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
+        /// </summary>
+        /// <returns>
+        /// Deserialized payload of the event. Returns null if there is no event data.
+        /// Returns <see cref="BinaryData"/> for unknown event types.
+        /// </returns>
+        public Task<BinaryData> GetDataAsync() =>
+            Task.FromResult(GetDataInternal());
+
+        private BinaryData GetDataInternal()
         {
-            if (Data == null)
+            if (Data != null)
+            {
+                // The data has not been serialized yet, but we still return it as BinaryData
+                // which uses System.Text.Json.
+                return new BinaryData(Data);
+            }
+            else
             {
                 if (DataBase64 != null)
                 {
                     return new BinaryData(DataBase64);
                 }
+                // CloudEvent Data can be null, whereas EventGrid Data cannot be.
+                // Hence we have this check here.
                 else if (SerializedData.ValueKind != JsonValueKind.Null &&
                          SerializedData.ValueKind != JsonValueKind.Undefined)
                 {
-                    // Try to deserialize to system event
-                    if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
-                    {
-                        return systemDeserializationFunction(SerializedData);
-                    }
-                    else
-                    {
-                        // Return serialized event data as BinaryData
-                        return BinaryData.FromStream(SerializePayloadToStream(SerializedData));
-                    }
+                    return BinaryData.FromStream(SerializePayloadToStream(SerializedData));
+                }
+                else
+                {
+                    // the CloudEvent Data was null
+                    return null;
                 }
             }
-            return Data;
         }
 
         private static MemoryStream SerializePayloadToStream(object payload, CancellationToken cancellationToken = default)
@@ -322,5 +355,13 @@ namespace Azure.Messaging.EventGrid
             dataStream.Position = 0;
             return dataStream;
         }
+
+        /// <summary>
+        /// Deserializes a system event to its system event data payload. This will return null if the event is not a system event.
+        /// To detect whether an event is a system event, use the <see cref="IsSystemEvent"/> property.
+        /// </summary>
+        /// <returns>The rich system model type.</returns>
+        public object AsSystemEventData() =>
+            SystemEventExtensions.AsSystemEventData(Type, SerializedData);
     }
 }

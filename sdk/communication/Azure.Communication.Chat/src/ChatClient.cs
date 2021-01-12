@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Identity;
+using Azure.Communication;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,23 +21,23 @@ namespace Azure.Communication.Chat
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ChatRestClient _chatRestClient;
         private readonly Uri _endpointUrl;
-        private readonly CommunicationUserCredential _communicationUserCredential;
+        private readonly CommunicationTokenCredential _communicationTokenCredential;
         private readonly ChatClientOptions _chatClientOptions;
         private const string MultiStatusThreadResourceType = "THREAD";
 
         /// <summary> Initializes a new instance of <see cref="ChatClient"/>.</summary>
         /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
-        /// <param name="communicationUserCredential">Instance of <see cref="CommunicationUserCredential"/>.</param>
+        /// <param name="communicationTokenCredential">Instance of <see cref="CommunicationTokenCredential"/>.</param>
         /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ChatClient(Uri endpointUrl, CommunicationUserCredential communicationUserCredential, ChatClientOptions? options = default)
+        public ChatClient(Uri endpointUrl, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions? options = default)
         {
-            Argument.AssertNotNull(communicationUserCredential, nameof(communicationUserCredential));
+            Argument.AssertNotNull(communicationTokenCredential, nameof(communicationTokenCredential));
             Argument.AssertNotNull(endpointUrl, nameof(endpointUrl));
             _chatClientOptions = options ?? new ChatClientOptions();
-            _communicationUserCredential = communicationUserCredential;
+            _communicationTokenCredential = communicationTokenCredential;
             _endpointUrl = endpointUrl;
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
-            HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationUserCredential);
+            HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationTokenCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, _chatClientOptions.ApiVersion);
         }
 
@@ -47,7 +47,7 @@ namespace Azure.Communication.Chat
             _clientDiagnostics = null!;
             _chatRestClient = null!;
             _endpointUrl = null!;
-            _communicationUserCredential = null!;
+            _communicationTokenCredential = null!;
             _chatClientOptions = null!;
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Communication.Chat
             {
                 Response<MultiStatusResponse> threadResponse =  await _chatRestClient.CreateChatThreadAsync(topic, members.Select(x => x.ToChatThreadMemberInternal()), cancellationToken).ConfigureAwait(false);
                 string threadId = threadResponse.Value.MultipleStatus.First(x => x.Type.ToUpperInvariant() == MultiStatusThreadResourceType).Id;
-                return new ChatThreadClient(threadId, _endpointUrl, _communicationUserCredential, _chatClientOptions);
+                return new ChatThreadClient(threadId, _endpointUrl, _communicationTokenCredential, _chatClientOptions);
             }
             catch (Exception ex)
             {
@@ -88,7 +88,7 @@ namespace Azure.Communication.Chat
             {
                 Response<MultiStatusResponse> threadResponse =  _chatRestClient.CreateChatThread(topic, members.Select(x=>x.ToChatThreadMemberInternal()), cancellationToken);
                 string threadId = threadResponse.Value.MultipleStatus.First(x => x.Type.ToUpperInvariant() == MultiStatusThreadResourceType).Id;
-                return new ChatThreadClient(threadId, _endpointUrl, _communicationUserCredential, _chatClientOptions);
+                return new ChatThreadClient(threadId, _endpointUrl, _communicationTokenCredential, _chatClientOptions);
             }
             catch (Exception ex)
             {
@@ -105,7 +105,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return new ChatThreadClient(threadId, _endpointUrl, _communicationUserCredential, _chatClientOptions);
+                return new ChatThreadClient(threadId, _endpointUrl, _communicationTokenCredential, _chatClientOptions);
             }
             catch (Exception ex)
             {
@@ -279,11 +279,11 @@ namespace Azure.Communication.Chat
 
         #endregion
 
-        private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential)
+        private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationTokenCredential communicationTokenCredential)
         {
-            var httpPipelinePolicy = new CommunicationUserAuthenticationPolicy(communicationUserCredential);
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-            return httpPipeline;
+            var bearerTokenCredential = new CommunicationBearerTokenCredential(communicationTokenCredential);
+            var authenticationPolicy = new BearerTokenAuthenticationPolicy(bearerTokenCredential, "");
+            return HttpPipelineBuilder.Build(options, authenticationPolicy);
         }
     }
 }

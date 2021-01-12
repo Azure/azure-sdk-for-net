@@ -3,45 +3,66 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 {
     [Extension("AzureStorageBlobs", "Blobs")]
     internal class BlobsExtensionConfigProvider : IExtensionConfigProvider,
         IConverter<BlobAttribute, BlobContainerClient>,
-        IConverter<BlobAttribute, BlobsExtensionConfigProvider.MultiBlobContext>
+        IConverter<BlobAttribute, BlobsExtensionConfigProvider.MultiBlobContext>,
+        IAsyncConverter<HttpRequestMessage, HttpResponseMessage>,
+        IDisposable
     {
         private readonly BlobTriggerAttributeBindingProvider _triggerBinder;
         private BlobServiceClientProvider _blobServiceClientProvider;
         private IContextGetter<IBlobWrittenWatcher> _blobWrittenWatcherGetter;
         private readonly INameResolver _nameResolver;
         private IConverterManager _converterManager;
+        private readonly BlobTriggerQueueWriterFactory _blobTriggerQueueWriterFactory;
+        private readonly ILogger _logger;
+        private BlobTriggerQueueWriter _blobTriggerQueueWriter;
+        private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
+        private readonly HttpRequestProcessor _httpRequestProcessor;
 
         public BlobsExtensionConfigProvider(
             BlobServiceClientProvider blobServiceClientProvider,
             BlobTriggerAttributeBindingProvider triggerBinder,
             IContextGetter<IBlobWrittenWatcher> contextAccessor,
             INameResolver nameResolver,
-            IConverterManager converterManager)
+            IConverterManager converterManager,
+            BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
+            HttpRequestProcessor httpRequestProcessor,
+            ILoggerFactory loggerFactory)
         {
             _blobServiceClientProvider = blobServiceClientProvider;
             _triggerBinder = triggerBinder;
             _blobWrittenWatcherGetter = contextAccessor;
             _nameResolver = nameResolver;
             _converterManager = converterManager;
+            _blobTriggerQueueWriterFactory = blobTriggerQueueWriterFactory;
+            _httpRequestProcessor = httpRequestProcessor;
+            _logger = loggerFactory.CreateLogger<BlobsExtensionConfigProvider>();
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -52,6 +73,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         private void InitilizeBlobBindings(ExtensionConfigContext context)
         {
+#pragma warning disable CS0618 // Type or member is obsolete
+            Uri url = context.GetWebhookHandler();
+#pragma warning restore CS0618 // Type or member is obsolete
+            _logger.LogInformation($"registered http endpoint = {url?.GetLeftPart(UriPartial.Path)}");
+
             var rule = context.AddBindingRule<BlobAttribute>();
 
             // Bind to multiple blobs (either via a container; an IEnumerable<T>)
@@ -110,6 +136,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             return GetContainer(blobAttribute);
         }
 
+        public async Task<HttpResponseMessage> ConvertAsync(HttpRequestMessage input, CancellationToken cancellationToken)
+        {
+            var functionName = HttpUtility.ParseQueryString(input.RequestUri.Query)["functionName"];
+            // Potential race condition, initialize _blobTriggerQueueWriter once.
+            if (_blobTriggerQueueWriter == null)
+            {
+                await _semaphoreSlim.WaitAsync(cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    if (_blobTriggerQueueWriter == null)
+                    {
+                        _blobTriggerQueueWriter = await _blobTriggerQueueWriterFactory.CreateAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                }
+                finally
+                {
+                    _semaphoreSlim.Release();
+                }
+            }
+
+            string content = await input.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var headers = input.Headers;
+
+            return await _httpRequestProcessor.ProcessAsync(input, functionName, ProcessEventsAsync, cancellationToken).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region CloudBlob rules
@@ -129,6 +181,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            _semaphoreSlim.Dispose();
+        }
 
         #region Support for binding to Multiple blobs
         // Open type matching types that can bind to an IEnumerable<T> blob collection.
@@ -341,6 +398,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 boundPath.BlobName, requestedType, cancellationToken).ConfigureAwait(false);
 
             return new BlobWithContainer<BlobBaseClient>(container, blob);
+        }
+
+        private async Task<HttpResponseMessage> ProcessEventsAsync(JArray events, string functionName, CancellationToken cancellationToken)
+        {
+            foreach (JObject jo in events)
+            {
+                BlobTriggerMessage blobTriggerMessage = GetBlobTriggerMessage(jo, functionName);
+                await _blobTriggerQueueWriter.EnqueueAsync(blobTriggerMessage, cancellationToken).ConfigureAwait(false);
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.Accepted);
+        }
+
+        private static BlobTriggerMessage GetBlobTriggerMessage(JObject jo, string functionId)
+        {
+            JObject data = jo["data"] as JObject;
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(new Uri(data["url"].ToString()));
+
+            return new BlobTriggerMessage()
+            {
+                ETag = $"\"{data["eTag"]}\"",
+                BlobType = (BlobType)Enum.Parse(typeof(BlobType), data["blobType"].ToString().Replace("Blob", "")),
+                ContainerName = blobUriBuilder.BlobContainerName,
+                BlobName = blobUriBuilder.BlobName,
+                FunctionId = functionId
+            };
         }
     }
 }

@@ -12,11 +12,15 @@ using Azure.Messaging.ServiceBus.Amqp;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///
+    /// The <see cref="ServiceBusReceivedMessage"/> is used to receive data from Service Bus Queues and Subscriptions.
+    /// When sending messages, the <see cref="ServiceBusMessage"/> is used.
     /// </summary>
+    /// <remarks>
+    /// The message structure is discussed in detail in the
+    /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
+    /// </remarks>
     public class ServiceBusReceivedMessage
     {
-
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
@@ -56,7 +60,7 @@ namespace Azure.Messaging.ServiceBus
         /// data that is not exposed as top level properties in the <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
         /// <returns>The raw Amqp message.</returns>
-        public AmqpAnnotatedMessage GetRawMessage() => AmqpMessage;
+        public AmqpAnnotatedMessage GetRawAmqpMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the body of the message.
@@ -129,7 +133,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public TimeSpan TimeToLive => AmqpMessage.GetTimeToLive();
 
-        /// <summary>Gets the a correlation identifier.</summary>
+        /// <summary>Gets the correlation identifier.</summary>
         /// <value>Correlation identifier.</value>
         /// <remarks>
         ///    Allows an application to specify a context for the message for the purposes of correlation,

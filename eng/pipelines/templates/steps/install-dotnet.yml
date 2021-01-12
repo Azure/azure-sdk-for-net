@@ -1,0 +1,15 @@
+# All required SDKs/runtimes are available on DevOps agents
+steps: []
+# Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
+#steps:
+#  - task: UseDotNet@2
+#    displayName: 'Use .NET Core SDK'
+#    inputs:
+#      useGlobalJson: true
+#      performMultiLevelLookup: true
+#  - task: UseDotNet@2
+#    condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
+#    displayName: 'Use .NET Core 2.1 runtime'
+#    inputs:
+#      packageType: runtime
+#      version: "2.1.x"

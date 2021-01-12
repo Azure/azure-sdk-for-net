@@ -7,12 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
-using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Shares.Test
+namespace Azure.Storage.Files.Shares.Tests
 {
     public class ServiceClientTests : FileTestBase
     {
@@ -40,6 +39,35 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual("", builder.ShareName);
             Assert.AreEqual("", builder.DirectoryOrFilePath);
             //Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All, permissions: AccountSasPermissions.All).ToString();
+            Uri uri = GetServiceClient_SharedKey().Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new ShareServiceClient(uri, new AzureSasCredential(sas), GetOptions()));
+            ShareServiceProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public void Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All, permissions: AccountSasPermissions.All).ToString();
+            Uri uri = GetServiceClient_SharedKey().Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new ShareClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
         [Test]
@@ -152,7 +180,6 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fakeService.SetPropertiesAsync(properties),
                 e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
-
         }
 
         [Test]
@@ -306,6 +333,32 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/17262")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task ListSharesSegmentAsync_EnabledProtocolsAndRootSquash()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                Protocols = ShareProtocols.Nfs,
+                RootSquash = ShareRootSquash.AllSquash,
+            };
+
+            await share.CreateAsync(options);
+
+            // Act
+            IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+
+            // Assert
+            ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
+            Assert.AreEqual(ShareProtocols.Nfs, shareItem.Properties.Protocols);
+            Assert.AreEqual(ShareRootSquash.AllSquash, shareItem.Properties.RootSquash);
+        }
+
+        [Test]
         public async Task CreateShareAsync()
         {
             var name = GetNewShareName();
@@ -389,28 +442,67 @@ namespace Azure.Storage.Files.Shares.Test
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - ShareServiceClient(string connectionString)
-            ShareServiceClient share = new ShareServiceClient(
-                connectionString);
+            ShareServiceClient share = InstrumentClient(new ShareServiceClient(
+                connectionString));
             Assert.IsTrue(share.CanGenerateAccountSasUri);
 
             // Act - ShareServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            ShareServiceClient share2 = new ShareServiceClient(
+            ShareServiceClient share2 = InstrumentClient(new ShareServiceClient(
                 connectionString,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(share2.CanGenerateAccountSasUri);
 
             // Act - ShareServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
-            ShareServiceClient share3 = new ShareServiceClient(
+            ShareServiceClient share3 = InstrumentClient(new ShareServiceClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(share3.CanGenerateAccountSasUri);
 
             // Act - ShareServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            ShareServiceClient share4 = new ShareServiceClient(
+            ShareServiceClient share4 = InstrumentClient(new ShareServiceClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(share4.CanGenerateAccountSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_GetShareClient()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - ShareServiceClient(string connectionString)
+            ShareServiceClient service = InstrumentClient(new ShareServiceClient(
+                connectionString));
+            ShareClient share = service.GetShareClient(GetNewShareName());
+            Assert.IsTrue(share.CanGenerateSasUri);
+
+            // Act - ShareServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            ShareServiceClient service2 = InstrumentClient(new ShareServiceClient(
+                connectionString,
+                GetOptions()));
+            ShareClient share2 = service2.GetShareClient(GetNewShareName());
+            Assert.IsTrue(share2.CanGenerateSasUri);
+
+            // Act - ShareServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
+            ShareServiceClient service3 = InstrumentClient(new ShareServiceClient(
+                blobEndpoint,
+                GetOptions()));
+            ShareClient share3 = service3.GetShareClient(GetNewShareName());
+            Assert.IsFalse(share3.CanGenerateSasUri);
+
+            // Act - ShareServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            ShareServiceClient service4 = InstrumentClient(new ShareServiceClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+            ShareClient share4 = service4.GetShareClient(GetNewShareName());
+            Assert.IsTrue(share4.CanGenerateSasUri);
         }
 
         [Test]
@@ -425,7 +517,7 @@ namespace Azure.Storage.Files.Shares.Test
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            ShareServiceClient serviceClient = new ShareServiceClient(connectionString, GetOptions());
+            ShareServiceClient serviceClient = InstrumentClient(new ShareServiceClient(connectionString, GetOptions()));
 
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(
@@ -455,7 +547,7 @@ namespace Azure.Storage.Files.Shares.Test
             DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             AccountSasServices services = AccountSasServices.Files;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            ShareServiceClient serviceClient = new ShareServiceClient(connectionString, GetOptions());
+            ShareServiceClient serviceClient = InstrumentClient(new ShareServiceClient(connectionString, GetOptions()));
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
             {
@@ -487,7 +579,7 @@ namespace Azure.Storage.Files.Shares.Test
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasServices services = AccountSasServices.Blobs; // Wrong Service
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            ShareServiceClient serviceClient = new ShareServiceClient(connectionString, GetOptions());
+            ShareServiceClient serviceClient = InstrumentClient(new ShareServiceClient(connectionString, GetOptions()));
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
             {

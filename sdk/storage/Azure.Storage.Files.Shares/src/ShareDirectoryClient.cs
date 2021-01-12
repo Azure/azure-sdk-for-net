@@ -138,10 +138,15 @@ namespace Azure.Storage.Files.Shares
         internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -264,6 +269,32 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Uri"/> referencing the directory that includes the
         /// name of the account, the name of the share, and the path of the
         /// directory.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public ShareDirectoryClient(Uri directoryUri, AzureSasCredential credential, ShareClientOptions options = default)
+            : this(directoryUri, credential.AsPolicy<ShareUriBuilder>(directoryUri), options, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
         /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
@@ -282,6 +313,7 @@ namespace Azure.Storage.Files.Shares
             ShareClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(directoryUri, nameof(directoryUri));
             options ??= new ShareClientOptions();
             _uri = directoryUri;
             _pipeline = options.Build(authentication);
@@ -302,6 +334,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -309,11 +344,17 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal ShareDirectoryClient(Uri directoryUri, HttpPipeline pipeline, ShareClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        internal ShareDirectoryClient(
+            Uri directoryUri,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            ShareClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
         {
             _uri = directoryUri;
             _pipeline = pipeline;
             _version = version;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
@@ -339,7 +380,12 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareDirectoryClient WithSnapshot(string snapshot)
         {
             var p = new ShareUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareDirectoryClient(p.ToUri(), Pipeline, Version, ClientDiagnostics);
+            return new ShareDirectoryClient(
+                p.ToUri(),
+                Pipeline,
+                SharedKeyCredential,
+                Version,
+                ClientDiagnostics);
         }
 
         /// <summary>
@@ -357,6 +403,7 @@ namespace Azure.Storage.Files.Shares
             return new ShareFileClient(
                 shareUriBuilder.ToUri(),
                 Pipeline,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics);
         }
@@ -376,6 +423,7 @@ namespace Azure.Storage.Files.Shares
             return new ShareDirectoryClient(
                 shareUriBuilder.ToUri(),
                 Pipeline,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics);
         }
@@ -1984,7 +2032,6 @@ namespace Azure.Storage.Files.Shares
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
                 handlesFailed += response.Value.NumberOfHandlesFailedToClose;
-
             } while (!string.IsNullOrEmpty(marker));
 
             return new CloseHandlesResult()
@@ -2709,7 +2756,7 @@ namespace Azure.Storage.Files.Shares
             }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

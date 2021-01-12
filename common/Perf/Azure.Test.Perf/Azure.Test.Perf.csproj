@@ -1,11 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!--
+      Perf framework should depend on lowest version of Azure.Core for maximum compat, allowing test
+      projects to choose a higher version if desired.
+    -->
+    <PackageReference Include="Azure.Core" VersionOverride="1.0.0" />
     <PackageReference Include="CommandLineParser" />
     <PackageReference Include="System.Reflection.Emit" />
+    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Channels" />
     <Reference Include="System.Net.Http" Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\PerfStressShared\PerfStressUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

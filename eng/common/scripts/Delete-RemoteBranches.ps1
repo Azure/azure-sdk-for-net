@@ -5,7 +5,7 @@ param(
   $AuthToken
 )
 
-. "${PSScriptRoot}\common.ps1"
+. (Join-Path $PSScriptRoot common.ps1)
 
 LogDebug "Operating on Repo [ $RepoName ]"
 try{

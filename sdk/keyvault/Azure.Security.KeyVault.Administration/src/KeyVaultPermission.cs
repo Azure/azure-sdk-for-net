@@ -6,25 +6,24 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <inheritdoc/>
+    /// <summary> Role definition permissions. </summary>
     [CodeGenModel("Permission", Usage = new[] { "input", "output" })]
     public partial class KeyVaultPermission
     {
-
         /// <summary> Denied actions. </summary>
         [CodeGenMember("NotActions")]
-        public IList<string> DenyActions { get; }
+        public IList<string> DeniedActions { get; }
 
         /// <summary> Denied Data actions. </summary>
         [CodeGenMember("NotDataActions")]
-        public IList<string> DenyDataActions { get; }
+        public IList<string> DeniedDataActions { get; }
 
         /// <summary> Allowed actions. </summary>
         [CodeGenMember("Actions")]
-        public IList<string> AllowActions { get; }
+        public IList<string> AllowedActions { get; }
 
         /// <summary> Allowed Data actions. </summary>
         [CodeGenMember("DataActions")]
-        public IList<string> AllowDataActions { get; }
+        public IList<string> AllowedDataActions { get; }
     }
 }

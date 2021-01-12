@@ -102,10 +102,15 @@ namespace Azure.Storage.Files.DataLake
         private StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateAccountSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateAccountSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -149,6 +154,59 @@ namespace Azure.Storage.Files.DataLake
         /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
         /// class.
         /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
+        /// </param>
+        public DataLakeServiceClient(string connectionString)
+            : this(connectionString, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakeServiceClient(string connectionString, DataLakeClientOptions options)
+        {
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            StorageSharedKeyCredential sharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            options ??= new DataLakeClientOptions();
+            HttpPipelinePolicy authPolicy = sharedKeyCredential.AsPolicy();
+
+            _pipeline = options.Build(authPolicy);
+            _uri = conn.BlobEndpoint;
+            _blobUri = new DataLakeUriBuilder(_uri).ToBlobUri();
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = sharedKeyCredential;
+            _blobServiceClient = BlobServiceClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                authPolicy,
+                Version.AsBlobsVersion(),
+                _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the Data Lake service.
         /// </param>
@@ -177,6 +235,49 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
             : this(serviceUri, credential.AsPolicy(), options, null, credential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeServiceClient(Uri serviceUri, AzureSasCredential credential)
+            : this(serviceUri, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeServiceClient(Uri serviceUri, AzureSasCredential credential, DataLakeClientOptions options)
+            : this(serviceUri, credential.AsPolicy<DataLakeUriBuilder>(serviceUri), options, null, null)
         {
         }
 
@@ -242,7 +343,6 @@ namespace Azure.Storage.Files.DataLake
             StorageSharedKeyCredential storageSharedKeyCredential)
             : this(serviceUri, authentication, options, null, storageSharedKeyCredential)
         {
-
         }
 
         /// <summary>
@@ -271,6 +371,7 @@ namespace Azure.Storage.Files.DataLake
             ClientDiagnostics clientDiagnostics,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             options ??= new DataLakeClientOptions();
             _pipeline = options.Build(authentication);
             _uri = serviceUri;
@@ -324,7 +425,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="DataLakeFileSystemClient"/> for the desired share.
         /// </returns>
         public virtual DataLakeFileSystemClient GetFileSystemClient(string fileSystemName)
-            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, SharedKeyCredential, Version, ClientDiagnostics);
 
         #region Get User Delegation Key
         /// <summary>
@@ -472,6 +573,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Pageable<FileSystemItem> GetFileSystems(
             FileSystemTraits traits = FileSystemTraits.None,
             string prefix = default,
@@ -507,6 +609,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<FileSystemItem> GetFileSystemsAsync(
             FileSystemTraits traits = FileSystemTraits.None,
             string prefix = default,
@@ -838,7 +941,7 @@ namespace Azure.Storage.Files.DataLake
                     nameof(AccountSasServices.Blobs));
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
             return sasUri.ToUri();
         }
         #endregion

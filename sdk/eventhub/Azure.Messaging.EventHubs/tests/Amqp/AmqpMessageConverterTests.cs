@@ -751,7 +751,6 @@ namespace Azure.Messaging.EventHubs.Tests
             using AmqpMessage firstMessage = converter.CreateMessageFromEvent(firstEvent, partitionKey);
             using AmqpMessage secondMessage = converter.CreateMessageFromEvent(secondEvent, partitionKey);
 
-
             AmqpMessage[] source = new[] { firstMessage, secondMessage };
 
             using AmqpMessage batchEnvelope = converter.CreateBatchFromMessages(source, partitionKey);

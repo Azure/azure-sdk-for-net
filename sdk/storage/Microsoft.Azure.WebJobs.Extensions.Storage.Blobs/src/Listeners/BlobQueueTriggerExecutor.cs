@@ -18,6 +18,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
@@ -29,16 +30,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private readonly IBlobCausalityReader _causalityReader;
         private readonly IBlobWrittenWatcher _blobWrittenWatcher;
         private readonly ConcurrentDictionary<string, BlobQueueRegistration> _registrations;
+        private readonly BlobTriggerSource _blobTriggerSource;
         private readonly ILogger<BlobListener> _logger;
 
-        public BlobQueueTriggerExecutor(IBlobWrittenWatcher blobWrittenWatcher, ILogger<BlobListener> logger)
-            : this(BlobCausalityReader.Instance, blobWrittenWatcher, logger)
+        public BlobQueueTriggerExecutor(BlobTriggerSource blobTriggerSource, IBlobWrittenWatcher blobWrittenWatcher, ILogger<BlobListener> logger)
+            : this(BlobCausalityReader.Instance, blobTriggerSource, blobWrittenWatcher, logger)
         {
         }
 
-        public BlobQueueTriggerExecutor(IBlobCausalityReader causalityReader, IBlobWrittenWatcher blobWrittenWatcher, ILogger<BlobListener> logger)
+        public BlobQueueTriggerExecutor(IBlobCausalityReader causalityReader, BlobTriggerSource blobTriggerSource, IBlobWrittenWatcher blobWrittenWatcher, ILogger<BlobListener> logger)
         {
             _causalityReader = causalityReader;
+            _blobTriggerSource = blobTriggerSource;
             _blobWrittenWatcher = blobWrittenWatcher;
             _registrations = new ConcurrentDictionary<string, BlobQueueRegistration>();
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -56,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public async Task<FunctionResult> ExecuteAsync(QueueMessage value, CancellationToken cancellationToken)
         {
-            BlobTriggerMessage message = JsonConvert.DeserializeObject<BlobTriggerMessage>(value.MessageText, JsonSerialization.Settings);
+            BlobTriggerMessage message = JsonConvert.DeserializeObject<BlobTriggerMessage>(value.Body.ToValidUTF8String(), JsonSerialization.Settings);
 
             if (message == null)
             {
@@ -99,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             string possibleETag = blobProperties.ETag.ToString();
 
             // If the blob still exists but the ETag is different, delete the message but do a fast path notification.
-            if (!string.Equals(message.ETag, possibleETag, StringComparison.Ordinal))
+            if (_blobTriggerSource == BlobTriggerSource.LogsAndContainerScan && !string.Equals(message.ETag, possibleETag, StringComparison.Ordinal))
             {
                 _blobWrittenWatcher.Notify(new Extensions.Storage.Blobs.BlobWithContainer<BlobBaseClient>(container, blob));
                 return successResult;

@@ -1,7 +1,17 @@
 # Release History
 
-## 12.8.0-beta.1 (Unreleased)
+## 12.8.0-beta.2 (Unreleased)
+- Fixed bug where the Stream returned by BlobBaseClient.OpenRead() would return a different Length after calls to Seek().
+- Fixed bug where BlobBaseClient.Exists() did not function correctly for blob encrypted with Customer Provided Key or Encryption Scope.
+- Added support for AzureSasCredential. That allows SAS rotation for long living clients.
 
+## 12.8.0-beta.1 (2020-12-07)
+- Added support for service version 2020-04-08.
+- Added BlockBlobClient.SyncUploadFromUri().
+- Added support for LeaseId parameter for BlobBaseClient.Get/SetTags().
+- Added Tags to BlobTaggedItem
+- Fixed bug where BlobContainerClient.GetBlobClient(), BlobContainerClient.GetParentServiceClient(), BlobServiceClient.GetBlobContainerClient(), BlobBaseClient.WithClientSideEncryptionOptions(), BlobBaseClient.GetParentBlobContainerClient(), BlobBaseClient.WithSnapshot() and BlobBaseClient.WithVersion() created clients that could not generate a SAS from clients that could generate a SAS
+- Added IsHierarchicalNamespaceEnabled to AccountInfo.
 
 ## 12.7.0 (2020-11-10)
 - Includes all features from 12.7.0-preview.1

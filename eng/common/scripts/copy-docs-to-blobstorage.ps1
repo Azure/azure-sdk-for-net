@@ -216,13 +216,15 @@ function Upload-Blobs
    
     LogDebug "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
     & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
-
+    
     LogDebug "Handling versioning files under $($DocDest)/$($PkgName)/versioning/"
     $versionsObj = (Update-Existing-Versions -PkgName $PkgName -PkgVersion $DocVersion -DocDest $DocDest)
-
-    # we can safely assume we have AT LEAST one version here. Reason being we just completed Update-Existing-Versions
-    $latestVersion = ($versionsObj.SortedVersionArray | Select-Object -First 1).RawVersion
-
+    $latestVersion = $versionsObj.LatestGAPackage 
+    if (!$latestVersion) {
+        $latestVersion = $versionsObj.LatestPreviewPackage 
+    }
+    LogDebug "Fetching the latest version $latestVersion"
+    
     if ($UploadLatest -and ($latestVersion -eq $DocVersion))
     {
         LogDebug "Uploading $($PkgName) to latest folder in $($DocDest)..."
@@ -230,8 +232,7 @@ function Upload-Blobs
     }
 }
 
-
-if ((Get-ChildItem -Path Function: | ? { $_.Name -eq $PublishGithubIODocsFn }).Count -gt 0)
+if ($PublishGithubIODocsFn -and (Test-Path "Function:$PublishGithubIODocsFn"))
 {
     &$PublishGithubIODocsFn -DocLocation $DocLocation -PublicArtifactLocation $PublicArtifactLocation
 }

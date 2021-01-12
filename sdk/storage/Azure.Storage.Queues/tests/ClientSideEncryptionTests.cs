@@ -18,6 +18,7 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Queues.Specialized.Models;
 using Azure.Storage.Queues.Tests;
+using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
 using static Moq.It;
@@ -26,7 +27,6 @@ namespace Azure.Storage.Queues.Test
 {
     public class ClientSideEncryptionTests : QueueTestBase
     {
-
         private const string s_algorithmName = "some algorithm name";
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
 
@@ -732,6 +732,63 @@ namespace Azure.Storage.Queues.Test
                     }
                 }
             }
+        }
+
+        [Test]
+        public void CanGenerateSas_WithClientSideEncryptionOptions_True()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
+                KeyWrapAlgorithm = "bar"
+            };
+
+            // Create blob
+            QueueClient queue = new QueueClient(
+                connectionString,
+                GetNewQueueName());
+            Assert.IsTrue(queue.CanGenerateSasUri);
+
+            // Act
+            QueueClient queueEncrypted = queue.WithClientSideEncryptionOptions(options);
+
+            // Assert
+            Assert.IsTrue(queueEncrypted.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithClientSideEncryptionOptions_False()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
+                KeyWrapAlgorithm = "bar"
+            };
+
+            // Create blob
+            QueueClient queue = InstrumentClient(new QueueClient(
+                blobEndpoint,
+                GetOptions()));
+            Assert.IsFalse(queue.CanGenerateSasUri);
+
+            // Act
+            QueueClient queueEncrypted = queue.WithClientSideEncryptionOptions(options);
+
+            // Assert
+            Assert.IsFalse(queueEncrypted.CanGenerateSasUri);
         }
     }
 }

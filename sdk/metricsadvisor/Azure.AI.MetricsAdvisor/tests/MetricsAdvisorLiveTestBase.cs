@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
@@ -29,23 +27,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         internal const string AlertConfigurationId = "204a211a-c5f4-45f3-a30e-512fb25d1d2c";
         internal const string AlertId = "17571a77000";
         internal const string MetricId = "27e3015f-04fd-44ba-a20b-bc529a0aebae";
-        internal const string DataFeedId = "0072a752-1476-4cfa-8cf0-f226995201a0";
+        internal const string DataFeedId = "9860df01-e740-40ec-94a2-6351813552ba";
 
         protected int MaximumSamplesCount => 10;
 
         protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2020-10-01T00:00:00Z");
 
         protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2020-10-31T00:00:00Z");
-
-        public void InitDataFeedSources()
-        {
-            _blobFeedName = Recording.GenerateAlphaNumericId("test");
-            _blobSource = new AzureBlobDataFeedSource(TestEnvironment.PrimaryStorageAccountKey, "foo", "template");
-            _dailyGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
-            _dataFeedSchema = new DataFeedSchema(new List<DataFeedMetric> { new DataFeedMetric("someMetricId", "someMetricName", "someMetricDisplayName", "someDescription") });
-            _dataFeedIngestionSettings = new DataFeedIngestionSettings(new DateTimeOffset(Recording.UtcNow.Year, Recording.UtcNow.Month, Recording.UtcNow.Day, 0, 0, 0, TimeSpan.Zero));
-            _dataFeedDescription = "my feed description";
-        }
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient()
         {
@@ -63,45 +51,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 InstrumentClientOptions(new MetricsAdvisorClientsOptions())));
         }
 
-        internal static async Task<DataFeed> GetFirstDataFeed(MetricsAdvisorAdministrationClient adminClient)
+        protected void ValidateSeriesKey(DimensionKey seriesKey)
         {
-            DataFeed feed = null;
-            IAsyncEnumerable<Page<DataFeed>> pages = adminClient.GetDataFeedsAsync(new GetDataFeedsOptions { TopCount = 1 }).AsPages();
+            Assert.That(seriesKey, Is.Not.Null);
 
-            await foreach (var page in pages)
-            {
-                //Only perform a single iteration.
-                feed = page.Values?.FirstOrDefault();
-                break;
-            }
-            return feed;
-        }
-
-        internal async Task<string> CreateDetectionConfiguration(MetricsAdvisorAdministrationClient adminClient)
-        {
-            DataFeed feed = await GetFirstDataFeed(adminClient).ConfigureAwait(false);
-            AnomalyDetectionConfiguration config = PopulateMetricAnomalyDetectionConfiguration(feed.MetricIds.First().Value);
-
-            return await adminClient.CreateDetectionConfigurationAsync(config).ConfigureAwait(false);
-        }
-
-        public AnomalyDetectionConfiguration PopulateMetricAnomalyDetectionConfiguration(string metricId)
-        {
-            return new AnomalyDetectionConfiguration(
-                metricId,
-                Recording.GenerateAlphaNumericId("Name"),
-                new MetricWholeSeriesDetectionCondition(
-                    DetectionConditionsOperator.And,
-                    new SmartDetectionCondition(42, AnomalyDetectorDirection.Both, new SuppressCondition(1, 67)),
-                    new HardThresholdCondition(23, 45, AnomalyDetectorDirection.Both, new SuppressCondition(1, 50)),
-                    new ChangeThresholdCondition(12, 5, true, AnomalyDetectorDirection.Both, new SuppressCondition(1, 1))));
-        }
-
-        protected void ValidateDimensionKey(DimensionKey dimensionKey)
-        {
-            Assert.That(dimensionKey, Is.Not.Null);
-
-            Dictionary<string, string> dimensionColumns = dimensionKey.AsDictionary();
+            Dictionary<string, string> dimensionColumns = seriesKey.AsDictionary();
 
             Assert.That(dimensionColumns.Count, Is.EqualTo(2));
             Assert.That(dimensionColumns.ContainsKey("city"));
@@ -111,11 +65,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dimensionColumns["category"], Is.Not.Null.And.Not.Empty);
         }
 
-        internal string _blobFeedName;
-        internal AzureBlobDataFeedSource _blobSource;
-        internal DataFeedGranularity _dailyGranularity;
-        internal DataFeedSchema _dataFeedSchema;
-        internal DataFeedIngestionSettings _dataFeedIngestionSettings;
-        internal string _dataFeedDescription;
+        protected void ValidateGroupKey(DimensionKey groupKey)
+        {
+            Assert.That(groupKey, Is.Not.Null);
+
+            Dictionary<string, string> dimensionColumns = groupKey.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.GreaterThan(0));
+            Assert.That(dimensionColumns.Count, Is.LessThanOrEqualTo(2));
+
+            foreach (KeyValuePair<string, string> column in dimensionColumns)
+            {
+                Assert.That(column.Key, Is.EqualTo("city").Or.EqualTo("category"));
+                Assert.That(column.Value, Is.Not.Null.And.Not.Empty);
+            }
+        }
     }
 }

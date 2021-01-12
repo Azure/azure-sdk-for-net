@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/pii?showStats=false\u0026domain=PHI\u0026stringIndexType=Utf16CodeUnit",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "152",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201202.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "34c6876220aa828d41c5fe049b0af49d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "5d0eec86-2c14-4bc4-9b73-0dc2d4f56374",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
+        "Date": "Wed, 02 Dec 2020 22:53:26 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "1383"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs.",
+            "id": "0",
+            "entities": [
+              {
+                "text": "859-98-0987",
+                "category": "U.S. Social Security Number (SSN)",
+                "offset": 21,
+                "length": 11,
+                "confidenceScore": 0.65
+              },
+              {
+                "text": "800-102-1100",
+                "category": "Phone Number",
+                "offset": 55,
+                "length": 12,
+                "confidenceScore": 0.8
+              }
+            ],
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2020-07-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "822153937",
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
+  }
+}

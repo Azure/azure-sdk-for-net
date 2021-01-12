@@ -9,22 +9,25 @@
     <IncludeStress Condition="'$(IncludeStress)' == ''">true</IncludeStress>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
+    <TraversalGlobalProperties>
+      CodeCoverageDirectory=$([System.IO.Path]::GetFullPath("$(CodeCoverageDirectory)", "$(MSBuildThisFileDirectory)..\sdk"));
+    </TraversalGlobalProperties>
   </PropertyGroup>
 
   <ItemGroup>
-    <ExcludeMgmtLib Include="..\sdk\*\Microsoft.*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
+    <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\**\samples\**\*.csproj" />
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\**\perf\**\*.csproj" />
     <StressProjects Include="..\sdk\$(ServiceDirectory)\**\stress\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
-    <ProjectReference Include="@(TestProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeTests)' == 'true'" />
-    <ProjectReference Include="@(SamplesProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamples)' == 'true'" />
-    <ProjectReference Include="@(PerfProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludePerf)' == 'true'" />
-    <ProjectReference Include="@(StressProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeStress)' == 'true'" />
-    <ProjectReference Include="@(SampleApplications)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
-    <ProjectReference Include="@(SrcProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSrc)' == 'true'" />
+    <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true'" />
+    <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
+    <ProjectReference Include="@(PerfProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludePerf)' == 'true'" />
+    <ProjectReference Include="@(StressProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeStress)' == 'true'" />
+    <ProjectReference Include="@(SampleApplications)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
+    <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />

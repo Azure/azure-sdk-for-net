@@ -6,21 +6,30 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" VersionOverride="3.0.14" />
+    <PackageReference Include="Microsoft.Azure.Management.EventHub" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" VersionOverride="3.0.23" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
+    <PackageReference Include="Polly" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.EventHubs.csproj" />
+    <ProjectReference Include="../../Microsoft.Azure.WebJobs.Extensions.EventHubs/src/Microsoft.Azure.WebJobs.Extensions.EventHubs.csproj" />
   </ItemGroup>
 
+  <Import Project="../../Azure.Messaging.EventHubs.Shared/src/Azure.Messaging.EventHubs.Shared.Testing.projitems" />
+
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\**\*.cs" />
-    <!-- TODO: https://github.com/Azure/azure-sdk-for-net/issues/16635 -->
-    <Compile Remove="EventHubConfigurationTests.cs" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Processor/tests/Infrastructure/StorageScope.cs" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Processor/tests/Infrastructure/StorageTestEnvironment.cs" />
   </ItemGroup>
 
   <ItemGroup>

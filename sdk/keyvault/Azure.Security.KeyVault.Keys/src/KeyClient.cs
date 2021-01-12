@@ -1069,7 +1069,6 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-
                 return _pipeline.SendRequest(RequestMethod.Put, importKeyOptions, () => new KeyVaultKey(importKeyOptions.Name), cancellationToken, KeysPath, importKeyOptions.Name);
             }
             catch (Exception e)
@@ -1128,7 +1127,6 @@ namespace Azure.Security.KeyVault.Keys
         /// <seealso cref="ExportKey(string, string, string, CancellationToken)"/>
         public virtual Response<KeyVaultKey> ExportKey(string name, string environment, CancellationToken cancellationToken = default) =>
             ExportKey(name, null, environment, cancellationToken);
-
 
         /// <summary>
         /// Exports the latest version of a <see cref="KeyVaultKey"/> including the private key if originally created with <see cref="CreateKeyOptions.Exportable"/> set to true,

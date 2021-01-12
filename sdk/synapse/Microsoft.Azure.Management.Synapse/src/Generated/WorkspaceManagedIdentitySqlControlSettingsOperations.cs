@@ -283,6 +283,31 @@ namespace Microsoft.Azure.Management.Synapse
         /// Managed Identity Sql Control Settings
         /// </param>
         /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ManagedIdentitySqlControlSettingsModel>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ManagedIdentitySqlControlSettingsModel managedIdentitySqlControlSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<ManagedIdentitySqlControlSettingsModel> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, managedIdentitySqlControlSettings, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create or update Managed Identity Sql Control Settings
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace
+        /// </param>
+        /// <param name='managedIdentitySqlControlSettings'>
+        /// Managed Identity Sql Control Settings
+        /// </param>
+        /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
@@ -303,7 +328,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagedIdentitySqlControlSettingsModel>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ManagedIdentitySqlControlSettingsModel managedIdentitySqlControlSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedIdentitySqlControlSettingsModel>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ManagedIdentitySqlControlSettingsModel managedIdentitySqlControlSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -365,7 +390,7 @@ namespace Microsoft.Azure.Management.Synapse
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("managedIdentitySqlControlSettings", managedIdentitySqlControlSettings);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -442,7 +467,7 @@ namespace Microsoft.Azure.Management.Synapse
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new ErrorContractException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

@@ -7,9 +7,7 @@ using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,19 +16,17 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// The client to use for interacting with the Azure Cognitive Service, Text Analytics.
     /// </summary>
-    public partial class TextAnalyticsClient
+    public class TextAnalyticsClient
     {
         private readonly Uri _baseUri;
         internal readonly TextAnalyticsRestClient _serviceRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
-        private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
         // Specifies the method used to interpret string offsets. Default to <see cref="StringIndexType.Utf16CodeUnit"/>.
         private readonly StringIndexType _stringCodeUnit = StringIndexType.Utf16CodeUnit;
-
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -69,7 +65,6 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
-            _apiVersion = options.GetVersionString();
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
 
@@ -109,7 +104,6 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
-            _apiVersion = options.GetVersionString();
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
 
@@ -399,9 +393,9 @@ namespace Azure.AI.TextAnalytics
         /// in the passed-in document, and categorize those entities into types
         /// such as person, location, or organization.
         /// <para>For more information on available categories, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -457,9 +451,9 @@ namespace Azure.AI.TextAnalytics
         /// in the passed-in document, and categorize those entities into types
         /// such as person, location, or organization.
         /// <para>For more information on available categories, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -515,9 +509,9 @@ namespace Azure.AI.TextAnalytics
         /// in the passed-in documents, and categorize those entities into types
         /// such as person, location, or organization.
         /// <para>For more information on available categories, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -551,9 +545,9 @@ namespace Azure.AI.TextAnalytics
         /// in the passed-in documents, and categorize those entities into types
         /// such as person, location, or organization.
         /// <para>For more information on available categories, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -587,9 +581,9 @@ namespace Azure.AI.TextAnalytics
         /// in the passed-in documents, and categorize those entities into types
         /// such as person, location, or organization.
         /// <para>For more information on available categories, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -618,9 +612,9 @@ namespace Azure.AI.TextAnalytics
         /// in the passed-in documents, and categorize those entities into types
         /// such as person, location, or organization.
         /// <para>For more information on available categories, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -708,7 +702,7 @@ namespace Azure.AI.TextAnalytics
         /// <para>For more information on available categories, see
         /// <a href="https://aka.ms/tanerpii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -773,7 +767,7 @@ namespace Azure.AI.TextAnalytics
         /// <para>For more information on available categories, see
         /// <a href="https://aka.ms/tanerpii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -838,7 +832,7 @@ namespace Azure.AI.TextAnalytics
         /// <para>For more information on available categories, see
         /// <a href="https://aka.ms/tanerpii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -874,7 +868,7 @@ namespace Azure.AI.TextAnalytics
         /// <para>For more information on available categories, see
         /// <a href="https://aka.ms/tanerpii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -910,7 +904,7 @@ namespace Azure.AI.TextAnalytics
         /// <para>For more information on available categories, see
         /// <a href="https://aka.ms/tanerpii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -941,7 +935,7 @@ namespace Azure.AI.TextAnalytics
         /// <para>For more information on available categories, see
         /// <a href="https://aka.ms/tanerpii"/>.</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1026,7 +1020,7 @@ namespace Azure.AI.TextAnalytics
         /// or mixed sentiment contained in the document, as well as a score
         /// indicating the model's confidence in the predicted sentiment.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1054,7 +1048,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the document, as well as a score indicating the model's
         /// confidence in the predicted sentiment.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1082,7 +1076,7 @@ namespace Azure.AI.TextAnalytics
         /// or mixed sentiment contained in the document, as well as a score
         /// indicating the model's confidence in the predicted sentiment.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1142,7 +1136,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the document, as well as a score indicating the model's
         /// confidence in the predicted sentiment.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1202,7 +1196,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1236,7 +1230,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1270,7 +1264,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1302,7 +1296,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1334,7 +1328,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1356,7 +1350,6 @@ namespace Azure.AI.TextAnalytics
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await AnalyzeSentimentBatchAsync(documentInputs, analyzeSentimentOptions, cancellationToken).ConfigureAwait(false);
-
         }
 
         /// <summary>
@@ -1364,7 +1357,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1393,7 +1386,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1413,7 +1406,6 @@ namespace Azure.AI.TextAnalytics
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-
         }
 
         /// <summary>
@@ -1421,7 +1413,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1508,7 +1500,7 @@ namespace Azure.AI.TextAnalytics
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1561,7 +1553,7 @@ namespace Azure.AI.TextAnalytics
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1614,7 +1606,7 @@ namespace Azure.AI.TextAnalytics
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1649,7 +1641,7 @@ namespace Azure.AI.TextAnalytics
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1684,7 +1676,7 @@ namespace Azure.AI.TextAnalytics
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1714,7 +1706,7 @@ namespace Azure.AI.TextAnalytics
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".</para>
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1788,7 +1780,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1844,7 +1836,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1900,7 +1892,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1934,7 +1926,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1968,7 +1960,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -1997,7 +1989,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// <para>For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.</para>
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
@@ -2081,9 +2073,14 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2118,7 +2115,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-
         }
 
         /// <summary>
@@ -2126,9 +2122,14 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2170,9 +2171,14 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2195,9 +2201,14 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -2227,9 +2238,14 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
@@ -2252,9 +2268,14 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// <remarks><para>
+        /// Note: In order to use this functionality, request to access public preview is required.
+        /// Azure Active Directory (AAD) is not currently supported. For more information see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
+        /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
@@ -2340,7 +2361,6 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
-
         }
 
         /// <summary> Runs the cancel job for healthcare operation which was initialized using <see cref="StartHealthcareBatch(IEnumerable{string}, string, HealthcareOptions, CancellationToken)"/> or <see cref="StartHealthcare"/> </summary>
@@ -2382,7 +2402,7 @@ namespace Azure.AI.TextAnalytics
 
                 try
                 {
-                    Response<RecognizeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                    Response<RecognizeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
                     RecognizeHealthcareEntitiesResultCollection result = operation.Value;
                     return Page.FromValues(result.AsEnumerable(), operation.NextLink, response.GetRawResponse());
@@ -2414,7 +2434,7 @@ namespace Azure.AI.TextAnalytics
                     string[] jobIdParams = nextLinkSplit.Last().Split('?');
                     // jobIdParams = ['8002878d-2e43-4675-ad20-455fe004641b', '$skip=20&$top=0']
 
-                    if (jobIdParams.Count() != 2)
+                    if (jobIdParams.Length != 2)
                     {
                         throw new InvalidOperationException($"Failed to parse element reference: {nextLink}");
                     }
@@ -2446,7 +2466,7 @@ namespace Azure.AI.TextAnalytics
                         }
                     }
 
-                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, showStats).ConfigureAwait(false);
+                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, showStats, cancellationToken).ConfigureAwait(false);
 
                     RecognizeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, operation._idToIndexMap);
                     return Page.FromValues(result.AsEnumerable(), jobState.Value.NextLink, jobState.GetRawResponse());
@@ -2735,7 +2755,7 @@ namespace Azure.AI.TextAnalytics
         private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<DetectLanguageInput> documents)
             => new LanguageBatchInput(documents.Select((document) => new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? _options.DefaultCountryHint }).ToList());
 
-        private IDictionary<string,string> CreateAdditionalInformation(TextAnalyticsError error)
+        private static IDictionary<string,string> CreateAdditionalInformation(TextAnalyticsError error)
         {
             if (string.IsNullOrEmpty(error.Target))
                 return null;

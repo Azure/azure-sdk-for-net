@@ -130,13 +130,18 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
         /// </summary>
-        private StorageSharedKeyCredential _storageSharedKeyCredential;
+        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
 
         /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateAccountSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateAccountSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -244,6 +249,31 @@ namespace Azure.Storage.Blobs
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public BlobServiceClient(Uri serviceUri, AzureSasCredential credential, BlobClientOptions options = default)
+            : this(serviceUri, credential.AsPolicy<BlobUriBuilder>(serviceUri), options ?? new BlobClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -330,8 +360,9 @@ namespace Azure.Storage.Blobs
             ClientSideEncryptionOptions clientSideEncryption,
             string encryptionScope,
             HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential = default)
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             _uri = serviceUri;
             _authenticationPolicy = authentication;
             _pipeline = pipeline;
@@ -384,7 +415,8 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: null,
                 clientSideEncryption: null,
                 encryptionScope: null,
-                pipeline);
+                pipeline,
+                storageSharedKeyCredential: null);
         }
         #endregion ctors
 
@@ -401,7 +433,15 @@ namespace Azure.Storage.Blobs
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
-            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
+            new BlobContainerClient(
+                Uri.AppendToPath(blobContainerName),
+                Pipeline,
+                _storageSharedKeyCredential,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
 
         #region protected static accessors for Azure.Storage.Blobs.Batch
         /// <summary>
@@ -675,6 +715,7 @@ namespace Azure.Storage.Blobs
                         maxresults: pageSizeHint,
                         include: BlobExtensions.AsIncludeItems(traits, states),
                         async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetBlobContainers)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
@@ -1758,6 +1799,7 @@ namespace Azure.Storage.Blobs
                         marker: marker,
                         maxresults: pageSizeHint,
                         async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(FindBlobsByTags)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1850,7 +1892,7 @@ namespace Azure.Storage.Blobs
                     nameof(AccountSasServices.Blobs));
             }
             UriBuilder sasUri = new UriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
             return sasUri.Uri;
         }
         #endregion

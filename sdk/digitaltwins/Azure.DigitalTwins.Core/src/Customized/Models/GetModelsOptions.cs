@@ -23,7 +23,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Whether to include the model definition in the result. If false, only the model metadata will be returned.
         /// </summary>
-        public bool IncludeModelDefinition { get; set; } = false;
+        public bool IncludeModelDefinition { get; set; }
 
         // This class contains two properties (TraceParent ,TraceState, MaxItemsPerPage) that are not intended to be used by the Track 2 SDKs.
         // Marking these properties as internal.

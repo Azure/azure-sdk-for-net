@@ -13,54 +13,66 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         public RecognizeEntitiesTests(bool isAsync) : base(isAsync) { }
 
-        private const string singleEnglish = "Microsoft was founded by Bill Gates and Paul Allen.";
-        private const string singleSpanish = "Microsoft fue fundado por Bill Gates y Paul Allen.";
+        private const string EnglishDocument1 = "Microsoft was founded by Bill Gates and Paul Allen.";
+        private const string EnglishDocument2 = "My cat and my dog might need to see a veterinarian.";
 
-        private static List<string> batchConvenienceDocuments = new List<string>
+        private const string SpanishDocument1 = "Microsoft fue fundado por Bill Gates y Paul Allen.";
+
+        private static readonly List<string> s_batchConvenienceDocuments = new List<string>
         {
-            "Microsoft was founded by Bill Gates and Paul Allen.",
-            "My cat and my dog might need to see a veterinarian."
+            EnglishDocument1,
+            EnglishDocument2
         };
 
-        private static List<TextDocumentInput> batchDocuments = new List<TextDocumentInput>
+        private static readonly List<TextDocumentInput> s_batchDocuments = new List<TextDocumentInput>
         {
-            new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+            new TextDocumentInput("1", EnglishDocument1)
             {
                  Language = "en",
             },
-            new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
+            new TextDocumentInput("2", SpanishDocument1)
             {
                  Language = "es",
             }
         };
 
+        private static readonly List<string> s_document1ExpectedOutput = new List<string>
+        {
+            "Microsoft",
+            "Bill Gates",
+            "Paul Allen"
+        };
+
+        private static readonly List<string> s_document2ExpectedOutput = new List<string>
+        {
+            "veterinarian"
+        };
+
+        [Test]
+        public async Task RecognizeEntitiesWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(EnglishDocument1);
+
+            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
+        }
+
         [Test]
         public async Task RecognizeEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = singleEnglish;
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(EnglishDocument1);
 
-            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
-
-            Assert.AreEqual(3, entities.Count);
-
-            var entitiesList = new List<string> { "Bill Gates", "Microsoft", "Paul Allen" };
-            foreach (CategorizedEntity entity in entities)
-            {
-                Assert.IsTrue(entitiesList.Contains(entity.Text));
-                Assert.IsNotNull(entity.ConfidenceScore);
-            }
+            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
         [Test]
         public async Task RecognizeEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = singleSpanish;
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(SpanishDocument1, "es");
 
-            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document, "es");
-
-            Assert.AreEqual(3, entities.Count);
+            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
         [Test]
@@ -103,20 +115,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RecognizeEntitiesBatchConvenienceTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
-
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents);
-
-            foreach (RecognizeEntitiesResult result in results)
-            {
-                Assert.GreaterOrEqual(result.Entities.Count(), 1);
-            }
-        }
-
-        [Test]
         public void RecognizeEntitiesBatchWithInvalidDocumentBatch()
         {
             TextAnalyticsClient client = GetClient();
@@ -137,55 +135,63 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task RecognizeEntitiesBatchConvenienceTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments);
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
+        }
+
+        [Test]
         public async Task RecognizeEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
-
-            foreach (RecognizeEntitiesResult result in results)
+            var expectedOutput = new Dictionary<string, List<string>>()
             {
-                Assert.GreaterOrEqual(result.Entities.Count(), 1);
-            }
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
 
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
         [Test]
         public async Task RecognizeEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = batchDocuments;
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchDocuments);
 
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents);
-
-            foreach (RecognizeEntitiesResult result in results)
+            var expectedOutput = new Dictionary<string, List<string>>()
             {
-                Assert.GreaterOrEqual(result.Entities.Count(), 1);
-            }
+                { "1", s_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
         [Test]
         public async Task RecognizeEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = batchDocuments;
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchDocuments, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
-
-            foreach (RecognizeEntitiesResult result in results)
+            var expectedOutput = new Dictionary<string, List<string>>()
             {
-                Assert.GreaterOrEqual(result.Entities.Count(), 1);
-            }
+                { "1", s_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
+            };
 
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
         [Test]
@@ -209,6 +215,64 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(results[0].HasError);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].Entities.Count());
             Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        private void ValidateInDocumenResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)
+        {
+            Assert.IsNotNull(entities.Warnings);
+            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
+            foreach (CategorizedEntity entity in entities)
+            {
+                Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
+                Assert.IsTrue(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase));
+                Assert.IsNotNull(entity.Category);
+                Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
+                Assert.GreaterOrEqual(entity.Offset, 0);
+
+                if (entity.SubCategory != null)
+                {
+                    Assert.IsNotEmpty(entity.SubCategory);
+                }
+            }
+        }
+
+        private void ValidateBatchDocumentsResult(RecognizeEntitiesResultCollection results, Dictionary<string, List<string>> minimumExpectedOutput, bool includeStatistics = default)
+        {
+            Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
+
+            if (includeStatistics)
+            {
+                Assert.IsNotNull(results.Statistics);
+                Assert.Greater(results.Statistics.DocumentCount, 0);
+                Assert.Greater(results.Statistics.TransactionCount, 0);
+                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+            }
+            else
+                Assert.IsNull(results.Statistics);
+
+            foreach (RecognizeEntitiesResult entitiesInDocument in results)
+            {
+                Assert.That(entitiesInDocument.Id, Is.Not.Null.And.Not.Empty);
+
+                Assert.False(entitiesInDocument.HasError);
+
+                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                Assert.IsNotNull(entitiesInDocument.Statistics);
+
+                if (includeStatistics)
+                {
+                    Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
+                    Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
+                }
+                else
+                {
+                    Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
+                    Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                }
+
+                ValidateInDocumenResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
+            }
         }
     }
 }

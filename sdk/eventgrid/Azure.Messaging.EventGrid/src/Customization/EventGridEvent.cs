@@ -51,31 +51,39 @@ namespace Azure.Messaging.EventGrid
             Id = id;
         }
 
-        /// <summary> An unique identifier for the event. </summary>
+        /// <summary> Gets or sets a unique identifier for the event. </summary>
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        /// <summary> The resource path of the event source. </summary>
+        /// <summary>Gets or sets the resource path of the event source.
+        /// This must be set when publishing the event to a domain, and must not be set when publishing the event to a topic.
+        /// </summary>
         public string Topic { get; set; }
 
-        /// <summary> A resource path relative to the topic path. </summary>
+        /// <summary>Gets or sets a resource path relative to the topic path.</summary>
         public string Subject { get; set; }
 
-        /// <summary> The type of the event that occurred. </summary>
+        /// <summary>Gets or sets the type of the event that occurred.</summary>
         public string EventType { get; set; }
 
-        /// <summary> The time (in UTC) the event was generated. </summary>
+        /// <summary>Gets or sets the time (in UTC) the event was generated.</summary>
         public DateTimeOffset EventTime { get; set; } = DateTimeOffset.UtcNow;
 
-        /// <summary> The schema version of the data object. </summary>
+        /// <summary>Gets or sets the schema version of the data object.</summary>
         public string DataVersion { get; set; }
 
-        /// <summary> Event data specific to the event type. </summary>
+        /// <summary>Gets or sets the event data specific to the event type.</summary>
         internal object Data { get; set; }
 
-        /// <summary> Serialized event data specific to the event type. </summary>
+        /// <summary>Gets or sets the serialized event data specific to the event type.</summary>
         internal JsonElement SerializedData { get; set; }
 
         private static readonly JsonObjectSerializer s_jsonSerializer = new JsonObjectSerializer();
+
+        /// <summary>
+        /// Gets whether or not the event is a System defined event.
+        /// </summary>
+        public bool IsSystemEvent =>
+            SystemEventExtensions.SystemEventDeserializers.ContainsKey(EventType);
 
         /// <summary>
         /// Given JSON-encoded events, parses the event envelope and returns an array of EventGridEvents.
@@ -185,7 +193,7 @@ namespace Azure.Messaging.EventGrid
             {
                 return (T)Data;
             }
-            else if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
+            else if (SystemEventExtensions.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
             {
                 return (T)systemDeserializationFunction(SerializedData);
             }
@@ -214,15 +222,26 @@ namespace Azure.Messaging.EventGrid
         /// Deserialized payload of the event.
         /// Returns <see cref="BinaryData"/> for unknown event types.
         /// </returns>
-        public object GetData()
+        public BinaryData GetData() =>
+            GetDataInternal();
+
+        /// <summary>
+        /// Deserializes the event payload into a system event type or
+        /// returns the payload of the event wrapped as <see cref="BinaryData"/>. Using BinaryData,
+        /// one can deserialize the payload into rich data, or access the raw JSON data using <see cref="BinaryData.ToString()"/>.
+        /// </summary>
+        /// <returns>
+        /// Deserialized payload of the event.
+        /// Returns <see cref="BinaryData"/> for unknown event types.
+        /// </returns>
+        public Task<BinaryData> GetDataAsync() =>
+            Task.FromResult(GetDataInternal());
+
+        private BinaryData GetDataInternal()
         {
             if (Data != null)
             {
-                return Data;
-            }
-            else if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(EventType, out Func<JsonElement, object> systemDeserializationFunction))
-            {
-                return systemDeserializationFunction(SerializedData);
+                return new BinaryData(Data);
             }
             else
             {
@@ -237,5 +256,13 @@ namespace Azure.Messaging.EventGrid
             dataStream.Position = 0;
             return dataStream;
         }
+
+        /// <summary>
+        /// Deserializes a system event to its system event data payload. This will return null if the event is not a system event.
+        /// To detect whether an event is a system event, use the <see cref="IsSystemEvent"/> property.
+        /// </summary>
+        /// <returns>The rich system model type.</returns>
+        public object AsSystemEventData() =>
+            SystemEventExtensions.AsSystemEventData(EventType, SerializedData);
     }
 }

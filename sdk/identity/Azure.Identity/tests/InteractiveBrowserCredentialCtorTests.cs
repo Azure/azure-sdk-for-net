@@ -36,8 +36,7 @@ namespace Azure.Identity.Tests
                 TenantId = Guid.NewGuid().ToString(),
                 AuthorityHost = new Uri("https://login.myauthority.com/"),
                 DisableAutomaticAuthentication = true,
-                EnablePersistentCache = true,
-                AllowUnencryptedCache = true,
+                TokenCache = new TokenCache(),
                 AuthenticationRecord = new AuthenticationRecord(),
                 RedirectUri = new Uri("https://localhost:8080"),
             };
@@ -116,8 +115,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(options.TenantId, credential.Client.TenantId);
             Assert.AreEqual(options.AuthorityHost, credential.Pipeline.AuthorityHost);
             Assert.AreEqual(options.DisableAutomaticAuthentication, credential.DisableAutomaticAuthentication);
-            Assert.AreEqual(options.EnablePersistentCache, credential.Client.EnablePersistentCache);
-            Assert.AreEqual(options.AllowUnencryptedCache, credential.Client.AllowUnencryptedCache);
+            Assert.AreEqual(options.TokenCache, credential.Client.TokenCache);
             Assert.AreEqual(options.AuthenticationRecord, credential.Record);
 
             if (options.RedirectUri != null)
@@ -129,6 +127,5 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(Constants.DefaultRedirectUrl, credential.Client.RedirectUrl);
             }
         }
-
     }
 }

@@ -117,7 +117,6 @@ namespace Azure.Messaging.ServiceBus
             add
             {
                 _innerProcessor.ProcessSessionMessageAsync += value;
-
             }
 
             remove
@@ -155,7 +154,6 @@ namespace Azure.Messaging.ServiceBus
             add
             {
                 _innerProcessor.SessionInitializingAsync += value;
-
             }
 
             remove
@@ -223,13 +221,11 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSessionProcessor" />.
         /// </summary>
-        /// <param name="closeMode">The mode indicating what should happen to the link when closing.</param>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
         public virtual async Task CloseAsync(
-            LinkCloseMode closeMode = LinkCloseMode.Detach,
             CancellationToken cancellationToken = default) =>
-            await _innerProcessor.CloseAsync(closeMode).ConfigureAwait(false);
+            await _innerProcessor.CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSessionProcessor" />.
