@@ -1,5 +1,8 @@
 # Release History
 
+## 3.0.0-beta.6 (Unreleased)
+
+
 ## 3.0.0-beta.5 (2021-01-12)
 
 ### Fixed
