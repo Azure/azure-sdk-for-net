@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.Data.Tables
 {
@@ -19,7 +20,7 @@ namespace Azure.Data.Tables
         /// <param name="encodedQueryParamString"></param>
 		public UriQueryParamsCollection(string encodedQueryParamString)
         {
-            encodedQueryParamString = encodedQueryParamString ?? throw Errors.ArgumentNull(nameof(encodedQueryParamString));
+            Argument.AssertNotNull(encodedQueryParamString, nameof(encodedQueryParamString));
 
             if (encodedQueryParamString.StartsWith("?", true, CultureInfo.InvariantCulture))
             {

@@ -272,7 +272,7 @@ namespace Azure.Data.Tables
         }
 
         private const string TableNameGroup = "tableName";
-        private static readonly Regex s_tableUriTableNameRegex = new Regex(@$"(Tables\('(?<{TableNameGroup}>\w+)'\))");
+        private static readonly Regex s_tableUriTableNameRegex = new Regex(@$"(Tables\('(?<{TableNameGroup}>\w+)'\))", RegexOptions.Compiled);
 
         /// <summary>
         /// Returns the table name given the <paramref name="uri"/>.
@@ -426,39 +426,6 @@ namespace Azure.Data.Tables
             account.IsDevStoreAccount = true;
 
             return account;
-        }
-
-        /// <summary>
-        /// Tokenizes input and stores name value pairs.
-        /// </summary>
-        /// <param name="connectionString">The string to parse.</param>
-        /// <param name="error">Error reporting delegate.</param>
-        /// <returns>Tokenized collection.</returns>
-        private static IDictionary<string, string> ParseStringIntoSettings(string connectionString, Action<string> error)
-        {
-            IDictionary<string, string> settings = new Dictionary<string, string>();
-            var splitted = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var nameValue in splitted)
-            {
-                var splittedNameValue = nameValue.Split(new char[] { '=' }, 2);
-
-                if (splittedNameValue.Length != 2)
-                {
-                    error("Settings must be of the form \"name=value\".");
-                    return null;
-                }
-
-                if (settings.ContainsKey(splittedNameValue[0]))
-                {
-                    error(string.Format(CultureInfo.InvariantCulture, "Duplicate setting '{0}' found.", splittedNameValue[0]));
-                    return null;
-                }
-
-                settings.Add(splittedNameValue[0], splittedNameValue[1]);
-            }
-
-            return settings;
         }
 
         /// <summary>

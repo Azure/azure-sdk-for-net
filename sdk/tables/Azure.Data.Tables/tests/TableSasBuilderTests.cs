@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Test
             Assert.Throws<ArgumentException>(() => new TableSasBuilder(string.Empty, TableSasPermissions.Add, DateTimeOffset.Now));
             Assert.Throws<ArgumentNullException>(() => new TableSasBuilder("table", null, DateTimeOffset.Now));
             Assert.Throws<ArgumentException>(() => new TableSasBuilder("table", string.Empty, DateTimeOffset.Now));
-            Assert.Throws<ArgumentNullException>(() => TableSasBuilder.Parse(null));
+            Assert.Throws<ArgumentNullException>(() => new TableSasBuilder(null));
         }
 
         public static IEnumerable<object[]> UriInputs()
@@ -28,10 +28,10 @@ namespace Azure.Data.Tables.Test
 
         [Test]
         [TestCaseSource(nameof(UriInputs))]
-        public void Parse(Uri uri)
+        public void ParseUri(Uri uri)
         {
             // Act
-            var tableSasBuilder = TableSasBuilder.Parse(uri);
+            var tableSasBuilder = new TableSasBuilder(uri);
 
             // Assert
             Assert.AreEqual(TableSasProtocol.Https, tableSasBuilder.Protocol);

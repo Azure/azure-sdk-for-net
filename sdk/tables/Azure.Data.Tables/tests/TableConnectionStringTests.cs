@@ -37,6 +37,47 @@ namespace Azure.Tables.Tests
             yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
         }
 
+        public static IEnumerable<object[]> InvalidStorageConnStrings()
+        {
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName=;AccountKey={Secret};EndpointSuffix=core.windows.net" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey=;EndpointSuffix=core.windows.net" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=" };
+            yield return new object[] { $"AccountName={AccountName};;AccountKey={Secret};EndpointSuffix=core.windows.net" };
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableConnectionString.
+        /// </summary>
+        [Test]
+        [TestCaseSource(nameof(ValidStorageConnStrings))]
+        public void TryParsesStorage(string connString)
+        {
+            Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
+            Assert.That(tcs.Credentials, Is.Not.Null);
+            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
+            Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/")), "The PrimaryUri should have matched.");
+            Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")), "The SecondaryUri should have matched.");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableConnectionString.
+        /// </summary>
+        [Test]
+        [TestCaseSource(nameof(InvalidStorageConnStrings))]
+        public void TryParsesInvalid(string connString)
+        {
+            Assert.That(!TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should not have been successful");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableConnectionString.
+        /// </summary>
+        [Test]
+        [TestCaseSource(nameof(InvalidStorageConnStrings))]
+        public void ParsesInvalid(string connString)
+        {
+            Assert.Throws<InvalidOperationException>(() => TableConnectionString.Parse(connString), "Parsing should not have been successful");
+        }
         /// <summary>
         /// Validates the functionality of the TableConnectionString.
         /// </summary>
@@ -44,7 +85,8 @@ namespace Azure.Tables.Tests
         [TestCaseSource(nameof(ValidStorageConnStrings))]
         public void ParsesStorage(string connString)
         {
-            Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
+            var tcs = TableConnectionString.Parse(connString);
+
             Assert.That(tcs.Credentials, Is.Not.Null);
             Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/")), "The PrimaryUri should have matched.");

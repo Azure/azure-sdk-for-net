@@ -46,27 +46,28 @@ namespace Azure.Data.Tables.Sas
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TableSasBuilder"/> by parsing an existing Uri containing a shared acccess signature.
+        /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared acccess signature.
         /// </summary>
         /// <param name="uri">The Uri to parse.</param>
         /// <returns></returns>
-        public static TableSasBuilder Parse(Uri uri)
+        public TableSasBuilder(Uri uri)
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
             var uriBuilder = new TableUriBuilder(uri);
-            return new TableSasBuilder(uriBuilder.Tablename, uriBuilder.Sas.Permissions, uriBuilder.Sas.ExpiresOn)
-            {
-                Identifier = uriBuilder.Sas.Identifier,
-                IPRange = uriBuilder.Sas.IPRange,
-                PartitionKeyEnd = uriBuilder.Sas.EndPartitionKey,
-                PartitionKeyStart = uriBuilder.Sas.StartPartitionKey,
-                Protocol = uriBuilder.Sas.Protocol,
-                RowKeyEnd = uriBuilder.Sas.EndRowKey,
-                RowKeyStart = uriBuilder.Sas.StartRowKey,
-                StartsOn = uriBuilder.Sas.StartsOn,
-                Version = uriBuilder.Sas.Version
-            };
+
+            TableName = uriBuilder.Tablename;
+            ExpiresOn = uriBuilder.Sas.ExpiresOn;
+            Identifier = uriBuilder.Sas.Identifier;
+            IPRange = uriBuilder.Sas.IPRange;
+            PartitionKeyEnd = uriBuilder.Sas.EndPartitionKey;
+            PartitionKeyStart = uriBuilder.Sas.StartPartitionKey;
+            Protocol = uriBuilder.Sas.Protocol;
+            RowKeyEnd = uriBuilder.Sas.EndRowKey;
+            RowKeyStart = uriBuilder.Sas.StartRowKey;
+            StartsOn = uriBuilder.Sas.StartsOn;
+            Version = uriBuilder.Sas.Version;
+            SetPermissions(uriBuilder.Sas.Permissions);
         }
 
         /// <summary>

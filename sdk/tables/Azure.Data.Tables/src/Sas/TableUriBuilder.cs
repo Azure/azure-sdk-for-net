@@ -192,18 +192,24 @@ namespace Azure.Data.Tables.Sas
             if (!string.IsNullOrWhiteSpace(sas))
             {
                 if (query.Length > 0)
-                { query.Append('&'); }
+                {
+                    query.Append('&');
+                }
                 query.Append(sas);
+                query.Insert(0, "?");
             }
 
             // Use RequestUriBuilder, which has slightly nicer formatting
+            if (query.Length > 0)
+            {
+            }
             return new RequestUriBuilder
             {
                 Scheme = Scheme,
                 Host = Host,
                 Port = Port,
                 Path = path.ToString(),
-                Query = query.Length > 0 ? "?" + query.ToString() : null
+                Query = query.Length > 0 ? query.ToString() : null
             };
         }
     }
