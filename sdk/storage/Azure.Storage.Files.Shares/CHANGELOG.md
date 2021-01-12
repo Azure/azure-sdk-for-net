@@ -1,6 +1,7 @@
 # Release History
 
-## 12.6.0-beta.2 (Unreleased)
+## 12.6.0 (2021-01-12)
+- Includes all features from 12.5.6-beta.1
 - Fixed bug where the Stream returned by ShareFileClient.OpenRead() would return a different Length after calls to Seek().
 - Added support for AzureSasCredential. That allows SAS rotation for long living clients.
 
