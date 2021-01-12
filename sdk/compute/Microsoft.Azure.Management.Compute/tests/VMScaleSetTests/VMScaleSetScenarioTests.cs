@@ -472,7 +472,7 @@ namespace Compute.Tests
                         getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
                         Assert.Equal(OrchestrationServiceState.Running.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState);
 
-                        m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                        //m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
                     }
                     finally
                     {

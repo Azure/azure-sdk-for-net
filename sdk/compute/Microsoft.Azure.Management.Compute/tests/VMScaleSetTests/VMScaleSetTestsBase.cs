@@ -635,7 +635,7 @@ namespace Compute.Tests
                 bool expectedAutomaticRepairsEnabledValue = vmScaleSet.AutomaticRepairsPolicy.Enabled ?? false;
                 Assert.True(vmScaleSetOut.AutomaticRepairsPolicy.Enabled == expectedAutomaticRepairsEnabledValue);
 
-                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT30M";
+                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT10M";
                 Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.GracePeriod, expectedAutomaticRepairsGracePeriodValue, ignoreCase: true);
             }
 

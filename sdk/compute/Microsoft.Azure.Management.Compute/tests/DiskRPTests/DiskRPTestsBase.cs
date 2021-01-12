@@ -740,7 +740,7 @@ namespace Compute.Tests.DiskRPTests
                 EnsureClientsInitialized(context);
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                var desName = "EncryptionSetforTest";
+                var desName = "DESforTest";
                 Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
                 disk.Location = location;
 
@@ -822,7 +822,7 @@ namespace Compute.Tests.DiskRPTests
                 EnsureClientsInitialized(context);
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                var desName = "EncryptionSetforTest";
+                var desName = "DESforTest";
                 Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
                 disk.Location = location;
 
