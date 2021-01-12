@@ -387,7 +387,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkStatementCancellationResult
     {
         internal SparkStatementCancellationResult() { }
-        public string Msg { get { throw null; } }
+        public string Message { get { throw null; } }
     }
     public partial class SparkStatementCollection
     {
@@ -401,8 +401,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SparkStatementLanguageType(string value) { throw null; }
-        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Dotnetspark { get { throw null; } }
-        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Pyspark { get { throw null; } }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType DotNetSpark { get { throw null; } }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType PySpark { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Spark { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Sql { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType other) { throw null; }
