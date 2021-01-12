@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified if payload is not JSON. </param>
         /// <param name="dataSerializationType">The type to use when serializing the data.
         /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="data"/>.</param>
-        public CloudEvent(string source, string type, object data = default, string dataContentType = default, Type dataSerializationType = default)
+        public CloudEvent(string source, string type, object data, string dataContentType = default, Type dataSerializationType = default)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));

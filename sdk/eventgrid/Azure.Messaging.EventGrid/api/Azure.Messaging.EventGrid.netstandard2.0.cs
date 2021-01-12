@@ -7,7 +7,7 @@ namespace Azure.Messaging.EventGrid
     }
     public partial class CloudEvent
     {
-        public CloudEvent(string source, string type, object data = null, string dataContentType = null, System.Type dataSerializationType = null) { }
+        public CloudEvent(string source, string type, object data, string dataContentType = null, System.Type dataSerializationType = null) { }
         public string DataContentType { get { throw null; } set { } }
         public string DataSchema { get { throw null; } set { } }
         public System.Collections.Generic.Dictionary<string, object> ExtensionAttributes { get { throw null; } }

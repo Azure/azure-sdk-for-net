@@ -114,7 +114,8 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(
                     new CloudEvent(
                         "record",
-                        "Microsoft.MockPublisher.TestEvent")
+                        "Microsoft.MockPublisher.TestEvent",
+                        null)
                     {
                         Id = Recording.Random.NewGuid().ToString(),
                         Subject = $"Subject-{i}",
