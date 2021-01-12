@@ -1,8 +1,10 @@
 # Release History
 
-## 12.8.0-beta.2 (Unreleased)
+## 12.8.0 (2021-01-12)
+- Includes all features from 12.8.0-beta.1
 - Fixed bug where the Stream returned by BlobBaseClient.OpenRead() would return a different Length after calls to Seek().
 - Fixed bug where BlobBaseClient.Exists() did not function correctly for blob encrypted with Customer Provided Key or Encryption Scope.
+- Added support for AzureSasCredential. That allows SAS rotation for long living clients.
 
 ## 12.8.0-beta.1 (2020-12-07)
 - Added support for service version 2020-04-08.

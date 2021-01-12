@@ -1,6 +1,13 @@
 # Release History
 
-## 3.0.0-beta.5 (Unreleased)
+## 3.0.0-beta.6 (Unreleased)
+
+### Added
+
+- Added TableUriBuilder
+- Added a constructor to TableSasBuilder and TableAccountSasBuilder that accepts a Uri with a Sas token
+
+## 3.0.0-beta.5 (2021-01-12)
 
 ### Fixed
 
