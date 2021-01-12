@@ -601,10 +601,28 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, paths.Count);
-            Assert.AreEqual("bar", paths[0].Name);
-            Assert.AreEqual("baz", paths[1].Name);
-            Assert.AreEqual("foo", paths[2].Name);
+            Assert.AreEqual(4, paths.Count);
+
+            // Check we are parsing BlobItems correctly
+            Assert.AreEqual(PathNames[PathNames.Length - 1], paths[0].Name);
+            Assert.IsFalse(paths[0].IsDirectory);
+            Assert.AreEqual(0, paths[0].ContentLength);
+            Assert.AreNotEqual(new ETag(""), paths[0].ETag);
+            Assert.IsNotNull(paths[0].Group);
+            Assert.AreNotEqual(DateTimeOffset.MinValue, paths[0].LastModified);
+            Assert.IsNotNull(paths[0].Permissions);
+
+            // Check we are parsing BlobPrefixes correctly.
+            Assert.AreEqual(PathNames[1], paths[1].Name);
+            Assert.IsTrue(paths[1].IsDirectory);
+            Assert.AreEqual(0, paths[1].ContentLength);
+            Assert.AreNotEqual(new ETag(""), paths[1].ETag);
+            Assert.IsNotNull(paths[1].Group);
+            Assert.AreNotEqual(DateTimeOffset.MinValue, paths[1].LastModified);
+            Assert.IsNotNull(paths[1].Permissions);
+
+            Assert.AreEqual(PathNames[2], paths[2].Name);
+            Assert.AreEqual(PathNames[0], paths[3].Name);
         }
 
         [Test]
@@ -628,9 +646,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("baz/bar/foo", paths[3].Name);
             Assert.AreEqual("baz/foo", paths[4].Name);
             Assert.AreEqual("baz/foo/bar", paths[5].Name);
-            Assert.AreEqual("foo", paths[6].Name);
-            Assert.AreEqual("foo/bar", paths[7].Name);
-            Assert.AreEqual("foo/foo", paths[8].Name);
+            Assert.AreEqual("file", paths[6].Name);
+            Assert.AreEqual("foo", paths[7].Name);
+            Assert.AreEqual("foo/bar", paths[8].Name);
+            Assert.AreEqual("foo/foo", paths[9].Name);
         }
 
         [Test]
@@ -648,13 +667,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, paths.Count);
+            Assert.AreEqual(4, paths.Count);
             Assert.IsNotNull(paths[0].Group);
             Assert.IsNotNull(paths[0].Owner);
 
-            Assert.AreEqual("bar", paths[0].Name);
-            Assert.AreEqual("baz", paths[1].Name);
-            Assert.AreEqual("foo", paths[2].Name);
+            Assert.AreEqual("file", paths[0].Name);
+            Assert.AreEqual("bar", paths[1].Name);
+            Assert.AreEqual("baz", paths[2].Name);
+            Assert.AreEqual("foo", paths[3].Name);
         }
 
         [Test]
@@ -704,7 +724,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.GetPathsAsync().ToListAsync(),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -2296,13 +2316,17 @@ namespace Azure.Storage.Files.DataLake.Tests
             string[] pathNames = PathNames;
             DataLakeDirectoryClient[] directories = new DataLakeDirectoryClient[pathNames.Length];
 
-            // Upload directories
-            for (var i = 0; i < pathNames.Length; i++)
+            // Upload directories.  Last Path is supposed to be a file.
+            for (var i = 0; i < pathNames.Length - 1; i++)
             {
                 DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(pathNames[i]));
                 directories[i] = directory;
                 await directory.CreateIfNotExistsAsync();
             }
+
+            // Create a file in the root directory.
+            DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(pathNames[pathNames.Length - 1]));
+            await file.CreateIfNotExistsAsync();
         }
     }
 }

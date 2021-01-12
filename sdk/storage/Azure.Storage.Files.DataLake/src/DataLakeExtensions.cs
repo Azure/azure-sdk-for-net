@@ -500,6 +500,7 @@ namespace Azure.Storage.Files.DataLake
 
             List<PathItem> pathItems = new List<PathItem>();
 
+            // It is possible for both BlobItems and BlobPrefixes to be populated.
             if (fileSystemBlobListPathsResult.Body.Segment.BlobItems != null)
             {
                 pathItems.AddRange(fileSystemBlobListPathsResult.Body.Segment.BlobItems.ToList().Select(r => r.ToPathItem()));
@@ -554,7 +555,7 @@ namespace Azure.Storage.Files.DataLake
             return new PathItem
             {
                 Name = blobPrefix.Name.Substring(0, blobPrefix.Name.Length - 1),
-                // TODO figure this out.
+                // BlobPrefixes are always directories.
                 IsDirectory = true,
                 LastModified = blobPrefix.Properties.LastModified,
                 ETag = blobPrefix.Properties.Etag,

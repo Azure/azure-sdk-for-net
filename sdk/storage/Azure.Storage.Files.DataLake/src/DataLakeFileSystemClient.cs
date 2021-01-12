@@ -1488,6 +1488,11 @@ namespace Azure.Storage.Files.DataLake
                         ListPathsIncludeItem.Permissions
                     };
 
+                    if (path != null && path[path.Length - 1] != '/')
+                    {
+                        path = $"{path}/";
+                    }
+
                     Response<FileSystemBlobListPathsResult> response = await DataLakeRestClient.FileSystem.BlobListPathsAsync(
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,

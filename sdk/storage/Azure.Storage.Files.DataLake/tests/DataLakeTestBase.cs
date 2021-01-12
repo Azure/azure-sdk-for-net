@@ -447,7 +447,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 "foo/bar",
                 "baz/foo",
                 "baz/foo/bar",
-                "baz/bar/foo"
+                "baz/bar/foo",
+                "file"
             };
         }
 }

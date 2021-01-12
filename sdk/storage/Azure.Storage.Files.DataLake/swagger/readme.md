@@ -284,4 +284,25 @@ directive:
     $.PathExpiryOptions["x-az-public"] = false;
 ```
 
+### Hide Blob Get Path related classes.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobHierarchyListSegment["x-az-public"] = false;
+    $.ListBlobsHierarchySegmentResponse["x-az-public"] = false;
+    $.BlobItemInternal["x-az-public"] = false;
+    $.BlobPrefix["x-az-public"] = false;
+    $.BlobPropertiesInternal["x-az-public"] = false;
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.ListPathsInclude.items["x-az-public"] = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}?restype=container&comp=list&include=permissions,metadata"]
+  transform: >
+    $.get.responses["200"]["x-az-public"] = false;
+```
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2Fswagger%2Freadme.png)

@@ -4138,7 +4138,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// BlobHierarchyListSegment
     /// </summary>
-    public partial class BlobHierarchyListSegment
+    internal partial class BlobHierarchyListSegment
     {
         /// <summary>
         /// BlobPrefixes
@@ -4153,7 +4153,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Creates a new BlobHierarchyListSegment instance
         /// </summary>
-        internal BlobHierarchyListSegment()
+        public BlobHierarchyListSegment()
             : this(false)
         {
         }
@@ -4194,26 +4194,6 @@ namespace Azure.Storage.Files.DataLake.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.BlobHierarchyListSegment value);
     }
-
-    /// <summary>
-    /// DataLakeModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class DataLakeModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobHierarchyListSegment instance for mocking.
-        /// </summary>
-        public static BlobHierarchyListSegment BlobHierarchyListSegment(
-            System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.BlobItemInternal> blobItems,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.BlobPrefix> blobPrefixes = default)
-        {
-            return new BlobHierarchyListSegment()
-            {
-                BlobItems = blobItems,
-                BlobPrefixes = blobPrefixes,
-            };
-        }
-    }
 }
 #endregion class BlobHierarchyListSegment
 
@@ -4223,7 +4203,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// An Azure Storage blob
     /// </summary>
-    public partial class BlobItemInternal
+    internal partial class BlobItemInternal
     {
         /// <summary>
         /// Name
@@ -4243,7 +4223,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Creates a new BlobItemInternal instance
         /// </summary>
-        internal BlobItemInternal()
+        public BlobItemInternal()
             : this(false)
         {
         }
@@ -4296,28 +4276,6 @@ namespace Azure.Storage.Files.DataLake.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.BlobItemInternal value);
     }
-
-    /// <summary>
-    /// DataLakeModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class DataLakeModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobItemInternal instance for mocking.
-        /// </summary>
-        public static BlobItemInternal BlobItemInternal(
-            string name = default,
-            Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal properties = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default)
-        {
-            return new BlobItemInternal()
-            {
-                Name = name,
-                Properties = properties,
-                Metadata = metadata,
-            };
-        }
-    }
 }
 #endregion class BlobItemInternal
 
@@ -4327,7 +4285,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// BlobPrefix
     /// </summary>
-    public partial class BlobPrefix
+    internal partial class BlobPrefix
     {
         /// <summary>
         /// Name
@@ -4342,7 +4300,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Creates a new BlobPrefix instance
         /// </summary>
-        internal BlobPrefix()
+        public BlobPrefix()
             : this(false)
         {
         }
@@ -4385,26 +4343,6 @@ namespace Azure.Storage.Files.DataLake.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.BlobPrefix value);
     }
-
-    /// <summary>
-    /// DataLakeModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class DataLakeModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobPrefix instance for mocking.
-        /// </summary>
-        public static BlobPrefix BlobPrefix(
-            string name,
-            Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal properties = default)
-        {
-            return new BlobPrefix()
-            {
-                Name = name,
-                Properties = properties,
-            };
-        }
-    }
 }
 #endregion class BlobPrefix
 
@@ -4414,7 +4352,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Properties of a blob
     /// </summary>
-    public partial class BlobPropertiesInternal
+    internal partial class BlobPropertiesInternal
     {
         /// <summary>
         /// Creation-Time
@@ -4508,36 +4446,6 @@ namespace Azure.Storage.Files.DataLake.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal value);
     }
-
-    /// <summary>
-    /// DataLakeModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class DataLakeModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobPropertiesInternal instance for mocking.
-        /// </summary>
-        public static BlobPropertiesInternal BlobPropertiesInternal(
-            System.DateTimeOffset lastModified,
-            Azure.ETag etag,
-            System.DateTimeOffset? creationTime = default,
-            long? contentLength = default,
-            string owner = default,
-            string group = default,
-            string permissions = default)
-        {
-            return new BlobPropertiesInternal()
-            {
-                LastModified = lastModified,
-                Etag = etag,
-                CreationTime = creationTime,
-                ContentLength = contentLength,
-                Owner = owner,
-                Group = group,
-                Permissions = permissions,
-            };
-        }
-    }
 }
 #endregion class BlobPropertiesInternal
 
@@ -4610,7 +4518,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// FileSystem BlobListPathsResult
     /// </summary>
-    public partial class FileSystemBlobListPathsResult
+    internal partial class FileSystemBlobListPathsResult
     {
         /// <summary>
         /// The media type of the body of the response. For List Blobs this is 'application/xml'
@@ -4633,28 +4541,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public FileSystemBlobListPathsResult()
         {
             Body = new Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse();
-        }
-    }
-
-    /// <summary>
-    /// DataLakeModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class DataLakeModelFactory
-    {
-        /// <summary>
-        /// Creates a new FileSystemBlobListPathsResult instance for mocking.
-        /// </summary>
-        public static FileSystemBlobListPathsResult FileSystemBlobListPathsResult(
-            string contentType,
-            string clientRequestId,
-            Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse body)
-        {
-            return new FileSystemBlobListPathsResult()
-            {
-                ContentType = contentType,
-                ClientRequestId = clientRequestId,
-                Body = body,
-            };
         }
     }
 }
@@ -4854,7 +4740,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// An enumeration of blobs
     /// </summary>
-    public partial class ListBlobsHierarchySegmentResponse
+    internal partial class ListBlobsHierarchySegmentResponse
     {
         /// <summary>
         /// ServiceEndpoint
@@ -4899,7 +4785,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Creates a new ListBlobsHierarchySegmentResponse instance
         /// </summary>
-        internal ListBlobsHierarchySegmentResponse()
+        public ListBlobsHierarchySegmentResponse()
             : this(false)
         {
         }
@@ -4973,38 +4859,6 @@ namespace Azure.Storage.Files.DataLake.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse value);
     }
-
-    /// <summary>
-    /// DataLakeModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class DataLakeModelFactory
-    {
-        /// <summary>
-        /// Creates a new ListBlobsHierarchySegmentResponse instance for mocking.
-        /// </summary>
-        public static ListBlobsHierarchySegmentResponse ListBlobsHierarchySegmentResponse(
-            string serviceEndpoint,
-            string containerName,
-            Azure.Storage.Files.DataLake.Models.BlobHierarchyListSegment segment,
-            string prefix = default,
-            string marker = default,
-            int? maxResults = default,
-            string delimiter = default,
-            string nextMarker = default)
-        {
-            return new ListBlobsHierarchySegmentResponse()
-            {
-                ServiceEndpoint = serviceEndpoint,
-                ContainerName = containerName,
-                Segment = segment,
-                Prefix = prefix,
-                Marker = marker,
-                MaxResults = maxResults,
-                Delimiter = delimiter,
-                NextMarker = nextMarker,
-            };
-        }
-    }
 }
 #endregion class ListBlobsHierarchySegmentResponse
 
@@ -5014,7 +4868,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// ListPathsIncludeItem values
     /// </summary>
-    public enum ListPathsIncludeItem
+    internal enum ListPathsIncludeItem
     {
         /// <summary>
         /// metadata
