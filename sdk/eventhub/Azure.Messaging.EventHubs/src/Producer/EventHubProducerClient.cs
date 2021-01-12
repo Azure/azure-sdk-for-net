@@ -441,7 +441,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
         /// <summary>
         ///   A set of information about the state of publishing for a partition, as observed by the <see cref="EventHubProducerClient" />.  This
-        ///   data can always be read, but will only be populated with information relevant to the features which are active for the producer client.
+        ///   data can always be read, but will only be populated with information relevant to the active features for the producer client.
         /// </summary>
         ///
         /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
@@ -449,11 +449,26 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The set of information about the publishing state of the requested partition, within the context of this producer.</returns>
         ///
+        /// <remarks>
+        ///   The state of a partition is only understood by the <see cref="EventHubProducerClient" /> after events have been published to that
+        ///   partition; calling this method for a partition before events have been published to it will return an empty set of properties.
+        /// </remarks>
+        ///
         public virtual async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
                                                                                                        CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+
+            // If the producer does not require stateful partitions, return an empty
+            // instance.
+
+            if (!RequiresStatefulPartitions(Options))
+            {
+                return PartitionPublishingProperties.Empty;
+            }
+
+            // If the state has not yet been initialized, then do so now.
 
             var partitionState = PartitionState.GetOrAdd(partitionId, new PartitionPublishingState(partitionId));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
