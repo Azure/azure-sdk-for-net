@@ -65,6 +65,8 @@ namespace Azure.MixedReality.RemoteRendering
             Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructRemoteRenderingEndpointUrl(account.AccountDomain);
 
             _account = account;
+            // TODO Would be better is account.AccountId _was_ a GUID already.
+            _accountId = new System.Guid(account.AccountId);
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(serviceEndpoint)));
             _restClient = new MixedRealityRemoteRenderingRestClient(_clientDiagnostics, _pipeline, serviceEndpoint/*, options.Version*/);
