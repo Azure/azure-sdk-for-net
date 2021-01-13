@@ -47,14 +47,19 @@
       "metadata": {
         "description": "The location of the resources. By default, this is the same as the resource group."
       }
+    },
+    "guidBaseValue": {
+      "type": "string",
+      "defaultValue": "[newGuid()]",
+      "metadata": {
+        "description": "The base value to use as part of GUID generation for resources requiring them, such as RBAC rules."
+      }
     }
   },
   "variables": {
     "serviceBusNamespace": "[concat('sb-', parameters('baseName'))]",
-    "serviceBusNamespace_T1": "[concat('t1-', variables('serviceBusNamespace'))]",
     "defaultSASKeyName": "RootManageSharedAccessKey",
     "authRuleResourceId": "[resourceId('Microsoft.ServiceBus/namespaces/authorizationRules', variables('serviceBusNamespace'), variables('defaultSASKeyName'))]",
-    "authRuleResourceId_T1": "[resourceId('Microsoft.ServiceBus/namespaces/authorizationRules', variables('serviceBusNamespace_T1'), variables('defaultSASKeyName'))]",
     "sbVersion": "2017-04-01",
     "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
     "serviceBusDataOwnerRoleId": "090c5cfd-751d-490a-894a-3ce6f1109419"
@@ -71,19 +76,9 @@
       "properties": {}
     },
     {
-      "apiVersion": "[variables('sbVersion')]",
-      "name": "[variables('serviceBusNamespace_T1')]",
-      "type": "Microsoft.ServiceBus/Namespaces",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard"
-      },
-      "properties": {}
-    },
-    {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, deployment().name, variables('serviceBusDataOwnerRoleId'))]",
+      "name": "[guid(parameters('guidBaseValue'), parameters('baseName'), parameters('testApplicationOid'), variables('serviceBusDataOwnerRoleId'))]",
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('serviceBusDataOwnerRoleId'))]",
         "principalId": "[parameters('testApplicationOid')]",
@@ -93,7 +88,7 @@
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, deployment().name, variables('contributorRoleId'))]",
+      "name": "[guid(parameters('guidBaseValue'), parameters('baseName'), parameters('testApplicationOid'), variables('contributorRoleId'))]",
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
         "principalId": "[parameters('testApplicationOid')]",
@@ -105,10 +100,6 @@
     "SERVICEBUS_CONNECTION_STRING": {
       "type": "string",
       "value": "[listkeys(variables('authRuleResourceId'), variables('sbVersion')).primaryConnectionString]"
-    },
-    "SERVICEBUS_T1_CONNECTION_STRING": {
-      "type": "string",
-      "value": "[listkeys(variables('authRuleResourceId_T1'), variables('sbVersion')).primaryConnectionString]"
     }
   }
 }
