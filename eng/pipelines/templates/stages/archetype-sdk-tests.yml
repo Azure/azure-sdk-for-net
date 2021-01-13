@@ -42,17 +42,16 @@ parameters:
   type: object
   default:
     Public:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-test)
+      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
     Preview:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview-test)
-      Location: 'canadacentral'
+      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
     Canary:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-test)
+      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
       Location: 'eastus2euap'
     UsGov:
-      SubscriptionConfiguration: $(sub-config-gov-test-resources-test)
+      SubscriptionConfiguration: $(sub-config-gov-test-resources)
     China:
-      SubscriptionConfiguration: $(sub-config-cn-test-resources-test)
+      SubscriptionConfiguration: $(sub-config-cn-test-resources)
 - name: Platforms
   type: object
   default:
@@ -119,8 +118,8 @@ stages:
           parameters:
             # Flag to include the job template with a container field
             ${{ each platform in parameters.AdditionalPlatforms }}:
-              ${{ if contains(coalesce(platform.value.SupportedClouds, cloud.key), cloud.key) }}:
-                ${{ if ne(platform.value.Container, '') }}:
+              ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
+                ${{ if platform.value.Container }}:
                   UsePlatformContainer: true
             AdditionalParameters:
               PreSteps:
@@ -140,10 +139,10 @@ stages:
             Platforms:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
               ${{ each platform in parameters.Platforms }}:
-                ${{ if contains(coalesce(platform.value.SupportedClouds, cloud.key), cloud.key) }}:
+                ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
                   ${{ platform.key }}: ${{ platform.value }}
               ${{ each platform in parameters.AdditionalPlatforms }}:
-                ${{ if contains(coalesce(platform.value.SupportedClouds, cloud.key), cloud.key) }}:
+                ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
                   ${{ platform.key }}: ${{ platform.value }}
             CloudConfig:
               SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
