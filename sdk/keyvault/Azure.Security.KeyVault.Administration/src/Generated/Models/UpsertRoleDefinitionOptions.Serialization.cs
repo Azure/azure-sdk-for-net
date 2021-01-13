@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             if (Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(RoleType);
+                writer.WriteStringValue(RoleType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Permissions))
             {
@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WriteStartArray();
                 foreach (var item in AssignableScopes)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }

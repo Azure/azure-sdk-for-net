@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -16,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Denied Data actions. </summary>
         [CodeGenMember("NotDataActions")]
-        public IList<string> DeniedDataActions { get; }
+        public IList<DeniedDataActions> DeniedDataActions { get; }
 
         /// <summary> Allowed actions. </summary>
         [CodeGenMember("Actions")]
@@ -24,6 +25,6 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Allowed Data actions. </summary>
         [CodeGenMember("DataActions")]
-        public IList<string> AllowedDataActions { get; }
+        public IList<AllowedDataActions> AllowedDataActions { get; }
     }
 }

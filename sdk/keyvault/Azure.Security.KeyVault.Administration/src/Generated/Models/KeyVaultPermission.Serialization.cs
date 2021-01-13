@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -42,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WriteStartArray();
                 foreach (var item in AllowedDataActions)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +53,7 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WriteStartArray();
                 foreach (var item in DeniedDataActions)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -63,8 +64,8 @@ namespace Azure.Security.KeyVault.Administration
         {
             Optional<IList<string>> actions = default;
             Optional<IList<string>> notActions = default;
-            Optional<IList<string>> dataActions = default;
-            Optional<IList<string>> notDataActions = default;
+            Optional<IList<AllowedDataActions>> dataActions = default;
+            Optional<IList<DeniedDataActions>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"))
@@ -104,10 +105,10 @@ namespace Azure.Security.KeyVault.Administration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AllowedDataActions> array = new List<AllowedDataActions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AllowedDataActions(item.GetString()));
                     }
                     dataActions = array;
                     continue;
@@ -119,10 +120,10 @@ namespace Azure.Security.KeyVault.Administration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<DeniedDataActions> array = new List<DeniedDataActions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new DeniedDataActions(item.GetString()));
                     }
                     notDataActions = array;
                     continue;

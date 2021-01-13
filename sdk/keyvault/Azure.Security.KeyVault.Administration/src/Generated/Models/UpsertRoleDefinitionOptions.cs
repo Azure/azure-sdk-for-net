@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         public UpsertRoleDefinitionOptions()
         {
             Permissions = new ChangeTrackingList<KeyVaultPermission>();
-            AssignableScopes = new ChangeTrackingList<string>();
+            AssignableScopes = new ChangeTrackingList<KeyVaultRoleScope>();
         }
 
         /// <summary> The role name. </summary>
@@ -26,10 +26,10 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> The role definition description. </summary>
         public string Description { get; set; }
         /// <summary> The role type. </summary>
-        public string RoleType { get; set; }
+        public RoleType? RoleType { get; set; }
         /// <summary> Role definition permissions. </summary>
         public IList<KeyVaultPermission> Permissions { get; }
         /// <summary> Role definition assignable scopes. </summary>
-        public IList<string> AssignableScopes { get; }
+        public IList<KeyVaultRoleScope> AssignableScopes { get; }
     }
 }

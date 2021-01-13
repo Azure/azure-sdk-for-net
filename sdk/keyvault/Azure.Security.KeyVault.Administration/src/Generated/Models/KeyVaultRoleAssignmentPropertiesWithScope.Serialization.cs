@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -14,14 +15,19 @@ namespace Azure.Security.KeyVault.Administration
     {
         internal static KeyVaultRoleAssignmentPropertiesWithScope DeserializeKeyVaultRoleAssignmentPropertiesWithScope(JsonElement element)
         {
-            Optional<string> scope = default;
+            Optional<KeyVaultRoleScope> scope = default;
             Optional<string> roleDefinitionId = default;
             Optional<string> principalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"))
                 {
-                    scope = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    scope = new KeyVaultRoleScope(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("roleDefinitionId"))
@@ -35,7 +41,7 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultRoleAssignmentPropertiesWithScope(scope.Value, roleDefinitionId.Value, principalId.Value);
+            return new KeyVaultRoleAssignmentPropertiesWithScope(Optional.ToNullable(scope), roleDefinitionId.Value, principalId.Value);
         }
     }
 }

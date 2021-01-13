@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -18,16 +19,16 @@ namespace Azure.Security.KeyVault.Administration
         {
             AllowedActions = new ChangeTrackingList<string>();
             DeniedActions = new ChangeTrackingList<string>();
-            AllowedDataActions = new ChangeTrackingList<string>();
-            DeniedDataActions = new ChangeTrackingList<string>();
+            AllowedDataActions = new ChangeTrackingList<AllowedDataActions>();
+            DeniedDataActions = new ChangeTrackingList<DeniedDataActions>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
         /// <param name="allowedActions"> Allowed actions. </param>
-        /// <param name="deniedActions"> Denied actions. </param>
-        /// <param name="allowedDataActions"> Allowed Data actions. </param>
-        /// <param name="deniedDataActions"> Denied Data actions. </param>
-        internal KeyVaultPermission(IList<string> allowedActions, IList<string> deniedActions, IList<string> allowedDataActions, IList<string> deniedDataActions)
+        /// <param name="deniedActions"> . </param>
+        /// <param name="allowedDataActions"> . </param>
+        /// <param name="deniedDataActions"> . </param>
+        internal KeyVaultPermission(IList<string> allowedActions, IList<string> deniedActions, IList<AllowedDataActions> allowedDataActions, IList<DeniedDataActions> deniedDataActions)
         {
             AllowedActions = allowedActions;
             DeniedActions = deniedActions;
