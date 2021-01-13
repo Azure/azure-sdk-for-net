@@ -4,7 +4,6 @@
     <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
     <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
     <NoWarn>SA1636</NoWarn>
-    <AssemblyOriginatorKeyFile>AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
