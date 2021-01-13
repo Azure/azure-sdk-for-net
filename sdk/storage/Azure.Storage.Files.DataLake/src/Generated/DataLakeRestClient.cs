@@ -3857,6 +3857,194 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
             #endregion Path.SetExpiryAsync
+
+            #region Path.GetAccessControlAsync
+            /// <summary>
+            /// Gets the access control for the path
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="upn">Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathGetAccessControlResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathGetAccessControlResult>> GetAccessControlAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                bool? upn = default,
+                bool async = true,
+                string operationName = "PathClient.GetAccessControl",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = GetAccessControlAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        requestId,
+                        upn))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Path.GetAccessControlAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="upn">Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names.</param>
+            /// <returns>The Path.GetAccessControlAsync Message.</returns>
+            internal static Azure.Core.HttpMessage GetAccessControlAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                bool? upn = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Head;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "acl", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (upn != null) {
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                _request.Uri.AppendQuery("upn", upn.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+                }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Path.GetAccessControlAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Path.GetAccessControlAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathGetAccessControlResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathGetAccessControlResult> GetAccessControlAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.DataLake.Models.PathGetAccessControlResult _value = new Azure.Storage.Files.DataLake.Models.PathGetAccessControlResult();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
+                        {
+                            _value.ClientRequestId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-owner", out _header))
+                        {
+                            _value.Owner = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-group", out _header))
+                        {
+                            _value.Group = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-permissions", out _header))
+                        {
+                            _value.Permissions = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-acl", out _header))
+                        {
+                            _value.ACL = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.DataLake.Models.PathGetAccessControlResult>(response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        string _value;
+                        using (System.IO.StreamReader _streamReader = new System.IO.StreamReader(response.ContentStream))
+                        {
+                            _value = _streamReader.ReadToEnd();
+                        }
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Path.GetAccessControlAsync
         }
         #endregion Path operations
     }
@@ -4376,6 +4564,88 @@ namespace Azure.Storage.Files.DataLake.Models
     }
 }
 #endregion class PathFlushDataResult
+
+#region class PathGetAccessControlResult
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// Path GetAccessControlResult
+    /// </summary>
+    public partial class PathGetAccessControlResult
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
+        /// </summary>
+        public string ClientRequestId { get; internal set; }
+
+        /// <summary>
+        /// The owner of the file or directory. Included in the response if Hierarchical Namespace is enabled for the account.
+        /// </summary>
+        public string Owner { get; internal set; }
+
+        /// <summary>
+        /// The owning group of the file or directory. Included in the response if Hierarchical Namespace is enabled for the account.
+        /// </summary>
+        public string Group { get; internal set; }
+
+        /// <summary>
+        /// The POSIX access permissions for the file owner, the file owning group, and others. Included in the response if Hierarchical Namespace is enabled for the account.
+        /// </summary>
+        public string Permissions { get; internal set; }
+
+        /// <summary>
+        /// The POSIX access control list for the file or directory.  Included in the response only if the action is "getAccessControl" and Hierarchical Namespace is enabled for the account.
+        /// </summary>
+        public string ACL { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PathGetAccessControlResult instances.
+        /// You can use DataLakeModelFactory.PathGetAccessControlResult instead.
+        /// </summary>
+        internal PathGetAccessControlResult() { }
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new PathGetAccessControlResult instance for mocking.
+        /// </summary>
+        public static PathGetAccessControlResult PathGetAccessControlResult(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            string clientRequestId,
+            string owner,
+            string group,
+            string permissions,
+            string aCL)
+        {
+            return new PathGetAccessControlResult()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ClientRequestId = clientRequestId,
+                Owner = owner,
+                Group = group,
+                Permissions = permissions,
+                ACL = aCL,
+            };
+        }
+    }
+}
+#endregion class PathGetAccessControlResult
 
 #region class PathGetPropertiesResult
 namespace Azure.Storage.Files.DataLake.Models

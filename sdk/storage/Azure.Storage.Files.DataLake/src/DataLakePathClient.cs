@@ -1971,7 +1971,9 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         private async Task<Response<PathAccessControl>> GetAccessControlInternal(
             bool? userPrincipalName,
+#pragma warning disable CA1801 // Review unused parameters
             DataLakeRequestConditions conditions,
+#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1983,18 +1985,12 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(Uri)}: {Uri}\n");
                 try
                 {
-                    Response<PathGetPropertiesResult> response = await DataLakeRestClient.Path.GetPropertiesAsync(
-                        clientDiagnostics: _clientDiagnostics,
+                    Response<PathGetAccessControlResult> response = await DataLakeRestClient.Path.GetAccessControlAsync(
+                        clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
-                        resourceUri: _dfsUri,
+                        resourceUri: _blobUri,
                         version: Version.ToVersionString(),
-                        action: PathGetPropertiesAction.GetAccessControl,
                         upn: userPrincipalName,
-                        leaseId: conditions?.LeaseId,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
