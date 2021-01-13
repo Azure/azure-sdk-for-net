@@ -218,24 +218,26 @@ namespace Azure.Storage.Files.Shares
         {
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder =
+            ShareUriBuilder uriBuilder =
                 new ShareUriBuilder(conn.FileEndpoint)
                 {
                     ShareName = shareName,
                     DirectoryOrFilePath = directoryPath
                 };
-            _uri = builder.ToUri();
+            _uri = uriBuilder.ToUri();
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
 
+            uriBuilder.ShareName = null;
+            uriBuilder.DirectoryOrFilePath = null;
+
             _directoryRestClient = new DirectoryRestClient(
                 _clientDiagnostics,
                 _pipeline,
-                // TODO
-                _uri.ToString(),
-                _version.ToString(),
+                uriBuilder.ToUri().ToString(),
+                _version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
         }
@@ -314,12 +316,17 @@ namespace Azure.Storage.Files.Shares
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
 
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(directoryUri)
+            {
+                ShareName = null,
+                DirectoryOrFilePath = null
+            };
+
             _directoryRestClient = new DirectoryRestClient(
                 _clientDiagnostics,
                 _pipeline,
-                // TODO
-                _uri.ToString(),
-                _version.ToString(),
+                uriBuilder.ToUri().ToString(),
+                _version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
         }
@@ -359,12 +366,17 @@ namespace Azure.Storage.Files.Shares
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _clientDiagnostics = clientDiagnostics;
 
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(directoryUri)
+            {
+                ShareName = null,
+                DirectoryOrFilePath = null
+            };
+
             _directoryRestClient = new DirectoryRestClient(
                 _clientDiagnostics,
                 _pipeline,
-                // TODO
-                _uri.ToString(),
-                _version.ToString(),
+                uriBuilder.ToUri().ToString(),
+                _version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
         }
@@ -589,8 +601,13 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareDirectoryClient)}.{nameof(Create)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
@@ -604,15 +621,11 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _directoryRestClient.CreateAsync(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
-                            // TODO fix this.
-                            //fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                            fileCreationTime: DateTimeOffset.MinValue,
-                            // TODO fix this.
-                            //fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                            fileLastWriteTime: DateTimeOffset.MinValue,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
@@ -622,15 +635,11 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.Create(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
-                            // TODO fix this.
-                            //fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                            fileCreationTime: DateTimeOffset.MinValue,
-                            // TODO fix this.
-                            //fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                            fileLastWriteTime: DateTimeOffset.MinValue,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
@@ -661,11 +670,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1470,12 +1481,8 @@ namespace Azure.Storage.Files.Shares
                             shareName: _shareName,
                             directory: _name,
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
-                            // TODO fix this
-                            //fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                            fileCreationTime: DateTimeOffset.MinValue,
-                            // TODO fix this
-                            //fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                            fileLastWriteTime: DateTimeOffset.MinValue,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
                             cancellationToken: cancellationToken)
@@ -1487,12 +1494,8 @@ namespace Azure.Storage.Files.Shares
                             shareName: _shareName,
                             directory: _name,
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
-                            // TODO fix this
-                            //fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                            fileCreationTime: DateTimeOffset.MinValue,
-                            // TODO fix this
-                            //fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                            fileLastWriteTime: DateTimeOffset.MinValue,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
                             cancellationToken: cancellationToken);

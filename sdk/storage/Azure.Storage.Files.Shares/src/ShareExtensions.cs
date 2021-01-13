@@ -140,10 +140,31 @@ namespace Azure.Storage.Files.Shares
             return null;
         }
 
-        // TODO
         internal static ShareFileInfo ToShareFileInfo(this FileCreateHeaders fileCreateHeaders)
         {
-            return null;
+            if (fileCreateHeaders == null)
+            {
+                return null;
+            }
+
+            return new ShareFileInfo
+            {
+                // TODO
+                //ETag = fileCreateHeaders.ETag
+                LastModified = fileCreateHeaders.LastModified.GetValueOrDefault(),
+                IsServerEncrypted = fileCreateHeaders.IsServerEncrypted.GetValueOrDefault(),
+                SmbProperties = new FileSmbProperties()
+                {
+                    // TODO
+                    //FileAttributes = fileCreateHeaders.FileAttributes
+                    FilePermissionKey = fileCreateHeaders.FilePermissionKey,
+                    FileCreatedOn = fileCreateHeaders.FileCreationTime,
+                    FileLastWrittenOn = fileCreateHeaders.FileLastWriteTime,
+                    FileChangedOn = fileCreateHeaders.FileLastWriteTime,
+                    FileId = fileCreateHeaders.FileId,
+                    ParentId = fileCreateHeaders.FileParentId
+                }
+            };
         }
 
         // TODO

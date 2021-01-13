@@ -31,6 +31,19 @@ directive:
     delete $.ShareSnapshot["x-ms-parameter-location"];
 ```
 
+### Times aren't required
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.FileCreationTime
+  transform: >
+    delete $.format;
+- from: swagger-document
+  where: $.parameters.FileLastWriteTime
+  transform: >
+    delete $.format;
+```
+
 ### ErrorCode
 ``` yaml
 directive:
@@ -76,6 +89,16 @@ directive:
       "x-ms-parameter-location": "method",
       "description": "The file name."
     };
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+   Object.keys($).map(id => {
+     if (id.includes('{directory}/{fileName}'))
+     {
+       $[id.replace('{directory}/{fileName}', '{fileName}')] = $[id];
+       delete $[id];
+     }
+   });
 - from: swagger-document
   where: $["x-ms-paths"]
   transform: >
