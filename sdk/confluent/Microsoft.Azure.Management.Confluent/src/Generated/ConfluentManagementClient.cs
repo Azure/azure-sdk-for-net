@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.Confluent
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IMarketplaceAgreementsOperations.
+        /// </summary>
+        public virtual IMarketplaceAgreementsOperations MarketplaceAgreements { get; private set; }
+
+        /// <summary>
         /// Gets the IOrganizationOperations.
         /// </summary>
         public virtual IOrganizationOperations OrganizationOperations { get; private set; }
@@ -322,6 +327,7 @@ namespace Microsoft.Azure.Management.Confluent
         /// </summary>
         private void Initialize()
         {
+            MarketplaceAgreements = new MarketplaceAgreementsOperations(this);
             OrganizationOperations = new OrganizationOperations(this);
             Organization = new OrganizationOperationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
