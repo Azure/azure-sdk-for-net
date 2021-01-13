@@ -16,7 +16,7 @@ namespace Azure.Communication.Administration
     /// <summary>
     /// The Azure Communication Services phone number administration client.
     /// </summary>
-    public partial class PhoneNumberAdministrationClient
+    public partial class PhoneNumbersClient
     {
         internal ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
         internal HttpPipeline HttpPipeline => _pipeline;
@@ -27,20 +27,20 @@ namespace Azure.Communication.Administration
         /// <summary>
         /// Initializes a phone number administration client with an Azure resource connection string.
         /// </summary>
-        public PhoneNumberAdministrationClient(string connectionString)
+        public PhoneNumbersClient(string connectionString)
             : this(new PhoneNumberAdministrationClientOptions(), ConnectionString.Parse(connectionString))
         { }
 
         /// <summary>
         /// Initializes a phone number administration client with an Azure resource connection string and client options.
         /// </summary>
-        public PhoneNumberAdministrationClient(string connectionString, PhoneNumberAdministrationClientOptions? options = default)
+        public PhoneNumbersClient(string connectionString, PhoneNumberAdministrationClientOptions? options = default)
             : this(
                   options ?? new PhoneNumberAdministrationClientOptions(),
                   ConnectionString.Parse(connectionString))
         { }
 
-        internal PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
+        internal PhoneNumbersClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
             : this(new ClientDiagnostics(options), options.BuildHttpPipline(connectionString), connectionString.GetRequired("endpoint"))
         { }
 

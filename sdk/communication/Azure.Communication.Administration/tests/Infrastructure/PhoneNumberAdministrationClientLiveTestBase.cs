@@ -20,9 +20,9 @@ namespace Azure.Communication.Administration.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="PhoneNumberAdministrationClient" />.</returns>
-        protected PhoneNumberAdministrationClient CreateClient(bool isInstrumented = true)
+        protected PhoneNumbersClient CreateClient(bool isInstrumented = true)
         {
-            var client = new PhoneNumberAdministrationClient(
+            var client = new PhoneNumbersClient(
                     TestEnvironment.ConnectionString,
                     InstrumentClientOptions(new PhoneNumberAdministrationClientOptions()));
 

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.Administration.Models
 {
-    /// <summary> The phone number type of the plan group. </summary>
+    /// <summary> The type of a phone number. </summary>
     public readonly partial struct PhoneNumberType : IEquatable<PhoneNumberType>
     {
         private readonly string _value;
@@ -22,19 +22,13 @@ namespace Azure.Communication.Administration.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UnknownValue = "Unknown";
-        private const string GeographicValue = "Geographic";
-        private const string TollFreeValue = "TollFree";
-        private const string IndirectValue = "Indirect";
+        private const string TollFreeValue = "tollFree";
+        private const string GeographicValue = "geographic";
 
-        /// <summary> Unknown. </summary>
-        public static PhoneNumberType Unknown { get; } = new PhoneNumberType(UnknownValue);
-        /// <summary> Geographic. </summary>
-        public static PhoneNumberType Geographic { get; } = new PhoneNumberType(GeographicValue);
-        /// <summary> TollFree. </summary>
+        /// <summary> tollFree. </summary>
         public static PhoneNumberType TollFree { get; } = new PhoneNumberType(TollFreeValue);
-        /// <summary> Indirect. </summary>
-        public static PhoneNumberType Indirect { get; } = new PhoneNumberType(IndirectValue);
+        /// <summary> geographic. </summary>
+        public static PhoneNumberType Geographic { get; } = new PhoneNumberType(GeographicValue);
         /// <summary> Determines if two <see cref="PhoneNumberType"/> values are the same. </summary>
         public static bool operator ==(PhoneNumberType left, PhoneNumberType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberType"/> values are not the same. </summary>

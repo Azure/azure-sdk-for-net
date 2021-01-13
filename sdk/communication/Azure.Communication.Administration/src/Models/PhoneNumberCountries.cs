@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Communication.Administration.Models
-{
-    internal partial class PhoneNumberCountries
-    {
-    }
-}
+//namespace Azure.Communication.Administration.Models
+//{
+//    internal partial class PhoneNumberCountries
+//    {
+//    }
+//}
