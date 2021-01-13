@@ -6,9 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.MixedReality.RemoteRendering.Models;
 
-namespace Azure.MixedReality.RemoteRendering
+namespace Azure.MixedReality.RemoteRendering.Models
 {
     /// <summary> The Conversion. </summary>
     public partial class ConversionInformation

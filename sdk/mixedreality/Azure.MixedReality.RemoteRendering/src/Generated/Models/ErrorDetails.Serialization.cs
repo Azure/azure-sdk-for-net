@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.MixedReality.RemoteRendering
+namespace Azure.MixedReality.RemoteRendering.Models
 {
     public partial class ErrorDetails
     {

@@ -8,9 +8,8 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.MixedReality.RemoteRendering.Models;
 
-namespace Azure.MixedReality.RemoteRendering
+namespace Azure.MixedReality.RemoteRendering.Models
 {
     public partial class ConversionInformation
     {

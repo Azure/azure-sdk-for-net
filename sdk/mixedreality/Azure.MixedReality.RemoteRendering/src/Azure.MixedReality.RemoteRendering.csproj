@@ -31,7 +31,6 @@
     <Compile Include="$(AzureMixedRealityAuthenticationSharedSources)*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Customizations\" />
     <Folder Include="Generated\Models\" />
   </ItemGroup>
 

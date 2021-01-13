@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.MixedReality.RemoteRendering
+namespace Azure.MixedReality.RemoteRendering.Models
 {
     /// <summary> The Error. </summary>
     public partial class ErrorDetails

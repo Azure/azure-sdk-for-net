@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.MixedReality.RemoteRendering;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {

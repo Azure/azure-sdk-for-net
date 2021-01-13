@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.MixedReality.RemoteRendering;
-
 namespace Azure.MixedReality.RemoteRendering.Models
 {
     /// <summary> The ErrorResponse. </summary>
