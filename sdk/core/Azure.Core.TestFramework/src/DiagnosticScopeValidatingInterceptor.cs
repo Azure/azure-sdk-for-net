@@ -20,7 +20,11 @@ namespace Azure.Core.TestFramework
             var methodName = invocation.Method.Name;
 
             Type declaringType = invocation.Method.DeclaringType;
-            var expectedName = declaringType.Name + "." + methodName.Substring(0, methodName.Length - 5);
+            var methodNameWithoutSuffix = methodName.EndsWith("Async", StringComparison.OrdinalIgnoreCase) ?
+                methodName.Substring(0, methodName.Length - 5) :
+                methodName;
+
+            var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
             bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
 
             if (invocation.Method.ReturnType is {IsGenericType: true} genericType &&

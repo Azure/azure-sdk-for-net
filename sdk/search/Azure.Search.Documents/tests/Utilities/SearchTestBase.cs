@@ -266,7 +266,7 @@ namespace Azure.Search.Documents.Tests
         protected async Task WaitForDocumentCountAsync(
             SearchClient searchClient,
             int minimumCount,
-            int attempts = 3,
+            int attempts = 10,
             TimeSpan? delay = null)
         {
             delay ??= TimeSpan.FromSeconds(1);
@@ -287,7 +287,15 @@ namespace Azure.Search.Documents.Tests
                 }
                 await DelayAsync(delay);
             }
-            Assert.Fail($"Indexing only reached {count} documents and not the expected {minimumCount}!");
+
+            if (count == 0)
+            {
+                Assert.Inconclusive("Indexing failed to start.");
+            }
+            else
+            {
+                Assert.Fail($"Indexing only reached {count} documents and not the expected {minimumCount}!");
+            }
         }
     }
 }

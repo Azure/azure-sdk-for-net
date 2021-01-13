@@ -105,7 +105,7 @@ namespace Azure.Data.Tables.Tests
 
             await CosmosThrottleWrapper(async () => await service.CreateTableAsync(tableName).ConfigureAwait(false));
 
-            client = service.GetTableClient(tableName);
+            client = InstrumentClient(service.GetTableClient(tableName));
         }
 
         [TearDown]

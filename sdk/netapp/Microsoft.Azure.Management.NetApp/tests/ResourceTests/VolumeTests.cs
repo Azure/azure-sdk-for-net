@@ -18,7 +18,7 @@ namespace NetApp.Tests.ResourceTests
 {
     public class VolumeTests : TestBase
     {
-        private const int delay = 5000;
+        private const int delay = 10000;
         public static ExportPolicyRule exportPolicyRule = new ExportPolicyRule()
         {
             RuleIndex = 1,
@@ -457,6 +457,10 @@ namespace NetApp.Tests.ResourceTests
 
                 netAppMgmtClient.Volumes.AuthorizeReplication(ResourceUtils.repResourceGroup, ResourceUtils.accountName1Repl, ResourceUtils.poolName1Repl, ResourceUtils.volumeName1Repl, authorizeRequest);
 
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
+                }
                 WaitForSucceeded(netAppMgmtClient, accountName: ResourceUtils.accountName1Repl, poolName: ResourceUtils.poolName1Repl, volumeName: ResourceUtils.volumeName1Repl);
 
                 WaitForReplicationStatus(netAppMgmtClient, "Mirrored");
@@ -582,11 +586,35 @@ namespace NetApp.Tests.ResourceTests
             }
         }
 
+        [Fact]
+        public void LongListVolumes()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                //get list of volumnes                
+                var volumesPage = netAppMgmtClient.Volumes.List("sara-systemic", "Sara-Systemic-NA", "Sara-Systemic-CP");
+                // Get all resources by polling on next page link
+                var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);
+                var volumesList = new List<Volume>();
+
+                foreach (var volume in volumeResponseList)
+                {
+                    volumesList.Add(volume);
+                }
+
+                Assert.Equal(166, volumesList.Count());
+
+            }
+        }
+
         private static string GetSessionsDirectoryPath()
         {
             string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.VolumeTests).GetTypeInfo().Assembly.Location;
             return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
+
     }
 }
 

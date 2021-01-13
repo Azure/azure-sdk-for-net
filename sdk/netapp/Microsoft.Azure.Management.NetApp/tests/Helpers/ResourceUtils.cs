@@ -12,7 +12,7 @@ namespace NetApp.Tests.Helpers
         public const long gibibyte = 1024L * 1024L * 1024L;
 
         private const string remoteSuffix = "-R";
-        public const string vnet = "sdknettestqa2vnet464";
+        public const string vnet = "sdknettestqa2vnet464";        
         public const string backupVnet = "sdknettestqa2vnet464euap";
         public const string repVnet = "sdktestqa2vnet464";
         //public const string remoteVnet = repVnet + remoteSuffix;
@@ -21,6 +21,7 @@ namespace NetApp.Tests.Helpers
         //public const string subsId = "0661B131-4A11-479B-96BF-2F95ACCA2F73";
         public const string subsId = "69a75bda-882e-44d5-8431-63421204132a";
         public const string location = "westus2";
+        //public const string location = "eastus2euap";
         //public const string remoteLocation = "southcentralus";
         public const string remoteLocation = "eastus";
         //public const string backupLocation = "westus2";
