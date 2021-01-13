@@ -1,0 +1,3 @@
+namespace Azure.ResourceManager.MachineLearningServices
+{
+}
