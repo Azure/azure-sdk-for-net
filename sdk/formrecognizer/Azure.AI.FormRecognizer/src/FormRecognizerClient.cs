@@ -901,6 +901,36 @@ namespace Azure.AI.FormRecognizer
 
         #endregion
 
+        #region Custom Serialization Experiment
+
+        /// <summary>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="modelId"></param>
+        /// <param name="form"></param>
+        /// <param name="recognizeFormsOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual RecognizeFormsOperation<T> StartRecognizeForms<T>(string modelId, Stream form, RecognizeFormsOptions recognizeFormsOptions = default, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="modelId"></param>
+        /// <param name="form"></param>
+        /// <param name="recognizeFormsOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual RecognizeFormsOperation<T> StartRecognizeForms<T>(PrebuiltFormModel modelId, Stream form, RecognizeFormsOptions recognizeFormsOptions = default, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         /// <summary>
         /// Used as part of argument validation. Detects the <see cref="FormContentType"/> of a stream and
         /// throws an <see cref="ArgumentException"/> in case of failure.
