@@ -1,6 +1,17 @@
 Set-StrictMode -Version "4.0"
 
-function CreateDisplayName([string]$parameter, [hashtable]$displayNames)
+class OrderedDictionary : System.Collections.Specialized.OrderedDictionary {}
+
+class MatrixConfig {
+    [PSCustomObject]$displayNames
+    [Hashtable]$displayNamesLookup
+    [PSCustomObject]$matrix
+    [OrderedDictionary]$orderedMatrix
+    [Array]$include
+    [Array]$exclude
+}
+
+function CreateDisplayName([string]$parameter, [Hashtable]$displayNames)
 {
     $name = $parameter
 
@@ -15,26 +26,56 @@ function CreateDisplayName([string]$parameter, [hashtable]$displayNames)
     return $name
 }
 
-function GenerateMatrix([HashTable]$config, [string]$selectFromMatrixType)
+function GenerateMatrix([MatrixConfig]$config, [string]$selectFromMatrixType)
 {
     if ($selectFromMatrixType -eq "sparse") {
-        [Array]$dimensions = GetMatrixDimensions $config.matrix
-        $size = $dimensions[0]
-        [Array]$matrix = GenerateSparseMatrix $config.matrix $config.displayNames $size
+        [Array]$matrix = GenerateSparseMatrix $config.orderedMatrix $config.displayNamesLookup
     } elseif ($selectFromMatrixType -eq "all") {
-        [Array]$matrix, $_ = GenerateFullMatrix $config.matrix $config.displayNames
+        [Array]$matrix = GenerateFullMatrix $config.orderedMatrix $config.displayNamesLookup
     } else {
         throw "Matrix generator not implemented for selectFromMatrixType: $($platform.selectFromMatrixType)"
     }
 
-    if ($config["exclude"]) {
+    if ($config.exclude) {
         [Array]$matrix = ProcessExcludes $matrix $config.exclude
     }
-    if ($config["include"]) {
-        [Array]$matrix = ProcessIncludes $matrix $config.include $config.displayNames
+    if ($config.include) {
+        [Array]$matrix = ProcessIncludes $matrix $config.include $config.displayNamesLookup
     }
 
-    return $matrix | Sort-Object -Property name
+    return $matrix
+}
+
+# Importing the JSON as PSCustomObject preserves key ordering,
+# whereas ConvertFrom-Json -AsHashtable does not
+function GetMatrixConfigFromJson($jsonConfig)
+{
+    [MatrixConfig]$config = $jsonConfig | ConvertFrom-Json
+    $config.orderedMatrix = [OrderedDictionary]@{}
+    $config.displayNamesLookup = @{}
+
+    $config.matrix.PSObject.Properties | ForEach-Object { 
+        $config.orderedMatrix.Add($_.Name, $_.Value)
+    }
+    $config.displayNames.PSObject.Properties | ForEach-Object {
+        $config.displayNamesLookup.Add($_.Name, $_.Value)
+    }
+    $config.include = $config.include | ForEach-Object {
+        $ordered = [OrderedDictionary]@{}
+        $_.PSObject.Properties | ForEach-Object {
+            $ordered.Add($_.Name, $_.Value)
+        }
+        return $ordered
+    }
+    $config.exclude = $config.exclude | ForEach-Object {
+        $ordered = [OrderedDictionary]@{}
+        $_.PSObject.Properties | ForEach-Object {
+            $ordered.Add($_.Name, $_.Value)
+        }
+        return $ordered
+    }
+
+    return $config
 }
 
 function ProcessExcludes([Array]$matrix, [Array]$excludes)
@@ -44,7 +85,7 @@ function ProcessExcludes([Array]$matrix, [Array]$excludes)
 
     foreach ($exclusion in $excludes) {
         $converted = ConvertToMatrixArrayFormat $exclusion
-        $full, $_ = GenerateFullMatrix $converted
+        $full = GenerateFullMatrix $converted
         $exclusionMatrix += $full
     }
 
@@ -60,25 +101,25 @@ function ProcessExcludes([Array]$matrix, [Array]$excludes)
     return $matrix | Where-Object { !$_.parameters.Contains($deleteKey) }
 }
 
-function ProcessIncludes([Array]$matrix, [Array]$includes, [HashTable]$displayNames)
+function ProcessIncludes([Array]$matrix, [Array]$includes, [Hashtable]$displayNames)
 {
     foreach ($inclusion in $includes) {
         $converted = ConvertToMatrixArrayFormat $inclusion
-        $full, $_ = GenerateFullMatrix $converted $displayNames
+        $full = GenerateFullMatrix $converted $displayNames
         $matrix += $full
     }
 
     return $matrix
 }
 
-function MatrixElementMatch([HashTable]$source, [HashTable]$target)
+function MatrixElementMatch([OrderedDictionary]$source, [OrderedDictionary]$target)
 {
     if ($target.Count -eq 0) {
         return $false
     }
 
     foreach ($key in $target.Keys) {
-        if ($source[$key] -ne $target[$key]) {
+        if (-not $source.Contains($key) -or $source[$key] -ne $target[$key]) {
             return $false
         }
     }
@@ -86,9 +127,9 @@ function MatrixElementMatch([HashTable]$source, [HashTable]$target)
     return $true
 }
 
-function ConvertToMatrixArrayFormat([HashTable]$matrix)
+function ConvertToMatrixArrayFormat([OrderedDictionary]$matrix)
 {
-    $converted = @{}
+    $converted = [OrderedDictionary]@{}
 
     foreach ($key in $matrix.Keys) {
         if ($matrix[$key] -isnot [Array]) {
@@ -103,10 +144,9 @@ function ConvertToMatrixArrayFormat([HashTable]$matrix)
 
 function SerializePipelineMatrix([Array]$matrix)
 {
-    $matrix = $matrix | Sort-Object -Property name
-    $pipelineMatrix = [ordered]@{}
+    $pipelineMatrix = [OrderedDictionary]@{}
     foreach ($entry in $matrix) {
-        $pipelineMatrix.Add($entry.name, [ordered]@{})
+        $pipelineMatrix.Add($entry.name, [OrderedDictionary]@{})
         foreach ($key in $entry.parameters.Keys) {
             $pipelineMatrix[$entry.name].Add($key, $entry.parameters[$key])
         }
@@ -118,9 +158,12 @@ function SerializePipelineMatrix([Array]$matrix)
     }
 }
 
-function GenerateSparseMatrix([HashTable]$parameters, [HashTable]$displayNames, [int]$count)
+function GenerateSparseMatrix([OrderedDictionary]$parameters, [Hashtable]$displayNames)
 {
-    [Array]$matrix, [Array]$dimensions = GenerateFullMatrix $parameters $displayNames
+    [Array]$dimensions = GetMatrixDimensions $parameters
+    $size = ($dimensions | Measure-Object -Maximum).Maximum
+
+    [Array]$matrix = GenerateFullMatrix $parameters $displayNames
     $sparseMatrix = @()
 
     # With full matrix, retrieve items by doing diagonal lookups across the matrix N times.
@@ -129,7 +172,7 @@ function GenerateSparseMatrix([HashTable]$parameters, [HashTable]$displayNames, 
     # 1, 1, 1
     # 2, 2, 2
     # 3, 0, 0 <- 3, 3, 3 wraps to 3, 0, 0 given the dimensions
-    for ($i = 0; $i -lt $count; $i++) {
+    for ($i = 0; $i -lt $size; $i++) {
         $idx = @()
         for ($j = 0; $j -lt $dimensions.Length; $j++) {
             $idx += $i % $dimensions[$j]
@@ -140,42 +183,17 @@ function GenerateSparseMatrix([HashTable]$parameters, [HashTable]$displayNames, 
     return $sparseMatrix
 }
 
-function GenerateFullMatrix([HashTable]$parameters, [HashTable]$displayNames = @{})
+function GenerateFullMatrix([OrderedDictionary] $parameters, [Hashtable]$displayNames = @{})
 {
-    $sortedParameters = SortMatrix $parameters
+    $parameterArray = $parameters.GetEnumerator() | ForEach-Object { $_ }
 
     $matrix = [System.Collections.ArrayList]::new()
-    InitializeMatrix $sortedParameters $displayNames $matrix
+    InitializeMatrix $parameterArray $displayNames $matrix
 
-    return $matrix.ToArray(), (GetMatrixDimensions $parameters)
+    return $matrix.ToArray()
 }
 
-# SortMatrix sorts a matrix by three properties:
-# 1. Descending element length or parameters
-# 2. Ascending parameter names alphabetically
-# 3. Ascending parameter values alphabetically
-#
-# The matrix must be sorted in order to have a deterministic layout.
-# This guarantees that a sparse matrix will always be generated with the
-# same set of elements given the same input.
-#
-# Additionally, parameter value arrays should be sorted, so that the azure pipelines
-# matrix yaml gets generated consistently.
-function SortMatrix([HashTable]$parameters)
-{
-    $sortedParameters = $parameters.GetEnumerator() `
-        | Sort-Object -Property `
-            @{ Expression = { $_.Value.Length }; Descending=$true }, `
-            @{ Expression = { $_.Name }; Descending=$false }
-
-    for ($i = 0; $i -lt $sortedParameters.Length; $i++) {
-        $sortedParameters[$i].Value = $sortedParameters[$i].Value | Sort-Object
-    }
-
-    return $sortedParameters
-}
-
-function CreateMatrixEntry([System.Collections.Specialized.OrderedDictionary]$permutation, [HashTable]$displayNames = @{})
+function CreateMatrixEntry([OrderedDictionary]$parameters, [Hashtable]$displayNames = @{})
 {
     $names = @()
     foreach ($key in $permutation.Keys) {
@@ -199,9 +217,9 @@ function InitializeMatrix
 {
     param(
         [Array]$parameters,
-        [HashTable]$displayNames,
+        [Hashtable]$displayNames,
         [System.Collections.ArrayList]$permutations,
-        [System.Collections.Specialized.OrderedDictionary]$permutation = @{}
+        [OrderedDictionary]$permutation = @{}
     )
 
     if (!$parameters) {
@@ -212,7 +230,7 @@ function InitializeMatrix
 
     $head, $tail = $parameters
     foreach ($value in $head.value) {
-        $newPermutation = [ordered]@{}
+        $newPermutation = [OrderedDictionary]@{}
         foreach ($element in $permutation.GetEnumerator()) {
             $newPermutation[$element.Name] = $element.Value
         }
@@ -221,14 +239,14 @@ function InitializeMatrix
     }
 }
 
-function GetMatrixDimensions([HashTable]$parameters)
+function GetMatrixDimensions([OrderedDictionary]$parameters)
 {
     $dimensions = @()
     foreach ($val in $parameters.Values) {
         $dimensions += $val.Length
     }
 
-    return $dimensions | Sort-Object -Descending
+    return $dimensions
 }
 
 function SetNdMatrixElement

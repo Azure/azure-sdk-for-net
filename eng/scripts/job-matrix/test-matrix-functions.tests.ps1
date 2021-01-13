@@ -1,8 +1,7 @@
+Using Module ./test-matrix-functions.psm1
 Import-Module Pester
 
 BeforeAll {
-    . $PSScriptRoot/test-matrix-functions.ps1
-
     $matrixConfig = @"
 {
     "displayNames": {
@@ -46,7 +45,7 @@ BeforeAll {
     ]
 }
 "@
-    $config = $matrixConfig | ConvertFrom-Json -AsHashtable
+    $config = GetMatrixConfigFromJson $matrixConfig
 }
 
 Describe "Matrix-Lookup" -Tag "lookup" {
@@ -267,7 +266,7 @@ Describe 'Matrix-Set' -Tag "set" {
 
 Describe "Platform Matrix Generation" -Tag "generate" {
     BeforeEach {
-        $matrixConfig = @"
+        $matrixConfigForGenerate = @"
 {
     "displayNames": {
         "--enableFoo": "withfoo"
@@ -286,49 +285,68 @@ Describe "Platform Matrix Generation" -Tag "generate" {
             "",
             "--enableFoo"
         ]
-    }
+    },
+    "include": [
+      {
+        "operatingSystem": "windows-2019",
+        "framework": "net461",
+        "additionalTestArguments": "/p:UseProjectReferenceToAzureClients=true"
+      }
+    ],
+    "exclude": [
+      {
+        "foo": "bar"
+      },
+      {
+        "foo2": "bar2"
+      }
+    ]
 }
 "@
-        $config = $matrixConfig | ConvertFrom-Json -AsHashtable
+        $generateConfig = GetMatrixConfigFromJson $matrixConfigForGenerate
     }
 
     It "Should get matrix dimensions from Nd parameters" {
-        GetMatrixDimensions $config.matrix | Should -Be 3, 2, 2
+        GetMatrixDimensions $generateConfig.orderedMatrix | Should -Be 3, 2, 2
     }
 
     It "Should use name overrides from displayNames" {
-        $matrix, $dimensions = GenerateFullMatrix $config.matrix $config.displayNames
+        $dimensions = GetMatrixDimensions $generateConfig.orderedMatrix
+        $matrix = GenerateFullMatrix $generateConfig.orderedMatrix $generateconfig.displayNamesLookup
 
         $element = GetNdMatrixElement @(0, 0, 0) $matrix $dimensions
-        $element.name | Should -Be "macOS1015_net461"
+        $element.name | Should -Be "windows2019_net461"
 
         $element = GetNdMatrixElement @(1, 1, 1) $matrix $dimensions
-        $element.name | Should -Be "ubuntu1804_withFoo_netcoreapp21"
+        $element.name | Should -Be "ubuntu1804_netcoreapp21_withFoo"
 
         $element = GetNdMatrixElement @(2, 1, 1) $matrix $dimensions
-        $element.name | Should -Be "windows2019_withFoo_netcoreapp21"
+        $element.name | Should -Be "macOS1015_netcoreapp21_withFoo"
     }
 
     It "Should enforce valid display name format" {
-        $config.displayNames["net461"] = '_123.Some.456.Invalid_format-name$(foo)'
-        $config.displayNames["netcoreapp2.1"] = (New-Object string[] 150) -join "a"
-        $matrix, $dimensions = GenerateFullMatrix $config.matrix $config.displayNames
+        $generateconfig.displayNamesLookup["net461"] = '_123.Some.456.Invalid_format-name$(foo)'
+        $generateconfig.displayNamesLookup["netcoreapp2.1"] = (New-Object string[] 150) -join "a"
+        $dimensions = GetMatrixDimensions $generateConfig.orderedMatrix
+        $matrix = GenerateFullMatrix $generateconfig.orderedMatrix $generateconfig.displayNamesLookup
 
         $element = GetNdMatrixElement @(0, 0, 0) $matrix $dimensions
-        $element.name | Should -Be "macOS1015_some456invalid_formatnamefoo"
+        $element.name | Should -Be "windows2019_some456invalid_formatnamefoo"
 
         $element = GetNdMatrixElement @(1, 1, 1) $matrix $dimensions
         $element.name.Length | Should -Be 100
-        $element.name | Should -BeLike "ubuntu1804_withFoo_aaaaaaaaaaaaaaaaa*"
+        # The withfoo part of the argument gets cut off at the character limit
+        $element.name | Should -BeLike "ubuntu1804_aaaaaaaaaaaaaaaaa*"
     }
 
 
     It "Should initialize an N-dimensional matrix from all parameter permutations" {
-        $matrix, $dimensions = GenerateFullMatrix $config.matrix $config.displayNames
+        $dimensions = GetMatrixDimensions $generateConfig.orderedMatrix
+        $matrix = GenerateFullMatrix $generateConfig.orderedMatrix $generateConfig.displayNamesLookup
         $matrix.Count | Should -Be 12
 
         $element = $matrix[0].parameters
-        $element.operatingSystem | Should -Be "macOS-10.15"
+        $element.operatingSystem | Should -Be "windows-2019"
         $element.framework | Should -Be "net461"
         $element.additionalArguments | Should -Be ""
 
@@ -338,19 +356,19 @@ Describe "Platform Matrix Generation" -Tag "generate" {
         $element.parameters.additionalArguments | Should -Be "--enableFoo"
 
         $element = GetNdMatrixElement @(2, 1, 1) $matrix $dimensions
-        $element.parameters.operatingSystem | Should -Be "windows-2019"
+        $element.parameters.operatingSystem | Should -Be "macOS-10.15"
         $element.parameters.framework | Should -Be "netcoreapp2.1"
         $element.parameters.additionalArguments | Should -Be "--enableFoo"
     }
 
-    It "Should initialize a sparse matrix of X length from an N-dimensional matrix" -TestCases @(
-        @{ size = 3; i = 0; name = "macOS1015_net461"; operatingSystem = "macOS-10.15"; framework = "net461"; additionalArguments = ""; }
-        @{ size = 5; i = 0; name = "macOS1015_net461"; operatingSystem = "macOS-10.15"; framework = "net461"; additionalArguments = ""; }
-        @{ size = 4; i = 1; name = "ubuntu1804_withFoo_netcoreapp21"; operatingSystem = "ubuntu-18.04"; framework = "netcoreapp2.1"; additionalArguments = "--enableFoo"; }
-        @{ size = 5; i = 2; name = "windows2019_net461"; operatingSystem = "windows-2019"; framework = "net461"; additionalArguments = ""; }
-        @{ size = 5; i = 4; name = "ubuntu1804_net461"; operatingSystem = "ubuntu-18.04"; framework = "net461"; additionalArguments = ""; }
+    It "Should initialize a sparse matrix from an N-dimensional matrix" -Tag bbp -TestCases @(
+        @{ i = 0; name = "windows2019_net461"; operatingSystem = "windows-2019"; framework = "net461"; additionalArguments = ""; }
+        @{ i = 1; name = "ubuntu1804_netcoreapp21_withfoo"; operatingSystem = "ubuntu-18.04"; framework = "netcoreapp2.1"; additionalArguments = "--enableFoo"; }
+        @{ i = 2; name = "macOS1015_net461"; operatingSystem = "macOS-10.15"; framework = "net461"; additionalArguments = ""; }
     ) {
-        $sparseMatrix = GenerateSparseMatrix $config.matrix $config.displayNames $size
+        $sparseMatrix = GenerateSparseMatrix $generateConfig.orderedMatrix $generateConfig.displayNamesLookup
+        $dimensions = GetMatrixDimensions $generateConfig.orderedMatrix
+        $size = ($dimensions | Measure-Object -Maximum).Maximum
         $sparseMatrix.Count | Should -Be $size
 
         $sparseMatrix[$i].name | Should -Be $name
@@ -361,50 +379,31 @@ Describe "Platform Matrix Generation" -Tag "generate" {
     }
 
     It "Should generate a sparse matrix from an N-dimensional matrix config" {
-        $sparseMatrix = GenerateMatrix $config "sparse"
-        $sparseMatrix.Length | Should -Be 3
+        $sparseMatrix = GenerateMatrix $generateConfig "sparse"
+        $sparseMatrix.Length | Should -Be 4
     }
 
     It "Should initialize a full matrix from an N-dimensional matrix config" {
-        $matrix = GenerateMatrix $config "all"
-        $matrix.Length | Should -Be 12
+        $matrix = GenerateMatrix $generateConfig "all"
+        $matrix.Length | Should -Be 13
     }
 }
 
-Describe "Matrix sort" -Tag "sort" {
-    It "Should sort matrix parameters by length first, then name and values alphabetically" {
-        $matrix = @{
-            "bbb" = @("b", "a", "c")
-            "aaa" = @("d", "b", "c")
-            "zzz"  = @("d", "b", "c", "a")
+Describe "Config File Object Conversion" -Tag "convert" {
+    It "Should convert a matrix config" {
+        $converted = GetMatrixConfigFromJson $matrixConfig
+
+        $converted.orderedMatrix | Should -BeOfType [System.Collections.Specialized.OrderedDictionary]
+        $converted.orderedMatrix.operatingSystem[0] | Should -Be "windows-2019"
+
+        $converted.displayNamesLookup | Should -BeOfType [Hashtable]
+        $converted.displayNamesLookup["--enableFoo"] | Should -Be "withFoo"
+
+        $converted.include | ForEach-Object {
+            $_ | Should -BeOfType [System.Collections.Specialized.OrderedDictionary]
         }
-        $expected = @(
-            @{ Name = "zzz"; Value = @("a", "b", "c", "d") }
-            @{ Name = "aaa"; Value = @("b", "c", "d") }
-            @{ Name = "bbb"; Value = @("a", "b", "c") }
-        )
-        $sorted = SortMatrix $matrix
-
-        for ($i = 0; $i -lt $matrix.Count; $i++) {
-            $sorted[$i].Name | Should -Be $expected[$i].Name
-            $sorted[$i].Value | Should -Be $expected[$i].Value
-        }
-    }
-
-    It "Should sort matrix dimensions descending" {
-        $matrix = @{
-            "bbb" = @("b", "a", "c")
-            "aaa" = @("d", "b", "c")
-            "zzz"  = @("d", "b", "c", "a")
-        }
-        GetMatrixDimensions $matrix | Should -Be @(4,3,3)
-    }
-
-    It "Should sort matrix output array by display name" {
-        $output = GenerateMatrix $config "all"
-
-        for ($i = 0; $i -lt $output.Length-1; $i++) {
-            $output[$i].name | Should -BeLessThan $output[$i+1].name
+        $converted.exclude | ForEach-Object {
+            $_ | Should -BeOfType [System.Collections.Specialized.OrderedDictionary]
         }
     }
 }
@@ -417,38 +416,53 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
         @{ source = @{ a = 1; b = 2; }; target = @{ }; expected = $false }
         @{ source = @{ }; target = @{ a = 1; b = 2; }; expected = $false }
     ) {
-        MatrixElementMatch $source $target | Should -Be $expected
+        $orderedSource = [OrderedDictionary]@{}
+        $source.GetEnumerator() | ForEach-Object {
+            $orderedSource.Add($_.Name, $_.Value)
+        }
+        $orderedTarget = [OrderedDictionary]@{}
+        $target.GetEnumerator() | ForEach-Object {
+            $orderedTarget.Add($_.Name, $_.Value)
+        }
+        MatrixElementMatch $orderedSource $orderedTarget | Should -Be $expected
     }
 
     It "Should convert singular elements" {
-        $matrix = ConvertToMatrixArrayFormat @{ a = 1; b = 2 }
+        $ordered = [OrderedDictionary]@{}
+        $ordered.Add("a", 1)
+        $ordered.Add("b", 2)
+        $matrix = ConvertToMatrixArrayFormat $ordered
         $matrix.a.Length | Should -Be 1
         $matrix.b.Length | Should -Be 1
 
-        $matrix = ConvertToMatrixArrayFormat @{ a = 1; b = @(1, 2) }
+        $ordered = [OrderedDictionary]@{}
+        $ordered.Add("a", 1)
+        $ordered.Add("b", @(1, 2))
+        $matrix = ConvertToMatrixArrayFormat $ordered
         $matrix.a.Length | Should -Be 1
         $matrix.b.Length | Should -Be 2
 
-        $matrix = ConvertToMatrixArrayFormat @{ a = @(1, 2); b = @() }
+        $ordered = [OrderedDictionary]@{}
+        $ordered.Add("a", @(1, 2))
+        $ordered.Add("b", @())
+        $matrix = ConvertToMatrixArrayFormat $ordered
         $matrix.a.Length | Should -Be 2
         $matrix.b.Length | Should -Be 0
     }
 
     It "Should remove matrix elements based on exclude filters" {
-        $matrix, $dimensions = GenerateFullMatrix $config.matrix $config.displayNames
+        $matrix = GenerateFullMatrix $config.orderedMatrix $config.displayNamesLookup
         $withExclusion = ProcessExcludes $matrix $config.exclude
         $withExclusion.Length | Should -Be 5
 
-        $dimensions = GetMatrixDimensions $config.matrix
-        $size = $dimensions[0]
-        $matrix, $dimensions = GenerateSparseMatrix $config.matrix $config.displayNames $size
+        $matrix = GenerateSparseMatrix $config.orderedMatrix $config.displayNamesLookup
         [array]$withExclusion = ProcessExcludes $matrix $config.exclude
         $withExclusion.Length | Should -Be 1
     }
 
     It "Should add matrix elements based on include elements" {
-        $matrix, $dimensions = GenerateFullMatrix $config.matrix $config.displayNames
-        $withInclusion = ProcessIncludes $matrix $config.include $config.displayNames
+        $matrix = GenerateFullMatrix $config.orderedMatrix $config.displayNamesLookup
+        $withInclusion = ProcessIncludes $matrix $config.include $config.displayNamesLookup
         $withInclusion.Length | Should -Be 15
     }
 
@@ -456,34 +470,29 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
         [Array]$matrix = GenerateMatrix $config "all"
         $matrix.Length | Should -Be 8
 
-        $matrix[0].name | Should -Be "macOS1015_net461"
-        $matrix[0].parameters.operatingSystem | Should -Be "macOS-10.15"
-        $matrix[0].parameters.framework | Should -Be "net461"
+        $matrix[0].name | Should -Be "windows2019_netcoreapp21"
+        $matrix[0].parameters.operatingSystem | Should -Be "windows-2019"
+        $matrix[0].parameters.framework | Should -Be "netcoreapp2.1"
         $matrix[0].parameters.additionalArguments | Should -Be ""
 
-        # Includes should get sorted along with base matrix
-        # The naming segment hierarchy is different because the includes
-        # get sorted differently, since parameter lengths are different
-        # (e.g. operatingSystem.Length = 1 vs. 3)
-
-        $matrix[1].name | Should -Be "net461_enableWindowsFoo_windows2019"
+        $matrix[1].name | Should -Be "windows2019_netcoreapp21_withfoo"
         $matrix[1].parameters.operatingSystem | Should -Be "windows-2019"
-        $matrix[1].parameters.framework | Should -Be "net461"
-        $matrix[1].parameters.additionalArguments | Should -Be "--enableWindowsFoo"
+        $matrix[1].parameters.framework | Should -Be "netcoreapp2.1"
+        $matrix[1].parameters.additionalArguments | Should -Be "--enableFoo"
 
-        $matrix[2].name | Should -Be "net50_enableWindowsFoo_windows2019"
-        $matrix[2].parameters.framework | Should -Be "net50"
-        $matrix[2].parameters.operatingSystem | Should -Be "windows-2019"
-        $matrix[2].parameters.additionalArguments | Should -Be "--enableWindowsFoo"
+        $matrix[2].name | Should -Be "ubuntu1804_net461"
+        $matrix[2].parameters.framework | Should -Be "net461"
+        $matrix[2].parameters.operatingSystem | Should -Be "ubuntu-18.04"
+        $matrix[2].parameters.additionalArguments | Should -Be ""
 
-        $matrix[5].name | Should -Be "ubuntu1804_netcoreapp21"
-        $matrix[5].parameters.framework | Should -Be "netcoreapp2.1"
-        $matrix[5].parameters.operatingSystem | Should -Be "ubuntu-18.04"
-        $matrix[5].parameters.additionalArguments | Should -Be ""
+        $matrix[4].name | Should -Be "macOS1015_net461"
+        $matrix[4].parameters.framework | Should -Be "net461"
+        $matrix[4].parameters.operatingSystem | Should -Be "macOS-10.15"
+        $matrix[4].parameters.additionalArguments | Should -Be ""
 
-        $matrix[7].name | Should -Be "windows2019_withFoo_netcoreapp21"
-        $matrix[7].parameters.framework | Should -Be "netcoreapp2.1"
+        $matrix[7].name | Should -Be "windows2019_net50_enableWindowsFoo"
+        $matrix[7].parameters.framework | Should -Be "net50"
         $matrix[7].parameters.operatingSystem | Should -Be "windows-2019"
-        $matrix[7].parameters.additionalArguments | Should -Be "--enableFoo"
+        $matrix[7].parameters.additionalArguments | Should -Be "--enableWindowsFoo"
     }
 }

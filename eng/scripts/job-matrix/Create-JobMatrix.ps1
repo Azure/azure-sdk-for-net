@@ -9,15 +9,15 @@
 
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory=$True)][object] $ConfigPath,
+    [Parameter(Mandatory=$True)][string] $ConfigPath,
     [Parameter(Mandatory=$True)][string] $Selection
 )
 
-. $PSScriptRoot/test-matrix-functions.ps1
+Import-Module $PSScriptRoot/test-matrix-functions.psm1
 
-$config = Get-Content $ConfigPath | ConvertFrom-Json -AsHashtable
+$config = GetMatrixConfigFromJson (Get-Content $ConfigPath)
 
-[Array]$matrix = GenerateMatrix $config $Selection
+[array]$matrix = GenerateMatrix $config $Selection
 $serialized = SerializePipelineMatrix $matrix
 
 Write-Output $serialized.pretty
