@@ -18,6 +18,8 @@ namespace Azure.MixedReality.RemoteRendering
     /// </summary>
     public class RemoteRenderingClient
     {
+        private readonly RemoteRenderingAccount _account;
+
         private readonly Guid _accountId;
 
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -28,25 +30,44 @@ namespace Azure.MixedReality.RemoteRendering
         private readonly MixedRealityRemoteRenderingRestClient _restClient;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RemoteRenderingClient"/> class.
+        /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
-        public RemoteRenderingClient(string accountId)
-            : this(accountId, new RemoteRenderingClientOptions())
-        {
-        }
+        /// <param name="account">The Azure Remote Rendering account details.</param>
+        /// <param name="accessToken">An access token used to access the specified Azure Remote Rendering account.</param>
+        /// <param name="options">The options.</param>
+        public RemoteRenderingClient(RemoteRenderingAccount account, AccessToken accessToken, RemoteRenderingClientOptions? options = null)
+            : this(account, new StaticAccessTokenCredential(accessToken), options) { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RemoteRenderingClient"/> class.
+        /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="account">The Azure Remote Rendering account details.</param>
+        /// <param name="keyCredential">The Azure Remote Rendering account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
-        public RemoteRenderingClient(string accountId, RemoteRenderingClientOptions options)
+        public RemoteRenderingClient(RemoteRenderingAccount account, AzureKeyCredential keyCredential, RemoteRenderingClientOptions? options = null)
+            : this(account, new MixedRealityAccountKeyCredential(account.AccountId, keyCredential), options) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
+        /// </summary>
+        /// <param name="account">The Azure Remote Rendering account details.</param>
+        /// <param name="credential">The credential used to access the Mixed Reality service.</param>
+        /// <param name="options">The options.</param>
+        public RemoteRenderingClient(RemoteRenderingAccount account, TokenCredential credential, RemoteRenderingClientOptions? options = null)
         {
-            _accountId = new Guid(accountId);
+            Argument.AssertNotNull(account, nameof(account));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new RemoteRenderingClientOptions();
+
+            Uri authenticationEndpoint = options.AuthenticationEndpoint ?? AuthenticationEndpoint.ConstructFromDomain(account.AccountDomain);
+            TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(account.AccountId, authenticationEndpoint, credential);
+            Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructRemoteRenderingEndpointUrl(account.AccountDomain);
+
+            _account = account;
             _clientDiagnostics = new ClientDiagnostics(options);
-            // TODO auth details.
-            _pipeline = new HttpPipeline();
-            _restClient = new MixedRealityRemoteRenderingRestClient(_clientDiagnostics, _pipeline);
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(serviceEndpoint)));
+            _restClient = new MixedRealityRemoteRenderingRestClient(_clientDiagnostics, _pipeline, serviceEndpoint/*, options.Version*/);
         }
 
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
@@ -479,6 +500,27 @@ namespace Azure.MixedReality.RemoteRendering
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        #endregion
+        #region Private methods
+
+        private static Uri ConstructRemoteRenderingEndpointUrl(string accountDomain)
+        {
+            Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
+
+            if (!Uri.TryCreate($"https://manage.sa.{accountDomain}", UriKind.Absolute, out Uri result))
+            {
+                throw new ArgumentException("The value could not be used to construct a valid endpoint.", nameof(accountDomain));
+            }
+
+            return result;
+        }
+
+        private static string GetDefaultScope(Uri uri)
+            => $"{uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped)}/.default";
+
+        private static string GenerateCv()
+            => Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=');
 
         #endregion
     }
