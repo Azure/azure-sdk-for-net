@@ -18,11 +18,11 @@
 
 
 This directory contains scripts supporting dynamic, cross-product matrix generation for azure pipeline jobs.
-It aims to replicate the [cross-product matrix functionality in github actions](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#example-running-with-more-than-one-version-of-nodejs),
+It aims to replicate the [cross-product matrix functionality in github actions](https://docs.github.com/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#example-running-with-more-than-one-version-of-nodejs),
 but also adds some additional features like sparse matrix generation, cross-product includes and excludes, and programmable matrix filters.
 
 This functionality is made possible by the ability for the azure pipelines yaml to take a [dynamic variable as an input
-for a job matrix definition](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml#multi-job-configuration) (see the code sample at the bottom of the linked section).
+for a job matrix definition](https://docs.microsoft.com/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml#multi-job-configuration) (see the code sample at the bottom of the linked section).
 
 ## Usage in a pipeline
 
