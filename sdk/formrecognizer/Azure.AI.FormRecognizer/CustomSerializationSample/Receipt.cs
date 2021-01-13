@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.AI.FormRecognizer.Models;
 
 namespace CustomSerializationSample
 {
     public class Receipt
     {
-        public string MerchantName { get; }
+        public FormField<string> MerchantName { get; }
 
-        public DateTime TransactionDate { get; }
+        public FormField<DateTime> TransactionDate { get; }
 
         public IReadOnlyCollection<ReceiptItem> Items { get; }
 
-        public float TotalPrice { get; }
+        public FormField<float> TotalPrice { get; }
     }
 }
