@@ -21,17 +21,20 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
         public void CreateSession()
         {
-            #region Snippet:CreatingASession
-
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
 
             RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+
+            #region Snippet:CreateASession
 
             string sessionId = "SessionId1";
 
             CreateSessionBody settings = new CreateSessionBody(10, SessionSize.Standard);
 
             client.CreateSession(sessionId, settings);
+
+            #endregion Snippet:CreateASession
+            #region Snippet:QuerySessionStatus
 
             // Poll every 10 seconds until the session is ready.
             while (true)
@@ -51,7 +54,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
                 }
             }
 
-            #endregion Snippet:CreatingASession
+            #endregion Snippet:QuerySessionStatus
         }
     }
 }

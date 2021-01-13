@@ -1,8 +1,9 @@
 # Azure Remote Rendering client library for .NET
 
-Remote Rendering is a cross-platform developer service that allows you to create mixed reality experiences using objects that persist their location across devices over time.
+Azure Remote Rendering (ARR) is a service that enables you to render high-quality, interactive 3D content in the cloud and stream it in real time to devices, such as the HoloLens 2.
 
-TODO: .Client in the URLs here.
+
+TODO: .Client in the URLs here (and .Client elsewhere in doc)
 [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/spatialanchors/Azure.MixedReality.RemoteRendering.Client) | [NuGet](https://www.nuget.org/packages/Azure.MixedReality.RemoteRendering.Client) | [Product documentation](https://docs.microsoft.com/azure/remote-rendering/)
 
 - [Azure Remote Rendering client library for .NET](#azure-remote-rendering-client-library-for-net)
@@ -17,8 +18,10 @@ TODO: .Client in the URLs here.
       - [Authenticating with a static access token](#authenticating-with-a-static-access-token)
   - [Key concepts](#key-concepts)
   - [Examples](#examples)
-    - [Create the thing](#create-the-thing)
-    - [Get the thing](#get-the-thing)
+    - [Convert an asset](#convert-an-asset)
+    - [Query the status of a conversion](#query-the-status-of-a-conversion)
+    - [Create a session](#create-a-session)
+    - [Query the status of a session](#query-the-status-of-a-session)
   - [Troubleshooting](#troubleshooting)
   - [Next steps](#next-steps)
   - [Contributing](#contributing)
@@ -153,43 +156,88 @@ RemoteRenderingClient client = new RemoteRenderingClient(account, accessToken);
 
 ## Key concepts
 
-TODO
+### RemoteRenderingClient
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+The `RemoteRenderingClient` is the client library used to access the RemoteRenderingService.
+It provides methods to create and manage asset conversions and rendering sessions.
 
 ## Examples
 
-Include code snippets and short descriptions for each task you listed in the [Introduction](#introduction) (the bulleted list). Briefly explain each operation, but include enough clarity to explain complex or otherwise tricky operations.
+- [Convert an asset](#convert-an-asset)
+- [Query the status of a conversion](#query-the-status-of-a-conversion)
+- [Create a session](#create-a-session)
+- [Query the status of a session](#query-the-status-of-a-session)
 
-If possible, use the same example snippets that your in-code documentation uses. For example, use the snippets in your `examples.py` that Sphinx ingests via its [literalinclude](https://www.sphinx-doc.org/en/1.5/markup/code.html?highlight=code%20examples#includes) directive. The `examples.py` file containing the snippets should reside alongside your package's code, and should be tested in an automated fashion.
+### Convert an asset
 
-Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
+We assume that a RemoteRenderingClient has been constructed as described in the [Authenticate the Client](#authenticate-the-client) section.
+The following snippet describes how to request that an asset, stored in blob storage at the given input container URI, gets converted.
 
-- [Create the thing](#create-the-thing)
-- [Get the thing](#get-the-thing)
-- [List the things](#list-the-things)
+```csharp Snippet:ConvertAnAsset
+    ConversionInputSettings input = new ConversionInputSettings("MyInputContainer", "box.fbx");
+    ConversionOutputSettings output = new ConversionOutputSettings("MyOutputContainer");
+    ConversionSettings settings = new ConversionSettings(input, output);
 
-### Create the thing
+    string conversionId = "ConversionId1";
 
-Use the `create_thing` method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call `Thing.save`.
-
-```Python
-thing = client.create_thing(id, name)
-thing.save()
+    client.CreateConversion(conversionId, settings);
 ```
 
-### Get the thing
+### Query the status of a conversion
 
-The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+```csharp Snippet:QueryConversionStatus
+    // Poll every 10 seconds completion every ten seconds.
+    while (true)
+    {
+        Thread.Sleep(10000);
 
-```C# Snippet:GetSecret
-var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
+        ConversionInformation conversion = client.GetConversion(conversionId).Value;
+        if (conversion.Status == CreatedByType.Succeeded)
+        {
+            Console.WriteLine($"Conversion succeeded: Output written to {conversion.Settings.OutputLocation}");
+            break;
+        }
+        else if (conversion.Status == CreatedByType.Failed)
+        {
+            Console.WriteLine($"Conversion failed: {conversion.Error.Code} {conversion.Error.Message}");
+            break;
+        }
+    }
+```
 
-SecretBundle secret = client.GetSecret("TestSecret");
+### Create a session
 
-Console.WriteLine(secret.Value);
-```Python
-things = client.list_things()
+We assume that a RemoteRenderingClient has been constructed as described in the [Authenticate the Client](#authenticate-the-client) section.
+The following snippet describes how to request that a new rendering session be started.
+
+```csharp Snippet:CreateASession
+    string sessionId = "SessionId1";
+
+    CreateSessionBody settings = new CreateSessionBody(10, SessionSize.Standard);
+
+    client.CreateSession(sessionId, settings);
+```
+
+### Query the status of a session
+
+```csharp Snippet:QuerySessionStatus
+    // Poll every 10 seconds until the session is ready.
+    while (true)
+    {
+        Thread.Sleep(10000);
+
+        SessionProperties properties = client.GetSession(sessionId).Value;
+        if (properties.Status == SessionStatus.Ready)
+        {
+            Console.WriteLine($"The session is ready. The session hostname is: {properties.Hostname}");
+            break;
+        }
+        else if (properties.Status == SessionStatus.Error)
+        {
+            Console.WriteLine($"Session creation encountered an error: {properties.Error.Code} {properties.Error.Message}");
+            break;
+        }
+    }
 ```
 
 ## Troubleshooting

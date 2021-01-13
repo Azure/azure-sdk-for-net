@@ -21,11 +21,11 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
         public void ConvertAsset()
         {
-            #region Snippet:ConvertingAnAsset
-
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
 
             RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+
+            #region Snippet:ConvertAnAsset
 
             ConversionInputSettings input = new ConversionInputSettings("MyInputContainer", "box.fbx");
             ConversionOutputSettings output = new ConversionOutputSettings("MyOutputContainer");
@@ -35,14 +35,15 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
             client.CreateConversion(conversionId, settings);
 
-            ConversionInformation conversion;
+            #endregion Snippet:ConvertAnAsset
+            #region Snippet:QueryConversionStatus
 
             // Poll every 10 seconds completion every ten seconds.
             while (true)
             {
                 Thread.Sleep(10000);
 
-                conversion = client.GetConversion(conversionId).Value;
+                ConversionInformation conversion = client.GetConversion(conversionId).Value;
                 if (conversion.Status == CreatedByType.Succeeded)
                 {
                     Console.WriteLine($"Conversion succeeded: Output written to {conversion.Settings.OutputLocation}");
@@ -54,7 +55,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
                     break;
                 }
             }
-            #endregion Snippet:ConvertingAnAsset
+            #endregion Snippet:QueryConversionStatus
         }
     }
 }
