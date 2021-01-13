@@ -110,10 +110,31 @@ namespace Azure.Storage.Files.Shares
             return null;
         }
 
-        // TODO
         internal static ShareDirectoryProperties ToShareDirectoryProperties(this DirectoryGetPropertiesHeaders directoryGetPropertiesHeaders)
         {
-            return null;
+            if (directoryGetPropertiesHeaders == null)
+            {
+                return null;
+            }
+            return new ShareDirectoryProperties()
+            {
+                Metadata = directoryGetPropertiesHeaders.Metadata,
+                // TODO
+                //ETag = directoryGetPropertiesHeaders.Etag;
+                LastModified = directoryGetPropertiesHeaders.LastModified.GetValueOrDefault(),
+                IsServerEncrypted = directoryGetPropertiesHeaders.IsServerEncrypted.GetValueOrDefault(),
+                SmbProperties = new FileSmbProperties()
+                {
+                    // TODO
+                    //FileAttributes = directoryGetPropertiesHeaders.FileAttributes,
+                    FilePermissionKey = directoryGetPropertiesHeaders.FilePermissionKey,
+                    FileCreatedOn = directoryGetPropertiesHeaders.FileCreationTime,
+                    FileLastWrittenOn = directoryGetPropertiesHeaders.FileLastWriteTime,
+                    FileChangedOn = directoryGetPropertiesHeaders.FileChangeTime,
+                    FileId = directoryGetPropertiesHeaders.FileId,
+                    ParentId = directoryGetPropertiesHeaders.FileParentId
+                }
+            };
         }
 
         // TODO
@@ -128,10 +149,18 @@ namespace Azure.Storage.Files.Shares
             return null;
         }
 
-        // TODO
         internal static StorageHandlesSegment ToStorageHandlesSegment(this ListHandlesResponse listHandlesResponse)
         {
-            return null;
+            if (listHandlesResponse == null)
+            {
+                return null;
+            }
+
+            return new StorageHandlesSegment()
+            {
+                NextMarker = listHandlesResponse.NextMarker,
+                Handles = listHandlesResponse.HandleList.ToList()
+            };
         }
 
         // TODO

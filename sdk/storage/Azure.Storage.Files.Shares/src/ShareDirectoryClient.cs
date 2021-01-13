@@ -4,14 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
-using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.Shares
@@ -592,9 +590,7 @@ namespace Azure.Storage.Files.Shares
             string filePermission,
             bool async,
             CancellationToken cancellationToken,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
-#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -1140,56 +1136,50 @@ namespace Azure.Storage.Files.Shares
         internal async Task<Response> DeleteInternal(
             bool async,
             CancellationToken cancellationToken,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
-#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareDirectoryClient)}.{nameof(Delete)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<DirectoryDeleteHeaders> response;
 
                     if (async)
                     {
                         response = await _directoryRestClient.DeleteAsync(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Name,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _directoryRestClient.Delete(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Name,
                             cancellationToken: cancellationToken);
                     }
 
                     return response.GetRawResponse();
-
-                    // TODO remove this
-                    //return await FileRestClient.Directory.DeleteAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    async: async,
-                    //    operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(Delete)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1285,9 +1275,7 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response<ShareDirectoryProperties>> GetPropertiesInternal(
             bool async,
             CancellationToken cancellationToken,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
-#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -1295,40 +1283,34 @@ namespace Azure.Storage.Files.Shares
                     nameof(ShareDirectoryClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareDirectoryClient)}.{nameof(GetProperties)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<DirectoryGetPropertiesHeaders> response;
 
                     if (async)
                     {
                         response = await _directoryRestClient.GetPropertiesAsync(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _directoryRestClient.GetProperties(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
                         response.Headers.ToShareDirectoryProperties(),
                         response.GetRawResponse());
-
-                    // TODO remove this.
-                    //Response<RawStorageDirectoryProperties> response = await FileRestClient.Directory.GetPropertiesAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    async: async,
-                    //    operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(GetProperties)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
 
                     // TODO
                     //// Return an exploding Response on 304
@@ -1339,11 +1321,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1463,8 +1447,12 @@ namespace Azure.Storage.Files.Shares
                     nameof(ShareDirectoryClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(SetHttpHeaders)}");
+
                 try
                 {
+                    scope.Start();
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
@@ -1478,8 +1466,8 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _directoryRestClient.SetPropertiesAsync(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
@@ -1491,8 +1479,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.SetProperties(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
@@ -1501,22 +1489,6 @@ namespace Azure.Storage.Files.Shares
                             cancellationToken: cancellationToken);
                     }
 
-                    // TODO remove this
-                    //Response<RawStorageDirectoryInfo> response = await FileRestClient.Directory.SetPropertiesAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
-                    //    filePermission: filePermission,
-                    //    fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                    //    fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                    //    filePermissionKey: smbProps.FilePermissionKey,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareDirectoryClient)}.{nameof(SetHttpHeaders)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
-
                     return Response.FromValue(
                         response.Headers.ToShareDirectoryInfo(),
                         response.GetRawResponse());
@@ -1524,11 +1496,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1632,15 +1606,19 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(SetMetadata)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<DirectorySetMetadataHeaders> response;
 
                     if (async)
                     {
                         response = await _directoryRestClient.SetMetadataAsync(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             metadata: metadata,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1648,23 +1626,11 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.SetMetadata(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             metadata: metadata,
                             cancellationToken: cancellationToken);
                     }
-
-                    // TODO remove this.
-                    //Response<RawStorageDirectoryInfo> response = await FileRestClient.Directory.SetMetadataAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    metadata: metadata,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareDirectoryClient)}.{nameof(SetMetadata)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
 
                     return Response.FromValue(
                         response.Headers.ToShareDirectoryInfo(),
@@ -1673,11 +1639,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1802,16 +1770,19 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(prefix)}: {prefix}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(GetFilesAndDirectories)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> response;
 
                     if (async)
                     {
                         response = await _directoryRestClient.ListFilesAndDirectoriesSegmentAsync(
-                            shareName: _shareName,
-                            // TODO
-                            directory: null,
+                            shareName: ShareName,
+                            directory: Path,
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -1821,9 +1792,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.ListFilesAndDirectoriesSegment(
-                            shareName: _shareName,
-                            // TODO
-                            directory: null,
+                            shareName: ShareName,
+                            directory: Path,
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -1833,29 +1803,17 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(
                         response.Value,
                         response.GetRawResponse());
-
-                    // TODO remove this.
-                    //return await FileRestClient.Directory.ListFilesAndDirectoriesSegmentAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    marker: marker,
-                    //    prefix: prefix,
-                    //    maxresults: pageSizeHint,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareDirectoryClient)}.{nameof(GetFilesAndDirectories)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1976,15 +1934,20 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(maxResults)}: {maxResults}\n" +
                     $"{nameof(recursive)}: {recursive}");
+
+                string operationName = $"{nameof(ShareDirectoryClient)}.{nameof(GetHandles)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders> response;
 
                     if (async)
                     {
                         response = await _directoryRestClient.ListHandlesAsync(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             marker: marker,
                             maxresults: maxResults,
                             recursive: recursive,
@@ -1994,8 +1957,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.ListHandles(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             marker: marker,
                             maxresults: maxResults,
                             recursive: recursive,
@@ -2005,29 +1968,17 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(
                         response.Value.ToStorageHandlesSegment(),
                         response.GetRawResponse());
-
-                    // TODO remove this
-                    //return await FileRestClient.Directory.ListHandlesAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    marker: marker,
-                    //    maxresults: maxResults,
-                    //    recursive: recursive,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareDirectoryClient)}.{nameof(GetHandles)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2324,9 +2275,7 @@ namespace Azure.Storage.Files.Shares
             bool? recursive,
             bool async,
             CancellationToken cancellationToken,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName = null)
-#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -2337,15 +2286,20 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(handleId)}: {handleId}\n" +
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(recursive)}: {recursive}");
+
+                operationName ??= $"{nameof(ShareDirectoryClient)}.{nameof(ForceCloseAllHandles)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> response;
 
                     if (async)
                     {
                         response = await _directoryRestClient.ForceCloseHandlesAsync(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             handleId: handleId,
                             marker: marker,
                             recursive: recursive,
@@ -2355,8 +2309,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.ForceCloseHandles(
-                            shareName: _shareName,
-                            directory: _name,
+                            shareName: ShareName,
+                            directory: Path,
                             handleId: handleId,
                             marker: marker,
                             recursive: recursive,
@@ -2365,30 +2319,18 @@ namespace Azure.Storage.Files.Shares
 
                     return Response.FromValue(
                         response.Headers.ToStorageClosedHandlesSegment(),
-                        response.GetRawResponse());;
-
-                    // TODO remove this
-                    //return await FileRestClient.Directory.ForceCloseHandlesAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    marker: marker,
-                    //    handleId: handleId,
-                    //    version: Version.ToVersionString(),
-                    //    recursive: recursive,
-                    //    async: async,
-                    //    operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(ForceCloseAllHandles)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    scope.Dispose();
                 }
             }
         }
