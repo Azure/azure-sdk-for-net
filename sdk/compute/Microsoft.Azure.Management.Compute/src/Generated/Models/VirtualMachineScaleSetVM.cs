@@ -82,15 +82,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="licenseType">Specifies that the image or disk that is
-        /// being used was licensed on-premises. This element is only used for
-        /// images that contain the Windows Server operating system.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server
-        /// &lt;br&gt;&lt;br&gt; If this element is included in a request for
-        /// an update, the value must match the initial value. This value
-        /// cannot be updated. &lt;br&gt;&lt;br&gt; For more information, see
-        /// [Azure Hybrid Use Benefit for Windows
-        /// Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible
+        /// values for Windows Server operating system are:
+        /// &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt;
+        /// Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux
+        /// Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for
+        /// RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE)
+        /// &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use
+        /// Benefit for Windows
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
+        /// &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
         /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15</param>
         /// <param name="modelDefinitionApplied">Specifies whether the model
         /// applied to the virtual machine is the model of the virtual machine
@@ -255,16 +257,19 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies that the image or disk that is being used
-        /// was licensed on-premises. This element is only used for images that
-        /// contain the Windows Server operating system.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
+        /// was licensed on-premises. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// Possible values for Windows Server operating system are:
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Windows_Client
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Windows_Server
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; If this element is included in
-        /// a request for an update, the value must match the initial value.
-        /// This value cannot be updated. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-        /// For more information, see [Azure Hybrid Use Benefit for Windows
-        /// Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values for Linux
+        /// Server operating system are: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// RHEL_BYOS (for RHEL) &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; SLES_BYOS
+        /// (for SUSE) &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more
+        /// information, see [Azure Hybrid Use Benefit for Windows
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [Azure Hybrid Use Benefit for
+        /// Linux
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Minimum api-version:
         /// 2015-06-15
         /// </summary>

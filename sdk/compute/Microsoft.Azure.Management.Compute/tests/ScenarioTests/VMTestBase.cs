@@ -161,7 +161,7 @@ namespace Compute.Tests
 
         protected string getDefaultDiskEncryptionSetId()
         {
-            return "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunning-eastus2RG/providers/Microsoft.Compute/diskEncryptionSets/longlivedBvtDES";
+            return "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/diskEncryptionSets/EncryptionSetforTest";
         }
 
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
@@ -224,7 +224,7 @@ namespace Compute.Tests
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
             bool hasDiffDisks = false,
-            string vmSize = VirtualMachineSizeTypes.StandardA0,
+            string vmSize = VirtualMachineSizeTypes.StandardA1V2,
             string osDiskStorageAccountType = "Standard_LRS",
             string dataDiskStorageAccountType = "Standard_LRS",
             bool? writeAcceleratorEnabled = null,
@@ -843,7 +843,7 @@ namespace Compute.Tests
         }
 
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
-            string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
+            string vmSize = "Standard_A1_v2", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             string diskEncryptionSetId = null)
         {
             // Generate Container name to hold disk VHds
