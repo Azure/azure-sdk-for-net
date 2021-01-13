@@ -26,7 +26,7 @@ namespace CustomSerializationSample
 
             foreach (Receipt receipt in receipts)
             {
-                Console.WriteLine($"Merchant Name: '{receipt.MerchantName}', with confidence {merchantNameField.Confidence}");
+                Console.WriteLine($"Merchant Name: '{receipt.MerchantName}', with confidence {receipt.MerchantName.Confidence}");
 
                 db.Add(receipt);
             }
