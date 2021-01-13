@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -220,10 +221,20 @@ namespace Azure.Storage.Files.Shares
             return null;
         }
 
-        // TODOs
         internal static ShareFileUploadInfo ToShareFileUploadInfo(this FileUploadRangeHeaders fileUploadRangeHeaders)
         {
-            return null;
+            if (fileUploadRangeHeaders == null)
+            {
+                return null;
+            }
+            return new ShareFileUploadInfo()
+            {
+                // TODO
+                //ETag = fileUploadRangeHeaders.Etag,
+                LastModified = fileUploadRangeHeaders.LastModified.GetValueOrDefault(),
+                ContentHash = fileUploadRangeHeaders.ContentMD5,
+                IsServerEncrypted = fileUploadRangeHeaders.IsServerEncrypted.GetValueOrDefault()
+            };
         }
 
         // TODO
@@ -232,22 +243,52 @@ namespace Azure.Storage.Files.Shares
             return null;
         }
 
-        // TODO
-        internal static ShareFileRangeInfo ToShareFileRangeInfo(this ShareFileRangeList shareFileRangeList)
+        internal static ShareFileRangeInfo ToShareFileRangeInfo(ShareFileRangeList shareFileRangeList, FileGetRangeListHeaders fileGetRangeListHeaders)
         {
-            return null;
+            if (shareFileRangeList == null)
+            {
+                return null;
+            }
+            return new ShareFileRangeInfo
+            {
+                LastModified = fileGetRangeListHeaders.LastModified.GetValueOrDefault(),
+                // TODO
+                //ETag = fileGetRangeListHeaders.ETag,
+                FileContentLength = fileGetRangeListHeaders.FileContentLength.GetValueOrDefault(),
+                Ranges = (IEnumerable<HttpRange>)shareFileRangeList.Ranges.ToList(),
+                ClearRanges = (IEnumerable<HttpRange>)shareFileRangeList.ClearRanges.ToList(),
+            };
         }
 
-        // TODO
         internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this FileForceCloseHandlesHeaders fileForceCloseHandlesHeaders)
         {
-            return null;
+            if (fileForceCloseHandlesHeaders == null)
+            {
+                return null;
+            }
+            return new StorageClosedHandlesSegment
+            {
+                Marker = fileForceCloseHandlesHeaders.Marker,
+                NumberOfHandlesClosed = fileForceCloseHandlesHeaders.NumberOfHandlesClosed.GetValueOrDefault(),
+                NumberOfHandlesFailedToClose = fileForceCloseHandlesHeaders.NumberOfHandlesFailedToClose.GetValueOrDefault()
+            };
         }
 
-        // TODO
         internal static ShareFileLease ToShareFileLease(this FileAcquireLeaseHeaders fileAcquireLeaseHeaders)
         {
-            return null;
+            if (fileAcquireLeaseHeaders == null)
+            {
+                return null;
+            }
+            return new ShareFileLease()
+            {
+                // TODO
+                //ETag = fileAcquireLeaseHeaders.Etag
+                LastModified = fileAcquireLeaseHeaders.LastModified.GetValueOrDefault(),
+                LeaseId = fileAcquireLeaseHeaders.LeaseId,
+                // TODO
+                //LeaseTime = fileAcquireLeaseHeaders.leaseTime,
+            };
         }
 
         // TODO
@@ -435,10 +476,58 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        // TODO
-        internal static ShareFileDownloadInfo ToShareFileDownloadInfo(this FileDownloadHeaders fileDownloadHeaders)
+        internal static ShareFileDownloadInfo ToShareFileDownloadInfo(FileDownloadHeaders fileDownloadHeaders, Stream content)
         {
-            return null;
+            if (fileDownloadHeaders == null)
+            {
+                return null;
+            }
+            return new ShareFileDownloadInfo
+            {
+                ContentLength = fileDownloadHeaders.ContentLength.GetValueOrDefault(),
+                Content = content,
+                ContentType = fileDownloadHeaders.ContentType,
+                ContentHash = fileDownloadHeaders.ContentMD5,
+                Details = new ShareFileDownloadDetails
+                {
+                    LastModified = fileDownloadHeaders.LastModified.GetValueOrDefault(),
+                    Metadata = fileDownloadHeaders.Metadata,
+                    ContentRange = fileDownloadHeaders.ContentRange,
+                    // TODO
+                    //ETag = fileDownloadHeaders.Etag
+                    // TODO
+                    //ContentEncoding = fileDownloadHeaders.ContentEncoding,
+                    CacheControl = fileDownloadHeaders.CacheControl,
+                    ContentDisposition = fileDownloadHeaders.ContentDisposition,
+                    // TODO
+                    //ContentLanguage = fileDownloadHeaders.ContentLanguage,
+                    AcceptRanges = fileDownloadHeaders.AcceptRanges,
+                    CopyCompletedOn = fileDownloadHeaders.CopyCompletionTime.GetValueOrDefault(),
+                    CopyStatusDescription = fileDownloadHeaders.CopyStatusDescription,
+                    CopyId = fileDownloadHeaders.CopyId,
+                    CopyProgress = fileDownloadHeaders.CopyProgress,
+                    // TODO
+                    //CopySource = fileDownloadHeaders.CopySource,
+                    // TODO
+                    //CopyStatus = fileDownloadHeaders.CopyStatus,
+                    FileContentHash = fileDownloadHeaders.FileContentMD5,
+                    IsServerEncrypted = fileDownloadHeaders.IsServerEncrypted.GetValueOrDefault(),
+                    LeaseDuration = fileDownloadHeaders.LeaseDuration.GetValueOrDefault(),
+                    LeaseState = fileDownloadHeaders.LeaseState.GetValueOrDefault(),
+                    LeaseStatus = fileDownloadHeaders.LeaseStatus.GetValueOrDefault(),
+                    SmbProperties = new FileSmbProperties
+                    {
+                        // TODO
+                        //FileAttributes = fileDownloadHeaders.FileAttributes,
+                        FilePermissionKey = fileDownloadHeaders.FilePermissionKey,
+                        FileCreatedOn = fileDownloadHeaders.FileCreationTime,
+                        FileLastWrittenOn = fileDownloadHeaders.FileLastWriteTime,
+                        FileChangedOn = fileDownloadHeaders.FileChangeTime,
+                        FileId = fileDownloadHeaders.FileId,
+                        ParentId = fileDownloadHeaders.FileParentId
+                    }
+                }
+            };
         }
     }
 }

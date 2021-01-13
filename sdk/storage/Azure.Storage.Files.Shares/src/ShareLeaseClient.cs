@@ -117,20 +117,16 @@ namespace Azure.Storage.Files.Shares.Specialized
             _file = client ?? throw Errors.ArgumentNull(nameof(client));
             LeaseId = leaseId ?? CreateUniqueLeaseId();
 
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(client.Uri)
+            {
+                ShareName = null,
+                DirectoryOrFilePath = null
+            };
+
             _fileRestClient = new FileRestClient(
                 ClientDiagnostics,
                 Pipeline,
-                // TODO
-                Uri.ToString(),
-                Version.ToVersionString(),
-                // TODO
-                sharesnapshot: null);
-
-            _shareRestClient = new ShareRestClient(
-                ClientDiagnostics,
-                Pipeline,
-                // TODO
-                Uri.ToString(),
+                uriBuilder.ToUri().ToString(),
                 Version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
@@ -155,15 +151,6 @@ namespace Azure.Storage.Files.Shares.Specialized
             {
                 ShareName = null
             };
-
-            _fileRestClient = new FileRestClient(
-                ClientDiagnostics,
-                Pipeline,
-                // TODO
-                Uri.ToString(),
-                Version.ToVersionString(),
-                // TODO
-                sharesnapshot: null);
 
             _shareRestClient = new ShareRestClient(
                 ClientDiagnostics,
@@ -561,8 +548,12 @@ namespace Azure.Storage.Files.Shares.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Release)}");
+
                 try
                 {
+                    scope.Start();
                     if (FileClient != null)
                     {
                         ResponseWithHeaders<FileReleaseLeaseHeaders> response;
@@ -588,18 +579,6 @@ namespace Azure.Storage.Files.Shares.Specialized
                         return Response.FromValue(
                             response.Headers.ToFileLeaseReleaseInfo(),
                             response.GetRawResponse());
-
-                        // TODO remove this
-                        //return await FileRestClient.File.ReleaseLeaseAsync(
-                        //    ClientDiagnostics,
-                        //    Pipeline,
-                        //    Uri,
-                        //    leaseId: LeaseId,
-                        //    Version.ToVersionString(),
-                        //    async: async,
-                        //    operationName: $"{nameof(ShareLeaseClient)}.{nameof(Release)}",
-                        //    cancellationToken: cancellationToken)
-                        //    .ConfigureAwait(false);
                     }
                     else
                     {
@@ -624,28 +603,18 @@ namespace Azure.Storage.Files.Shares.Specialized
                         return Response.FromValue(
                             response.Headers.ToFileLeaseReleaseInfo(),
                             response.GetRawResponse());
-
-                        // TODO remove this.
-                        //return await FileRestClient.Share.ReleaseLeaseAsync(
-                        //    ClientDiagnostics,
-                        //    Pipeline,
-                        //    Uri,
-                        //    LeaseId,
-                        //    Version.ToVersionString(),
-                        //    async: async,
-                        //    operationName: $"{nameof(ShareLeaseClient)}.{nameof(Release)}",
-                        //    cancellationToken: cancellationToken)
-                        //    .ConfigureAwait(false);
                     }
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    scope.Dispose();
                 }
             }
         }

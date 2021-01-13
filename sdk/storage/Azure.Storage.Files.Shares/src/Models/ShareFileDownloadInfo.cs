@@ -41,7 +41,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Details returned when downloading a file
         /// </summary>
-        public ShareFileDownloadDetails Details { get; private set; }
+        public ShareFileDownloadDetails Details { get; internal set; }
 
         /// <summary>
         /// Disposes the StorageFileDownloadInfo by calling Dispose on the underlying Content stream.
