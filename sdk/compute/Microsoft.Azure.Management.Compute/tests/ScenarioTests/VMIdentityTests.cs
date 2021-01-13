@@ -30,7 +30,6 @@ namespace Compute.Tests
                 string asName = ComputeManagementTestUtilities.GenerateName("as");
                 string userIdentityName = ComputeManagementTestUtilities.GenerateName("userid");
                 VirtualMachine inputVM;
-                bool passed = false;
 
                 try
                 {
@@ -65,21 +64,12 @@ namespace Compute.Tests
                     Assert.True(getVM.Identity.UserAssignedIdentities.Keys.Contains(identity));
                     Assert.NotNull(getVM.Identity.UserAssignedIdentities[identity].PrincipalId);
                     Assert.NotNull(getVM.Identity.UserAssignedIdentities[identity].ClientId);
-
-                    m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-
-                    passed = true;
-                }
-                catch (Exception e)
-                {
-                    throw e;
                 }
                 finally
                 {
-                    Assert.True(passed);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }
     }
 }
-
