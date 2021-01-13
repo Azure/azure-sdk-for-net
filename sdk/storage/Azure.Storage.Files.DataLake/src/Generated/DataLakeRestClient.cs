@@ -4571,7 +4571,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Path GetAccessControlResult
     /// </summary>
-    public partial class PathGetAccessControlResult
+    internal partial class PathGetAccessControlResult
     {
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
@@ -4613,36 +4613,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// You can use DataLakeModelFactory.PathGetAccessControlResult instead.
         /// </summary>
         internal PathGetAccessControlResult() { }
-    }
-
-    /// <summary>
-    /// DataLakeModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class DataLakeModelFactory
-    {
-        /// <summary>
-        /// Creates a new PathGetAccessControlResult instance for mocking.
-        /// </summary>
-        public static PathGetAccessControlResult PathGetAccessControlResult(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string clientRequestId,
-            string owner,
-            string group,
-            string permissions,
-            string aCL)
-        {
-            return new PathGetAccessControlResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                ClientRequestId = clientRequestId,
-                Owner = owner,
-                Group = group,
-                Permissions = permissions,
-                ACL = aCL,
-            };
-        }
     }
 }
 #endregion class PathGetAccessControlResult

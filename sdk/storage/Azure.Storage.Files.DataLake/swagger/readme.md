@@ -275,6 +275,15 @@ directive:
     $.put.responses["200"]["x-az-response-name"] = "PathSetExpiryInternal";
 ```
 
+### Make PathGetAccessControlResult internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?comp=acl"]
+  transform: >
+    $.head.responses["200"]["x-az-public"] = false;
+```
+
 ### Make PathExpiryOptions internal
 ``` yaml
 directive:
