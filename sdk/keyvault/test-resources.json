@@ -57,13 +57,6 @@
                 "description": "Whether to enable soft delete for the Key Vault. The default is true."
             }
         },
-        "keyVaultDomainSuffix": {
-            "type": "string",
-            "defaultValue": ".vault.azure.net",
-            "metadata": {
-                "description": "Domain suffix for sovereign clouds, requires the preceding '.'. The default uses the public Azure Cloud (.vault.azure.net)"
-            }
-        },
         "keyVaultSku": {
             "type": "string",
             "defaultValue": "premium",
@@ -73,7 +66,8 @@
         }
     },
     "variables": {
-        "azureKeyVaultUrl": "[format('https://{0}{1}', parameters('baseName'), parameters('keyVaultDomainSuffix'))]",
+        "kvApiVersion": "2019-09-01",
+        "kvName": "[parameters('baseName')]",
         "hsmApiVersion": "2020-04-01-preview",
         "hsmName": "[concat(parameters('baseName'), 'hsm')]",
         "mgmtApiVersion": "2019-04-01",
@@ -99,8 +93,8 @@
     "resources": [
         {
             "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2016-10-01",
-            "name": "[parameters('baseName')]",
+            "apiVersion": "[variables('kvApiVersion')]",
+            "name": "[variables('kvName')]",
             "location": "[parameters('location')]",
             "properties": {
                 "sku": {
@@ -165,7 +159,8 @@
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
                 "enabledForTemplateDeployment": false,
-                "enableSoftDelete": "[parameters('enableSoftDelete')]"
+                "enableSoftDelete": "[parameters('enableSoftDelete')]",
+                "softDeleteRetentionInDays": 7
             }
         },
         {
@@ -240,7 +235,7 @@
     "outputs": {
         "AZURE_KEYVAULT_URL": {
             "type": "string",
-            "value": "[variables('azureKeyVaultUrl')]"
+            "value": "[reference(variables('kvName')).vaultUri]"
         },
         "AZURE_MANAGEDHSM_URL": {
             "type": "string",
