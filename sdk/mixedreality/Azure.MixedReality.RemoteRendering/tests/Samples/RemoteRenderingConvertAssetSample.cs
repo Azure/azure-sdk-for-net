@@ -5,47 +5,56 @@ using System;
 using System.Threading;
 using Azure.Core.TestFramework;
 using Azure.MixedReality.RemoteRendering.Models;
-using Azure.MixedReality.RemoteRendering.Tests;
 
 namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 {
     public class RemoteRenderingConvertAssetSample : SamplesBase<RemoteRenderingTestEnvironment>
     {
-        private readonly string _accountDomain;
-        private readonly string _accountId;
+        private readonly RemoteRenderingAccount _account;
         private readonly string _accountKey;
 
         public RemoteRenderingConvertAssetSample()
         {
-            _accountDomain = TestEnvironment.AccountDomain;
-            _accountId = TestEnvironment.AccountId;
+            _account = new RemoteRenderingAccount(TestEnvironment.AccountId, TestEnvironment.AccountDomain);
             _accountKey = TestEnvironment.AccountKey;
         }
 
         public void ConvertAsset()
         {
-            RemoteRenderingClient client = new RemoteRenderingClient(_accountId);
+            #region Snippet:ConvertingAnAsset
 
-            // TODO Fill in with viable details.
-            ConversionInputSettings input = new ConversionInputSettings("foo", "bar.fbx");
-            ConversionOutputSettings output = new ConversionOutputSettings("foobar.arrAsset");
+            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
+
+            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+
+            ConversionInputSettings input = new ConversionInputSettings("MyInputContainer", "box.fbx");
+            ConversionOutputSettings output = new ConversionOutputSettings("MyOutputContainer");
             ConversionSettings settings = new ConversionSettings(input, output);
 
-            string conversionId = "MyConversionId";
+            string conversionId = "ConversionId1";
 
             client.CreateConversion(conversionId, settings);
 
             ConversionInformation conversion;
-            for (int i = 0; i < 10; ++i)
+
+            // Poll every 10 seconds completion every ten seconds.
+            while (true)
             {
+                Thread.Sleep(10000);
+
                 conversion = client.GetConversion(conversionId).Value;
                 if (conversion.Status == CreatedByType.Succeeded)
                 {
-                    Console.WriteLine($"Output written to {conversion.Settings.OutputLocation}");
+                    Console.WriteLine($"Conversion succeeded: Output written to {conversion.Settings.OutputLocation}");
                     break;
                 }
-                Thread.Sleep(5000);
+                else if (conversion.Status == CreatedByType.Failed)
+                {
+                    Console.WriteLine($"Conversion failed: {conversion.Error.Code} {conversion.Error.Message}");
+                    break;
+                }
             }
+            #endregion Snippet:ConvertingAnAsset
         }
     }
 }

@@ -10,15 +10,13 @@ namespace Azure.MixedReality.RemoteRendering.Tests
 {
     public class RemoteRenderingLiveTests : RecordedTestBase<RemoteRenderingTestEnvironment>
     {
-        private readonly string _accountDomain;
-        private readonly string _accountId;
+        private readonly RemoteRenderingAccount _account;
         private readonly string _accountKey;
 
         public RemoteRenderingLiveTests(bool isAsync) :
             base(isAsync /*, RecordedTestMode.Record */)
         {
-            _accountDomain = TestEnvironment.AccountDomain;
-            _accountId = TestEnvironment.AccountId;
+            _account = new RemoteRenderingAccount(TestEnvironment.AccountId, TestEnvironment.AccountDomain);
             _accountKey = TestEnvironment.AccountKey;
         }
 
@@ -30,11 +28,11 @@ namespace Azure.MixedReality.RemoteRendering.Tests
             // TODO: Can I use resources which stay resident somewhere, or will I need them deployed to Blob storage
             // as part of the test deployment?
 
-            ConversionInputSettings input = new ConversionInputSettings("foo", "bar.fbx");
-            ConversionOutputSettings output = new ConversionOutputSettings("foobar.arrAsset");
+            ConversionInputSettings input = new ConversionInputSettings("InputContainer", "box.fbx");
+            ConversionOutputSettings output = new ConversionOutputSettings("OutputContainer");
             ConversionSettings settings = new ConversionSettings(input, output);
 
-            string conversionId = "MyConversionId";
+            string conversionId = "ConversionId1";
 
             ConversionInformation conversion = await client.CreateConversionAsync(conversionId, settings);
             Assert.AreEqual(conversion.Settings, settings);
@@ -50,7 +48,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests
 
             CreateSessionBody settings = new CreateSessionBody(10, SessionSize.Standard);
 
-            string sessionId = "MySessionId";
+            string sessionId = "SessionId1";
 
             SessionProperties session = await client.CreateSessionAsync(sessionId, settings);
             Assert.AreEqual(session.MaxLeaseTimeMinutes, settings.MaxLeaseTimeMinutes);
@@ -78,8 +76,10 @@ namespace Azure.MixedReality.RemoteRendering.Tests
 
         private RemoteRenderingClient GetClient()
         {
+            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
+
             var options = InstrumentClientOptions(new RemoteRenderingClientOptions());
-            return InstrumentClient(new RemoteRenderingClient(_accountId, options));
+            return InstrumentClient(new RemoteRenderingClient(_account, accountKeyCredential));
         }
     }
 }
