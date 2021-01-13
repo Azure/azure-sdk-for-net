@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
     <Version>5.0.0-beta.1</Version>
-    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;CA1507</NoWarn>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
