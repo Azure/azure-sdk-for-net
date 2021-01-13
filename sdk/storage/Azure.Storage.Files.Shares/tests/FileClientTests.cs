@@ -76,6 +76,39 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+            var client = test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName());
+            await client.CreateAsync(1024);
+            Uri uri = client.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new ShareFileClient(uri, new AzureSasCredential(sas), GetOptions()));
+            ShareFileProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+            Uri uri = test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()).Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new ShareFileClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
         public void FilePathsParsing()
         {
             // nested directories

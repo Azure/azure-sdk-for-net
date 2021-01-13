@@ -37,26 +37,24 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         {
             // Submit the Spark job
             SparkBatchJobOptions createParams = this.CreateSparkJobRequestParameters();
-            SparkBatchJob jobCreateResponse = (await SparkBatchClient.CreateSparkBatchJobAsync(createParams)).Value;
-
-            // Poll the Spark job until it finishes
-            SparkBatchJob getJobResponse = await this.PollSparkBatchJobSubmissionAsync(jobCreateResponse);
+            SparkBatchOperation createOperation = await SparkBatchClient.StartCreateSparkBatchJobAsync(createParams);
+            SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 
             // Verify the Spark batch job completes successfully
-            Assert.True("success".Equals(getJobResponse.State, StringComparison.OrdinalIgnoreCase) && getJobResponse.Result == SparkBatchJobResultType.Succeeded,
+            Assert.True("success".Equals(jobCreateResponse.State, StringComparison.OrdinalIgnoreCase) && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
-                    getJobResponse.Id,
-                    getJobResponse.State,
-                    getJobResponse.Result,
-                    string.Join(", ", getJobResponse.Errors ?? new List<SparkServiceError>())
+                    jobCreateResponse.Id,
+                    jobCreateResponse.State,
+                    jobCreateResponse.Result,
+                    string.Join(", ", jobCreateResponse.Errors ?? new List<SparkServiceError>())
                 )
             );
 
             // Get the list of Spark batch jobs and check that the submitted job exists
             List<SparkBatchJob> listJobResponse = await this.ListSparkBatchJobsAsync();
             Assert.NotNull(listJobResponse);
-            Assert.IsTrue(listJobResponse.Any(job => job.Id == getJobResponse.Id));
+            Assert.IsTrue(listJobResponse.Any(job => job.Id == jobCreateResponse.Id));
         }
 
         [Test]
@@ -65,8 +63,14 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchJobCollection sparkJobs = (await SparkBatchClient.GetSparkBatchJobsAsync()).Value;
             foreach (SparkBatchJob expectedSparkJob in sparkJobs.Sessions)
             {
-                SparkBatchJob actualSparkJob = await SparkBatchClient.GetSparkBatchJobAsync(expectedSparkJob.Id);
-                ValidateSparkBatchJob(expectedSparkJob, actualSparkJob);
+                try
+                {
+                    SparkBatchJob actualSparkJob = await SparkBatchClient.GetSparkBatchJobAsync(expectedSparkJob.Id);
+                    ValidateSparkBatchJob(expectedSparkJob, actualSparkJob);
+                }
+                catch (Azure.RequestFailedException)
+                {
+                }
             }
         }
     }

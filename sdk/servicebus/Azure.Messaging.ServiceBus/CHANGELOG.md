@@ -3,6 +3,14 @@
 ## 7.1.0-beta.1 (Unreleased)
 
 
+## 7.0.1 (2021-01-12)
+
+### Fixed
+- Fixed race condition that could occur when using the same `ServiceBusSessionReceiverOptions` instance 
+for several receivers.
+- Increased the authorization refresh buffer to make it less likely that authorization will expire.
+
+
 ## 7.0.0 (2020-11-23)
 ### Breaking Changes
 - Renamed GetRawMessage method to GetRawAmqpMessage.

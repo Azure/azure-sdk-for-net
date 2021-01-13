@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
@@ -137,6 +138,39 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException(
                 () => new BlobClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.All).ToString();
+            var client = test.Container.GetBlobClient(GetNewBlobName());
+            await client.UploadAsync(new MemoryStream());
+            Uri blobUri = client.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new BlobClient(blobUri, new AzureSasCredential(sas), GetOptions()));
+            BlobProperties blobProperties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(blobProperties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.All).ToString();
+            Uri blobUri = test.Container.GetBlobClient("foo").Uri;
+            blobUri = new Uri(blobUri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new BlobClient(blobUri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
         #region Upload
