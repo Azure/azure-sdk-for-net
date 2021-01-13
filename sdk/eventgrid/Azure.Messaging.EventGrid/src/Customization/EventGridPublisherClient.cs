@@ -182,22 +182,7 @@ namespace Azure.Messaging.EventGrid
                     // Individual events cannot be null
                     Argument.AssertNotNull(egEvent, nameof(egEvent));
 
-                    JsonDocument data;
-                    if (egEvent.Data is BinaryData binaryEventData)
-                    {
-                        try
-                        {
-                            data = JsonDocument.Parse(binaryEventData);
-                        }
-                        catch (JsonException)
-                        {
-                            data = SerializeObjectToJsonDocument(binaryEventData.ToString(), typeof(string), cancellationToken);
-                        }
-                    }
-                    else
-                    {
-                        data = SerializeObjectToJsonDocument(egEvent.Data, egEvent.Data.GetType(), cancellationToken);
-                    }
+                    JsonDocument data = SerializeObjectToJsonDocument(egEvent.Data, egEvent.DataSerializationType, cancellationToken);
 
                     EventGridEventInternal newEGEvent = new EventGridEventInternal(
                         egEvent.Id,
@@ -309,7 +294,7 @@ namespace Azure.Messaging.EventGrid
                     // Additionally, if the type of data is binary, 'Data' will not be populated (data will be stored in 'DataBase64' instead)
                     if (cloudEvent.Data != null)
                     {
-                        JsonDocument data = SerializeObjectToJsonDocument(cloudEvent.Data, cloudEvent.Data.GetType(), cancellationToken);
+                        JsonDocument data = SerializeObjectToJsonDocument(cloudEvent.Data, cloudEvent.DataSerializationType, cancellationToken);
                         newCloudEvent.Data = data.RootElement;
                     }
                     eventsWithSerializedPayloads.Add(newCloudEvent);
