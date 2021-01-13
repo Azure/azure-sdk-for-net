@@ -3,29 +3,28 @@ parameters:
     type: object
     # Example:
     #   - Name: base_product_matrix
-    #     Path: /eng/pipelines/matrix.json
+    #     Path: eng/pipelines/matrix.json
     #     Selection: sparse
   - name: steps
     type: object
 
 jobs:
-  - {{ each config in parameters.MatrixConfigs }}:
+  - ${{ each config in parameters.MatrixConfigs }}:
     - job: generate_matrix_${{ config.Name }}
+      displayName: Generate ${{ config.Name }} matrix
       steps:
-      - task: PowerShell@2
-        inputs:
-          name: generate_job_matrix_${{ config.Name }}
-          displayName: Generate ${{ config.Name }} Job Matrix
-          script: |
-            eng/scripts/matrix/Create-JobMatrix.ps1 `
+        - pwsh: |
+            eng/scripts/job-matrix/Create-JobMatrix.ps1 `
               -ConfigPath ${{ config.Path }} `
-              -Selection ${{ config.Selection }} `
-              -MatrixVariableName ${{ config.Name }}
+              -Selection ${{ config.Selection }}
+          name: generate_job_matrix_${{ config.Name }}
+          displayName: Generate Job Matrix
 
     - job:
+      displayName: Print ${{ config.Name }}
       dependsOn: generate_matrix_${{ config.Name }}
       strategy:
         maxParallel: 0
-        matrix: $[ dependencies.generate_matrix.outputs['generate_job_matrix_${{ config.Name }}.matrix'] ]
+        matrix: $[ dependencies.generate_matrix_${{ config.Name }}.outputs['generate_job_matrix_${{ config.Name }}.matrix'] ]
       steps:
         - ${{ parameters.steps }}

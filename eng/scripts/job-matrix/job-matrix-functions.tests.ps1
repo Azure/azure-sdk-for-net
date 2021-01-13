@@ -1,4 +1,4 @@
-Using Module ./test-matrix-functions.psm1
+Using Module ./job-matrix-functions.psm1
 Import-Module Pester
 
 BeforeAll {

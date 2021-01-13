@@ -13,7 +13,7 @@ param (
     [Parameter(Mandatory=$True)][string] $Selection
 )
 
-Import-Module $PSScriptRoot/test-matrix-functions.psm1
+Import-Module $PSScriptRoot/job-matrix-functions.psm1
 
 $config = GetMatrixConfigFromJson (Get-Content $ConfigPath)
 
