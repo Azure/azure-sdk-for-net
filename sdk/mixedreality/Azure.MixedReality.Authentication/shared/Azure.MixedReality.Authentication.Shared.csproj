@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--<TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>-->
+    <AssemblyTitle>Shared source for Azure Mixed Reality Client libraries.</AssemblyTitle>
+    <Nullable>enable</Nullable>
+    <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
+    <IsPackable>false</IsPackable>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>
+      $(NoWarn);
+      CA1812;   <!-- Avoid uninstantiated internal classes. (This is shared source.) -->
+    </NoWarn>
+  </PropertyGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.MixedReality.Authentication.csproj" />
+  </ItemGroup>
+
+</Project>
