@@ -143,6 +143,7 @@ namespace Azure.Analytics.Synapse.Spark
 
             switch (livyState)
             {
+                case "starting":
                 case "error":
                 case "dead":
                 case "success":
