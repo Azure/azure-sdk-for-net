@@ -4,6 +4,14 @@
     <TargetFrameworks>netcoreapp2.1;net461;net5.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <StartupObject>SmokeTest.Program</StartupObject>
+    <NoWarn>$(NoWarn);
+    <!--
+      Because we often ship packages with ***-beta.* dependency
+      forcing them to ***-alpha.* from the nightly feed is regarded as a downgrade
+      that's why the NU1605 warning is suppressed
+     -->
+      NU1605</NoWarn>
+    
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
