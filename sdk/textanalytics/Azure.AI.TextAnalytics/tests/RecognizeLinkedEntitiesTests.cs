@@ -149,21 +149,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RecognizeLinkedEntitiesBatchConvenienceWithStringIndexTypeTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new TextAnalyticsRequestOptions { StringIndexType = StringIndexType.UnicodeCodePoint });
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "0", s_document1ExpectedOutput },
-                { "1", s_document2ExpectedOutput },
-            };
-
-            ValidateBatchDocumentsResult(results, expectedOutput);
-        }
-
-        [Test]
         public async Task RecognizeLinkedEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();

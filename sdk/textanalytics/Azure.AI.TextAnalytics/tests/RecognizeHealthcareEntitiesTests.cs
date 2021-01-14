@@ -262,26 +262,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RecognizeHealthcareEntitiesBatchWithStringIndexTypeTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            var documents = batchDocuments;
-
-            HealthcareOptions options = new HealthcareOptions()
-            {
-                StringIndexType = StringIndexType.UnicodeCodePoint
-            };
-
-            HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents, options);
-
-            await operation.WaitForCompletionAsync(PollingInterval);
-
-            RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
-
-            Assert.AreEqual(2, resultCollection.Count);
-        }
-
-        [Test]
         public async Task RecognizeHealthcareEntitiesBatchWithPagination()
         {
             TextAnalyticsClient client = GetClient();

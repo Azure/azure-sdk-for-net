@@ -25,9 +25,6 @@ namespace Azure.AI.TextAnalytics
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
-        // Specifies the method used to interpret string offsets. Default to <see cref="StringIndexType.Utf16CodeUnit"/>.
-        private readonly StringIndexType _stringCodeUnit = StringIndexType.Utf16CodeUnit;
-
         /// <summary>
         /// Protected constructor to allow mocking.
         /// </summary>
@@ -426,7 +423,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: _stringCodeUnit,
+                    stringIndexType: StringIndexType.Utf16CodeUnit,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -484,7 +481,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: _stringCodeUnit,
+                    stringIndexType: StringIndexType.Utf16CodeUnit,
                     cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -1811,7 +1808,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: _stringCodeUnit,
+                    stringIndexType: StringIndexType.Utf16CodeUnit,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -1867,7 +1864,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: _stringCodeUnit,
+                    stringIndexType: StringIndexType.Utf16CodeUnit,
                     cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
