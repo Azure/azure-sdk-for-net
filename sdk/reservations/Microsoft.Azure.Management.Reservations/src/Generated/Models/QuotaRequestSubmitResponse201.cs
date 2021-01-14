@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Linq;
 
     /// <summary>
-    /// The quota request submit response with request id.
+    /// Response with request ID that the quota request was accepted.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class QuotaRequestSubmitResponse201
@@ -34,11 +34,12 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the QuotaRequestSubmitResponse201
         /// class.
         /// </summary>
-        /// <param name="id">The quota request id. Please use the requestId to
-        /// check the request status.</param>
-        /// <param name="name">The operation Id</param>
-        /// <param name="type">The resource type</param>
-        /// <param name="provisioningState">The quota request status.</param>
+        /// <param name="id">The quota request ID. Use the requestId parameter
+        /// to check the request status.</param>
+        /// <param name="name">Operation ID</param>
+        /// <param name="type">Resource type</param>
+        /// <param name="provisioningState">The details of the quota request
+        /// status.</param>
         /// <param name="message">A user friendly message.</param>
         public QuotaRequestSubmitResponse201(string id = default(string), string name = default(string), string type = default(string), object provisioningState = default(object), string message = default(string))
         {
@@ -56,26 +57,26 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the quota request id. Please use the requestId to check the
+        /// Gets the quota request ID. Use the requestId parameter to check the
         /// request status.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the operation Id
+        /// Gets operation ID
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the resource type
+        /// Gets resource type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets the quota request status.
+        /// Gets the details of the quota request status.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public object ProvisioningState { get; private set; }

@@ -29,19 +29,22 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <summary>
         /// Initializes a new instance of the QuotaProperties class.
         /// </summary>
-        /// <param name="limit">The quota limit.</param>
-        /// <param name="currentValue">The current resource usages
-        /// information.</param>
-        /// <param name="unit"> The units of the limit, such as - Count, Bytes,
-        /// etc. Use the unit field provided in the Get quota response.</param>
+        /// <param name="limit">Quota properties.</param>
+        /// <param name="currentValue">Current usage value for the
+        /// resource.</param>
+        /// <param name="unit"> The limit units, such as **count** and
+        /// **bytes**. Use the unit field provided in the response of the GET
+        /// quota operation.</param>
         /// <param name="name">Name of the resource provide by the resource
-        /// Provider. Please use this name property for quotaRequests.</param>
-        /// <param name="resourceType">The Resource Type Name.</param>
-        /// <param name="quotaPeriod">The quota period over which the usage
-        /// values are summarized, such as - P1D (Per one day), PT1M (Per one
-        /// minute), PT1S (Per one second). This parameter is optional because,
-        /// for some resources like compute, the period doesn’t matter.</param>
-        /// <param name="properties">Additional properties for the specific
+        /// provider. Use this property for quotaRequests resource
+        /// operations.</param>
+        /// <param name="resourceType">The name of the resource type.</param>
+        /// <param name="quotaPeriod">The time period over which the quota
+        /// usage values are summarized. For example, P1D (per one day), PT1M
+        /// (per one minute), and PT1S (per one second). This parameter is
+        /// optional because, for some resources such as compute, the time
+        /// period is irrelevant.</param>
+        /// <param name="properties">Additional properties for the specified
         /// resource provider.</param>
         public QuotaProperties(int? limit = default(int?), int? currentValue = default(int?), string unit = default(string), ResourceName name = default(ResourceName), object resourceType = default(object), string quotaPeriod = default(string), object properties = default(object))
         {
@@ -61,48 +64,48 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the quota limit.
+        /// Gets or sets quota properties.
         /// </summary>
         [JsonProperty(PropertyName = "limit")]
         public int? Limit { get; set; }
 
         /// <summary>
-        /// Gets the current resource usages information.
+        /// Gets current usage value for the resource.
         /// </summary>
         [JsonProperty(PropertyName = "currentValue")]
         public int? CurrentValue { get; private set; }
 
         /// <summary>
-        /// Gets or sets  The units of the limit, such as - Count, Bytes, etc.
-        /// Use the unit field provided in the Get quota response.
+        /// Gets or sets  The limit units, such as **count** and **bytes**. Use
+        /// the unit field provided in the response of the GET quota operation.
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public string Unit { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the resource provide by the resource Provider.
-        /// Please use this name property for quotaRequests.
+        /// Gets or sets name of the resource provide by the resource provider.
+        /// Use this property for quotaRequests resource operations.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public ResourceName Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the Resource Type Name.
+        /// Gets or sets the name of the resource type.
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
         public object ResourceType { get; set; }
 
         /// <summary>
-        /// Gets the quota period over which the usage values are summarized,
-        /// such as - P1D (Per one day), PT1M (Per one minute), PT1S (Per one
-        /// second). This parameter is optional because, for some resources
-        /// like compute, the period doesn’t matter.
+        /// Gets the time period over which the quota usage values are
+        /// summarized. For example, P1D (per one day), PT1M (per one minute),
+        /// and PT1S (per one second). This parameter is optional because, for
+        /// some resources such as compute, the time period is irrelevant.
         /// </summary>
         [JsonProperty(PropertyName = "quotaPeriod")]
         public string QuotaPeriod { get; private set; }
 
         /// <summary>
-        /// Gets or sets additional properties for the specific resource
+        /// Gets or sets additional properties for the specified resource
         /// provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]

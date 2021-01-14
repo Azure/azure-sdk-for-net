@@ -7,10 +7,10 @@
 		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
 		<Description>Microsoft.Azure.Management.Reservations Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
-		<Version>1.14.0-preview</Version>
+		<Version>1.15.0</Version>
     <PackageTags>Reservations;</PackageTags>
 		<PackageReleaseNotes>
-			Adding quota api to sdk
+			Adding quota GA api to sdk.
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

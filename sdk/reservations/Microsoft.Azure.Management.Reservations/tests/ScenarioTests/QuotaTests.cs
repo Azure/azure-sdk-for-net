@@ -164,7 +164,7 @@ namespace Reservations.Tests.ScenarioTests
                 );
             }
         }
-
+/*
         [Fact]
         public void Test_GetAQMProperties()
         {
@@ -210,9 +210,9 @@ namespace Reservations.Tests.ScenarioTests
                 Assert.False(false, $"Not excpected {ex.ToString()}");
             }
         }
-
+*/
         #endregion
-        #region Neagtive Test Cases
+        #region Negative Test Cases
         [Fact]
         public void Test_ComputeSkusPutRequestFailedDueToQuotaReduction()
         {

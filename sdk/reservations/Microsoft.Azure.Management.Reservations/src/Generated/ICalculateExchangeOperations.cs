@@ -19,16 +19,20 @@ namespace Microsoft.Azure.Management.Reservations
     using System.Threading.Tasks;
 
     /// <summary>
-    /// AutoQuotaIncreaseOperations operations.
+    /// CalculateExchangeOperations operations.
     /// </summary>
-    public partial interface IAutoQuotaIncreaseOperations
+    public partial interface ICalculateExchangeOperations
     {
         /// <summary>
-        /// Gets the Auto Quota Increase enrollment details for the specified
-        /// subscription.
+        /// Calculates the refund amounts and price of the new purchases.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// Azure subscription id.
+        /// <remarks>
+        /// Calculates price for exchanging `Reservations` if there are no
+        /// policy errors.
+        ///
+        /// </remarks>
+        /// <param name='body'>
+        /// Request containing purchases and refunds that need to be executed.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -36,7 +40,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ExceptionResponseException">
+        /// <exception cref="ErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -45,16 +49,17 @@ namespace Microsoft.Azure.Management.Reservations
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AutoQuotaIncreaseDetail>> GetPropertiesWithHttpMessagesAsync(string subscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CalculateExchangeOperationResultResponse,CalculateExchangePostHeaders>> PostWithHttpMessagesAsync(CalculateExchangeRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Sets the Auto Quota Increase enrollment properties for the
-        /// specified subscription.
+        /// Calculates the refund amounts and price of the new purchases.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// Azure subscription id.
-        /// </param>
-        /// <param name='autoQuotaIncreaseRequest'>
-        /// Auto Quota increase request payload.
+        /// <remarks>
+        /// Calculates price for exchanging `Reservations` if there are no
+        /// policy errors.
+        ///
+        /// </remarks>
+        /// <param name='body'>
+        /// Request containing purchases and refunds that need to be executed.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -62,7 +67,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ExceptionResponseException">
+        /// <exception cref="ErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -71,6 +76,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AutoQuotaIncreaseDetail>> CreateWithHttpMessagesAsync(string subscriptionId, AutoQuotaIncreaseDetail autoQuotaIncreaseRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CalculateExchangeOperationResultResponse,CalculateExchangePostHeaders>> BeginPostWithHttpMessagesAsync(CalculateExchangeRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

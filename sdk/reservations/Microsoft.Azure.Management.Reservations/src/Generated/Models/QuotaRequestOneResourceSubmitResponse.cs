@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Linq;
 
     /// <summary>
-    /// Quota submit request response
+    /// Response for the quota submission request.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class QuotaRequestOneResourceSubmitResponse : IResource
@@ -35,15 +35,15 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the
         /// QuotaRequestOneResourceSubmitResponse class.
         /// </summary>
-        /// <param name="id">The quota request Id.</param>
+        /// <param name="id">The quota request ID.</param>
         /// <param name="name">The name of the quota request.</param>
         /// <param name="type">Type of resource.
         /// "Microsoft.Capacity/ServiceLimits"</param>
         /// <param name="provisioningState">The quota request status.</param>
         /// <param name="message">User friendly status message.</param>
-        /// <param name="requestSubmitTime">The quota request submit time. The
-        /// date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as
-        /// specified by the ISO 8601 standard.</param>
+        /// <param name="requestSubmitTime">The time when the quota request was
+        /// submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the
+        /// ISO 8601 standard.</param>
         /// <param name="properties">Quota properties for the resource.</param>
         public QuotaRequestOneResourceSubmitResponse(string id = default(string), string name = default(string), string type = default(string), object provisioningState = default(object), string message = default(string), System.DateTime? requestSubmitTime = default(System.DateTime?), QuotaProperties properties = default(QuotaProperties))
         {
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the quota request Id.
+        /// Gets the quota request ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
@@ -93,9 +93,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets the quota request submit time. The date conforms to the
-        /// following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601
-        /// standard.
+        /// Gets the time when the quota request was submitted using format:
+        /// yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestSubmitTime")]
         public System.DateTime? RequestSubmitTime { get; private set; }
