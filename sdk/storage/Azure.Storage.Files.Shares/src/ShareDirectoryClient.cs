@@ -642,23 +642,6 @@ namespace Azure.Storage.Files.Shares
                             cancellationToken: cancellationToken);
                     }
 
-                    // TODO remove this.
-                    //Response<RawStorageDirectoryInfo> response = await FileRestClient.Directory.CreateAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    metadata: metadata,
-                    //    fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
-                    //    filePermission: filePermission,
-                    //    fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                    //    fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                    //    filePermissionKey: smbProps.FilePermissionKey,
-                    //    async: async,
-                    //    operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(Create)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
-
                     return Response.FromValue(
                         response.ToShareDirectoryInfo(),
                         response.GetRawResponse());

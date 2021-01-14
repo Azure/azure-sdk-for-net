@@ -3311,10 +3311,8 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ShareCreatePermissionHeaders> response;
-
                     scope.Start();
-
+                    ResponseWithHeaders<ShareCreatePermissionHeaders> response;
                     SharePermission sharePermission = new SharePermission(permission);
 
                     if (async)
@@ -3336,34 +3334,6 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(
                         response.ToPermissionInfo(),
                         response.GetRawResponse());
-
-                    // TODO remove this
-                    //// Serialize the permission as a JSON object
-                    //using var stream = new MemoryStream();
-                    //using var writer = new Utf8JsonWriter(stream);
-                    //writer.WriteStartObject();
-                    //writer.WriteString("permission", permission);
-                    //writer.WriteEndObject();
-                    //if (async)
-                    //{
-                    //    await writer.FlushAsync(cancellationToken).ConfigureAwait(false);
-                    //}
-                    //else
-                    //{
-                    //    writer.Flush();
-                    //}
-                    //var json = Encoding.UTF8.GetString(stream.ToArray());
-
-                    //return await FileRestClient.Share.CreatePermissionAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    sharePermissionJson: json,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareClient)}.{nameof(CreatePermission)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
