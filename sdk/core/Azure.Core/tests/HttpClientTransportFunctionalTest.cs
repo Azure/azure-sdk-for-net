@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
 #if !NET461
                 return new HttpClientTransport(new HttpClientHandler()
                 {
-                    ServerCertificateCustomValidationCallback = (_, _, _, _) => true
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 });
 #endif
             }
