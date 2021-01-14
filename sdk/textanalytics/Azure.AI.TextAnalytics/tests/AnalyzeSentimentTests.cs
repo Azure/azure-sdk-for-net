@@ -314,6 +314,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
         }
 
+        [Test]
         public async Task AnalyzeSentimentBatchTest()
         {
             TextAnalyticsClient client = GetClient();
