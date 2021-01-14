@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!--Temporary workaround as Microsoft.Azure.WebJobs.Host.TestCommon does not support net461-->
-    <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
-    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>SA1636</NoWarn>
   </PropertyGroup>
 
@@ -14,6 +12,13 @@
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" VersionOverride="2.3.1" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Host.TestCommon" VersionOverride="3.0.19" />
+  </ItemGroup>
+  <!--Temporary workaround as Microsoft.Azure.WebJobs.Host.TestCommon does not support net461-->
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net461' ">
+    <PackageReference Include="Microsoft.Azure.WebJobs.Host.TestCommon" VersionOverride="3.0.19" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <Compile Remove="*.cs" />
   </ItemGroup>
 
   <ItemGroup>
