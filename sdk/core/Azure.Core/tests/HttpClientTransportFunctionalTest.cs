@@ -17,9 +17,9 @@ namespace Azure.Core.Tests
 #endif
         }
 
-        protected override HttpPipelineTransport GetTransport(bool ssl = false)
+        protected override HttpPipelineTransport GetTransport(bool https = false)
         {
-            if (ssl)
+            if (https)
             {
 #if !NET461
                 return new HttpClientTransport(new HttpClientHandler()

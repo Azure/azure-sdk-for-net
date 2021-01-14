@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        protected abstract HttpPipelineTransport GetTransport(bool ssl = false);
+        protected abstract HttpPipelineTransport GetTransport(bool https = false);
 
         public static object[] ContentWithLength =>
             new object[]
@@ -789,7 +789,7 @@ namespace Azure.Core.Tests
 
         [TestCase(true)]
         [TestCase(false)]
-        public async Task ThrowsTaskCanceledExceptionWhenCancelled(bool ssl)
+        public async Task ThrowsTaskCanceledExceptionWhenCancelled(bool https)
         {
             var testDoneTcs = new CancellationTokenSource();
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -799,10 +799,10 @@ namespace Azure.Core.Tests
                 {
                     tcs.SetResult(null);
                     await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
-                }, ssl);
+                }, https);
 
             var cts = new CancellationTokenSource();
-            var transport = GetTransport(ssl);
+            var transport = GetTransport(https);
             Request request = transport.CreateRequest();
             request.Uri.Reset(testServer.Address);
 
@@ -819,7 +819,7 @@ namespace Azure.Core.Tests
 
         [TestCase(true)]
         [TestCase(false)]
-        public async Task CanCancelContentUpload(bool ssl)
+        public async Task CanCancelContentUpload(bool https)
         {
             var testDoneTcs = new CancellationTokenSource();
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -834,10 +834,10 @@ namespace Azure.Core.Tests
                     await context.Request.Body.ReadAsync(buffer, 0, 100);
                     tcs.SetResult(null);
                     await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
-                }, ssl);
+                }, https);
 
             var cts = new CancellationTokenSource();
-            var transport = GetTransport(ssl);
+            var transport = GetTransport(https);
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Post;
             request.Content = RequestContent.Create(buffer);

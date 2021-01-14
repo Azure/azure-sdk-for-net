@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        public TestServer(RequestDelegate app, bool ssl = false)
+        public TestServer(RequestDelegate app, bool https = false)
         {
             _app = app;
             _host = new WebHostBuilder()
@@ -34,7 +34,7 @@ namespace Azure.Core.Tests
                     options.Limits.MaxRequestBodySize = null;
                     options.Listen(new IPEndPoint(IPAddress.Loopback, 0), listenOptions =>
                     {
-                        if (ssl)
+                        if (https)
                         {
                             listenOptions.UseHttps();
                         }
