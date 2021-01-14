@@ -14,6 +14,7 @@ extends:
     # Declare a custom platform to limit test runs to a single HSM.
     AdditionalPlatforms:
       Linux_HSM:
-        OSVmImage: "ubuntu-18.04"
+        OSVmImage: ubuntu-18.04
         TestTargetFramework: netcoreapp2.1
         ArmTemplateParameters: "@{enableHsm = $true}"
+        SupportedClouds: Public,UsGov
