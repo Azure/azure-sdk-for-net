@@ -1,9 +1,38 @@
+parameters:
+- name: Artifacts
+  type: object
+  default: []
+- name: TestPipeline
+  type: boolean
+  default: false
+- name: ArtifactName
+  type: string
+  default: packages
+- name: SDKType
+  type: string
+  default: client
+- name: ServiceDirectory
+  type: string
+  default: not-specified
+- name: ServiceToTest
+  type: string
+  default: ''
+- name: TestSetupSteps
+  type: stepList
+  default: []
+- name: WindowsPool
+  type: string
+  default: azsdk-pool-mms-win-2019-general
+- name: LinuxPool
+  type: string
+  default: azsdk-pool-mms-ubuntu-1804-general
+
 jobs:
   - job: Build
     variables:
       - template: ../variables/globals.yml
     pool:
-      name: azsdk-pool-mms-win-2019-general # Comment this line back-out to switch to public pools.
+      name: ${{ parameters.WindowsPool }} # Comment this line back-out to switch to public pools.
       # vmImage: windows-2019 # Comment this line back-in to switch to public pools.
     steps:
       - ${{if eq(parameters.TestPipeline, 'true')}}:
@@ -37,6 +66,7 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: >-
           dotnet pack eng/service.proj -warnaserror
+          /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeTests=false
           /p:PublicSign=false $(VersioningProperties)
@@ -58,7 +88,7 @@ jobs:
         inputs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
-      
+
       - template: /eng/pipelines/templates/steps/create-apireview.yml
         parameters:
           Artifacts: ${{parameters.Artifacts}}
@@ -68,7 +98,8 @@ jobs:
     variables:
       - template: ../variables/globals.yml
     pool:
-      vmImage: ubuntu-18.04
+      name: ${{ parameters.LinuxPool }}
+      vmImage:
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -102,7 +133,9 @@ jobs:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: -ServiceDirectory ${{parameters.ServiceToTest}}
+          arguments: >
+           -ServiceDirectory ${{ parameters.ServiceToTest }}
+           -SDKType ${{ parameters.SDKType }}
           pwsh: true
           failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
@@ -121,25 +154,25 @@ jobs:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
         Linux:
-          Pool: # Intentionally blank.
-          OSVmImage: "ubuntu-18.04"
+          Pool: ${{ parameters.LinuxPool }} # Comment out to swap back to public hosted pool.
+          OSVmImage: # "ubuntu-18.04" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: netcoreapp2.1
           CollectCoverage: true
         Windows_NetCoreApp_ProjectReferences:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: netcoreapp2.1
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net461
         Windows_NetFramework_ProjectReferences:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net461
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
@@ -148,7 +181,7 @@ jobs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
         Windows_Net50:
-          Pool: azsdk-pool-mms-win-2019-general # Comment out to swap back to public hosted pool.
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net5.0
     pool:
@@ -160,12 +193,13 @@ jobs:
             ${{ pair.key }}: ${{ pair.value }}
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: >-
-          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
+          dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToTest}}
+          /p:SDKType=${{ parameters.SDKType }}
+          /p:ServiceDirectory=${{ parameters.ServiceToTest }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
-          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{parameters.ServiceDirectory}}
+          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{ parameters.ServiceDirectory }}
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

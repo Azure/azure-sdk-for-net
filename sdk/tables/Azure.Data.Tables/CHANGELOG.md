@@ -1,7 +1,17 @@
 # Release History
 
-## 3.0.0-beta.5 (Unreleased)
+## 3.0.0-beta.6 (Unreleased)
 
+### Added
+
+- Added TableUriBuilder
+- Added a constructor to TableSasBuilder and TableAccountSasBuilder that accepts a Uri with a Sas token
+
+## 3.0.0-beta.5 (2021-01-12)
+
+### Fixed
+
+- Fixed an issue which transposed the values used for EndPartitionKey and StartRowKey in the generated Sas token Uri
 
 ## 3.0.0-beta.4 (2020-12-10)
 

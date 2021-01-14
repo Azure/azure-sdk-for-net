@@ -1,5 +1,6 @@
 jobs:
   - job: Build
+    timeoutInMinutes: 100
     pool:
       vmImage: windows-2019
     steps:
@@ -8,10 +9,13 @@ jobs:
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
           dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
+          pwsh eng/scripts/Track1CodeCheck.ps1
         displayName: "Build & Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          REPOSITORY_NAME: $(Build.Repository.Name)
+          PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
       - task: PublishBuildArtifacts@1
         condition: succeededOrFailed()
         inputs:

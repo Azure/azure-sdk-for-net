@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    /// <summary> The MediaGraphInstanceGetRequest. </summary>
+    /// <summary> Represents the MediaGraphInstanceGetRequest. </summary>
     public partial class MediaGraphInstanceGetRequest : ItemNonSetRequestBase
     {
         /// <summary> Initializes a new instance of MediaGraphInstanceGetRequest. </summary>

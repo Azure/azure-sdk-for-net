@@ -61,8 +61,8 @@ namespace Azure.Iot.Hub.Service
             {
                 request.Headers.Add("x-ms-max-item-count", xMsMaxItemCount);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(querySpecification);
             request.Content = content;

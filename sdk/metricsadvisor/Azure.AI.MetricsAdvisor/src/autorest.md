@@ -83,6 +83,113 @@ directive:
     $.properties.upperBoundaryList.items["x-nullable"] = true;
 ```
 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AzureApplicationInsightsParameter
+  transform: >
+    $.properties.apiKey["x-nullable"] = true;
+    $.properties.applicationId["x-nullable"] = true;
+    $.properties.azureCloud["x-nullable"] = true;
+    $.properties.query["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AzureBlobParameter
+  transform: >
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.container["x-nullable"] = true;
+    $.properties.blobTemplate["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AzureCosmosDBParameter
+  transform: >
+    $.properties.collectionId["x-nullable"] = true;
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.database["x-nullable"] = true;
+    $.properties.sqlQuery["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AzureDataLakeStorageGen2Parameter
+  transform: >
+    $.properties.accountKey["x-nullable"] = true;
+    $.properties.accountName["x-nullable"] = true;
+    $.properties.directoryTemplate["x-nullable"] = true;
+    $.properties.fileSystemName["x-nullable"] = true;
+    $.properties.fileTemplate["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AzureTableParameter
+  transform: >
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.query["x-nullable"] = true;
+    $.properties.table["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ElasticsearchParameter
+  transform: >
+    $.properties.authHeader["x-nullable"] = true;
+    $.properties.host["x-nullable"] = true;
+    $.properties.port["x-nullable"] = true;
+    $.properties.query["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.HttpRequestParameter
+  transform: >
+    $.properties.httpHeader["x-nullable"] = true;
+    $.properties.httpMethod["x-nullable"] = true;
+    $.properties.payload["x-nullable"] = true;
+    $.properties.url["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.InfluxDBParameter
+  transform: >
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.database["x-nullable"] = true;
+    $.properties.password["x-nullable"] = true;
+    $.properties.query["x-nullable"] = true;
+    $.properties.userName["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.MongoDBParameter
+  transform: >
+    $.properties.command["x-nullable"] = true;
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.database["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SqlSourceParameter
+  transform: >
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.query["x-nullable"] = true;
+```
+
 ### Add required properties
 
 ``` yaml

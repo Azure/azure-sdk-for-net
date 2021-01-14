@@ -67,64 +67,6 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [Test]
-        public async Task CanPublishEventWithBinaryData()
-        {
-            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
-            EventGridPublisherClient client = InstrumentClient(
-                new EventGridPublisherClient(
-                    new Uri(TestEnvironment.TopicHost),
-                    new AzureKeyCredential(TestEnvironment.TopicKey),
-                    options));
-
-            List<EventGridEvent> eventsList = new List<EventGridEvent>();
-
-            for (int i = 0; i < 10; i++)
-            {
-                eventsList.Add(
-                    new EventGridEvent(
-                        BinaryData.FromObjectAsJson(new TestPayload("name", i)),
-                        $"Subject-{i}",
-                        "Microsoft.MockPublisher.TestEvent",
-                        "1.0")
-                    {
-                        Id = Recording.Random.NewGuid().ToString(),
-                        EventTime = Recording.Now
-                    });
-            }
-
-            await client.SendEventsAsync(eventsList);
-        }
-
-        [Test]
-        public async Task CanPublishEventWithNonJsonSerializedBinaryData()
-        {
-            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
-            EventGridPublisherClient client = InstrumentClient(
-                new EventGridPublisherClient(
-                    new Uri(TestEnvironment.TopicHost),
-                    new AzureKeyCredential(TestEnvironment.TopicKey),
-                    options));
-
-            List<EventGridEvent> eventsList = new List<EventGridEvent>();
-
-            for (int i = 0; i < 10; i++)
-            {
-                eventsList.Add(
-                    new EventGridEvent(
-                        new BinaryData("data"),
-                        $"Subject-{i}",
-                        "Microsoft.MockPublisher.TestEvent",
-                        "1.0")
-                    {
-                        Id = Recording.Random.NewGuid().ToString(),
-                        EventTime = Recording.Now
-                    });
-            }
-
-            await client.SendEventsAsync(eventsList);
-        }
-
-        [Test]
         public async Task CanPublishEventToDomain()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -172,7 +114,8 @@ namespace Azure.Messaging.EventGrid.Tests
                 eventsList.Add(
                     new CloudEvent(
                         "record",
-                        "Microsoft.MockPublisher.TestEvent")
+                        "Microsoft.MockPublisher.TestEvent",
+                        null)
                     {
                         Id = Recording.Random.NewGuid().ToString(),
                         Subject = $"Subject-{i}",
@@ -246,7 +189,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 CloudEvent cloudEvent = new CloudEvent(
                     "record",
                     "Microsoft.MockPublisher.TestEvent",
-                    new BinaryData(Encoding.UTF8.GetBytes("data")),
+                    new BinaryData(Encoding.UTF8.GetBytes("data")).ToMemory(),
                     "test/binary")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
@@ -371,7 +314,7 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridPublisherClient sasTokenClient = InstrumentClient(
                 new EventGridPublisherClient(
                     new Uri(TestEnvironment.TopicHost),
-                    new EventGridSharedAccessSignatureCredential(sasToken),
+                    new AzureSasCredential(sasToken),
                     InstrumentClientOptions(new EventGridPublisherClientOptions())));
             await sasTokenClient.SendEventsAsync(GetEventsList());
         }

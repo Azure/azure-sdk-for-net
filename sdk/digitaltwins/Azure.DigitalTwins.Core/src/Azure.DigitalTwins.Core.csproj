@@ -50,6 +50,9 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
   </ItemGroup>
 
   <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />
