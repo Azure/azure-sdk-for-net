@@ -3,6 +3,7 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Azure.Management.ManagedServiceIdentity;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -32,6 +33,7 @@ namespace Compute.Tests
         protected ComputeManagementClient m_CrpClient;
         protected StorageManagementClient m_SrpClient;
         protected NetworkManagementClient m_NrpClient;
+        protected ManagedServiceIdentityClient m_MsiClient;
 
         protected bool m_initialized = false;
         protected object m_lock = new object();
@@ -51,6 +53,7 @@ namespace Compute.Tests
                         m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_NrpClient = ComputeManagementTestUtilities.GetNetworkManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        m_MsiClient = ComputeManagementTestUtilities.GetManagedServiceIdentityClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                         m_subId = m_CrpClient.SubscriptionId;
                         if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
