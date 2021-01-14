@@ -4,7 +4,7 @@ ENV \
     NO_AT_BRIDGE=1 \
     DOCKER_CONTAINER_NAME="ubuntu_netcore_keyring" \
     PSModuleAnalysisCachePath=/var/cache/microsoft/powershell/PSModuleAnalysisCache/ModuleAnalysisCache \
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Ubuntu-18.04
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Ubuntu-20.04
 
 # Install GNOME keyring
 RUN apt-get update \
@@ -14,7 +14,7 @@ RUN apt-get update \
         gnome-keyring
 
 # Install PowerShell && .net core runtime 2.1
-RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb \
+RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     && apt-get update \
     && apt-get install -y powershell \
