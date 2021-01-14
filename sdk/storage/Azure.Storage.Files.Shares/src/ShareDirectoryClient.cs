@@ -660,7 +660,7 @@ namespace Azure.Storage.Files.Shares
                     //    .ConfigureAwait(false);
 
                     return Response.FromValue(
-                        response.Headers.ToShareDirectoryInfo(),
+                        response.ToShareDirectoryInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -1309,7 +1309,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareDirectoryProperties(),
+                        response.ToShareDirectoryProperties(),
                         response.GetRawResponse());
 
                     // TODO
@@ -1490,7 +1490,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareDirectoryInfo(),
+                        response.ToShareDirectoryInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -1633,7 +1633,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareDirectoryInfo(),
+                        response.ToShareDirectoryInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -2318,7 +2318,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToStorageClosedHandlesSegment(),
+                        response.ToStorageClosedHandlesSegment(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)

@@ -7,7 +7,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
@@ -26,17 +28,6 @@ namespace Azure.Storage.Files.Shares
                 throw Errors.MustBeLessThanOrEqualTo(nameof(filePermission), Constants.File.MaxFilePermissionHeaderSize);
             }
         }
-
-        // TODO fix this.
-        //internal static Response<ShareFileLease> ToLease(this Response<BrokenLease> response)
-        //    => Response.FromValue(
-        //        new ShareFileLease
-        //        {
-        //            ETag = response.Value.ETag,
-        //            LastModified = response.Value.LastModified,
-        //            LeaseId = response.Value.LeaseId,
-        //            LeaseTime = response.Value.LeaseTime
-        //        }, response.GetRawResponse());
 
         internal static string ToFileDateTimeString(this DateTimeOffset? dateTimeOffset)
             => dateTimeOffset.HasValue ? ToFileDateTimeString(dateTimeOffset.Value) : null;
@@ -106,46 +97,46 @@ namespace Azure.Storage.Files.Shares
         }
 
         // TODO
-        internal static ShareDirectoryInfo ToShareDirectoryInfo(this DirectoryCreateHeaders directoryCreateHeaders)
+        internal static ShareDirectoryInfo ToShareDirectoryInfo(this ResponseWithHeaders<DirectoryCreateHeaders> response)
         {
             return null;
         }
 
-        internal static ShareDirectoryProperties ToShareDirectoryProperties(this DirectoryGetPropertiesHeaders directoryGetPropertiesHeaders)
+        internal static ShareDirectoryProperties ToShareDirectoryProperties(this ResponseWithHeaders<DirectoryGetPropertiesHeaders> response)
         {
-            if (directoryGetPropertiesHeaders == null)
+            if (response == null)
             {
                 return null;
             }
             return new ShareDirectoryProperties()
             {
-                Metadata = directoryGetPropertiesHeaders.Metadata,
+                Metadata = response.Headers.Metadata,
                 // TODO
-                //ETag = directoryGetPropertiesHeaders.Etag;
-                LastModified = directoryGetPropertiesHeaders.LastModified.GetValueOrDefault(),
-                IsServerEncrypted = directoryGetPropertiesHeaders.IsServerEncrypted.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
                 SmbProperties = new FileSmbProperties()
                 {
                     // TODO
                     //FileAttributes = directoryGetPropertiesHeaders.FileAttributes,
-                    FilePermissionKey = directoryGetPropertiesHeaders.FilePermissionKey,
-                    FileCreatedOn = directoryGetPropertiesHeaders.FileCreationTime,
-                    FileLastWrittenOn = directoryGetPropertiesHeaders.FileLastWriteTime,
-                    FileChangedOn = directoryGetPropertiesHeaders.FileChangeTime,
-                    FileId = directoryGetPropertiesHeaders.FileId,
-                    ParentId = directoryGetPropertiesHeaders.FileParentId
+                    FilePermissionKey = response.Headers.FilePermissionKey,
+                    FileCreatedOn = response.Headers.FileCreationTime,
+                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
+                    FileChangedOn = response.Headers.FileChangeTime,
+                    FileId = response.Headers.FileId,
+                    ParentId = response.Headers.FileParentId
                 }
             };
         }
 
         // TODO
-        internal static ShareDirectoryInfo ToShareDirectoryInfo(this DirectorySetPropertiesHeaders directorySetPropertiesHeaders)
+        internal static ShareDirectoryInfo ToShareDirectoryInfo(this ResponseWithHeaders<DirectorySetPropertiesHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static ShareDirectoryInfo ToShareDirectoryInfo(this DirectorySetMetadataHeaders directorySetMetadataHeaders)
+        internal static ShareDirectoryInfo ToShareDirectoryInfo(this ResponseWithHeaders<DirectorySetMetadataHeaders> response)
         {
             return null;
         }
@@ -165,247 +156,315 @@ namespace Azure.Storage.Files.Shares
         }
 
         // TODO
-        internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this DirectoryForceCloseHandlesHeaders directoryForceCloseHandlesHeaders)
+        internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> response)
         {
             return null;
         }
 
-        internal static ShareFileInfo ToShareFileInfo(this FileCreateHeaders fileCreateHeaders)
+        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileCreateHeaders> response)
         {
-            if (fileCreateHeaders == null)
+            if (response == null)
             {
                 return null;
             }
 
             return new ShareFileInfo
             {
-                // TODO
-                //ETag = fileCreateHeaders.ETag
-                LastModified = fileCreateHeaders.LastModified.GetValueOrDefault(),
-                IsServerEncrypted = fileCreateHeaders.IsServerEncrypted.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
                 SmbProperties = new FileSmbProperties()
                 {
                     // TODO
                     //FileAttributes = fileCreateHeaders.FileAttributes
-                    FilePermissionKey = fileCreateHeaders.FilePermissionKey,
-                    FileCreatedOn = fileCreateHeaders.FileCreationTime,
-                    FileLastWrittenOn = fileCreateHeaders.FileLastWriteTime,
-                    FileChangedOn = fileCreateHeaders.FileLastWriteTime,
-                    FileId = fileCreateHeaders.FileId,
-                    ParentId = fileCreateHeaders.FileParentId
+                    FilePermissionKey = response.Headers.FilePermissionKey,
+                    FileCreatedOn = response.Headers.FileCreationTime,
+                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
+                    FileChangedOn = response.Headers.FileLastWriteTime,
+                    FileId = response.Headers.FileId,
+                    ParentId = response.Headers.FileParentId
                 }
             };
         }
 
         // TODO
-        internal static ShareFileCopyInfo ToShareFileCopyInfo(this FileStartCopyHeaders fileStartCopyHeaders)
+        internal static ShareFileCopyInfo ToShareFileCopyInfo(this ResponseWithHeaders<FileStartCopyHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileCopyInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                CopyId = response.Headers.CopyId,
+                CopyStatus = response.Headers.CopyStatus.GetValueOrDefault()
+            };
+        }
+
+        // TODO
+        internal static ShareFileProperties ToShareFileProperties(this ResponseWithHeaders<FileGetPropertiesHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static ShareFileProperties ToShareFileProperties(this FileGetPropertiesHeaders fileGetPropertiesHeaders)
+        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileSetHttpHeadersHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static ShareFileInfo ToShareFileInfo(this FileSetHttpHeadersHeaders fileSetHttpHeadersHeaders)
+        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileSetMetadataHeaders> response)
         {
             return null;
         }
 
-        // TODO
-        internal static ShareFileInfo ToShareFileInfo(this FileSetMetadataHeaders fileSetMetadataHeaders)
+        internal static ShareFileUploadInfo ToShareFileUploadInfo(this ResponseWithHeaders<FileUploadRangeHeaders> response)
         {
-            return null;
-        }
-
-        internal static ShareFileUploadInfo ToShareFileUploadInfo(this FileUploadRangeHeaders fileUploadRangeHeaders)
-        {
-            if (fileUploadRangeHeaders == null)
+            if (response == null)
             {
                 return null;
             }
             return new ShareFileUploadInfo()
             {
-                // TODO
-                //ETag = fileUploadRangeHeaders.Etag,
-                LastModified = fileUploadRangeHeaders.LastModified.GetValueOrDefault(),
-                ContentHash = fileUploadRangeHeaders.ContentMD5,
-                IsServerEncrypted = fileUploadRangeHeaders.IsServerEncrypted.GetValueOrDefault()
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault()
             };
         }
 
         // TODO
-        internal static ShareFileUploadInfo ToShareFileUploadInfo(this FileUploadRangeFromURLHeaders fileUploadRangeFromURLHeaders)
+        internal static ShareFileUploadInfo ToShareFileUploadInfo(this ResponseWithHeaders<FileUploadRangeFromURLHeaders> response)
         {
             return null;
         }
 
-        internal static ShareFileRangeInfo ToShareFileRangeInfo(ShareFileRangeList shareFileRangeList, FileGetRangeListHeaders fileGetRangeListHeaders)
+        internal static ShareFileRangeInfo ToShareFileRangeInfo(this ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> response)
         {
-            if (shareFileRangeList == null)
+            if (response == null)
             {
                 return null;
             }
             return new ShareFileRangeInfo
             {
-                LastModified = fileGetRangeListHeaders.LastModified.GetValueOrDefault(),
-                // TODO
-                //ETag = fileGetRangeListHeaders.ETag,
-                FileContentLength = fileGetRangeListHeaders.FileContentLength.GetValueOrDefault(),
-                Ranges = (IEnumerable<HttpRange>)shareFileRangeList.Ranges.ToList(),
-                ClearRanges = (IEnumerable<HttpRange>)shareFileRangeList.ClearRanges.ToList(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                FileContentLength = response.Headers.FileContentLength.GetValueOrDefault(),
+                Ranges = (IEnumerable<HttpRange>)response.Value.Ranges.ToList(),
+                ClearRanges = (IEnumerable<HttpRange>)response.Value.ClearRanges.ToList(),
             };
         }
 
-        internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this FileForceCloseHandlesHeaders fileForceCloseHandlesHeaders)
+        internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this ResponseWithHeaders<FileForceCloseHandlesHeaders> response)
         {
-            if (fileForceCloseHandlesHeaders == null)
+            if (response == null)
             {
                 return null;
             }
             return new StorageClosedHandlesSegment
             {
-                Marker = fileForceCloseHandlesHeaders.Marker,
-                NumberOfHandlesClosed = fileForceCloseHandlesHeaders.NumberOfHandlesClosed.GetValueOrDefault(),
-                NumberOfHandlesFailedToClose = fileForceCloseHandlesHeaders.NumberOfHandlesFailedToClose.GetValueOrDefault()
+                Marker = response.Headers.Marker,
+                NumberOfHandlesClosed = response.Headers.NumberOfHandlesClosed.GetValueOrDefault(),
+                NumberOfHandlesFailedToClose = response.Headers.NumberOfHandlesFailedToClose.GetValueOrDefault()
             };
         }
 
-        internal static ShareFileLease ToShareFileLease(this FileAcquireLeaseHeaders fileAcquireLeaseHeaders)
+        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<FileAcquireLeaseHeaders> response)
         {
-            if (fileAcquireLeaseHeaders == null)
+            if (response == null)
             {
                 return null;
             }
+
+            int? leaseTime = null;
+
+            // TODO make this a constant.
+            if (response.GetRawResponse().Headers.TryGetValue("x-ms-lease-time", out string leaseTimeString))
+            {
+                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
+            }
+
             return new ShareFileLease()
             {
-                // TODO
-                //ETag = fileAcquireLeaseHeaders.Etag
-                LastModified = fileAcquireLeaseHeaders.LastModified.GetValueOrDefault(),
-                LeaseId = fileAcquireLeaseHeaders.LeaseId,
-                // TODO
-                //LeaseTime = fileAcquireLeaseHeaders.leaseTime,
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = leaseTime
             };
         }
 
         // TODO
-        internal static ShareFileLease ToShareFileLease(this ShareAcquireLeaseHeaders shareAcquireLeaseHeaders)
+        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareAcquireLeaseHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this FileReleaseLeaseHeaders fileReleaseLeaseHeaders)
+        internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this ResponseWithHeaders<FileReleaseLeaseHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this ShareReleaseLeaseHeaders shareReleaseLeaseHeaders)
+        internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this ResponseWithHeaders<ShareReleaseLeaseHeaders> response)
+        {
+            return null;
+        }
+
+        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<FileChangeLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            int? leaseTime = null;
+
+            // TODO make this a constant
+            if (response.GetRawResponse().Headers.TryGetValue("x-ms-lease-time", out string leaseTimeString))
+            {
+                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
+            }
+
+            return new ShareFileLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = leaseTime,
+            };
+        }
+
+        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareChangeLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            int? leaseTime = null;
+
+            // TODO make this a constant
+            if (response.GetRawResponse().Headers.TryGetValue("x-ms-lease-time", out string leaseTimeString))
+            {
+                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
+            }
+
+            return new ShareFileLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = leaseTime,
+            };
+        }
+
+        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<FileBreakLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            int? leaseTime = null;
+
+            // TODO make this a constant
+            if (response.GetRawResponse().Headers.TryGetValue("x-ms-lease-time", out string leaseTimeString))
+            {
+                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
+            }
+
+            return new ShareFileLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                // Break lease does not return lease Id.
+                LeaseId = null,
+                LeaseTime = leaseTime
+            };
+        }
+
+        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareBreakLeaseHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static ShareFileLease ToShareFileLease(this FileChangeLeaseHeaders fileChangeLeaseHeaders)
+        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<FileReleaseLeaseHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static ShareFileLease ToShareFileLease(this ShareChangeLeaseHeaders shareChangeLeaseHeaders)
+        internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareCreateHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static ShareFileLease ToShareFileLease(this FileBreakLeaseHeaders fileBreakLeaseHeaders)
+        internal static ShareSnapshotInfo ToShareSnapshotInfo(this ResponseWithHeaders<ShareCreateSnapshotHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static ShareFileLease ToShareFileLease(this ShareBreakLeaseHeaders fileBreakLeaseHeaders)
+        internal static ShareProperties ToShareProperties(this ResponseWithHeaders<ShareGetPropertiesHeaders> response)
         {
-            return null;
-        }
-
-        // TODO
-        internal static ShareFileLease ToShareFileLease(this FileReleaseLeaseHeaders fileReleaseLeaseHeaders)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static ShareInfo ToShareInfo(this ShareCreateHeaders shareCreateHeaders)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static ShareSnapshotInfo ToShareSnapshotInfo(this ShareCreateSnapshotHeaders shareCreateSnapshotHeaders)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static ShareProperties ToShareProperties(this ShareGetPropertiesHeaders shareGetPropertiesHeaders)
-        {
-            if (shareGetPropertiesHeaders == null)
+            if (response == null)
             {
                 return null;
             }
 
             return new ShareProperties
             {
-                LastModified = shareGetPropertiesHeaders.LastModified,
+                LastModified = response.Headers.LastModified,
                 // TODO fix this.
                 ETag = new ETag(""),
-                ProvisionedIops = shareGetPropertiesHeaders.ProvisionedIops,
-                ProvisionedIngressMBps = shareGetPropertiesHeaders.ProvisionedIngressMBps,
-                ProvisionedEgressMBps = shareGetPropertiesHeaders.ProvisionedEgressMBps,
-                NextAllowedQuotaDowngradeTime = shareGetPropertiesHeaders.NextAllowedQuotaDowngradeTime,
+                ProvisionedIops = response.Headers.ProvisionedIops,
+                ProvisionedIngressMBps = response.Headers.ProvisionedIngressMBps,
+                ProvisionedEgressMBps = response.Headers.ProvisionedEgressMBps,
+                NextAllowedQuotaDowngradeTime = response.Headers.NextAllowedQuotaDowngradeTime,
                 // TODO fix this.
                 DeletedOn = null,
                 // TODO fix this.
                 RemainingRetentionDays = null,
-                AccessTier = shareGetPropertiesHeaders.AccessTier,
-                AccessTierChangeTime = shareGetPropertiesHeaders.AccessTierChangeTime,
-                AccessTierTransitionState = shareGetPropertiesHeaders.AccessTierTransitionState,
+                AccessTier = response.Headers.AccessTier,
+                AccessTierChangeTime = response.Headers.AccessTierChangeTime,
+                AccessTierTransitionState = response.Headers.AccessTierTransitionState,
                 // TODO fix this
                 //LeaseStatus = shareGetPropertiesHeaders.LeaseStatus,
                 //LeaseState = shareGetPropertiesHeaders.LeaseState,
                 //LeaseDuration = shareGetPropertiesHeaders.LeaseDuration,
                 //Protocols = shareGetPropertiesHeaders.EnabledProtocols,
-                RootSquash = shareGetPropertiesHeaders.RootSquash,
-                QuotaInGB = shareGetPropertiesHeaders.Quota,
-                Metadata = shareGetPropertiesHeaders.Metadata
+                RootSquash = response.Headers.RootSquash,
+                QuotaInGB = response.Headers.Quota,
+                Metadata = response.Headers.Metadata
             };
         }
 
         // TODO
-        internal static ShareInfo ToShareInfo(this ShareSetPropertiesHeaders shareSetPropertiesHeaders)
+        internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareSetPropertiesHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static ShareInfo ToShareInfo(this ShareSetMetadataHeaders shareSetMetadataHeaders)
+        internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareSetMetadataHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static ShareInfo ToShareInfo(this ShareSetAccessPolicyHeaders shareSetAccessPolicyHeaders)
+        internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareSetAccessPolicyHeaders> response)
         {
             return null;
         }
 
         // TODO
-        internal static PermissionInfo ToPermissionInfo(this ShareCreatePermissionHeaders shareCreatePermissionHeaders)
+        internal static PermissionInfo ToPermissionInfo(this ResponseWithHeaders<ShareCreatePermissionHeaders> response)
         {
             return null;
         }
@@ -476,55 +535,55 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        internal static ShareFileDownloadInfo ToShareFileDownloadInfo(FileDownloadHeaders fileDownloadHeaders, Stream content)
+        internal static ShareFileDownloadInfo ToShareFileDownloadInfo(this ResponseWithHeaders<Stream, FileDownloadHeaders> response)
         {
-            if (fileDownloadHeaders == null)
+            if (response == null)
             {
                 return null;
             }
             return new ShareFileDownloadInfo
             {
-                ContentLength = fileDownloadHeaders.ContentLength.GetValueOrDefault(),
-                Content = content,
-                ContentType = fileDownloadHeaders.ContentType,
-                ContentHash = fileDownloadHeaders.ContentMD5,
+                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                Content = response.Value,
+                ContentType = response.Headers.ContentType,
+                ContentHash = response.Headers.ContentMD5,
                 Details = new ShareFileDownloadDetails
                 {
-                    LastModified = fileDownloadHeaders.LastModified.GetValueOrDefault(),
-                    Metadata = fileDownloadHeaders.Metadata,
-                    ContentRange = fileDownloadHeaders.ContentRange,
+                    LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                    Metadata = response.Headers.Metadata,
+                    ContentRange = response.Headers.ContentRange,
                     // TODO
                     //ETag = fileDownloadHeaders.Etag
                     // TODO
                     //ContentEncoding = fileDownloadHeaders.ContentEncoding,
-                    CacheControl = fileDownloadHeaders.CacheControl,
-                    ContentDisposition = fileDownloadHeaders.ContentDisposition,
+                    CacheControl = response.Headers.CacheControl,
+                    ContentDisposition = response.Headers.ContentDisposition,
                     // TODO
                     //ContentLanguage = fileDownloadHeaders.ContentLanguage,
-                    AcceptRanges = fileDownloadHeaders.AcceptRanges,
-                    CopyCompletedOn = fileDownloadHeaders.CopyCompletionTime.GetValueOrDefault(),
-                    CopyStatusDescription = fileDownloadHeaders.CopyStatusDescription,
-                    CopyId = fileDownloadHeaders.CopyId,
-                    CopyProgress = fileDownloadHeaders.CopyProgress,
+                    AcceptRanges = response.Headers.AcceptRanges,
+                    CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
+                    CopyStatusDescription = response.Headers.CopyStatusDescription,
+                    CopyId = response.Headers.CopyId,
+                    CopyProgress = response.Headers.CopyProgress,
                     // TODO
                     //CopySource = fileDownloadHeaders.CopySource,
                     // TODO
                     //CopyStatus = fileDownloadHeaders.CopyStatus,
-                    FileContentHash = fileDownloadHeaders.FileContentMD5,
-                    IsServerEncrypted = fileDownloadHeaders.IsServerEncrypted.GetValueOrDefault(),
-                    LeaseDuration = fileDownloadHeaders.LeaseDuration.GetValueOrDefault(),
-                    LeaseState = fileDownloadHeaders.LeaseState.GetValueOrDefault(),
-                    LeaseStatus = fileDownloadHeaders.LeaseStatus.GetValueOrDefault(),
+                    FileContentHash = response.Headers.FileContentMD5,
+                    IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                    LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),
+                    LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
+                    LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault(),
                     SmbProperties = new FileSmbProperties
                     {
                         // TODO
                         //FileAttributes = fileDownloadHeaders.FileAttributes,
-                        FilePermissionKey = fileDownloadHeaders.FilePermissionKey,
-                        FileCreatedOn = fileDownloadHeaders.FileCreationTime,
-                        FileLastWrittenOn = fileDownloadHeaders.FileLastWriteTime,
-                        FileChangedOn = fileDownloadHeaders.FileChangeTime,
-                        FileId = fileDownloadHeaders.FileId,
-                        ParentId = fileDownloadHeaders.FileParentId
+                        FilePermissionKey = response.Headers.FilePermissionKey,
+                        FileCreatedOn = response.Headers.FileCreationTime,
+                        FileLastWrittenOn = response.Headers.FileLastWriteTime,
+                        FileChangedOn = response.Headers.FileChangeTime,
+                        FileId = response.Headers.FileId,
+                        ParentId = response.Headers.FileParentId
                     }
                 }
             };

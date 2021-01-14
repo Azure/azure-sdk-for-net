@@ -793,7 +793,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareFileInfo(),
+                        response.ToShareFileInfo(),
                         response.GetRawResponse());
 
                     // TODO remove this
@@ -1390,15 +1390,19 @@ namespace Azure.Storage.Files.Shares
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(StartCopy)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<FileStartCopyHeaders> response;
 
                     if (async)
                     {
                         response = await _fileRestClient.StartCopyAsync(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             copySource: sourceUri.ToString(),
                             metadata: metadata,
                             filePermission: filePermission,
@@ -1412,8 +1416,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _fileRestClient.StartCopy(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             copySource: sourceUri.ToString(),
                             metadata: metadata,
                             filePermission: filePermission,
@@ -1425,39 +1429,19 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareFileCopyInfo(),
+                        response.ToShareFileCopyInfo(),
                         response.GetRawResponse());
-
-                    // TODO remove this
-                    //return await Shares.FileRestClient.File.StartCopyAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    copySource: sourceUri,
-                    //    metadata: metadata,
-                    //    leaseId: conditions?.LeaseId,
-                    //    filePermission: filePermission,
-                    //    filePermissionKey: smbProperties?.FilePermissionKey,
-                    //    filePermissionCopyMode: filePermissionCopyMode,
-                    //    ignoreReadOnly: ignoreReadOnly,
-                    //    fileAttributes: smbProperties?.FileAttributes?.ToAttributesString(),
-                    //    fileCreationTime: smbProperties?.FileCreatedOn.ToFileDateTimeString(),
-                    //    fileLastWriteTime: smbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
-                    //    setArchiveAttribute: setArchiveAttribute,
-                    //    async: async,
-                    //    cancellationToken: cancellationToken,
-                    //    operationName: $"{nameof(Shares.ShareFileClient)}.{nameof(StartCopy)}")
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1647,8 +1631,12 @@ namespace Azure.Storage.Files.Shares
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(copyId)}: {copyId}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(AbortCopy)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<FileAbortCopyHeaders> response;
 
                     if (async)
@@ -1672,27 +1660,17 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return response.GetRawResponse();
-
-                    //return await Shares.FileRestClient.File.AbortCopyAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    copyId: copyId,
-                    //    leaseId: conditions?.LeaseId,
-                    //    version: Version.ToVersionString(),
-                    //    async: async,
-                    //    cancellationToken: cancellationToken,
-                    //    operationName: $"{nameof(Shares.ShareFileClient)}.{nameof(AbortCopy)}")
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2087,7 +2065,7 @@ namespace Azure.Storage.Files.Shares
 
             return (
                 Response.FromValue(
-                    ShareExtensions.ToShareFileDownloadInfo(response.Headers, response.Value),
+                    response.ToShareFileDownloadInfo(),
                     response.GetRawResponse()),
                 response.Value);
         }
@@ -2800,7 +2778,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareFileProperties(),
+                        response.ToShareFileProperties(),
                         response.GetRawResponse());
 
                     // TODO
@@ -3156,7 +3134,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareFileInfo(),
+                        response.ToShareFileInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -3389,7 +3367,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareFileInfo(),
+                        response.ToShareFileInfo(),
                         response.GetRawResponse()); ;
 
                     // TODO remove this.
@@ -3572,7 +3550,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareFileUploadInfo(),
+                        response.ToShareFileUploadInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -3931,7 +3909,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareFileUploadInfo(),
+                        response.ToShareFileUploadInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -4217,7 +4195,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareFileUploadInfo(),
+                        response.ToShareFileUploadInfo(),
                         response.GetRawResponse());
 
                     // TODO remove this.
@@ -4877,7 +4855,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        ShareExtensions.ToShareFileRangeInfo(response.Value, response.Headers),
+                        response.ToShareFileRangeInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -5426,7 +5404,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToStorageClosedHandlesSegment(),
+                        response.ToStorageClosedHandlesSegment(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)

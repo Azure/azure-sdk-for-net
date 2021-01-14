@@ -654,7 +654,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareInfo(),
+                        response.ToShareInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -1350,7 +1350,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareSnapshotInfo(),
+                        response.ToShareSnapshotInfo(),
                         response.GetRawResponse());
 
                     // TODO remove this
@@ -1832,7 +1832,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareProperties(),
+                        response.ToShareProperties(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -2010,7 +2010,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareInfo(),
+                        response.ToShareInfo(),
                         response.GetRawResponse());
 
                     //return await FileRestClient.Share.SetPropertiesAsync(
@@ -2426,7 +2426,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareInfo(),
+                        response.ToShareInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -2889,7 +2889,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToShareInfo(),
+                        response.ToShareInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -3334,7 +3334,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.Headers.ToPermissionInfo(),
+                        response.ToPermissionInfo(),
                         response.GetRawResponse());
 
                     // TODO remove this
