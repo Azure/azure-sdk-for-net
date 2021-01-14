@@ -1,4 +1,8 @@
 # Release History
+
+## 4.2.1 (2021-01-14)
+- Update dependency of Microsoft.Azure.Amqp to version 2.4.9
+
 ## 4.2.0
 ### Improvements
 - Enable a way to Unregister Message Handler and Session Handler [PR 14021](https://github.com/Azure/azure-sdk-for-net/pull/14021)
