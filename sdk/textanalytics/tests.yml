@@ -10,5 +10,7 @@ extends:
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'centraluseuap'
-    Clouds: 'Public,Preview,UsGov'
+      UsGov:
+        SubscriptionConfiguration: $(sub-config-gov-test-resources-test)
+    Clouds: 'Public,Canary,UsGov'
     UnsupportedClouds: 'China'
