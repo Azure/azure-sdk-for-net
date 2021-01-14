@@ -203,10 +203,48 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        // TODO
         internal static ShareFileProperties ToShareFileProperties(this ResponseWithHeaders<FileGetPropertiesHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileProperties
+            {
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                Metadata = response.Headers.Metadata,
+                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                ContentType = response.Headers.ContentType,
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                // TODO
+                //ContentEncoding = response.Headers.ContentEncoding,
+                CacheControl = response.Headers.CacheControl,
+                ContentDisposition = response.Headers.ContentDisposition,
+                // TODO
+                //ContentLanguage = response.Headers.ContentLanguage,
+                CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
+                CopyStatusDescription = response.Headers.CopyStatusDescription,
+                CopyId = response.Headers.CopyId,
+                CopyProgress = response.Headers.CopyProgress,
+                CopySource = response.Headers.CopySource,
+                CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                SmbProperties = new FileSmbProperties
+                {
+                    // TODO
+                    //FileAttributes = response.Headers.FileAttributes,
+                    FilePermissionKey = response.Headers.FilePermissionKey,
+                    FileCreatedOn = response.Headers.FileCreationTime,
+                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
+                    FileChangedOn = response.Headers.FileChangeTime,
+                    FileId = response.Headers.FileId,
+                    ParentId = response.Headers.FileParentId
+                },
+                LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),
+                LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
+                LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault()
+            };
         }
 
         // TODO
