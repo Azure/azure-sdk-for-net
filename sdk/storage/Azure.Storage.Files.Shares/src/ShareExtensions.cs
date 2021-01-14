@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Files.Shares.Models;
@@ -144,16 +142,42 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        // TODO
         internal static ShareDirectoryInfo ToShareDirectoryInfo(this ResponseWithHeaders<DirectorySetPropertiesHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareDirectoryInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ToFileAttributes(response.Headers.FileAttributes),
+                    FilePermissionKey = response.Headers.FilePermissionKey,
+                    FileCreatedOn = response.Headers.FileCreationTime,
+                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
+                    FileChangedOn = response.Headers.FileChangeTime,
+                    FileId = response.Headers.FileId,
+                    ParentId = response.Headers.FileParentId
+                }
+            };
         }
 
-        // TODO
         internal static ShareDirectoryInfo ToShareDirectoryInfo(this ResponseWithHeaders<DirectorySetMetadataHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            // Set Directory metadata returns limited resposne headers - https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-metadata.
+            return new ShareDirectoryInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                SmbProperties = new FileSmbProperties()
+            };
         }
 
         internal static StorageHandlesSegment ToStorageHandlesSegment(this ListHandlesResponse listHandlesResponse)
@@ -170,10 +194,18 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        // TODO
         internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new StorageClosedHandlesSegment
+            {
+                Marker = response.Headers.Marker,
+                NumberOfHandlesClosed = response.Headers.NumberOfHandlesClosed.GetValueOrDefault(),
+                NumberOfHandlesFailedToClose = response.Headers.NumberOfHandlesFailedToClose.GetValueOrDefault()
+            };
         }
 
         internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileCreateHeaders> response)
@@ -201,7 +233,6 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        // TODO
         internal static ShareFileCopyInfo ToShareFileCopyInfo(this ResponseWithHeaders<FileStartCopyHeaders> response)
         {
             if (response == null)
@@ -260,16 +291,47 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        // TODO
         internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileSetHttpHeadersHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ToFileAttributes(response.Headers.FileAttributes),
+                    FilePermissionKey = response.Headers.FilePermissionKey,
+                    FileCreatedOn = response.Headers.FileCreationTime,
+                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
+                    FileChangedOn = response.Headers.FileChangeTime,
+                    FileId = response.Headers.FileId,
+                    ParentId = response.Headers.FileParentId
+                }
+            };
         }
 
-        // TODO
         internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileSetMetadataHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                // TODO
+                //LastModified =
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                // TODO
+                SmbProperties = new FileSmbProperties
+                {
+                }
+            };
         }
 
         internal static ShareFileUploadInfo ToShareFileUploadInfo(this ResponseWithHeaders<FileUploadRangeHeaders> response)
@@ -287,10 +349,20 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        // TODO
         internal static ShareFileUploadInfo ToShareFileUploadInfo(this ResponseWithHeaders<FileUploadRangeFromURLHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileUploadInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                // TODO
+                //ContentHash = response.Headers.con
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+            };
         }
 
         internal static ShareFileRangeInfo ToShareFileRangeInfo(this ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> response)
@@ -347,22 +419,46 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        // TODO
         internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareAcquireLeaseHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                // TODO
+                //LeaseTime = response.Headers.LeaseTime
+            };
         }
 
-        // TODO
         internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this ResponseWithHeaders<FileReleaseLeaseHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new FileLeaseReleaseInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
         }
 
-        // TODO
         internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this ResponseWithHeaders<ShareReleaseLeaseHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new FileLeaseReleaseInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+            };
         }
 
         internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<FileChangeLeaseHeaders> response)
@@ -440,28 +536,64 @@ namespace Azure.Storage.Files.Shares
 
         internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareBreakLeaseHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = response.Headers.LeaseTime
+            };
         }
 
-        // TODO
         internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<FileReleaseLeaseHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                // TODO
+                //LeaseId = response.Headers.LeaseId
+                // TODO
+                //LeaseTime = response.Headers.LeaseTime
+            };
         }
 
-        // TODO
         internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareCreateHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
         }
 
-        // TODO
         internal static ShareSnapshotInfo ToShareSnapshotInfo(this ResponseWithHeaders<ShareCreateSnapshotHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new ShareSnapshotInfo
+            {
+                Snapshot = response.Headers.Snapshot,
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
         }
 
-        // TODO
         internal static ShareProperties ToShareProperties(this ResponseWithHeaders<ShareGetPropertiesHeaders> response)
         {
             if (response == null)
@@ -484,34 +616,54 @@ namespace Azure.Storage.Files.Shares
                 RemainingRetentionDays = null,
                 AccessTier = response.Headers.AccessTier,
                 AccessTierChangeTime = response.Headers.AccessTierChangeTime,
-                AccessTierTransitionState = response.Headers.AccessTierTransitionState,
-                // TODO fix this
-                //LeaseStatus = shareGetPropertiesHeaders.LeaseStatus,
-                //LeaseState = shareGetPropertiesHeaders.LeaseState,
-                //LeaseDuration = shareGetPropertiesHeaders.LeaseDuration,
-                //Protocols = shareGetPropertiesHeaders.EnabledProtocols,
+                LeaseStatus = response.Headers.LeaseStatus,
+                LeaseState = response.Headers.LeaseState,
+                LeaseDuration = response.Headers.LeaseDuration,
+                Protocols =  ToShareEnabledProtocols(response.Headers.EnabledProtocols),
                 RootSquash = response.Headers.RootSquash,
                 QuotaInGB = response.Headers.Quota,
                 Metadata = response.Headers.Metadata
             };
         }
 
-        // TODO
         internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareSetPropertiesHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new ShareInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
         }
 
-        // TODO
         internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareSetMetadataHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
         }
 
-        // TODO
         internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareSetAccessPolicyHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
         }
 
         internal static PermissionInfo ToPermissionInfo(this ResponseWithHeaders<ShareCreatePermissionHeaders> response)
@@ -610,8 +762,7 @@ namespace Azure.Storage.Files.Shares
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
                     Metadata = response.Headers.Metadata,
                     ContentRange = response.Headers.ContentRange,
-                    // TODO
-                    //ETag = fileDownloadHeaders.Etag
+                    ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                     // TODO
                     //ContentEncoding = fileDownloadHeaders.ContentEncoding,
                     CacheControl = response.Headers.CacheControl,
@@ -623,10 +774,8 @@ namespace Azure.Storage.Files.Shares
                     CopyStatusDescription = response.Headers.CopyStatusDescription,
                     CopyId = response.Headers.CopyId,
                     CopyProgress = response.Headers.CopyProgress,
-                    // TODO
-                    //CopySource = fileDownloadHeaders.CopySource,
-                    // TODO
-                    //CopyStatus = fileDownloadHeaders.CopyStatus,
+                    CopySource = new Uri(response.Headers.CopySource),
+                    CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
                     FileContentHash = response.Headers.FileContentMD5,
                     IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
                     LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),

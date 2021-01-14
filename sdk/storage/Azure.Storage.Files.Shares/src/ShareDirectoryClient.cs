@@ -2189,7 +2189,8 @@ namespace Azure.Storage.Files.Shares
                         marker,
                         recursive,
                         async,
-                        cancellationToken)
+                        cancellationToken,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(ForceCloseAllHandles)}")
                     .ConfigureAwait(false);
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
