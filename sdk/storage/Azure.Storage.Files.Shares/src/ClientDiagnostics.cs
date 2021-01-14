@@ -30,7 +30,7 @@ namespace Azure.Core.Pipeline
 #pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 #pragma warning restore CA1822
             )
-        { 
+        {
             XDocument xml = XDocument.Parse(content);
             errorCode = xml.Root.Element(Constants.ErrorCode).Value;
             message = xml.Root.Element(Constants.ErrorMessage).Value;
