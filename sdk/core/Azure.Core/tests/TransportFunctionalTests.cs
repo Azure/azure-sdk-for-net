@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
@@ -19,25 +20,15 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    [TestFixture(typeof(HttpClientTransport), true)]
-    [TestFixture(typeof(HttpClientTransport), false)]
-#if NETFRAMEWORK
-    [TestFixture(typeof(HttpWebRequestTransport), true)]
-    [TestFixture(typeof(HttpWebRequestTransport), false)]
-#endif
-    public class TransportFunctionalTests : PipelineTestBase
+    [TestFixture(true)]
+    [TestFixture(false)]
+    public abstract class TransportFunctionalTests : PipelineTestBase
     {
-        private readonly Type _transportType;
-
-        public TransportFunctionalTests(Type transportType, bool isAsync) : base(isAsync)
+        public TransportFunctionalTests(bool isAsync) : base(isAsync)
         {
-             _transportType = transportType;
         }
 
-        private HttpPipelineTransport GetTransport()
-        {
-            return (HttpPipelineTransport) Activator.CreateInstance(_transportType);
-        }
+        protected abstract HttpPipelineTransport GetTransport(bool ssl = false);
 
         public static object[] ContentWithLength =>
             new object[]
@@ -796,8 +787,9 @@ namespace Azure.Core.Tests
             }
         }
 
-        [Test]
-        public async Task ThrowsTaskCanceledExceptionWhenCancelled()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ThrowsTaskCanceledExceptionWhenCancelled(bool ssl)
         {
             var testDoneTcs = new CancellationTokenSource();
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -807,11 +799,48 @@ namespace Azure.Core.Tests
                 {
                     tcs.SetResult(null);
                     await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
-                });
+                }, ssl);
 
             var cts = new CancellationTokenSource();
-            var transport = GetTransport();
+            var transport = GetTransport(ssl);
             Request request = transport.CreateRequest();
+            request.Uri.Reset(testServer.Address);
+
+            var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
+
+            // Wait for server to receive a request
+            await tcs.Task;
+
+            cts.Cancel();
+
+            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task);
+            testDoneTcs.Cancel();
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanCancelContentUpload(bool ssl)
+        {
+            var testDoneTcs = new CancellationTokenSource();
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            // Use large enough request content size to fill the buffers and force the upload to stall
+            var buffer = new byte[100*1024*1024];
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    // read part of the request
+                    await context.Request.Body.ReadAsync(buffer, 0, 100);
+                    tcs.SetResult(null);
+                    await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+                }, ssl);
+
+            var cts = new CancellationTokenSource();
+            var transport = GetTransport(ssl);
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Post;
+            request.Content = RequestContent.Create(buffer);
             request.Uri.Reset(testServer.Address);
 
             var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
