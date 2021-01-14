@@ -27,7 +27,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WriteObjectValue(Protocol, "Protocol");
+                writer.WriteObjectValue(Protocol, "ProtocolSettings");
             }
             if (Optional.IsCollectionDefined(Cors))
             {
@@ -55,9 +55,9 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 minuteMetrics = ShareMetrics.DeserializeShareMetrics(minuteMetricsElement);
             }
-            if (element.Element("Protocol") is XElement protocolElement)
+            if (element.Element("ProtocolSettings") is XElement protocolSettingsElement)
             {
-                protocol = ShareProtocolSettings.DeserializeShareProtocolSettings(protocolElement);
+                protocol = ShareProtocolSettings.DeserializeShareProtocolSettings(protocolSettingsElement);
             }
             if (element.Element("Cors") is XElement corsElement)
             {

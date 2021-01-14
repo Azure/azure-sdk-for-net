@@ -15,10 +15,10 @@ namespace Azure.Storage.Files.Shares.Models
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
-            writer.WriteStartElement(nameHint ?? "ShareProtocolSettings");
+            writer.WriteStartElement(nameHint ?? "ProtocolSettings");
             if (Optional.IsDefined(Smb))
             {
-                writer.WriteObjectValue(Smb, "Smb");
+                writer.WriteObjectValue(Smb, "SMB");
             }
             writer.WriteEndElement();
         }
@@ -26,9 +26,9 @@ namespace Azure.Storage.Files.Shares.Models
         internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element)
         {
             ShareSmbSettings smb = default;
-            if (element.Element("Smb") is XElement smbElement)
+            if (element.Element("SMB") is XElement sMBElement)
             {
-                smb = ShareSmbSettings.DeserializeShareSmbSettings(smbElement);
+                smb = ShareSmbSettings.DeserializeShareSmbSettings(sMBElement);
             }
             return new ShareProtocolSettings(smb);
         }
