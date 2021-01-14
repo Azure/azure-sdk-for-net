@@ -12,6 +12,8 @@ parameters:
 jobs:
   - ${{ if eq(parameters.Daily, false) }}:
     - job: smoke_test_eligibility
+      pool:
+        vmImage: ubuntu-18.04
       displayName: Check Smoke Test Eligibility
       steps:
         # pipelines only supports template each when it generates the entire script block.
