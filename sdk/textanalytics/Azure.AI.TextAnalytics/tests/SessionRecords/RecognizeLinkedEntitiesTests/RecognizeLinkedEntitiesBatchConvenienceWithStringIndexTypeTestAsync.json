@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/linking?stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/linking?showStats=false\u0026stringIndexType=UnicodeCodePoint",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
-        "Content-Length": "103",
+        "Content-Length": "192",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210113.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "5dbd0e4d74f1991eb1c26555a87606e8",
+        "x-ms-client-request-id": "3c71e34ea0153792ba288d365c885862",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,19 +18,24 @@
             "id": "0",
             "text": "Microsoft was founded by Bill Gates and Paul Allen.",
             "language": "en"
+          },
+          {
+            "id": "1",
+            "text": "Pike place market is my favorite Seattle attraction.",
+            "language": "en"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0d199181-f040-4ab3-9874-89eac73cd87a",
+        "apim-request-id": "bb89312b-a178-4aaf-b7d5-3b46706d349d",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Thu, 14 Jan 2021 01:39:58 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
+        "Date": "Thu, 14 Jan 2021 01:40:01 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "documents": [
@@ -87,6 +92,44 @@
               }
             ],
             "warnings": []
+          },
+          {
+            "id": "1",
+            "entities": [
+              {
+                "bingId": "38b9431e-cf91-93be-0584-c42a3ecbfdc7",
+                "name": "Pike Place Market",
+                "matches": [
+                  {
+                    "text": "Pike place market",
+                    "offset": 0,
+                    "length": 17,
+                    "confidenceScore": 0.86
+                  }
+                ],
+                "language": "en",
+                "id": "Pike Place Market",
+                "url": "https://en.wikipedia.org/wiki/Pike_Place_Market",
+                "dataSource": "Wikipedia"
+              },
+              {
+                "bingId": "5fbba6b8-85e1-4d41-9444-d9055436e473",
+                "name": "Seattle",
+                "matches": [
+                  {
+                    "text": "Seattle",
+                    "offset": 33,
+                    "length": 7,
+                    "confidenceScore": 0.27
+                  }
+                ],
+                "language": "en",
+                "id": "Seattle",
+                "url": "https://en.wikipedia.org/wiki/Seattle",
+                "dataSource": "Wikipedia"
+              }
+            ],
+            "warnings": []
           }
         ],
         "errors": [],
@@ -95,7 +138,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "862299711",
+    "RandomSeed": "1055851207",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
   }

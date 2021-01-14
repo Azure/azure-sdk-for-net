@@ -23,10 +23,10 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "252789c9-1e99-450c-abbd-629dae7e81bd",
+        "apim-request-id": "7f177f94-2e42-4ae1-8271-7d246c13edb6",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Wed, 13 Jan 2021 22:23:50 GMT",
+        "Date": "Thu, 14 Jan 2021 01:38:26 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",

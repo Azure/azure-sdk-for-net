@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/pii?showStats=true\u0026domain=PHI",
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/pii?showStats=false\u0026domain=PHI\u0026stringIndexType=UnicodeCodePoint",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
@@ -9,7 +9,7 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210113.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "eecc011d319477b6a3836264a1185b02",
+        "x-ms-client-request-id": "bf9f90357032f6eca94839d740221338",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -28,30 +28,20 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "24b2b2d8-0741-45c6-bfa7-4797d068f0b7",
+        "apim-request-id": "cd4fca32-300c-438d-9202-9aae605a52cb",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
         "Date": "Thu, 14 Jan 2021 01:40:06 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "117"
+        "x-envoy-upstream-service-time": "233"
       },
       "ResponseBody": {
-        "statistics": {
-          "documentsCount": 2,
-          "validDocumentsCount": 2,
-          "erroneousDocumentsCount": 0,
-          "transactionsCount": 2
-        },
         "documents": [
           {
             "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs.",
             "id": "0",
-            "statistics": {
-              "charactersCount": 100,
-              "transactionsCount": 1
-            },
             "entities": [
               {
                 "text": "859-98-0987",
@@ -73,10 +63,6 @@
           {
             "redactedText": "Your ABA number - ********* - is the first 9 digits in the lower left hand corner of your personal check",
             "id": "1",
-            "statistics": {
-              "charactersCount": 104,
-              "transactionsCount": 1
-            },
             "entities": [
               {
                 "text": "111000025",
@@ -109,7 +95,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1097726284",
+    "RandomSeed": "1934088034",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
   }
