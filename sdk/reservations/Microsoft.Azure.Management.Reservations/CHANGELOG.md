@@ -4,7 +4,7 @@
 **Notes**
 
 * Add quota GA APIs.
-* Removed AutoQuotaIncrease APIs from GA version.
+* Removed AutoQuotaIncrease APIs from GA version. It's available in preview version -1.14.0-preview.
 
 ### Changes in 1.14.0-preview
 **Notes**
