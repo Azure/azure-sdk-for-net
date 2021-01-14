@@ -649,7 +649,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -675,7 +675,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -739,7 +739,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DomainFilter.GetString(),
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -804,7 +804,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DomainFilter.GetString(),
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -970,7 +970,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DomainFilter.GetString(),
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -997,7 +997,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DomainFilter.GetString(),
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -1111,7 +1111,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.IncludeOpinionMining,
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -1171,7 +1171,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.IncludeOpinionMining,
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -1447,7 +1447,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.IncludeOpinionMining,
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -1474,7 +1474,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.IncludeOpinionMining,
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -2024,7 +2024,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -2049,7 +2049,7 @@ namespace Azure.AI.TextAnalytics
                 Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    _stringCodeUnit,
+                    options.StringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -2103,7 +2103,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(documentInputs, options.ModelVersion, _stringCodeUnit, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(documentInputs, options.ModelVersion, options.StringIndexType, cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
@@ -2152,7 +2152,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(documentInputs, options.ModelVersion, _stringCodeUnit, cancellationToken);
+                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(documentInputs, options.ModelVersion, options.StringIndexType, cancellationToken);
                 string location = response.Headers.OperationLocation;
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
@@ -2302,7 +2302,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(batchInput, options.ModelVersion, _stringCodeUnit, cancellationToken);
+                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(batchInput, options.ModelVersion, options.StringIndexType, cancellationToken);
                 string location = response.Headers.OperationLocation;
 
                 var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
@@ -2325,7 +2325,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(batchInput, options.ModelVersion, _stringCodeUnit, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(batchInput, options.ModelVersion, options.StringIndexType, cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
                 var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
