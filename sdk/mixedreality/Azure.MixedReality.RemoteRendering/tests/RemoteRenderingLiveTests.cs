@@ -46,7 +46,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests
         {
             var client = GetClient();
 
-            CreateSessionBody settings = new CreateSessionBody(10, SessionSize.Standard);
+            CreateSessionSettings settings = new CreateSessionSettings(10, SessionSize.Standard);
 
             string sessionId = "SessionId1";
 
@@ -57,7 +57,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests
             SessionProperties session2 = await client.GetSessionAsync(sessionId);
             Assert.AreEqual(session2, session);
 
-            UpdateSessionBody updateSettings = new UpdateSessionBody(15);
+            UpdateSessionSettings updateSettings = new UpdateSessionSettings(15);
 
             SessionProperties session3 = await client.UpdateSessionAsync(sessionId, updateSettings);
             Assert.AreEqual(session3.MaxLeaseTimeMinutes, 15);
