@@ -7,12 +7,12 @@
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
-    /// <summary> The UpdateSessionBody. </summary>
-    public partial class UpdateSessionBody
+    /// <summary> The UpdateSessionSettings. </summary>
+    public partial class UpdateSessionSettings
     {
-        /// <summary> Initializes a new instance of UpdateSessionBody. </summary>
+        /// <summary> Initializes a new instance of UpdateSessionSettings. </summary>
         /// <param name="maxLeaseTimeMinutes"> Update to the time the session will run after it reached the &apos;Ready&apos; state.  It has to be bigger than the current value of maxLeaseTimeMinutes. </param>
-        public UpdateSessionBody(int maxLeaseTimeMinutes)
+        public UpdateSessionSettings(int maxLeaseTimeMinutes)
         {
             MaxLeaseTimeMinutes = maxLeaseTimeMinutes;
         }

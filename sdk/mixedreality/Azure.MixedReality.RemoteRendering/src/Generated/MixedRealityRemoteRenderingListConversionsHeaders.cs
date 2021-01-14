@@ -19,9 +19,5 @@ namespace Azure.MixedReality.RemoteRendering
         }
         /// <summary> Microsoft Correlation Vector. Include this value when reporting issues. </summary>
         public string MSCV => _response.Headers.TryGetValue("MS-CV", out string value) ? value : null;
-        /// <summary> Describes the error encountered while trying to authenticate the resource. </summary>
-        public string WWWAuthenticate => _response.Headers.TryGetValue("WWW-Authenticate", out string value) ? value : null;
-        /// <summary> The minimum number of seconds to wait before not getting this response anymore. </summary>
-        public int? RetryAfter => _response.Headers.TryGetValue("Retry-After", out int? value) ? value : null;
     }
 }

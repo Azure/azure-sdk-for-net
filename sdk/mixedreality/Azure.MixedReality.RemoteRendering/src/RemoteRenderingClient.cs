@@ -346,17 +346,17 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> Updates a particular rendering session. </summary>
         /// <param name="sessionId"> ID of a previously created session. </param>
-        /// <param name="body"> Settings of the session to be updated. </param>
+        /// <param name="settings"> Settings of the session to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
-        public virtual Response<SessionProperties> UpdateSession(string sessionId, UpdateSessionBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="settings"/> is null. </exception>
+        public virtual Response<SessionProperties> UpdateSession(string sessionId, UpdateSessionSettings settings, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
             try
             {
-                var result = _restClient.UpdateSession(_accountId, sessionId, body, cancellationToken);
+                var result = _restClient.UpdateSession(_accountId, sessionId, settings, cancellationToken);
                 return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
@@ -368,17 +368,17 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> Updates a particular rendering session. </summary>
         /// <param name="sessionId"> ID of a previously created session. </param>
-        /// <param name="body"> Settings of the session to be updated. </param>
+        /// <param name="settings"> Settings of the session to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<SessionProperties>> UpdateSessionAsync(string sessionId, UpdateSessionBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="settings"/> is null. </exception>
+        public virtual async Task<Response<SessionProperties>> UpdateSessionAsync(string sessionId, UpdateSessionSettings settings, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSessionAsync)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
             try
             {
-                var result = await _restClient.UpdateSessionAsync(_accountId, sessionId, body, cancellationToken).ConfigureAwait(false);
+                var result = await _restClient.UpdateSessionAsync(_accountId, sessionId, settings, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
