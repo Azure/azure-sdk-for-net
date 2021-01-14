@@ -89,7 +89,6 @@ namespace Azure.Communication.Administration
             var headers = new PhoneNumbersSearchAvailablePhoneNumbersHeaders(message.Response);
             switch (message.Response.Status)
             {
-                case 201:
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
@@ -122,7 +121,6 @@ namespace Azure.Communication.Administration
             var headers = new PhoneNumbersSearchAvailablePhoneNumbersHeaders(message.Response);
             switch (message.Response.Status)
             {
-                case 201:
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:

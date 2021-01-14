@@ -17,12 +17,12 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Administration
 {
     /// <summary> Search for available phone numbers to purchase. </summary>
-    public partial class PhoneNumbersSearchAvailablePhoneNumbersOperation : Operation<PhoneNumberSearchResult>, IOperationSource<PhoneNumberSearchResult>
+    public partial class SearchAvailablePhoneNumbersOperation : Operation<PhoneNumberSearchResult>, IOperationSource<PhoneNumberSearchResult>
     {
         private readonly ArmOperationHelpers<PhoneNumberSearchResult> _operation;
-        internal PhoneNumbersSearchAvailablePhoneNumbersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SearchAvailablePhoneNumbersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<PhoneNumberSearchResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PhoneNumbersSearchAvailablePhoneNumbersOperation");
+            _operation = new ArmOperationHelpers<PhoneNumberSearchResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SearchAvailablePhoneNumbersOperation");
         }
 
         /// <inheritdoc />

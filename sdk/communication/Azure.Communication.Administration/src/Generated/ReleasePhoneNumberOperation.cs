@@ -12,15 +12,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Administration.Models
 {
     /// <summary> Releases an acquired phone number. </summary>
-    public partial class PhoneNumbersReleasePhoneNumberOperation : Operation<Response>, IOperationSource<Response>
+    public partial class ReleasePhoneNumberOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
-        internal PhoneNumbersReleasePhoneNumberOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ReleasePhoneNumberOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PhoneNumbersReleasePhoneNumberOperation");
+            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ReleasePhoneNumberOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

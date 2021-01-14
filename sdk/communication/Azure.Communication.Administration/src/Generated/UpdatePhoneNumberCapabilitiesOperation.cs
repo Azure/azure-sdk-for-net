@@ -10,19 +10,18 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.Administration.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Administration.Models
 {
     /// <summary> Update capabilities of an acquired phone number. </summary>
-    public partial class PhoneNumbersUpdatePhoneNumberCapabilitiesOperation : Operation<AcquiredPhoneNumber>, IOperationSource<AcquiredPhoneNumber>
+    public partial class UpdatePhoneNumberCapabilitiesOperation : Operation<AcquiredPhoneNumber>, IOperationSource<AcquiredPhoneNumber>
     {
         private readonly ArmOperationHelpers<AcquiredPhoneNumber> _operation;
-        internal PhoneNumbersUpdatePhoneNumberCapabilitiesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal UpdatePhoneNumberCapabilitiesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<AcquiredPhoneNumber>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PhoneNumbersUpdatePhoneNumberCapabilitiesOperation");
+            _operation = new ArmOperationHelpers<AcquiredPhoneNumber>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "UpdatePhoneNumberCapabilitiesOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

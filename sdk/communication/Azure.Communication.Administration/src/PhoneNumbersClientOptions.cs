@@ -8,9 +8,9 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Administration
 {
     /// <summary>
-    /// The options for phone number management client options. <see cref="PhoneNumberAdministrationClientOptions"/>
+    /// The options for phone number management client options. <see cref="PhoneNumbersClientOptions"/>
     /// </summary>
-    public class PhoneNumberAdministrationClientOptions : ClientOptions
+    public class PhoneNumbersClientOptions : ClientOptions
     {
         /// <summary>
         /// The latest version of the Phone number management service.
@@ -20,9 +20,9 @@ namespace Azure.Communication.Administration
         internal string ApiVersion { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberAdministrationClientOptions"/>.
+        /// Initializes a new instance of the <see cref="PhoneNumbersClientOptions"/>.
         /// </summary>
-        public PhoneNumberAdministrationClientOptions(ServiceVersion version = LatestVersion, RetryOptions? retryOptions = default, HttpPipelineTransport? transport = default)
+        public PhoneNumbersClientOptions(ServiceVersion version = LatestVersion, RetryOptions? retryOptions = default, HttpPipelineTransport? transport = default)
         {
             ApiVersion = version switch
             {

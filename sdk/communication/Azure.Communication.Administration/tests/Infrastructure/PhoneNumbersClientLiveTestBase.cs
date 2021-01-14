@@ -7,9 +7,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Administration.Tests
 {
-    public class PhoneNumberAdministrationClientLiveTestBase : RecordedTestBase<PhoneNumberAdministrationClientTestEnvironment>
+    public class PhoneNumbersClientLiveTestBase : RecordedTestBase<PhoneNumbersClientTestEnvironment>
     {
-        public PhoneNumberAdministrationClientLiveTestBase(bool isAsync) : base(isAsync)
+        public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new CommunicationRecordedTestSanitizer();
 
         public bool IncludePhoneNumberLiveTests
@@ -24,7 +24,7 @@ namespace Azure.Communication.Administration.Tests
         {
             var client = new PhoneNumbersClient(
                     TestEnvironment.ConnectionString,
-                    InstrumentClientOptions(new PhoneNumberAdministrationClientOptions()));
+                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
 
             return isInstrumented ? InstrumentClient(client) : client;
         }

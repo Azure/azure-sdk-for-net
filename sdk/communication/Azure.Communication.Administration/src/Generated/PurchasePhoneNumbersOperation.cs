@@ -12,15 +12,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Administration.Models
 {
     /// <summary> Purchase phone numbers. </summary>
-    public partial class PhoneNumbersPurchasePhoneNumbersOperation : Operation<Response>, IOperationSource<Response>
+    public partial class PurchasePhoneNumbersOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
-        internal PhoneNumbersPurchasePhoneNumbersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PurchasePhoneNumbersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PhoneNumbersPurchasePhoneNumbersOperation");
+            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PurchasePhoneNumbersOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

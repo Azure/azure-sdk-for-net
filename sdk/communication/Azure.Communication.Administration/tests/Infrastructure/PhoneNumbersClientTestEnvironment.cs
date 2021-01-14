@@ -5,9 +5,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Administration.Tests
 {
-    public class PhoneNumberAdministrationClientTestEnvironment : TestEnvironment
+    public class PhoneNumbersClientTestEnvironment : TestEnvironment
     {
-        public PhoneNumberAdministrationClientTestEnvironment() : base("communication")
+        public PhoneNumbersClientTestEnvironment() : base("communication")
         {
         }
 

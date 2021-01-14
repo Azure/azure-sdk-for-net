@@ -15,23 +15,23 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Administration
 {
-    /// <summary> The CommunicationIdentity service client. </summary>
-    public partial class CommunicationIdentityClient
+    /// <summary> The InternalCommunicationIdentity service client. </summary>
+    internal partial class InternalCommunicationIdentityClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal CommunicationIdentityRestClient RestClient { get; }
-        /// <summary> Initializes a new instance of CommunicationIdentityClient for mocking. </summary>
-        protected CommunicationIdentityClient()
+        internal InternalCommunicationIdentityRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of InternalCommunicationIdentityClient for mocking. </summary>
+        protected InternalCommunicationIdentityClient()
         {
         }
-        /// <summary> Initializes a new instance of CommunicationIdentityClient. </summary>
+        /// <summary> Initializes a new instance of InternalCommunicationIdentityClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
-        internal CommunicationIdentityClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        internal InternalCommunicationIdentityClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
-            RestClient = new CommunicationIdentityRestClient(clientDiagnostics, pipeline, endpoint);
+            RestClient = new InternalCommunicationIdentityRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -40,7 +40,7 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CommunicationIdentity>> CreateAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationIdentityClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Create");
             scope.Start();
             try
             {
@@ -57,7 +57,7 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CommunicationIdentity> Create(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationIdentityClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Create");
             scope.Start();
             try
             {
@@ -75,7 +75,7 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationIdentityClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Delete");
             scope.Start();
             try
             {
@@ -93,7 +93,7 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationIdentityClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Delete");
             scope.Start();
             try
             {
@@ -112,7 +112,7 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> UpdateAsync(string id, DateTimeOffset? tokensValidFrom = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationIdentityClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Update");
             scope.Start();
             try
             {
@@ -131,7 +131,7 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Update(string id, DateTimeOffset? tokensValidFrom = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationIdentityClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Update");
             scope.Start();
             try
             {
@@ -150,7 +150,7 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CommunicationUserToken>> IssueTokenAsync(string id, IEnumerable<string> scopes, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationIdentityClient.IssueToken");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.IssueToken");
             scope.Start();
             try
             {
@@ -169,7 +169,7 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CommunicationUserToken> IssueToken(string id, IEnumerable<string> scopes, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CommunicationIdentityClient.IssueToken");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.IssueToken");
             scope.Start();
             try
             {

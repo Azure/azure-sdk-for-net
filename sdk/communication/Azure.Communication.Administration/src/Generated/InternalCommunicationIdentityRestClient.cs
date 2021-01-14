@@ -17,18 +17,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Administration
 {
-    internal partial class CommunicationIdentityRestClient
+    internal partial class InternalCommunicationIdentityRestClient
     {
         private string endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of CommunicationIdentityRestClient. </summary>
+        /// <summary> Initializes a new instance of InternalCommunicationIdentityRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        public InternalCommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
             if (endpoint == null)
             {

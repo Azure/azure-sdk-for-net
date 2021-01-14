@@ -36,114 +36,6 @@ namespace Azure.Communication.Administration
             _pipeline = pipeline;
         }
 
-        /// <summary> Get a search result by its id. </summary>
-        /// <param name="searchId"> The search Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PhoneNumberSearchResult>> GetSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetSearchResult");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetSearchResultAsync(searchId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get a search result by its id. </summary>
-        /// <param name="searchId"> The search Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PhoneNumberSearchResult> GetSearchResult(string searchId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetSearchResult");
-            scope.Start();
-            try
-            {
-                return RestClient.GetSearchResult(searchId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get an operation by its id. </summary>
-        /// <param name="operationId"> The operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PhoneNumberOperation>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetOperation");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetOperationAsync(operationId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get an operation by its id. </summary>
-        /// <param name="operationId"> The operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PhoneNumberOperation> GetOperation(string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetOperation");
-            scope.Start();
-            try
-            {
-                return RestClient.GetOperation(operationId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Cancels the operation if cancellation is supported for the operation type. </summary>
-        /// <param name="operationId"> The operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelOperationAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.CancelOperation");
-            scope.Start();
-            try
-            {
-                return await RestClient.CancelOperationAsync(operationId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Cancels the operation if cancellation is supported for the operation type. </summary>
-        /// <param name="operationId"> The operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelOperation(string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.CancelOperation");
-            scope.Start();
-            try
-            {
-                return RestClient.CancelOperation(operationId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets information about an acquired phone number. </summary>
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -303,7 +195,7 @@ namespace Azure.Communication.Administration
         /// <param name="quantity"> The desired quantity of phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="capabilities"/> is null. </exception>
-        public virtual async Task<PhoneNumbersSearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string countryCode, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilitiesRequest capabilities, string areaCode = null, int? quantity = null, CancellationToken cancellationToken = default)
+        public virtual async Task<SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string countryCode, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilitiesRequest capabilities, string areaCode = null, int? quantity = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
@@ -319,7 +211,7 @@ namespace Azure.Communication.Administration
             try
             {
                 var originalResponse = await RestClient.SearchAvailablePhoneNumbersAsync(countryCode, phoneNumberType, assignmentType, capabilities, areaCode, quantity, cancellationToken).ConfigureAwait(false);
-                return new PhoneNumbersSearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(countryCode, phoneNumberType, assignmentType, capabilities, areaCode, quantity).Request, originalResponse);
+                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(countryCode, phoneNumberType, assignmentType, capabilities, areaCode, quantity).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -337,7 +229,7 @@ namespace Azure.Communication.Administration
         /// <param name="quantity"> The desired quantity of phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="capabilities"/> is null. </exception>
-        public virtual PhoneNumbersSearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string countryCode, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilitiesRequest capabilities, string areaCode = null, int? quantity = null, CancellationToken cancellationToken = default)
+        public virtual SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string countryCode, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilitiesRequest capabilities, string areaCode = null, int? quantity = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
@@ -353,7 +245,7 @@ namespace Azure.Communication.Administration
             try
             {
                 var originalResponse = RestClient.SearchAvailablePhoneNumbers(countryCode, phoneNumberType, assignmentType, capabilities, areaCode, quantity, cancellationToken);
-                return new PhoneNumbersSearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(countryCode, phoneNumberType, assignmentType, capabilities, areaCode, quantity).Request, originalResponse);
+                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(countryCode, phoneNumberType, assignmentType, capabilities, areaCode, quantity).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -365,14 +257,14 @@ namespace Azure.Communication.Administration
         /// <summary> Purchase phone numbers. </summary>
         /// <param name="searchId"> The id of the search result to purchase. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<PhoneNumbersPurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartPurchasePhoneNumbers");
             scope.Start();
             try
             {
                 var originalResponse = await RestClient.PurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
-                return new PhoneNumbersPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -384,14 +276,14 @@ namespace Azure.Communication.Administration
         /// <summary> Purchase phone numbers. </summary>
         /// <param name="searchId"> The id of the search result to purchase. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PhoneNumbersPurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
+        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartPurchasePhoneNumbers");
             scope.Start();
             try
             {
                 var originalResponse = RestClient.PurchasePhoneNumbers(searchId, cancellationToken);
-                return new PhoneNumbersPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -404,7 +296,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual async Task<PhoneNumbersReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -416,7 +308,7 @@ namespace Azure.Communication.Administration
             try
             {
                 var originalResponse = await RestClient.ReleasePhoneNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
-                return new PhoneNumbersReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
+                return new ReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -429,7 +321,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual PhoneNumbersReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -441,7 +333,7 @@ namespace Azure.Communication.Administration
             try
             {
                 var originalResponse = RestClient.ReleasePhoneNumber(phoneNumber, cancellationToken);
-                return new PhoneNumbersReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
+                return new ReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -456,7 +348,7 @@ namespace Azure.Communication.Administration
         /// <param name="calling"> Available Calling capabilities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual async Task<PhoneNumbersUpdatePhoneNumberCapabilitiesOperation> StartUpdatePhoneNumberCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityValue? sms = null, PhoneNumberCapabilityValue? calling = null, CancellationToken cancellationToken = default)
+        public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdatePhoneNumberCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityValue? sms = null, PhoneNumberCapabilityValue? calling = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -468,7 +360,7 @@ namespace Azure.Communication.Administration
             try
             {
                 var originalResponse = await RestClient.UpdatePhoneNumberCapabilitiesAsync(phoneNumber, sms, calling, cancellationToken).ConfigureAwait(false);
-                return new PhoneNumbersUpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdatePhoneNumberCapabilitiesRequest(phoneNumber, sms, calling).Request, originalResponse);
+                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdatePhoneNumberCapabilitiesRequest(phoneNumber, sms, calling).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -483,7 +375,7 @@ namespace Azure.Communication.Administration
         /// <param name="calling"> Available Calling capabilities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual PhoneNumbersUpdatePhoneNumberCapabilitiesOperation StartUpdatePhoneNumberCapabilities(string phoneNumber, PhoneNumberCapabilityValue? sms = null, PhoneNumberCapabilityValue? calling = null, CancellationToken cancellationToken = default)
+        public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdatePhoneNumberCapabilities(string phoneNumber, PhoneNumberCapabilityValue? sms = null, PhoneNumberCapabilityValue? calling = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -495,7 +387,7 @@ namespace Azure.Communication.Administration
             try
             {
                 var originalResponse = RestClient.UpdatePhoneNumberCapabilities(phoneNumber, sms, calling, cancellationToken);
-                return new PhoneNumbersUpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdatePhoneNumberCapabilitiesRequest(phoneNumber, sms, calling).Request, originalResponse);
+                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdatePhoneNumberCapabilitiesRequest(phoneNumber, sms, calling).Request, originalResponse);
             }
             catch (Exception e)
             {
