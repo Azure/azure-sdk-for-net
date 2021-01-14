@@ -19,16 +19,16 @@ namespace Azure.Security.KeyVault.Administration
         {
             AllowedActions = new ChangeTrackingList<string>();
             DeniedActions = new ChangeTrackingList<string>();
-            AllowedDataActions = new ChangeTrackingList<DataActions>();
-            DeniedDataActions = new ChangeTrackingList<DataActions>();
+            AllowedDataActions = new ChangeTrackingList<DataActionPermission>();
+            DeniedDataActions = new ChangeTrackingList<DataActionPermission>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
-        /// <param name="allowedActions"> Allowed actions. </param>
-        /// <param name="deniedActions"> Not actions. </param>
-        /// <param name="allowedDataActions"> Allowed data actions. </param>
-        /// <param name="deniedDataActions"> Not data actions. </param>
-        internal KeyVaultPermission(IList<string> allowedActions, IList<string> deniedActions, IList<DataActions> allowedDataActions, IList<DataActions> deniedDataActions)
+        /// <param name="allowedActions"> Action permissions that are granted. </param>
+        /// <param name="deniedActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
+        /// <param name="allowedDataActions"> Data action permissions that are granted. </param>
+        /// <param name="deniedDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
+        internal KeyVaultPermission(IList<string> allowedActions, IList<string> deniedActions, IList<DataActionPermission> allowedDataActions, IList<DataActionPermission> deniedDataActions)
         {
             AllowedActions = allowedActions;
             DeniedActions = deniedActions;
