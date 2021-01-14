@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-bionic AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 
 ENV \
     NO_AT_BRIDGE=1 \
