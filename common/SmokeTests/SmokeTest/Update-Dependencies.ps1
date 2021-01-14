@@ -21,7 +21,7 @@ $PACKAGE_REFERENCE_XPATH = '//Project/ItemGroup/PackageReference'
 $DEV_DATE_REGEX = 'dev\.(\d{8})'
 
 $NIGHTLY_FEED_NAME = 'NightlyFeed'
-$NIGHTLY_FEED_URL = 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
+$NIGHTLY_FEED_URL = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
 
 function Log-Warning($message) {
     if ($CI) {
@@ -30,19 +30,12 @@ function Log-Warning($message) {
         Write-Warning $message
     }
 }
-
+Unregister-PackageSource -Name $NIGHTLY_FEED_NAME -ErrorAction SilentlyContinue;
 Register-PackageSource `
     -Name $NIGHTLY_FEED_NAME `
     -Location $NIGHTLY_FEED_URL `
     -ProviderName Nuget `
     -ErrorAction SilentlyContinue `
-
-# List all packages from the source specified by $FeedName. Packages are sorted
-# ascending by version according to semver rules (e.g. 4.0.0-preview.1 comes
-# before 4.0.0) not lexicographically.
-# Packages cannot be filtered at this stage because the sleet feed to which they
-# are published does not support filtering by name.
-$allPackages = Find-Package -Source $NIGHTLY_FEED_NAME -AllVersion -AllowPrereleaseVersions
 
 $baselineVersionDate = $null;
 
@@ -56,22 +49,32 @@ $csproj |
     ForEach-Object {
         # Resolve package version:
         $packageName = $_.Node.Include
-
-        # This assumes that the versions coming back from Find-Package are
-        # sorted ascending. It excludes any version that is in the corresponding
-        # $PACKAGE_EXCLUSIONS entry
-        $targetVersion = ($allPackages |
-            Where-Object { $_.Name -eq $packageName } |
-            Where-Object { -not ( $PACKAGE_EXCLUSIONS.ContainsKey($packageName) -and $PACKAGE_EXCLUSIONS[$packageName].ContainsKey($_.Version)) } |
-            Select-Object -Last 1).Version
-
-        if ($targetVersion -eq $null) {
-            return
+        
+        $allVersions = Find-Package -Source $NIGHTLY_FEED_NAME -AllVersion -AllowPrereleaseVersions -Name $packageName -ErrorAction SilentlyContinue
+        
+        if (!$allVersions)
+        {
+            if ($packageName.StartsWith("Azure."))
+            {
+                throw "Unable to find a package version for $packageName" 
+            }
+            else
+            {
+                Write-Host "$packageName package not found on the nightly feed"
+                return;
+            }
         }
+
+        # Find the latest published package by date to avoid version ordering conflicts with old *-dev.* packages
+        # This excludes any version that is in the corresponding $PACKAGE_EXCLUSIONS entry
+        $targetVersion = ($allVersions |
+            Where-Object { $_.Source -eq $NIGHTLY_FEED_NAME } |
+            Where-Object { -not ( $PACKAGE_EXCLUSIONS.ContainsKey($packageName) -and $PACKAGE_EXCLUSIONS[$packageName].ContainsKey($_.Version)) } |
+            Sort-Object -Property @{expression={if ($_.Metadata) { $_.Metadata["published"] }}} |
+            Select-Object -First 1).Version
 
         Write-Host "Setting $packageName to $targetVersion"
         $_.Node.Version = "$targetVersion"
-
 
         # Validate package version date component matches
         if ($SkipVersionValidation) {
