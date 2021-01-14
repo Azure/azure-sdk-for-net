@@ -5,7 +5,7 @@ extends:
   parameters:
     ServiceDirectory: metricsadvisor
     EnvVars:
-      METRICSADVISOR_ACCOUNT_NAME: "js-metrics-advisor"
+      METRICSADVISOR_ACCOUNT_NAME: $(net-metricsadvisor-fake-secret)
       METRICSADVISOR_SUBSCRIPTION_KEY: $(metricsadvisor-test-subscription-key)
       METRICSADVISOR_PRIMARY_API_KEY: $(net-metricsadvisor-test-api-key)
       METRICSADVISOR_DATA_FEED_ID: "9860df01-e740-40ec-94a2-6351813552ba"
