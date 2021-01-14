@@ -808,8 +808,16 @@ namespace Azure.Core.Tests
 
             var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
 
-            // Wait for server to receive a request
-            await tcs.Task.TimeoutAfterDefault();
+            try
+            {
+                // Wait for server to receive a request
+                await tcs.Task.TimeoutAfterDefault();
+            }
+            catch (TimeoutException)
+            {
+                // Try to observe the request failure
+                await task.TimeoutAfterDefault();
+            }
 
             cts.Cancel();
 
@@ -844,8 +852,17 @@ namespace Azure.Core.Tests
 
             var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
 
-            // Wait for server to receive a request
-            await tcs.Task.TimeoutAfterDefault();
+            try
+            {
+                // Wait for server to receive a request
+                await tcs.Task.TimeoutAfterDefault();
+            }
+            catch (TimeoutException)
+            {
+                // Try to observe the request failure
+                await task.TimeoutAfterDefault();
+            }
+
             cts.Cancel();
 
             Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task.TimeoutAfterDefault());

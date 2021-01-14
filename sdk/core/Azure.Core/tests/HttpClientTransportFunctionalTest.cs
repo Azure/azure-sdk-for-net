@@ -9,12 +9,15 @@ namespace Azure.Core.Tests
 {
     public class HttpClientTransportFunctionalTest : TransportFunctionalTests
     {
-        public HttpClientTransportFunctionalTest(bool isAsync) : base(isAsync)
+        static HttpClientTransportFunctionalTest()
         {
             // No way to disable SSL check per HttpClient on NET461
 #if NET461
             ServicePointManager.ServerCertificateValidationCallback += (_, _, _, _) => true;
 #endif
+        }
+        public HttpClientTransportFunctionalTest(bool isAsync) : base(isAsync)
+        {
         }
 
         protected override HttpPipelineTransport GetTransport(bool https = false)
