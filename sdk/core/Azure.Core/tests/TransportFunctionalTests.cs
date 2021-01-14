@@ -787,9 +787,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task ThrowsTaskCanceledExceptionWhenCancelled(bool https)
+        [Test]
+        public Task ThrowsTaskCanceledExceptionWhenCancelled() => ThrowsTaskCanceledExceptionWhenCancelled(false);
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
+        public Task ThrowsTaskCanceledExceptionWhenCancelledHttps() => ThrowsTaskCanceledExceptionWhenCancelled(true);
+
+        private async Task ThrowsTaskCanceledExceptionWhenCancelled(bool https)
         {
             var testDoneTcs = new CancellationTokenSource();
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -825,9 +830,14 @@ namespace Azure.Core.Tests
             testDoneTcs.Cancel();
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task CanCancelContentUpload(bool https)
+        [Test]
+        public Task CanCancelContentUpload() => CanCancelContentUpload(false);
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
+        public Task CanCancelContentUploadHttps() => CanCancelContentUpload(true);
+
+        private async Task CanCancelContentUpload(bool https)
         {
             var buffer = new byte[100];
             var testDoneTcs = new CancellationTokenSource();
