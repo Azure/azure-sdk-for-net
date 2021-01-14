@@ -69,6 +69,11 @@ jobs:
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_Net50 (AzureCloud):
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net5.0
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          ArmTemplateParameters: $(azureCloudArmParameters)
         Windows_NetCoreApp (AzureUSGovernment):
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
