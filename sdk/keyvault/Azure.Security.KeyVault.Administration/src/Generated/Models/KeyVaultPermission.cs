@@ -19,16 +19,16 @@ namespace Azure.Security.KeyVault.Administration
         {
             AllowedActions = new ChangeTrackingList<string>();
             DeniedActions = new ChangeTrackingList<string>();
-            AllowedDataActions = new ChangeTrackingList<AllowedDataActions>();
-            DeniedDataActions = new ChangeTrackingList<DeniedDataActions>();
+            AllowedDataActions = new ChangeTrackingList<DataActions>();
+            DeniedDataActions = new ChangeTrackingList<DataActions>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
         /// <param name="allowedActions"> Allowed actions. </param>
-        /// <param name="deniedActions"> . </param>
-        /// <param name="allowedDataActions"> . </param>
-        /// <param name="deniedDataActions"> . </param>
-        internal KeyVaultPermission(IList<string> allowedActions, IList<string> deniedActions, IList<AllowedDataActions> allowedDataActions, IList<DeniedDataActions> deniedDataActions)
+        /// <param name="deniedActions"> Not actions. </param>
+        /// <param name="allowedDataActions"> Allowed data actions. </param>
+        /// <param name="deniedDataActions"> Not data actions. </param>
+        internal KeyVaultPermission(IList<string> allowedActions, IList<string> deniedActions, IList<DataActions> allowedDataActions, IList<DataActions> deniedDataActions)
         {
             AllowedActions = allowedActions;
             DeniedActions = deniedActions;

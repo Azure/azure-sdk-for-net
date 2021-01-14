@@ -64,8 +64,8 @@ namespace Azure.Security.KeyVault.Administration
         {
             Optional<IList<string>> actions = default;
             Optional<IList<string>> notActions = default;
-            Optional<IList<AllowedDataActions>> dataActions = default;
-            Optional<IList<DeniedDataActions>> notDataActions = default;
+            Optional<IList<DataActions>> dataActions = default;
+            Optional<IList<DataActions>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"))
@@ -105,10 +105,10 @@ namespace Azure.Security.KeyVault.Administration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AllowedDataActions> array = new List<AllowedDataActions>();
+                    List<DataActions> array = new List<DataActions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AllowedDataActions(item.GetString()));
+                        array.Add(new DataActions(item.GetString()));
                     }
                     dataActions = array;
                     continue;
@@ -120,10 +120,10 @@ namespace Azure.Security.KeyVault.Administration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeniedDataActions> array = new List<DeniedDataActions>();
+                    List<DataActions> array = new List<DataActions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new DeniedDataActions(item.GetString()));
+                        array.Add(new DataActions(item.GetString()));
                     }
                     notDataActions = array;
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Denied Data actions. </summary>
         [CodeGenMember("NotDataActions")]
-        public IList<DeniedDataActions> DeniedDataActions { get; }
+        public IList<DataActions> DeniedDataActions { get; }
 
         /// <summary> Allowed actions. </summary>
         [CodeGenMember("Actions")]
@@ -25,6 +25,6 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Allowed Data actions. </summary>
         [CodeGenMember("DataActions")]
-        public IList<AllowedDataActions> AllowedDataActions { get; }
+        public IList<DataActions> AllowedDataActions { get; }
     }
 }
