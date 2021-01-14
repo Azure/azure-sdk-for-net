@@ -1139,7 +1139,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await _directoryRestClient.DeleteAsync(
                             shareName: ShareName,
-                            directory: Name,
+                            directory: Path,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1147,7 +1147,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = _directoryRestClient.Delete(
                             shareName: ShareName,
-                            directory: Name,
+                            directory: Path,
                             cancellationToken: cancellationToken);
                     }
 
