@@ -271,6 +271,23 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task AnalyzeSentimentBatchConvenienceWithStringIndexTypeTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = batchConvenienceDocuments;
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { StringIndexType = StringIndexType.UnicodeCodePoint });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [Test]
         public async Task AnalyzeSentimentBatchConvenienceWithStatisticsAndCancellationTest()
         {
             TextAnalyticsClient client = GetClient();
