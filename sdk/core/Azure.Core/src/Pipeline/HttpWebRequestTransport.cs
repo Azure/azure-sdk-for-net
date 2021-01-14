@@ -62,12 +62,6 @@ namespace Azure.Core.Pipeline
             {
                 if (message.Request.Content != null)
                 {
-                    if (request.ContentLength == -1 &&
-                        message.Request.Content.TryComputeLength(out var length))
-                    {
-                        request.ContentLength = length;
-                    }
-
                     using var requestStream = async ? await request.GetRequestStreamAsync().ConfigureAwait(false) : request.GetRequestStream();
 
                     if (async)
@@ -197,6 +191,13 @@ namespace Azure.Core.Pipeline
                 }
 
                 request.Headers.Add(messageRequestHeader.Name, messageRequestHeader.Value);
+            }
+
+            if (request.ContentLength == -1 &&
+                messageRequest.Content != null &&
+                messageRequest.Content.TryComputeLength(out var length))
+            {
+                request.ContentLength = length;
             }
 
             if (request.ContentLength != -1)

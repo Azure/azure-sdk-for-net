@@ -821,11 +821,9 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public async Task CanCancelContentUpload(bool https)
         {
+            var buffer = new byte[100];
             var testDoneTcs = new CancellationTokenSource();
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-
-            // Use large enough request content size to fill the buffers and force the upload to stall
-            var buffer = new byte[100*1024*1024];
 
             using TestServer testServer = new TestServer(
                 async context =>
@@ -840,17 +838,17 @@ namespace Azure.Core.Tests
             var transport = GetTransport(https);
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Post;
-            request.Content = RequestContent.Create(buffer);
+            // Use infinite request content size to fill the buffers and force the upload to stall
+            request.Content = RequestContent.Create(new InfiniteStream());
             request.Uri.Reset(testServer.Address);
 
             var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
 
             // Wait for server to receive a request
-            await tcs.Task;
-
+            await tcs.Task.TimeoutAfterDefault();
             cts.Cancel();
 
-            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task);
+            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task.TimeoutAfterDefault());
             testDoneTcs.Cancel();
         }
 
@@ -911,6 +909,24 @@ namespace Azure.Core.Tests
             }
 
             public bool IsDisposed { get; set; }
+        }
+
+        private class InfiniteStream : ReadOnlyStream
+        {
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                return 0;
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                return count;
+            }
+
+            public override bool CanRead { get; } = true;
+            public override bool CanSeek { get; } = true;
+            public override long Length => long.MaxValue;
+            public override long Position { get; set; } = 0;
         }
     }
 }
