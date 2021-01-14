@@ -809,11 +809,11 @@ namespace Azure.Core.Tests
             var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
 
             // Wait for server to receive a request
-            await tcs.Task;
+            await tcs.Task.TimeoutAfterDefault();
 
             cts.Cancel();
 
-            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task);
+            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task.TimeoutAfterDefault());
             testDoneTcs.Cancel();
         }
 
