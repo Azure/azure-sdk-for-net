@@ -29,7 +29,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
             string sessionId = "SessionId1";
 
-            CreateSessionBody settings = new CreateSessionBody(10, SessionSize.Standard);
+            CreateSessionSettings settings = new CreateSessionSettings(10, SessionSize.Standard);
 
             client.CreateSession(sessionId, settings);
 
@@ -55,6 +55,68 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             }
 
             #endregion Snippet:QuerySessionStatus
+        }
+
+        public void CreateUpdateAndStopSession()
+        {
+            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
+
+            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+
+            string sessionId = "SessionId2";
+
+            CreateSessionSettings settings = new CreateSessionSettings(10, SessionSize.Standard);
+
+            client.CreateSession(sessionId, settings);
+
+            #region Snippet:UpdateSession
+
+            UpdateSessionSettings longerLeaseSettings = new UpdateSessionSettings(60);
+
+            client.UpdateSession(sessionId, longerLeaseSettings);
+
+            #endregion Snippet:UpdateSession
+            #region Snippet:StopSession
+
+            client.StopSession(sessionId);
+
+            #endregion Snippet:StopSession
+        }
+
+        public void ListSessions()
+        {
+            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
+
+            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+
+            string sessionId = "SessionId3";
+
+            CreateSessionSettings settings = new CreateSessionSettings(10, SessionSize.Standard);
+
+            client.CreateSession(sessionId, settings);
+
+            // In this example, we don't list the sessions which have stopped or expired.
+            #region Snippet:ListSessions
+
+            foreach (var properties in client.ListSessions())
+            {
+                if (properties.Status == SessionStatus.Starting)
+                {
+                    Console.WriteLine($"Session \"{properties.Id}\" is starting.");
+                }
+                else if (properties.Status == SessionStatus.Ready)
+                {
+                    Console.WriteLine($"Session \"{properties.Id}\" is ready. The hostname is: {properties.Hostname}");
+                }
+                else if (properties.Status == SessionStatus.Error)
+                {
+                    Console.WriteLine($"Session \"{properties.Id}\" failed with an error: {properties.Error.Code} {properties.Error.Message}");
+                }
+            }
+
+            #endregion Snippet:ListSessions
+
+            client.StopSession(sessionId);
         }
     }
 }

@@ -18,10 +18,14 @@ TODO: .Client in the URLs here (and .Client elsewhere in doc)
       - [Authenticating with a static access token](#authenticating-with-a-static-access-token)
   - [Key concepts](#key-concepts)
   - [Examples](#examples)
-    - [Convert an asset](#convert-an-asset)
+    - [Start an asset conversion](#start-an-asset-conversion)
     - [Query the status of a conversion](#query-the-status-of-a-conversion)
+    - [List conversions](#list-conversions)
     - [Create a session](#create-a-session)
     - [Query the status of a session](#query-the-status-of-a-session)
+    - [List sessions](#list-sessions)
+    - [Extend the lifetime of a session](#extend-the-lifetime-of-a-session)
+    - [Stop a session](#stop-a-session)
   - [Troubleshooting](#troubleshooting)
   - [Next steps](#next-steps)
   - [Contributing](#contributing)
@@ -163,17 +167,21 @@ It provides methods to create and manage asset conversions and rendering session
 
 ## Examples
 
-- [Convert an asset](#convert-an-asset)
+- [Start an asset conversion](#start-an-asset-conversion)
 - [Query the status of a conversion](#query-the-status-of-a-conversion)
+- [List running conversions](#list-ongoing-conversions)
 - [Create a session](#create-a-session)
 - [Query the status of a session](#query-the-status-of-a-session)
+- [List sessions](#list-sessions)
+- [Extend the lifetime of a session](#extend-the-lifetime-of-a-session)
+- [Stop a session](#stop-a-session)
 
-### Convert an asset
+### Start an asset conversion
 
 We assume that a RemoteRenderingClient has been constructed as described in the [Authenticate the Client](#authenticate-the-client) section.
 The following snippet describes how to request that an asset, stored in blob storage at the given input container URI, gets converted.
 
-```csharp Snippet:ConvertAnAsset
+```csharp Snippet:StartAnAssetConversion
     ConversionInputSettings input = new ConversionInputSettings("MyInputContainer", "box.fbx");
     ConversionOutputSettings output = new ConversionOutputSettings("MyOutputContainer");
     ConversionSettings settings = new ConversionSettings(input, output);
@@ -185,6 +193,9 @@ The following snippet describes how to request that an asset, stored in blob sto
 
 ### Query the status of a conversion
 
+A conversion can take anywhere from seconds to hours.
+This code queries the status of a conversion until it has finished (or failed).
+
 ```csharp Snippet:QueryConversionStatus
     // Poll every 10 seconds completion every ten seconds.
     while (true)
@@ -192,15 +203,32 @@ The following snippet describes how to request that an asset, stored in blob sto
         Thread.Sleep(10000);
 
         ConversionInformation conversion = client.GetConversion(conversionId).Value;
-        if (conversion.Status == CreatedByType.Succeeded)
+        if (conversion.Status == ConversionStatus.Succeeded)
         {
             Console.WriteLine($"Conversion succeeded: Output written to {conversion.Settings.OutputLocation}");
             break;
         }
-        else if (conversion.Status == CreatedByType.Failed)
+        else if (conversion.Status == ConversionStatus.Failed)
         {
             Console.WriteLine($"Conversion failed: {conversion.Error.Code} {conversion.Error.Message}");
             break;
+        }
+    }
+```
+
+### List conversions
+
+Obtain the status of your conversions. 
+The list may include conversions which have yet to start, conversions which are running and conversions which have finished.
+In this example, we just list the currently running conversions.
+
+```csharp Snippet:ListConversions
+    Console.WriteLine("The ids of currently active conversions are:");
+    foreach (var conversion in client.ListConversions())
+    {
+        if (conversion.Status == ConversionStatus.Running)
+        {
+            Console.WriteLine(conversion.Id);
         }
     }
 ```
@@ -238,6 +266,48 @@ The following snippet describes how to request that a new rendering session be s
             break;
         }
     }
+```
+
+### List the sessions
+
+Obtain the status of your sessions. 
+The list may include sessions which have yet to start, sessions which are running and sessions which have finished.
+In this example, we skip sessions which have were stopped or have expired.
+
+```csharp Snippet:ListSessions
+    foreach (var properties in client.ListSessions())
+    {
+        if (properties.Status == SessionStatus.Starting)
+        {
+            Console.WriteLine($"Session \"{properties.Id}\" is starting.");
+        }
+        else if (properties.Status == SessionStatus.Ready)
+        {
+            Console.WriteLine($"Session \"{properties.Id}\" is ready. The hostname is: {properties.Hostname}");
+        }
+        else if (properties.Status == SessionStatus.Error)
+        {
+            Console.WriteLine($"Session \"{properties.Id}\" failed with an error: {properties.Error.Code} {properties.Error.Message}");
+        }
+    }
+```
+
+### Extend the lifetime of a session
+
+Given an active session, the following code extends the maximum lease time for that session to 60 minutes.
+
+```csharp Snippet:UpdateSession
+    UpdateSessionSettings longerLeaseSettings = new UpdateSessionSettings(60);
+
+    client.UpdateSession(sessionId, longerLeaseSettings);
+```
+
+### Stop a session
+
+The following code will stop a running session with given id.
+
+```csharp Snippet:StopSession
+    client.StopSession(sessionId);
 ```
 
 ## Troubleshooting

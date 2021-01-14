@@ -25,7 +25,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
             RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
 
-            #region Snippet:ConvertAnAsset
+            #region Snippet:StartAnAssetConversion
 
             ConversionInputSettings input = new ConversionInputSettings("MyInputContainer", "box.fbx");
             ConversionOutputSettings output = new ConversionOutputSettings("MyOutputContainer");
@@ -35,7 +35,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
             client.CreateConversion(conversionId, settings);
 
-            #endregion Snippet:ConvertAnAsset
+            #endregion Snippet:StartAnAssetConversion
             #region Snippet:QueryConversionStatus
 
             // Poll every 10 seconds completion every ten seconds.
@@ -44,18 +44,46 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
                 Thread.Sleep(10000);
 
                 ConversionInformation conversion = client.GetConversion(conversionId).Value;
-                if (conversion.Status == CreatedByType.Succeeded)
+                if (conversion.Status == ConversionStatus.Succeeded)
                 {
                     Console.WriteLine($"Conversion succeeded: Output written to {conversion.Settings.OutputLocation}");
                     break;
                 }
-                else if (conversion.Status == CreatedByType.Failed)
+                else if (conversion.Status == ConversionStatus.Failed)
                 {
                     Console.WriteLine($"Conversion failed: {conversion.Error.Code} {conversion.Error.Message}");
                     break;
                 }
             }
             #endregion Snippet:QueryConversionStatus
+        }
+
+        public void ListConversions()
+        {
+            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
+
+            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+
+            ConversionInputSettings input = new ConversionInputSettings("MyInputContainer", "box.fbx");
+            ConversionOutputSettings output = new ConversionOutputSettings("MyOutputContainer");
+            ConversionSettings settings = new ConversionSettings(input, output);
+
+            string conversionId = "ConversionId2";
+
+            client.CreateConversion(conversionId, settings);
+
+            #region Snippet:ListConversions
+
+            Console.WriteLine("The ids of currently active conversions are:");
+            foreach (var conversion in client.ListConversions())
+            {
+                if (conversion.Status == ConversionStatus.Running)
+                {
+                    Console.WriteLine(conversion.Id);
+                }
+            }
+
+            #endregion
         }
     }
 }
