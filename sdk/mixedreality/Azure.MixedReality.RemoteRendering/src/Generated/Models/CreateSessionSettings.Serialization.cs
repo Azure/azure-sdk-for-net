@@ -10,13 +10,15 @@ using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
-    public partial class ConversionRequest : IUtf8JsonSerializable
+    public partial class CreateSessionSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("settings");
-            writer.WriteObjectValue(Settings);
+            writer.WritePropertyName("maxLeaseTimeMinutes");
+            writer.WriteNumberValue(MaxLeaseTimeMinutes);
+            writer.WritePropertyName("size");
+            writer.WriteStringValue(Size.ToString());
             writer.WriteEndObject();
         }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,8 +15,22 @@ namespace Azure.MixedReality.RemoteRendering.Models
     public partial class ErrorDetails
     {
         /// <summary> Initializes a new instance of ErrorDetails. </summary>
-        internal ErrorDetails()
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
+        internal ErrorDetails(string code, string message)
         {
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
+            Code = code;
+            Message = message;
             Details = new ChangeTrackingList<ErrorDetails>();
         }
 
@@ -23,7 +38,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
         /// <param name="code"> Error code. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="target"> The target of the error. </param>
+        /// <param name="target"> The target of the particular error (e.g., the name of the property in error). </param>
         /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
         internal ErrorDetails(string code, string message, IReadOnlyList<ErrorDetails> details, string target, ErrorDetails innerError)
         {
@@ -40,7 +55,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
         public string Message { get; }
         /// <summary> An array of details about specific errors that led to this reported error. </summary>
         public IReadOnlyList<ErrorDetails> Details { get; }
-        /// <summary> The target of the error. </summary>
+        /// <summary> The target of the particular error (e.g., the name of the property in error). </summary>
         public string Target { get; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
         public ErrorDetails InnerError { get; }

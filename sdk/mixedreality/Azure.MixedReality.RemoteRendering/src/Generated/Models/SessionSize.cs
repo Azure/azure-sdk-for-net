@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
-    /// <summary> The SessionSize. </summary>
+    /// <summary> Size of the server used for the rendering session. Remote Rendering with Standard size server has a maximum scene size of 20 million polygons. Remote Rendering with Premium size does not enforce a hard maximum, but performance may be degraded if your content exceeds the rendering capabilities of the service. </summary>
     public readonly partial struct SessionSize : IEquatable<SessionSize>
     {
         private readonly string _value;

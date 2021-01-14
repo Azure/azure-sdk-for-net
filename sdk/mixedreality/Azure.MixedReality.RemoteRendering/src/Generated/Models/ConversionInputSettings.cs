@@ -9,12 +9,12 @@ using System;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
-    /// <summary> The ConversionInputSettings. </summary>
+    /// <summary> Settings for the conversion input. </summary>
     public partial class ConversionInputSettings
     {
         /// <summary> Initializes a new instance of ConversionInputSettings. </summary>
-        /// <param name="storageContainerUri"> . </param>
-        /// <param name="relativeInputAssetPath"> . </param>
+        /// <param name="storageContainerUri"> The URI of the Azure blob storage container containing the input model. </param>
+        /// <param name="relativeInputAssetPath"> The relative path starting at blobPrefix (or at the container root if blobPrefix is not specified) to the input model. Must point to file with a supported file format ending. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerUri"/> or <paramref name="relativeInputAssetPath"/> is null. </exception>
         public ConversionInputSettings(string storageContainerUri, string relativeInputAssetPath)
         {
@@ -32,10 +32,10 @@ namespace Azure.MixedReality.RemoteRendering.Models
         }
 
         /// <summary> Initializes a new instance of ConversionInputSettings. </summary>
-        /// <param name="storageContainerUri"> . </param>
-        /// <param name="storageContainerReadListSas"> . </param>
-        /// <param name="blobPrefix"> . </param>
-        /// <param name="relativeInputAssetPath"> . </param>
+        /// <param name="storageContainerUri"> The URI of the Azure blob storage container containing the input model. </param>
+        /// <param name="storageContainerReadListSas"> A Azure blob storage container shared access signature giving read and list access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. </param>
+        /// <param name="blobPrefix"> Only Blobs starting with this prefix will be downloaded to perform the conversion. </param>
+        /// <param name="relativeInputAssetPath"> The relative path starting at blobPrefix (or at the container root if blobPrefix is not specified) to the input model. Must point to file with a supported file format ending. </param>
         internal ConversionInputSettings(string storageContainerUri, string storageContainerReadListSas, string blobPrefix, string relativeInputAssetPath)
         {
             StorageContainerUri = storageContainerUri;
@@ -44,9 +44,13 @@ namespace Azure.MixedReality.RemoteRendering.Models
             RelativeInputAssetPath = relativeInputAssetPath;
         }
 
+        /// <summary> The URI of the Azure blob storage container containing the input model. </summary>
         public string StorageContainerUri { get; set; }
+        /// <summary> A Azure blob storage container shared access signature giving read and list access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. </summary>
         public string StorageContainerReadListSas { get; set; }
+        /// <summary> Only Blobs starting with this prefix will be downloaded to perform the conversion. </summary>
         public string BlobPrefix { get; set; }
+        /// <summary> The relative path starting at blobPrefix (or at the container root if blobPrefix is not specified) to the input model. Must point to file with a supported file format ending. </summary>
         public string RelativeInputAssetPath { get; set; }
     }
 }

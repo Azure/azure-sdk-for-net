@@ -19,8 +19,8 @@ namespace Azure.MixedReality.RemoteRendering.Models
             ConversionSettings settings = default;
             Optional<ConversionOutput> output = default;
             ErrorDetails error = default;
-            CreatedByType status = default;
-            Optional<DateTimeOffset> creationTime = default;
+            ConversionStatus status = default;
+            DateTimeOffset creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -55,21 +55,16 @@ namespace Azure.MixedReality.RemoteRendering.Models
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new CreatedByType(property.Value.GetString());
+                    status = new ConversionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("creationTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new ConversionInformation(id, settings, output.Value, error, status, Optional.ToNullable(creationTime));
+            return new ConversionInformation(id, settings, output.Value, error, status, creationTime);
         }
     }
 }

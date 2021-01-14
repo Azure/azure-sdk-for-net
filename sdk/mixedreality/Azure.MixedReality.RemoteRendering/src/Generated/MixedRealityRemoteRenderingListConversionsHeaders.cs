@@ -17,7 +17,7 @@ namespace Azure.MixedReality.RemoteRendering
         {
             _response = response;
         }
-        /// <summary> Microsoft Correlation Vector. Include this value when reporting errors to the Azure Remote Rendering team. </summary>
+        /// <summary> Microsoft Correlation Vector. Include this value when reporting issues. </summary>
         public string MSCV => _response.Headers.TryGetValue("MS-CV", out string value) ? value : null;
         /// <summary> Describes the error encountered while trying to authenticate the resource. </summary>
         public string WWWAuthenticate => _response.Headers.TryGetValue("WWW-Authenticate", out string value) ? value : null;

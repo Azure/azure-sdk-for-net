@@ -5,20 +5,23 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.MixedReality.RemoteRendering.Models
 {
     /// <summary> The ErrorResponse. </summary>
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        internal ErrorResponse()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
         /// <param name="error"> The error object containing details of why the request failed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal ErrorResponse(ErrorDetails error)
         {
+            if (error == null)
+            {
+                throw new ArgumentNullException(nameof(error));
+            }
+
             Error = error;
         }
 

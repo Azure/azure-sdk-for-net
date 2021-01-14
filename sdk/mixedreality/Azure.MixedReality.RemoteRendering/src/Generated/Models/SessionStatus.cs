@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
-    /// <summary> The SessionStatus. </summary>
+    /// <summary> The status of the rendering session. Once the status reached the &apos;Ready&apos; state it can be connected to. The terminal state is &apos;Stopped&apos;. </summary>
     public readonly partial struct SessionStatus : IEquatable<SessionStatus>
     {
         private readonly string _value;

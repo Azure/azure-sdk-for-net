@@ -15,7 +15,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
     public partial class ConversionList
     {
         /// <summary> Initializes a new instance of ConversionList. </summary>
-        /// <param name="conversions"> . </param>
+        /// <param name="conversions"> The list of conversions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversions"/> is null. </exception>
         internal ConversionList(IEnumerable<ConversionInformation> conversions)
         {
@@ -28,7 +28,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
         }
 
         /// <summary> Initializes a new instance of ConversionList. </summary>
-        /// <param name="conversions"> . </param>
+        /// <param name="conversions"> The list of conversions. </param>
         /// <param name="nextLink"> If more conversions are available this link with the same authentication header can be used to retrieve further values. </param>
         internal ConversionList(IReadOnlyList<ConversionInformation> conversions, string nextLink)
         {
@@ -36,6 +36,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
             NextLink = nextLink;
         }
 
+        /// <summary> The list of conversions. </summary>
         public IReadOnlyList<ConversionInformation> Conversions { get; }
         /// <summary> If more conversions are available this link with the same authentication header can be used to retrieve further values. </summary>
         public string NextLink { get; }

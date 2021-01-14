@@ -20,7 +20,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
         }
 
         /// <summary> Initializes a new instance of SessionsList. </summary>
-        /// <param name="sessions"> . </param>
+        /// <param name="sessions"> The list of rendering sessions. Does not include sessions in &apos;Stopped&apos; state. </param>
         /// <param name="nextLink"> If more rendering sessions are available this link with the same authentication header can be used to retrieve further values. </param>
         internal SessionsList(IReadOnlyList<SessionProperties> sessions, string nextLink)
         {
@@ -28,6 +28,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
             NextLink = nextLink;
         }
 
+        /// <summary> The list of rendering sessions. Does not include sessions in &apos;Stopped&apos; state. </summary>
         public IReadOnlyList<SessionProperties> Sessions { get; }
         /// <summary> If more rendering sessions are available this link with the same authentication header can be used to retrieve further values. </summary>
         public string NextLink { get; }

@@ -15,14 +15,14 @@ namespace Azure.MixedReality.RemoteRendering.Models
     {
         internal static SessionProperties DeserializeSessionProperties(JsonElement element)
         {
-            Optional<string> id = default;
+            string id = default;
             Optional<int> arrInspectorPort = default;
             Optional<int> handshakePort = default;
             Optional<int> elapsedTimeMinutes = default;
             Optional<string> hostname = default;
             Optional<int> maxLeaseTimeMinutes = default;
-            Optional<SessionSize> size = default;
-            Optional<SessionStatus> status = default;
+            SessionSize size = default;
+            SessionStatus status = default;
             Optional<float> teraflops = default;
             Optional<ErrorDetails> error = default;
             Optional<DateTimeOffset> creationTime = default;
@@ -80,21 +80,11 @@ namespace Azure.MixedReality.RemoteRendering.Models
                 }
                 if (property.NameEquals("size"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     size = new SessionSize(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     status = new SessionStatus(property.Value.GetString());
                     continue;
                 }
@@ -129,7 +119,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
                     continue;
                 }
             }
-            return new SessionProperties(id.Value, Optional.ToNullable(arrInspectorPort), Optional.ToNullable(handshakePort), Optional.ToNullable(elapsedTimeMinutes), hostname.Value, Optional.ToNullable(maxLeaseTimeMinutes), Optional.ToNullable(size), Optional.ToNullable(status), Optional.ToNullable(teraflops), error.Value, Optional.ToNullable(creationTime));
+            return new SessionProperties(id, Optional.ToNullable(arrInspectorPort), Optional.ToNullable(handshakePort), Optional.ToNullable(elapsedTimeMinutes), hostname.Value, Optional.ToNullable(maxLeaseTimeMinutes), size, status, Optional.ToNullable(teraflops), error.Value, Optional.ToNullable(creationTime));
         }
     }
 }

@@ -15,8 +15,8 @@ namespace Azure.MixedReality.RemoteRendering.Models
     {
         internal static ErrorDetails DeserializeErrorDetails(JsonElement element)
         {
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string code = default;
+            string message = default;
             Optional<IReadOnlyList<ErrorDetails>> details = default;
             Optional<string> target = default;
             Optional<ErrorDetails> innerError = default;
@@ -63,7 +63,7 @@ namespace Azure.MixedReality.RemoteRendering.Models
                     continue;
                 }
             }
-            return new ErrorDetails(code.Value, message.Value, Optional.ToList(details), target.Value, innerError.Value);
+            return new ErrorDetails(code, message, Optional.ToList(details), target.Value, innerError.Value);
         }
     }
 }

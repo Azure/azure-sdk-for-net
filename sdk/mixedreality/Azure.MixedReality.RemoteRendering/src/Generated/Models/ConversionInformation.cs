@@ -13,12 +13,13 @@ namespace Azure.MixedReality.RemoteRendering.Models
     public partial class ConversionInformation
     {
         /// <summary> Initializes a new instance of ConversionInformation. </summary>
-        /// <param name="id"> . </param>
-        /// <param name="settings"> Settings for where to retrieve input files from and where to write output files. </param>
+        /// <param name="id"> The id of the conversion supplied when the conversion was created. </param>
+        /// <param name="settings"> Settings for where to retrieve input files from and where to write output files. Supplied when creating the conversion. </param>
         /// <param name="error"> The error object containing details about the conversion failure. </param>
-        /// <param name="status"> . </param>
+        /// <param name="status"> The status of the conversion. Terminal states are &apos;Cancelled&apos;, &apos;Failed&apos;, &apos;Succeeded&apos;. </param>
+        /// <param name="creationTime"> The time when the conversion was created. Date and time in ISO 8601 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="settings"/> is null. </exception>
-        internal ConversionInformation(string id, ConversionSettings settings, ErrorDetails error, CreatedByType status)
+        internal ConversionInformation(string id, ConversionSettings settings, ErrorDetails error, ConversionStatus status, DateTimeOffset creationTime)
         {
             if (id == null)
             {
@@ -33,16 +34,17 @@ namespace Azure.MixedReality.RemoteRendering.Models
             Settings = settings;
             Error = error;
             Status = status;
+            CreationTime = creationTime;
         }
 
         /// <summary> Initializes a new instance of ConversionInformation. </summary>
-        /// <param name="id"> . </param>
-        /// <param name="settings"> Settings for where to retrieve input files from and where to write output files. </param>
-        /// <param name="output"> . </param>
+        /// <param name="id"> The id of the conversion supplied when the conversion was created. </param>
+        /// <param name="settings"> Settings for where to retrieve input files from and where to write output files. Supplied when creating the conversion. </param>
+        /// <param name="output"> Information about the output of a successful conversion. Only present when the status of the conversion is &apos;Succeeded&apos;. </param>
         /// <param name="error"> The error object containing details about the conversion failure. </param>
-        /// <param name="status"> . </param>
-        /// <param name="creationTime"> . </param>
-        internal ConversionInformation(string id, ConversionSettings settings, ConversionOutput output, ErrorDetails error, CreatedByType status, DateTimeOffset? creationTime)
+        /// <param name="status"> The status of the conversion. Terminal states are &apos;Cancelled&apos;, &apos;Failed&apos;, &apos;Succeeded&apos;. </param>
+        /// <param name="creationTime"> The time when the conversion was created. Date and time in ISO 8601 format. </param>
+        internal ConversionInformation(string id, ConversionSettings settings, ConversionOutput output, ErrorDetails error, ConversionStatus status, DateTimeOffset creationTime)
         {
             Id = id;
             Settings = settings;
@@ -52,13 +54,17 @@ namespace Azure.MixedReality.RemoteRendering.Models
             CreationTime = creationTime;
         }
 
+        /// <summary> The id of the conversion supplied when the conversion was created. </summary>
         public string Id { get; }
-        /// <summary> Settings for where to retrieve input files from and where to write output files. </summary>
+        /// <summary> Settings for where to retrieve input files from and where to write output files. Supplied when creating the conversion. </summary>
         public ConversionSettings Settings { get; }
+        /// <summary> Information about the output of a successful conversion. Only present when the status of the conversion is &apos;Succeeded&apos;. </summary>
         public ConversionOutput Output { get; }
         /// <summary> The error object containing details about the conversion failure. </summary>
         public ErrorDetails Error { get; }
-        public CreatedByType Status { get; }
-        public DateTimeOffset? CreationTime { get; }
+        /// <summary> The status of the conversion. Terminal states are &apos;Cancelled&apos;, &apos;Failed&apos;, &apos;Succeeded&apos;. </summary>
+        public ConversionStatus Status { get; }
+        /// <summary> The time when the conversion was created. Date and time in ISO 8601 format. </summary>
+        public DateTimeOffset CreationTime { get; }
     }
 }

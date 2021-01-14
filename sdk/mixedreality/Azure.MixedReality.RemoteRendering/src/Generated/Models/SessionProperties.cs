@@ -13,23 +13,35 @@ namespace Azure.MixedReality.RemoteRendering.Models
     public partial class SessionProperties
     {
         /// <summary> Initializes a new instance of SessionProperties. </summary>
-        internal SessionProperties()
+        /// <param name="id"> The id of the session supplied when the conversion was created. </param>
+        /// <param name="size"> Size of the server used for the rendering session. Remote Rendering with Standard size server has a maximum scene size of 20 million polygons. Remote Rendering with Premium size does not enforce a hard maximum, but performance may be degraded if your content exceeds the rendering capabilities of the service. </param>
+        /// <param name="status"> The status of the rendering session. Once the status reached the &apos;Ready&apos; state it can be connected to. The terminal state is &apos;Stopped&apos;. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal SessionProperties(string id, SessionSize size, SessionStatus status)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            Id = id;
+            Size = size;
+            Status = status;
         }
 
         /// <summary> Initializes a new instance of SessionProperties. </summary>
-        /// <param name="id"> . </param>
-        /// <param name="arrInspectorPort"> . </param>
-        /// <param name="handshakePort"> . </param>
+        /// <param name="id"> The id of the session supplied when the conversion was created. </param>
+        /// <param name="arrInspectorPort"> The TCP port at which the Azure Remote Rendering Inspector tool is hosted. </param>
+        /// <param name="handshakePort"> The TCP port used for the handshake. </param>
         /// <param name="elapsedTimeMinutes"> Amount of time in minutes the session is or has been in Ready state. Time is rounded down to a full minute. </param>
-        /// <param name="hostname"> . </param>
-        /// <param name="maxLeaseTimeMinutes"> . </param>
-        /// <param name="size"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="teraflops"> . </param>
+        /// <param name="hostname"> The hostname under which the rendering session is reachable. </param>
+        /// <param name="maxLeaseTimeMinutes"> The time in minutes the session will run after reaching the &apos;Ready&apos; state. </param>
+        /// <param name="size"> Size of the server used for the rendering session. Remote Rendering with Standard size server has a maximum scene size of 20 million polygons. Remote Rendering with Premium size does not enforce a hard maximum, but performance may be degraded if your content exceeds the rendering capabilities of the service. </param>
+        /// <param name="status"> The status of the rendering session. Once the status reached the &apos;Ready&apos; state it can be connected to. The terminal state is &apos;Stopped&apos;. </param>
+        /// <param name="teraflops"> The computational power of the rendering session GPU measured in Teraflops. </param>
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
-        /// <param name="creationTime"> . </param>
-        internal SessionProperties(string id, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string hostname, int? maxLeaseTimeMinutes, SessionSize? size, SessionStatus? status, float? teraflops, ErrorDetails error, DateTimeOffset? creationTime)
+        /// <param name="creationTime"> The time when the rendering session was created. Date and time in ISO 8601 format. </param>
+        internal SessionProperties(string id, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string hostname, int? maxLeaseTimeMinutes, SessionSize size, SessionStatus status, float? teraflops, ErrorDetails error, DateTimeOffset? creationTime)
         {
             Id = id;
             ArrInspectorPort = arrInspectorPort;
@@ -44,18 +56,27 @@ namespace Azure.MixedReality.RemoteRendering.Models
             CreationTime = creationTime;
         }
 
+        /// <summary> The id of the session supplied when the conversion was created. </summary>
         public string Id { get; }
+        /// <summary> The TCP port at which the Azure Remote Rendering Inspector tool is hosted. </summary>
         public int? ArrInspectorPort { get; }
+        /// <summary> The TCP port used for the handshake. </summary>
         public int? HandshakePort { get; }
         /// <summary> Amount of time in minutes the session is or has been in Ready state. Time is rounded down to a full minute. </summary>
         public int? ElapsedTimeMinutes { get; }
+        /// <summary> The hostname under which the rendering session is reachable. </summary>
         public string Hostname { get; }
+        /// <summary> The time in minutes the session will run after reaching the &apos;Ready&apos; state. </summary>
         public int? MaxLeaseTimeMinutes { get; }
-        public SessionSize? Size { get; }
-        public SessionStatus? Status { get; }
+        /// <summary> Size of the server used for the rendering session. Remote Rendering with Standard size server has a maximum scene size of 20 million polygons. Remote Rendering with Premium size does not enforce a hard maximum, but performance may be degraded if your content exceeds the rendering capabilities of the service. </summary>
+        public SessionSize Size { get; }
+        /// <summary> The status of the rendering session. Once the status reached the &apos;Ready&apos; state it can be connected to. The terminal state is &apos;Stopped&apos;. </summary>
+        public SessionStatus Status { get; }
+        /// <summary> The computational power of the rendering session GPU measured in Teraflops. </summary>
         public float? Teraflops { get; }
         /// <summary> The error object containing details about the rendering session startup failure. </summary>
         public ErrorDetails Error { get; }
+        /// <summary> The time when the rendering session was created. Date and time in ISO 8601 format. </summary>
         public DateTimeOffset? CreationTime { get; }
     }
 }

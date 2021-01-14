@@ -19,11 +19,6 @@ namespace Azure.MixedReality.RemoteRendering.Models
             {
                 if (property.NameEquals("outputAssetUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        outputAssetUri = null;
-                        continue;
-                    }
                     outputAssetUri = property.Value.GetString();
                     continue;
                 }

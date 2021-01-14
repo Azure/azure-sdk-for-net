@@ -14,21 +14,16 @@ namespace Azure.MixedReality.RemoteRendering.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            Optional<ErrorDetails> error = default;
+            ErrorDetails error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     error = ErrorDetails.DeserializeErrorDetails(property.Value);
                     continue;
                 }
             }
-            return new ErrorResponse(error.Value);
+            return new ErrorResponse(error);
         }
     }
 }

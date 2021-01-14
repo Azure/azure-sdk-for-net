@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
-    /// <summary> The ConversionOutputSettings. </summary>
+    /// <summary> Settings for the conversion output. </summary>
     public partial class ConversionOutputSettings
     {
         /// <summary> Initializes a new instance of ConversionOutputSettings. </summary>
-        /// <param name="storageContainerUri"> . </param>
+        /// <param name="storageContainerUri"> The URI of the Azure blob storage container where the result of the conversion should be written to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerUri"/> is null. </exception>
         public ConversionOutputSettings(string storageContainerUri)
         {
@@ -26,10 +26,10 @@ namespace Azure.MixedReality.RemoteRendering.Models
         }
 
         /// <summary> Initializes a new instance of ConversionOutputSettings. </summary>
-        /// <param name="storageContainerUri"> . </param>
-        /// <param name="storageContainerWriteSas"> . </param>
-        /// <param name="blobPrefix"> . </param>
-        /// <param name="outputAssetFilename"> . </param>
+        /// <param name="storageContainerUri"> The URI of the Azure blob storage container where the result of the conversion should be written to. </param>
+        /// <param name="storageContainerWriteSas"> A Azure blob storage container shared access signature giving write access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. </param>
+        /// <param name="blobPrefix"> A prefix which gets prepended in front of all files produced by the conversion process. Will be treaded as a virtual folder. </param>
+        /// <param name="outputAssetFilename"> The file name of the output asset. Must end in &apos;.arrAsset&apos;. </param>
         internal ConversionOutputSettings(string storageContainerUri, string storageContainerWriteSas, string blobPrefix, string outputAssetFilename)
         {
             StorageContainerUri = storageContainerUri;
@@ -38,9 +38,13 @@ namespace Azure.MixedReality.RemoteRendering.Models
             OutputAssetFilename = outputAssetFilename;
         }
 
+        /// <summary> The URI of the Azure blob storage container where the result of the conversion should be written to. </summary>
         public string StorageContainerUri { get; set; }
+        /// <summary> A Azure blob storage container shared access signature giving write access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. </summary>
         public string StorageContainerWriteSas { get; set; }
+        /// <summary> A prefix which gets prepended in front of all files produced by the conversion process. Will be treaded as a virtual folder. </summary>
         public string BlobPrefix { get; set; }
+        /// <summary> The file name of the output asset. Must end in &apos;.arrAsset&apos;. </summary>
         public string OutputAssetFilename { get; set; }
     }
 }

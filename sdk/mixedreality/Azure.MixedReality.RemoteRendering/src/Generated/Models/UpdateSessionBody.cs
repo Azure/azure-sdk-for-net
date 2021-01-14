@@ -11,12 +11,13 @@ namespace Azure.MixedReality.RemoteRendering.Models
     public partial class UpdateSessionBody
     {
         /// <summary> Initializes a new instance of UpdateSessionBody. </summary>
-        /// <param name="maxLeaseTimeMinutes"> . </param>
+        /// <param name="maxLeaseTimeMinutes"> Update to the time the session will run after it reached the &apos;Ready&apos; state.  It has to be bigger than the current value of maxLeaseTimeMinutes. </param>
         public UpdateSessionBody(int maxLeaseTimeMinutes)
         {
             MaxLeaseTimeMinutes = maxLeaseTimeMinutes;
         }
 
+        /// <summary> Update to the time the session will run after it reached the &apos;Ready&apos; state.  It has to be bigger than the current value of maxLeaseTimeMinutes. </summary>
         public int MaxLeaseTimeMinutes { get; }
     }
 }
