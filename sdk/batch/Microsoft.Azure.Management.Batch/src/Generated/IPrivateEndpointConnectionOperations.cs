@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the properties of an existing private endpoint connection.
         /// </summary>
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the private endpoint connections in the specified
         /// account.

@@ -533,10 +533,10 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionUpdateHeaders> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, privateEndpointConnectionName, parameters, ifMatch, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<PrivateEndpointConnection> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, privateEndpointConnectionName, parameters, ifMatch, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateEndpointConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -773,7 +773,7 @@ namespace Microsoft.Azure.Management.Batch
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionUpdateHeaders>();
+            var _result = new AzureOperationResponse<PrivateEndpointConnection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -797,19 +797,6 @@ namespace Microsoft.Azure.Management.Batch
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<PrivateEndpointConnectionUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
