@@ -101,7 +101,7 @@ namespace Azure.MixedReality.RemoteRendering
             scope.Start();
             try
             {
-                var result = _restClient.CreateConversion(_accountId, conversionId, new ConversionRequest(settings), cancellationToken);
+                var result = _restClient.CreateConversion(_accountId, conversionId, new CreateConversionSettings(settings), cancellationToken);
                 return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
@@ -129,7 +129,7 @@ namespace Azure.MixedReality.RemoteRendering
             scope.Start();
             try
             {
-                var result = await _restClient.CreateConversionAsync(_accountId, conversionId, new ConversionRequest(settings), cancellationToken).ConfigureAwait(false);
+                var result = await _restClient.CreateConversionAsync(_accountId, conversionId, new CreateConversionSettings(settings), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
@@ -260,17 +260,17 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> Creates a new rendering session. </summary>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
-        /// <param name="body"> Settings of the session to be created. </param>
+        /// <param name="settings"> Settings of the session to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
-        public virtual Response<SessionProperties> CreateSession(string sessionId, CreateSessionBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="settings"/> is null. </exception>
+        public virtual Response<SessionProperties> CreateSession(string sessionId, CreateSessionSettings settings, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
             try
             {
-                var result = _restClient.CreateSession(_accountId, sessionId, body, cancellationToken);
+                var result = _restClient.CreateSession(_accountId, sessionId, settings, cancellationToken);
                 return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
@@ -282,17 +282,17 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> Creates a new rendering session. </summary>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
-        /// <param name="body"> Settings of the session to be created. </param>
+        /// <param name="settings"> Settings of the session to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<SessionProperties>> CreateSessionAsync(string sessionId, CreateSessionBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="settings"/> is null. </exception>
+        public virtual async Task<Response<SessionProperties>> CreateSessionAsync(string sessionId, CreateSessionSettings settings, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(CreateSessionAsync)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
             try
             {
-                var result = await _restClient.CreateSessionAsync(_accountId, sessionId, body, cancellationToken).ConfigureAwait(false);
+                var result = await _restClient.CreateSessionAsync(_accountId, sessionId, settings, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(result.Value, result.GetRawResponse());
             }
             catch (Exception ex)
