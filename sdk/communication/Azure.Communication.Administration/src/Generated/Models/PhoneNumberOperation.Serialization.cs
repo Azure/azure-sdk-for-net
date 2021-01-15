@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class PhoneNumberOperation
+    internal partial class PhoneNumberOperation
     {
         internal static PhoneNumberOperation DeserializePhoneNumberOperation(JsonElement element)
         {

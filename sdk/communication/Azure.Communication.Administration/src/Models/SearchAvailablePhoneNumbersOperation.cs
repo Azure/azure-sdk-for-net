@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Administration.Models
 {
     [CodeGenModel("PhoneNumbersSearchAvailablePhoneNumbersOperation")]
     public partial class SearchAvailablePhoneNumbersOperation

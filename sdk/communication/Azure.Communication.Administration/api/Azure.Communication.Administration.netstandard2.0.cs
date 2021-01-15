@@ -54,8 +54,8 @@ namespace Azure.Communication.Administration
         public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.Administration.Models.ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Communication.Administration.SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string countryCode, Azure.Communication.Administration.Models.PhoneNumberType phoneNumberType, Azure.Communication.Administration.Models.PhoneNumberAssignmentType assignmentType, Azure.Communication.Administration.Models.PhoneNumberCapabilitiesRequest capabilities, string areaCode = null, int? quantity = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string countryCode, Azure.Communication.Administration.Models.PhoneNumberType phoneNumberType, Azure.Communication.Administration.Models.PhoneNumberAssignmentType assignmentType, Azure.Communication.Administration.Models.PhoneNumberCapabilitiesRequest capabilities, string areaCode = null, int? quantity = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.Administration.Models.SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string countryCode, Azure.Communication.Administration.Models.PhoneNumberType phoneNumberType, Azure.Communication.Administration.Models.PhoneNumberAssignmentType assignmentType, Azure.Communication.Administration.Models.PhoneNumberCapabilitiesRequest capabilities, string areaCode = null, int? quantity = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string countryCode, Azure.Communication.Administration.Models.PhoneNumberType phoneNumberType, Azure.Communication.Administration.Models.PhoneNumberAssignmentType assignmentType, Azure.Communication.Administration.Models.PhoneNumberCapabilitiesRequest capabilities, string areaCode = null, int? quantity = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.Administration.Models.UpdatePhoneNumberCapabilitiesOperation StartUpdatePhoneNumberCapabilities(string phoneNumber, Azure.Communication.Administration.Models.PhoneNumberCapabilityValue? sms = default(Azure.Communication.Administration.Models.PhoneNumberCapabilityValue?), Azure.Communication.Administration.Models.PhoneNumberCapabilityValue? calling = default(Azure.Communication.Administration.Models.PhoneNumberCapabilityValue?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.UpdatePhoneNumberCapabilitiesOperation> StartUpdatePhoneNumberCapabilitiesAsync(string phoneNumber, Azure.Communication.Administration.Models.PhoneNumberCapabilityValue? sms = default(Azure.Communication.Administration.Models.PhoneNumberCapabilityValue?), Azure.Communication.Administration.Models.PhoneNumberCapabilityValue? calling = default(Azure.Communication.Administration.Models.PhoneNumberCapabilityValue?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Administration.Models.AcquiredPhoneNumber> UpdatePhoneNumber(string phoneNumber, string callbackUri = null, string applicationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -69,19 +69,6 @@ namespace Azure.Communication.Administration
         {
             V1 = 1,
         }
-    }
-    public partial class SearchAvailablePhoneNumbersOperation : Azure.Operation<Azure.Communication.Administration.Models.PhoneNumberSearchResult>
-    {
-        internal SearchAvailablePhoneNumbersOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Communication.Administration.Models.PhoneNumberSearchResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberSearchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberSearchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.Communication.Administration.Models
@@ -115,11 +102,6 @@ namespace Azure.Communication.Administration.Models
         public Azure.Communication.Administration.Models.CommunicationError InnerError { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
-    }
-    public partial class CommunicationIdentity
-    {
-        internal CommunicationIdentity() { }
-        public string Id { get { throw null; } }
     }
     public partial class CommunicationUserToken
     {
@@ -205,17 +187,6 @@ namespace Azure.Communication.Administration.Models
         public string BillingFrequency { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
     }
-    public partial class PhoneNumberOperation
-    {
-        internal PhoneNumberOperation() { }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
-        public Azure.Communication.Administration.Models.CommunicationError Error { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.Communication.Administration.Models.OperationKind Kind { get { throw null; } }
-        public System.DateTimeOffset LastActionDateTime { get { throw null; } }
-        public string ResourceLocation { get { throw null; } }
-        public Azure.Communication.Administration.Models.PhoneNumberOperationStatusCodes Status { get { throw null; } }
-    }
     public enum PhoneNumberOperationStatusCodes
     {
         NotStarted = 0,
@@ -277,6 +248,19 @@ namespace Azure.Communication.Administration.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SearchAvailablePhoneNumbersOperation : Azure.Operation<Azure.Communication.Administration.Models.PhoneNumberSearchResult>
+    {
+        internal SearchAvailablePhoneNumbersOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Communication.Administration.Models.PhoneNumberSearchResult Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberSearchResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberSearchResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class UpdatePhoneNumberCapabilitiesOperation : Azure.Operation<Azure.Communication.Administration.Models.AcquiredPhoneNumber>
     {

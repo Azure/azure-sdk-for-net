@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Long running operation. </summary>
-    public partial class PhoneNumberOperation
+    internal partial class PhoneNumberOperation
     {
         /// <summary> Initializes a new instance of PhoneNumberOperation. </summary>
         /// <param name="status"> Status of operation. </param>
