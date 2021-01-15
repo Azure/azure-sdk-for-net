@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
@@ -19,25 +20,15 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    [TestFixture(typeof(HttpClientTransport), true)]
-    [TestFixture(typeof(HttpClientTransport), false)]
-#if NETFRAMEWORK
-    [TestFixture(typeof(HttpWebRequestTransport), true)]
-    [TestFixture(typeof(HttpWebRequestTransport), false)]
-#endif
-    public class TransportFunctionalTests : PipelineTestBase
+    [TestFixture(true)]
+    [TestFixture(false)]
+    public abstract class TransportFunctionalTests : PipelineTestBase
     {
-        private readonly Type _transportType;
-
-        public TransportFunctionalTests(Type transportType, bool isAsync) : base(isAsync)
+        public TransportFunctionalTests(bool isAsync) : base(isAsync)
         {
-             _transportType = transportType;
         }
 
-        private HttpPipelineTransport GetTransport()
-        {
-            return (HttpPipelineTransport) Activator.CreateInstance(_transportType);
-        }
+        protected abstract HttpPipelineTransport GetTransport(bool https = false);
 
         public static object[] ContentWithLength =>
             new object[]
@@ -797,7 +788,13 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task ThrowsTaskCanceledExceptionWhenCancelled()
+        public Task ThrowsTaskCanceledExceptionWhenCancelled() => ThrowsTaskCanceledExceptionWhenCancelled(false);
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
+        public Task ThrowsTaskCanceledExceptionWhenCancelledHttps() => ThrowsTaskCanceledExceptionWhenCancelled(true);
+
+        private async Task ThrowsTaskCanceledExceptionWhenCancelled(bool https)
         {
             var testDoneTcs = new CancellationTokenSource();
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -807,21 +804,78 @@ namespace Azure.Core.Tests
                 {
                     tcs.SetResult(null);
                     await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
-                });
+                }, https);
 
             var cts = new CancellationTokenSource();
-            var transport = GetTransport();
+            var transport = GetTransport(https);
             Request request = transport.CreateRequest();
             request.Uri.Reset(testServer.Address);
 
             var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
 
-            // Wait for server to receive a request
-            await tcs.Task;
+            try
+            {
+                // Wait for server to receive a request
+                await tcs.Task.TimeoutAfterDefault();
+            }
+            catch (TimeoutException)
+            {
+                // Try to observe the request failure
+                await task.TimeoutAfterDefault();
+            }
 
             cts.Cancel();
 
-            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task);
+            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task.TimeoutAfterDefault());
+            testDoneTcs.Cancel();
+        }
+
+        [Test]
+        public Task CanCancelContentUpload() => CanCancelContentUpload(false);
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
+        public Task CanCancelContentUploadHttps() => CanCancelContentUpload(true);
+
+        private async Task CanCancelContentUpload(bool https)
+        {
+            var buffer = new byte[100];
+            var testDoneTcs = new CancellationTokenSource();
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    // read part of the request
+                    await context.Request.Body.ReadAsync(buffer, 0, 100);
+                    tcs.SetResult(null);
+                    await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+                }, https);
+
+            var cts = new CancellationTokenSource();
+            var transport = GetTransport(https);
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Post;
+            // Use infinite request content size to fill the buffers and force the upload to stall
+            request.Content = RequestContent.Create(new InfiniteStream());
+            request.Uri.Reset(testServer.Address);
+
+            var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
+
+            try
+            {
+                // Wait for server to receive a request
+                await tcs.Task.TimeoutAfterDefault();
+            }
+            catch (TimeoutException)
+            {
+                // Try to observe the request failure
+                await task.TimeoutAfterDefault();
+            }
+
+            cts.Cancel();
+
+            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task.TimeoutAfterDefault());
             testDoneTcs.Cancel();
         }
 
@@ -882,6 +936,24 @@ namespace Azure.Core.Tests
             }
 
             public bool IsDisposed { get; set; }
+        }
+
+        private class InfiniteStream : ReadOnlyStream
+        {
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                return 0;
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                return count;
+            }
+
+            public override bool CanRead { get; } = true;
+            public override bool CanSeek { get; } = true;
+            public override long Length => long.MaxValue;
+            public override long Position { get; set; } = 0;
         }
     }
 }

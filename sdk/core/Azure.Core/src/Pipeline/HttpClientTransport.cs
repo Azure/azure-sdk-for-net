@@ -107,8 +107,12 @@ namespace Azure.Core.Pipeline
 #else
                     contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
 #endif
-
                 }
+            }
+            // HttpClient on NET5 throws OperationCanceledException from sync call sites, normalize to TaskCanceledException
+            catch (OperationCanceledException)
+            {
+                throw new TaskCanceledException();
             }
             catch (HttpRequestException e)
             {
