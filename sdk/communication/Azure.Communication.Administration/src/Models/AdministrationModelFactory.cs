@@ -28,22 +28,6 @@ namespace Azure.Communication.Administration.Models
 #pragma warning restore CA1054 // URI-like parameters should not be strings
             => new AcquiredPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, assignmentType, purchaseDate, capabilities, callbackUri, applicationId, cost);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CommunicationUserToken"/> class.
-        /// </summary>
-        /// <param name="id"> id of communication user token. </param>
-        /// <param name="token"> taken value of communication user token. </param>
-        /// <param name="expiresOn"> expiry date time of communication user token. </param>
-        /// <returns>A new <see cref="CommunicationUserToken"/> instance for mocking.</returns>
-        public static CommunicationUserToken CommunicationUserToken(string id, string token, DateTimeOffset expiresOn)
-            => new CommunicationUserToken(id, token, expiresOn);
-
-        /// <summary> Initializes a new instance of PhoneNumberCapabilities. </summary>
-        /// <param name="sms"> Available Sms capabilities. </param>
-        /// <param name="calling"> Available Calling capabilities. </param>
-        public static PhoneNumberCapabilities PhoneNumberCapabilities(PhoneNumberCapabilityValue sms, PhoneNumberCapabilityValue calling)
-            => new PhoneNumberCapabilities(sms, calling);
-
         /// <summary> Initializes a new instance of PhoneNumberCost. </summary>
         /// <param name="amount"> The cost amount. </param>
         /// <param name="currencyCode"> The ISO 4217 currency code for the cost amount. </param>

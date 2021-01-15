@@ -33,11 +33,10 @@ namespace Azure.Communication.Administration.Tests
         public async Task IssuingTokenGeneratesTokenAndIdentityWithScopes(params string[] scopes)
         {
             CommunicationIdentityClient client = CreateInstrumentedCommunicationIdentityClient();
-            Response<CommunicationUser> userResponse = await client.CreateUserAsync();
-            Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(scopes: scopes.Select(x => new CommunicationIdentityTokenScope(x)));
+            Response<CommunicationIdentityAccessToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationIdentityTokenScope(x)));
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
-            Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.User.Id));
             ValidateScopesIfNotSanitized();
 
             void ValidateScopesIfNotSanitized()
@@ -48,6 +47,12 @@ namespace Azure.Communication.Administration.Tests
                     CollectionAssert.AreEquivalent(scopes, payload.Scopes);
                 }
             }
+            CommunicationIdentityClient client = CreateInstrumentedCommunicationIdentityClientWithToken(tokenCredential);
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(scopes: scopes.Select(x => new CommunicationIdentityTokenScope(x)));
+            Response<CommunicationIdentityAccessToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationIdentityTokenScope(x)));
+
+            Assert.IsNotNull(tokenResponse.Value);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
         }
     }
 }

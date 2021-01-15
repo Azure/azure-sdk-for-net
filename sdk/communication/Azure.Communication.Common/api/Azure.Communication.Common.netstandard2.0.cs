@@ -9,9 +9,9 @@ namespace Azure.Communication
     {
         protected CommunicationIdentifier() { }
     }
-    public partial class CommunicationUser : Azure.Communication.CommunicationIdentifier
+    public partial class CommunicationUserIdentifier : Azure.Communication.CommunicationIdentifier
     {
-        public CommunicationUser(string id) { }
+        public CommunicationUserIdentifier(string id) { }
         public string Id { get { throw null; } }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{Value}")]

@@ -10,16 +10,18 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    internal partial class CommunicationIdentityUpdateRequest : IUtf8JsonSerializable
+    internal partial class CommunicationIdentityAccessTokenRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TokensValidFrom))
+            writer.WritePropertyName("scopes");
+            writer.WriteStartArray();
+            foreach (var item in Scopes)
             {
-                writer.WritePropertyName("tokensValidFrom");
-                writer.WriteStringValue(TokensValidFrom.Value, "O");
+                writer.WriteStringValue(item.ToString());
             }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
     }

@@ -37,14 +37,15 @@ namespace Azure.Communication.Administration
         }
 
         /// <summary> Create a new identity. </summary>
+        /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CommunicationIdentity>> CreateAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationIdentityAccessTokenResult>> CreateIdentityAsync(IEnumerable<CommunicationIdentityTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.CreateIdentity");
             scope.Start();
             try
             {
-                return await RestClient.CreateAsync(cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateIdentityAsync(createTokenWithScopes, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -54,14 +55,15 @@ namespace Azure.Communication.Administration
         }
 
         /// <summary> Create a new identity. </summary>
+        /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CommunicationIdentity> Create(CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationIdentityAccessTokenResult> CreateIdentity(IEnumerable<CommunicationIdentityTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.CreateIdentity");
             scope.Start();
             try
             {
-                return RestClient.Create(cancellationToken);
+                return RestClient.CreateIdentity(createTokenWithScopes, cancellationToken);
             }
             catch (Exception e)
             {
@@ -70,16 +72,16 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Delete the identity, revoke all tokens of the identity and delete all associated data. </summary>
+        /// <summary> Delete the identity, revoke all tokens for the identity and delete all associated data. </summary>
         /// <param name="id"> Identifier of the identity to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteIdentityAsync(string id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.DeleteIdentity");
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteIdentityAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -88,16 +90,16 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Delete the identity, revoke all tokens of the identity and delete all associated data. </summary>
+        /// <summary> Delete the identity, revoke all tokens for the identity and delete all associated data. </summary>
         /// <param name="id"> Identifier of the identity to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(string id, CancellationToken cancellationToken = default)
+        public virtual Response DeleteIdentity(string id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.DeleteIdentity");
             scope.Start();
             try
             {
-                return RestClient.Delete(id, cancellationToken);
+                return RestClient.DeleteIdentity(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -106,17 +108,16 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Update an Identity. </summary>
+        /// <summary> Revoke all access tokens for the specific identity. </summary>
         /// <param name="id"> Identifier of the identity. </param>
-        /// <param name="tokensValidFrom"> All tokens that are issued prior to this time will be revoked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateAsync(string id, DateTimeOffset? tokensValidFrom = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RevokeAccessTokensAsync(string id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.RevokeAccessTokens");
             scope.Start();
             try
             {
-                return await RestClient.UpdateAsync(id, tokensValidFrom, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RevokeAccessTokensAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -125,17 +126,16 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Update an Identity. </summary>
+        /// <summary> Revoke all access tokens for the specific identity. </summary>
         /// <param name="id"> Identifier of the identity. </param>
-        /// <param name="tokensValidFrom"> All tokens that are issued prior to this time will be revoked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Update(string id, DateTimeOffset? tokensValidFrom = null, CancellationToken cancellationToken = default)
+        public virtual Response RevokeAccessTokens(string id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.RevokeAccessTokens");
             scope.Start();
             try
             {
-                return RestClient.Update(id, tokensValidFrom, cancellationToken);
+                return RestClient.RevokeAccessTokens(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -144,17 +144,17 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Generate a new token for an identity. </summary>
+        /// <summary> Issue a new token for an identity. </summary>
         /// <param name="id"> Identifier of the identity to issue token for. </param>
         /// <param name="scopes"> List of scopes attached to the token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CommunicationUserToken>> IssueTokenAsync(string id, IEnumerable<string> scopes, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationIdentityAccessToken>> IssueAccessTokenAsync(string id, IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.IssueToken");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.IssueAccessToken");
             scope.Start();
             try
             {
-                return await RestClient.IssueTokenAsync(id, scopes, cancellationToken).ConfigureAwait(false);
+                return await RestClient.IssueAccessTokenAsync(id, scopes, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -163,17 +163,17 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Generate a new token for an identity. </summary>
+        /// <summary> Issue a new token for an identity. </summary>
         /// <param name="id"> Identifier of the identity to issue token for. </param>
         /// <param name="scopes"> List of scopes attached to the token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CommunicationUserToken> IssueToken(string id, IEnumerable<string> scopes, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationIdentityAccessToken> IssueAccessToken(string id, IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.IssueToken");
+            using var scope = _clientDiagnostics.CreateScope("InternalCommunicationIdentityClient.IssueAccessToken");
             scope.Start();
             try
             {
-                return RestClient.IssueToken(id, scopes, cancellationToken);
+                return RestClient.IssueAccessToken(id, scopes, cancellationToken);
             }
             catch (Exception e)
             {

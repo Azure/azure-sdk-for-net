@@ -18,17 +18,17 @@ namespace Azure.Communication.Chat.Tests.samples
         public async Task SendGetUpdateDeleteMessagesSendNotificationReadReceiptsAsync()
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
-            Response<CommunicationUser> threadMember = await communicationIdentityClient.CreateUserAsync();
-            CommunicationUserToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, new[] { CommunicationTokenScope.Chat });
+            Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync(new[] { CommunicationIdentityTokenScope.Chat });
+            CommunicationIdentityAccessToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, new[] { CommunicationIdentityTokenScope.Chat });
             string userToken = communicationUserToken.Token;
             string endpoint = TestEnvironment.ChatApiUrl();
-            string theadCreatorMemberId = communicationUserToken.User.Id;
+            string theadCreatorMemberId = threadMember.Value.Id;
 
             ChatClient chatClient = new ChatClient(
                 new Uri(endpoint),
                 new CommunicationUserCredential(userToken));
 
-            var chatThreadMember = new ChatThreadMember(new CommunicationUser(theadCreatorMemberId))
+            var chatThreadMember = new ChatThreadMember(new CommunicationUserIdentifier(theadCreatorMemberId))
             {
                 DisplayName = "UserDisplayName",
                 ShareHistoryTime = DateTime.MinValue
