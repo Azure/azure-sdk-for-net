@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyTitle>Microsoft Azure Mixed Reality STS Client</AssemblyTitle>
+    <AssemblyTitle>Microsoft Azure Mixed Reality ARR Client</AssemblyTitle>
     <Version>1.0.0-preview.1</Version>
     <PackageTags>Azure MixedReality</PackageTags>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
-    <PackageProjectUrl>https://azure.microsoft.com/topic/mixed-reality/</PackageProjectUrl>
+    <PackageProjectUrl>https://azure.microsoft.com/services/remote-rendering/</PackageProjectUrl>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.0-alpha.20210112.1" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -30,21 +30,6 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureMixedRealityAuthenticationSharedSources)*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Generated\Models\" />
-  </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.MixedReality.Authentication\src\Azure.MixedReality.Authentication.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
 </Project>
