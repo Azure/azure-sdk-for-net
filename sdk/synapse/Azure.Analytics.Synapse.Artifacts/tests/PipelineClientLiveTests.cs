@@ -21,20 +21,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// </remarks>
     public class PipelineClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PipelineClientLiveTests"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public PipelineClientLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        private PipelineClient CreateClient()
+        {
+            return InstrumentClient(new PipelineClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ArtifactsClientOptions())
+            ));
         }
 
         [Test]
         public async Task TestGetPipeline()
         {
-            await foreach (var expectedPipeline in PipelineClient.GetPipelinesByWorkspaceAsync())
+            PipelineClient client = CreateClient ();
+
+            await foreach (var expectedPipeline in client.GetPipelinesByWorkspaceAsync())
             {
-                PipelineResource actualPipeline = await PipelineClient.GetPipelineAsync(expectedPipeline.Name);
+                PipelineResource actualPipeline = await client.GetPipelineAsync(expectedPipeline.Name);
                 Assert.AreEqual(expectedPipeline.Name, actualPipeline.Name);
                 Assert.AreEqual(expectedPipeline.Id, actualPipeline.Id);
             }
@@ -43,8 +50,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestCreatePipeline()
         {
+            PipelineClient client = CreateClient ();
+
             string pipelineName = Recording.GenerateName("Pipeline");
-            PipelineCreateOrUpdatePipelineOperation operation = await PipelineClient.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
+            PipelineCreateOrUpdatePipelineOperation operation = await client.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
             PipelineResource pipeline = await operation.WaitForCompletionAsync();
             Assert.AreEqual(pipelineName, pipeline.Name);
         }
@@ -52,12 +61,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestDeletePipeline()
         {
+            PipelineClient client = CreateClient ();
+
             string pipelineName = Recording.GenerateName("Pipeline");
 
-            PipelineCreateOrUpdatePipelineOperation createOperation = await PipelineClient.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
+            PipelineCreateOrUpdatePipelineOperation createOperation = await client.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
             await createOperation.WaitForCompletionAsync();
 
-            PipelineDeletePipelineOperation deleteOperation = await PipelineClient.StartDeletePipelineAsync(pipelineName);
+            PipelineDeletePipelineOperation deleteOperation = await client.StartDeletePipelineAsync(pipelineName);
             Response response = await deleteOperation.WaitForCompletionAsync();
             Assert.AreEqual(200, response.Status);
         }

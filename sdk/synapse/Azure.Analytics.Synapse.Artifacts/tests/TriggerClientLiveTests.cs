@@ -21,20 +21,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// </remarks>
     public class TriggerClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TriggerClientLiveTests"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public TriggerClientLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        private TriggerClient CreateClient()
+        {
+            return InstrumentClient(new TriggerClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ArtifactsClientOptions())
+            ));
         }
 
         [Test]
         public async Task TestGetTrigger()
         {
-            await foreach (var expectedTrigger in TriggerClient.GetTriggersByWorkspaceAsync())
+            TriggerClient client = CreateClient();
+            await foreach (var expectedTrigger in client.GetTriggersByWorkspaceAsync())
             {
-                TriggerResource actualTrigger = await TriggerClient.GetTriggerAsync(expectedTrigger.Name);
+                TriggerResource actualTrigger = await client.GetTriggerAsync(expectedTrigger.Name);
                 Assert.AreEqual(expectedTrigger.Name, actualTrigger.Name);
                 Assert.AreEqual(expectedTrigger.Id, actualTrigger.Id);
             }
@@ -43,8 +49,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestCreateTrigger()
         {
+            TriggerClient client = CreateClient();
+
             string triggerName = Recording.GenerateName("Trigger");
-            TriggerCreateOrUpdateTriggerOperation operation = await TriggerClient.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence())));
+            TriggerCreateOrUpdateTriggerOperation operation = await client.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence())));
             TriggerResource trigger = await operation.WaitForCompletionAsync();
             Assert.AreEqual(triggerName, trigger.Name);
         }
@@ -52,12 +60,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestDeleteTrigger()
         {
+            TriggerClient client = CreateClient();
+
             string triggerName = Recording.GenerateName("Trigger");
 
-            TriggerCreateOrUpdateTriggerOperation createOperation = await TriggerClient.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence())));
+            TriggerCreateOrUpdateTriggerOperation createOperation = await client.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence())));
             await createOperation.WaitForCompletionAsync();
 
-            TriggerDeleteTriggerOperation deleteOperation = await TriggerClient.StartDeleteTriggerAsync(triggerName);
+            TriggerDeleteTriggerOperation deleteOperation = await client.StartDeleteTriggerAsync(triggerName);
             Response response = await deleteOperation.WaitForCompletionAsync();
             Assert.AreEqual(200, response.Status);
         }

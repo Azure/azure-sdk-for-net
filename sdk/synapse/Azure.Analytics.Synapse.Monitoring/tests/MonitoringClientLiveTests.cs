@@ -21,18 +21,24 @@ namespace Azure.Analytics.Synapse.Monitoring.Tests
     /// </remarks>
     public class MonitoringClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MonitoringClientLiveTests"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public MonitoringClientLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        private MonitoringClient CreateClient()
+        {
+            return InstrumentClient(new MonitoringClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new MonitoringClientOptions())
+            ));
         }
 
         [Test]
         public async Task TestListSparkApplications()
         {
-            SparkJobListViewResponse sparkJobList = await MonitoringClient.GetSparkJobListAsync();
+            MonitoringClient client = CreateClient();
+            SparkJobListViewResponse sparkJobList = await client.GetSparkJobListAsync();
             Assert.NotNull(sparkJobList);
             CollectionAssert.IsNotEmpty(sparkJobList.SparkJobs);
         }
@@ -40,7 +46,8 @@ namespace Azure.Analytics.Synapse.Monitoring.Tests
         [Test]
         public async Task TestSqlQuery()
         {
-            SqlQueryStringDataModel sqlQuery = await MonitoringClient.GetSqlJobQueryStringAsync();
+            MonitoringClient client = CreateClient();
+            SqlQueryStringDataModel sqlQuery = await client.GetSqlJobQueryStringAsync();
             Assert.NotNull(sqlQuery);
             Assert.IsNotNull(sqlQuery.Query);
         }
