@@ -5,17 +5,27 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Request to purchase phone numbers. </summary>
     internal partial class PhoneNumberPurchaseRequest
     {
         /// <summary> Initializes a new instance of PhoneNumberPurchaseRequest. </summary>
-        public PhoneNumberPurchaseRequest()
+        /// <param name="searchId"> The id of the search result to purchase. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        public PhoneNumberPurchaseRequest(string searchId)
         {
+            if (searchId == null)
+            {
+                throw new ArgumentNullException(nameof(searchId));
+            }
+
+            SearchId = searchId;
         }
 
         /// <summary> The id of the search result to purchase. </summary>
-        public string SearchId { get; set; }
+        public string SearchId { get; }
     }
 }

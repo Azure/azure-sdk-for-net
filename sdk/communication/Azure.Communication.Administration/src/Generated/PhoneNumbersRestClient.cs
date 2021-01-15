@@ -209,10 +209,7 @@ namespace Azure.Communication.Administration
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
-            var model = new PhoneNumberPurchaseRequest()
-            {
-                SearchId = searchId
-            };
+            var model = new PhoneNumberPurchaseRequest(searchId);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -222,8 +219,14 @@ namespace Azure.Communication.Administration
         /// <summary> Purchase phone numbers. </summary>
         /// <param name="searchId"> The id of the search result to purchase. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders>> PurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders>> PurchasePhoneNumbersAsync(string searchId, CancellationToken cancellationToken = default)
         {
+            if (searchId == null)
+            {
+                throw new ArgumentNullException(nameof(searchId));
+            }
+
             using var message = CreatePurchasePhoneNumbersRequest(searchId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PhoneNumbersPurchasePhoneNumbersHeaders(message.Response);
@@ -239,8 +242,14 @@ namespace Azure.Communication.Administration
         /// <summary> Purchase phone numbers. </summary>
         /// <param name="searchId"> The id of the search result to purchase. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders> PurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        public ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders> PurchasePhoneNumbers(string searchId, CancellationToken cancellationToken = default)
         {
+            if (searchId == null)
+            {
+                throw new ArgumentNullException(nameof(searchId));
+            }
+
             using var message = CreatePurchasePhoneNumbersRequest(searchId);
             _pipeline.Send(message, cancellationToken);
             var headers = new PhoneNumbersPurchasePhoneNumbersHeaders(message.Response);

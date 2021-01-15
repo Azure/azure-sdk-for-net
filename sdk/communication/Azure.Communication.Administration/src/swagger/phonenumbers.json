@@ -818,6 +818,9 @@
     "PhoneNumberPurchaseRequest": {
       "description": "Request to purchase phone numbers",
       "type": "object",
+	  "required": [
+        "searchId"
+      ],
       "properties": {
         "searchId": {
           "description": "The id of the search result to purchase.",

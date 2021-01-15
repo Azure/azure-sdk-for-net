@@ -15,11 +15,8 @@ namespace Azure.Communication.Administration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SearchId))
-            {
-                writer.WritePropertyName("searchId");
-                writer.WriteStringValue(SearchId);
-            }
+            writer.WritePropertyName("searchId");
+            writer.WriteStringValue(SearchId);
             writer.WriteEndObject();
         }
     }

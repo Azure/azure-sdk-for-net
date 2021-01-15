@@ -257,8 +257,14 @@ namespace Azure.Communication.Administration
         /// <summary> Purchase phone numbers. </summary>
         /// <param name="searchId"> The id of the search result to purchase. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, CancellationToken cancellationToken = default)
         {
+            if (searchId == null)
+            {
+                throw new ArgumentNullException(nameof(searchId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartPurchasePhoneNumbers");
             scope.Start();
             try
@@ -276,8 +282,14 @@ namespace Azure.Communication.Administration
         /// <summary> Purchase phone numbers. </summary>
         /// <param name="searchId"> The id of the search result to purchase. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, CancellationToken cancellationToken = default)
         {
+            if (searchId == null)
+            {
+                throw new ArgumentNullException(nameof(searchId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartPurchasePhoneNumbers");
             scope.Start();
             try

@@ -31,8 +31,8 @@ namespace Azure.Communication.Administration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.AcquiredPhoneNumber>> GetPhoneNumberAsync(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.Administration.Models.AcquiredPhoneNumber> ListPhoneNumbers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.Administration.Models.AcquiredPhoneNumber> ListPhoneNumbersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Communication.Administration.Models.PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.Administration.Models.PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.Administration.Models.ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.Administration.Models.SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string countryCode, Azure.Communication.Administration.Models.PhoneNumberType phoneNumberType, Azure.Communication.Administration.Models.PhoneNumberAssignmentType assignmentType, Azure.Communication.Administration.Models.PhoneNumberCapabilitiesRequest capabilities, string areaCode = null, int? quantity = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -193,13 +193,6 @@ namespace Azure.Communication.Administration.Models
         public double Amount { get { throw null; } }
         public string BillingFrequency { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
-    }
-    public enum PhoneNumberOperationStatusCodes
-    {
-        NotStarted = 0,
-        Running = 1,
-        Succeeded = 2,
-        Failed = 3,
     }
     public partial class PhoneNumberSearchResult
     {
