@@ -1,12 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Analytics.Synapse.Spark.Models;
-using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Spark;
+using Azure.Analytics.Synapse.Spark.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Spark.Tests
 {
@@ -17,7 +20,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class SparkBatchClientLiveTests : SparkClientTestBase
+    public class SparkBatchClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SparkBatchClientLiveTests"/> class.

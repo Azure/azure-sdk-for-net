@@ -1,14 +1,17 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Azure.Analytics.Synapse.ManagedPrivateEndpoints;
 using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
+namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
 {
     /// <summary>
     /// The suite of tests for the <see cref="ManagedPrivateEndpointsClient"/> class.
@@ -17,7 +20,7 @@ namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class ManagedPrivateEndpointsClientLiveTests : ManagedPrivateEndpointsClientTestBase
+    public class ManagedPrivateEndpointsClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ManagedPrivateEndpointsClientLiveTests"/> class.

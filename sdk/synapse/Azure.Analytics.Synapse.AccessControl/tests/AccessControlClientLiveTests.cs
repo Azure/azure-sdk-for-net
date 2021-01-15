@@ -1,16 +1,17 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Analytics.Synapse.AccessControl;
 using Azure.Analytics.Synapse.AccessControl.Models;
 using Azure.Core.TestFramework;
-using Newtonsoft.Json.Linq;
+using Azure.Analytics.Synapse.Tests;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Tests.AccessControl
+namespace Azure.Analytics.Synapse.AccessControl.Tests
 {
     /// <summary>
     /// The suite of tests for the <see cref="AccessControlClient"/> class.
@@ -19,7 +20,7 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class AccessControlClientLiveTests : AccessControlClientTestBase
+    public class AccessControlClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AccessControlClientLiveTests"/> class.
