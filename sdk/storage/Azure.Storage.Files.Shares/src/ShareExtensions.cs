@@ -774,7 +774,8 @@ namespace Azure.Storage.Files.Shares
                     CopyStatusDescription = response.Headers.CopyStatusDescription,
                     CopyId = response.Headers.CopyId,
                     CopyProgress = response.Headers.CopyProgress,
-                    CopySource = new Uri(response.Headers.CopySource),
+                    // TODO investigate this
+                    CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
                     CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
                     FileContentHash = response.Headers.FileContentMD5,
                     IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),

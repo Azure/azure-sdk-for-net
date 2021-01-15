@@ -1642,8 +1642,8 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _fileRestClient.AbortCopyAsync(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             copyId: copyId,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -1652,8 +1652,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _fileRestClient.AbortCopy(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             copyId: copyId,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -2042,8 +2042,8 @@ namespace Azure.Storage.Files.Shares
             if (async)
             {
                 response = await _fileRestClient.DownloadAsync(
-                    shareName: _shareName,
-                    fileName: _path,
+                    shareName: ShareName,
+                    fileName: Path,
                     // TODO this might not work
                     range: range.ToString(),
                     rangeGetContentMD5: rangeGetContentHash,
@@ -2054,8 +2054,8 @@ namespace Azure.Storage.Files.Shares
             else
             {
                 response = _fileRestClient.Download(
-                    shareName: _shareName,
-                    fileName: _path,
+                    shareName: ShareName,
+                    fileName: Path,
                     // TODO this might not work
                     range: range.ToString(),
                     rangeGetContentMD5: rangeGetContentHash,
@@ -3342,15 +3342,19 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(SetMetadata)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<FileSetMetadataHeaders> response;
 
                     if (async)
                     {
                         response = await _fileRestClient.SetMetadataAsync(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             metadata: metadata,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -3359,8 +3363,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _fileRestClient.SetMetadata(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             metadata: metadata,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -3368,29 +3372,18 @@ namespace Azure.Storage.Files.Shares
 
                     return Response.FromValue(
                         response.ToShareFileInfo(),
-                        response.GetRawResponse()); ;
-
-                    // TODO remove this.
-                    //Response<RawStorageFileInfo> response = await Shares.FileRestClient.File.SetMetadataAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    metadata: metadata,
-                    //    leaseId: conditions?.LeaseId,
-                    //    async: async,
-                    //    cancellationToken: cancellationToken,
-                    //    operationName: $"{nameof(Shares.ShareFileClient)}.{nameof(SetMetadata)}")
-                    //    .ConfigureAwait(false);
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3882,8 +3875,8 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _fileRestClient.UploadRangeAsync(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             range: range.ToString(),
                             fileRangeWrite: ShareFileRangeWriteType.Update,
                             contentLength: (content?.Length - content?.Position) ?? 0,
@@ -3896,8 +3889,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _fileRestClient.UploadRange(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             range: range.ToString(),
                             fileRangeWrite: ShareFileRangeWriteType.Update,
                             contentLength: (content?.Length - content?.Position) ?? 0,
@@ -4166,8 +4159,8 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _fileRestClient.UploadRangeFromURLAsync(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             range: range.ToString(),
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
@@ -4181,8 +4174,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _fileRestClient.UploadRangeFromURL(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             range: range.ToString(),
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
@@ -5058,8 +5051,8 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _fileRestClient.ListHandlesAsync(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             marker: marker,
                             maxresults: maxResults,
                             cancellationToken: cancellationToken)
@@ -5068,8 +5061,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _fileRestClient.ListHandles(
-                            shareName: _shareName,
-                            fileName: _path,
+                            shareName: ShareName,
+                            fileName: Path,
                             marker: marker,
                             maxresults: maxResults,
                             cancellationToken: cancellationToken);
