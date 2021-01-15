@@ -165,7 +165,7 @@ stages:
                           PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
                           ArtifactName: ${{artifact.name}}
                           Language: '.net'
-                          DocRepoDestinationPath: 'api/overview/azure/' 
+                          DocRepoDestinationPath: 'api/overview/azure/'
                           GHReviewersVariable: 'OwningGHUser'
                           CIConfigs: $(CIConfigs)
                           OnboardingBranch: 'onboarding'
@@ -222,6 +222,16 @@ stages:
                           PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
                           PRLabels: "auto-merge"
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
+
+  - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+    - stage: SmokeTest_Release_Packages
+      displayName: Smoke Test Release Packages
+      jobs:
+        - template: /eng/pipelines/templates/jobs/smoke-tests.yml
+          parameters:
+            Daily: false
+            Artifacts: ${{ parameters.Artifacts }}
+            ArtifactName: ${{ parameters.ArtifactName }}
 
   - stage: Integration
     dependsOn: Signing
