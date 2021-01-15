@@ -472,7 +472,7 @@ namespace Azure.Communication.Chat.Tests
         {
             Response<CommunicationUserIdentifier> threadMember = communicationIdentityClient.CreateUser(new[] { CommunicationIdentityTokenScope.Chat });
             IEnumerable<CommunicationIdentityTokenScope> scopes = new[] { CommunicationIdentityTokenScope.Chat };
-            Response<CommunicationIdentityAccessToken> tokenResponseThreadMember = communicationIdentityClient.IssueToken(threadMember.Value, scopes);
+            Response<CommunicationIdentityAccessToken> tokenResponseThreadMember = communicationIdentityClient.IssueAccessToken(threadMember.Value, scopes);
 
             return (threadMember.Value, tokenResponseThreadMember.Value.Token);
         }
@@ -481,7 +481,7 @@ namespace Azure.Communication.Chat.Tests
         {
             Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync(new[] { CommunicationIdentityTokenScope.Chat });
             IEnumerable<CommunicationIdentityTokenScope> scopes = new[] { CommunicationIdentityTokenScope.Chat };
-            Response<CommunicationIdentityAccessToken> tokenResponseThreadMember = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, scopes);
+            Response<CommunicationIdentityAccessToken> tokenResponseThreadMember = await communicationIdentityClient.IssueAccessTokenAsync(threadMember.Value, scopes);
 
             return (threadMember.Value, tokenResponseThreadMember.Value.Token);
         }

@@ -105,7 +105,7 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response> RevokeAccessTokensAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(RevokeTokens)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(RevokeAccessTokens)}");
             scope.Start();
             try
             {
@@ -124,7 +124,7 @@ namespace Azure.Communication.Administration
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response RevokeAccessTokens(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(RevokeTokens)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(RevokeAccessTokens)}");
             scope.Start();
             try
             {
@@ -143,7 +143,7 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationIdentityAccessToken>> IssueAccessTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueAccessToken)}");
             scope.Start();
             try
             {
@@ -163,7 +163,7 @@ namespace Azure.Communication.Administration
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<CommunicationIdentityAccessToken> IssueAccessToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueAccessToken)}");
             scope.Start();
             try
             {

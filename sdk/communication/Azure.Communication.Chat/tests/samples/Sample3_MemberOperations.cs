@@ -22,9 +22,9 @@ namespace Azure.Communication.Chat.Tests.samples
             Response<CommunicationUserIdentifier> threadMember2 = await communicationIdentityClient.CreateUserAsync(new[] { CommunicationIdentityTokenScope.Chat });
             Response<CommunicationUserIdentifier> threadMember3 = await communicationIdentityClient.CreateUserAsync(new[] { CommunicationIdentityTokenScope.Chat });
 
-            CommunicationIdentityAccessToken communicationUserToken1 = await communicationIdentityClient.IssueTokenAsync(threadMember1.Value, new[] { CommunicationIdentityTokenScope.Chat });
-            CommunicationIdentityAccessToken communicationUserToken2 = await communicationIdentityClient.IssueTokenAsync(threadMember2.Value, new[] { CommunicationIdentityTokenScope.Chat });
-            CommunicationIdentityAccessToken communicationUserToken3 = await communicationIdentityClient.IssueTokenAsync(threadMember3.Value, new[] { CommunicationIdentityTokenScope.Chat });
+            CommunicationIdentityAccessToken communicationUserToken1 = await communicationIdentityClient.IssueAccessTokenAsync(threadMember1.Value, new[] { CommunicationIdentityTokenScope.Chat });
+            CommunicationIdentityAccessToken communicationUserToken2 = await communicationIdentityClient.IssueAccessTokenAsync(threadMember2.Value, new[] { CommunicationIdentityTokenScope.Chat });
+            CommunicationIdentityAccessToken communicationUserToken3 = await communicationIdentityClient.IssueAccessTokenAsync(threadMember3.Value, new[] { CommunicationIdentityTokenScope.Chat });
             string userToken = communicationUserToken1.Token;
             string endpoint = TestEnvironment.ChatApiUrl();
             string theadCreatorMemberId = threadMember1.Value.Id;
@@ -57,15 +57,15 @@ namespace Azure.Communication.Chat.Tests.samples
             var members = new[]
             {
                 new ChatThreadMember(new CommunicationUserIdentifier(memberId1)) { DisplayName ="display name member 1"},
-                new ChatThreadMember(new CommunicationUser(memberId2)) { DisplayName ="display name member 2"},
-                new ChatThreadMember(new CommunicationUser(memberId3)) { DisplayName ="display name member 3"}
+                new ChatThreadMember(new CommunicationUserIdentifier(memberId2)) { DisplayName ="display name member 2"},
+                new ChatThreadMember(new CommunicationUserIdentifier(memberId3)) { DisplayName ="display name member 3"}
             };
             await chatThreadClient.AddMembersAsync(members);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_AddMembers
 
             var memberId = memberId2;
             #region Snippet:Azure_Communication_Chat_Tests_Samples_RemoveMember
-            await chatThreadClient.RemoveMemberAsync(new CommunicationUser(memberId));
+            await chatThreadClient.RemoveMemberAsync(new CommunicationUserIdentifier(memberId));
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_RemoveMember
 
             await chatClient.DeleteChatThreadAsync(threadId);
