@@ -142,9 +142,9 @@ namespace Azure.Media.Analytics.Edge.Models
     }
     public partial class MediaGraphImageScale
     {
-        public MediaGraphImageScale(Azure.Media.Analytics.Edge.Models.MediaGraphImageScaleMode mode) { }
+        public MediaGraphImageScale() { }
         public string Height { get { throw null; } set { } }
-        public Azure.Media.Analytics.Edge.Models.MediaGraphImageScaleMode Mode { get { throw null; } set { } }
+        public Azure.Media.Analytics.Edge.Models.MediaGraphImageScaleMode? Mode { get { throw null; } set { } }
         public string Width { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -183,6 +183,7 @@ namespace Azure.Media.Analytics.Edge.Models
         public MediaGraphInstanceCollection() { }
         public string ContinuationToken { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Media.Analytics.Edge.Models.MediaGraphInstance> Value { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphInstanceCollection Deserialize(string json) { throw null; }
     }
     public partial class MediaGraphInstanceDeActivateRequest : Azure.Media.Analytics.Edge.Models.ItemNonSetRequestBase
     {
@@ -214,12 +215,25 @@ namespace Azure.Media.Analytics.Edge.Models
         public Azure.Media.Analytics.Edge.Models.MediaGraphInstance Instance { get { throw null; } set { } }
         public override string GetPayloadAsJson() { throw null; }
     }
-    public enum MediaGraphInstanceState
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaGraphInstanceState : System.IEquatable<Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState>
     {
-        Inactive = 0,
-        Activating = 1,
-        Active = 2,
-        Deactivating = 3,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaGraphInstanceState(string value) { throw null; }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState Activating { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState Active { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState Deactivating { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState Inactive { get { throw null; } }
+        public bool Equals(Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState left, Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState right) { throw null; }
+        public static implicit operator Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState (string value) { throw null; }
+        public static bool operator !=(Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState left, Azure.Media.Analytics.Edge.Models.MediaGraphInstanceState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MediaGraphIoTHubMessageSink : Azure.Media.Analytics.Edge.Models.MediaGraphSink
     {
@@ -259,21 +273,53 @@ namespace Azure.Media.Analytics.Edge.Models
     }
     public partial class MediaGraphNodeInput
     {
-        public MediaGraphNodeInput() { }
+        public MediaGraphNodeInput(string nodeName) { }
         public string NodeName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelector> OutputSelectors { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput FromNodeName(string nodeName) { throw null; }
+        public static implicit operator Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput (string nodeName) { throw null; }
     }
     public partial class MediaGraphOutputSelector
     {
         public MediaGraphOutputSelector() { }
         public Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorOperator? Operator { get { throw null; } set { } }
-        public string Property { get { throw null; } set { } }
+        public Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorProperty? Property { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public enum MediaGraphOutputSelectorOperator
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaGraphOutputSelectorOperator : System.IEquatable<Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorOperator>
     {
-        Is = 0,
-        IsNot = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaGraphOutputSelectorOperator(string value) { throw null; }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorOperator Is { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorOperator IsNot { get { throw null; } }
+        public bool Equals(Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorOperator other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorOperator left, Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorOperator right) { throw null; }
+        public static implicit operator Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorOperator (string value) { throw null; }
+        public static bool operator !=(Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorOperator left, Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorOperator right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaGraphOutputSelectorProperty : System.IEquatable<Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorProperty>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaGraphOutputSelectorProperty(string value) { throw null; }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorProperty MediaType { get { throw null; } }
+        public bool Equals(Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorProperty other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorProperty left, Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorProperty right) { throw null; }
+        public static implicit operator Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorProperty (string value) { throw null; }
+        public static bool operator !=(Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorProperty left, Azure.Media.Analytics.Edge.Models.MediaGraphOutputSelectorProperty right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MediaGraphParameterDeclaration
     {
@@ -289,17 +335,32 @@ namespace Azure.Media.Analytics.Edge.Models
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public enum MediaGraphParameterType
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaGraphParameterType : System.IEquatable<Azure.Media.Analytics.Edge.Models.MediaGraphParameterType>
     {
-        String = 0,
-        SecretString = 1,
-        Int = 2,
-        Double = 3,
-        Bool = 4,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaGraphParameterType(string value) { throw null; }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphParameterType Bool { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphParameterType Double { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphParameterType Int { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphParameterType SecretString { get { throw null; } }
+        public static Azure.Media.Analytics.Edge.Models.MediaGraphParameterType String { get { throw null; } }
+        public bool Equals(Azure.Media.Analytics.Edge.Models.MediaGraphParameterType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Media.Analytics.Edge.Models.MediaGraphParameterType left, Azure.Media.Analytics.Edge.Models.MediaGraphParameterType right) { throw null; }
+        public static implicit operator Azure.Media.Analytics.Edge.Models.MediaGraphParameterType (string value) { throw null; }
+        public static bool operator !=(Azure.Media.Analytics.Edge.Models.MediaGraphParameterType left, Azure.Media.Analytics.Edge.Models.MediaGraphParameterType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MediaGraphPemCertificateList : Azure.Media.Analytics.Edge.Models.MediaGraphCertificateSource
     {
         public MediaGraphPemCertificateList(System.Collections.Generic.IEnumerable<string> certificates) { }
+        public MediaGraphPemCertificateList(System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> certificates) { }
+        public MediaGraphPemCertificateList(params System.Security.Cryptography.X509Certificates.X509Certificate2[] certificates) { }
         public System.Collections.Generic.IList<string> Certificates { get { throw null; } }
     }
     public partial class MediaGraphProcessor
@@ -340,7 +401,7 @@ namespace Azure.Media.Analytics.Edge.Models
     }
     public partial class MediaGraphSignalGateProcessor : Azure.Media.Analytics.Edge.Models.MediaGraphProcessor
     {
-        public MediaGraphSignalGateProcessor(string name, System.Collections.Generic.IEnumerable<Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput> inputs, string activationSignalOffset, string minimumActivationTime, string maximumActivationTime) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput>)) { }
+        public MediaGraphSignalGateProcessor(string name, System.Collections.Generic.IEnumerable<Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput> inputs) : base (default(string), default(System.Collections.Generic.IEnumerable<Azure.Media.Analytics.Edge.Models.MediaGraphNodeInput>)) { }
         public string ActivationEvaluationWindow { get { throw null; } set { } }
         public string ActivationSignalOffset { get { throw null; } set { } }
         public string MaximumActivationTime { get { throw null; } set { } }
@@ -389,7 +450,6 @@ namespace Azure.Media.Analytics.Edge.Models
         public string ContinuationToken { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Media.Analytics.Edge.Models.MediaGraphTopology> Value { get { throw null; } }
         public static Azure.Media.Analytics.Edge.Models.MediaGraphTopologyCollection Deserialize(string json) { throw null; }
-        public string Serialize() { throw null; }
     }
     public partial class MediaGraphTopologyDeleteRequest : Azure.Media.Analytics.Edge.Models.ItemNonSetRequestBase
     {
@@ -424,7 +484,7 @@ namespace Azure.Media.Analytics.Edge.Models
     }
     public partial class MediaGraphUsernamePasswordCredentials : Azure.Media.Analytics.Edge.Models.MediaGraphCredentials
     {
-        public MediaGraphUsernamePasswordCredentials(string username) { }
+        public MediaGraphUsernamePasswordCredentials(string username, string password) { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }

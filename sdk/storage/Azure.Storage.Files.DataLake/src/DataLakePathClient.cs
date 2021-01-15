@@ -352,6 +352,53 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Uri"/> referencing the resource that includes the
         /// name of the account, the name of the file system, and the path to the
         /// resource.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakePathClient(Uri pathUri, AzureSasCredential credential)
+            : this(pathUri, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the resource that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakePathClient(Uri pathUri, AzureSasCredential credential, DataLakeClientOptions options)
+            : this(pathUri, credential.AsPolicy<DataLakeUriBuilder>(pathUri), options, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the resource that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -425,6 +472,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(pathUri, nameof(pathUri));
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
             options ??= new DataLakeClientOptions();
             _uri = pathUri;
@@ -2263,7 +2311,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlRecursive"/> operation sets the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2309,7 +2358,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlRecursiveAsync"/> operation sets the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2355,7 +2405,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="UpdateAccessControlRecursive"/> operation modifies the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2401,7 +2452,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="UpdateAccessControlRecursiveAsync"/> operation modifies the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2447,7 +2499,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="RemoveAccessControlRecursive"/> operation removes the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2493,7 +2546,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="RemoveAccessControlRecursiveAsync"/> operation removes the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2539,7 +2593,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlRecursiveInternal"/> operation sets the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="operationName">
         /// The operation name for diagnostic purpose.

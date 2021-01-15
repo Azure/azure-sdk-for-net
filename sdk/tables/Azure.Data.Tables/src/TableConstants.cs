@@ -76,7 +76,10 @@ namespace Azure.Data.Tables
             // SASTimeFormat represents the format of a SAS start or expiry time. Use it when formatting/parsing a time.Time.
             // ISO 8601 uses "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
             public const string SasTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
-
+            public const string SasTimeFormatSeconds = "yyyy-MM-ddTHH:mm:ssZ";
+            public const string SasTimeFormatSubSeconds = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+            public const string SasTimeFormatMinutes = "yyyy-MM-ddTHH:mmZ";
+            public const string SasTimeFormatDays = "yyyy-MM-dd";
             /// <summary>
             /// Gets the default service version to use when building shared access
             /// signatures.

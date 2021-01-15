@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    /// <summary> The MediaGraphTopologyDeleteRequest. </summary>
+    /// <summary> Represents the MediaGraphTopologyDeleteRequest. </summary>
     public partial class MediaGraphTopologyDeleteRequest : ItemNonSetRequestBase
     {
         /// <summary> Initializes a new instance of MediaGraphTopologyDeleteRequest. </summary>

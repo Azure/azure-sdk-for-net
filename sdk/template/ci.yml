@@ -28,7 +28,6 @@ extends:
   parameters:
     ServiceDirectory: template
     ArtifactName: packages
-    TestPipeline: true
     Artifacts:
     - name: Azure.Template
       safeName: AzureTemplate
