@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Compute
     /// <summary>
     /// VirtualMachineScaleSetVMRunCommandsOperations operations.
     /// </summary>
-    public partial interface IVirtualMachineScaleSetVMRunCommandsOperations
+    public partial interface IVirtualMachineScaleSetVMRunCommandsOperations //test
     {
         /// <summary>
         /// The operation to create or update the VMSS VM run command.
