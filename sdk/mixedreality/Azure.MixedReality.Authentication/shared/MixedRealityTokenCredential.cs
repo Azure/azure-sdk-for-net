@@ -24,7 +24,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="endpoint">The Mixed Reality STS service endpoint.</param>
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
         /// <param name="options">The options.</param>
-        private MixedRealityTokenCredential(string accountId, Uri endpoint, TokenCredential credential, MixedRealityStsClientOptions? options = null)
+        private MixedRealityTokenCredential(Guid accountId, Uri endpoint, TokenCredential credential, MixedRealityStsClientOptions? options = null)
         {
             _stsClient = new MixedRealityStsClient(accountId, endpoint, credential, options);
         }
@@ -58,7 +58,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
         /// <param name="options">The options.</param>
         /// <returns><see cref="TokenCredential"/>.</returns>
-        public static TokenCredential GetMixedRealityCredential(string accountId, Uri endpoint, TokenCredential credential, MixedRealityStsClientOptions? options = null)
+        public static TokenCredential GetMixedRealityCredential(Guid accountId, Uri endpoint, TokenCredential credential, MixedRealityStsClientOptions? options = null)
         {
             if (credential is StaticAccessTokenCredential)
             {
