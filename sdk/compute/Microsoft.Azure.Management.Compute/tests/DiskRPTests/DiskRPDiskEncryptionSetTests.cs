@@ -35,13 +35,13 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void DiskEncryptionSet_CreateDisk()
         {
-            DiskEncryptionSet_CreateDisk_Execute("DiskEncryptionSet_CreateDisk", location: supportedZoneLocation);
+            DiskEncryptionSet_CreateDisk_Execute("DiskEncryptionSet_CreateDisk", location: "eastus2");
         }
 
         [Fact]
         public void DiskEncryptionSet_AddDESToExistingDisk()
         {
-            DiskEncryptionSet_UpdateDisk_Execute("DiskEncryptionSet_AddDESToExistingDisk", location: supportedZoneLocation);
+            DiskEncryptionSet_UpdateDisk_Execute("DiskEncryptionSet_AddDESToExistingDisk", location: "eastus2");
         }
     }
 }
