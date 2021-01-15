@@ -470,20 +470,20 @@ namespace Azure.Communication.Chat.Tests
 
         private (CommunicationUserIdentifier user, string token) CreateUserAndToken(CommunicationIdentityClient communicationIdentityClient)
         {
-            Response<CommunicationUserIdentifier> threadMember = communicationIdentityClient.CreateUser();
-            IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
-            Response<CommunicationUserToken> tokenResponseThreadMember = communicationIdentityClient.IssueToken(threadMember.Value, scopes);
+            Response<CommunicationUserIdentifier> threadMember = communicationIdentityClient.CreateUser(new[] { CommunicationIdentityTokenScope.Chat });
+            IEnumerable<CommunicationIdentityTokenScope> scopes = new[] { CommunicationIdentityTokenScope.Chat };
+            Response<CommunicationIdentityAccessToken> tokenResponseThreadMember = communicationIdentityClient.IssueToken(threadMember.Value, scopes);
 
-            return (tokenResponseThreadMember.Value.User, tokenResponseThreadMember.Value.Token);
+            return (threadMember.Value, tokenResponseThreadMember.Value.Token);
         }
 
         private async Task<(CommunicationUserIdentifier user, string token)> CreateUserAndTokenAsync(CommunicationIdentityClient communicationIdentityClient)
         {
-            Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync();
-            IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
-            Response<CommunicationUserToken> tokenResponseThreadMember = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, scopes);
+            Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync(new[] { CommunicationIdentityTokenScope.Chat });
+            IEnumerable<CommunicationIdentityTokenScope> scopes = new[] { CommunicationIdentityTokenScope.Chat };
+            Response<CommunicationIdentityAccessToken> tokenResponseThreadMember = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, scopes);
 
-            return (tokenResponseThreadMember.Value.User, tokenResponseThreadMember.Value.Token);
+            return (threadMember.Value, tokenResponseThreadMember.Value.Token);
         }
     }
 }

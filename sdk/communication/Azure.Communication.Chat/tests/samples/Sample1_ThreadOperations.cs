@@ -18,11 +18,11 @@ namespace Azure.Communication.Chat.Tests.samples
         public async Task CreateGetUpdateDeleteThreadAsync()
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
-            Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync();
-            CommunicationUserToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, new[] { CommunicationTokenScope.Chat });
+            Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync(new[] { CommunicationIdentityTokenScope.Chat });
+            CommunicationIdentityAccessToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, new[] { CommunicationIdentityTokenScope.Chat });
             string userToken = communicationUserToken.Token;
             string endpoint = TestEnvironment.ChatApiUrl();
-            string threadCreatorId = communicationUserToken.User.Id;
+            string threadCreatorId = threadMember.Value.Id;
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
             ChatClient chatClient = new ChatClient(

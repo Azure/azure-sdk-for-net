@@ -6,14 +6,14 @@ namespace Azure.Communication.Administration
         public CommunicationIdentityClient(string connectionString, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
         public CommunicationIdentityClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
         public CommunicationIdentityClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
-        public virtual Azure.Response<Azure.Communication.CommunicationUserIdentifier> CreateUser(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CommunicationUserIdentifier>> CreateUserAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CommunicationUserIdentifier> CreateUser(System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.CommunicationIdentityTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CommunicationUserIdentifier>> CreateUserAsync(System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.CommunicationIdentityTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteUser(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Administration.Models.CommunicationUserToken> IssueToken(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.CommunicationUserToken>> IssueTokenAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RevokeTokens(Azure.Communication.CommunicationUserIdentifier communicationUser, System.DateTimeOffset? issuedBefore = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RevokeTokensAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.DateTimeOffset? issuedBefore = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Administration.Models.CommunicationIdentityAccessToken> IssueToken(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.CommunicationIdentityTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.CommunicationIdentityAccessToken>> IssueTokenAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.CommunicationIdentityTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RevokeTokens(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RevokeTokensAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CommunicationIdentityClientOptions : Azure.Core.ClientOptions
     {
@@ -137,7 +137,6 @@ namespace Azure.Communication.Administration.Models
         public static Azure.Communication.Administration.Models.AcquiredPhoneNumber AcquiredPhoneNumber(string phoneNumber, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.PhoneNumberCapability> acquiredCapabilities, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.PhoneNumberCapability> availableCapabilities) { throw null; }
         public static Azure.Communication.Administration.Models.AreaCodes AreaCodes(System.Collections.Generic.IReadOnlyList<string> primaryAreaCodes, System.Collections.Generic.IReadOnlyList<string> secondaryAreaCodes, string nextLink) { throw null; }
         public static Azure.Communication.Administration.Models.CarrierDetails CarrierDetails(string name, string localizedName) { throw null; }
-        public static Azure.Communication.Administration.Models.CommunicationUserToken CommunicationUserToken(string id, string token, System.DateTimeOffset expiresOn) { throw null; }
         public static Azure.Communication.Administration.Models.LocationOptions LocationOptions(string labelId, string labelName, System.Collections.Generic.IList<Azure.Communication.Administration.Models.LocationOptionsDetails> options) { throw null; }
         public static Azure.Communication.Administration.Models.LocationOptionsDetails LocationOptionsDetails(string name, string value, System.Collections.Generic.IList<Azure.Communication.Administration.Models.LocationOptions> locationOptions) { throw null; }
         public static Azure.Communication.Administration.Models.LocationOptionsResponse LocationOptionsResponse(Azure.Communication.Administration.Models.LocationOptions locationOptions) { throw null; }
@@ -213,12 +212,40 @@ namespace Azure.Communication.Administration.Models
         public string LocalizedName { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class CommunicationUserToken
+    public partial class CommunicationIdentity
     {
-        internal CommunicationUserToken() { }
+        internal CommunicationIdentity() { }
+        public string Id { get { throw null; } }
+    }
+    public partial class CommunicationIdentityAccessToken
+    {
+        internal CommunicationIdentityAccessToken() { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public string Token { get { throw null; } }
-        public Azure.Communication.CommunicationUserIdentifier User { get { throw null; } }
+    }
+    public partial class CommunicationIdentityAccessTokenResult
+    {
+        internal CommunicationIdentityAccessTokenResult() { }
+        public Azure.Communication.Administration.Models.CommunicationIdentityAccessToken AccessToken { get { throw null; } }
+        public Azure.Communication.Administration.Models.CommunicationIdentity Identity { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommunicationIdentityTokenScope : System.IEquatable<Azure.Communication.Administration.Models.CommunicationIdentityTokenScope>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommunicationIdentityTokenScope(string value) { throw null; }
+        public static Azure.Communication.Administration.Models.CommunicationIdentityTokenScope Chat { get { throw null; } }
+        public static Azure.Communication.Administration.Models.CommunicationIdentityTokenScope Voip { get { throw null; } }
+        public bool Equals(Azure.Communication.Administration.Models.CommunicationIdentityTokenScope other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.Administration.Models.CommunicationIdentityTokenScope left, Azure.Communication.Administration.Models.CommunicationIdentityTokenScope right) { throw null; }
+        public static implicit operator Azure.Communication.Administration.Models.CommunicationIdentityTokenScope (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.Administration.Models.CommunicationIdentityTokenScope left, Azure.Communication.Administration.Models.CommunicationIdentityTokenScope right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CreateReservationOptions
     {

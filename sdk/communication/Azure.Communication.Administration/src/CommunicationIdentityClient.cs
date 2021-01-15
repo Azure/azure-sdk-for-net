@@ -87,41 +87,20 @@ namespace Azure.Communication.Administration
         }
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="scopes">The scopes that the access token should have.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationUserIdentifier>> CreateUserAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationUserIdentifier>> CreateUserAsync(IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUser)}");
-            scope.Start();
-            try
-            {
-                Response<CommunicationIdentity> response = await RestClient.CreateAsync(cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CommunicationUserIdentifier(response.Value.Id), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            await Task.Yield();
+            throw new NotImplementedException();
         }
 
-        /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <returns>A <see cref="Response{CommunicationUserIdentifier}"/>.</returns>
+        /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="scopes">The scopes that the access token should have.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual Response<CommunicationUserIdentifier> CreateUser(CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationUserIdentifier> CreateUser(IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUser)}");
-            scope.Start();
-            try
-            {
-                Response<CommunicationIdentity> response = RestClient.Create(cancellationToken);
-                return Response.FromValue(new CommunicationUserIdentifier(response.Value.Id), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary>Asynchronously deletes a <see cref="CommunicationUserIdentifier"/>, revokes its tokens and deletes its data.</summary>
@@ -133,7 +112,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteIdentityAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -152,7 +131,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return RestClient.Delete(communicationUser.Id, cancellationToken);
+                return RestClient.DeleteIdentity(communicationUser.Id, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -163,15 +142,14 @@ namespace Azure.Communication.Administration
 
         /// <summary>Asynchronously revokes all the tokens created for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> whose tokens should get revoked.</param>
-        /// <param name="issuedBefore">All tokens that are issued prior to this time will be revoked.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response> RevokeTokensAsync(CommunicationUserIdentifier communicationUser, DateTimeOffset? issuedBefore = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RevokeTokensAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(RevokeTokens)}");
             scope.Start();
             try
             {
-                return await RestClient.UpdateAsync(communicationUser.Id, issuedBefore ?? DateTime.UtcNow, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RevokeAccessTokensAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -182,16 +160,15 @@ namespace Azure.Communication.Administration
 
         /// <summary>Revokes all the tokens created for a user.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> whose tokens will be revoked.</param>
-        /// <param name="issuedBefore">All tokens that are issued prior to this time should get revoked.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual Response RevokeTokens(CommunicationUserIdentifier communicationUser, DateTimeOffset? issuedBefore = default, CancellationToken cancellationToken = default)
+        public virtual Response RevokeTokens(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(RevokeTokens)}");
             scope.Start();
             try
             {
-                return RestClient.Update(communicationUser.Id, issuedBefore ?? DateTime.UtcNow, cancellationToken);
+                return RestClient.RevokeAccessTokens(communicationUser.Id, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -201,16 +178,16 @@ namespace Azure.Communication.Administration
         }
 
         /// <summary>Asynchronously issues a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="scopes">The scopes that the token should have.</param>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
+        /// <param name="scopes">The scopes that the access token should have.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationUserToken>> IssueTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationIdentityAccessToken>> IssueTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
             scope.Start();
             try
             {
-                return await RestClient.IssueTokenAsync(communicationUser.Id, scopes.Select(x => x.ToString()), cancellationToken).ConfigureAwait(false);
+                return await RestClient.IssueAccessTokenAsync(communicationUser.Id, scopes, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -220,17 +197,17 @@ namespace Azure.Communication.Administration
         }
 
         /// <summary>Issues a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="scopes">The scopes that the token should have.</param>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
+        /// <param name="scopes">The scopes that the token should have.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual Response<CommunicationUserToken> IssueToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationIdentityAccessToken> IssueToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
             scope.Start();
             try
             {
-                return RestClient.IssueToken(communicationUser.Id, scopes.Select(x => x.ToString()), cancellationToken);
+                return RestClient.IssueAccessToken(communicationUser.Id, scopes, cancellationToken);
             }
             catch (Exception ex)
             {

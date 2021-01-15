@@ -41,16 +41,6 @@ namespace Azure.Communication.Administration.Models
             => new CarrierDetails(name, localizedName);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CommunicationUserToken"/> class.
-        /// </summary>
-        /// <param name="id"> id of communication user token. </param>
-        /// <param name="token"> taken value of communication user token. </param>
-        /// <param name="expiresOn"> expiry date time of communication user token. </param>
-        /// <returns>A new <see cref="CommunicationUserToken"/> instance for mocking.</returns>
-        public static CommunicationUserToken CommunicationUserToken(string id, string token, DateTimeOffset expiresOn)
-            => new CommunicationUserToken(id, token, expiresOn);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberReservationOperation"/> class.
         /// </summary>
         /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>

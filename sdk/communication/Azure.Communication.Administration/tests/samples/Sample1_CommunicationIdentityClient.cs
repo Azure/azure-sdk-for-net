@@ -36,13 +36,13 @@ namespace Azure.Communication.Administration.Samples
             client = CreateClientWithConnectionString();
 
             #region  Snippet:CreateCommunicationUserAsync
-            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(scopes: new[] { CommunicationIdentityTokenScope.Chat });
             CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
             #endregion Snippet:CreateCommunicationTokenAsync
 
             #region  Snippet:CreateCommunicationTokenAsync
-            Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
+            Response<CommunicationIdentityAccessToken> tokenResponse = await client.IssueTokenAsync(user, scopes: new[] { CommunicationIdentityTokenScope.Chat });
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
             Console.WriteLine($"Token: {token}");
@@ -50,10 +50,7 @@ namespace Azure.Communication.Administration.Samples
             #endregion Snippet:CreateCommunicationTokenAsync
 
             #region Snippet:RevokeCommunicationUserTokenAsync
-            Response revokeResponse = await client.RevokeTokensAsync(
-                user,
-                //@@ issuedBefore: DateTimeOffset.UtcNow.AddDays(-1) /* optional */);
-                /*@@*/ issuedBefore: new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero));
+            Response revokeResponse = await client.RevokeTokensAsync(user);
             #endregion Snippet:RevokeCommunicationUserTokenAsync
 
             #region Snippet:DeleteACommunicationUserAsync
@@ -74,13 +71,13 @@ namespace Azure.Communication.Administration.Samples
             client = CreateClientWithConnectionString();
 
             #region  Snippet:CreateCommunicationUser
-            Response<CommunicationUserIdentifier> userResponse = client.CreateUser();
+            Response<CommunicationUserIdentifier> userResponse = client.CreateUser(new[] { CommunicationIdentityTokenScope.Chat });
             CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
             #endregion Snippet:CreateCommunicationToken
 
             #region  Snippet:CreateCommunicationToken
-            Response<CommunicationUserToken> tokenResponse = client.IssueToken(user, scopes: new[] { CommunicationTokenScope.Chat });
+            Response<CommunicationIdentityAccessToken> tokenResponse = client.IssueToken(user, scopes: new[] { CommunicationIdentityTokenScope.Chat });
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
             Console.WriteLine($"Token: {token}");
@@ -88,10 +85,7 @@ namespace Azure.Communication.Administration.Samples
             #endregion Snippet:CreateCommunicationToken
 
             #region Snippet:RevokeCommunicationUserToken
-            Response revokeResponse = client.RevokeTokens(
-                user,
-                //@@ issuedBefore: DateTimeOffset.UtcNow.AddDays(-1) /* optional */);
-                /*@@*/ issuedBefore: new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero));
+            Response revokeResponse = client.RevokeTokens(user);
             #endregion Snippet:RevokeCommunicationUserToken
 
             #region Snippet:DeleteACommunicationUser
@@ -112,7 +106,7 @@ namespace Azure.Communication.Administration.Samples
             client = CreateClientWithTokenCredential();
             try
             {
-                Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+                Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(scopes: new[] { CommunicationIdentityTokenScope.Chat });
             }
             catch (Exception ex)
             {
@@ -132,7 +126,7 @@ namespace Azure.Communication.Administration.Samples
 
             try
             {
-                Response<CommunicationUserIdentifier> response = await client.CreateUserAsync();
+                Response<CommunicationUserIdentifier> response = await client.CreateUserAsync(scopes: new[] { CommunicationIdentityTokenScope.Chat });
             }
             catch (RequestFailedException ex)
             {
