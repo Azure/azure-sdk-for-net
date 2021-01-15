@@ -35,7 +35,7 @@ namespace Azure.MixedReality.RemoteRendering
         {
             Version = version switch
             {
-                ServiceVersion.V2021_01_01_preview => "2021_01_01_preview",
+                ServiceVersion.V2021_01_01_preview => "2021-01-01-preview",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
 
