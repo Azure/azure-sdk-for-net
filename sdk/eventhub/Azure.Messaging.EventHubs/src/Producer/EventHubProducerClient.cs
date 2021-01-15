@@ -454,8 +454,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   partition; calling this method for a partition before events have been published to it will return an empty set of properties.
         /// </remarks>
         ///
-        public virtual async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
-                                                                                                       CancellationToken cancellationToken = default)
+        internal virtual async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
+                                                                                                         CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
