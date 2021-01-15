@@ -10,14 +10,16 @@
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$True)][string] $ConfigPath,
-    [Parameter(Mandatory=$True)][string] $Selection
+    [Parameter(Mandatory=$True)][string] $Selection,
+    [Parameter(Mandatory=$False)][string] $DisplayNameFilter,
+    [Parameter(Mandatory=$False)][array] $Filters
 )
 
-Import-Module $PSScriptRoot/job-matrix-functions.psm1
+. $PSScriptRoot/job-matrix-functions.ps1
 
 $config = GetMatrixConfigFromJson (Get-Content $ConfigPath)
 
-[array]$matrix = GenerateMatrix $config $Selection
+[array]$matrix = GenerateMatrix $config $Selection $DisplayNameFilter $Filters
 $serialized = SerializePipelineMatrix $matrix
 
 Write-Output $serialized.pretty

@@ -35,15 +35,22 @@ parameters:
 - name: Platforms
   type: object
   default: {}
+- name: Matrix
+  type: string
+- name: DependsOn
+  type: string
+  default: ''
 - name: UsePlatformContainer
   type: boolean
   default: false
 
 jobs:
   - job:
+    dependsOn: ${{ parameters.DependsOn }}
+    condition: ne(${{ parameters.Matrix }}, '{}')
     strategy:
       maxParallel: ${{ parameters.MaxParallel }}
-      matrix: ${{ parameters.Platforms }}
+      matrix: $[ ${{ parameters.Matrix }} ]
 
     variables:
       - template: ../variables/globals.yml
@@ -64,6 +71,7 @@ jobs:
       vmImage: $(OSVmImage)
 
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
+      # Add a default so the job doesn't fail when the matrix is empty
       container: $[ variables['Container'] ]
 
     steps:
