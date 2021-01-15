@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> A communication identity. </summary>
-    internal partial class CommunicationIdentity
+    public partial class CommunicationIdentity
     {
         /// <summary> Initializes a new instance of CommunicationIdentity. </summary>
         /// <param name="id"> Identifier of the identity. </param>

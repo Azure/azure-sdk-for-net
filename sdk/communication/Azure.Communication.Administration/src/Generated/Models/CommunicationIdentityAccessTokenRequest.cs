@@ -11,13 +11,13 @@ using System.Linq;
 
 namespace Azure.Communication.Administration.Models
 {
-    /// <summary> The CommunicationTokenRequest. </summary>
-    internal partial class CommunicationTokenRequest
+    /// <summary> The CommunicationIdentityAccessTokenRequest. </summary>
+    internal partial class CommunicationIdentityAccessTokenRequest
     {
-        /// <summary> Initializes a new instance of CommunicationTokenRequest. </summary>
+        /// <summary> Initializes a new instance of CommunicationIdentityAccessTokenRequest. </summary>
         /// <param name="scopes"> List of scopes attached to the token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
-        public CommunicationTokenRequest(IEnumerable<string> scopes)
+        public CommunicationIdentityAccessTokenRequest(IEnumerable<CommunicationIdentityTokenScope> scopes)
         {
             if (scopes == null)
             {
@@ -28,6 +28,6 @@ namespace Azure.Communication.Administration.Models
         }
 
         /// <summary> List of scopes attached to the token. </summary>
-        public IList<string> Scopes { get; }
+        public IList<CommunicationIdentityTokenScope> Scopes { get; }
     }
 }

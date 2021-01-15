@@ -11,20 +11,14 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class CommunicationUserToken
+    public partial class CommunicationIdentityAccessToken
     {
-        internal static CommunicationUserToken DeserializeCommunicationUserToken(JsonElement element)
+        internal static CommunicationIdentityAccessToken DeserializeCommunicationIdentityAccessToken(JsonElement element)
         {
-            string id = default;
             string token = default;
             DateTimeOffset expiresOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("token"))
                 {
                     token = property.Value.GetString();
@@ -36,7 +30,7 @@ namespace Azure.Communication.Administration.Models
                     continue;
                 }
             }
-            return new CommunicationUserToken(id, token, expiresOn);
+            return new CommunicationIdentityAccessToken(token, expiresOn);
         }
     }
 }
