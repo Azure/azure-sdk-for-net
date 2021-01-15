@@ -503,7 +503,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var hookToCreate = new WebNotificationHook(hookName, "http://contoso.com");
 
-            await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
+            var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var hookCount = 0;
 
@@ -511,7 +511,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 Assert.That(hook.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(hook.Name, Is.Not.Null.And.Not.Empty);
-                Assert.That(hook.Administrators, Is.Not.Null.And.Not.Empty);
+                Assert.That(hook.Administrators, Is.Not.Null.And.Not.Empty, $"Failed! Hook ID: {hook.Id}");
                 Assert.That(hook.Administrators.Any(admin => admin == null || admin == string.Empty), Is.False);
                 Assert.That(hook.Description, Is.Not.Null);
                 Assert.That(hook.ExternalLink, Is.Not.Null);
@@ -542,6 +542,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
 
             Assert.That(hookCount, Is.GreaterThan(0));
+
+            await disposableHook.DisposeAsync();
         }
 
         [RecordedTest]

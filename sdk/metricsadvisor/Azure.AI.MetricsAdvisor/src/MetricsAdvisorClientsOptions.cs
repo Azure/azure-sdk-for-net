@@ -27,6 +27,7 @@ namespace Azure.AI.MetricsAdvisor
             }
 
             Version = version;
+            Diagnostics.LoggedHeaderNames.Add("apim-request-id");
         }
 
         /// <summary>
