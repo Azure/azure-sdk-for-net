@@ -32,10 +32,10 @@ namespace Azure.AI.TextAnalytics.Tests
             string document = "👨 Microsoft the company.";
 
             RecognizeEntitiesResultCollection responseWithUnicodeCodePoint = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en", new TextAnalyticsRequestOptions() { StringIndexType = StringIndexType.UnicodeCodePoint });
-            RecognizeEntitiesResultCollection responseWithUtf16CodeUnit = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en", new TextAnalyticsRequestOptions() { StringIndexType = StringIndexType.Utf16CodeUnit });
+            RecognizeEntitiesResultCollection responseWithUtf16CodeUnit = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en");
 
-            var entitiesWithUnicodeCodePoint = responseWithUnicodeCodePoint.FirstOrDefault().Entities.ToList();
-            var entitiesWithUtf16CodeUnit = responseWithUtf16CodeUnit.FirstOrDefault().Entities.ToList();
+            var entitiesWithUnicodeCodePoint = responseWithUnicodeCodePoint.FirstOrDefault().Entities;
+            var entitiesWithUtf16CodeUnit = responseWithUtf16CodeUnit.FirstOrDefault().Entities;
 
             Assert.AreEqual(1, entitiesWithUnicodeCodePoint.Count);
             Assert.AreEqual("Microsoft", entitiesWithUnicodeCodePoint.FirstOrDefault().Text);

@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// StringIndexType
         /// </summary>
-        public StringIndexType? StringIndexType { get; set; }
+        public StringIndexType StringIndexType { get; set; } = StringIndexType.Utf16CodeUnit;
 
         /// <summary>
         /// PiiTaskParametersDomain
