@@ -1205,7 +1205,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(PartitionPublishingPartialOptionsTestCases))]
-        public async Task OpenProducerLinkAsyncConfiguresTheLinkWhenOptionsAreEmpty(PartitionPublishingOptions options)
+        public async Task OpenProducerLinkAsyncConfiguresTheLinkWhenOptionsAreEmpty(object options)
         {
             var endpoint = new Uri("amqp://test.service.gov");
             var eventHub = "myHub";
@@ -1253,7 +1253,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, options, TimeSpan.FromDays(1), cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, (PartitionPublishingOptions)options, TimeSpan.FromDays(1), cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
