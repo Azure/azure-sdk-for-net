@@ -100,6 +100,13 @@ namespace Azure.Communication.Administration.Models
         public Azure.Communication.Administration.Models.PhoneNumberType PhoneNumberType { get { throw null; } }
         public System.DateTimeOffset PurchaseDate { get { throw null; } }
     }
+    public static partial class AdministrationModelFactory
+    {
+        public static Azure.Communication.Administration.Models.AcquiredPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, Azure.Communication.Administration.Models.PhoneNumberType phoneNumberType, Azure.Communication.Administration.Models.PhoneNumberAssignmentType assignmentType, System.DateTimeOffset purchaseDate, Azure.Communication.Administration.Models.PhoneNumberCapabilities capabilities, string callbackUri, string applicationId, Azure.Communication.Administration.Models.PhoneNumberCost cost) { throw null; }
+        public static Azure.Communication.Administration.Models.CommunicationUserToken CommunicationUserToken(string id, string token, System.DateTimeOffset expiresOn) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberCapabilities PhoneNumberCapabilities(Azure.Communication.Administration.Models.PhoneNumberCapabilityValue sms, Azure.Communication.Administration.Models.PhoneNumberCapabilityValue calling) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency) { throw null; }
+    }
     public partial class CommunicationError
     {
         internal CommunicationError() { }

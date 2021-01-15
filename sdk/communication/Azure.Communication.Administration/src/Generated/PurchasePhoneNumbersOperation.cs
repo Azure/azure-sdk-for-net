@@ -22,8 +22,6 @@ namespace Azure.Communication.Administration.Models
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PurchasePhoneNumbersOperation");
         }
-        /// <inheritdoc />
-        public override string Id => _operation.Id;
 
         /// <inheritdoc />
         public override Response Value => _operation.Value;

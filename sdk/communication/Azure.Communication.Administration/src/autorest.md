@@ -8,7 +8,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 ``` yaml
 public-clients: true
 input-file:
-    -  C:\work\phonenumbers_refactor.json
+    -  ./swagger/phonenumbers.json
 title: Phone number administration
 payload-flattening-threshold: 3
 ```

@@ -8,5 +8,7 @@ namespace Azure.Communication.Administration.Models
     [CodeGenModel("PhoneNumbersPurchasePhoneNumbersOperation")]
     public partial class PurchasePhoneNumbersOperation
     {
+        /// <inheritdoc />
+        public override string Id { get; }
     }
 }

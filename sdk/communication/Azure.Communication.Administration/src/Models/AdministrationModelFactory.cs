@@ -23,7 +23,9 @@ namespace Azure.Communication.Administration.Models
         /// <param name="applicationId"> The application id the number has been assigned to. </param>
         /// <param name="cost"> The monthly cost of the phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="phoneNumber"/>, <paramref name="countryCode"/>, <paramref name="capabilities"/>, <paramref name="callbackUri"/>, <paramref name="applicationId"/>, or <paramref name="cost"/> is null. </exception>
+#pragma warning disable CA1054 // URI-like parameters should not be strings
         public static AcquiredPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCapabilities capabilities, string callbackUri, string applicationId, PhoneNumberCost cost)
+#pragma warning restore CA1054 // URI-like parameters should not be strings
             => new AcquiredPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, assignmentType, purchaseDate, capabilities, callbackUri, applicationId, cost);
 
         /// <summary>

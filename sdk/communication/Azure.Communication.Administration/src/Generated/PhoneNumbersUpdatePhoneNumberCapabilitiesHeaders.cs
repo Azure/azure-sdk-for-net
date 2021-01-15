@@ -19,5 +19,7 @@ namespace Azure.Communication.Administration
         }
         /// <summary> URL to query for status of the operation. </summary>
         public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
+        /// <summary> Url to retrieve the final result after opration succeeded. Is a relative link. </summary>
+        public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
     }
 }

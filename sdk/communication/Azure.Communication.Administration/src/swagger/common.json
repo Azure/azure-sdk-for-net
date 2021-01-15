@@ -1,0 +1,107 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Communication",
+    "description": "Communication Services API common types.",
+    "version": "2020-11-19-preview1"
+  },
+  "paths": {},
+  "definitions": {
+    "CommunicationErrorResponse": {
+      "description": "The Communication Services error.",
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "description": "The Communication Services error.",
+          "$ref": "#/definitions/CommunicationError"
+        }
+      }
+    },
+    "CommunicationError": {
+      "description": "The Communication Services error.",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The error code."
+        },
+        "message": {
+          "type": "string",
+          "description": "The error message."
+        },
+        "target": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The error target."
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationError"
+          },
+          "readOnly": true,
+          "description": "Further details about specific errors that led to this error."
+        },
+        "innererror": {
+          "x-ms-client-name": "innerError",
+          "readOnly": true,
+          "$ref": "#/definitions/CommunicationError",
+          "description": "The inner error if any."
+        }
+      },
+      "x-nullable": true
+    },
+    "CommunicationIdentifierKind": {
+      "description": "The kind of a communication identifier.",
+      "type": "string",
+      "enum": [
+        "unknown",
+        "communicationUser",
+        "phoneNumber",
+        "callingApplication"
+      ],
+      "x-ms-enum": {
+        "name": "CommunicationIdentifierKind",
+        "modelAsString": true
+      }
+    },
+    "CommunicationIdentifier": {
+      "description": "Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user.",
+      "required": [
+        "kind",
+        "id"
+      ],
+      "properties": {
+        "kind": {
+          "$ref": "#/definitions/CommunicationIdentifierKind",
+          "description": "Kind of the communication identifier."
+        },
+        "id": {
+          "type": "string",
+          "description": "Full Id of the identifier."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The phone number in E.164 format."
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "Azure Active Directory OAuth2 Flow.",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      }
+    }
+  }
+}
