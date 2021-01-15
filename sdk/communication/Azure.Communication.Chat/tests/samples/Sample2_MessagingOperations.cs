@@ -50,7 +50,7 @@ namespace Azure.Communication.Chat.Tests.samples
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
             await foreach (ChatMessage message in allMessages)
             {
-                Console.WriteLine($"{message.Id}:{message.Sender.Id}:{message.Content}");
+                Console.WriteLine($"{message.Id}:{message.Sender}:{message.Content}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetMessages
 
@@ -67,7 +67,7 @@ namespace Azure.Communication.Chat.Tests.samples
             AsyncPageable<ChatMessageReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
             await foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
             {
-                Console.WriteLine($"{readReceipt.ChatMessageId}:{readReceipt.Sender.Id}:{readReceipt.ReadOn}");
+                Console.WriteLine($"{readReceipt.ChatMessageId}:{readReceipt.Sender}:{readReceipt.ReadOn}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts
 

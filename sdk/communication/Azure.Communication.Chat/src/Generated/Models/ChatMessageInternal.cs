@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.Chat
 {
@@ -19,9 +20,8 @@ namespace Azure.Communication.Chat
         /// <param name="sequenceId"> Sequence of the chat message in the conversation. </param>
         /// <param name="version"> Version of the chat message. </param>
         /// <param name="createdOn"> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="senderId"> The id of the chat message sender. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="sequenceId"/>, <paramref name="version"/>, or <paramref name="senderId"/> is null. </exception>
-        internal ChatMessageInternal(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, DateTimeOffset createdOn, string senderId)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="sequenceId"/>, or <paramref name="version"/> is null. </exception>
+        internal ChatMessageInternal(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, DateTimeOffset createdOn)
         {
             if (id == null)
             {
@@ -35,10 +35,6 @@ namespace Azure.Communication.Chat
             {
                 throw new ArgumentNullException(nameof(version));
             }
-            if (senderId == null)
-            {
-                throw new ArgumentNullException(nameof(senderId));
-            }
 
             Id = id;
             Type = type;
@@ -46,7 +42,6 @@ namespace Azure.Communication.Chat
             SequenceId = sequenceId;
             Version = version;
             CreatedOn = createdOn;
-            SenderId = senderId;
         }
 
         /// <summary> Initializes a new instance of ChatMessageInternal. </summary>
@@ -58,10 +53,10 @@ namespace Azure.Communication.Chat
         /// <param name="content"> Content of a chat message. </param>
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="createdOn"> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="senderId"> The id of the chat message sender. </param>
+        /// <param name="sender"> The id of the chat message sender. </param>
         /// <param name="deletedOn"> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="editedOn"> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatMessageInternal(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, ChatMessageContentInternal content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
+        internal ChatMessageInternal(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, ChatMessageContentInternal content, string senderDisplayName, DateTimeOffset createdOn, CommunicationIdentifierModel sender, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
         {
             Id = id;
             Type = type;
@@ -71,7 +66,7 @@ namespace Azure.Communication.Chat
             Content = content;
             SenderDisplayName = senderDisplayName;
             CreatedOn = createdOn;
-            SenderId = senderId;
+            Sender = sender;
             DeletedOn = deletedOn;
             EditedOn = editedOn;
         }
@@ -93,7 +88,7 @@ namespace Azure.Communication.Chat
         /// <summary> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset CreatedOn { get; }
         /// <summary> The id of the chat message sender. </summary>
-        public string SenderId { get; }
+        public CommunicationIdentifierModel Sender { get; }
         /// <summary> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

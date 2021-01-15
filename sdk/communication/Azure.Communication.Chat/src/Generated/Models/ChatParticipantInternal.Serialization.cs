@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -17,7 +18,7 @@ namespace Azure.Communication.Chat
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WriteObjectValue(Id);
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName");
@@ -30,14 +31,14 @@ namespace Azure.Communication.Chat
 
         internal static ChatParticipantInternal DeserializeChatParticipantInternal(JsonElement element)
         {
-            string id = default;
+            CommunicationIdentifierModel id = default;
             Optional<string> displayName = default;
             DateTimeOffset shareHistoryTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayName"))

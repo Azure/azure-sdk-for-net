@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -23,7 +24,7 @@ namespace Azure.Communication.Chat
             Optional<ChatMessageContentInternal> content = default;
             Optional<string> senderDisplayName = default;
             DateTimeOffset createdOn = default;
-            string senderId = default;
+            Optional<CommunicationIdentifierModel> sender = default;
             Optional<DateTimeOffset> deletedOn = default;
             Optional<DateTimeOffset> editedOn = default;
             foreach (var property in element.EnumerateObject())
@@ -73,9 +74,14 @@ namespace Azure.Communication.Chat
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("senderId"))
+                if (property.NameEquals("sender"))
                 {
-                    senderId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sender = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deletedOn"))
@@ -99,7 +105,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageInternal(id, type, priority, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, senderId, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn));
+            return new ChatMessageInternal(id, type, priority, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, sender.Value, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn));
         }
     }
 }

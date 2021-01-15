@@ -9,18 +9,20 @@ namespace Azure.Communication.Chat
     [CodeGenModel("ChatMessageReadReceipt")]
     public partial class ChatMessageReadReceipt
     {
-        internal ChatMessageReadReceipt(string senderId, string chatMessageId, DateTimeOffset readOn)
+        internal ChatMessageReadReceipt(CommunicationIdentifierModel sender, string chatMessageId, DateTimeOffset readOn)
         {
-            SenderId = senderId;
-            Sender = new CommunicationUserIdentifier(senderId);
+            RawSender = sender;
+            Sender = CommunicationIdentifierSerializer.Deserialize(sender);
             ChatMessageId = chatMessageId;
             ReadOn = readOn;
         }
 
         /// <summary>
-        /// The <see cref="CommunicationUserIdentifier" /> for the message.
+        /// The <see cref="CommunicationIdentifier" /> for the message.
         /// </summary>
-        public CommunicationUserIdentifier Sender { get; }
-        internal string SenderId { get; }
+        public CommunicationIdentifier Sender { get; }
+
+        [CodeGenMember("Sender")]
+        internal CommunicationIdentifierModel RawSender { get; }
     }
 }

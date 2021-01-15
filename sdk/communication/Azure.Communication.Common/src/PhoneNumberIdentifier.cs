@@ -26,5 +26,14 @@ namespace Azure.Communication
             Argument.AssertNotNullOrEmpty(phoneNumber, nameof(phoneNumber));
             Value = phoneNumber;
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => Value;
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => Value.GetHashCode();
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj) => obj is PhoneNumberIdentifier p && p.Value == Value;
     }
 }

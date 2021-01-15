@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -18,7 +19,7 @@ namespace Azure.Communication.Chat
             string id = default;
             string topic = default;
             DateTimeOffset createdOn = default;
-            string createdBy = default;
+            CommunicationIdentifierModel createdBy = default;
             Optional<DateTimeOffset> deletedOn = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,7 +40,7 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("createdBy"))
                 {
-                    createdBy = property.Value.GetString();
+                    createdBy = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deletedOn"))

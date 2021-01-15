@@ -13,7 +13,7 @@ namespace Azure.Communication.Chat
         {
             if (chatMessageContentInternal.Initiator != null)
             {
-                Initiator = new CommunicationUserIdentifier(chatMessageContentInternal.Initiator);
+                Initiator = CommunicationIdentifierSerializer.Deserialize(chatMessageContentInternal.Initiator);
             }
 
             Message = chatMessageContentInternal.Message;
@@ -36,6 +36,6 @@ namespace Azure.Communication.Chat
         /// <summary> Chat message content for type 'participantAdded' or 'participantRemoved' messages. </summary>
         public IReadOnlyList<ChatParticipant> Participants { get; }
         /// <summary> Chat message content for type 'participantAdded' or 'participantRemoved' messages. </summary>
-        public CommunicationUserIdentifier? Initiator { get; }
+        public CommunicationIdentifier? Initiator { get; }
     }
 }

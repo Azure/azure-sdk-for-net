@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -18,7 +19,7 @@ namespace Azure.Communication.Chat
             Optional<string> message = default;
             Optional<string> topic = default;
             Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;
-            Optional<string> initiator = default;
+            Optional<CommunicationIdentifierModel> initiator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"))
@@ -48,7 +49,12 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("initiator"))
                 {
-                    initiator = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    initiator = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
             }

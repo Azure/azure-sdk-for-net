@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -24,7 +25,7 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> Chat message content for type &quot;topicUpdated&quot; messages. </param>
         /// <param name="participants"> Chat message content for type &quot;participantAdded&quot; or &quot;participantRemoved&quot; messages. </param>
         /// <param name="initiator"> Chat message content for type &quot;participantAdded&quot; or &quot;participantRemoved&quot; messages. </param>
-        internal ChatMessageContentInternal(string message, string topic, IReadOnlyList<ChatParticipantInternal> participants, string initiator)
+        internal ChatMessageContentInternal(string message, string topic, IReadOnlyList<ChatParticipantInternal> participants, CommunicationIdentifierModel initiator)
         {
             Message = message;
             Topic = topic;
@@ -39,6 +40,6 @@ namespace Azure.Communication.Chat
         /// <summary> Chat message content for type &quot;participantAdded&quot; or &quot;participantRemoved&quot; messages. </summary>
         public IReadOnlyList<ChatParticipantInternal> Participants { get; }
         /// <summary> Chat message content for type &quot;participantAdded&quot; or &quot;participantRemoved&quot; messages. </summary>
-        public string Initiator { get; }
+        public CommunicationIdentifierModel Initiator { get; }
     }
 }

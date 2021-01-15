@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.Chat
 {
@@ -16,7 +17,7 @@ namespace Azure.Communication.Chat
         /// <param name="id"> The id of the chat participant. </param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ChatParticipantInternal(string id, DateTimeOffset shareHistoryTime)
+        public ChatParticipantInternal(CommunicationIdentifierModel id, DateTimeOffset shareHistoryTime)
         {
             if (id == null)
             {
@@ -31,7 +32,7 @@ namespace Azure.Communication.Chat
         /// <param name="id"> The id of the chat participant. </param>
         /// <param name="displayName"> Display name for the chat participant. </param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatParticipantInternal(string id, string displayName, DateTimeOffset shareHistoryTime)
+        internal ChatParticipantInternal(CommunicationIdentifierModel id, string displayName, DateTimeOffset shareHistoryTime)
         {
             Id = id;
             DisplayName = displayName;
@@ -39,7 +40,7 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> The id of the chat participant. </summary>
-        public string Id { get; set; }
+        public CommunicationIdentifierModel Id { get; set; }
         /// <summary> Display name for the chat participant. </summary>
         public string DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

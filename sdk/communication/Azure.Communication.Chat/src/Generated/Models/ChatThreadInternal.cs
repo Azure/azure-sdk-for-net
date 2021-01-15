@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.Chat
 {
@@ -18,7 +19,7 @@ namespace Azure.Communication.Chat
         /// <param name="createdOn"> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="createdBy"> Id of the chat thread owner. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="topic"/>, or <paramref name="createdBy"/> is null. </exception>
-        internal ChatThreadInternal(string id, string topic, DateTimeOffset createdOn, string createdBy)
+        internal ChatThreadInternal(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifierModel createdBy)
         {
             if (id == null)
             {
@@ -45,7 +46,7 @@ namespace Azure.Communication.Chat
         /// <param name="createdOn"> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="createdBy"> Id of the chat thread owner. </param>
         /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatThreadInternal(string id, string topic, DateTimeOffset createdOn, string createdBy, DateTimeOffset? deletedOn)
+        internal ChatThreadInternal(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifierModel createdBy, DateTimeOffset? deletedOn)
         {
             Id = id;
             Topic = topic;
@@ -61,7 +62,7 @@ namespace Azure.Communication.Chat
         /// <summary> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset CreatedOn { get; }
         /// <summary> Id of the chat thread owner. </summary>
-        public string CreatedBy { get; }
+        public CommunicationIdentifierModel CreatedBy { get; }
         /// <summary> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
     }

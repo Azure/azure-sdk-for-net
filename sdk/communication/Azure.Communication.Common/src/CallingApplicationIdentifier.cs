@@ -26,5 +26,14 @@ namespace Azure.Communication
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Id = id;
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => Id;
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => Id.GetHashCode();
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj) => obj is CallingApplicationIdentifier applicationId && applicationId.Id == Id;
     }
 }

@@ -22,13 +22,13 @@ namespace Azure.Communication.Chat
         /// <param name="content"> Content of the chat message. </param>
         /// <param name="senderDisplayName"> The display name of the chat message sender. </param>
         /// <param name="createdOn"> The timestamp when the chat message arrived at the server. </param>
-        /// <param name="senderId"> The id of the chat message sender. </param>
+        /// <param name="sender"> The id of the chat message sender. </param>
         /// <param name="deletedOn"> The timestamp when the chat message was deleted. </param>
         /// <param name="editedOn"> The timestamp when the chat message was edited. </param>
         /// <returns>A new <see cref="ChatMessage"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChatMessage ChatMessage(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
-            => new ChatMessage(id, type, priority, sequenceId, version, content, senderDisplayName, createdOn, senderId, deletedOn, editedOn);
+        public static ChatMessage ChatMessage(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, CommunicationIdentifier sender, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
+            => new ChatMessage(id, type, priority, sequenceId, version, content, senderDisplayName, createdOn, sender, deletedOn, editedOn);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatThreadInfo"/> class.
@@ -45,12 +45,12 @@ namespace Azure.Communication.Chat
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatMessageReadReceipt"/> class.
         /// </summary>
-        /// <param name="senderId"> Id of the of message sender. </param>
+        /// <param name="sender"> Id of the of message sender. </param>
         /// <param name="chatMessageId"> Id for the chat message that has been read. </param>
         /// <param name="readOn"> Read receipt timestamp. </param>
         /// <returns>A new <see cref="ChatMessageReadReceipt"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChatMessageReadReceipt ChatMessageReadReceipt(string senderId, string chatMessageId, DateTimeOffset readOn)
-            => new ChatMessageReadReceipt(senderId, chatMessageId, readOn);
+        public static ChatMessageReadReceipt ChatMessageReadReceipt(CommunicationIdentifier sender, string chatMessageId, DateTimeOffset readOn)
+            => new ChatMessageReadReceipt(CommunicationIdentifierSerializer.Serialize(sender), chatMessageId, readOn);
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.Communication.Chat
         public System.DateTimeOffset? EditedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Communication.Chat.ChatMessagePriority Priority { get { throw null; } }
-        public Azure.Communication.CommunicationUserIdentifier Sender { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Sender { get { throw null; } }
         public string SenderDisplayName { get { throw null; } }
         public string SequenceId { get { throw null; } }
         public Azure.Communication.Chat.ChatMessageType Type { get { throw null; } }
@@ -59,7 +59,7 @@ namespace Azure.Communication.Chat
     public partial class ChatMessageContent
     {
         internal ChatMessageContent() { }
-        public Azure.Communication.CommunicationUserIdentifier? Initiator { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier? Initiator { get { throw null; } }
         public string Message { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatParticipant> Participants { get { throw null; } }
         public string Topic { get { throw null; } }
@@ -87,7 +87,7 @@ namespace Azure.Communication.Chat
         internal ChatMessageReadReceipt() { }
         public string ChatMessageId { get { throw null; } }
         public System.DateTimeOffset ReadOn { get { throw null; } }
-        public Azure.Communication.CommunicationUserIdentifier Sender { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Sender { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ChatMessageType : System.IEquatable<Azure.Communication.Chat.ChatMessageType>
@@ -113,23 +113,23 @@ namespace Azure.Communication.Chat
     public static partial class ChatModelFactory
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, Azure.Communication.Chat.ChatMessageType type, Azure.Communication.Chat.ChatMessagePriority priority, string sequenceId, string version, Azure.Communication.Chat.ChatMessageContent content, string senderDisplayName, System.DateTimeOffset createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn) { throw null; }
+        public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, Azure.Communication.Chat.ChatMessageType type, Azure.Communication.Chat.ChatMessagePriority priority, string sequenceId, string version, Azure.Communication.Chat.ChatMessageContent content, string senderDisplayName, System.DateTimeOffset createdOn, Azure.Communication.CommunicationIdentifier sender, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Communication.Chat.ChatMessageReadReceipt ChatMessageReadReceipt(string senderId, string chatMessageId, System.DateTimeOffset readOn) { throw null; }
+        public static Azure.Communication.Chat.ChatMessageReadReceipt ChatMessageReadReceipt(Azure.Communication.CommunicationIdentifier sender, string chatMessageId, System.DateTimeOffset readOn) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatThreadInfo ChatThreadInfo(string id, string topic, System.DateTimeOffset? deletedOn, System.DateTimeOffset? lastMessageReceivedOn) { throw null; }
     }
     public partial class ChatParticipant
     {
-        public ChatParticipant(Azure.Communication.CommunicationUserIdentifier communicationUserIdentifier) { }
+        public ChatParticipant(Azure.Communication.CommunicationIdentifier id) { }
         public string? DisplayName { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier Id { get { throw null; } set { } }
         public System.DateTimeOffset ShareHistoryTime { get { throw null; } set { } }
-        public Azure.Communication.CommunicationUserIdentifier User { get { throw null; } set { } }
     }
     public partial class ChatThread
     {
         internal ChatThread() { }
-        public Azure.Communication.CommunicationUserIdentifier CreatedBy { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier CreatedBy { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public string Id { get { throw null; } }

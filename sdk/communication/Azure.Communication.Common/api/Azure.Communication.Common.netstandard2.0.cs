@@ -4,6 +4,9 @@ namespace Azure.Communication
     {
         public CallingApplicationIdentifier(string id) { }
         public string Id { get { throw null; } }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
     }
     public abstract partial class CommunicationIdentifier
     {
@@ -25,18 +28,27 @@ namespace Azure.Communication
     {
         public CommunicationUserIdentifier(string id) { }
         public string Id { get { throw null; } }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MicrosoftTeamsUserIdentifier : Azure.Communication.CommunicationIdentifier
     {
         public MicrosoftTeamsUserIdentifier(string userId, bool isAnonymous = false) { }
-        public string Id { get { throw null; } }
         public bool IsAnonymous { get { throw null; } }
+        public string UserId { get { throw null; } }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{Value}")]
     public partial class PhoneNumberIdentifier : Azure.Communication.CommunicationIdentifier
     {
         public PhoneNumberIdentifier(string phoneNumber) { }
         public string Value { get { throw null; } }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class UnknownIdentifier : Azure.Communication.CommunicationIdentifier
     {
