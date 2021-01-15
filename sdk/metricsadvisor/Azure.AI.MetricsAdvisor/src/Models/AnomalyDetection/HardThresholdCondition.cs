@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class HardThresholdCondition
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="HardThresholdCondition"/> class.
+        /// Initializes a new instance of the <see cref="HardThresholdCondition"/> class.
         /// </summary>
         /// <param name="anomalyDetectorDirection">The direction of the specified boundaries. Depending on its value, <see cref="LowerBound"/> and/or <see cref="UpperBound"/> may be required.</param>
         /// <param name="suppressCondition">The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.</param>

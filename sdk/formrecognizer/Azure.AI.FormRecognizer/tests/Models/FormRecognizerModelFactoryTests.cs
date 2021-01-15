@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var formRecognizerError = new FormRecognizerError("", "");
 
             var modelId = "18910691-1896-0619-1896-091118961109";
-            var displayName = "My model";
+            var modelName = "My model";
             var properties = new CustomFormModelProperties();
             var status = CustomFormModelStatus.Ready;
             var trainingStartedOn = DateTimeOffset.Parse("1723-07-31T23:29:31Z");
@@ -66,10 +66,10 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingDocuments = new List<TrainingDocumentInfo>() { trainingDocumentInfo };
             var errors = new List<FormRecognizerError>() { formRecognizerError };
 
-            var customFormModel = FormRecognizerModelFactory.CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors, displayName, properties);
+            var customFormModel = FormRecognizerModelFactory.CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors, modelName, properties);
 
             Assert.AreEqual(modelId, customFormModel.ModelId);
-            Assert.AreEqual(displayName, customFormModel.DisplayName);
+            Assert.AreEqual(modelName, customFormModel.ModelName);
             Assert.AreEqual(status, customFormModel.Status);
             Assert.AreEqual(trainingStartedOn, customFormModel.TrainingStartedOn);
             Assert.AreEqual(trainingCompletedOn, customFormModel.TrainingCompletedOn);
@@ -100,16 +100,16 @@ namespace Azure.AI.FormRecognizer.Tests
         public void FormRecognizerModelFactoryCanInstantiateCustomFormModelInfo()
         {
             var modelId = "10001112-2233-3444-5556-667778889991";
-            var displayName = "My model";
+            var modelName = "My model";
             var properties = new CustomFormModelProperties();
             var trainingStartedOn = DateTimeOffset.Parse("1933-05-17T11:59:02Z");
             var trainingCompletedOn = DateTimeOffset.Parse("1949-03-19T07:41:47Z");
             var status = CustomFormModelStatus.Ready;
 
-            var customFormModelInfo = FormRecognizerModelFactory.CustomFormModelInfo(modelId, trainingStartedOn, trainingCompletedOn, status, displayName, properties);
+            var customFormModelInfo = FormRecognizerModelFactory.CustomFormModelInfo(modelId, trainingStartedOn, trainingCompletedOn, status, modelName, properties);
 
             Assert.AreEqual(modelId, customFormModelInfo.ModelId);
-            Assert.AreEqual(displayName, customFormModelInfo.DisplayName);
+            Assert.AreEqual(modelName, customFormModelInfo.ModelName);
             Assert.AreEqual(properties, customFormModelInfo.Properties);
             Assert.AreEqual(trainingStartedOn, customFormModelInfo.TrainingStartedOn);
             Assert.AreEqual(trainingCompletedOn, customFormModelInfo.TrainingCompletedOn);
@@ -181,7 +181,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
         }
 
         [Test]
@@ -201,7 +201,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
         }
 
         [Test]
@@ -221,7 +221,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
         }
 
         [Test]
@@ -241,7 +241,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
         }
 
         [Test]
@@ -261,7 +261,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
         }
 
         [Test]
@@ -281,7 +281,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
         }
 
         [Test]
@@ -304,7 +304,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
         }
 
         [Test]
@@ -327,17 +327,17 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
         }
 
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFieldValueWithSelectionMarkValueType()
         {
-            var value = FormSelectionMarkState.Selected;
+            var value = SelectionMarkState.Selected;
             var fieldValue = FormRecognizerModelFactory.FieldValueWithSelectionMarkValueType(value);
 
             Assert.AreEqual(FieldValueType.SelectionMark, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsFormSelectionMarkState());
+            Assert.AreEqual(value, fieldValue.AsSelectionMarkState());
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
@@ -567,7 +567,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var pageNumber = 113;
             var text = "selected";
             var confidence = 0.1602f;
-            var state = FormSelectionMarkState.Selected;
+            var state = SelectionMarkState.Selected;
 
             var formSelectionMark = FormRecognizerModelFactory.FormSelectionMark(boundingBox, pageNumber, text, confidence, state);
 

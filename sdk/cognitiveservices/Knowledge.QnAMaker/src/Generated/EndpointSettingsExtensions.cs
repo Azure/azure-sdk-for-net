@@ -48,12 +48,9 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> UpdateSettingsAsync(this IEndpointSettings operations, EndpointSettingsDTO endpointSettingsPayload, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateSettingsAsync(this IEndpointSettings operations, EndpointSettingsDTO endpointSettingsPayload, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateSettingsWithHttpMessagesAsync(endpointSettingsPayload, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.UpdateSettingsWithHttpMessagesAsync(endpointSettingsPayload, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

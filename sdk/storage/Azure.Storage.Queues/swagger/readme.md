@@ -252,34 +252,7 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.QueueMessage) {
-        $.QueueMessage = $.DequeuedMessageItem;
-        delete $.DequeuedMessageItem;
-
-        $.QueueMessage.properties.NextVisibleOn = $.QueueMessage.properties.TimeNextVisible;
-        $.QueueMessage.properties.NextVisibleOn.xml = {"name": "TimeNextVisible"};
-        delete $.QueueMessage.properties.TimeNextVisible;
-
-        $.QueueMessage.properties.InsertedOn = $.QueueMessage.properties.InsertionTime;
-        $.QueueMessage.properties.InsertedOn.xml = {"name": "InsertionTime"};
-        delete $.QueueMessage.properties.InsertionTime;
-
-        $.QueueMessage.properties.ExpiresOn = $.QueueMessage.properties.ExpirationTime;
-        $.QueueMessage.properties.ExpiresOn.xml = {"name": "ExpirationTime"};
-        delete $.QueueMessage.properties.ExpirationTime;
-
-        const count = $.QueueMessage.properties.DequeueCount;
-        delete $.QueueMessage.properties.DequeueCount;
-        $.QueueMessage.properties.DequeueCount = count;
-    }
-- from: swagger-document
-  where: $.definitions.DequeuedMessagesList
-  transform: >
-    const def = $.items;
-    if (!def["$ref"].endsWith("QueueMessage")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/QueueMessage");
-        $.items = { "$ref": path };
-    }
+    $.DequeuedMessageItem["x-az-public"] = false;
 ```
 
 ### EnqueuedMessage
@@ -327,30 +300,7 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.PeekedMessage) {
-        $.PeekedMessage = $.PeekedMessageItem;
-        delete $.PeekedMessageItem;
-
-        $.PeekedMessage.properties.InsertedOn = $.PeekedMessage.properties.InsertionTime;
-        $.PeekedMessage.properties.InsertedOn.xml = {"name": "InsertionTime"};
-        delete $.PeekedMessage.properties.InsertionTime;
-
-        $.PeekedMessage.properties.ExpiresOn = $.PeekedMessage.properties.ExpirationTime;
-        $.PeekedMessage.properties.ExpiresOn.xml = {"name": "ExpirationTime"};
-        delete $.PeekedMessage.properties.ExpirationTime;
-
-        const count = $.PeekedMessage.properties.DequeueCount;
-        delete $.PeekedMessage.properties.DequeueCount;
-        $.PeekedMessage.properties.DequeueCount = count;
-    }
-- from: swagger-document
-  where: $.definitions.PeekedMessagesList
-  transform: >
-    const def = $.items;
-    if (!def["$ref"].endsWith("PeekedMessage")) {
-        const path = def["$ref"].replace(/[#].*$/, "#/definitions/PeekedMessage");
-        $.items = { "$ref": path };
-    }
+    $.PeekedMessageItem["x-az-public"] = false;
 ```
 
 ### ListQueuesInclude
@@ -458,7 +408,7 @@ directive:
     $.QueueServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "QueueCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
-    $.QueueServiceProperties.properties.Cors.xml.name = "CorsRule";
+    $.QueueServiceProperties.properties.Cors.xml.name = "Cors";
     $.RetentionPolicy["x-ms-client-name"] = "QueueRetentionPolicy";
     $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
 ```

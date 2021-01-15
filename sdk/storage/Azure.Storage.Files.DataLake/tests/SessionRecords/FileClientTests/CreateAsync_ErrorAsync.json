@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "3872fd6e-1bc8-6fa3-f1d1-a6243c1cf248",
         "x-ms-date": "Fri, 03 Apr 2020 21:01:51 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -28,7 +28,7 @@
         "x-ms-client-request-id": "3872fd6e-1bc8-6fa3-f1d1-a6243c1cf248",
         "x-ms-error-code": "FilesystemNotFound",
         "x-ms-request-id": "fa44018b-201f-0097-62fb-091bad000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": {
         "error": {

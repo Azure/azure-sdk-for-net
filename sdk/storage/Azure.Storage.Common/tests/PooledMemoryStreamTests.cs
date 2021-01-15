@@ -65,7 +65,6 @@ namespace Azure.Storage.Tests
             PooledMemoryStream arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, 0, _pool, bufferPartitionSize, false, default).EnsureCompleted();
             originalStream.Position = 0;
 
-
             // assert it holds the correct amount of data. other tests assert data validity and it's so expensive to do that here.
             // test without blowing up memory
             const int testSize = 256 * Constants.MB;

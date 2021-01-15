@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.CosmosDB.Tests

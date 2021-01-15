@@ -252,7 +252,6 @@ namespace Azure.Storage.Blobs.Test
             using StreamReader streamReader = new StreamReader(response.Value.Content);
             string s = await streamReader.ReadToEndAsync();
 
-
             // Act - with  IBlobQueryErrorReceiver
             BlobQueryError expectedBlobQueryError = new BlobQueryError
             {

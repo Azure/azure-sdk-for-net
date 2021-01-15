@@ -48,7 +48,6 @@ namespace Azure.Data.AppConfiguration.Performance
             await s_configurationClient.GetConfigurationSettingAsync("key");
         }
 
-
         private class MockClientHandler : HttpClientHandler
         {
             private readonly Func<HttpRequestMessage, HttpResponseMessage> _responseMessage;

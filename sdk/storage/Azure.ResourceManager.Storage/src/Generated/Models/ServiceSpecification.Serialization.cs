@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("metricSpecifications"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MetricSpecification> array = new List<MetricSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

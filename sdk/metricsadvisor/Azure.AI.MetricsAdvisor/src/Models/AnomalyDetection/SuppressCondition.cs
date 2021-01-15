@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class SuppressCondition
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="SuppressCondition"/> class.
+        /// Initializes a new instance of the <see cref="SuppressCondition"/> class.
         /// </summary>
         /// <param name="minimumNumber">The amount of data points to consider when looking back on the previously ingested data. Must include the most recent point, so value must be at least 1.</param>
         /// <param name="minimumRatio">The minimum percentage of unexpected values that must be present in the latest ingested data points to detect an anomaly. Value is between (0, 100].</param>

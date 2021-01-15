@@ -48,6 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("defaultValues"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DWCopyCommandDefaultValue> array = new List<DWCopyCommandDefaultValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -58,6 +63,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("additionalOptions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

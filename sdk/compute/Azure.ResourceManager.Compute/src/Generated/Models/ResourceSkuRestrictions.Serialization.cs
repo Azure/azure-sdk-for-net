@@ -23,11 +23,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = property.Value.GetString().ToResourceSkuRestrictionsType();
                     continue;
                 }
                 if (property.NameEquals("values"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -38,11 +48,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("restrictionInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     restrictionInfo = ResourceSkuRestrictionInfo.DeserializeResourceSkuRestrictionInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     reasonCode = property.Value.GetString().ToResourceSkuRestrictionsReasonCode();
                     continue;
                 }

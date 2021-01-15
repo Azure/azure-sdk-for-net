@@ -601,7 +601,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(loadBalancer.OwnedPartitionIds.Count(), Is.EqualTo(OrphanedPartitionCount), "The load balancer should have ownership of all orphaned partitions and none additional.");
         }
 
-
         /// <summary>
         ///   Verifies that claimable partitions are claimed by a <see cref="PartitionLoadBalancer" /> after RunAsync is called.
         /// </summary>

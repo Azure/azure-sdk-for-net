@@ -29,6 +29,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("receivedTimestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     receivedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

@@ -28,7 +28,8 @@ namespace Compute.Tests
             string publisher = "Microsoft.Compute",
             string type = "VMAccessAgent",
             string version = "2.0",
-            bool autoUpdateMinorVersion = true)
+            bool autoUpdateMinorVersion = true,
+            bool? enableAutomaticUpgrade = null)
         {
             var vmExtension = new VirtualMachineScaleSetExtension
             {
@@ -38,7 +39,8 @@ namespace Compute.Tests
                 TypeHandlerVersion = version,
                 AutoUpgradeMinorVersion = autoUpdateMinorVersion,
                 Settings = "{}",
-                ProtectedSettings = "{}"
+                ProtectedSettings = "{}",
+                EnableAutomaticUpgrade = enableAutomaticUpgrade
             };
 
             return vmExtension;

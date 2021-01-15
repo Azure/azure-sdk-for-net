@@ -110,50 +110,100 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("frontendIPConfiguration"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             frontendIPConfiguration = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("protocol"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             protocol = new TransportProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("frontendPortRangeStart"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             frontendPortRangeStart = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("frontendPortRangeEnd"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             frontendPortRangeEnd = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("backendPort"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             backendPort = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("idleTimeoutInMinutes"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             idleTimeoutInMinutes = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("enableFloatingIP"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enableFloatingIP = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("enableTcpReset"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enableTcpReset = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }

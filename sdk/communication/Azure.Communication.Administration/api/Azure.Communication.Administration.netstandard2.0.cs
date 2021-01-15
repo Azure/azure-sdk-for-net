@@ -4,14 +4,15 @@ namespace Azure.Communication.Administration
     {
         protected CommunicationIdentityClient() { }
         public CommunicationIdentityClient(string connectionString, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
-        public virtual Azure.Response<Azure.Communication.CommunicationUser> CreateUser(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CommunicationUser>> CreateUserAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteUser(Azure.Communication.CommunicationUser communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(Azure.Communication.CommunicationUser communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Administration.Models.CommunicationUserToken> IssueToken(Azure.Communication.CommunicationUser communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.CommunicationUserToken>> IssueTokenAsync(Azure.Communication.CommunicationUser communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RevokeTokens(Azure.Communication.CommunicationUser communicationUser, System.DateTimeOffset? issuedBefore = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RevokeTokensAsync(Azure.Communication.CommunicationUser communicationUser, System.DateTimeOffset? issuedBefore = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public CommunicationIdentityClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
+        public virtual Azure.Response<Azure.Communication.CommunicationUserIdentifier> CreateUser(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CommunicationUserIdentifier>> CreateUserAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteUser(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Administration.Models.CommunicationUserToken> IssueToken(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.CommunicationUserToken>> IssueTokenAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RevokeTokens(Azure.Communication.CommunicationUserIdentifier communicationUser, System.DateTimeOffset? issuedBefore = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RevokeTokensAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.DateTimeOffset? issuedBefore = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CommunicationIdentityClientOptions : Azure.Core.ClientOptions
     {
@@ -46,26 +47,24 @@ namespace Azure.Communication.Administration
         protected PhoneNumberAdministrationClient() { }
         public PhoneNumberAdministrationClient(string connectionString) { }
         public PhoneNumberAdministrationClient(string connectionString, Azure.Communication.Administration.PhoneNumberAdministrationClientOptions? options = null) { }
-        public virtual Azure.Response CancelSearch(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CancelSearchAsync(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ConfigureNumber(Azure.Communication.Administration.Models.PstnConfiguration pstnConfiguration, Azure.Communication.PhoneNumber phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ConfigureNumberAsync(Azure.Communication.Administration.Models.PstnConfiguration pstnConfiguration, Azure.Communication.PhoneNumber phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Administration.Models.CreateSearchResponse> CreateSearch(Azure.Communication.Administration.Models.CreateSearchOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.CreateSearchResponse>> CreateSearchAsync(Azure.Communication.Administration.Models.CreateSearchOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CancelReservation(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelReservationAsync(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ConfigureNumber(Azure.Communication.Administration.Models.PstnConfiguration pstnConfiguration, Azure.Communication.PhoneNumberIdentifier phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ConfigureNumberAsync(Azure.Communication.Administration.Models.PstnConfiguration pstnConfiguration, Azure.Communication.PhoneNumberIdentifier phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Administration.Models.AreaCodes> GetAllAreaCodes(string locationType, string countryCode, string phonePlanId, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.LocationOptionsQuery> locationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.AreaCodes>> GetAllAreaCodesAsync(string locationType, string countryCode, string phonePlanId, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.LocationOptionsQuery> locationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.Administration.Models.AcquiredPhoneNumber> GetAllPhoneNumbers(string? locale = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.Administration.Models.AcquiredPhoneNumber> GetAllPhoneNumbersAsync(string? locale = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.Administration.Models.PhoneNumberEntity> GetAllReleases(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.Administration.Models.PhoneNumberEntity> GetAllReleasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Communication.Administration.Models.PhoneNumberEntity> GetAllSearches(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Communication.Administration.Models.PhoneNumberEntity> GetAllSearchesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.Administration.Models.PhoneNumberEntity> GetAllReservations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.Administration.Models.PhoneNumberEntity> GetAllReservationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.Administration.Models.PhoneNumberCountry> GetAllSupportedCountries(string? locale = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.Administration.Models.PhoneNumberCountry> GetAllSupportedCountriesAsync(string? locale = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Administration.Models.UpdatePhoneNumberCapabilitiesResponse> GetCapabilitiesUpdate(string capabilitiesUpdateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.UpdatePhoneNumberCapabilitiesResponse>> GetCapabilitiesUpdateAsync(string capabilitiesUpdateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Administration.Models.NumberConfigurationResponse> GetNumberConfiguration(Azure.Communication.PhoneNumber phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.NumberConfigurationResponse>> GetNumberConfigurationAsync(Azure.Communication.PhoneNumber phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Administration.Models.NumberConfigurationResponse> GetNumberConfiguration(Azure.Communication.PhoneNumberIdentifier phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.NumberConfigurationResponse>> GetNumberConfigurationAsync(Azure.Communication.PhoneNumberIdentifier phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.Administration.Models.PhonePlanGroup> GetPhonePlanGroups(string countryCode, string? locale = null, bool? includeRateInformation = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.Administration.Models.PhonePlanGroup> GetPhonePlanGroupsAsync(string countryCode, string? locale = null, bool? includeRateInformation = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Administration.Models.LocationOptionsResponse> GetPhonePlanLocationOptions(string countryCode, string phonePlanGroupId, string phonePlanId, string? locale = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -74,14 +73,18 @@ namespace Azure.Communication.Administration
         public virtual Azure.AsyncPageable<Azure.Communication.Administration.Models.PhonePlan> GetPhonePlansAsync(string countryCode, string phonePlanGroupId, string? locale = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Administration.Models.PhoneNumberRelease> GetReleaseById(string releaseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberRelease>> GetReleaseByIdAsync(string releaseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Administration.Models.PhoneNumberSearch> GetSearchById(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberSearch>> GetSearchByIdAsync(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response PurchaseSearch(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> PurchaseSearchAsync(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Administration.Models.ReleaseResponse> ReleasePhoneNumbers(System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumber> phoneNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.ReleaseResponse>> ReleasePhoneNumbersAsync(System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumber> phoneNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UnconfigureNumber(Azure.Communication.PhoneNumber phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UnconfigureNumberAsync(Azure.Communication.PhoneNumber phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Administration.Models.PhoneNumberReservation> GetReservationById(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberReservation>> GetReservationByIdAsync(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.Administration.Models.PhoneNumberReservationPurchaseOperation StartPurchaseReservation(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.PhoneNumberReservationPurchaseOperation> StartPurchaseReservationAsync(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.Administration.Models.ReleasePhoneNumberOperation StartReleasePhoneNumber(Azure.Communication.PhoneNumberIdentifier phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(Azure.Communication.PhoneNumberIdentifier phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.Administration.Models.ReleasePhoneNumberOperation StartReleasePhoneNumbers(System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumberIdentifier> phoneNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.ReleasePhoneNumberOperation> StartReleasePhoneNumbersAsync(System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumberIdentifier> phoneNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.Administration.Models.PhoneNumberReservationOperation StartReservation(Azure.Communication.Administration.Models.CreateReservationOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.Administration.Models.PhoneNumberReservationOperation> StartReservationAsync(Azure.Communication.Administration.Models.CreateReservationOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UnconfigureNumber(Azure.Communication.PhoneNumberIdentifier phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UnconfigureNumberAsync(Azure.Communication.PhoneNumberIdentifier phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Administration.Models.UpdateNumberCapabilitiesResponse> UpdateCapabilities(System.Collections.Generic.IDictionary<string, Azure.Communication.Administration.Models.NumberUpdateCapabilities> phoneNumberUpdateCapabilities, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.Models.UpdateNumberCapabilitiesResponse>> UpdateCapabilitiesAsync(System.Collections.Generic.IDictionary<string, Azure.Communication.Administration.Models.NumberUpdateCapabilities> phoneNumberUpdateCapabilities, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -107,12 +110,6 @@ namespace Azure.Communication.Administration.Models
         public string PhoneNumber { get { throw null; } }
         public string PlaceName { get { throw null; } }
     }
-    public partial class AcquiredPhoneNumbers
-    {
-        internal AcquiredPhoneNumbers() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.AcquiredPhoneNumber> PhoneNumbers { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ActivationState : System.IEquatable<Azure.Communication.Administration.Models.ActivationState>
     {
@@ -133,6 +130,32 @@ namespace Azure.Communication.Administration.Models
         public static implicit operator Azure.Communication.Administration.Models.ActivationState (string value) { throw null; }
         public static bool operator !=(Azure.Communication.Administration.Models.ActivationState left, Azure.Communication.Administration.Models.ActivationState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public static partial class AdministrationModelFactory
+    {
+        public static Azure.Communication.Administration.Models.AcquiredPhoneNumber AcquiredPhoneNumber(string phoneNumber, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.PhoneNumberCapability> acquiredCapabilities, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.Models.PhoneNumberCapability> availableCapabilities) { throw null; }
+        public static Azure.Communication.Administration.Models.AreaCodes AreaCodes(System.Collections.Generic.IReadOnlyList<string> primaryAreaCodes, System.Collections.Generic.IReadOnlyList<string> secondaryAreaCodes, string nextLink) { throw null; }
+        public static Azure.Communication.Administration.Models.CarrierDetails CarrierDetails(string name, string localizedName) { throw null; }
+        public static Azure.Communication.Administration.Models.CommunicationUserToken CommunicationUserToken(string id, string token, System.DateTimeOffset expiresOn) { throw null; }
+        public static Azure.Communication.Administration.Models.LocationOptions LocationOptions(string labelId, string labelName, System.Collections.Generic.IList<Azure.Communication.Administration.Models.LocationOptionsDetails> options) { throw null; }
+        public static Azure.Communication.Administration.Models.LocationOptionsDetails LocationOptionsDetails(string name, string value, System.Collections.Generic.IList<Azure.Communication.Administration.Models.LocationOptions> locationOptions) { throw null; }
+        public static Azure.Communication.Administration.Models.LocationOptionsResponse LocationOptionsResponse(Azure.Communication.Administration.Models.LocationOptions locationOptions) { throw null; }
+        public static Azure.Communication.Administration.Models.NumberConfigurationResponse NumberConfigurationResponse(Azure.Communication.Administration.Models.PstnConfiguration pstnConfiguration) { throw null; }
+        public static Azure.Communication.Administration.Models.NumberUpdateCapabilities NumberUpdateCapabilities(System.Collections.Generic.IList<Azure.Communication.Administration.Models.PhoneNumberCapability> add, System.Collections.Generic.IList<Azure.Communication.Administration.Models.PhoneNumberCapability> remove) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberCountry PhoneNumberCountry(string localizedName, string countryCode) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberEntity PhoneNumberEntity(string id, System.DateTimeOffset? createdAt, string displayName, int? quantity, int? quantityObtained, string status, System.DateTimeOffset? focDate) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberRelease PhoneNumberRelease(string releaseId, System.DateTimeOffset? createdAt, Azure.Communication.Administration.Models.ReleaseStatus? status, string errorMessage, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Communication.Administration.Models.PhoneNumberReleaseDetails> phoneNumberReleaseStatusDetails) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberReleaseDetails PhoneNumberReleaseDetails(Azure.Communication.Administration.Models.PhoneNumberReleaseStatus? status, int? errorCode) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberReservation PhoneNumberReservation(string reservationId, string displayName, System.DateTimeOffset? createdAt, string description, System.Collections.Generic.IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.LocationOptionsDetails> locationOptions, Azure.Communication.Administration.Models.ReservationStatus? status, System.Collections.Generic.IReadOnlyList<string> phoneNumbers, System.DateTimeOffset? reservationExpiryDate, int? errorCode) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberReservationOperation PhoneNumberReservationOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string reservationId) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberReservationPurchaseOperation PhoneNumberReservationPurchaseOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string reservationId) { throw null; }
+        public static Azure.Communication.Administration.Models.PhonePlan PhonePlan(string phonePlanId, string localizedName, Azure.Communication.Administration.Models.LocationType locationType) { throw null; }
+        public static Azure.Communication.Administration.Models.PhonePlanGroup PhonePlanGroup(string phonePlanGroupId, string localizedName, string localizedDescription) { throw null; }
+        public static Azure.Communication.Administration.Models.PhonePlansResponse PhonePlansResponse(System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhonePlan> phonePlans, string nextLink) { throw null; }
+        public static Azure.Communication.Administration.Models.RateInformation RateInformation(double? monthlyRate, Azure.Communication.Administration.Models.CurrencyType? currencyType, string rateErrorMessage) { throw null; }
+        public static Azure.Communication.Administration.Models.ReleasePhoneNumberOperation ReleasePhoneNumberOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string releaseId) { throw null; }
+        public static Azure.Communication.Administration.Models.UpdateNumberCapabilitiesResponse UpdateNumberCapabilitiesResponse(string capabilitiesUpdateId) { throw null; }
+        public static Azure.Communication.Administration.Models.UpdatePhoneNumberCapabilitiesResponse UpdatePhoneNumberCapabilitiesResponse(string capabilitiesUpdateId, System.DateTimeOffset? createdAt, Azure.Communication.Administration.Models.CapabilitiesUpdateStatus? capabilitiesUpdateStatus, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Communication.Administration.Models.NumberUpdateCapabilities> phoneNumberCapabilitiesUpdates) { throw null; }
     }
     public partial class AreaCodes
     {
@@ -194,22 +217,17 @@ namespace Azure.Communication.Administration.Models
         internal CommunicationUserToken() { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public string Token { get { throw null; } }
-        public Azure.Communication.CommunicationUser User { get { throw null; } }
+        public Azure.Communication.CommunicationUserIdentifier User { get { throw null; } }
     }
-    public partial class CreateSearchOptions
+    public partial class CreateReservationOptions
     {
-        public CreateSearchOptions(string displayName, string description, System.Collections.Generic.IEnumerable<string> phonePlanIds, string areaCode) { }
+        public CreateReservationOptions(string displayName, string description, System.Collections.Generic.IEnumerable<string> phonePlanIds, string areaCode) { }
         public string AreaCode { get { throw null; } }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.Administration.Models.LocationOptionsDetails> LocationOptions { get { throw null; } }
         public System.Collections.Generic.IList<string> PhonePlanIds { get { throw null; } }
         public int? Quantity { get { throw null; } set { } }
-    }
-    public partial class CreateSearchResponse
-    {
-        internal CreateSearchResponse() { }
-        public string SearchId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CurrencyType : System.IEquatable<Azure.Communication.Administration.Models.CurrencyType>
@@ -323,23 +341,11 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.PhoneNumberCapability left, Azure.Communication.Administration.Models.PhoneNumberCapability right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PhoneNumberCountries
-    {
-        internal PhoneNumberCountries() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhoneNumberCountry> Countries { get { throw null; } }
-        public string NextLink { get { throw null; } }
-    }
     public partial class PhoneNumberCountry
     {
         internal PhoneNumberCountry() { }
         public string CountryCode { get { throw null; } }
         public string LocalizedName { get { throw null; } }
-    }
-    public partial class PhoneNumberEntities
-    {
-        internal PhoneNumberEntities() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhoneNumberEntity> Entities { get { throw null; } }
-        public string NextLink { get { throw null; } }
     }
     public partial class PhoneNumberEntity
     {
@@ -387,9 +393,9 @@ namespace Azure.Communication.Administration.Models
         public static bool operator !=(Azure.Communication.Administration.Models.PhoneNumberReleaseStatus left, Azure.Communication.Administration.Models.PhoneNumberReleaseStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PhoneNumberSearch
+    public partial class PhoneNumberReservation
     {
-        internal PhoneNumberSearch() { }
+        internal PhoneNumberReservation() { }
         public string AreaCode { get { throw null; } }
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public string Description { get { throw null; } }
@@ -400,8 +406,34 @@ namespace Azure.Communication.Administration.Models
         public System.Collections.Generic.IReadOnlyList<string> PhonePlanIds { get { throw null; } }
         public int? Quantity { get { throw null; } }
         public System.DateTimeOffset? ReservationExpiryDate { get { throw null; } }
-        public string SearchId { get { throw null; } }
-        public Azure.Communication.Administration.Models.SearchStatus? Status { get { throw null; } }
+        public string ReservationId { get { throw null; } }
+        public Azure.Communication.Administration.Models.ReservationStatus? Status { get { throw null; } }
+    }
+    public partial class PhoneNumberReservationOperation : Azure.Operation<Azure.Communication.Administration.Models.PhoneNumberReservation>
+    {
+        public PhoneNumberReservationOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Communication.Administration.Models.PhoneNumberReservation Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberReservation>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberReservation>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class PhoneNumberReservationPurchaseOperation : Azure.Operation<Azure.Communication.Administration.Models.ReservationStatus>
+    {
+        public PhoneNumberReservationPurchaseOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Communication.Administration.Models.ReservationStatus Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.ReservationStatus>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.ReservationStatus>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberType : System.IEquatable<Azure.Communication.Administration.Models.PhoneNumberType>
@@ -443,12 +475,6 @@ namespace Azure.Communication.Administration.Models
         public string PhonePlanGroupId { get { throw null; } }
         public Azure.Communication.Administration.Models.RateInformation RateInformation { get { throw null; } }
     }
-    public partial class PhonePlanGroups
-    {
-        internal PhonePlanGroups() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhonePlanGroup> PhonePlanGroupsValue { get { throw null; } }
-    }
     public partial class PhonePlansResponse
     {
         internal PhonePlansResponse() { }
@@ -468,10 +494,18 @@ namespace Azure.Communication.Administration.Models
         public double? MonthlyRate { get { throw null; } }
         public string RateErrorMessage { get { throw null; } }
     }
-    public partial class ReleaseResponse
+    public partial class ReleasePhoneNumberOperation : Azure.Operation<Azure.Communication.Administration.Models.PhoneNumberRelease>
     {
-        internal ReleaseResponse() { }
-        public string ReleaseId { get { throw null; } }
+        public ReleasePhoneNumberOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Communication.Administration.Models.PhoneNumberRelease Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberRelease>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberRelease>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReleaseStatus : System.IEquatable<Azure.Communication.Administration.Models.ReleaseStatus>
@@ -495,32 +529,32 @@ namespace Azure.Communication.Administration.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SearchStatus : System.IEquatable<Azure.Communication.Administration.Models.SearchStatus>
+    public readonly partial struct ReservationStatus : System.IEquatable<Azure.Communication.Administration.Models.ReservationStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SearchStatus(string value) { throw null; }
-        public static Azure.Communication.Administration.Models.SearchStatus Cancelled { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus Cancelling { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus Completing { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus Error { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus Expired { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus Expiring { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus InProgress { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus Manual { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus Pending { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus PurchasePending { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus Refreshing { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus Reserved { get { throw null; } }
-        public static Azure.Communication.Administration.Models.SearchStatus Success { get { throw null; } }
-        public bool Equals(Azure.Communication.Administration.Models.SearchStatus other) { throw null; }
+        public ReservationStatus(string value) { throw null; }
+        public static Azure.Communication.Administration.Models.ReservationStatus Cancelled { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus Cancelling { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus Completing { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus Error { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus Expired { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus Expiring { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus InProgress { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus Manual { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus Pending { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus PurchasePending { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus Refreshing { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus Reserved { get { throw null; } }
+        public static Azure.Communication.Administration.Models.ReservationStatus Success { get { throw null; } }
+        public bool Equals(Azure.Communication.Administration.Models.ReservationStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.Administration.Models.SearchStatus left, Azure.Communication.Administration.Models.SearchStatus right) { throw null; }
-        public static implicit operator Azure.Communication.Administration.Models.SearchStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.Administration.Models.SearchStatus left, Azure.Communication.Administration.Models.SearchStatus right) { throw null; }
+        public static bool operator ==(Azure.Communication.Administration.Models.ReservationStatus left, Azure.Communication.Administration.Models.ReservationStatus right) { throw null; }
+        public static implicit operator Azure.Communication.Administration.Models.ReservationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.Administration.Models.ReservationStatus left, Azure.Communication.Administration.Models.ReservationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class UpdateNumberCapabilitiesResponse

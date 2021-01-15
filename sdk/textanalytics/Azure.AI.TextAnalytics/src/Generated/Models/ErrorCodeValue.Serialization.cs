@@ -17,6 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
             ErrorCodeValue.InvalidArgument => "InvalidArgument",
             ErrorCodeValue.InternalServerError => "InternalServerError",
             ErrorCodeValue.ServiceUnavailable => "ServiceUnavailable",
+            ErrorCodeValue.NotFound => "NotFound",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ErrorCodeValue value.")
         };
 
@@ -26,6 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (string.Equals(value, "InvalidArgument", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.InvalidArgument;
             if (string.Equals(value, "InternalServerError", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.InternalServerError;
             if (string.Equals(value, "ServiceUnavailable", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.ServiceUnavailable;
+            if (string.Equals(value, "NotFound", StringComparison.InvariantCultureIgnoreCase)) return ErrorCodeValue.NotFound;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ErrorCodeValue value.");
         }
     }

@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, ParameterValuesValue> dictionary = new Dictionary<string, ParameterValuesValue>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -77,6 +82,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("groupNames"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

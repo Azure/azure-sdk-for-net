@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("maxPrice"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxPrice = property.Value.GetDouble();
                     continue;
                 }

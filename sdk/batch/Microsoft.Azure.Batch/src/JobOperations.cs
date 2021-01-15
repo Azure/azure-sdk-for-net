@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Batch
 
         internal JobOperations(BatchClient parentBatchClient, IEnumerable<BatchClientBehavior> inheritedBehaviors)
         {
-            this.ParentBatchClient = parentBatchClient;
+            ParentBatchClient = parentBatchClient;
 
             // set up the behavior inheritance
             InheritUtil.InheritClientBehaviorsAndSetPublicProperty(this, inheritedBehaviors);
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Batch
                 () =>
                 {
                     // here is the actual strongly typed enumerator
-                    AsyncListJobsEnumerator typedEnumerator = new AsyncListJobsEnumerator(this.ParentBatchClient, bhMgr, detailLevel);
+                    AsyncListJobsEnumerator typedEnumerator = new AsyncListJobsEnumerator(ParentBatchClient, bhMgr, detailLevel);
 
                     // here is the base
                     PagedEnumeratorBase<CloudJob> enumeratorBase = typedEnumerator;
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Batch
         public IPagedEnumerable<CloudJob> ListJobs(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
             
             IPagedEnumerable<CloudJob> enumerable = ListJobsImpl(bhMgr, detailLevel);
 
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Batch
 
         internal async Task<CloudJob> GetJobAsyncImpl(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            Task<AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>> asyncTask = this.ParentBatchClient.ProtocolLayer.GetJob(jobId, bhMgr, cancellationToken);
+            Task<AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>> asyncTask = ParentBatchClient.ProtocolLayer.GetJob(jobId, bhMgr, cancellationToken);
 
             AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders> response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Batch
             Models.CloudJob protoJob = response.Body;
 
             // convert to bound object layer equiv
-            CloudJob openedJob = new CloudJob(this.ParentBatchClient, protoJob, bhMgr.BaseBehaviors);
+            CloudJob openedJob = new CloudJob(ParentBatchClient, protoJob, bhMgr.BaseBehaviors);
 
             return openedJob;
         }
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors, detailLevel);
 
             Task<CloudJob> asyncTask = GetJobAsyncImpl(jobId, bhMgr, cancellationToken);
 
@@ -177,14 +177,14 @@ namespace Microsoft.Azure.Batch
         public CloudJob GetJob(string jobId, DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task<CloudJob> asyncTask = GetJobAsync(jobId, detailLevel, additionalBehaviors);
-            CloudJob newJob = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            CloudJob newJob = asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
 
             return newJob;
         }
 
         internal async Task<TaskCountsResult> GetJobTaskCountsAsyncImpl(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            AzureOperationResponse<Models.TaskCountsResult, Models.JobGetTaskCountsHeaders> response = await this.ParentBatchClient.ProtocolLayer.GetJobTaskCounts(
+            AzureOperationResponse<Models.TaskCountsResult, Models.JobGetTaskCountsHeaders> response = await ParentBatchClient.ProtocolLayer.GetJobTaskCounts(
                 jobId,
                 bhMgr,
                 cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel: null);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors, detailLevel: null);
             TaskCountsResult counts = await GetJobTaskCountsAsyncImpl(jobId, bhMgr, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 
             return counts;
@@ -238,9 +238,9 @@ namespace Microsoft.Azure.Batch
         public async Task EnableJobAsync(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            Task asyncTask = this.ParentBatchClient.ProtocolLayer.EnableJob(jobId, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.EnableJob(jobId, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Batch
         public void EnableJob(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = EnableJobAsync(jobId, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -273,9 +273,9 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            Task asyncTask = this.ParentBatchClient.ProtocolLayer.DisableJob(jobId, disableJobOption, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.DisableJob(jobId, disableJobOption, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Batch
         public void DisableJob(string jobId, Common.DisableJobOption disableJobOption, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = DisableJobAsync(jobId, disableJobOption, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Batch
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            Task asyncTask = this.ParentBatchClient.ProtocolLayer.TerminateJob(jobId, terminateReason, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.TerminateJob(jobId, terminateReason, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Batch
         public void TerminateJob(string jobId, string terminateReason = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = TerminateJobAsync(jobId, terminateReason, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -344,9 +344,9 @@ namespace Microsoft.Azure.Batch
         public async Task DeleteJobAsync(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            Task asyncTask = this.ParentBatchClient.ProtocolLayer.DeleteJob(jobId, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.DeleteJob(jobId, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -364,7 +364,7 @@ namespace Microsoft.Azure.Batch
         public void DeleteJob(string jobId, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = DeleteJobAsync(jobId, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         internal IPagedEnumerable<CloudTask> ListTasksImpl(string jobId, BehaviorManager bhMgr, DetailLevel detailLevel)
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Batch
                                                         IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // get the enumerable
             IPagedEnumerable<CloudTask> enumerable = ListTasksImpl(jobId, bhMgr, detailLevel);
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.Batch
                                                                     CancellationToken cancellationToken)
         {
             Task<AzureOperationResponse<Models.CloudTask, Models.TaskGetHeaders>> asyncTask =
-                this.ParentBatchClient.ProtocolLayer.GetTask(
+                ParentBatchClient.ProtocolLayer.GetTask(
                     jobId,
                     taskId,
                     bhMgr,
@@ -427,7 +427,7 @@ namespace Microsoft.Azure.Batch
             Models.CloudTask protoTask = response.Body;
 
             // bind CloudTask to protocol task
-            CloudTask newTask = new CloudTask(this.ParentBatchClient, jobId, protoTask, bhMgr.BaseBehaviors);
+            CloudTask newTask = new CloudTask(ParentBatchClient, jobId, protoTask, bhMgr.BaseBehaviors);
 
             return newTask;
         }
@@ -450,7 +450,7 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors, detailLevel);
 
             Task<CloudTask> asyncTask = GetTaskAsyncImpl(jobId, taskId, bhMgr, cancellationToken);
 
@@ -469,7 +469,7 @@ namespace Microsoft.Azure.Batch
         public CloudTask GetTask(string jobId, string taskId, DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task<CloudTask> asyncTask = GetTaskAsync(jobId, taskId, detailLevel, additionalBehaviors);
-            CloudTask newTask = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            CloudTask newTask = asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
 
             return newTask;
         }
@@ -490,7 +490,7 @@ namespace Microsoft.Azure.Batch
                                                         IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // get the enumerable
             IPagedEnumerable<SubtaskInformation> enumerable = ListSubtasksImpl(jobId, taskId, bhMgr, detailLevel);
@@ -530,7 +530,7 @@ namespace Microsoft.Azure.Batch
             implTask.Freeze(); //Mark the underlying task readonly
 
             // start the AddTask request
-            Task asyncTask = this.ParentBatchClient.ProtocolLayer.AddTask(jobId, protoTask, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.AddTask(jobId, protoTask, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -590,9 +590,9 @@ namespace Microsoft.Azure.Batch
         {
             ConcurrentDictionary<Type, IFileStagingArtifact> artifacts = new ConcurrentDictionary<Type,IFileStagingArtifact>();
 
-            Task asyncTask = this.AddTaskAsync(jobId, taskToAdd, artifacts, additionalBehaviors);
+            Task asyncTask = AddTaskAsync(jobId, taskToAdd, artifacts, additionalBehaviors);
 
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
 
             return artifacts;
         }
@@ -659,10 +659,10 @@ namespace Microsoft.Azure.Batch
                                                         IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             // get the enumerable
-            IPagedEnumerable<NodeFile> enumerable = this.ListNodeFilesImpl(jobId, taskId, recursive, bhMgr, detailLevel);
+            IPagedEnumerable<NodeFile> enumerable = ListNodeFilesImpl(jobId, taskId, recursive, bhMgr, detailLevel);
 
             return enumerable;
         }
@@ -685,7 +685,7 @@ namespace Microsoft.Azure.Batch
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            Task asyncTask = this.ParentBatchClient.ProtocolLayer.TerminateTask(jobId, taskId, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.TerminateTask(jobId, taskId, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -704,7 +704,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = TerminateTaskAsync(jobId, taskId, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
 
         }
 
@@ -726,7 +726,7 @@ namespace Microsoft.Azure.Batch
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            Task asyncTask = this.ParentBatchClient.ProtocolLayer.DeleteTask(jobId, taskId, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.DeleteTask(jobId, taskId, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -776,7 +776,7 @@ namespace Microsoft.Azure.Batch
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            Task asyncTask = this.ParentBatchClient.ProtocolLayer.ReactivateTask(jobId, taskId, bhMgr, cancellationToken);
+            Task asyncTask = ParentBatchClient.ProtocolLayer.ReactivateTask(jobId, taskId, bhMgr, cancellationToken);
             
             return asyncTask;
         }
@@ -805,7 +805,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task asyncTask = ReactivateTaskAsync(jobId, taskId, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         internal async Task<NodeFile> GetNodeFileAsyncImpl(
@@ -815,7 +815,7 @@ namespace Microsoft.Azure.Batch
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var getNodeFilePropertiesTask = await this.ParentBatchClient.ProtocolLayer.GetNodeFilePropertiesByTask(
+            var getNodeFilePropertiesTask = await ParentBatchClient.ProtocolLayer.GetNodeFilePropertiesByTask(
                 jobId, 
                 taskId, 
                 filePath, 
@@ -850,7 +850,7 @@ namespace Microsoft.Azure.Batch
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            Task<NodeFile> asyncTask = this.GetNodeFileAsyncImpl(jobId, taskId, filePath, bhMgr, cancellationToken);
+            Task<NodeFile> asyncTask = GetNodeFileAsyncImpl(jobId, taskId, filePath, bhMgr, cancellationToken);
 
             return asyncTask;
         }
@@ -870,8 +870,8 @@ namespace Microsoft.Azure.Batch
             string filePath,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task<NodeFile> asyncTask = this.GetNodeFileAsync(jobId, taskId, filePath, additionalBehaviors);
-            NodeFile file = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            Task<NodeFile> asyncTask = GetNodeFileAsync(jobId, taskId, filePath, additionalBehaviors);
+            NodeFile file = asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
             return file;
         }
 
@@ -884,7 +884,7 @@ namespace Microsoft.Azure.Batch
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            await this.ParentBatchClient.ProtocolLayer.GetNodeFileByTask(
+            await ParentBatchClient.ProtocolLayer.GetNodeFileByTask(
                 jobId,
                 taskId,
                 filePath,
@@ -916,7 +916,7 @@ namespace Microsoft.Azure.Batch
         {
             // set up behavior manager
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
-            return this.CopyNodeFileContentToStreamAsyncImpl(jobId, taskId, filePath, stream, byteRange, bhMgr, cancellationToken);
+            return CopyNodeFileContentToStreamAsyncImpl(jobId, taskId, filePath, stream, byteRange, bhMgr, cancellationToken);
         }
 
         /// <summary>
@@ -937,8 +937,8 @@ namespace Microsoft.Azure.Batch
             GetFileRequestByteRange byteRange = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task asyncTask = this.CopyNodeFileContentToStreamAsync(jobId, taskId, filePath, stream, byteRange, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            Task asyncTask = CopyNodeFileContentToStreamAsync(jobId, taskId, filePath, stream, byteRange, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         internal Task<string> CopyNodeFileContentToStringAsyncImpl(
@@ -952,7 +952,7 @@ namespace Microsoft.Azure.Batch
         {
             return UtilitiesInternal.ReadNodeFileAsStringAsync(
                 // Note that behaviors is purposefully dropped in the below call since it's already managed by the bhMgr
-                (stream, bRange, behaviors, ct) => this.CopyNodeFileContentToStreamAsyncImpl(jobId, taskId, filePath, stream, bRange, bhMgr, ct),
+                (stream, bRange, behaviors, ct) => CopyNodeFileContentToStreamAsyncImpl(jobId, taskId, filePath, stream, bRange, bhMgr, ct),
                 encoding,
                 byteRange,
                 additionalBehaviors: null,
@@ -980,7 +980,7 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken = default)
         {
             // set up behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
             return CopyNodeFileContentToStringAsyncImpl(jobId, taskId, filePath, encoding, byteRange, bhMgr, cancellationToken);
         }
 
@@ -1002,8 +1002,8 @@ namespace Microsoft.Azure.Batch
             GetFileRequestByteRange byteRange = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task<string> asyncTask = this.CopyNodeFileContentToStringAsync(jobId, taskId, filePath, encoding, byteRange, additionalBehaviors);
-            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            Task<string> asyncTask = CopyNodeFileContentToStringAsync(jobId, taskId, filePath, encoding, byteRange, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -1032,7 +1032,7 @@ namespace Microsoft.Azure.Batch
             // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            var asyncTask = this.ParentBatchClient.ProtocolLayer.DeleteNodeFileByTask(
+            var asyncTask = ParentBatchClient.ProtocolLayer.DeleteNodeFileByTask(
                 jobId,
                 taskId, 
                 filePath, 
@@ -1064,8 +1064,8 @@ namespace Microsoft.Azure.Batch
             bool? recursive = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task asyncTask = this.DeleteNodeFileAsync(jobId, taskId, filePath, recursive, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            Task asyncTask = DeleteNodeFileAsync(jobId, taskId, filePath, recursive, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         internal Task AddTaskAsyncImpl(
@@ -1129,9 +1129,9 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
-            await this.AddTaskAsyncImpl(
+            await AddTaskAsyncImpl(
                 jobId,
                 tasksToAdd,
                 parallelOptions,
@@ -1181,7 +1181,7 @@ namespace Microsoft.Azure.Batch
             TimeSpan? timeout = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task asyncTask = this.AddTaskAsync(
+            Task asyncTask = AddTaskAsync(
                 jobId,
                 tasksToAdd,
                 parallelOptions,
@@ -1189,7 +1189,7 @@ namespace Microsoft.Azure.Batch
                 timeout,
                 additionalBehaviors);
 
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
         /// <summary>
@@ -1209,7 +1209,7 @@ namespace Microsoft.Azure.Batch
             BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> asyncTask = 
-                this.ParentBatchClient.ProtocolLayer.GetAllJobLifetimeStats(
+                ParentBatchClient.ProtocolLayer.GetAllJobLifetimeStats(
                     bhMgr,
                     cancellationToken);
 
@@ -1230,8 +1230,8 @@ namespace Microsoft.Azure.Batch
         /// <remarks>This is a blocking operation; for a non-blocking equivalent, see <see cref="GetAllLifetimeStatisticsAsync(IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</remarks>
         public JobStatistics GetAllLifetimeStatistics(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task<JobStatistics> asyncTask = this.GetAllLifetimeStatisticsAsync(additionalBehaviors);
-            JobStatistics statistics = asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            Task<JobStatistics> asyncTask = GetAllLifetimeStatisticsAsync(additionalBehaviors);
+            JobStatistics statistics = asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
 
             return statistics;
         }
@@ -1248,7 +1248,7 @@ namespace Microsoft.Azure.Batch
         public IPagedEnumerable<JobPreparationAndReleaseTaskExecutionInformation> ListJobPreparationAndReleaseTaskStatus(string jobId, DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
 
             PagedEnumerable<JobPreparationAndReleaseTaskExecutionInformation> enumerable = new PagedEnumerable<JobPreparationAndReleaseTaskExecutionInformation>( // the lamda will be the enumerator factory
                 () =>

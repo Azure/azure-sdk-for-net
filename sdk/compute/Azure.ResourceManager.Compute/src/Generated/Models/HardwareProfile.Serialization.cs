@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("vmSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     vmSize = new VirtualMachineSizeTypes(property.Value.GetString());
                     continue;
                 }

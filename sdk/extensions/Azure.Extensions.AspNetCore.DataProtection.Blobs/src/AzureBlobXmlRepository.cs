@@ -71,7 +71,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
             Task.Run(() => StoreElementAsync(element)).GetAwaiter().GetResult();
         }
 
-        private XDocument CreateDocumentFromBlob(byte[] blob)
+        private static XDocument CreateDocumentFromBlob(byte[] blob)
         {
             using (var memoryStream = new MemoryStream(blob))
             {
@@ -144,7 +144,6 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
                         BlobContents = memoryStream.ToArray(),
                         ETag = response.Headers.ETag
                     };
-
                 }
                 Volatile.Write(ref _cachedBlobData, latestCachedData);
             }

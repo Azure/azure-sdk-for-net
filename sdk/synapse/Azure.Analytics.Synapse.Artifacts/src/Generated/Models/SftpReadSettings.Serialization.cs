@@ -71,26 +71,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("recursive"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     recursive = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("wildcardFolderPath"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     wildcardFolderPath = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("wildcardFileName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     wildcardFileName = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeStart"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     modifiedDatetimeStart = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeEnd"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     modifiedDatetimeEnd = property.Value.GetObject();
                     continue;
                 }
@@ -101,6 +126,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxConcurrentConnections = property.Value.GetObject();
                     continue;
                 }

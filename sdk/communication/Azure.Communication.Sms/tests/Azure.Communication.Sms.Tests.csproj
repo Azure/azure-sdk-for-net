@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Moq" />
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
@@ -17,5 +17,6 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\\ConnectionString.cs" />
+    <Compile Include="..\..\Azure.Communication.Common\tests\CommunicationRecordedTestSanitizer.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

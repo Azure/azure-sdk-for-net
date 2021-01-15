@@ -9,7 +9,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class DataFeedGranularity
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedGranularity"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedGranularity"/> class.
         /// </summary>
         /// <param name="granularityType">The type of <see cref="DataFeedGranularity"/>.</param>
         public DataFeedGranularity(DataFeedGranularityType granularityType)
