@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.MixedReality.RemoteRe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.MixedReality.RemoteRendering.Tests", "tests\Azure.MixedReality.RemoteRendering.Tests.csproj", "{2B67CBA1-55D8-491E-80CC-96A590E3F4F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{85271BAE-8B48-43B6-8A16-BBD3F14F7AA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{85271BAE-8B48-43B6-8A16-BBD3F14F7AA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
