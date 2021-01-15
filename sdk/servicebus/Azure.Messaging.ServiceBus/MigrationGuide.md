@@ -38,7 +38,7 @@ The modern Service Bus client library also provides the ability to share in some
 
 We have a variety of new features in the version 7 of the Service Bus library.
 - Ability to create a batch of messages with the smarter `ServiceBusSender.CreateMessageBatch()` and `ServiceBusMessageBatch.TryAddMessage()` APIs. This will help you manage the messages to be sent in the most optimal way.
-- Ability to receive messages from a given set of sessions. Previously, you could only recieve from one specificed session or receive from a session as determined by the service.
+- Ability to process messages continuously from a given set of sessions. Previously, when registering a session message handler, it was not possible to restrict to a specific session or a specific set of sessions. This is now possible when using the `ServiceBusSessionProcessor`.
 - Azure Service Bus follows the AMQP protocol and as such the Service Bus message is converted to an AMQP message when sent to the service. In the new library, you now have the ability to write and read the entire AMQP message along with its header, footer, properties, and annotations instead of just the properties that were exposed before. This is helpful if you are an advanced user and want to make use of the full might of AMQP message format.
 - The APIs to schedule the sending of a message at a later time and the ones to cancel such scheduled messages now work for batches of messages as well.
 
