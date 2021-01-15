@@ -80,6 +80,10 @@ parameters:
     Windows_Net50:
       OSVmImage: "windows-2019"
       TestTargetFramework: net5.0
+    Windows_NetCoreApp_ProjectReferences:
+      OSVmImage: "windows-2019"
+      TestTargetFramework: net5.0
+      AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
 - name: PlatformPreSteps
   type: object
   default:
