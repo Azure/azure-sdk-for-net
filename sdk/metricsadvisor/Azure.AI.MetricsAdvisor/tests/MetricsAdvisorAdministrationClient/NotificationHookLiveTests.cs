@@ -496,6 +496,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18004")]
         public async Task GetHooksWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
