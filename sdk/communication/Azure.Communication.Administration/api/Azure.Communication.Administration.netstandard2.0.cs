@@ -187,13 +187,6 @@ namespace Azure.Communication.Administration.Models
         public string BillingFrequency { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
     }
-    public enum PhoneNumberOperationStatusCodes
-    {
-        NotStarted = 0,
-        Running = 1,
-        Succeeded = 2,
-        Failed = 3,
-    }
     public partial class PhoneNumberSearchResult
     {
         internal PhoneNumberSearchResult() { }
