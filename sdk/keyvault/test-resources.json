@@ -159,8 +159,7 @@
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
                 "enabledForTemplateDeployment": false,
-                "enableSoftDelete": "[parameters('enableSoftDelete')]",
-                "softDeleteRetentionInDays": 7
+                "enableSoftDelete": "[parameters('enableSoftDelete')]"
             }
         },
         {
