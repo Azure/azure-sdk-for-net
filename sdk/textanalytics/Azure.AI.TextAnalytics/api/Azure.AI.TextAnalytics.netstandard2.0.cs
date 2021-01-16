@@ -138,6 +138,7 @@ namespace Azure.AI.TextAnalytics
     {
         public EntitiesTaskParameters() { }
         public string ModelVersion { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.StringIndexType StringIndexType { get { throw null; } set { } }
     }
     public partial class Entity
     {
@@ -367,6 +368,7 @@ namespace Azure.AI.TextAnalytics
         public PiiTaskParameters() { }
         public Azure.AI.TextAnalytics.PiiTaskParametersDomain? Domain { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.StringIndexType StringIndexType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PiiTaskParametersDomain : System.IEquatable<Azure.AI.TextAnalytics.PiiTaskParametersDomain>
@@ -447,6 +449,25 @@ namespace Azure.AI.TextAnalytics
         public double Negative { get { throw null; } }
         public double Neutral { get { throw null; } }
         public double Positive { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StringIndexType : System.IEquatable<Azure.AI.TextAnalytics.StringIndexType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StringIndexType(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.StringIndexType TextElementsV8 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.StringIndexType UnicodeCodePoint { get { throw null; } }
+        public static Azure.AI.TextAnalytics.StringIndexType Utf16CodeUnit { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.StringIndexType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.StringIndexType left, Azure.AI.TextAnalytics.StringIndexType right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.StringIndexType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.StringIndexType left, Azure.AI.TextAnalytics.StringIndexType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TasksStateTasksDetails : Azure.AI.TextAnalytics.TaskState
     {
@@ -643,6 +664,7 @@ namespace Azure.AI.TextAnalytics
         public TextAnalyticsRequestOptions() { }
         public bool IncludeStatistics { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.StringIndexType StringIndexType { get { throw null; } set { } }
     }
     public partial class TextAnalyticsResult
     {

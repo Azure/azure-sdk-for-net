@@ -6,20 +6,17 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareJobState
+    internal partial class AnalyzeJobMetadata
     {
-        internal static HealthcareJobState DeserializeHealthcareJobState(JsonElement element)
+        internal static AnalyzeJobMetadata DeserializeAnalyzeJobMetadata(JsonElement element)
         {
-            Optional<HealthcareResult> results = default;
-            Optional<IReadOnlyList<TextAnalyticsErrorInternal>> errors = default;
-            Optional<string> nextLink = default;
+            Optional<string> displayName = default;
             DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             string jobId = default;
@@ -27,34 +24,9 @@ namespace Azure.AI.TextAnalytics.Models
             JobStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    results = HealthcareResult.DeserializeHealthcareResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("errors"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<TextAnalyticsErrorInternal> array = new List<TextAnalyticsErrorInternal>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(item));
-                    }
-                    errors = array;
-                    continue;
-                }
-                if (property.NameEquals("@nextLink"))
-                {
-                    nextLink = property.Value.GetString();
+                    displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))
@@ -88,7 +60,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, results.Value, Optional.ToList(errors), nextLink.Value);
+            return new AnalyzeJobMetadata(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, displayName.Value);
         }
     }
 }
