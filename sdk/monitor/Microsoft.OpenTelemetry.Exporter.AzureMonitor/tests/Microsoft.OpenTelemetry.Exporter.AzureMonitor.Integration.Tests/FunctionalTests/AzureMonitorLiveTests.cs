@@ -14,13 +14,18 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
+    using NUnit.Framework;
+
     public class AzureMonitorLiveTests : RecordedTestBase<AzureMonitorTestEnvironment>
     {
         public AzureMonitorLiveTests(bool isAsync) :
-            base(isAsync /*, RecordedTestMode.Record */)
+            base(isAsync, RecordedTestMode.Record)
         {
             //...
         }
+
+        [Test]
+        public void Dummy() { }
 
         [RecordedTest]
         public async Task VerifyCanLog()
@@ -31,7 +36,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
             // VERIFY
             // TODO: Query logs from Kusto https://dev.applicationinsights.io/quickstart
 
-            await Task.Run(() => Guid.NewGuid());
+            //await Task.Run(() => Guid.NewGuid());
+            await Task.Delay(10000);
         }
 
         [RecordedTest]
@@ -42,11 +48,12 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
 
         private ILogger<AzureMonitorLiveTests> GetLogger()
         {
-            var processor = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(
-                options: new AzureMonitorExporterOptions
-                {
-                    ConnectionString = $"InstrumentationKey={TestEnvironment.ConnectionString}",
-                }));
+            var options = this.InstrumentClientOptions(new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey={TestEnvironment.InstrumentationKey}",
+            });
+
+            var processor = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(options));
 
             var serviceCollection = new ServiceCollection().AddLogging(builder =>
             {
