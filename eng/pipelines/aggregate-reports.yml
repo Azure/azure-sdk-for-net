@@ -26,10 +26,28 @@ jobs:
     pool:
       vmImage: 'windows-2019'
 
+    timeoutInMinutes: 120
     steps:
       - download: net-core
         artifact: packages
         patterns: '*'
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+        displayName: 'Run CredScan'
+        inputs:
+          debugMode: false
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+        displayName: 'Post Analysis'
+        inputs:
+          GdnBreakAllTools: false
+          GdnBreakGdnToolCredScan: true
+          GdnBreakGdnToolCredScanSeverity: Error
+          GdnBreakBaselineFiles: $(Build.SourcesDirectory)/eng/dotnet.gdnbaselines
+          GdnBreakBaselines: baseline        
+        continueOnError: true
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+        displayName: 'Publish Security Analysis Logs'
+        continueOnError: true
+        condition: succeededOrFailed()
 
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
