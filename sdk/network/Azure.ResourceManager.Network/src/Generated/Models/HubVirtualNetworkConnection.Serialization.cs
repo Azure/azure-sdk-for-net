@@ -86,35 +86,70 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("remoteVirtualNetwork"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             remoteVirtualNetwork = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allowHubToRemoteVnetTransit"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             allowHubToRemoteVnetTransit = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("allowRemoteVnetToUseHubVnetGateways"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             allowRemoteVnetToUseHubVnetGateways = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("enableInternetSecurity"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enableInternetSecurity = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("routingConfiguration"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }

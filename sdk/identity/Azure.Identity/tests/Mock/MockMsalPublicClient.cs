@@ -73,6 +73,18 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
+        public override ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, AuthenticationRecord record, bool async, CancellationToken cancellationToken)
+        {
+            Func<string[], AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;
+
+            if (factory != null)
+            {
+                return new ValueTask<AuthenticationResult>(factory(scopes));
+            }
+
+            throw new NotImplementedException();
+        }
+
         public override ValueTask<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = DeviceCodeAuthFactory ?? AuthFactory;

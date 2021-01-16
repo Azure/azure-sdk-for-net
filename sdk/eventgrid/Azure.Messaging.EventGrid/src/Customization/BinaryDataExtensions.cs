@@ -22,16 +22,10 @@ namespace Azure.Messaging.EventGrid
         public static EventGridEvent ToEventGridEvent(this BinaryData binaryData)
         {
             // Deserialize JsonElement to single event, parse event envelope properties
-            JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToBytes());
+            JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToMemory());
             EventGridEventInternal egEventInternal = EventGridEventInternal.DeserializeEventGridEventInternal(requestDocument.RootElement);
 
-            EventGridEvent egEvent = new EventGridEvent(
-                    egEventInternal.Data,
-                    egEventInternal.Subject,
-                    egEventInternal.EventType,
-                    egEventInternal.DataVersion,
-                    egEventInternal.EventTime,
-                    egEventInternal.Id);
+            EventGridEvent egEvent = new EventGridEvent(egEventInternal);
 
             return egEvent;
         }
@@ -44,25 +38,10 @@ namespace Azure.Messaging.EventGrid
         public static CloudEvent ToCloudEvent(this BinaryData binaryData)
         {
             // Deserialize JsonElement to single event, parse event envelope properties
-            JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToBytes());
+            JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToMemory());
             CloudEventInternal cloudEventInternal = CloudEventInternal.DeserializeCloudEventInternal(requestDocument.RootElement);
 
-            // Case where Data and Type are null - cannot pass null Type into CloudEvent constructor
-            if (cloudEventInternal.Type == null)
-            {
-                cloudEventInternal.Type = "";
-            }
-
-            CloudEvent cloudEvent = new CloudEvent(
-                    cloudEventInternal.Id,
-                    cloudEventInternal.Source,
-                    cloudEventInternal.Type,
-                    cloudEventInternal.Time,
-                    cloudEventInternal.Dataschema,
-                    cloudEventInternal.Datacontenttype,
-                    cloudEventInternal.Subject,
-                    cloudEventInternal.Data,
-                    cloudEventInternal.DataBase64);
+            CloudEvent cloudEvent = new CloudEvent(cloudEventInternal);
 
             if (cloudEventInternal.AdditionalProperties != null)
             {

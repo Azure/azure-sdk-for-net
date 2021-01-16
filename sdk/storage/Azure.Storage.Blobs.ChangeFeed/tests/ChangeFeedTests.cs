@@ -979,7 +979,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 default));
 
             containerClient.Verify(r => r.Uri, Times.Exactly(1));
-
         }
 
         public static Task<Page<BlobHierarchyItem>> GetYearsPathShortFuncAsync(string continuation, int? pageSizeHint)

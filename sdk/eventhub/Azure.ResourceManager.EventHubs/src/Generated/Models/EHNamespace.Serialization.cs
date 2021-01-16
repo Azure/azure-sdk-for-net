@@ -103,11 +103,21 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (property.NameEquals("sku"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     identity = Identity.DeserializeIdentity(property.Value);
                     continue;
                 }
@@ -118,6 +128,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -143,6 +158,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("provisioningState"))
@@ -152,11 +172,21 @@ namespace Azure.ResourceManager.EventHubs.Models
                         }
                         if (property0.NameEquals("createdAt"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("updatedAt"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
@@ -177,26 +207,51 @@ namespace Azure.ResourceManager.EventHubs.Models
                         }
                         if (property0.NameEquals("isAutoInflateEnabled"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             isAutoInflateEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("maximumThroughputUnits"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             maximumThroughputUnits = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("kafkaEnabled"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             kafkaEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             encryption = Encryption.DeserializeEncryption(property0.Value);
                             continue;
                         }

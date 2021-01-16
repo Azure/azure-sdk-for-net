@@ -28,16 +28,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("connectionStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectionStatus = new VirtualNetworkGatewayConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ingressBytesTransferred"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ingressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("egressBytesTransferred"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     egressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }

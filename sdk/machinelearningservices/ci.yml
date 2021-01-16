@@ -1,0 +1,32 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+# Azure.ResourceManager.MachineLearningServices
+
+trigger:
+  branches:
+    include:
+    - master
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/machinelearningservices/
+
+pr:
+  branches:
+    include:
+    - master
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/machinelearningservices/
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: machinelearningservices
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.ResourceManager.MachineLearningServices
+      safeName: AzureResourceManagerMachineLearningServices

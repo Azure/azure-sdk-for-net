@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
     /// <summary>
     /// Class representing an data connection.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DataConnection")]
     public partial class DataConnection : ProxyResource
     {
         /// <summary>

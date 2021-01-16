@@ -21,5 +21,11 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";
         public const string Canceled = "Canceled";
+        public const string Deleted = "Deleted";
+        public const string Warning = "Warning";
+        public const string Suspending = "Suspending";
+        public const string Restoring = "Restoring";
+        public const string Moving = "Moving";
+        public const string Disabled = "Disabled";
     }
 }

@@ -2,8 +2,8 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
-    <Version>1.3.0-beta.3</Version>
-    <ApiCompatVersion>1.2.2</ApiCompatVersion>
+    <Version>1.4.0-beta.2</Version>
+    <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
@@ -27,6 +27,7 @@
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" />
   </ItemGroup>
   <!-- Import the Azure.Base project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />

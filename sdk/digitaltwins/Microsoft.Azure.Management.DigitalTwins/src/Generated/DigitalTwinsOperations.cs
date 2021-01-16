@@ -274,8 +274,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='tags'>
-        /// Instance tags
+        /// <param name='digitalTwinsPatchDescription'>
+        /// The DigitalTwinsInstance and security metadata.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -283,10 +283,10 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DigitalTwinsDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DigitalTwinsDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, DigitalTwinsPatchDescription digitalTwinsPatchDescription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<DigitalTwinsDescription> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, tags, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DigitalTwinsDescription> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, digitalTwinsPatchDescription, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1087,8 +1087,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='tags'>
-        /// Instance tags
+        /// <param name='digitalTwinsPatchDescription'>
+        /// The DigitalTwinsInstance and security metadata.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1111,7 +1111,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DigitalTwinsDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DigitalTwinsDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, DigitalTwinsPatchDescription digitalTwinsPatchDescription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1125,10 +1125,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            DigitalTwinsPatchDescription digitalTwinsPatchDescription = new DigitalTwinsPatchDescription();
-            if (tags != null)
+            if (digitalTwinsPatchDescription == null)
             {
-                digitalTwinsPatchDescription.Tags = tags;
+                throw new ValidationException(ValidationRules.CannotBeNull, "digitalTwinsPatchDescription");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1218,7 +1217,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1257,6 +1256,24 @@ namespace Microsoft.Azure.Management.DigitalTwins
             }
             // Deserialize Response
             if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DigitalTwinsDescription>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 202)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -1441,6 +1458,24 @@ namespace Microsoft.Azure.Management.DigitalTwins
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DigitalTwinsDescription>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             // Deserialize Response
             if ((int)_statusCode == 202)

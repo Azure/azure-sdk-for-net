@@ -20,11 +20,21 @@ namespace Azure.Communication.Administration.Models
             {
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new PhoneNumberReleaseStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     errorCode = property.Value.GetInt32();
                     continue;
                 }

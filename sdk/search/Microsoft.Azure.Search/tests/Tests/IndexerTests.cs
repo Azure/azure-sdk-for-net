@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
     using Xunit;
+    using Index = Microsoft.Azure.Search.Models.Index;
 
     public sealed class IndexerTests : SearchTestBase<IndexerFixture>
     {
@@ -286,7 +287,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             Run(() =>
             {
-                // Set handler that injects mock_status query string, which results in service 
+                // Set handler that injects mock_status query string, which results in service
                 // returning a well-known mock response
                 SearchServiceClient searchClient = Data.GetSearchServiceClient(new MockStatusDelegatingHandler());
 

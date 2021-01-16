@@ -14,6 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
             : base(new FieldBoundingBox(textLine.BoundingBox), pageNumber, textLine.Text)
         {
             Words = ConvertWords(textLine.Words, pageNumber);
+            Appearance = textLine.Appearance;
         }
 
         /// <summary>
@@ -45,5 +46,8 @@ namespace Azure.AI.FormRecognizer.Models
 
             return rawWords;
         }
+
+        /// <summary> Text appearance properties. </summary>
+        public Appearance Appearance { get; }
     }
 }

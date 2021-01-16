@@ -600,30 +600,120 @@ namespace Microsoft.Azure.Batch.Common
     public static class PoolResizeErrorCodes
     {
         /// <summary>
-        /// The account has reached its quota of compute nodes.
+        /// Desired number of nodes could not be allocated due to a stop resize operation
         /// </summary>
-        public const string AccountCoreQuotaReached = "AccountCoreQuotaReached";
+        public const string ResizeStopped = "ResizeStopped";
 
         /// <summary>
-        /// An error occurred while trying to allocate the desired number of compute nodes.
-        /// </summary>
-        public const string AllocationFailed = "AllocationFailed";
-
-        /// <summary>
-        /// The Batch service was unable to allocate the desired number of compute nodes within the resize timeout.
-        /// </summary>
-        public const string AllocationTimedOut = "AllocationTimedout";
-
-        /// <summary>
-        /// An error occurred when removing compute nodes from the pool.
+        /// One or more failures were encountered in removing nodes from the pool
         /// </summary>
         public const string RemoveNodesFailed = "RemoveNodesFailed";
 
         /// <summary>
-        /// The user stopped the resize operation.
+        /// Desired number of nodes could not be allocated as the resize timeout was reached
         /// </summary>
-        public const string ResizeStopped = "ResizeStopped";
-
+        public const string AllocationTimedOut = "AllocationTimedOut";
+        
+        /// <summary>
+        /// Desired number of nodes could not be allocated
+        /// </summary>
+        public const string AllocationFailed = "AllocationFailed";
+        
+        /// <summary>
+        /// The specified account has reached core quota
+        /// </summary>
+        public const string AccountCoreQuotaReached = "AccountCoreQuotaReached";
+        
+        /// <summary>
+        /// The specified account has reached low priority core quota
+        /// </summary>
+        public const string AccountLowPriorityCoreQuotaReached = "AccountLowPriorityCoreQuotaReached";
+        
+        /// <summary>
+        /// The marketplace resource plan is missing required publisher property
+        /// </summary>
+        public const string MissingPublisherPropertyInMarketPlacePlan = "MissingPublisherPropertyInMarketPlacePlan";
+        
+        /// <summary>
+        /// Allocation failed because the allocation condition is too restrictive. Please remove some constraints and try again
+        /// </summary>
+        public const string OverconstrainedAllocationRequestError = "OverconstrainedAllocationRequestError";
+        
+        /// <summary>
+        /// Commmunication enabled pool has reached the maximum VM count
+        /// </summary>
+        public const string CommunicationEnabledPoolReachedMaxVMCount = "CommunicationEnabledPoolReachedMaxVMCount";
+        
+        /// <summary>
+        /// The specified account has reached spot core quota
+        /// </summary>
+        public const string AccountSpotCoreQuotaReached = "AccountSpotCoreQuotaReached";
+        
+        /// <summary>
+        /// Pool creation failed with error 'Failed to perform resource identity operation'
+        /// </summary>
+        public const string FailedIdentityOperation = "FailedIdentityOperation";
+        
+        /// <summary>
+        /// Pool creation failed with disk encryption error
+        /// </summary>
+        public const string DiskEncryptionFailure = "DiskEncryptionFailure";
+        
+        /// <summary>
+        /// A dependent resource specified for the Pool was not found.
+        /// </summary>
+        public const string DependentResourceNotFound = "DependentResourceNotFound";
+        
+        /// <summary>
+        /// Assigned policy on resource has blocked pool operation.
+        /// </summary>
+        public const string OperationsRestrictedByPolicy = "OperationsRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on PublicIP has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnPublicIPRestrictedByPolicy = "OperationsOnPublicIPRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Custom Image has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnImageRestrictedByPolicy = "OperationsOnImageRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Network Security Group has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnNetworkSecurityGroupRestrictedByPolicy = "OperationsOnNetworkSecurityGroupRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Load Balancer has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnLoadBalancerRestrictedByPolicy = "OperationsOnLoadBalancerRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Virtual Network has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnVirtualNetworkRestrictedByPolicy = "OperationsOnVirtualNetworkRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Private Link has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnPrivateLinkRestrictedByPolicy = "OperationsOnPrivateLinkRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Private Endpoint has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnPrivateEndpointRestrictedByPolicy = "OperationsOnPrivateEndpointRestrictedByPolicy";
+        
+        /// <summary>
+        /// Requested VM size is not compatible with requested configuration.
+        /// </summary>
+        public const string IncompatibleVMSize = "IncompatibleVMSize";
+        
+        /// <summary>
+        /// Requested VM size is not supported.
+        /// </summary>
+        public const string UnsupportedVMSize = "UnsupportedVMSize";
+        
         /// <summary>
         /// The reason for the failure is not known.
         /// </summary>

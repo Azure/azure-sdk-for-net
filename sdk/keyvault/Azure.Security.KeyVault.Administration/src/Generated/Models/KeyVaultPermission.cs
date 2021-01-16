@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role definition permissions. </summary>
     public partial class KeyVaultPermission
@@ -16,32 +16,23 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
         public KeyVaultPermission()
         {
-            Actions = new ChangeTrackingList<string>();
-            NotActions = new ChangeTrackingList<string>();
-            DataActions = new ChangeTrackingList<string>();
-            NotDataActions = new ChangeTrackingList<string>();
+            AllowedActions = new ChangeTrackingList<string>();
+            DeniedActions = new ChangeTrackingList<string>();
+            AllowedDataActions = new ChangeTrackingList<string>();
+            DeniedDataActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
-        /// <param name="actions"> Allowed actions. </param>
-        /// <param name="notActions"> Denied actions. </param>
-        /// <param name="dataActions"> Allowed Data actions. </param>
-        /// <param name="notDataActions"> Denied Data actions. </param>
-        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<string> dataActions, IList<string> notDataActions)
+        /// <param name="allowedActions"> Allowed actions. </param>
+        /// <param name="deniedActions"> Denied actions. </param>
+        /// <param name="allowedDataActions"> Allowed Data actions. </param>
+        /// <param name="deniedDataActions"> Denied Data actions. </param>
+        internal KeyVaultPermission(IList<string> allowedActions, IList<string> deniedActions, IList<string> allowedDataActions, IList<string> deniedDataActions)
         {
-            Actions = actions;
-            NotActions = notActions;
-            DataActions = dataActions;
-            NotDataActions = notDataActions;
+            AllowedActions = allowedActions;
+            DeniedActions = deniedActions;
+            AllowedDataActions = allowedDataActions;
+            DeniedDataActions = deniedDataActions;
         }
-
-        /// <summary> Allowed actions. </summary>
-        public IList<string> Actions { get; }
-        /// <summary> Denied actions. </summary>
-        public IList<string> NotActions { get; }
-        /// <summary> Allowed Data actions. </summary>
-        public IList<string> DataActions { get; }
-        /// <summary> Denied Data actions. </summary>
-        public IList<string> NotDataActions { get; }
     }
 }

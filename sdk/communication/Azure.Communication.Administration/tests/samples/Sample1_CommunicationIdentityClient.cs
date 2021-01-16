@@ -5,7 +5,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
 using Azure.Communication.Administration.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
@@ -17,8 +19,8 @@ namespace Azure.Communication.Administration.Samples
     /// </summary>
     public partial class Sample1_CommunicationIdentityClient : CommunicationIdentityClientLiveTestBase
     {
-        public Sample1_CommunicationIdentityClient(bool isAsync): base(isAsync)
-            => Matcher.ExcludeHeaders.Add("x-ms-content-sha256");
+        public Sample1_CommunicationIdentityClient(bool isAsync) : base(isAsync)
+            => Matcher.IgnoredHeaders.Add("x-ms-content-sha256");
 
         [Test]
         [AsyncOnly]
@@ -34,8 +36,8 @@ namespace Azure.Communication.Administration.Samples
             client = CreateInstrumentedCommunicationIdentityClient();
 
             #region  Snippet:CreateCommunicationUserAsync
-            Response<CommunicationUser> userResponse = await client.CreateUserAsync();
-            CommunicationUser user = userResponse.Value;
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
             #endregion Snippet:CreateCommunicationTokenAsync
 
@@ -72,8 +74,8 @@ namespace Azure.Communication.Administration.Samples
             client = CreateInstrumentedCommunicationIdentityClient();
 
             #region  Snippet:CreateCommunicationUser
-            Response<CommunicationUser> userResponse = client.CreateUser();
-            CommunicationUser user = userResponse.Value;
+            Response<CommunicationUserIdentifier> userResponse = client.CreateUser();
+            CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
             #endregion Snippet:CreateCommunicationToken
 
@@ -98,6 +100,28 @@ namespace Azure.Communication.Administration.Samples
         }
 
         [Test]
+        public async Task CreateIdentityWithToken()
+        {
+            var endpoint = TestEnvironment.EndpointString;
+            #region Snippet:CreateCommunicationIdentityFromToken
+            //@@var endpoint = "<endpoint_url>";
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            var client = new CommunicationIdentityClient(new Uri(endpoint), tokenCredential);
+            #endregion Snippet:CreateCommunicationIdentityFromToken
+
+            tokenCredential = (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential();
+            client = CreateInstrumentedCommunicationIdentityClientWithToken(tokenCredential);
+            try
+            {
+                Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
         public async Task Troubleshooting()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -109,7 +133,7 @@ namespace Azure.Communication.Administration.Samples
 
             try
             {
-                Response<CommunicationUser> response = await client.CreateUserAsync();
+                Response<CommunicationUserIdentifier> response = await client.CreateUserAsync();
             }
             catch (RequestFailedException ex)
             {
@@ -121,6 +145,5 @@ namespace Azure.Communication.Administration.Samples
                 Assert.Fail($"Unexpected error: {ex}");
             }
         }
-
     }
 }

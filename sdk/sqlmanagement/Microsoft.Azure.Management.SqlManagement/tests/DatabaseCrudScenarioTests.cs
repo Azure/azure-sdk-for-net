@@ -107,7 +107,7 @@ namespace Sql.Tests
                 {
                     Location = server.Location,
                     Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4", "Hyperscale"),
-                    ReadReplicaCount = 4,
+                    HighAvailabilityReplicaCount = 4,
                 };
                 var db7 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db7Input);
                 Assert.NotNull(db7);
@@ -123,6 +123,17 @@ namespace Sql.Tests
                 Assert.NotNull(db8);
                 SqlManagementTestUtilities.ValidateDatabase(db8Input, db8, dbName);
 
+                dbName = SqlManagementTestUtilities.GenerateName();
+                var db9Input = new Database()
+                {
+                    Location = server.Location,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.P1),
+                    MaintenanceConfigurationId = SqlManagementTestUtilities.GetTestMaintenanceConfigurationId(sqlClient.SubscriptionId),
+                };
+                var db9 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db9Input);
+                Assert.NotNull(db9);
+                SqlManagementTestUtilities.ValidateDatabase(db9Input, db9, dbName);
+
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db1.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db2.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db4.Name);
@@ -130,6 +141,7 @@ namespace Sql.Tests
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db6.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db7.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db8.Name);
+                sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db9.Name);
             }
         }
 
@@ -231,6 +243,7 @@ namespace Sql.Tests
                 Collation = SqlTestConstants.DefaultCollation,
                 MaxSizeBytes = 2 * 1024L * 1024L * 1024L,
                 Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0),
+                ZoneRedundant = false,
                 Tags = tags,
             };
             var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
@@ -253,6 +266,7 @@ namespace Sql.Tests
             //
             dynamic updateEditionAndSloInput = createModelFunc();
             updateEditionAndSloInput.Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0, "Standard");
+            updateEditionAndSloInput.ZoneRedundant = false;
             var db2 = updateFunc(resourceGroup.Name, server.Name, dbName, updateEditionAndSloInput);
             SqlManagementTestUtilities.ValidateDatabase(updateEditionAndSloInput, db2, dbName);
 
@@ -276,6 +290,14 @@ namespace Sql.Tests
             updateTags.Tags = new Dictionary<string, string> { { "asdf", "zxcv" } };
             var db7 = updateFunc(resourceGroup.Name, server.Name, dbName, updateTags);
             SqlManagementTestUtilities.ValidateDatabase(updateTags, db7, dbName);
+
+            // Update maintenance
+            //
+            dynamic updateMaintnenace = createModelFunc();
+            updateMaintnenace.Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S2, "Standard");
+            updateMaintnenace.MaintenanceConfigurationId = SqlManagementTestUtilities.GetTestMaintenanceConfigurationId(sqlClient.SubscriptionId);
+            var db9 = updateFunc(resourceGroup.Name, server.Name, dbName, updateMaintnenace);
+            SqlManagementTestUtilities.ValidateDatabase(updateMaintnenace, db9, dbName);
         }
 
         [Fact]

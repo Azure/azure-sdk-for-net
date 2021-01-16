@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "b2a9a716-6a68-9b05-2aa7-2a2b95ff040a",
         "x-ms-date": "Fri, 03 Apr 2020 20:53:29 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "b2a9a716-6a68-9b05-2aa7-2a2b95ff040a",
         "x-ms-request-id": "96216265-f01e-0012-53f9-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -44,7 +44,7 @@
         ],
         "x-ms-client-request-id": "a2509b90-064b-04fe-ec47-2b72dfa6fcb7",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -59,7 +59,7 @@
         "x-ms-client-request-id": "a2509b90-064b-04fe-ec47-2b72dfa6fcb7",
         "x-ms-error-code": "AuthenticationFailed",
         "x-ms-request-id": "fa43fb13-201f-0097-4af9-091bad000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": {
         "error": {
@@ -81,7 +81,7 @@
         "x-ms-client-request-id": "02ce77c8-cf22-fb37-f234-e7d6e735fe1d",
         "x-ms-date": "Fri, 03 Apr 2020 20:53:29 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -94,7 +94,7 @@
         ],
         "x-ms-client-request-id": "02ce77c8-cf22-fb37-f234-e7d6e735fe1d",
         "x-ms-request-id": "96216283-f01e-0012-6ff9-093670000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

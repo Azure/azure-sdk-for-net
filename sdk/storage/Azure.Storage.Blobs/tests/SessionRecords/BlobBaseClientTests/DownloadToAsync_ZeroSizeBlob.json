@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "3448d2be-bbed-59bf-d9ea-ed99662494d7",
         "x-ms-date": "Wed, 17 Jun 2020 18:43:10 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "3448d2be-bbed-59bf-d9ea-ed99662494d7",
         "x-ms-request-id": "dd2ece34-c01e-0026-1cd7-4405b8000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "9f3e5c32-dee4-afb6-13b2-2a3b5799f59b",
         "x-ms-date": "Wed, 17 Jun 2020 18:43:10 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": [],
       "StatusCode": 201,
@@ -66,7 +66,7 @@
         "x-ms-content-crc64": "AAAAAAAAAAA=",
         "x-ms-request-id": "dd2ece3b-c01e-0026-21d7-4405b8000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-version-id": "2020-06-17T18:43:11.4993594Z"
       },
       "ResponseBody": []
@@ -85,7 +85,7 @@
         "x-ms-date": "Wed, 17 Jun 2020 18:43:10 GMT",
         "x-ms-range": "bytes=0-268435455",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 416,
@@ -103,7 +103,7 @@
         "x-ms-client-request-id": "08f211cc-bafe-4279-2c9d-2133f59ca945",
         "x-ms-error-code": "InvalidRange",
         "x-ms-request-id": "dd2ece3e-c01e-0026-24d7-4405b8000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidRange\u003C/Code\u003E\u003CMessage\u003EThe range specified is invalid for the current size of the resource.\n",
@@ -124,7 +124,7 @@
         "x-ms-client-request-id": "466fdffc-eda7-d69c-1536-56393dbed1db",
         "x-ms-date": "Wed, 17 Jun 2020 18:43:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -150,7 +150,7 @@
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "dd2ece4a-c01e-0026-2dd7-4405b8000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-version-id": "2020-06-17T18:43:11.4993594Z"
       },
       "ResponseBody": []
@@ -168,7 +168,7 @@
         "x-ms-client-request-id": "1536ddb0-622c-839d-1687-390e0b4195ac",
         "x-ms-date": "Wed, 17 Jun 2020 18:43:11 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -181,7 +181,7 @@
         ],
         "x-ms-client-request-id": "1536ddb0-622c-839d-1687-390e0b4195ac",
         "x-ms-request-id": "dd2ece4d-c01e-0026-30d7-4405b8000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

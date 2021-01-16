@@ -78,13 +78,17 @@ namespace Azure.AI.FormRecognizer.Training
         public override bool HasValue => _value != null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class.
+        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class which
+        /// tracks the status of the long-running operation for copying a custom model into a target Form Recognizer resource.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
         /// <param name="client">The client used to check for completion.</param>
         public CopyModelOperation(string operationId, string targetModelId, FormTrainingClient client)
         {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
+
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
             _targetModelId = targetModelId;

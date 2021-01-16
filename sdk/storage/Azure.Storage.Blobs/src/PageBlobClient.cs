@@ -158,6 +158,33 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Uri"/> referencing the page blob that includes the
         /// name of the account, the name of the blob container, and the name of
         /// the blob.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public PageBlobClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
+            : base(blobUri, credential, options)
+        {
+            AssertNoClientSideEncryption(options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the page blob that includes the
+        /// name of the account, the name of the blob container, and the name of
+        /// the blob.
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -185,6 +212,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -194,6 +224,7 @@ namespace Azure.Storage.Blobs.Specialized
         internal PageBlobClient(
             Uri blobUri,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
@@ -201,6 +232,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(
                   blobUri,
                   pipeline,
+                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics,
                   customerProvidedKey,
@@ -252,6 +284,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new PageBlobClient(
                 builder.ToUri(),
                 Pipeline,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -272,7 +305,9 @@ namespace Azure.Storage.Blobs.Specialized
             };
 
             return new PageBlobClient(
-                builder.ToUri(), Pipeline,
+                builder.ToUri(),
+                Pipeline,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -2578,6 +2613,7 @@ namespace Azure.Storage.Blobs.Specialized
                     PageBlobClient pageBlobUri = new PageBlobClient(
                         sourceUri,
                         Pipeline,
+                        SharedKeyCredential,
                         Version,
                         ClientDiagnostics,
                         CustomerProvidedKey,

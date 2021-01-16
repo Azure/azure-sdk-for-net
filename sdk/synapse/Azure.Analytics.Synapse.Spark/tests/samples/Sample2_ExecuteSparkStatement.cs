@@ -13,22 +13,23 @@ namespace Azure.Analytics.Synapse.Samples
     /// <summary>
     /// This sample demonstrates how to submit Spark job in Azure Synapse Analytics using synchronous methods of <see cref="SparkSessionClient"/>.
     /// </summary>
-    public partial class ExecuteSparkStatement
+    public partial class Sample2_ExecuteSparkStatement : SampleFixture
     {
         [Test]
         public void ExecuteSparkStatementSync()
         {
-            // Environment variable with the Synapse workspace endpoint.
-            string workspaceUrl = TestEnvironment.WorkspaceUrl;
+            #region Snippet:CreateSparkSessionClient
+            // Replace the strings below with the spark and endpoint information
+            string sparkPoolName = "<my-spark-pool-name>";
+            /*@@*/sparkPoolName = TestEnvironment.SparkPoolName;
 
-            // Environment variable with the Synapse Spark pool name.
-            string sparkPoolName = TestEnvironment.SparkPoolName;
+            string endpoint = "<my-endpoint-url>";
+            /*@@*/endpoint = TestEnvironment.EndpointUrl;
 
-            #region Snippet:SparkSessionSample1SparkSessionClient
-            SparkSessionClient client = new SparkSessionClient(new Uri(workspaceUrl), sparkPoolName, new DefaultAzureCredential());
+            SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
             #endregion
 
-            #region Snippet:SparkSessionSample1StartSparkSession
+            #region Snippet:CreateSparkSession
             SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewGuid()}")
             {
                 DriverMemory = "28g",
@@ -38,34 +39,47 @@ namespace Azure.Analytics.Synapse.Samples
                 ExecutorCount = 2
             };
 
-            SparkSession sessionCreated = client.CreateSparkSession(request);
+            SparkSessionOperation createSessionOperation = client.StartCreateSparkSession(request);
+            while (!createSessionOperation.HasCompleted)
+            {
+                System.Threading.Thread.Sleep(2000);
+                createSessionOperation.UpdateStatus();
+            }
+            SparkSession sessionCreated = createSessionOperation.Value;
             #endregion
 
-            #region Snippet:SparkSessionSample1GetSparkSession
+            #region Snippet:GetSparkSession
             SparkSession session = client.GetSparkSession(sessionCreated.Id);
             Debug.WriteLine($"Session is returned with name {session.Name} and state {session.State}");
             #endregion
 
-            #region Snippet:SparkSessionSample1ExecuteSparkStatement
+            #region Snippet:CreateSparkStatement
             SparkStatementOptions sparkStatementRequest = new SparkStatementOptions
             {
                 Kind = SparkStatementLanguageType.Spark,
                 Code = @"print(""Hello world\n"")"
             };
-            SparkStatement statementCreated = client.CreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
+
+            SparkStatementOperation createStatementOperation = client.StartCreateSparkStatement(sessionCreated.Id, sparkStatementRequest);
+            while (!createStatementOperation.HasCompleted)
+            {
+                System.Threading.Thread.Sleep(2000);
+                createStatementOperation.UpdateStatus();
+            }
+            SparkStatement statementCreated = createStatementOperation.Value;
             #endregion
 
-            #region Snippet:SparkSessionSample1GetSparkStatement
+            #region Snippet:GetSparkStatement
             SparkStatement statement = client.GetSparkStatement(sessionCreated.Id, statementCreated.Id);
             Debug.WriteLine($"Statement is returned with id {statement.Id} and state {statement.State}");
             #endregion
 
-            #region Snippet:SparkSessionSample1CancelSparkStatement
+            #region Snippet:CancelSparkStatement
             SparkStatementCancellationResult cancellationResult = client.CancelSparkStatement(sessionCreated.Id, statementCreated.Id);
-            Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Msg}");
+            Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Message}");
             #endregion
 
-            #region Snippet:SparkSessionSample1StopSparkSession
+            #region Snippet:CancelSparkSession
             Response operation = client.CancelSparkSession(sessionCreated.Id);
             #endregion
         }

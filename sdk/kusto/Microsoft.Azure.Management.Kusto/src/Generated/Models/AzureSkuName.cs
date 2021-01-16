@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string StandardD12V2 = "Standard_D12_v2";
         public const string StandardL4s = "Standard_L4s";
         public const string DevNoSLAStandardD11V2 = "Dev(No SLA)_Standard_D11_v2";
+        public const string StandardE64iV3 = "Standard_E64i_v3";
         public const string StandardE2aV4 = "Standard_E2a_v4";
         public const string StandardE4aV4 = "Standard_E4a_v4";
         public const string StandardE8aV4 = "Standard_E8a_v4";

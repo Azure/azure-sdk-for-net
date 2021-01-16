@@ -1,0 +1,18 @@
+trigger: none
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: attestation
+    Location: westus
+    EnvVars:
+      ISOLATED_ATTESTATION_URL: $(ISOLATED_ATTESTATION_URL)
+      AAD_ATTESTATION_URL: $(AAD_ATTESTATION_URL)
+      serializedPolicySigningKey0: $(serializedPolicySigningKey0)
+      serializedPolicySigningKey1: $(serializedPolicySigningKey1)
+      serializedPolicySigningKey2: $(serializedPolicySigningKey2)
+      policySigningCertificate0: $(policySigningCertificate0)
+      policySigningCertificate1: $(policySigningCertificate1)
+      policySigningCertificate2: $(policySigningCertificate2)
+      isolatedSigningCertificate: $(isolatedSigningCertificate)
+      serializedIsolatedSigningKey: $(serializedIsolatedSigningKey)

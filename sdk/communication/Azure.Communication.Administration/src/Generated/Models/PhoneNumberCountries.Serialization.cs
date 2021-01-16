@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class PhoneNumberCountries
+    internal partial class PhoneNumberCountries
     {
         internal static PhoneNumberCountries DeserializePhoneNumberCountries(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.Communication.Administration.Models
             {
                 if (property.NameEquals("countries"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PhoneNumberCountry> array = new List<PhoneNumberCountry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

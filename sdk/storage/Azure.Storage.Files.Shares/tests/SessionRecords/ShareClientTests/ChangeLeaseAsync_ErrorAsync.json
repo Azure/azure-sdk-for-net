@@ -16,7 +16,7 @@
         "x-ms-lease-id": "2b8c95e5-248f-7e7b-9482-8c2db1a90552",
         "x-ms-proposed-lease-id": "f9ab9c71-e39d-3f69-5ee8-ae5d703cc5b7",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -31,7 +31,7 @@
         "x-ms-client-request-id": "f05c00bf-4bc8-0270-2b4c-cca6761e0d58",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "f7eefe0e-301a-0000-3c77-6bdac2000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",

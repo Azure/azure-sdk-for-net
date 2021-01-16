@@ -116,8 +116,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(pipeline);
             request.Content = content;
@@ -324,6 +324,82 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal HttpMessage CreateRenamePipelineRequest(string pipelineName, ArtifactRenameRequest request)
+        {
+            var message = _pipeline.CreateMessage();
+            var request0 = message.Request;
+            request0.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/pipelines/", false);
+            uri.AppendPath(pipelineName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(request);
+            request0.Content = content;
+            return message;
+        }
+
+        /// <summary> Renames a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="request"/> is null. </exception>
+        public async Task<Response> RenamePipelineAsync(string pipelineName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var message = CreateRenamePipelineRequest(pipelineName, request);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Renames a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="request"/> is null. </exception>
+        public Response RenamePipeline(string pipelineName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var message = CreateRenamePipelineRequest(pipelineName, request);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateCreatePipelineRunRequest(string pipelineName, string referencePipelineRunId, bool? isRecovery, string startActivityName, IDictionary<string, object> parameters)
         {
             var message = _pipeline.CreateMessage();
@@ -348,10 +424,10 @@ namespace Azure.Analytics.Synapse.Artifacts
                 uri.AppendQuery("startActivityName", startActivityName, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (parameters != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in parameters)

@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("ignoreMissingVNetServiceEndpoint"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ignoreMissingVNetServiceEndpoint = property.Value.GetBoolean();
                     continue;
                 }

@@ -11,14 +11,11 @@
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Properties related to Digital Twins Endpoint
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DigitalTwinsEndpointResourceProperties")]
     public partial class DigitalTwinsEndpointResourceProperties
     {
         /// <summary>
@@ -36,15 +33,24 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// </summary>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Provisioning', 'Deleting', 'Succeeded', 'Failed',
-        /// 'Canceled'</param>
+        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
+        /// 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
-        /// <param name="tags">The resource tags.</param>
-        public DigitalTwinsEndpointResourceProperties(string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="authenticationType">Specifies the authentication type
+        /// being used for connecting to the endpoint. Possible values include:
+        /// 'KeyBased', 'IdentityBased'</param>
+        /// <param name="deadLetterSecret">Dead letter storage secret for
+        /// key-based authentication. Will be obfuscated during read.</param>
+        /// <param name="deadLetterUri">Dead letter storage URL for
+        /// identity-based authentication.</param>
+        public DigitalTwinsEndpointResourceProperties(string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string authenticationType = default(string), string deadLetterSecret = default(string), string deadLetterUri = default(string))
         {
             ProvisioningState = provisioningState;
             CreatedTime = createdTime;
-            Tags = tags;
+            AuthenticationType = authenticationType;
+            DeadLetterSecret = deadLetterSecret;
+            DeadLetterUri = deadLetterUri;
             CustomInit();
         }
 
@@ -55,7 +61,9 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
 
         /// <summary>
         /// Gets the provisioning state. Possible values include:
-        /// 'Provisioning', 'Deleting', 'Succeeded', 'Failed', 'Canceled'
+        /// 'Provisioning', 'Deleting', 'Succeeded', 'Failed', 'Canceled',
+        /// 'Deleted', 'Warning', 'Suspending', 'Restoring', 'Moving',
+        /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -67,10 +75,26 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         public System.DateTime? CreatedTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource tags.
+        /// Gets or sets specifies the authentication type being used for
+        /// connecting to the endpoint. Possible values include: 'KeyBased',
+        /// 'IdentityBased'
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "authenticationType")]
+        public string AuthenticationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets dead letter storage secret for key-based
+        /// authentication. Will be obfuscated during read.
+        /// </summary>
+        [JsonProperty(PropertyName = "deadLetterSecret")]
+        public string DeadLetterSecret { get; set; }
+
+        /// <summary>
+        /// Gets or sets dead letter storage URL for identity-based
+        /// authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "deadLetterUri")]
+        public string DeadLetterUri { get; set; }
 
     }
 }

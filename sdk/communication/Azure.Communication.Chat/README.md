@@ -14,13 +14,13 @@ This package contains a C# SDK for Azure Communication Services for chat.
 Install the Azure Communication Chat client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Chat --version 1.0.0-beta.2
+dotnet add package Azure.Communication.Chat --version 1.0.0-beta.3
 ``` 
 
 ### Prerequisites
 You need an [Azure subscription][azure_sub] and a [Communication Service Resource][communication_resource_docs] to use this package.
 
-To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal] or the [.NET management client library][communication_resource_create_net].
+To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 <!--
 Here's an example using the Azure CLI:
 
@@ -39,7 +39,7 @@ For the generation of user access tokens, refer to [User Access Tokens][useracce
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
 using Azure.Communication.Administration;
 using Azure.Communication.Administration.Models;
-using Azure.Communication.Identity;
+using Azure.Communication;
 using Azure.Communication.Chat;
 ```
 
@@ -49,7 +49,7 @@ This will allow you to create, get, or delete chat threads.
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 ChatClient chatClient = new ChatClient(
     new Uri(endpoint),
-    new CommunicationUserCredential(userToken));
+    new CommunicationTokenCredential(userToken));
 ```
 
 ### Create a ChatThreadClient
@@ -165,10 +165,10 @@ Use `CreateChatThread` to create a chat thread client object.
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 ChatClient chatClient = new ChatClient(
     new Uri(endpoint),
-    new CommunicationUserCredential(userToken));
+    new CommunicationTokenCredential(userToken));
 ```
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-var chatThreadMember = new ChatThreadMember(new CommunicationUser(threadCreatorId))
+var chatThreadMember = new ChatThreadMember(new CommunicationUserIdentifier(threadCreatorId))
 {
     DisplayName = "UserDisplayName"
 };
@@ -295,9 +295,9 @@ Use `AddMembers` to add members to the chat thread. The following are the suppor
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_AddMembers
 var members = new[]
 {
-    new ChatThreadMember(new CommunicationUser(memberId1)) { DisplayName ="display name member 1"},
-    new ChatThreadMember(new CommunicationUser(memberId2)) { DisplayName ="display name member 2"},
-    new ChatThreadMember(new CommunicationUser(memberId3)) { DisplayName ="display name member 3"}
+    new ChatThreadMember(new CommunicationUserIdentifier(memberId1)) { DisplayName ="display name member 1"},
+    new ChatThreadMember(new CommunicationUserIdentifier(memberId2)) { DisplayName ="display name member 2"},
+    new ChatThreadMember(new CommunicationUserIdentifier(memberId3)) { DisplayName ="display name member 3"}
 };
 await chatThreadClient.AddMembersAsync(members);
 ```
@@ -308,7 +308,7 @@ Use `RemoveMember` to remove a thread member from the thread.
 `communicationUser` is the identification of the chat member.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_RemoveMember
-await chatThreadClient.RemoveMemberAsync(new CommunicationUser(memberId));
+await chatThreadClient.RemoveMemberAsync(new CommunicationUserIdentifier(memberId));
 ```
 
 ## Events Operations
@@ -374,6 +374,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [useraccesstokens]:https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
 [communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
 [nextsteps]:https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Chat/src
