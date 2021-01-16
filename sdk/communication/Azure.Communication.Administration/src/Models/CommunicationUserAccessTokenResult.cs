@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.Administration.Models
 {
-    internal partial class CommunicationIdentityUpdateRequest
+    internal partial class CommunicationIdentityAccessTokenResult
     {
     }
 }

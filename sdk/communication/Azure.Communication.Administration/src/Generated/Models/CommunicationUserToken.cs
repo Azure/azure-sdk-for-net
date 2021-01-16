@@ -7,16 +7,16 @@
 
 using System;
 
-namespace Azure.Communication.Administration.Models
+namespace Azure.Communication.Administration
 {
     /// <summary> An access token. </summary>
-    public partial class CommunicationIdentityAccessToken
+    public partial class CommunicationUserToken
     {
-        /// <summary> Initializes a new instance of CommunicationIdentityAccessToken. </summary>
+        /// <summary> Initializes a new instance of CommunicationUserToken. </summary>
         /// <param name="token"> The access token issued for the identity. </param>
         /// <param name="expiresOn"> The expiry time of the token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
-        internal CommunicationIdentityAccessToken(string token, DateTimeOffset expiresOn)
+        internal CommunicationUserToken(string token, DateTimeOffset expiresOn)
         {
             if (token == null)
             {

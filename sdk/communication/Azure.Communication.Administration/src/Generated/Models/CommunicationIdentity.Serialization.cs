@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class CommunicationIdentity
+    internal partial class CommunicationIdentity
     {
         internal static CommunicationIdentity DeserializeCommunicationIdentity(JsonElement element)
         {

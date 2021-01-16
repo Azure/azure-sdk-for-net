@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.Administration;
 
 namespace Azure.Communication.Administration.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.Communication.Administration.Models
         /// <summary> Initializes a new instance of CommunicationIdentityAccessTokenRequest. </summary>
         /// <param name="scopes"> List of scopes attached to the token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
-        public CommunicationIdentityAccessTokenRequest(IEnumerable<CommunicationIdentityTokenScope> scopes)
+        public CommunicationIdentityAccessTokenRequest(IEnumerable<CommunicationTokenScope> scopes)
         {
             if (scopes == null)
             {
@@ -28,6 +29,6 @@ namespace Azure.Communication.Administration.Models
         }
 
         /// <summary> List of scopes attached to the token. </summary>
-        public IList<CommunicationIdentityTokenScope> Scopes { get; }
+        public IList<CommunicationTokenScope> Scopes { get; }
     }
 }

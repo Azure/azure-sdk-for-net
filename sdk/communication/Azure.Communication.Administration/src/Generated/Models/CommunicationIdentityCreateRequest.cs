@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Communication.Administration;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
@@ -16,10 +17,10 @@ namespace Azure.Communication.Administration.Models
         /// <summary> Initializes a new instance of CommunicationIdentityCreateRequest. </summary>
         public CommunicationIdentityCreateRequest()
         {
-            CreateTokenWithScopes = new ChangeTrackingList<CommunicationIdentityTokenScope>();
+            CreateTokenWithScopes = new ChangeTrackingList<CommunicationTokenScope>();
         }
 
         /// <summary> Also create access token for the created identity. </summary>
-        public IList<CommunicationIdentityTokenScope> CreateTokenWithScopes { get; }
+        public IList<CommunicationTokenScope> CreateTokenWithScopes { get; }
     }
 }

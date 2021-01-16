@@ -9,11 +9,11 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Administration.Models
+namespace Azure.Communication.Administration
 {
-    public partial class CommunicationIdentityAccessToken
+    public partial class CommunicationUserToken
     {
-        internal static CommunicationIdentityAccessToken DeserializeCommunicationIdentityAccessToken(JsonElement element)
+        internal static CommunicationUserToken DeserializeCommunicationUserToken(JsonElement element)
         {
             string token = default;
             DateTimeOffset expiresOn = default;
@@ -30,7 +30,7 @@ namespace Azure.Communication.Administration.Models
                     continue;
                 }
             }
-            return new CommunicationIdentityAccessToken(token, expiresOn);
+            return new CommunicationUserToken(token, expiresOn);
         }
     }
 }
