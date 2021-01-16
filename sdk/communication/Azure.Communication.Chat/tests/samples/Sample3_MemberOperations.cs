@@ -18,13 +18,13 @@ namespace Azure.Communication.Chat.Tests.samples
         public async Task GetAddRemoveMembersAsync()
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
-            Response<CommunicationUserIdentifier> threadMember1 = await communicationIdentityClient.CreateUserAsync(new[] { CommunicationIdentityTokenScope.Chat });
-            Response<CommunicationUserIdentifier> threadMember2 = await communicationIdentityClient.CreateUserAsync(new[] { CommunicationIdentityTokenScope.Chat });
-            Response<CommunicationUserIdentifier> threadMember3 = await communicationIdentityClient.CreateUserAsync(new[] { CommunicationIdentityTokenScope.Chat });
+            Response<CommunicationUserIdentifier> threadMember1 = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationUserIdentifier> threadMember2 = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationUserIdentifier> threadMember3 = await communicationIdentityClient.CreateUserAsync();
 
-            CommunicationIdentityAccessToken communicationUserToken1 = await communicationIdentityClient.IssueTokenAsync(threadMember1.Value, new[] { CommunicationIdentityTokenScope.Chat });
-            CommunicationIdentityAccessToken communicationUserToken2 = await communicationIdentityClient.IssueTokenAsync(threadMember2.Value, new[] { CommunicationIdentityTokenScope.Chat });
-            CommunicationIdentityAccessToken communicationUserToken3 = await communicationIdentityClient.IssueTokenAsync(threadMember3.Value, new[] { CommunicationIdentityTokenScope.Chat });
+            CommunicationUserToken communicationUserToken1 = await communicationIdentityClient.IssueTokenAsync(threadMember1.Value, new[] { CommunicationTokenScope.Chat });
+            CommunicationUserToken communicationUserToken2 = await communicationIdentityClient.IssueTokenAsync(threadMember2.Value, new[] { CommunicationTokenScope.Chat });
+            CommunicationUserToken communicationUserToken3 = await communicationIdentityClient.IssueTokenAsync(threadMember3.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken1.Token;
             string endpoint = TestEnvironment.ChatApiUrl();
             string theadCreatorMemberId = threadMember1.Value.Id;

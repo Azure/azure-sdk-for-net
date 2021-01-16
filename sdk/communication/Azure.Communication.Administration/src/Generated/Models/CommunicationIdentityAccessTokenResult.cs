@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Communication.Administration;
 
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> A communication identity with access token. </summary>
-    public partial class CommunicationIdentityAccessTokenResult
+    internal partial class CommunicationIdentityAccessTokenResult
     {
         /// <summary> Initializes a new instance of CommunicationIdentityAccessTokenResult. </summary>
         /// <param name="identity"> A communication identity. </param>
@@ -28,7 +29,7 @@ namespace Azure.Communication.Administration.Models
         /// <summary> Initializes a new instance of CommunicationIdentityAccessTokenResult. </summary>
         /// <param name="identity"> A communication identity. </param>
         /// <param name="accessToken"> An access token. </param>
-        internal CommunicationIdentityAccessTokenResult(CommunicationIdentity identity, CommunicationIdentityAccessToken accessToken)
+        internal CommunicationIdentityAccessTokenResult(CommunicationIdentity identity, CommunicationUserToken accessToken)
         {
             Identity = identity;
             AccessToken = accessToken;
@@ -37,6 +38,6 @@ namespace Azure.Communication.Administration.Models
         /// <summary> A communication identity. </summary>
         public CommunicationIdentity Identity { get; }
         /// <summary> An access token. </summary>
-        public CommunicationIdentityAccessToken AccessToken { get; }
+        public CommunicationUserToken AccessToken { get; }
     }
 }

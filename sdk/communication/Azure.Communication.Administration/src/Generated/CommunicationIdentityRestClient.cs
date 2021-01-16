@@ -40,7 +40,7 @@ namespace Azure.Communication.Administration
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateIdentityRequest(IEnumerable<CommunicationIdentityTokenScope> createTokenWithScopes)
+        internal HttpMessage CreateCreateIdentityRequest(IEnumerable<CommunicationTokenScope> createTokenWithScopes)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.Communication.Administration
         /// <summary> Create a new identity. </summary>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationIdentityAccessTokenResult>> CreateIdentityAsync(IEnumerable<CommunicationIdentityTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationIdentityAccessTokenResult>> CreateIdentityAsync(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateIdentityRequest(createTokenWithScopes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -88,7 +88,7 @@ namespace Azure.Communication.Administration
         /// <summary> Create a new identity. </summary>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationIdentityAccessTokenResult> CreateIdentity(IEnumerable<CommunicationIdentityTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
+        public Response<CommunicationIdentityAccessTokenResult> CreateIdentity(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateIdentityRequest(createTokenWithScopes);
             _pipeline.Send(message, cancellationToken);
@@ -223,7 +223,7 @@ namespace Azure.Communication.Administration
             }
         }
 
-        internal HttpMessage CreateIssueAccessTokenRequest(string id, IEnumerable<CommunicationIdentityTokenScope> scopes)
+        internal HttpMessage CreateIssueAccessTokenRequest(string id, IEnumerable<CommunicationTokenScope> scopes)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -249,7 +249,7 @@ namespace Azure.Communication.Administration
         /// <param name="scopes"> List of scopes attached to the token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="scopes"/> is null. </exception>
-        public async Task<Response<CommunicationIdentityAccessToken>> IssueAccessTokenAsync(string id, IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationUserToken>> IssueAccessTokenAsync(string id, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -266,9 +266,9 @@ namespace Azure.Communication.Administration
             {
                 case 200:
                     {
-                        CommunicationIdentityAccessToken value = default;
+                        CommunicationUserToken value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(document.RootElement);
+                        value = CommunicationUserToken.DeserializeCommunicationUserToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -281,7 +281,7 @@ namespace Azure.Communication.Administration
         /// <param name="scopes"> List of scopes attached to the token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="scopes"/> is null. </exception>
-        public Response<CommunicationIdentityAccessToken> IssueAccessToken(string id, IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
+        public Response<CommunicationUserToken> IssueAccessToken(string id, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -298,9 +298,9 @@ namespace Azure.Communication.Administration
             {
                 case 200:
                     {
-                        CommunicationIdentityAccessToken value = default;
+                        CommunicationUserToken value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(document.RootElement);
+                        value = CommunicationUserToken.DeserializeCommunicationUserToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

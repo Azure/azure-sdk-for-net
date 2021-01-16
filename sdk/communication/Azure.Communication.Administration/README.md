@@ -80,9 +80,7 @@ Console.WriteLine($"Expires On: {expiresOn}");
 In case a user's tokens are compromised or need to be revoked:
 
 ```C# Snippet:RevokeCommunicationUserToken
-Response revokeResponse = client.RevokeTokens(
-    user,
-    issuedBefore: DateTimeOffset.UtcNow.AddDays(-1) /* optional */);
+Response revokeResponse = client.RevokeTokens(user);
 ```
 
 ### Deleting a user

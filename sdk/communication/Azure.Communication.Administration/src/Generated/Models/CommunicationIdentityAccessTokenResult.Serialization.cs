@@ -6,16 +6,17 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.Administration;
 using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class CommunicationIdentityAccessTokenResult
+    internal partial class CommunicationIdentityAccessTokenResult
     {
         internal static CommunicationIdentityAccessTokenResult DeserializeCommunicationIdentityAccessTokenResult(JsonElement element)
         {
             CommunicationIdentity identity = default;
-            Optional<CommunicationIdentityAccessToken> accessToken = default;
+            Optional<CommunicationUserToken> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -30,7 +31,7 @@ namespace Azure.Communication.Administration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    accessToken = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(property.Value);
+                    accessToken = CommunicationUserToken.DeserializeCommunicationUserToken(property.Value);
                     continue;
                 }
             }

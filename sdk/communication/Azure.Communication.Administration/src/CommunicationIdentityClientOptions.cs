@@ -15,7 +15,7 @@ namespace Azure.Communication.Administration
         /// <summary>
         /// The latest version of the token service.
         /// </summary>
-        public const ServiceVersion LatestVersion = ServiceVersion.V1;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V1;
 
         internal string ApiVersion { get; }
 
@@ -26,7 +26,7 @@ namespace Azure.Communication.Administration
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V1 => "2020-07-20-preview2",
+                ServiceVersion.V1 => "2021-03-07",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
 

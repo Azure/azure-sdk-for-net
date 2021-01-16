@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class CommunicationIdentity
+    internal partial class CommunicationIdentity
     {
     }
 }
