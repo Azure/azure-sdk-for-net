@@ -49,6 +49,7 @@ namespace Azure.Messaging.EventHubs
     public partial class EventHubConnectionOptions
     {
         public EventHubConnectionOptions() { }
+        public System.Uri CustomEndpointAddress { get { throw null; } set { } }
         public System.Net.IWebProxy Proxy { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsTransportType TransportType { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
