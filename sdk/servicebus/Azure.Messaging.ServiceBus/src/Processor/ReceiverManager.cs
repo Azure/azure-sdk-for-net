@@ -72,13 +72,16 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken,
             bool forceClose = false)
         {
-            try
+            if (Receiver != null)
             {
-                await Receiver.DisposeAsync().ConfigureAwait(false);
-            }
-            finally
-            {
-                Receiver = null;
+                try
+                {
+                    await Receiver.DisposeAsync().ConfigureAwait(false);
+                }
+                finally
+                {
+                    Receiver = null;
+                }
             }
         }
 
