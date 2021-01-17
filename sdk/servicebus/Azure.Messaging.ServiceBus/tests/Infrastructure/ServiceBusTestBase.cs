@@ -86,7 +86,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 .Setup(receiver => receiver.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
                 .Returns(async (int maximumMessageCount, TimeSpan? maxWaitTime, CancellationToken cancellationToken) =>
                 {
-                    await Task.Delay(-1, cancellationToken);
+                    await Task.Delay(Timeout.Infinite, cancellationToken);
                     throw new NotImplementedException();
                 });
 
