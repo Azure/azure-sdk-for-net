@@ -184,7 +184,8 @@ The following snippet describes how to request that an asset, stored in blob sto
     ConversionOutputSettings output = new ConversionOutputSettings("MyOutputContainer");
     ConversionSettings settings = new ConversionSettings(input, output);
 
-    string conversionId = "ConversionId1";
+    // A randomly generated GUID is a good choice for a conversionId.
+    string conversionId = Guid.NewGuid().ToString();
 
     client.CreateConversion(conversionId, settings);
 ```
@@ -237,9 +238,10 @@ We assume that a RemoteRenderingClient has been constructed as described in the 
 The following snippet describes how to request that a new rendering session be started.
 
 ```csharp Snippet:CreateASession
-    string sessionId = "SessionId1";
+    CreateSessionSettings settings = new CreateSessionSettings(30, SessionSize.Standard);
 
-    CreateSessionBody settings = new CreateSessionBody(10, SessionSize.Standard);
+    // A randomly generated GUID is a good choice for a sessionId.
+    string sessionId = Guid.NewGuid().ToString();
 
     client.CreateSession(sessionId, settings);
 ```

@@ -27,9 +27,10 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
             #region Snippet:CreateASession
 
-            string sessionId = "SessionId1";
+            CreateSessionSettings settings = new CreateSessionSettings(30, SessionSize.Standard);
 
-            CreateSessionSettings settings = new CreateSessionSettings(10, SessionSize.Standard);
+            // A randomly generated GUID is a good choice for a sessionId.
+            string sessionId = Guid.NewGuid().ToString();
 
             client.CreateSession(sessionId, settings);
 
@@ -55,17 +56,27 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             }
 
             #endregion Snippet:QuerySessionStatus
+
+            // Use the session here.
+            // ...
+
+            // The session will automatically timeout, but in this sample we also demonstrate how to shut it down explicitly.
+            #region Snippet:StopSession
+
+            client.StopSession(sessionId);
+
+            #endregion Snippet:StopSession
         }
 
-        public void CreateUpdateAndStopSession()
+        public void UpdateSession()
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
 
             RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
 
-            string sessionId = "SessionId2";
+            string sessionId = Guid.NewGuid().ToString();
 
-            CreateSessionSettings settings = new CreateSessionSettings(10, SessionSize.Standard);
+            CreateSessionSettings settings = new CreateSessionSettings(30, SessionSize.Standard);
 
             client.CreateSession(sessionId, settings);
 
@@ -76,11 +87,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             client.UpdateSession(sessionId, longerLeaseSettings);
 
             #endregion Snippet:UpdateSession
-            #region Snippet:StopSession
 
             client.StopSession(sessionId);
-
-            #endregion Snippet:StopSession
         }
 
         public void ListSessions()
@@ -89,7 +97,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
             RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
 
-            string sessionId = "SessionId3";
+            string sessionId = Guid.NewGuid().ToString();
 
             CreateSessionSettings settings = new CreateSessionSettings(10, SessionSize.Standard);
 

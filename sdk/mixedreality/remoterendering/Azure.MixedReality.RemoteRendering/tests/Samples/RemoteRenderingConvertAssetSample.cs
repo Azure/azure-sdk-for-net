@@ -31,7 +31,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             ConversionOutputSettings output = new ConversionOutputSettings("MyOutputContainer");
             ConversionSettings settings = new ConversionSettings(input, output);
 
-            string conversionId = "ConversionId1";
+            // A randomly generated GUID is a good choice for a conversionId.
+            string conversionId = Guid.NewGuid().ToString();
 
             client.CreateConversion(conversionId, settings);
 
@@ -68,7 +69,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             ConversionOutputSettings output = new ConversionOutputSettings("MyOutputContainer");
             ConversionSettings settings = new ConversionSettings(input, output);
 
-            string conversionId = "ConversionId2";
+            string conversionId = Guid.NewGuid().ToString();
 
             client.CreateConversion(conversionId, settings);
 
