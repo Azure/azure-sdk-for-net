@@ -65,15 +65,15 @@ namespace Azure.Identity
 
             if (tenantId != null && clientId != null)
             {
-                if (clientSecret != null)
+                if (!string.IsNullOrEmpty(clientSecret))
                 {
                     Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, null, _pipeline, null);
                 }
-                else if (username != null && password != null)
+                else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
                     Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, null, _pipeline, null);
                 }
-                else if (clientCertificatePath != null)
+                else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, null, _pipeline, null);
                 }
