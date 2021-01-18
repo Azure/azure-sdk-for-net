@@ -2,9 +2,7 @@
 
 Azure Remote Rendering (ARR) is a service that enables you to render high-quality, interactive 3D content in the cloud and stream it in real time to devices, such as the HoloLens 2.
 
-
-TODO: .Client in the URLs here (and .Client elsewhere in doc)
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/spatialanchors/Azure.MixedReality.RemoteRendering.Client) | [NuGet](https://www.nuget.org/packages/Azure.MixedReality.RemoteRendering.Client) | [Product documentation](https://docs.microsoft.com/azure/remote-rendering/)
+[Product documentation](https://docs.microsoft.com/azure/remote-rendering/)
 
 - [Azure Remote Rendering client library for .NET](#azure-remote-rendering-client-library-for-net)
   - [Getting started](#getting-started)
@@ -39,19 +37,19 @@ Install the Azure Mixed Reality ARR client library for .NET using one of the fol
 From Visual Studio Package Manager:
 
 ```powershell
-Install-Package Azure.MixedReality.RemoteRendering.Client
+Install-Package Azure.MixedReality.RemoteRendering
 ```
 
 From .NET CLI
 
 ```dotnetcli
-dotnet add package Azure.MixedReality.RemoteRendering.Client
+dotnet add package Azure.MixedReality.RemoteRendering
 ```
 
 Add a package reference:
 
 ```xml
-<PackageReference Include="Azure.MixedReality.RemoteRendering.Client" Version="1.0.0-preview.1" />
+<PackageReference Include="Azure.MixedReality.RemoteRendering" Version="1.0.0-preview.1" />
 ```
 
 ### Prerequisites
