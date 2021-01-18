@@ -74,7 +74,7 @@ Azure Remote Rendering supports a few different forms of authentication:
     method for production applications because it allows you to avoid embedding the credentials for access to Azure Spatial
     Anchors in your client application.
 
-See [here](https://docs.microsoft.com/en-us/azure/remote-rendering/how-tos/authentication) for detailed instructions and information.
+See [here](https://docs.microsoft.com/azure/remote-rendering/how-tos/authentication) for detailed instructions and information.
 
 #### Authenticating with account key authentication
 
