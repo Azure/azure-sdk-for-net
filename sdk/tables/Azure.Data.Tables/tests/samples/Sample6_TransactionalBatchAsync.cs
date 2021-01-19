@@ -30,7 +30,7 @@ namespace Azure.Data.Tables.Samples
             await serviceClient.CreateTableAsync(tableName);
             TableClient client = serviceClient.GetTableClient(tableName);
 
-            #region Snippet:BatchInsert
+            #region Snippet:BatchAdd
             // Create a list of 5 entities with the same partition key.
             //@@string partitionKey = "BatchInsertSample";
             List<TableEntity> entityList = new List<TableEntity>{
@@ -60,14 +60,14 @@ namespace Azure.Data.Tables.Samples
                 },
             };
 
-            // Create the batch for insert.
-            TableTransactionalBatch insertBatch = client.CreateTransactionalBatch(partitionKey);
+            // Create the batch.
+            TableTransactionalBatch addBatch = client.CreateTransactionalBatch(partitionKey);
 
-            // Add the entities for insertion to the batch.
-            insertBatch.AddEntities(entityList);
+            // Add the entities to be added to the batch.
+            addBatch.AddEntities(entityList);
 
             // Submit the batch.
-            TableBatchResponse response = await insertBatch.SubmitBatchAsync().ConfigureAwait(false);
+            TableBatchResponse response = await addBatch.SubmitBatchAsync().ConfigureAwait(false);
 
             foreach (TableEntity entity in entityList)
             {
