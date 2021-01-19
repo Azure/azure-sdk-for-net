@@ -142,7 +142,14 @@
               "Operation-Location": {
                 "description": "URL to query for status of the operation.",
                 "type": "string"
+              },
+			  "Location": {
+                "description": "Url to retrieve the final result after operation completes.",
+                "type": "string"
               }
+            },
+			"schema": {
+              "$ref": "#/definitions/PhoneNumberSearchResult"
             }
           },
           "default": {
@@ -352,7 +359,14 @@
               "Operation-Location": {
                 "description": "URL to query for status of the operation.",
                 "type": "string"
+              },
+			  "Location": {
+                "description": "Url to retrieve the final result after operation completes.",
+                "type": "string"
               }
+            },
+			"schema": {
+              "$ref": "#/definitions/AcquiredPhoneNumber"
             }
           },
           "default": {
@@ -403,9 +417,6 @@
         "responses": {
           "202": {
             "description": "The service has accepted the request and will start processing later. It will return 'Accepted' immediately and include an 'Operation-Location' header. Client side should further query the operation status using the URL specified in this header.",
-            "schema": {
-              "$ref": "#/definitions/AcquiredPhoneNumber"
-            },
             "headers": {
               "Operation-Location": {
                 "description": "URL to query for status of the operation.",
@@ -415,6 +426,9 @@
                 "type": "string",
                 "description": "Url to retrieve the final result after opration succeeded. Is a relative link"
               }
+            },
+			"schema": {
+              "$ref": "#/definitions/AcquiredPhoneNumber"
             }
           },
           "default": {

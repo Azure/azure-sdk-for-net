@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,16 +16,16 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Purchase phone numbers. </summary>
-    public partial class PurchasePhoneNumbersOperation : Operation<Response>, IOperationSource<Response>
+    public partial class PurchasePhoneNumbersOperation : Operation<PhoneNumberSearchResult>, IOperationSource<PhoneNumberSearchResult>
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly ArmOperationHelpers<PhoneNumberSearchResult> _operation;
         internal PurchasePhoneNumbersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PurchasePhoneNumbersOperation");
+            _operation = new ArmOperationHelpers<PhoneNumberSearchResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PurchasePhoneNumbersOperation");
         }
 
         /// <inheritdoc />
-        public override Response Value => _operation.Value;
+        public override PhoneNumberSearchResult Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -42,19 +43,21 @@ namespace Azure.Communication.Administration.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<PhoneNumberSearchResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<PhoneNumberSearchResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Response IOperationSource<Response>.CreateResult(Response response, CancellationToken cancellationToken)
+        PhoneNumberSearchResult IOperationSource<PhoneNumberSearchResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            return response;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            return PhoneNumberSearchResult.DeserializePhoneNumberSearchResult(document.RootElement);
         }
 
-        async ValueTask<Response> IOperationSource<Response>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PhoneNumberSearchResult> IOperationSource<PhoneNumberSearchResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            return await new ValueTask<Response>(response).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return PhoneNumberSearchResult.DeserializePhoneNumberSearchResult(document.RootElement);
         }
     }
 }
