@@ -163,6 +163,24 @@ namespace Azure.Core.Pipeline
                     continue;
                 }
 
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.IfModifiedSince, StringComparison.OrdinalIgnoreCase))
+                {
+                    request.IfModifiedSince = DateTime.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
+                    continue;
+                }
+
+                if (string.Equals(messageRequestHeader.Name, "Expect", StringComparison.OrdinalIgnoreCase))
+                {
+                    request.Expect = messageRequestHeader.Value;
+                    continue;
+                }
+
+                if (string.Equals(messageRequestHeader.Name, "Transfer-Encoding", StringComparison.OrdinalIgnoreCase))
+                {
+                    request.TransferEncoding = messageRequestHeader.Value;
+                    continue;
+                }
+
                 if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.Range, StringComparison.OrdinalIgnoreCase))
                 {
                     var value = RangeHeaderValue.Parse(messageRequestHeader.Value);
