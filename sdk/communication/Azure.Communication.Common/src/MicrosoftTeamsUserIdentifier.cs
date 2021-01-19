@@ -31,5 +31,15 @@ namespace Azure.Communication
             UserId = userId;
             IsAnonymous = isAnonymous;
         }
+
+        /// <inheritdoc />
+        public override string ToString() => UserId;
+
+        /// <inheritdoc />
+        public override int GetHashCode() => UserId.GetHashCode();
+
+        /// <inheritdoc />
+        public override bool Equals(CommunicationIdentifier other)
+            => other is MicrosoftTeamsUserIdentifier otherId && otherId.UserId == UserId && otherId.IsAnonymous == IsAnonymous;
     }
 }

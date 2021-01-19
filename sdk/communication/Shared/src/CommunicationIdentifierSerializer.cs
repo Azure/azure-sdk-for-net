@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.Communication
@@ -36,15 +35,15 @@ namespace Azure.Communication
                 CommunicationUserIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.CommunicationUser) { Id = u.Id },
                 CallingApplicationIdentifier a => new CommunicationIdentifierModel(CommunicationIdentifierKind.CallingApplication) { Id = a.Id },
                 PhoneNumberIdentifier p => new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber) { PhoneNumber = p.Value },
-                MicrosoftTeamsUserIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { MicrosoftTeamsUserId = u.UserId },
+                MicrosoftTeamsUserIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { MicrosoftTeamsUserId = u.UserId, IsAnonymous = u.IsAnonymous },
                 UnknownIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.Unknown) { Id = u.Id },
                 _ => throw new NotSupportedException(),
             };
 
-        public static T AssertNotNull<T>([AllowNull, NotNull] T value, string name, CommunicationIdentifierKind kind) where T : class?
+        private static T AssertNotNull<T>(T value, string name, CommunicationIdentifierKind kind) where T : class?
             => value ?? throw new JsonException($"Property '{name}' is required for identifier of kind `{kind}`.");
 
-        public static T AssertNotNull<T>(T? value, string name, CommunicationIdentifierKind kind) where T : struct
+        private static T AssertNotNull<T>(T? value, string name, CommunicationIdentifierKind kind) where T : struct
         {
             if (value is null)
                 throw new JsonException($"Property '{name}' is required for identifier of kind `{kind}`.");

@@ -7,7 +7,6 @@ using Azure.Core;
 namespace Azure.Communication
 {
     /// <summary>Represents a Phone Number.</summary>
-    [DebuggerDisplay("{Value}")]
     public class PhoneNumberIdentifier : CommunicationIdentifier
     {
         /// <summary>The phone number in E.164 format.</summary>
@@ -26,5 +25,15 @@ namespace Azure.Communication
             Argument.AssertNotNullOrEmpty(phoneNumber, nameof(phoneNumber));
             Value = phoneNumber;
         }
+
+        /// <inheritdoc />
+        public override string ToString() => Value;
+
+        /// <inheritdoc />
+        public override int GetHashCode() => Value.GetHashCode();
+
+        /// <inheritdoc />
+        public override bool Equals(CommunicationIdentifier other)
+            => other is PhoneNumberIdentifier otherId && otherId.Value == Value;
     }
 }
