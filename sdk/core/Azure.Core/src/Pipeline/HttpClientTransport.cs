@@ -134,7 +134,11 @@ namespace Azure.Core.Pipeline
             ServicePointHelpers.SetLimits(httpClientHandler);
 #endif
 
-            return new HttpClient(httpClientHandler);
+            return new HttpClient(httpClientHandler)
+            {
+                // Timeouts are handled by the pipeline
+                Timeout = Timeout.InfiniteTimeSpan
+            };
         }
 
         private static HttpRequestMessage BuildRequestMessage(HttpMessage message)
