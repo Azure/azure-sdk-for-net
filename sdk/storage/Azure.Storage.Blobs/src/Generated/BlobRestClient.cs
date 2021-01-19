@@ -21961,6 +21961,11 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset LastAccessed { get; internal set; }
 
         /// <summary>
+        /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
+        /// </summary>
+        public string VersionId { get; internal set; }
+
+        /// <summary>
         /// Content
         /// </summary>
         public System.IO.Stream Content { get; internal set; }
