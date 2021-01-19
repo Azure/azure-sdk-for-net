@@ -11,19 +11,31 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Returns the requested OCI Manifest file. </summary>
-    internal partial class OCIManifest : Manifest
+    public partial class OCIManifest : Manifest
     {
         /// <summary> Initializes a new instance of OCIManifest. </summary>
-        internal OCIManifest()
+        public OCIManifest()
         {
             Layers = new ChangeTrackingList<Descriptor>();
         }
 
+        /// <summary> Initializes a new instance of OCIManifest. </summary>
+        /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="config"> V2 image config descriptor. </param>
+        /// <param name="layers"> List of V2 image layer information. </param>
+        /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
+        internal OCIManifest(int? schemaVersion, Descriptor config, IList<Descriptor> layers, Annotations annotations) : base(schemaVersion)
+        {
+            Config = config;
+            Layers = layers;
+            Annotations = annotations;
+        }
+
         /// <summary> V2 image config descriptor. </summary>
-        public Descriptor Config { get; }
+        public Descriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
-        public IReadOnlyList<Descriptor> Layers { get; }
+        public IList<Descriptor> Layers { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public Annotations Annotations { get; }
+        public Annotations Annotations { get; set; }
     }
 }
