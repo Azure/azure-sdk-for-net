@@ -433,7 +433,7 @@ namespace Azure.Core.Tests
             }
 
             public override bool CanRead { get; } = true;
-            public override bool CanSeek { get; } = false;
+            public override bool CanSeek { get; } = true;
             public override long Length { get; }
             public override long Position { get; set; }
             public bool IsDisposed { get; set; }
