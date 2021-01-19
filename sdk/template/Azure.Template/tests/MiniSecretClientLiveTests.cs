@@ -8,9 +8,9 @@ using NUnit.Framework;
 
 namespace Azure.Template.Tests
 {
-    public class MiniSecretClientLiveTest: RecordedTestBase<MiniSecretClientTestEnvironment>
+    public class MiniSecretClientLiveTests: RecordedTestBase<MiniSecretClientTestEnvironment>
     {
-        public MiniSecretClientLiveTest(bool isAsync) : base(isAsync)
+        public MiniSecretClientLiveTests(bool isAsync) : base(isAsync)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;
