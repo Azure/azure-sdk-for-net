@@ -1717,8 +1717,8 @@ namespace Azure.Storage.Blobs
         /// The name of the destination container.
         /// </param>
         /// <param name="sourceConditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on the renaming of this container.
+        /// Optional <see cref="BlobRequestConditions"/> that
+        /// source container has to meet to proceed with rename.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1754,8 +1754,8 @@ namespace Azure.Storage.Blobs
         /// The name of the destination container.
         /// </param>
         /// <param name="sourceConditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on the renaming of this container.
+        /// Optional <see cref="BlobRequestConditions"/> that
+        /// source container has to meet to proceed with rename.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate

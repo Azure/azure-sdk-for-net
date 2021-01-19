@@ -1097,8 +1097,8 @@ namespace Azure.Storage.Files.DataLake
         /// The name of the destination File System.
         /// </param>
         /// <param name="sourceConditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the renaming of this file sytem.
+        /// Optional <see cref="DataLakeRequestConditions"/> that
+        /// source file system has to meet to proceed with rename.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1161,8 +1161,8 @@ namespace Azure.Storage.Files.DataLake
         /// The name of the destination File System.
         /// </param>
         /// <param name="sourceConditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the renaming of this file sytem.
+        /// Optional <see cref="DataLakeRequestConditions"/> that
+        /// source file system has to meet to proceed with rename.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
