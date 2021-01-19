@@ -1714,7 +1714,7 @@ namespace Azure.Storage.Blobs
         /// The name of the source container.
         /// </param>
         /// <param name="destinationContainerName">
-        /// The new name of the Blob Container.
+        /// The name of the destination container.
         /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
@@ -1751,7 +1751,7 @@ namespace Azure.Storage.Blobs
         /// The name of the source container.
         /// </param>
         /// <param name="destinationContainerName">
-        /// The new name of the Blob Container.
+        /// The name of the destination container.
         /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="BlobRequestConditions"/> to add

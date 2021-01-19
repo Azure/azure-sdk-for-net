@@ -1094,7 +1094,7 @@ namespace Azure.Storage.Files.DataLake
         /// The name of the source File System.
         /// </param>
         /// <param name="destinationFileSystemName">
-        /// The new name of the File System.
+        /// The name of the destination File System.
         /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -1158,7 +1158,7 @@ namespace Azure.Storage.Files.DataLake
         /// The name of the source File System.
         /// </param>
         /// <param name="destinationFileSystemName">
-        /// The new name of the File System.
+        /// The name of the destination File System.
         /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add

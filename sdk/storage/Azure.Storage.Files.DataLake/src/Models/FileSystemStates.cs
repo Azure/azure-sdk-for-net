@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.DataLake.Models
     public enum FileSystemStates
     {
         /// <summary>
-        /// Default flag specifying that no flags are set in <see cref="FileSystemTraits"/>.
+        /// Default flag specifying that no flags are set in <see cref="FileSystemStates"/>.
         /// </summary>
         None = 0,
 
