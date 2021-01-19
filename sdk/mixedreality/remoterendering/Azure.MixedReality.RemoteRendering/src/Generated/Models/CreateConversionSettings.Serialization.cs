@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
-    public partial class CreateConversionSettings : IUtf8JsonSerializable
+    internal partial class CreateConversionSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

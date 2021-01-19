@@ -10,7 +10,7 @@ using System;
 namespace Azure.MixedReality.RemoteRendering.Models
 {
     /// <summary> Request to start a conversion. </summary>
-    public partial class CreateConversionSettings
+    internal partial class CreateConversionSettings
     {
         /// <summary> Initializes a new instance of CreateConversionSettings. </summary>
         /// <param name="settings"> Settings for where to retrieve input files from and where to write output files. Supplied when creating the conversion. </param>
