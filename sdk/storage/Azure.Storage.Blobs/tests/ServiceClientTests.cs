@@ -788,8 +788,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             BlobContainerClient newContainer = await service.RenameBlobContainerAsync(
-                destinationContainerName: newContainerName,
-                sourceContainerName: oldContainerName);
+                sourceContainerName: oldContainerName,
+                destinationContainerName: newContainerName);
 
             // Assert
             await newContainer.GetPropertiesAsync();
@@ -833,8 +833,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             BlobContainerClient newContainer = await service.RenameBlobContainerAsync(
-                destinationContainerName: newContainerName,
                 sourceContainerName: oldContainerName,
+                destinationContainerName: newContainerName,
                 sourceConditions: sourceConditions);
 
             // Assert
@@ -864,8 +864,8 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.RenameBlobContainerAsync(
-                    destinationContainerName: newContainerName,
                     sourceContainerName: oldContainerName,
+                    destinationContainerName: newContainerName,
                     sourceConditions: sourceConditions),
                 e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithContainerOperation.ToString(), e.ErrorCode));
 

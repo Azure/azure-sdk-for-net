@@ -1090,11 +1090,11 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Renames an existing Blob File System.
         /// </summary>
-        /// <param name="destinationFileSystemName">
-        /// The new name of the File System.
-        /// </param>
         /// <param name="sourceFileSystemName">
         /// The name of the source File System.
+        /// </param>
+        /// <param name="destinationFileSystemName">
+        /// The new name of the File System.
         /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -1112,8 +1112,8 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual Response<DataLakeFileSystemClient> RenameFileSystem(
-            string destinationFileSystemName,
             string sourceFileSystemName,
+            string destinationFileSystemName,
             DataLakeRequestConditions sourceConditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -1124,8 +1124,8 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<BlobContainerClient> response = _blobServiceClient.RenameBlobContainer(
-                    destinationFileSystemName,
                     sourceFileSystemName,
+                    destinationFileSystemName,
                     sourceConditions.ToBlobRequestConditions(),
                     cancellationToken);
 
@@ -1154,11 +1154,11 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Renames an existing Blob File System.
         /// </summary>
-        /// <param name="destinationFileSystemName">
-        /// The new name of the File System.
-        /// </param>
         /// <param name="sourceFileSystemName">
         /// The name of the source File System.
+        /// </param>
+        /// <param name="destinationFileSystemName">
+        /// The new name of the File System.
         /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -1176,8 +1176,8 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileSystemClient>> RenameFileSystemAsync(
-            string destinationFileSystemName,
             string sourceFileSystemName,
+            string destinationFileSystemName,
             DataLakeRequestConditions sourceConditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -1188,8 +1188,8 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<BlobContainerClient> response = await _blobServiceClient.RenameBlobContainerAsync(
-                    destinationFileSystemName,
                     sourceFileSystemName,
+                    destinationFileSystemName,
                     sourceConditions.ToBlobRequestConditions(),
                     cancellationToken)
                     .ConfigureAwait(false);
