@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.MixedReality.RemoteRendering.Models
 {
     /// <summary> The ConversionList. </summary>
-    public partial class ConversionList
+    internal partial class ConversionList
     {
         /// <summary> Initializes a new instance of ConversionList. </summary>
         /// <param name="conversions"> The list of conversions. </param>

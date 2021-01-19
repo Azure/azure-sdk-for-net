@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.MixedReality.RemoteRendering.Models
 {
     /// <summary> The result of a list sessions request. </summary>
-    public partial class SessionsList
+    internal partial class SessionsList
     {
         /// <summary> Initializes a new instance of SessionsList. </summary>
         internal SessionsList()

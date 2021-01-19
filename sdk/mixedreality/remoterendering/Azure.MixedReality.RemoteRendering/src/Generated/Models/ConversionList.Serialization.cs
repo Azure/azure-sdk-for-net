@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
-    public partial class ConversionList
+    internal partial class ConversionList
     {
         internal static ConversionList DeserializeConversionList(JsonElement element)
         {
