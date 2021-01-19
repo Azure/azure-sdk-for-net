@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
             var uploadTasks = new Task[Options.Count];
             for (var i = 0; i < uploadTasks.Length; i++)
             {
-                var blobName = $"getblobstest-{Guid.NewGuid()}";
+                var blobName = $"Azure.Storage.Blobs.Perf.Scenarios.DownloadBlob-{Guid.NewGuid()}";
                 uploadTasks[i] = BlobContainerClient.UploadBlobAsync(blobName, Stream.Null);
             }
             await Task.WhenAll(uploadTasks);
