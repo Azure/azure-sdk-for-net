@@ -8,7 +8,7 @@ Azure Remote Rendering (ARR) is a service that enables you to render high-qualit
   - [Getting started](#getting-started)
     - [Install the package](#install-the-package)
     - [Prerequisites](#prerequisites)
-    - [Creating the client](#creating-the-client)
+    - [Authenticate the client](#authenticate-the-client)
       - [Authenticating with account key authentication](#authenticating-with-account-key-authentication)
       - [Authenticating with an AAD client secret](#authenticating-with-an-aad-client-secret)
       - [Authenticating a user using device code authentication](#authenticating-a-user-using-device-code-authentication)
@@ -59,7 +59,7 @@ Include a section after the install command that details any requirements that m
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
 
-### Creating the client
+### Authenticate the client
 
 Constructing a remote rendering client requires an authenticated account, and a service endpoint.
 

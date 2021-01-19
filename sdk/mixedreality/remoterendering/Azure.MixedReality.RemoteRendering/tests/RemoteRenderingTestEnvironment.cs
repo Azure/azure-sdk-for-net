@@ -24,7 +24,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_ACCOUNT_ID environment variable.
         /// </remarks>
-        public string AccountId => GetRecordedVariable("ACCOUNT_ID");
+        public string AccountId => GetRecordedVariable("ACCOUNT_ID", options => options.IsSecret());
 
         /// <summary>
         /// Gets the account key.
@@ -32,13 +32,13 @@ namespace Azure.MixedReality.RemoteRendering.Tests
         /// <remarks>
         /// Set the MIXEDREALITY_ACCOUNT_KEY environment variable.
         /// </remarks>
-        public string AccountKey => GetRecordedVariable("ACCOUNT_KEY");
+        public string AccountKey => GetRecordedVariable("ACCOUNT_KEY", options => options.IsSecret());
 
         /// <summary>
         /// Gets the service endpoint.
         /// </summary>
         /// <remarks>
-        /// Set the MIXEDREALITY_ACCOUNT_KEY environment variable.
+        /// Set the MIXED_REALITY_SERVICE_ENDPOINT environment variable.
         /// </remarks>
         public string ServiceEndpoint => GetRecordedVariable("SERVICE_ENDPOINT");
     }

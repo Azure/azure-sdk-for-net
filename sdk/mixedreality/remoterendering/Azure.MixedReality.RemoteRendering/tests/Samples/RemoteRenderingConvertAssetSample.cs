@@ -41,7 +41,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             #endregion Snippet:StartAnAssetConversion
             #region Snippet:QueryConversionStatus
 
-            // Poll every 10 seconds completion every ten seconds.
+            // Poll for completion every 10 seconds.
             while (true)
             {
                 Thread.Sleep(10000);
