@@ -67,7 +67,14 @@ namespace Azure.Core.Pipeline
             {
                 if (initialStream.CanSeek)
                 {
-                    _length = EnsureStream(initialStream).Length;
+                    try
+                    {
+                        _length = EnsureStream(initialStream).Length;
+                    }
+                    catch
+                    {
+                        // ignore
+                    }
                 }
 
                 _currentStream = EnsureStream(initialStream);
@@ -146,7 +153,7 @@ namespace Azure.Core.Pipeline
             }
 
             public override bool CanRead => _currentStream.CanRead;
-            public override bool CanSeek { get; } = false;
+            public override bool CanSeek { get; }
             public override long Length => _length ?? throw new NotSupportedException();
 
             public override long Position
