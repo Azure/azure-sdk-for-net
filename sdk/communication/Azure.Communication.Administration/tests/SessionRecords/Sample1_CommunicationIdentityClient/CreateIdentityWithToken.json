@@ -33,7 +33,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_ENDPOINT_STRING": "https://prototype-communication.communication.azure.com",
+    "COMMUNICATION_ENDPOINT": "https://prototype-communication.communication.azure.com",
     "RandomSeed": "1690082112"
   }
 }

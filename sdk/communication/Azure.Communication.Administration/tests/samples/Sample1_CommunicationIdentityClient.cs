@@ -33,7 +33,7 @@ namespace Azure.Communication.Administration.Samples
             var client = new CommunicationIdentityClient(connectionString);
             #endregion Snippet:CreateCommunicationIdentityClientAsync
 
-            client = CreateInstrumentedCommunicationIdentityClient();
+            client = CreateClientWithConnectionString();
 
             #region  Snippet:CreateCommunicationUserAsync
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
@@ -71,7 +71,7 @@ namespace Azure.Communication.Administration.Samples
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationIdentityClient(connectionString);
             #endregion Snippet:CreateCommunicationIdentityClient
-            client = CreateInstrumentedCommunicationIdentityClient();
+            client = CreateClientWithConnectionString();
 
             #region  Snippet:CreateCommunicationUser
             Response<CommunicationUserIdentifier> userResponse = client.CreateUser();
@@ -102,15 +102,14 @@ namespace Azure.Communication.Administration.Samples
         [Test]
         public async Task CreateIdentityWithToken()
         {
-            var endpoint = TestEnvironment.EndpointString;
             #region Snippet:CreateCommunicationIdentityFromToken
-            //@@var endpoint = "<endpoint_url>";
+            var endpoint = new Uri("my-resource.communication.azure.com");
+            /*@@*/ endpoint = TestEnvironment.Endpoint;
             TokenCredential tokenCredential = new DefaultAzureCredential();
-            var client = new CommunicationIdentityClient(new Uri(endpoint), tokenCredential);
+            var client = new CommunicationIdentityClient(endpoint, tokenCredential);
             #endregion Snippet:CreateCommunicationIdentityFromToken
 
-            tokenCredential = (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential();
-            client = CreateInstrumentedCommunicationIdentityClientWithToken(tokenCredential);
+            client = CreateClientWithTokenCredential();
             try
             {
                 Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
@@ -129,7 +128,7 @@ namespace Azure.Communication.Administration.Samples
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationIdentityClient(connectionString);
-            /*@@*/ client = CreateInstrumentedCommunicationIdentityClient();
+            /*@@*/ client = CreateClientWithConnectionString();
 
             try
             {

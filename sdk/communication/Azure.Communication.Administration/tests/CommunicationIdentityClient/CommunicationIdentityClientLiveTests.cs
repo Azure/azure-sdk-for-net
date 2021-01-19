@@ -31,11 +31,22 @@ namespace Azure.Communication.Administration.Tests
         }
 
         [Test]
-        [TestCase("chat", TestName = "IssuingTokenWithSingleScope")]
-        [TestCase("chat", "pstn", TestName = "IssuingTokenWithMultipleScopes")]
-        public async Task IssuingTokenGeneratesTokenAndIdentityWithScopes(params string[] scopes)
+        [TestCase(AuthMethod.ConnectionString, "chat", TestName = "IssuingTokenWithSingleScopeWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, "chat", TestName = "IssuingTokenWithSingleScopeWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, "chat", TestName = "IssuingTokenWithSingleScopeWithTokenCredential")]
+        [TestCase(AuthMethod.ConnectionString, "chat", "pstn", TestName = "IssuingTokenWithMultipleScopesWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, "chat", "pstn", TestName = "IssuingTokenWithMultipleScopesWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, "chat", "pstn", TestName = "IssuingTokenWithMultipleScopesWithTokenCredential")]
+        public async Task IssuingTokenGeneratesTokenAndIdentityWithScopes(AuthMethod authMethod, params string[] scopes)
         {
-            CommunicationIdentityClient client = CreateInstrumentedCommunicationIdentityClient();
+            CommunicationIdentityClient client = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
             Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
             Assert.IsNotNull(tokenResponse.Value);
@@ -53,27 +64,11 @@ namespace Azure.Communication.Administration.Tests
             }
         }
 
-        [Test]
-        [TestCase("chat", TestName = "IdentityClientFromTokenWithSingleScope")]
-        [TestCase("chat", "pstn", TestName = "IdentityClientFromTokenWithMultipleScopes")]
-        public async Task GeneratesIdentityUsingTokenCredentialWithScopes(params string[] scopes)
+        public enum AuthMethod
         {
-            TokenCredential tokenCredential;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                tokenCredential = new MockCredential();
-            }
-            else
-            {
-                tokenCredential = new DefaultAzureCredential();
-            }
-            CommunicationIdentityClient client = CreateInstrumentedCommunicationIdentityClientWithToken(tokenCredential);
-            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
-            Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
-
-            Assert.IsNotNull(tokenResponse.Value);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
-            Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.User.Id));
+            ConnectionString,
+            KeyCredential,
+            TokenCredential,
         }
     }
 }

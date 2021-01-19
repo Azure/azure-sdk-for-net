@@ -46,9 +46,9 @@ var client = new CommunicationIdentityClient(connectionString);
 Clients also have the option to authenticate using a valid token.
 
 ```C# Snippet:CreateCommunicationIdentityFromToken
-var endpoint = "<endpoint_url>";
+var endpoint = new Uri("my-resource.communication.azure.com");
 TokenCredential tokenCredential = new DefaultAzureCredential();
-var client = new CommunicationIdentityClient(new Uri(endpoint), tokenCredential);
+var client = new CommunicationIdentityClient(endpoint, tokenCredential);
 ```
 
 ### Key concepts
