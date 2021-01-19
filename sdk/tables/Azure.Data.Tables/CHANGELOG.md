@@ -2,6 +2,10 @@
 
 ## 3.0.0-beta.6 (Unreleased)
 
+### Fixed
+
+- Fixed an issue that prevented start/end row key and partition key values from being used in Sas tokens
+
 ### Added
 
 - Added TableUriBuilder
