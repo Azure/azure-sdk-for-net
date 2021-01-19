@@ -621,7 +621,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ListCheckpointsUsesSequenceNumberAsTheStartingPositionWhenOffsetIsNullInLegacyCheckpoint()
+        public async Task ListCheckpointSkipsCheckpointsWhenOffsetIsNullInLegacyCheckpoint()
         {
             var blobList = new List<BlobItem>
             {
@@ -648,8 +648,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var checkpoints = await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
 
             Assert.That(checkpoints, Is.Not.Null, "A set of checkpoints should have been returned.");
-            Assert.That(checkpoints.Single().StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(0, false)));
-            Assert.That(checkpoints.Single().PartitionId, Is.EqualTo("0"));
+            Assert.That(checkpoints, Is.Empty, "No valid checkpoints should exist.");
         }
 
         /// <summary>
