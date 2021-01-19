@@ -150,7 +150,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
                 async Task AddAndSendMessages()
                 {
-                    while (batch.TryAddMessage(
+                    int ct = 0;
+                    // service limits to 5000 messages but we have not added this to our client validation yet
+                    while (++ct < 5000 && batch.TryAddMessage(
                         new ServiceBusMessage(new byte[50])
                         {
                             MessageId = "new message ID that takes up some space",
