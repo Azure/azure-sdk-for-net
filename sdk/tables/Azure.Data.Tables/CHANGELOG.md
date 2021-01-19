@@ -2,7 +2,7 @@
 
 ## 3.0.0-beta.6 (Unreleased)
 
-### Fixed
+### Key Bug Fixes
 
 - Fixed an issue that prevented start/end row key and partition key values from being used in Sas tokens
 
@@ -13,13 +13,13 @@
 
 ## 3.0.0-beta.5 (2021-01-12)
 
-### Fixed
+### Key Bug Fixes
 
 - Fixed an issue which transposed the values used for EndPartitionKey and StartRowKey in the generated Sas token Uri
 
 ## 3.0.0-beta.4 (2020-12-10)
 
-### Fixed
+### Key Bug Fixes
 
 - Fixed an issue with custom entity model serialization of the ETag property
 - Properly create secondary endpoint Uri for Azurite endpoints
