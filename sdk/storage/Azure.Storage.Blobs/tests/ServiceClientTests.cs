@@ -763,8 +763,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             BlobContainerClient newContainer = await service.RenameBlobContainerAsync(
-                destinationContainerName: newContainerName,
-                sourceContainerName: oldContainerName);
+                sourceContainerName: oldContainerName,
+                destinationContainerName: newContainerName);
 
             // Assert
             await newContainer.GetPropertiesAsync();

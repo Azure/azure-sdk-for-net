@@ -1739,8 +1739,8 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions sourceConditions = default,
             CancellationToken cancellationToken = default)
             => RenameBlobContainerInternal(
-                destinationContainerName,
                 sourceContainerName,
+                destinationContainerName,
                 sourceConditions,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -1778,8 +1778,8 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions sourceConditions = default,
             CancellationToken cancellationToken = default)
             => await RenameBlobContainerInternal(
-                destinationContainerName,
                 sourceContainerName,
+                destinationContainerName,
                 sourceConditions,
                 async: true,
                 cancellationToken)

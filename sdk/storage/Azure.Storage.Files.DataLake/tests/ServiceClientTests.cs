@@ -370,8 +370,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             DataLakeFileSystemClient newFileSystem = await service.RenameFileSystemAsync(
-                destinationFileSystemName: newFileSystemName,
-                sourceFileSystemName: oldFileSystemName);
+                sourceFileSystemName: oldFileSystemName,
+                destinationFileSystemName: newFileSystemName);
 
             // Assert
             await newFileSystem.GetPropertiesAsync();
@@ -484,8 +484,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             DataLakeFileSystemClient newFileSystem = await service.RenameFileSystemAsync(
-                destinationFileSystemName: newFileSystemName,
                 sourceFileSystemName: oldFileSystemName,
+                destinationFileSystemName: newFileSystemName,
                 sourceConditions: sourceConditions);
 
             // Assert
@@ -515,8 +515,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.RenameFileSystemAsync(
-                    destinationFileSystemName: newFileSystemName,
                     sourceFileSystemName: oldFileSystemName,
+                    destinationFileSystemName: newFileSystemName,
                     sourceConditions: sourceConditions),
                 e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
 
