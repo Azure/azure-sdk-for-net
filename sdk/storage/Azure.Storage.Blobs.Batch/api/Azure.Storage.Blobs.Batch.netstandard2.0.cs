@@ -1,10 +1,3 @@
-namespace Azure.Storage.Blobs.Models
-{
-    public enum BlobDeleteType
-    {
-        Permanent = 0,
-    }
-}
 namespace Azure.Storage.Blobs.Specialized
 {
     public partial class BlobBatch : System.IDisposable
