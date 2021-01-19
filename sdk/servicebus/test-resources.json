@@ -47,13 +47,6 @@
       "metadata": {
         "description": "The location of the resources. By default, this is the same as the resource group."
       }
-    },
-    "guidBaseValue": {
-      "type": "string",
-      "defaultValue": "[newGuid()]",
-      "metadata": {
-        "description": "The base value to use as part of GUID generation for resources requiring them, such as RBAC rules."
-      }
     }
   },
   "variables": {
@@ -78,7 +71,10 @@
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
-      "name": "[guid(parameters('guidBaseValue'), parameters('baseName'), parameters('testApplicationOid'), variables('serviceBusDataOwnerRoleId'))]",
+      "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('serviceBusDataOwnerRoleId'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]"
+      ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('serviceBusDataOwnerRoleId'))]",
         "principalId": "[parameters('testApplicationOid')]",
@@ -88,7 +84,10 @@
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
-      "name": "[guid(parameters('guidBaseValue'), parameters('baseName'), parameters('testApplicationOid'), variables('contributorRoleId'))]",
+      "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('contributorRoleId'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]"
+      ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
         "principalId": "[parameters('testApplicationOid')]",
