@@ -196,6 +196,14 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        public void FileUriBuilder_AccountNameError()
+        {
+            var fileUriBuilder = new ShareUriBuilder(new Uri("http://notaurl"));
+
+            Assert.IsEmpty(fileUriBuilder.AccountName);
+        }
+
+        [Test]
         public void FileUriBuilder_MalformedSubdomain()
         {
             // account and file swapped

@@ -284,6 +284,31 @@ namespace Azure.Storage.Queues.Test
         public void QueueUriBuilder_IPStyleUrl_PortTest()
         {
             // Arrange
+            var uriString = "https://127.0.0.1:8080/account";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
+            Uri newUri = queueUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", queueUriBuilder.Scheme);
+            Assert.AreEqual("127.0.0.1", queueUriBuilder.Host);
+            Assert.AreEqual(8080, queueUriBuilder.Port);
+            Assert.AreEqual("account", queueUriBuilder.AccountName);
+            Assert.AreEqual("", queueUriBuilder.QueueName);
+            Assert.IsFalse(queueUriBuilder.Messages);
+            Assert.AreEqual("", queueUriBuilder.MessageId);
+            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.AreEqual("", queueUriBuilder.Query);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void QueueUriBuilder_IPStyleUrl_PortTestQueue()
+        {
+            // Arrange
             var uriString = "https://127.0.0.1:8080/account/queue";
             var originalUri = new UriBuilder(uriString);
 
@@ -380,6 +405,14 @@ namespace Azure.Storage.Queues.Test
             var queueUriBuilder = new QueueUriBuilder(new Uri("https://account.z.queue.core.windows.net/share/dir"));
 
             Assert.AreEqual("account", queueUriBuilder.AccountName);
+        }
+
+        [Test]
+        public void QueueUriBuilder_AccountNameError()
+        {
+            var queueUriBuilder = new QueueUriBuilder(new Uri("http://notaurl"));
+
+            Assert.IsEmpty(queueUriBuilder.AccountName);
         }
 
         [Test]

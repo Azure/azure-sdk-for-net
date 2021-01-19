@@ -104,6 +104,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void DataLakeUriBuilder_AccountNameError()
+        {
+            var datalakeUriBuilder = new DataLakeUriBuilder(new Uri("http://notaurl"));
+
+            Assert.IsEmpty(datalakeUriBuilder.AccountName);
+        }
+
+        [Test]
         public void DataLakeUriBuilder_MalformedSubdomain()
         {
             // account and file swapped

@@ -90,10 +90,7 @@ namespace Azure.Storage
             if (accountEndIndex >= 0)
             {
                 var serviceStartIndex = host.IndexOf(serviceSubDomain, accountEndIndex, StringComparison.InvariantCulture);
-                if (serviceStartIndex > accountEndIndex)
-                {
-                    return host.Substring(0, accountEndIndex);
-                }
+                return serviceStartIndex > -1 ? host.Substring(0, accountEndIndex) : null;
             }
             return null;
         }

@@ -220,11 +220,19 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public void DataLakeUriBuilder_AccountNamePeriod()
+        public void BlobUriBuilder_AccountNamePeriod()
         {
             var blobUriBuilder = new BlobUriBuilder(new Uri("https://account.z.blob.core.windows.net/share/dir"));
 
             Assert.AreEqual("account", blobUriBuilder.AccountName);
+        }
+
+        [Test]
+        public void BlobUriBuilder_AccountNameError()
+        {
+            var blobUriBuilder = new BlobUriBuilder(new Uri("http://notaurl"));
+
+            Assert.IsEmpty(blobUriBuilder.AccountName);
         }
 
         [Test]
@@ -323,6 +331,31 @@ namespace Azure.Storage.Blobs.Test
         public void BlobUriBuilder_IPStyleUrl_PortTest()
         {
             // Arrange
+            var uriString = "https://127.0.0.1:8080/account";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.AreEqual("", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(8080, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void BlobUriBuilder_IPStyleUrl_PortTestContainer()
+        {
+            // Arrange
             var uriString = "https://127.0.0.1:8080/account/container";
             var originalUri = new UriBuilder(uriString);
 
@@ -345,7 +378,84 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void BlobUriBuilder_IPStyleUrl_PortTestBlob()
+        {
+            // Arrange
+            var uriString = "https://127.0.0.1:8080/account/container/blob";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("blob", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(8080, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        [TestCase("http://localhost:10000/devstoreaccount1/container/%E6%96%91%E9%BB%9E")]
+        [TestCase("http://localhost:10000/devstoreaccount1/container/斑點")]
+        public void BlobUriBuilder_IPStyleUrl_PortTest_NonAsciiUri(string uriString)
+        {
+            // Arrange
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", blobUriBuilder.Scheme);
+            Assert.AreEqual("localhost", blobUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("斑點", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(10000, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
         public void BlobUriBuilder_LocalDockerUrl_PortTest()
+        {
+            // Arrange
+            // BlobEndpoint from https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
+            var uriString = "http://docker_container:10000/devstoreaccount1";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", blobUriBuilder.Scheme);
+            Assert.AreEqual("docker_container", blobUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
+            Assert.AreEqual("", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(10000, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void BlobUriBuilder_LocalDockerUrl_PortTestContainer()
         {
             // Arrange
             // BlobEndpoint from https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
@@ -362,6 +472,107 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
             Assert.AreEqual("containername", blobUriBuilder.BlobContainerName);
             Assert.AreEqual("", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(10000, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void BlobUriBuilder_LocalDockerUrl_PortTestBlob()
+        {
+            // Arrange
+            // BlobEndpoint from https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
+            var uriString = "http://docker_container:10000/devstoreaccount1/containername/blobname";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", blobUriBuilder.Scheme);
+            Assert.AreEqual("docker_container", blobUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
+            Assert.AreEqual("containername", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("blobname", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(10000, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void BlobUriBuilder_LocalDockerUrl_Azurite()
+        {
+            // Arrange
+            var uriString = "http://azure-storage-emulator-azurite:10000/devstoreaccount1";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", blobUriBuilder.Scheme);
+            Assert.AreEqual("azure-storage-emulator-azurite", blobUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
+            Assert.AreEqual("", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(10000, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void BlobUriBuilder_LocalDockerUrl_AzuriteContainer()
+        {
+            // Arrange
+            var uriString = "http://azure-storage-emulator-azurite:10000/devstoreaccount1/container";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", blobUriBuilder.Scheme);
+            Assert.AreEqual("azure-storage-emulator-azurite", blobUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(10000, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void BlobUriBuilder_LocalDockerUrl_AzuriteBlob()
+        {
+            // Arrange
+            var uriString = "http://azure-storage-emulator-azurite:10000/devstoreaccount1/container/blob";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", blobUriBuilder.Scheme);
+            Assert.AreEqual("azure-storage-emulator-azurite", blobUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("blob", blobUriBuilder.BlobName);
             Assert.AreEqual("", blobUriBuilder.Snapshot);
             Assert.IsNull(blobUriBuilder.Sas);
             Assert.AreEqual("", blobUriBuilder.Query);
