@@ -605,6 +605,7 @@ namespace Azure.Messaging.EventHubs.Processor
             offset = null;
             sequenceNumber = null;
 
+            var hadOffset = false;
             var jsonReader = new Utf8JsonReader(data);
 
             try
@@ -623,8 +624,10 @@ namespace Azure.Messaging.EventHubs.Processor
                                 return false;
                             }
 
+                            hadOffset = true;
+
                             var offsetString = jsonReader.GetString();
-                            if (offsetString != null)
+                            if (!string.IsNullOrEmpty(offsetString))
                             {
                                 if (long.TryParse(offsetString, out long offsetValue))
                                 {
@@ -657,7 +660,8 @@ namespace Azure.Messaging.EventHubs.Processor
                 // Ignore this because if the data is malformed, it will be treated as if the checkpoint didn't exist.
                 return false;
             }
-            return true;
+
+            return hadOffset && sequenceNumber != null;
         }
 
         /// <summary>

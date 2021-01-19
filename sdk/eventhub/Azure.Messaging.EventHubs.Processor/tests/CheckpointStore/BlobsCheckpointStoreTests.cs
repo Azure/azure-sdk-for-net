@@ -585,8 +585,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///   Verifies basic functionality of ListCheckpointsAsync and ensures the starting position is set correctly.
         /// </summary>
         ///
-        [Test]
-        public async Task ListCheckpointsUsesSequenceNumberAsTheStartingPositionWhenNoOffsetIsPresentInLegacyCheckpoint()
+        [TestCase("null", "0")]
+        [TestCase("null", "78")]
+        [TestCase("\"\"", "0")]
+        [TestCase("\"\"", "78")]
+        public async Task ListCheckpointSkipsCheckpointsWhenOffsetIsNullOrEmptyInLegacyCheckpoint(string offset, string sequenceNumber)
         {
             var blobList = new List<BlobItem>
             {
@@ -600,43 +603,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0", client =>
             {
                 client.Content = Encoding.UTF8.GetBytes("{" +
-                                                        "\"PartitionId\":\"0\"," +
-                                                        "\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\"," +
-                                                        "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
-                                                        "\"Epoch\":386," +
-                                                        "\"SequenceNumber\":960180" +
-                                                        "}");
-            });
-
-            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
-            var checkpoints = await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
-
-            Assert.That(checkpoints, Is.Not.Null, "A set of checkpoints should have been returned.");
-            Assert.That(checkpoints.Single().StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960180, false)));
-            Assert.That(checkpoints.Single().PartitionId, Is.EqualTo("0"));
-        }
-
-        /// <summary>
-        ///   Verifies basic functionality of ListCheckpointsAsync and ensures the starting position is set correctly.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ListCheckpointSkipsCheckpointsWhenOffsetIsNullInLegacyCheckpoint()
-        {
-            var blobList = new List<BlobItem>
-            {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0",
-                                           false,
-                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
-                                           "snapshot")
-            };
-
-            var containerClient = new MockBlobContainerClient() { Blobs = blobList };
-            containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0", client =>
-            {
-                client.Content = Encoding.UTF8.GetBytes("{" +
-                                                        "\"Offset\":null," +
-                                                        "\"SequenceNumber\":0," +
+                                                        "\"Offset\":" + offset + "," +
+                                                        "\"SequenceNumber\":" + sequenceNumber + "," +
                                                         "\"PartitionId\":\"8\"," +
                                                         "\"Owner\":\"cc397fe0-6771-4eaa-a8df-1997efeb3c87\"," +
                                                         "\"Token\":\"ab00a395-4c39-4939-89d5-10c04b4553af\"," +
