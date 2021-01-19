@@ -100,7 +100,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Assert.AreEqual("foo.csv", d["name"]);
         }
 
-
         [Test]
         public void TestMethodExtension()
         {

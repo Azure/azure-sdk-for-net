@@ -12,6 +12,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -115,6 +116,39 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException(
                 () => new AppendBlobClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.All).ToString();
+            var client = test.Container.GetAppendBlobClient(GetNewBlobName());
+            await client.CreateAsync();
+            Uri blobUri = client.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new AppendBlobClient(blobUri, new AzureSasCredential(sas), GetOptions()));
+            BlobProperties blobProperties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(blobProperties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.All).ToString();
+            Uri blobUri = test.Container.GetAppendBlobClient("foo").Uri;
+            blobUri = new Uri(blobUri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new AppendBlobClient(blobUri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
         [Test]
@@ -299,7 +333,6 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreateAsync_Headers()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-
         }
 
         [Test]
@@ -1684,7 +1717,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 await blob.CreateAsync();
             }
-
 
             byte[] expectedData = GetRandomBuffer(Constants.KB);
             using Stream stream = new MemoryStream(expectedData);

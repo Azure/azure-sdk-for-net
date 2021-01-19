@@ -23,12 +23,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public int RequestCount => _messages.Count;
 
+        /// <summary>
+        /// If this BlobBatch is container scoped.
+        /// </summary>
         private readonly bool _isContainerScoped;
 
         /// <summary>
         /// If this BlobBatch is container scoped.
         /// </summary>
-        public bool IsContainerScoped => _isContainerScoped;
+        internal bool IsContainerScoped => _isContainerScoped;
 
         /// <summary>
         /// The <see cref="BlobBatchClient"/> associated with this batch.  It

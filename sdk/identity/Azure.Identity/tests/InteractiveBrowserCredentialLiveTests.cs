@@ -69,7 +69,6 @@ namespace Azure.Identity.Tests
             Assert.NotNull(token.Token);
         }
 
-
         [Test]
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithSharedTokenCacheAsync()
@@ -86,7 +85,6 @@ namespace Azure.Identity.Tests
 
             Assert.NotNull(token.Token);
         }
-
 
         [Test]
         [Ignore("This test is an integration test which can only be run with user interaction")]

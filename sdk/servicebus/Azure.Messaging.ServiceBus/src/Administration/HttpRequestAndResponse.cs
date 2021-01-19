@@ -41,7 +41,6 @@ namespace Azure.Messaging.ServiceBus.Administration
             _port = GetPort(_fullyQualifiedNamespace);
         }
 
-
         internal async Task ThrowIfRequestFailedAsync(Request request, Response response)
         {
             if ((response.Status >= 200) && (response.Status < 400))

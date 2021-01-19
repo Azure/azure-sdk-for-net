@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +19,6 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class CloudEventTests
     {
-
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
 
@@ -67,9 +67,9 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
 
             activity.Stop();
-            List<CloudEventInternal> cloudEvents = DeserializeRequest(mockTransport.SingleRequest);
+            List<CloudEvent> cloudEvents = DeserializeRequest(mockTransport.SingleRequest);
             IEnumerator<CloudEvent> cloudEnum = eventsList.GetEnumerator();
-            foreach (CloudEventInternal cloudInternal in cloudEvents)
+            foreach (CloudEvent cloudEvent in cloudEvents)
             {
                 cloudEnum.MoveNext();
                 Dictionary<string, object> cloudEventAttr = cloudEnum.Current.ExtensionAttributes;
@@ -78,51 +78,133 @@ namespace Azure.Messaging.EventGrid.Tests
                 {
                     Assert.AreEqual(
                         cloudEventAttr[TraceParentHeaderName],
-                        cloudInternal[TraceParentHeaderName]);
+                        cloudEvent.ExtensionAttributes[TraceParentHeaderName]);
 
                     Assert.AreEqual(
                         cloudEventAttr[TraceStateHeaderName],
-                        cloudInternal[TraceStateHeaderName]);
+                        cloudEvent.ExtensionAttributes[TraceStateHeaderName]);
                 }
                 else if (cloudEventAttr.ContainsKey(TraceParentHeaderName))
                 {
                     Assert.AreEqual(
                         cloudEventAttr[TraceParentHeaderName],
-                        cloudInternal[TraceParentHeaderName]);
+                        cloudEvent.ExtensionAttributes[TraceParentHeaderName]);
                 }
                 else if (cloudEventAttr.ContainsKey(TraceStateHeaderName))
                 {
                     Assert.AreEqual(
                        cloudEventAttr[TraceStateHeaderName],
-                       cloudInternal[TraceStateHeaderName]);
+                       cloudEvent.ExtensionAttributes[TraceStateHeaderName]);
                 }
                 else
                 {
                     Assert.AreEqual(
                        activity.Id,
-                       cloudInternal[TraceParentHeaderName]);
+                       cloudEvent.ExtensionAttributes[TraceParentHeaderName]);
                 }
             }
         }
 
-        private static List<CloudEventInternal> DeserializeRequest(Request request)
+        [Test]
+        public async Task SerializesExpectedProperties_BaseType()
+        {
+            var mockTransport = new MockTransport(new MockResponse(200));
+            var options = new EventGridPublisherClientOptions
+            {
+                Transport = mockTransport
+            };
+            EventGridPublisherClient client =
+               new EventGridPublisherClient(
+                   new Uri("http://localHost"),
+                   new AzureKeyCredential("fakeKey"),
+                   options);
+            var cloudEvent = new CloudEvent(
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent",
+                    new DerivedTestPayload
+                    {
+                        Name = "name",
+                        Age = 10,
+                        DerivedProperty = 5
+                    },
+                    "TestPayload",
+                    typeof(TestPayload));
+
+            // since the data has not yet been serialized (CloudEvent not constructed from Parse method), GetData returns the passed in instance.
+            Assert.AreEqual(5, cloudEvent.GetData<DerivedTestPayload>().DerivedProperty);
+
+            // GetData returns as BinaryData so it will always serialize first even if cloudEvent was not constructed by calling Parse.
+            Assert.IsNull(cloudEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+
+            List<CloudEvent> eventsList = new List<CloudEvent>()
+            {
+                cloudEvent
+            };
+
+            await client.SendEventsAsync(eventsList);
+
+            cloudEvent = DeserializeRequest(mockTransport.SingleRequest).First();
+            Assert.IsNull(cloudEvent.GetData<DerivedTestPayload>().DerivedProperty);
+            Assert.IsNull(cloudEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+        }
+
+        [Test]
+        public async Task SerializesExpectedProperties_DerivedType()
+        {
+            var mockTransport = new MockTransport(new MockResponse(200));
+            var options = new EventGridPublisherClientOptions
+            {
+                Transport = mockTransport
+            };
+            EventGridPublisherClient client =
+               new EventGridPublisherClient(
+                   new Uri("http://localHost"),
+                   new AzureKeyCredential("fakeKey"),
+                   options);
+            var cloudEvent = new CloudEvent(
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent",
+                    new DerivedTestPayload
+                    {
+                        Name = "name",
+                        Age = 10,
+                        DerivedProperty = 5
+                    },
+                    "TestPayload");
+
+            Assert.AreEqual(5, cloudEvent.GetData<DerivedTestPayload>().DerivedProperty);
+            Assert.AreEqual(5, cloudEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+
+            List<CloudEvent> eventsList = new List<CloudEvent>()
+            {
+                cloudEvent
+            };
+
+            await client.SendEventsAsync(eventsList);
+
+            cloudEvent = DeserializeRequest(mockTransport.SingleRequest).First();
+            Assert.AreEqual(5, cloudEvent.GetData<DerivedTestPayload>().DerivedProperty);
+            Assert.AreEqual(5, cloudEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+        }
+
+        private static List<CloudEvent> DeserializeRequest(Request request)
         {
             var content = request.Content as Utf8JsonRequestContent;
             var stream = new MemoryStream();
             content.WriteTo(stream, CancellationToken.None);
             stream.Position = 0;
             JsonDocument requestDocument = JsonDocument.Parse(stream);
-            var cloudEvents = new List<CloudEventInternal>();
+            var cloudEvents = new List<CloudEvent>();
             // Parse JsonElement into separate events, deserialize event envelope properties
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
             {
-                cloudEvents.Add(CloudEventInternal.DeserializeCloudEventInternal(requestDocument.RootElement));
+                cloudEvents.Add(new CloudEvent(CloudEventInternal.DeserializeCloudEventInternal(requestDocument.RootElement)));
             }
             else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
             {
                 foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
                 {
-                    cloudEvents.Add(CloudEventInternal.DeserializeCloudEventInternal(property));
+                    cloudEvents.Add(new CloudEvent(CloudEventInternal.DeserializeCloudEventInternal(property)));
                 }
             }
             return cloudEvents;

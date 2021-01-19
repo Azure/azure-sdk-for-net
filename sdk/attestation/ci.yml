@@ -29,3 +29,5 @@ extends:
     Artifacts:
     - name: Microsoft.Azure.Attestation
       safeName: MicrosoftAzureAttestation
+    - name: Azure.Security.Attestation
+      safeName: AzureSecurityAttestation

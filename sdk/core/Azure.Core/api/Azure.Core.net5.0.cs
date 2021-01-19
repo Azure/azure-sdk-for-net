@@ -22,6 +22,13 @@ namespace Azure
         public string Key { get { throw null; } }
         public void Update(string key) { }
     }
+    public partial class AzureSasCredential
+    {
+        public AzureSasCredential(string signature) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string Signature { get { throw null; } }
+        public void Update(string signature) { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ETag : System.IEquatable<Azure.ETag>
     {

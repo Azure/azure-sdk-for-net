@@ -132,7 +132,7 @@ namespace Azure.Data.Tables
         public virtual void DeleteEntity(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag)) { }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableBatchResponse> SubmitBatch(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableBatchResponse>> SubmitBatchAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public bool TryGetFailedEntityFromException(Azure.RequestFailedException exception, out Azure.Data.Tables.ITableEntity failedEntity) { throw null; }
+        public virtual bool TryGetFailedEntityFromException(Azure.RequestFailedException exception, out Azure.Data.Tables.ITableEntity failedEntity) { throw null; }
         public virtual void UpdateEntity<T>(T entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) where T : class, Azure.Data.Tables.ITableEntity, new() { }
         public virtual void UpsertEntity<T>(T entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) where T : class, Azure.Data.Tables.ITableEntity, new() { }
     }
@@ -245,6 +245,7 @@ namespace Azure.Data.Tables.Sas
     {
         public TableAccountSasBuilder(Azure.Data.Tables.Sas.TableAccountSasPermissions permissions, Azure.Data.Tables.Sas.TableAccountSasResourceTypes resourceTypes, System.DateTimeOffset expiresOn) { }
         public TableAccountSasBuilder(string rawPermissions, Azure.Data.Tables.Sas.TableAccountSasResourceTypes resourceTypes, System.DateTimeOffset expiresOn) { }
+        public TableAccountSasBuilder(System.Uri uri) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Data.Tables.Sas.TableSasIPRange IPRange { get { throw null; } set { } }
@@ -301,6 +302,7 @@ namespace Azure.Data.Tables.Sas
     {
         public TableSasBuilder(string tableName, Azure.Data.Tables.Sas.TableSasPermissions permissions, System.DateTimeOffset expiresOn) { }
         public TableSasBuilder(string tableName, string rawPermissions, System.DateTimeOffset expiresOn) { }
+        public TableSasBuilder(System.Uri uri) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Data.Tables.Sas.TableSasIPRange IPRange { get { throw null; } set { } }
@@ -365,5 +367,18 @@ namespace Azure.Data.Tables.Sas
         public string StartPartitionKey { get { throw null; } set { } }
         public string StartRowKey { get { throw null; } set { } }
         public override string ToString() { throw null; }
+    }
+    public partial class TableUriBuilder
+    {
+        public TableUriBuilder(System.Uri uri) { }
+        public string AccountName { get { throw null; } set { } }
+        public string Host { get { throw null; } set { } }
+        public int Port { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public Azure.Data.Tables.Sas.TableSasQueryParameters Sas { get { throw null; } set { } }
+        public string Scheme { get { throw null; } set { } }
+        public string Tablename { get { throw null; } set { } }
+        public override string ToString() { throw null; }
+        public System.Uri ToUri() { throw null; }
     }
 }

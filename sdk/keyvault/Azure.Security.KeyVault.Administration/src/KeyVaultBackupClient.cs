@@ -126,26 +126,24 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initiates a full restore of the Key Vault.
         /// </summary>
-        /// <param name="backupFolderUri">
+        /// <param name="folderUri">
         /// The <see cref="Uri"/> for the blob storage resource, including the path to the blob container where the backup resides.
         /// This would be the exact value that is returned as the result of a <see cref="BackupOperation"/>.
         /// An example Uri may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
         /// </param>
         /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="backupFolderUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="RestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual async Task<RestoreOperation> StartRestoreAsync(Uri backupFolderUri, string sasToken, CancellationToken cancellationToken = default)
+        public virtual async Task<RestoreOperation> StartRestoreAsync(Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
             scope.Start();
             try
             {
                 // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-                string[] uriSegments = backupFolderUri.Segments;
-                string folderName = uriSegments[uriSegments.Length - 1];
-                string containerUriString = backupFolderUri.AbsoluteUri.Substring(0, backupFolderUri.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase));
+                ParseFolderName(folderUri, out string containerUriString, out string folderName);
 
                 var response = await _restClient.FullRestoreOperationAsync(
                     VaultUri.AbsoluteUri,
@@ -167,26 +165,24 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initiates a full Restore of the Key Vault.
         /// </summary>
-        /// <param name="backupFolderUri">
+        /// <param name="folderUri">
         /// The <see cref="Uri"/> for the blob storage resource, including the path to the blob container where the backup resides.
         /// This would be the exact value that is returned as the result of a <see cref="BackupOperation"/>.
         /// An example Uri path may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
         /// </param>
         /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="backupFolderUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="RestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual RestoreOperation StartRestore(Uri backupFolderUri, string sasToken, CancellationToken cancellationToken = default)
+        public virtual RestoreOperation StartRestore(Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
             scope.Start();
             try
             {
                 // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-                string[] uriSegments = backupFolderUri.Segments;
-                string folderName = uriSegments[uriSegments.Length - 1];
-                string containerUriString = backupFolderUri.AbsoluteUri.Substring(0, backupFolderUri.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase));
+                ParseFolderName(folderUri, out string containerUriString, out string folderName);
 
                 var response = _restClient.FullRestoreOperation(
                     VaultUri.AbsoluteUri,
@@ -209,26 +205,26 @@ namespace Azure.Security.KeyVault.Administration
         /// Initiates a selective restore of the Key Vault.
         /// </summary>
         /// <param name="keyName">The name of the key to be restored from the supplied backup.</param>
-        /// <param name="backupFolderUri">
+        /// <param name="folderUri">
         /// The <see cref="Uri"/> for the blob storage resource, including the path to the blob container where the backup resides.
         /// This would be the exact value that is returned as the result of a <see cref="BackupOperation"/>.
         /// An example Uri path may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
         /// </param>
         /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="backupFolderUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="RestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual async Task<RestoreOperation> StartSelectiveRestoreAsync(string keyName, Uri backupFolderUri, string sasToken, CancellationToken cancellationToken = default)
+        public virtual async Task<SelectiveKeyRestoreOperation> StartSelectiveRestoreAsync(string keyName, Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveRestore)}");
             scope.Start();
             try
             {
                 // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-                string[] uriSegments = backupFolderUri.Segments;
+                string[] uriSegments = folderUri.Segments;
                 string folderName = uriSegments[uriSegments.Length - 1];
-                string containerUriString = backupFolderUri.AbsoluteUri.Substring(0, backupFolderUri.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase));
+                string containerUriString = folderUri.AbsoluteUri.Substring(0, folderUri.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase));
 
                 var response = await _restClient.SelectiveKeyRestoreOperationAsync(
                     VaultUri.AbsoluteUri,
@@ -239,7 +235,7 @@ namespace Azure.Security.KeyVault.Administration
                                 folderName),
                     cancellationToken).ConfigureAwait(false);
 
-                return new RestoreOperation(this, response);
+                return new SelectiveKeyRestoreOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -252,26 +248,26 @@ namespace Azure.Security.KeyVault.Administration
         /// Initiates a selective Restore of the Key Vault.
         /// </summary>
         /// <param name="keyName">The name of the key to be restored from the supplied backup.</param>
-        /// <param name="backupFolderUri">
+        /// <param name="folderUri">
         /// The <see cref="Uri"/> for the blob storage resource, including the path to the blob container where the backup resides.
         /// This would be the exact value that is returned as the result of a <see cref="BackupOperation"/>.
         /// An example Uri path may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
         /// </param>
         /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="backupFolderUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="RestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual RestoreOperation StartSelectiveRestore(string keyName, Uri backupFolderUri, string sasToken, CancellationToken cancellationToken = default)
+        public virtual SelectiveKeyRestoreOperation StartSelectiveRestore(string keyName, Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveRestore)}");
             scope.Start();
             try
             {
                 // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-                string[] uriSegments = backupFolderUri.Segments;
+                string[] uriSegments = folderUri.Segments;
                 string folderName = uriSegments[uriSegments.Length - 1];
-                string containerUriString = backupFolderUri.AbsoluteUri.Substring(0, backupFolderUri.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase));
+                string containerUriString = folderUri.AbsoluteUri.Substring(0, folderUri.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase));
 
                 var response = _restClient.SelectiveKeyRestoreOperation(
                     VaultUri.AbsoluteUri,
@@ -282,7 +278,7 @@ namespace Azure.Security.KeyVault.Administration
                                 folderName),
                     cancellationToken);
 
-                return new RestoreOperation(this, response);
+                return new SelectiveKeyRestoreOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -336,6 +332,52 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
+        /// Returns the details of selective restore operation.
+        /// </summary>
+        /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        internal virtual async Task<Response<SelectiveKeyRestoreDetailsInternal>> GetSelectiveKeyRestoreDetailsAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
+            scope.Start();
+            try
+            {
+                var restoreResult = await _restClient.RestoreStatusAsync(VaultUri.AbsoluteUri, jobId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SelectiveKeyRestoreDetailsInternal(restoreResult.Value), restoreResult.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the details of selective restore operation.
+        /// </summary>
+        /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        internal virtual Response<SelectiveKeyRestoreDetailsInternal> GetSelectiveKeyRestoreDetails(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
+            scope.Start();
+            try
+            {
+                var restoreResult = _restClient.RestoreStatus(VaultUri.AbsoluteUri, jobId, cancellationToken);
+                return Response.FromValue(new SelectiveKeyRestoreDetailsInternal(restoreResult.Value), restoreResult.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Returns the details of full backup operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full backup operation. </param>
@@ -377,6 +419,15 @@ namespace Azure.Security.KeyVault.Administration
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        internal static void ParseFolderName(Uri folderUri, out string containerUriString, out string folderName)
+        {
+            int indexOfContainerBoundary = folderUri.AbsoluteUri.IndexOf('/', folderUri.Scheme.Length + 4);
+            indexOfContainerBoundary = folderUri.AbsoluteUri.IndexOf('/', indexOfContainerBoundary + 1) + 1;
+
+            containerUriString = folderUri.AbsoluteUri.Substring(0, indexOfContainerBoundary - 1);
+            folderName = folderUri.AbsoluteUri.Substring(indexOfContainerBoundary, folderUri.AbsoluteUri.Length - indexOfContainerBoundary);
         }
     }
 }

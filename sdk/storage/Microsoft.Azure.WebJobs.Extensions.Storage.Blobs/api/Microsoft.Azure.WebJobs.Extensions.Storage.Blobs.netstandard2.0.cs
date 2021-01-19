@@ -22,6 +22,12 @@ namespace Microsoft.Azure.WebJobs
         public BlobTriggerAttribute(string blobPath) { }
         public string BlobPath { get { throw null; } }
         public string Connection { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.BlobTriggerSource Source { get { throw null; } set { } }
+    }
+    public enum BlobTriggerSource
+    {
+        LogsAndContainerScan = 0,
+        EventGrid = 1,
     }
 }
 namespace Microsoft.Azure.WebJobs.Extensions.Storage

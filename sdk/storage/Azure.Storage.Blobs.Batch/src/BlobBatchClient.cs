@@ -25,12 +25,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public virtual Uri Uri { get; }
 
+        /// <summary>
+        /// If this BlobBatchClient is scoped to a container.
+        /// </summary>
         private readonly bool _isContainerScoped;
 
         /// <summary>
         /// If this BlobBatchClient is scoped to a container.
         /// </summary>
-        public virtual bool IsContainerScoped => _isContainerScoped;
+        internal virtual bool IsContainerScoped => _isContainerScoped;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send

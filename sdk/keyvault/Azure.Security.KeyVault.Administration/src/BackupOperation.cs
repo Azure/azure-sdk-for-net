@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
@@ -17,11 +18,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// The number of seconds recommended by the service to delay before checking on completion status.
         /// </summary>
-        private readonly int? _retryAfterSeconds;
+        internal int? _retryAfterSeconds;
         private readonly KeyVaultBackupClient _client;
         private Response _response;
         private FullBackupDetailsInternal _value;
         private readonly string _id;
+        private RequestFailedException _requestFailedException;
 
         /// <summary>
         /// Creates an instance of a BackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
@@ -97,9 +99,9 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     throw new InvalidOperationException("The operation is not complete.");
                 }
-                if (_value != null && _value.EndTime.HasValue && _value.Error != null)
+                if (_requestFailedException != null)
                 {
-                    throw new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
+                    throw _requestFailedException;
                 }
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 return new BackupResult(new Uri(_value.AzureStorageBlobContainerUri), _value.StartTime.Value, _value.EndTime.Value);
@@ -116,26 +118,41 @@ namespace Azure.Security.KeyVault.Administration
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
-        {
-            if (!HasCompleted)
-            {
-                Response<FullBackupDetailsInternal> response = _client.GetBackupDetails(Id, cancellationToken);
-                _value = response.Value;
-                _response = response.GetRawResponse();
-            }
-
-            return GetRawResponse();
-        }
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
+            UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
 
         /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken = default)
         {
             if (!HasCompleted)
             {
-                Response<FullBackupDetailsInternal> response = await _client.GetBackupDetailsAsync(Id, cancellationToken).ConfigureAwait(false);
-                _value = response.Value;
-                _response = response.GetRawResponse();
+                try
+                {
+                    Response<FullBackupDetailsInternal> response = async ?
+                        await _client.GetBackupDetailsAsync(Id, cancellationToken).ConfigureAwait(false)
+                        : _client.GetBackupDetails(Id, cancellationToken);
+
+                    _value = response.Value;
+                    _response = response.GetRawResponse();
+                }
+                catch (RequestFailedException ex)
+                {
+                    _requestFailedException = ex;
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    _requestFailedException = new RequestFailedException("Unexpected failure", ex);
+                    throw _requestFailedException;
+                }
+                if (_value != null && _value.EndTime.HasValue && _value.Error != null)
+                {
+                    _requestFailedException = new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
+                    throw _requestFailedException;
+                }
             }
 
             return GetRawResponse();

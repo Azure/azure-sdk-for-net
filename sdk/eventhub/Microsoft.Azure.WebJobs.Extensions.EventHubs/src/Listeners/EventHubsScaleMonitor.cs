@@ -43,6 +43,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         public ScaleMonitorDescriptor Descriptor { get; }
 
+        /// <summary>
+        /// Returns the state of the event hub for scaling purposes.
+        /// </summary>
         async Task<ScaleMetrics> IScaleMonitor.GetMetricsAsync()
         {
             return await GetMetricsAsync().ConfigureAwait(false);
@@ -147,7 +150,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             };
         }
 
-
         // Get the number of unprocessed events by deriving the delta between the server side info and the partition lease info,
         private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobsCheckpointStore.BlobStorageCheckpoint partitionLeaseInfo)
         {
@@ -181,6 +183,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             return (count < 0) ? 0 : count;
         }
 
+        /// <summary>
+        /// Return the current scaling decision based on the EventHub status.
+        /// </summary>
         ScaleStatus IScaleMonitor.GetScaleStatus(ScaleStatusContext context)
         {
             return GetScaleStatusCore(context.WorkerCount, context.Metrics?.Cast<EventHubsTriggerMetrics>().ToArray());

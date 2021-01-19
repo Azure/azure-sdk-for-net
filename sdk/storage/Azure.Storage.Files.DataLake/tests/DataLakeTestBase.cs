@@ -71,7 +71,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60),
+                    NetworkTimeout = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 100 : 400),
                 },
                 Transport = GetTransport()
             };
@@ -185,7 +186,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.AreEqual(expected.Count, actual.Count, "Metadata counts are not equal");
             }
 
-
             foreach (KeyValuePair<string, string> kvp in expected)
             {
                 if (!actual.TryGetValue(kvp.Key, out var value) ||
@@ -250,7 +250,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new DataLakeServiceClient(
                     (new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceIdentitySasCredentialsPath(fileSystemName: fileSystemName, path: path, userDelegationKey: userDelegationKey, accountName: TestConfigHierarchicalNamespace.AccountName)}")).ToHttps(),
                     GetOptions()));
-
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(
@@ -357,6 +356,24 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
             return dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
+        public SasQueryParameters GetNewAccountSas(
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
+            AccountSasPermissions permissions = AccountSasPermissions.All,
+            StorageSharedKeyCredential sharedKeyCredentials = default)
+        {
+            var builder = new AccountSasBuilder
+            {
+                Protocol = SasProtocol.None,
+                Services = AccountSasServices.Blobs,
+                ResourceTypes = resourceTypes,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+            };
+            builder.SetPermissions(permissions);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         //TODO consider removing this.

@@ -177,7 +177,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -310,6 +310,33 @@ namespace Azure.Storage.Blobs.Specialized
         /// name of the account, the name of the container, and the name of
         /// the blob.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public BlobBaseClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
+            : this(blobUri, credential.AsPolicy<BlobUriBuilder>(blobUri), options, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -352,6 +379,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(blobUri, nameof(blobUri));
             options ??= new BlobClientOptions();
             _uri = blobUri;
             if (!string.IsNullOrEmpty(blobUri.Query))
@@ -470,7 +498,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -510,7 +538,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
-                _storageSharedKeyCredential,
+                SharedKeyCredential,
                 Version,
                 ClientDiagnostics,
                 CustomerProvidedKey,
@@ -2734,7 +2762,6 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (RequestFailedException storageRequestFailedException)
                 when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound
                     || storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
-
                 {
                     return Response.FromValue(false, default);
                 }
@@ -2912,14 +2939,11 @@ namespace Azure.Storage.Blobs.Specialized
 
                 try
                 {
-                    Response<BlobPropertiesInternal> response = await BlobRestClient.Blob.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
+                    Response<BlobProperties> response = await GetPropertiesInternal(
+                        conditions: default,
                         async: async,
-                        operationName: $"{nameof(BlobBaseClient)}.{nameof(Exists)}",
-                        cancellationToken: cancellationToken)
+                        cancellationToken: cancellationToken,
+                        $"{nameof(BlobBaseClient)}.{nameof(Exists)}")
                         .ConfigureAwait(false);
 
                     return Response.FromValue(true, response.GetRawResponse());
@@ -3085,7 +3109,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
                 conditions,
-                false, // async
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -3120,7 +3144,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
                 conditions,
-                true, // async
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -3145,6 +3169,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{BlobProperties}"/> describing the
         /// blob's properties.
@@ -3156,8 +3183,10 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response<BlobProperties>> GetPropertiesInternal(
             BlobRequestConditions conditions,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
+            operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetProperties)}";
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 Pipeline.LogMethodEnter(
@@ -3182,7 +3211,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifNoneMatch: conditions?.IfNoneMatch,
                         ifTags: conditions?.TagConditions,
                         async: async,
-                        operationName: "BlobBaseClient.GetProperties",
+                        operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -4267,7 +4296,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }
@@ -4299,7 +4328,7 @@ namespace Azure.Storage.Blobs.Specialized
                 _parentBlobContainerClient = new BlobContainerClient(
                     blobUriBuilder.ToUri(),
                     Pipeline,
-                    _storageSharedKeyCredential,
+                    SharedKeyCredential,
                     Version,
                     ClientDiagnostics,
                     CustomerProvidedKey,

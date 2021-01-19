@@ -11,7 +11,9 @@ To create a new `TextAnalyticsClient`, you need a Text Analytics endpoint and cr
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
-```C# Snippet:TextAnalyticsSample1CreateClient
+```C# Snippet:CreateTextAnalyticsClient
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
 var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
@@ -20,18 +22,34 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 To get a deeper analysis into which are the aspects that people considered good or bad, we will need to include the `AdditionalSentimentAnalyses.OpinionMining` type into the `AnalyzeSentimentOptions`.
 
 ```C# Snippet:TAAnalyzeSentimentWithOpinionMining
+string reviewA = @"The food and service were unacceptable, but the concierge were nice.
+                 After talking to them about the quality of the food and the process
+                 to get room service they refunded the money we spent at the restaurant
+                 and gave us a voucher for nearby restaurants.";
+
+string reviewB = @"The rooms were beautiful. The AC was good and quiet, which was key for
+                us as outside it was 100F and our baby was getting uncomfortable because of the heat.
+                The breakfast was good too with good options and good servicing times.
+                The thing we didn't like was that the toilet in our bathroom was smelly.
+                It could have been that the toilet was not cleaned before we arrived.
+                Either way it was very uncomfortable.
+                Once we notified the staff, they came and cleaned it and left candles.";
+
+string reviewC = @"Nice rooms! I had a great unobstructed view of the Microsoft campus
+                but bathrooms were old and the toilet was dirty when we arrived. 
+                It was close to bus stops and groceries stores. If you want to be close to
+                campus I will recommend it, otherwise, might be better to stay in a cleaner one.";
+
 var documents = new List<string>
 {
-    "The food and service were unacceptable, but the concierge were nice.",
-    "The rooms were beautiful. The AC was good and quiet.",
-    "The breakfast was good, but the toilet was smelly.",
-    "Loved this hotel - good breakfast - nice shuttle service - clean rooms.",
-    "I had a great unobstructed view of the Microsoft campus.",
-    "Nice rooms but bathrooms were old and the toilet was dirty when we arrived.",
-    "We changed rooms as the toilet smelled."
+    reviewA,
+    reviewB,
+    reviewC
 };
 
-AnalyzeSentimentResultCollection reviews = client.AnalyzeSentimentBatch(documents, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
+var options = new AnalyzeSentimentOptions() { IncludeOpinionMining = true };
+Response<AnalyzeSentimentResultCollection> response = client.AnalyzeSentimentBatch(documents, options: options);
+AnalyzeSentimentResultCollection reviews = response.Value;
 
 Dictionary<string, int> complaints = GetComplaints(reviews);
 
@@ -53,8 +71,6 @@ Alert! major complaint is *toilet*
    food, 1
    service, 1
    toilet, 3
-   bathrooms, 1
-   rooms, 1
 ```
 
 ## Define method `GetComplaints`

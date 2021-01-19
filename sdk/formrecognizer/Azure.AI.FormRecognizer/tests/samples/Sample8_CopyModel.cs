@@ -17,10 +17,9 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             string resourceId = TestEnvironment.TargetResourceId;
             string resourceRegion = TestEnvironment.TargetResourceRegion;
-
 
             #region Snippet:FormRecognizerSampleCreateCopySourceClient
             //@@ string endpoint = "<source_endpoint>";
@@ -31,7 +30,11 @@ namespace Azure.AI.FormRecognizer.Samples
 
             // For the purpose of this sample, we are going to create a trained model to copy. Please note that
             // if you already have a model, this is not necessary.
-            CustomFormModel model = await sourceClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+            //@@ Uri trainingFileUri = <trainingFileUri>;
+            TrainingOperation operation = await sourceClient.StartTrainingAsync(trainingFileUri, useTrainingLabels: false);
+            Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+            CustomFormModel model = operationResponse.Value;
+
             string modelId = model.ModelId;
 
             #region Snippet:FormRecognizerSampleCreateCopyTargetClient

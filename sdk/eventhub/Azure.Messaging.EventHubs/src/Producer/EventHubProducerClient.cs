@@ -418,7 +418,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
         {
-
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             return await Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
@@ -442,7 +441,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
         /// <summary>
         ///   A set of information about the state of publishing for a partition, as observed by the <see cref="EventHubProducerClient" />.  This
-        ///   data can always be read, but will only be populated with information relevant to the features which are active for the producer client.
+        ///   data can always be read, but will only be populated with information relevant to the active features for the producer client.
         /// </summary>
         ///
         /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
@@ -450,11 +449,26 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The set of information about the publishing state of the requested partition, within the context of this producer.</returns>
         ///
+        /// <remarks>
+        ///   The state of a partition is only understood by the <see cref="EventHubProducerClient" /> after events have been published to that
+        ///   partition; calling this method for a partition before events have been published to it will return an empty set of properties.
+        /// </remarks>
+        ///
         public virtual async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
                                                                                                        CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+
+            // If the producer does not require stateful partitions, return an empty
+            // instance.
+
+            if (!RequiresStatefulPartitions(Options))
+            {
+                return PartitionPublishingProperties.Empty;
+            }
+
+            // If the state has not yet been initialized, then do so now.
 
             var partitionState = PartitionState.GetOrAdd(partitionId, new PartitionPublishingState(partitionId));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -465,7 +479,6 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (!partitionState.IsInitialized)
                 {
-
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                     await InitializePartitionStateAsync(partitionState, cancellationToken).ConfigureAwait(false);
                 }
@@ -753,7 +766,7 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 if (OwnsConnection)
                 {
-                    await Connection.CloseAsync().ConfigureAwait(false);
+                    await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -783,7 +796,11 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
+        public virtual async ValueTask DisposeAsync()
+        {
+            await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -1118,7 +1135,6 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             finally
             {
-
                 EventHubsEventSource.Log.IdempotentPublishComplete(EventHubName, options.PartitionId);
             }
         }

@@ -17,6 +17,8 @@ namespace Azure.Storage.Files.DataLake
             new FileSystemItem()
             {
                 Name = containerItem.Name,
+                IsDeleted = containerItem.IsDeleted,
+                VersionId = containerItem.VersionId,
                 Properties = containerItem.Properties.ToFileSystemProperties()
             };
 
@@ -35,7 +37,9 @@ namespace Azure.Storage.Files.DataLake
                     HasImmutabilityPolicy = containerProperties.HasImmutabilityPolicy,
                     HasLegalHold = containerProperties.HasLegalHold,
                     ETag = containerProperties.ETag,
-                    Metadata = containerProperties.Metadata
+                    Metadata = containerProperties.Metadata,
+                    DeletedOn = containerProperties.DeletedOn,
+                    RemainingRetentionDays = containerProperties.RemainingRetentionDays
                 };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>

@@ -22,7 +22,6 @@ namespace Azure.DigitalTwins.Core
         [CodeGenMember("Tracestate")]
         internal string TraceState { get; set; }
 
-
         // This is internal because users should not set page size here. It should be set on the pageable instances's .AsPages() method.
         internal int? MaxItemsPerPage { get; set; }
     }

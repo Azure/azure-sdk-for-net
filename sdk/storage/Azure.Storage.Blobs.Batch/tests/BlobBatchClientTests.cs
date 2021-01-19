@@ -210,6 +210,24 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(403, ex.Status);
         }
 
+        [Test]
+        [LiveOnly]
+        public async Task Batch_AzureSasCredential()
+        {
+            // Create a container using SAS for Auth
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var serviceClient = GetServiceClient_SharedKey();
+            var sas = GetAccountSasCredentials().SasToken;
+            var sasServiceClient = InstrumentClient(new BlobServiceClient(serviceClient.Uri, new AzureSasCredential(sas), GetOptions()));
+            await using TestScenario scenario = Scenario(sasServiceClient);
+            Uri[] blobs = await scenario.CreateBlobUrisAsync(test.Container, 2);
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            Response[] responses = await client.DeleteBlobsAsync(blobs);
+
+            scenario.AssertStatus(202, responses);
+        }
+
         // TODO: Add a requirement that one of the test tenants is in a
         // different account so we can verify batch requests fail across
         // multiple storage accounts
@@ -1029,7 +1047,6 @@ namespace Azure.Storage.Blobs.Test
 
             public BlobBatchClient GetBlobBatchClient()
                 => _test.InstrumentClient(Service.GetBlobBatchClient());
-
 
             public async Task AssertDeleted(BlobClient blob)
             {

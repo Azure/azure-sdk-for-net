@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -173,7 +174,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key", indexException.InnerException.Message);
         }
 
-
         [Theory]
         [TestCase("SingleEvent", "0")]
         [TestCase("SingleReturnEvent", "0")]
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new TestLoggerProvider());
             // use moq eventgridclient for test extension
-            var customExtension = new EventGridExtensionConfigProvider(customConverter, loggerFactory);
+            var customExtension = new EventGridExtensionConfigProvider(customConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
             var configuration = new Dictionary<string, string>
                 {
