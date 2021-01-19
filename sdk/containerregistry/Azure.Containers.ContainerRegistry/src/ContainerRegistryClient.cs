@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Containers.ContainerRegistry.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -16,7 +17,8 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal V2SupportRestClient RestClient { get; }
+        internal V2SupportRestClient v2SupportRestClient { get; }
+        internal ManifestsRestClient manifestsRestClient { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/>.
@@ -45,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         internal ContainerRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
-            RestClient = new V2SupportRestClient(_clientDiagnostics, pipeline, url);
+            v2SupportRestClient = new V2SupportRestClient(_clientDiagnostics, pipeline, url);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -56,7 +58,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await RestClient.CheckAsync(cancellationToken).ConfigureAwait(false);
+                return await v2SupportRestClient.CheckAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -71,7 +73,37 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return RestClient.Check(cancellationToken);
+                return v2SupportRestClient.Check(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Response CreateManifest(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("TODO REPLACE");
+            scope.Start();
+            try
+            {
+                return manifestsRestClient.Create(name, reference, payload, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Response<ManifestWrapper> GetManifest(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("TODO REPLACE");
+            scope.Start();
+            try
+            {
+                return manifestsRestClient.Get(name, reference, "application/vnd.docker.distribution.manifest.v2+json", cancellationToken);
             }
             catch (Exception e)
             {

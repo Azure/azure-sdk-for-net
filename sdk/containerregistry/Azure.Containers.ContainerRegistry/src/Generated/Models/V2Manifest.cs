@@ -11,19 +11,31 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Returns the requested Docker V2 Manifest file. </summary>
-    internal partial class V2Manifest : Manifest
+    public partial class V2Manifest : Manifest
     {
         /// <summary> Initializes a new instance of V2Manifest. </summary>
-        internal V2Manifest()
+        public V2Manifest()
         {
             Layers = new ChangeTrackingList<Descriptor>();
         }
 
+        /// <summary> Initializes a new instance of V2Manifest. </summary>
+        /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="mediaType"> Media type for this Manifest. </param>
+        /// <param name="config"> V2 image config descriptor. </param>
+        /// <param name="layers"> List of V2 image layer information. </param>
+        internal V2Manifest(int? schemaVersion, string mediaType, Descriptor config, IList<Descriptor> layers) : base(schemaVersion)
+        {
+            MediaType = mediaType;
+            Config = config;
+            Layers = layers;
+        }
+
         /// <summary> Media type for this Manifest. </summary>
-        public string MediaType { get; }
+        public string MediaType { get; set; }
         /// <summary> V2 image config descriptor. </summary>
-        public Descriptor Config { get; }
+        public Descriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
-        public IReadOnlyList<Descriptor> Layers { get; }
+        public IList<Descriptor> Layers { get; }
     }
 }

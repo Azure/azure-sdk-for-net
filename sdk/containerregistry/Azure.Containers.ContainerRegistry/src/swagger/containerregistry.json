@@ -96,6 +96,135 @@
           }
         }
       }
+    },
+    "/v2/{name}/manifests/{reference}": {
+      "get": {
+        "tags": [
+          "Manifest"
+        ],
+        "description": "Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest.",
+        "x-ms-examples": {
+          "Get manifest": {
+            "$ref": "./examples/GetManifest.json"
+          }
+        },
+        "operationId": "Manifests_Get",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/ImageReference"
+          },
+          {
+            "name": "accept",
+            "in": "header",
+            "description": "Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the requested manifest file in a larger combined group",
+            "schema": {
+              "$ref": "#/definitions/ManifestWrapper"
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Manifest"
+        ],
+        "x-ms-long-running-operation": false,
+        "description": "Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest.",
+        "x-ms-examples": {
+          "Put manifest": {
+            "$ref": "./examples/CreateManifest.json"
+          }
+        },
+        "consumes": [
+          "application/vnd.docker.distribution.manifest.v2+json"
+        ],
+        "operationId": "Manifests_Create",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/ImageReference"
+          },
+          {
+            "$ref": "#/parameters/ManifestBody"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The manifest is updated",
+            "schema": {},
+
+            "headers": {
+              "Docker-Content-Digest": {
+                "type": "string",
+                "description": "Identifies the docker upload uuid for the current request."
+              },
+              "Location": {
+                "type": "string",
+                "description": "The canonical location url of the uploaded manifest."
+              },
+              "Content-Length": {
+                "type": "integer",
+                "format": "int64",
+                "description": "The length of the requested blob content."
+              }
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Manifest"
+        ],
+        "description": "Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`.",
+        "x-ms-examples": {
+          "Delete manifest": {
+            "$ref": "./examples/DeleteManifest.json"
+          }
+        },
+        "operationId": "Manifests_Delete",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/ImageReference"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The manifest has been deleted"
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      }
     }
   },
   "x-ms-paths": {

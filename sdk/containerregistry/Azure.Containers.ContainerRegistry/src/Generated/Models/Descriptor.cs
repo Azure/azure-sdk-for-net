@@ -11,23 +11,38 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Docker V2 image layer descriptor including config and layers. </summary>
-    internal partial class Descriptor
+    public partial class Descriptor
     {
         /// <summary> Initializes a new instance of Descriptor. </summary>
-        internal Descriptor()
+        public Descriptor()
         {
             Urls = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of Descriptor. </summary>
+        /// <param name="mediaType"> Layer media type. </param>
+        /// <param name="size"> Layer size. </param>
+        /// <param name="digest"> Layer digest. </param>
+        /// <param name="urls"> Specifies a list of URIs from which this object may be downloaded. </param>
+        /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
+        internal Descriptor(string mediaType, long? size, string digest, IList<string> urls, Annotations annotations)
+        {
+            MediaType = mediaType;
+            Size = size;
+            Digest = digest;
+            Urls = urls;
+            Annotations = annotations;
+        }
+
         /// <summary> Layer media type. </summary>
-        public string MediaType { get; }
+        public string MediaType { get; set; }
         /// <summary> Layer size. </summary>
-        public long? Size { get; }
+        public long? Size { get; set; }
         /// <summary> Layer digest. </summary>
-        public string Digest { get; }
+        public string Digest { get; set; }
         /// <summary> Specifies a list of URIs from which this object may be downloaded. </summary>
-        public IReadOnlyList<string> Urls { get; }
+        public IList<string> Urls { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public Annotations Annotations { get; }
+        public Annotations Annotations { get; set; }
     }
 }

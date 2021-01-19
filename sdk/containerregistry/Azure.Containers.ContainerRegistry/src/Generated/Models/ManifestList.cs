@@ -11,17 +11,27 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Returns the requested Docker multi-arch-manifest file. </summary>
-    internal partial class ManifestList : Manifest
+    public partial class ManifestList : Manifest
     {
         /// <summary> Initializes a new instance of ManifestList. </summary>
-        internal ManifestList()
+        public ManifestList()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
         }
 
+        /// <summary> Initializes a new instance of ManifestList. </summary>
+        /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="mediaType"> Media type for this Manifest. </param>
+        /// <param name="manifests"> List of V2 image layer information. </param>
+        internal ManifestList(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests) : base(schemaVersion)
+        {
+            MediaType = mediaType;
+            Manifests = manifests;
+        }
+
         /// <summary> Media type for this Manifest. </summary>
-        public string MediaType { get; }
+        public string MediaType { get; set; }
         /// <summary> List of V2 image layer information. </summary>
-        public IReadOnlyList<ManifestListAttributes> Manifests { get; }
+        public IList<ManifestListAttributes> Manifests { get; }
     }
 }
