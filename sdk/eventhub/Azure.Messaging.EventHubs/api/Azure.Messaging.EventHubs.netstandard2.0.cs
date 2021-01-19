@@ -16,7 +16,6 @@ namespace Azure.Messaging.EventHubs
         public long Offset { get { throw null; } }
         public string PartitionKey { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
-        public int? PublishedSequenceNumber { get { throw null; } }
         public long SequenceNumber { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> SystemProperties { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -485,7 +484,6 @@ namespace Azure.Messaging.EventHubs.Producer
         public int Count { get { throw null; } }
         public long MaximumSizeInBytes { get { throw null; } }
         public long SizeInBytes { get { throw null; } }
-        public int? StartingPublishedSequenceNumber { get { throw null; } }
         public void Dispose() { }
         public bool TryAdd(Azure.Messaging.EventHubs.EventData eventData) { throw null; }
     }
@@ -513,8 +511,8 @@ namespace Azure.Messaging.EventHubs.Producer
         public virtual System.Threading.Tasks.Task<string[]> GetPartitionIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.EventHubs.PartitionProperties> GetPartitionPropertiesAsync(string partitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendAsync(Azure.Messaging.EventHubs.Producer.EventDataBatch eventBatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task SendAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.EventData> eventSet, Azure.Messaging.EventHubs.Producer.SendEventOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task SendAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.EventData> eventSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.EventData> eventBatch, Azure.Messaging.EventHubs.Producer.SendEventOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.EventData> eventBatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
