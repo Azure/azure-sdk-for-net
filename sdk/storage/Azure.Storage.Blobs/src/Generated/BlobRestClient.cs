@@ -4081,14 +4081,6 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
                         }
-                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
-                        {
-                            _value.VersionId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-is-current-version", out _header))
-                        {
-                            _value.IsCurrentVersion = bool.Parse(_header);
-                        }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
                             _value.AcceptRanges = _header;
@@ -4241,14 +4233,6 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
                             _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
-                        {
-                            _value.VersionId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-is-current-version", out _header))
-                        {
-                            _value.IsCurrentVersion = bool.Parse(_header);
                         }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
