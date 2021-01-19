@@ -124,7 +124,8 @@ namespace Azure.Messaging.ServiceBus
             EntityStatus status = default,
             string forwardTo = default,
             string forwardDeadLetteredMessagesTo = default,
-            string userMetadata = default) =>
+            string userMetadata = default,
+            bool enablePartitioning = default) =>
             new QueueProperties(name)
             {
                 LockDuration = lockDuration,
@@ -141,7 +142,8 @@ namespace Azure.Messaging.ServiceBus
                 Status = status,
                 ForwardTo = forwardTo,
                 ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo,
-                UserMetadata = userMetadata
+                UserMetadata = userMetadata,
+                EnablePartitioning = enablePartitioning
             };
 
         /// <summary>
@@ -156,7 +158,8 @@ namespace Azure.Messaging.ServiceBus
             TimeSpan autoDeleteOnIdle = default,
             TimeSpan duplicateDetectionHistoryTimeWindow = default,
             bool enableBatchedOperations = default,
-            EntityStatus status = default) =>
+            EntityStatus status = default,
+            bool enablePartitioning = default) =>
             new TopicProperties(name)
             {
                 MaxSizeInMegabytes = maxSizeInMegabytes,
@@ -167,6 +170,7 @@ namespace Azure.Messaging.ServiceBus
                 EnableBatchedOperations = enableBatchedOperations,
                 AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
                 Status = status,
+                EnablePartitioning = enablePartitioning
             };
 
         /// <summary>

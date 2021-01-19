@@ -8,12 +8,9 @@
         "Content-Length": "95",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201104.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "3ae9216be8b4e49bf94b63b34827f3a7",
+        "x-ms-client-request-id": "0db09c67e48a3acc3d4fb94f3bf0b394",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,14 +20,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "57480d1f-edbd-44db-b494-4bf5e90d77ce",
+        "apim-request-id": "a0dd7bb7-1096-472a-b3e8-029dfa3d4015",
         "Content-Length": "1176",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 21:39:46 GMT",
+        "Date": "Tue, 15 Dec 2020 01:34:29 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5161",
-        "X-Request-ID": "57480d1f-edbd-44db-b494-4bf5e90d77ce"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "106",
+        "x-request-id": "a0dd7bb7-1096-472a-b3e8-029dfa3d4015"
       },
       "ResponseBody": {
         "value": [
@@ -92,6 +89,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "1980822719"
+    "RandomSeed": "867929192"
   }
 }

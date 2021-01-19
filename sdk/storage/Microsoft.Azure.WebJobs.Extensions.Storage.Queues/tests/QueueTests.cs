@@ -92,7 +92,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         private static string GetErrorMessageForBadQueueName(string value, string parameterName)
         {
             return "A queue name can contain only letters, numbers, and dash(-) characters - \"" + value + "\"" +
+#if NET5_0
+                $" (Parameter '{parameterName}')"; // from ArgumentException
+#else
                 Environment.NewLine + "Parameter name: " + parameterName; // from ArgumentException
+#endif
         }
 
         // Program with variable queue name containing both %% and { }.
@@ -302,58 +306,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             {
                 x = "abc";
             }
-        }
-
-        // Nice failure when no storage account is set
-        [Test]
-        [Ignore("Re-enable when StorageAccountParser returns")]
-        public void Fails_When_No_Storage_is_set()
-        {
-            // TODO: We shouldn't have to do this, but our default parser
-            //       does not allow for null Storage/Dashboard.
-            //var mockParser = new Mock<IStorageAccountParser>();
-            //mockParser
-            //    .Setup(p => p.ParseAccount(null, It.IsAny<string>()))
-            //    .Returns<string>(null);
-
-            //// no storage account!
-            //IHost host = new HostBuilder()
-            //    .ConfigureDefaultTestHost<ProgramSimple>()
-            //    .ConfigureServices(services =>
-            //    {
-            //        services.AddSingleton<IStorageAccountParser>(mockParser.Object);
-            //    })
-            //    .ConfigureAppConfiguration(config =>
-            //    {
-            //        config.AddInMemoryCollection(new Dictionary<string, string>
-            //        {
-            //            { "AzureWebJobsStorge", null },
-            //            { "AzureWebJobsDashboard", null }
-            //        });
-            //    })
-            //    .Build();
-
-            //string message = StorageAccountParser.FormatParseAccountErrorMessage(StorageAccountParseResult.MissingOrEmptyConnectionStringError, "Storage");
-            //TestHelpers.AssertIndexingError(() => host.GetJobHost().Call<ProgramSimple>("Func"), "ProgramSimple.Func", message);
-        }
-
-        [Test]
-        [Ignore("Re-enable when StorageAccountParser returns")]
-        public void Sanitizes_Exception_If_Connection_String()
-        {
-            //// people accidentally use their connection string; we want to make sure we sanitize it
-            //IHost host = new HostBuilder()
-            //    .ConfigureDefaultTestHost<ProgramSimple2>()
-            //    .Build();
-
-            //string message = StorageAccountParser.FormatParseAccountErrorMessage(StorageAccountParseResult.MissingOrEmptyConnectionStringError, ProgramSimple2.ConnectionString);
-
-            //TestHelpers.AssertIndexingError(() => host.GetJobHost().Call<ProgramSimple2>(nameof(ProgramSimple2.Func2)),
-            //    "ProgramSimple2.Func2", message);
-
-            //Assert.DoesNotContain(ProgramSimple2.ConnectionString, message);
-            //Assert.DoesNotContain("AzureWebJobs", message); // prefix should not be added
-            //Assert.Contains("[Hidden Credential]", message);
         }
 
         public class ProgramBadContract

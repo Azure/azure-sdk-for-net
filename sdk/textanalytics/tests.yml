@@ -1,9 +1,12 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: textanalytics
-    EnvVars:
-      TEXT_ANALYTICS_API_KEY: $(net-textanalytics-test-api-key)
-      TEXT_ANALYTICS_ENDPOINT: $(net-textanalytics-test-ppe-endpoint-string) 
+    CloudConfig:
+      Public:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      Canary:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: 'centraluseuap'

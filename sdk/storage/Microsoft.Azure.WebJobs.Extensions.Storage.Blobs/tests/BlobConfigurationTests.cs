@@ -98,7 +98,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             });
         }
 
-
         private class BindToCloudBlockBlobProgram
         {
             public BlockBlobClient Result { get; set; }

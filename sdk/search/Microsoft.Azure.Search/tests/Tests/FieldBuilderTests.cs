@@ -11,6 +11,7 @@ using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
 using Xunit;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
+using Index = Microsoft.Azure.Search.Models.Index;
 
 namespace Microsoft.Azure.Search.Tests
 {
@@ -416,11 +417,10 @@ namespace Microsoft.Azure.Search.Tests
             string expectedErrorMessage =
                 $"Property '{invalidPropertyName}' is of type '{modelType.GetProperty(invalidPropertyName).PropertyType}', " +
                 "which does not map to an Azure Search data type. Please use a supported data type or mark the property with " +
-                "[JsonIgnore] or [FieldBuilderIgnore] and define the field by creating a Field object." +
-                $"{Environment.NewLine}Parameter name: {nameof(modelType)}";
+                "[JsonIgnore] or [FieldBuilderIgnore] and define the field by creating a Field object.";
 
             Assert.Equal(nameof(modelType), e.ParamName);
-            Assert.Equal(expectedErrorMessage, e.Message);
+            Assert.StartsWith(expectedErrorMessage, e.Message);
         }
 
         [Theory]
@@ -440,10 +440,10 @@ namespace Microsoft.Azure.Search.Tests
 
             string expectedErrorMessage =
                 $"Type '{modelType}' does not have properties which map to fields of an Azure Search index. Please use a " +
-                $"class or struct with public properties.{Environment.NewLine}Parameter name: {nameof(modelType)}";
+                $"class or struct with public properties.";
 
             Assert.Equal(nameof(modelType), e.ParamName);
-            Assert.Equal(expectedErrorMessage, e.Message);
+            Assert.StartsWith(expectedErrorMessage, e.Message);
         }
 
         [Fact]

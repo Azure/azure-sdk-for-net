@@ -87,9 +87,9 @@ namespace Azure.Storage.Blobs.Specialized
                 // Write the request URI
                 content
                     .Append(message.Request.Method.Method)
-                    .Append(" ")
+                    .Append(' ')
                     .Append(message.Request.Uri.PathAndQuery)
-                    .Append(" ")
+                    .Append(' ')
                     .Append(BatchConstants.HttpVersion)
                     .Append(newline);
 

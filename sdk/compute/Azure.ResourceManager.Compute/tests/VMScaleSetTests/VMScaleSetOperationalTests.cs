@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task TestVMScaleSetOperationsInternal(bool hasManagedDisks = false)
         {
-
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
             // Create resource group

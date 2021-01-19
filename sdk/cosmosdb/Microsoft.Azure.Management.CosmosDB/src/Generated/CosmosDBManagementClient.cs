@@ -167,6 +167,36 @@ namespace Microsoft.Azure.Management.CosmosDB
         public virtual INotebookWorkspacesOperations NotebookWorkspaces { get; private set; }
 
         /// <summary>
+        /// Gets the IRestorableSqlDatabasesOperations.
+        /// </summary>
+        public virtual IRestorableSqlDatabasesOperations RestorableSqlDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlContainersOperations.
+        /// </summary>
+        public virtual IRestorableSqlContainersOperations RestorableSqlContainers { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlResourcesOperations.
+        /// </summary>
+        public virtual IRestorableSqlResourcesOperations RestorableSqlResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbDatabasesOperations.
+        /// </summary>
+        public virtual IRestorableMongodbDatabasesOperations RestorableMongodbDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbCollectionsOperations.
+        /// </summary>
+        public virtual IRestorableMongodbCollectionsOperations RestorableMongodbCollections { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbResourcesOperations.
+        /// </summary>
+        public virtual IRestorableMongodbResourcesOperations RestorableMongodbResources { get; private set; }
+
+        /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
@@ -437,6 +467,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             GremlinResources = new GremlinResourcesOperations(this);
             RestorableDatabaseAccounts = new RestorableDatabaseAccountsOperations(this);
             NotebookWorkspaces = new NotebookWorkspacesOperations(this);
+            RestorableSqlDatabases = new RestorableSqlDatabasesOperations(this);
+            RestorableSqlContainers = new RestorableSqlContainersOperations(this);
+            RestorableSqlResources = new RestorableSqlResourcesOperations(this);
+            RestorableMongodbDatabases = new RestorableMongodbDatabasesOperations(this);
+            RestorableMongodbCollections = new RestorableMongodbCollectionsOperations(this);
+            RestorableMongodbResources = new RestorableMongodbResourcesOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

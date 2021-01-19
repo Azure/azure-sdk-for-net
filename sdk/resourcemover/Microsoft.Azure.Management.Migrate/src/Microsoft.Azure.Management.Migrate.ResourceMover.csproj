@@ -7,9 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.Migrate.ResourceMover</PackageId>
 		<Description>Provides developers with libraries for the azure resource mover under Azure Resource manager.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Migrate.ResourceMover</AssemblyName>
-		<Version>1.0.1-preview</Version>
+		<Version>1.0.2-preview</Version>
 		<PackageTags>Management.Migrate; Region Move;Azure Resource Mover;</PackageTags>
-		<PackageReleaseNotes>Added BulkRemoveMoveResources API.</PackageReleaseNotes>
+		<PackageReleaseNotes>Changes to refer readonly property SourceResourceSettings to ResourceSettings.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

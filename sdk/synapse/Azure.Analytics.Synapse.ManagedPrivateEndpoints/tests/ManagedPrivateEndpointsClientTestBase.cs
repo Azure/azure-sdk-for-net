@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
         {
             recording ??= Recording;
             return InstrumentClient(new ManagedPrivateEndpointsClient(
-                new Uri(TestEnvironment.WorkspaceUrl),
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ManagedPrivateEndpointsClientOptions())));
         }

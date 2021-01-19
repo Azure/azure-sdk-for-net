@@ -157,6 +157,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             mockScope
                .Setup(scope => scope.OpenReceiverLinkAsync(
                    It.IsAny<string>(),
+                   It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
@@ -173,6 +174,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
+                   It.IsAny<string>(),
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
@@ -211,6 +213,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             mockScope
                .Setup(scope => scope.OpenReceiverLinkAsync(
                    It.IsAny<string>(),
+                   It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
@@ -227,6 +230,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
+                   It.IsAny<string>(),
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
@@ -273,6 +277,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             mockScope
                .Setup(scope => scope.OpenReceiverLinkAsync(
                    It.IsAny<string>(),
+                   It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
@@ -281,7 +286,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
-
             var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
@@ -289,6 +293,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceBusy));
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
+                   It.IsAny<string>(),
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
@@ -331,6 +336,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             mockScope
                .Setup(scope => scope.OpenReceiverLinkAsync(
                    It.IsAny<string>(),
+                   It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
@@ -348,6 +354,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
                    It.IsAny<string>(),
+                   It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
@@ -356,7 +363,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<CancellationToken>()),
                 Times.Once());
         }
-
 
         /// <summary>
         ///   Verifies functionality of the <see cref="AmqpReceiver.ReceiveAsync" />
@@ -385,6 +391,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             mockScope
                .Setup(scope => scope.OpenReceiverLinkAsync(
                    It.IsAny<string>(),
+                   It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
@@ -401,6 +408,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<TimeSpan>(),
                     It.IsAny<uint>(),
@@ -438,6 +446,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             mockScope
                .Setup(scope => scope.OpenReceiverLinkAsync(
                    It.IsAny<string>(),
+                   It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
@@ -454,6 +463,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<TimeSpan>(),
                     It.IsAny<uint>(),

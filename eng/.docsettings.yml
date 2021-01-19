@@ -148,15 +148,20 @@ known_content_issues:
   - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Extensions.Azure/README.md','#5499']
+  - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', '#15423']
+  - ['sdk/eventhub/README.md','azure-sdk-tools/issues/42']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#5499']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Blobs/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Blobs/perf/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Blobs.Batch/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Blobs.Cryptography/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Common/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Files.DataLake/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Files.DataLake/perf/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Files.Shares/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Files.Shares/perf/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Queues/README.md','#11492']
   - ['sdk/synapse/Microsoft.Azure.Synapse/README.md','#11492']
   - ['sdk/tables/Azure.Data.Tables/readme.md', '#11492']
@@ -164,6 +169,7 @@ known_content_issues:
   - ['sdk/core/Microsoft.Azure.Core.NewtonsoftJson/README.md', '#15423']
   - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', '#15423']
   - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', '#15423']
+  - ['sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/README.md', '#15423']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

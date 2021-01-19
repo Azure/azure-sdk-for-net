@@ -1,17 +1,21 @@
 jobs:
   - job: Build
+    timeoutInMinutes: 100
     pool:
       vmImage: windows-2019
     steps:
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
           dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
+          pwsh eng/scripts/Track1CodeCheck.ps1
         displayName: "Build & Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
+          REPOSITORY_NAME: $(Build.Repository.Name)
+          PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
       - task: PublishBuildArtifacts@1
         condition: succeededOrFailed()
         inputs:
@@ -46,12 +50,12 @@ jobs:
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"
         displayName: "Build & Run Tests"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:

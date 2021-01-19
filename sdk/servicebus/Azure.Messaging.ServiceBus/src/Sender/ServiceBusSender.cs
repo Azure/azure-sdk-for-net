@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -410,8 +410,6 @@ namespace Azure.Messaging.ServiceBus
             // exception should have been thrown by this point.
             return sequenceNumbers[0];
         }
-
-
 
         /// <summary>
         /// Schedules a set of messages to appear on Service Bus at a later time.

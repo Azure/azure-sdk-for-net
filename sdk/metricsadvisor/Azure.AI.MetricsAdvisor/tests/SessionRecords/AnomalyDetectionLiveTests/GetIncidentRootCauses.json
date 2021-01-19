@@ -6,25 +6,22 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201103.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "4aac0415261b3617dadc904058bf14d1",
+        "x-ms-client-request-id": "1c9ee367c0bb6aa7f500aae042073928",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "25878a68-c078-4c5e-a4e9-f7c8e5ffdad7",
-        "Content-Length": "1630",
+        "apim-request-id": "b5c8e049-f21a-4011-9f13-ff96901481e2",
+        "Content-Length": "1631",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 03 Nov 2020 17:09:43 GMT",
+        "Date": "Tue, 15 Dec 2020 01:34:32 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5384",
-        "X-Request-ID": "25878a68-c078-4c5e-a4e9-f7c8e5ffdad7"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "244",
+        "x-request-id": "b5c8e049-f21a-4011-9f13-ff96901481e2"
       },
       "ResponseBody": {
         "value": [
@@ -38,7 +35,7 @@
             "path": [
               "city"
             ],
-            "score": 0.093254247542794377,
+            "score": 0.093254247542794544,
             "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Houston"
           },
           {
@@ -51,7 +48,7 @@
             "path": [
               "city"
             ],
-            "score": 0.070565102895706833,
+            "score": 0.070565102895706944,
             "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Manila"
           },
           {
@@ -64,7 +61,7 @@
             "path": [
               "city"
             ],
-            "score": 0.03432394626357288,
+            "score": 0.034323946263572935,
             "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Tianjin"
           },
           {
@@ -77,7 +74,7 @@
             "path": [
               "city"
             ],
-            "score": 0.032546005599616568,
+            "score": 0.032546005599616623,
             "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Shanghai"
           },
           {
@@ -115,6 +112,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "344168361"
+    "RandomSeed": "2081121000"
   }
 }

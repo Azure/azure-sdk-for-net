@@ -1,7 +1,4 @@
 parameters:
-- name: Platforms
-  type: object
-  default: []
 - name: PreSteps
   type: object
   default: []
@@ -23,92 +20,107 @@ parameters:
 - name: Location
   type: string
   default: ''
+- name: SDKType
+  type: string
+  default: client
 - name: ServiceDirectory
   type: string
   default: not-specified
 - name: TestSetupSteps
   type: stepList
   default: []
-- name: CloudConfigurations
+- name: CloudConfig
   type: object
-  default:
-    AzureCloud:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+  default: {}
+- name: Platforms
+  type: object
+  default: {}
+- name: UsePlatformContainer
+  type: boolean
+  default: false
 
 jobs:
-  - ${{ each cloudConfig in parameters.CloudConfigurations }}:
-    - ${{ each platform in parameters.Platforms }}:
-      - job:
-        condition: and(succeededOrFailed(), eq(eq(variables['Record'], 'true'), eq('${{ platform.TestMode }}', 'Record')))
-        displayName: ${{ platform.DisplayName }}_${{ cloudConfig.key }}
-        variables:
-          - template: ../variables/globals.yml
-          - name: OSVmImage
-            value: ${{ platform.OSVmImage }}
+  - job:
+    strategy:
+      maxParallel: ${{ parameters.MaxParallel }}
+      matrix: ${{ parameters.Platforms }}
 
-        timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+    variables:
+      - template: ../variables/globals.yml
+      # ServiceDirectory references must get passed down by the caller as variable references
+      - name: ServiceDirectory
+        value: ${{ parameters.ServiceDirectory }}
+      - name: AdditionalTestArguments
+        value: ''
+      - name: ArmTemplateParameters
+        value: '@{}'
+      - name: TestMode
+        value: 'None'
 
-        pool:
-          vmImage: $(OSVmImage)
-        ${{ if platform.Container }}:
-          container: ${{ platform.Container }}
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
-        steps:
-          - ${{ if platform.PreSteps }}:
-            - ${{ platform.PreSteps }}
+    pool:
+      vmImage: $(OSVmImage)
 
-          - ${{ parameters.PreSteps }}
+    ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
+      container: $[ variables['Container'] ]
 
-          - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+    steps:
+      - ${{ parameters.PreSteps }}
 
-          - ${{ each step in parameters.TestSetupSteps }}:
-            - ${{ each pair in step }}:
-                ${{ pair.key }}: ${{ pair.value }}
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
 
-          - template: /eng/common/TestResources/deploy-test-resources.yml
-            parameters:
-              Location: ${{ coalesce(parameters.Location, cloudConfig.value.Location, 'westus2') }}
-              ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-              SubscriptionConfiguration: ${{ cloudConfig.value.SubscriptionConfiguration }}
-              ArmTemplateParameters: ${{ cloudConfig.value.ArmTemplateParameters }}
+      - ${{ each step in parameters.TestSetupSteps }}:
+        - ${{ each pair in step }}:
+            ${{ pair.key }}: ${{ pair.value }}
 
-          - script: >
-              dotnet test eng/service.proj
-              --framework ${{ platform.TestTargetFramework }}
-              --filter "TestCategory!=Manually"
-              --logger "trx"
-              --logger:"console;verbosity=normal"
-              /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-              /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
-              /p:BuildInParallel=${{ parameters.BuildInParallel }}
-              ${{ platform.AdditionalTestArguments }}
+      - template: /eng/common/TestResources/deploy-test-resources.yml
+        parameters:
+          ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
+            Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
+          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
+          ArmTemplateParameters: $(ArmTemplateParameters)
 
-            displayName: "Build & Test (all tests for ${{ platform.TestTargetFramework }})"
-            env:
-              DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-              DOTNET_CLI_TELEMETRY_OPTOUT: 1
-              DOTNET_MULTILEVEL_LOOKUP: 0
-              AZURE_TEST_MODE: "${{ coalesce(platform.TestMode, 'None') }}"
-              ${{ each var in parameters.EnvVars }}:
-                ${{ var.key }}: ${{ var.value }}
-              ${{ each var in cloudConfig.value.EnvVars }}:
-                ${{ var.key }}: ${{ var.value }}
+      - pwsh: |
+          if ($env:SupportsRecording -and $env:Record) {
+            Write-Host "Enabling Record mode"
+            Write-Host "##vso[task.setvariable variable=TestMode]Record"
+          }
+        displayName: Set Test Mode
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - pwsh: >
+          dotnet test eng/service.proj
+          --framework $(TestTargetFramework)
+          --filter "TestCategory!=Manually"
+          --logger "trx"
+          --logger:"console;verbosity=normal"
+          /p:SDKType=${{ parameters.SDKType }}
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
+          /p:BuildInParallel=${{ parameters.BuildInParallel }}
+          $(AdditionalTestArguments)
 
-          - template: /eng/common/TestResources/remove-test-resources.yml
-            parameters:
-              ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-              SubscriptionConfiguration: ${{ cloudConfig.value.SubscriptionConfiguration }}
+        displayName: "Build & Test (all tests for $(TestTargetFramework))"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          AZURE_TEST_MODE: $(TestMode)
+          ${{ each var in parameters.EnvVars }}:
+            ${{ var.key }}: ${{ var.value }}
 
-          - task: PublishTestResults@2
-            condition: always()
-            displayName: "Publish Results (${{ platform.TestTargetFramework }})"
-            inputs:
-              testResultsFiles: "**/*.trx"
-              testRunTitle: "$(OSName) ${{ platform.TestTargetFramework }}"
-              testResultsFormat: "VSTest"
-              mergeTestResults: true
+      - template: /eng/common/TestResources/remove-test-resources.yml
+        parameters:
+          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
 
-          - ${{ parameters.PostSteps }}
+      - task: PublishTestResults@2
+        condition: always()
+        displayName: "Publish Results ($(TestTargetFramework))"
+        inputs:
+          testResultsFiles: "**/*.trx"
+          testRunTitle: "$(TestTargetFramework)"
+          testResultsFormat: "VSTest"
+          mergeTestResults: true
 
-          - ${{ if platform.PostSteps }}:
-            - ${{ platform.PostSteps }}
+      - ${{ parameters.PostSteps }}

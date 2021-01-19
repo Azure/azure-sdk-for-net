@@ -25,6 +25,10 @@
       CA2231; <!-- Override Equality operators -->
       CA2225; <!-- Provide alternative to implicit operators -->
       CA1714; <!-- Flags should have plural names -->
+      CA1062; <!-- Public parameter should be checked for null -->
+      CA1031; <!-- Don't catch generic exceptions -->
+      CA2000; <!-- Call dispose on IDisposable objects -->
+      CA2012; <!-- ValueTask should only be awaited once - conflicts with EnsureCompleted check -->
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -51,7 +55,8 @@
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <UpdateSourceOnBuild Condition="'$(UpdateSourceOnBuild)' == ''">$(AZURE_DEV_UPDATESOURCESONBUILD)</UpdateSourceOnBuild>
     <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
-    <CoverletOutputFormat Condition="'$(CoverletOutputFormat)' == '' and '$(CollectCoverage)' == 'true'">cobertura</CoverletOutputFormat>
+    <InheritDocEnabled>true</InheritDocEnabled>
+    <InheritDocTrimLevel>private</InheritDocTrimLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
@@ -65,6 +70,12 @@
       CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
       AZC0012; <!-- Single word class names -->
       AZC0008;
+    </NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
+    <NoWarn>
+      $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
     </NoWarn>
   </PropertyGroup>
 
@@ -85,8 +96,9 @@
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.1;net461</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>netcoreapp2.1;net5.0</RequiredTargetFrameworks>
+    <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp2.1 (the "primary"). -->
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp2.1;net5.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <Import Project="$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.props" Condition="'$(IsMgmtClientLibrary)' == 'true'"/>

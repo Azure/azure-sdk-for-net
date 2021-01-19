@@ -16,7 +16,10 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
-    public partial class TableTransactionalBatch
+    /// <summary>
+    /// Provides synchronous and asynchronous methods for creating and submitting table transactional batch requests.
+    /// </summary>
+    public class TableTransactionalBatch
     {
         private readonly TableRestClient _tableOperations;
         private readonly TableRestClient _batchOperations;
@@ -26,12 +29,12 @@ namespace Azure.Data.Tables
         private readonly OdataMetadataFormat _format;
         private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
         internal MultipartContent _batch;
-        internal Guid _batchGuid = default;
-        internal Guid _changesetGuid = default;
+        internal Guid _batchGuid;
+        internal Guid _changesetGuid;
         internal ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup = new ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)>();
         internal ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)> _requestMessages = new ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)>();
         private List<(ITableEntity entity, HttpMessage HttpMessage)> _submittedMessageList;
-        private bool _submitted = false;
+        private bool _submitted;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableTransactionalBatch"/> class.
@@ -61,7 +64,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="batchGuid">The batch boundary Guid.</param>
         /// <param name="changesetGuid">The changeset boundary Guid.</param>
-        internal void SetBatchGuids(Guid batchGuid, Guid changesetGuid)
+        internal virtual void SetBatchGuids(Guid batchGuid, Guid changesetGuid)
         {
             _batchGuid = batchGuid;
             _changesetGuid = changesetGuid;
@@ -256,7 +259,7 @@ namespace Azure.Data.Tables
         /// <param name="exception">The exception thrown from <see cref="TableTransactionalBatch.SubmitBatch(CancellationToken)"/> or <see cref="TableTransactionalBatch.SubmitBatchAsync(CancellationToken)"/>.</param>
         /// <param name="failedEntity">If the return value is <c>true</c>, contains the <see cref="ITableEntity"/> that caused the batch operation to fail.</param>
         /// <returns><c>true</c> if the failed entity was retrieved from the exception, else <c>false</c>.</returns>
-        public bool TryGetFailedEntityFromException(RequestFailedException exception, out ITableEntity failedEntity)
+        public virtual bool TryGetFailedEntityFromException(RequestFailedException exception, out ITableEntity failedEntity)
         {
             failedEntity = null;
 

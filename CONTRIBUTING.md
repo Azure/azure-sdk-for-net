@@ -9,9 +9,10 @@
 - Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 3.1.301 SDK** for your specific platform. (or a higher version within the 3.1.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/3.1)
+- Install **.NET Core 5.0.100 SDK** for your specific platform. (or a higher version within the 5.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/5.0)
 - Install the latest version of git (https://git-scm.com/downloads)
-- Install [NodeJS](https://nodejs.org/en/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
+- Install [NodeJS](https://nodejs.org/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
 
 ## GENERAL THINGS TO KNOW:
 
@@ -55,8 +56,11 @@ Nuget package will be created in root directory under \artifacts\packages\Debug 
 ### Using the command line:
 
 Run e.g. `msbuild eng\mgmt.proj /t:"Runtests" /p:Scope=Compute`
-In the above example _RunTests_ will build and run tests for Compute only or you can use command line CLI
-`dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj`
+In the above example _RunTests_ will build and run tests for Compute only or you can use command line CLI:
+
+```bash
+dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj
+```
 
 ### Non-Windows command line build
 
@@ -66,6 +70,22 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 - `dotnet msbuild eng\mgmt.proj /t:RunTests /p:scope=Compute`
 - `dotnet msbuild eng\mgmt.proj /t:CreateNugetPackage /p:scope=Compute`
 - `dotnet msbuild build.proj /t:Util /p:UtilityName=InstallPsModules`
+
+### Code Coverage
+
+If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
+
+```bash
+dotnet tool restore
+dotnet test /p:CollectCoverage=true
+```
+
+On developers' machines, you can open `index.html` from within the `TestResults` directory in each of your test projects.
+Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
+All covered projects should have 70% or better test coverage.
+
+By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
+To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
 
 ### Update build tools
 

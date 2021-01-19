@@ -144,10 +144,15 @@ namespace Azure.Storage.Files.Shares
         internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
 
         /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         //const string fileType = "file";
 
@@ -269,6 +274,31 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="ShareClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public ShareFileClient(Uri fileUri, AzureSasCredential credential, ShareClientOptions options = default)
+            : this(fileUri, credential.AsPolicy<ShareUriBuilder>(fileUri), options, null)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ShareFileClient"/>
         /// class.
         /// </summary>
@@ -294,6 +324,7 @@ namespace Azure.Storage.Files.Shares
             ShareClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
             _pipeline = options.Build(authentication);
@@ -312,6 +343,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -319,10 +353,16 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal ShareFileClient(Uri fileUri, HttpPipeline pipeline, ShareClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        internal ShareFileClient(
+            Uri fileUri,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            ShareClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
         {
             _uri = fileUri;
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
         }
@@ -349,7 +389,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareFileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new ShareUriBuilder(Uri) { Snapshot = shareSnapshot };
-            return new ShareFileClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics);
+            return new ShareFileClient(builder.ToUri(), Pipeline, SharedKeyCredential, Version, ClientDiagnostics);
         }
 
         /// <summary>
@@ -3174,7 +3214,6 @@ namespace Azure.Storage.Files.Shares
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="ClearRangeAsync"/>
         /// operation clears the <paramref name="range"/> of a file.
@@ -3759,8 +3798,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .ConfigureAwait(false);
 
-
-
         /// <summary>
         /// The <see cref="UploadRangeFromUriAsync(Uri, HttpRange, HttpRange, CancellationToken)"/>
         /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
@@ -4180,7 +4217,6 @@ namespace Azure.Storage.Files.Shares
                         async,
                         cancellationToken)
                         .ConfigureAwait(false);
-
                 }
             }
             finally
@@ -4706,6 +4742,7 @@ namespace Azure.Storage.Files.Shares
                         marker: marker,
                         maxresults: maxResults,
                         async: async,
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(GetHandles)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -4924,7 +4961,6 @@ namespace Azure.Storage.Files.Shares
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
                 handlesFailed += response.Value.NumberOfHandlesFailedToClose;
-
             } while (!string.IsNullOrEmpty(marker));
 
             return new CloseHandlesResult()
@@ -5284,7 +5320,7 @@ namespace Azure.Storage.Files.Shares
             }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

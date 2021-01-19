@@ -179,13 +179,18 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
         /// </summary>
-        internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
 
         /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -230,6 +235,77 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
+        /// </param>
+        /// <param name="fileSystemName">
+        /// The name of the file system containing this path.
+        /// </param>
+        /// <param name="path">
+        /// The path to the file or directory.
+        /// </param>
+        public DataLakePathClient(string connectionString, string fileSystemName, string path)
+            : this(connectionString, fileSystemName, path, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
+        /// </param>
+        /// <param name="fileSystemName">
+        /// The name of the file system containing this path.
+        /// </param>
+        /// <param name="path">
+        /// The path to the file or directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakePathClient(
+            string connectionString,
+            string fileSystemName,
+            string path,
+            DataLakeClientOptions options)
+        {
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            StorageSharedKeyCredential sharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(conn.BlobEndpoint)
+            {
+                FileSystemName = fileSystemName,
+                DirectoryOrFilePath = path
+            };
+            options ??= new DataLakeClientOptions();
+
+            _uri = uriBuilder.ToUri();
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
+            _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = sharedKeyCredential;
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
         /// class.
         /// </summary>
@@ -265,6 +341,53 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakePathClient(Uri pathUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
             : this(pathUri, credential.AsPolicy(), options, credential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the resource that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakePathClient(Uri pathUri, AzureSasCredential credential)
+            : this(pathUri, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the resource that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakePathClient(Uri pathUri, AzureSasCredential credential, DataLakeClientOptions options)
+            : this(pathUri, credential.AsPolicy<DataLakeUriBuilder>(pathUri), options, null)
         {
         }
 
@@ -349,6 +472,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(pathUri, nameof(pathUri));
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
             options ??= new DataLakeClientOptions();
             _uri = pathUri;
@@ -359,6 +483,14 @@ namespace Azure.Storage.Files.DataLake
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+
+            uriBuilder.DirectoryOrFilePath = null;
+            _fileSystemClient = new DataLakeFileSystemClient(
+                uriBuilder.ToDfsUri(),
+                _pipeline,
+                storageSharedKeyCredential,
+                Version,
+                ClientDiagnostics);
         }
 
         /// <summary>
@@ -373,12 +505,19 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions options = default)
+        internal DataLakePathClient(
+            Uri pathUri,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            DataLakeClientOptions options = default)
         {
             options ??= new DataLakeClientOptions();
             var uriBuilder = new DataLakeUriBuilder(pathUri);
@@ -386,6 +525,7 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
@@ -394,6 +534,7 @@ namespace Azure.Storage.Files.DataLake
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 _pipeline,
+                storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
         }
@@ -440,6 +581,7 @@ namespace Azure.Storage.Files.DataLake
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 pipeline,
+                null,
                 version,
                 clientDiagnostics);
         }
@@ -448,6 +590,7 @@ namespace Azure.Storage.Files.DataLake
             Uri fileSystemUri,
             string directoryOrFilePath,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             DataLakeClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics)
         {
@@ -459,6 +602,7 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _blockBlobClient = BlockBlobClientInternals.Create(
@@ -471,6 +615,7 @@ namespace Azure.Storage.Files.DataLake
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 pipeline,
+                storageSharedKeyCredential,
                 version,
                 clientDiagnostics);
         }
@@ -507,10 +652,10 @@ namespace Azure.Storage.Files.DataLake
             foreach (KeyValuePair<string, string> kv in metadata)
             {
                 sb.Append(kv.Key);
-                sb.Append("=");
+                sb.Append('=');
                 byte[] valueBytes = Encoding.UTF8.GetBytes(kv.Value);
                 sb.Append(Convert.ToBase64String(valueBytes));
-                sb.Append(",");
+                sb.Append(',');
             }
             sb.Remove(sb.Length - 1, 1);
             return sb.ToString();
@@ -776,7 +921,6 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(umask)}: {umask}\n");
                 try
                 {
-
                     Response<PathCreateResult> createResponse = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
@@ -882,7 +1026,6 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken)
                     .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="CreateIfNotExistsAsync(PathResourceType, PathHttpHeaders, Metadata, string, string, CancellationToken)"/>
         /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
@@ -942,7 +1085,6 @@ namespace Azure.Storage.Files.DataLake
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
-
 
         /// <summary>
         /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, bool, CancellationToken)"/>
@@ -1685,7 +1827,7 @@ namespace Azure.Storage.Files.DataLake
                     }
 
                     // Build destPathClient
-                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline);
+                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline, SharedKeyCredential);
 
                     Response<PathCreateResult> response = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,
@@ -2169,7 +2311,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlRecursive"/> operation sets the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2215,7 +2358,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlRecursiveAsync"/> operation sets the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2261,7 +2405,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="UpdateAccessControlRecursive"/> operation modifies the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2307,7 +2452,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="UpdateAccessControlRecursiveAsync"/> operation modifies the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2353,7 +2499,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="RemoveAccessControlRecursive"/> operation removes the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2399,7 +2546,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="RemoveAccessControlRecursiveAsync"/> operation removes the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -2445,7 +2593,8 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlRecursiveInternal"/> operation sets the
         /// Access Control on a path and subpaths
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="operationName">
         /// The operation name for diagnostic purpose.
@@ -2605,7 +2754,6 @@ namespace Azure.Storage.Files.DataLake
                                 }
                             }
                             batchesCount++;
-
                         } while (!string.IsNullOrEmpty(continuationToken)
                             && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
 
@@ -2714,7 +2862,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
 
         /// <summary>
@@ -2848,7 +2995,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
-                            permissions: permissions.ToSymbolicPermissions(),
+                            permissions: permissions?.ToSymbolicPermissions(),
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -3151,7 +3298,8 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetMetadata(
                     metadata,
-                    conditions.ToBlobRequestConditions());
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
 
                 return Response.FromValue(
                     response.Value.ToPathInfo(),
@@ -3208,7 +3356,8 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetMetadataAsync(
                     metadata,
-                    conditions.ToBlobRequestConditions())
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken)
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
@@ -3313,7 +3462,7 @@ namespace Azure.Storage.Files.DataLake
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

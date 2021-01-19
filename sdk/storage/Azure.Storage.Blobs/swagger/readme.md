@@ -1691,4 +1691,22 @@ directive:
         "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } } };
 ```
 
+### Hide BlobDeleteType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.BlobDeleteType
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide BlobRetentionPolicy.AllowPermanentDelete
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.RetentionPolicy
+  transform: >
+    delete $.properties.AllowPermanentDelete;
+```
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs%2Fswagger%2Freadme.png)

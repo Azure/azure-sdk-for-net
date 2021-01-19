@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the rule manager is disposed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsDisposed { get; private set; } = false;
+        public bool IsDisposed { get; private set; }
 
         /// <summary>
         /// The active connection to the Azure Service Bus service, enabling client communications for metadata
@@ -184,7 +184,6 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>Returns a list of rules description</returns>
         public virtual async Task<IList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken = default)
         {
-
             Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleStart(Identifier);

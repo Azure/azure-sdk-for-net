@@ -32,5 +32,14 @@ namespace Azure.Core.Tests
 
             return response ?? new HttpResponseMessage((HttpStatusCode)200);
         }
+
+#if NET5_0
+        protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            HttpResponseMessage response = _onSend(request).GetAwaiter().GetResult();
+
+            return response ?? new HttpResponseMessage((HttpStatusCode)200);
+        }
+#endif
     }
 }

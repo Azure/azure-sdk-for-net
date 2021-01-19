@@ -61,6 +61,13 @@
       "metadata": {
         "description": "The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung."
       }
+    },
+    "guidBaseValue": {
+      "type": "string",
+      "defaultValue": "[newGuid()]",
+      "metadata": {
+        "description": "The base value to use as part of GUID generation for resources requiring them, such as RBAC rules."
+      }
     }
   },
   "variables": {
@@ -68,13 +75,9 @@
     "eventHubsDataOwnerRoleId": "f526a384-b230-433a-b45c-95f59c4a2dec",
     "eventHubsNamespace": "[concat('eh-', parameters('baseName'))]",
     "storageAccount": "[concat('blb', parameters('baseName'))]",
-    "eventHubsNamespace_T1": "[concat('t1-', variables('eventHubsNamespace'))]",
-    "storageAccount_T1": "[concat('t1', variables('storageAccount'))]",
     "defaultSASKeyName": "RootManageSharedAccessKey",
     "eventHubsAuthRuleResourceId": "[resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventHubsNamespace'), variables('defaultSASKeyName'))]",
-    "eventHubsAuthRuleResourceId_T1": "[resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventHubsNamespace_T1'), variables('defaultSASKeyName'))]",
     "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount'))]",
-    "storageAccountId_T1": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_T1'))]"
   },
   "resources": [
     {
@@ -91,48 +94,6 @@
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2019-04-01",
       "name": "[variables('storageAccount')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard_LRS",
-        "tier": "Standard"
-      },
-      "kind": "BlobStorage",
-      "properties": {
-        "networkAcls": {
-          "bypass": "AzureServices",
-          "virtualNetworkRules": [],
-          "ipRules": [],
-          "defaultAction": "Allow"
-        },
-        "supportsHttpsTrafficOnly": true,
-        "encryption": {
-          "services": {
-            "file": {
-              "enabled": true
-            },
-            "blob": {
-              "enabled": true
-            }
-          },
-          "keySource": "Microsoft.Storage"
-        },
-        "accessTier": "Hot"
-      }
-    },
-    {
-      "apiVersion": "2015-08-01",
-      "name": "[variables('eventHubsNamespace_T1')]",
-      "type": "Microsoft.EventHub/Namespaces",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard",
-        "tier": "Standard"
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2019-04-01",
-      "name": "[variables('storageAccount_T1')]",
       "location": "[parameters('location')]",
       "sku": {
         "name": "Standard_LRS",
@@ -180,7 +141,7 @@
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('eventHubsDataOwnerRoleId'))]",
+      "name": "[guid(parameters('guidBaseValue'), parameters('baseName'), parameters('testApplicationOid'), variables('eventHubsDataOwnerRoleId'))]",
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('eventHubsDataOwnerRoleId'))]",
         "principalId": "[parameters('testApplicationOid')]",
@@ -190,7 +151,7 @@
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('contributorRoleId'))]",
+      "name": "[guid(parameters('guidBaseValue'), parameters('baseName'), parameters('testApplicationOid'), variables('contributorRoleId'))]",
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
         "principalId": "[parameters('testApplicationOid')]",
@@ -210,14 +171,6 @@
     "EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING": {
       "type": "string",
       "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccount'), ';AccountKey=', listKeys(variables('storageAccountId'), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=', parameters('storageEndpointSuffix'))]"
-    },
-    "EVENTHUB_T1_NAMESPACE_CONNECTION_STRING": {
-        "type": "string",
-        "value": "[listkeys(variables('eventHubsAuthRuleResourceId_T1'), '2015-08-01').primaryConnectionString]"
-    },
-    "EVENTHUB_T1_STORAGE_CONNECTION_STRING": {
-      "type": "string",
-      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccount_T1'), ';AccountKey=', listKeys(variables('storageAccountId_T1'), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=', parameters('storageEndpointSuffix'))]"
     }
   }
 }
