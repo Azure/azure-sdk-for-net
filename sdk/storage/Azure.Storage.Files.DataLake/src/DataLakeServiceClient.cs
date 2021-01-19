@@ -1099,6 +1099,8 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> that
         /// source file system has to meet to proceed with rename.
+        /// Note that LeaseId is the only request condition enforced by
+        /// this API.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1163,6 +1165,8 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> that
         /// source file system has to meet to proceed with rename.
+        /// Note that LeaseId is the only request condition enforced by
+        /// this API.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate

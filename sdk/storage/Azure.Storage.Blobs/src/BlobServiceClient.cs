@@ -1719,6 +1719,8 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceConditions">
         /// Optional <see cref="BlobRequestConditions"/> that
         /// source container has to meet to proceed with rename.
+        /// Note that LeaseId is the only request condition enforced by
+        /// this API.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1756,6 +1758,8 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceConditions">
         /// Optional <see cref="BlobRequestConditions"/> that
         /// source container has to meet to proceed with rename.
+        /// Note that LeaseId is the only request condition enforced by
+        /// this API.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
