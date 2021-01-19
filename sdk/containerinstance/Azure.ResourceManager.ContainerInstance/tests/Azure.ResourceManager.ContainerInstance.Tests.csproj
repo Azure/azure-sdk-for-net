@@ -7,6 +7,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.ContainerInstance.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Resources"/>
+    <PackageReference Include="Azure.ResourceManager.Resources" />
   </ItemGroup>
 </Project>
