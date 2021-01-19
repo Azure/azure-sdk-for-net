@@ -358,6 +358,24 @@ namespace Azure.Storage.Files.DataLake.Tests
             return dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 
+        public SasQueryParameters GetNewAccountSas(
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
+            AccountSasPermissions permissions = AccountSasPermissions.All,
+            StorageSharedKeyCredential sharedKeyCredentials = default)
+        {
+            var builder = new AccountSasBuilder
+            {
+                Protocol = SasProtocol.None,
+                Services = AccountSasServices.Blobs,
+                ResourceTypes = resourceTypes,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+            };
+            builder.SetPermissions(permissions);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
+
         //TODO consider removing this.
         public async Task<string> SetupPathMatchCondition(DataLakePathClient path, string match)
         {

@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate blob storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json
+input-file: C:\Users\seanmcc\git\azure-rest-api-specs\specification\storage\data-plane\Microsoft.BlobStorage\preview\2020-06-12\blob.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -1707,6 +1707,15 @@ directive:
   where: $.definitions.RetentionPolicy
   transform: >
     delete $.properties.AllowPermanentDelete;
+```
+
+### Hide ContainerSubmitBatchResult
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}?restype=container&comp=batch"]
+  transform: >
+    $.post.responses["202"]["x-az-public"] = false;
 ```
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs%2Fswagger%2Freadme.png)
