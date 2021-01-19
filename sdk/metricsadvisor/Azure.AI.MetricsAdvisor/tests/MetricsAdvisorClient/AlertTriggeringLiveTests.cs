@@ -63,6 +63,34 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        public async Task GetAlertsWithTokenCredential()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential: true);
+
+            var options = new GetAlertsOptions(SamplingStartTime, SamplingEndTime, AlertQueryTimeMode.AnomalyTime);
+
+            var alertCount = 0;
+
+            await foreach (AnomalyAlert alert in client.GetAlertsAsync(AlertConfigurationId, options))
+            {
+                Assert.That(alert, Is.Not.Null);
+                Assert.That(alert.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(alert.Timestamp, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(alert.CreatedTime, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(alert.ModifiedTime, Is.Not.EqualTo(default(DateTimeOffset)));
+
+                Assert.That(alert.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
+
+                if (++alertCount >= MaximumSamplesCount)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(alertCount, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
         public async Task GetAnomalies()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();

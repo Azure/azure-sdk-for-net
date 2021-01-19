@@ -22,9 +22,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var options = new MetricsAdvisorClientsOptions();
 
             Assert.That(() => new MetricsAdvisorAdministrationClient(null, credential), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, default(MetricsAdvisorKeyCredential)), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => new MetricsAdvisorAdministrationClient(null, credential, options), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, null, options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, default(MetricsAdvisorKeyCredential), options), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
