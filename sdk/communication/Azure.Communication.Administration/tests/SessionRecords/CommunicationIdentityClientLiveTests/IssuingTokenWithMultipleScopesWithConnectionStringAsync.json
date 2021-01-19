@@ -1,13 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/identities?api-version=2020-07-20-preview2",
+      "RequestUri": "https://sanitized.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 19 Jan 2021 18:31:44 GMT",
-        "traceparent": "00-aab5b9e3dc381e44b6656b57391b124f-4e80af6519f8304b-00",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "Date": "Tue, 19 Jan 2021 23:02:52 GMT",
+        "traceparent": "00-e647b251df20804aa4620d69499bbd0d-8433bb16b6bd724b-00",
         "User-Agent": [
           "azsdk-net-Communication.Administration/1.0.0-alpha.20210119.1",
           "(.NET 5.0.2; Microsoft Windows 10.0.18363)"
@@ -16,33 +18,35 @@
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": null,
+      "RequestBody": {},
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 18:31:43 GMT",
-        "MS-CV": "JeD8N\u002BL3D0qxPUJCb/efYw.0",
+        "Date": "Tue, 19 Jan 2021 23:02:50 GMT",
+        "MS-CV": "udJ5FL9GlECe1wtB/cBiuw.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0jyUHYAAAAACJunNddRZ3TL/rKb9qIrm0WVZSMzBFREdFMDMxNAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0G2UHYAAAAADwRk1GBVQVToKWqfpednuOWVZSMzBFREdFMDMyMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "x-ms-client-request-id": "ce71d9d3510f7ca667e18999423eba70",
-        "X-Processing-Time": "28ms"
+        "X-Processing-Time": "20ms"
       },
       "ResponseBody": {
-        "id": "Sanitized"
+        "identity": {
+          "id": "Sanitized"
+        }
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/identities/sanitized/token?api-version=2020-07-20-preview2",
+      "RequestUri": "https://sanitized.communication.azure.com/identities/sanitized/:issueAccessToken?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "26",
         "Content-Type": "application/json",
-        "Date": "Tue, 19 Jan 2021 18:31:44 GMT",
-        "traceparent": "00-e6c0226e4593a24cab5ce783c8d8a2a7-e15912ece7dc8440-00",
+        "Date": "Tue, 19 Jan 2021 23:02:52 GMT",
+        "traceparent": "00-37612b25cb93c1409838f5eb4e3f7693-282b759b87929046-00",
         "User-Agent": [
           "azsdk-net-Communication.Administration/1.0.0-alpha.20210119.1",
           "(.NET 5.0.2; Microsoft Windows 10.0.18363)"
@@ -61,18 +65,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 18:31:43 GMT",
-        "MS-CV": "ZiHgqfZ4IESnq4z01Y\u002Bb4g.0",
+        "Date": "Tue, 19 Jan 2021 23:02:50 GMT",
+        "MS-CV": "IxCbiYT6QkS7d5/hb31FcA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0jyUHYAAAAAA\u002BQ2Zj2eOeQ6RkgWYyyHrbWVZSMzBFREdFMDMxNAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0G2UHYAAAAADo671tXWLNRIB51bL3lk15WVZSMzBFREdFMDMyMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "x-ms-client-request-id": "208b14678f42e6a28edb748a05e6ac89",
-        "X-Processing-Time": "24ms"
+        "X-Processing-Time": "25ms"
       },
       "ResponseBody": {
-        "id": "Sanitized",
         "token": "Sanitized",
-        "expiresOn": "2021-01-20T18:31:42.5562103\u002B00:00"
+        "expiresOn": "2021-01-20T23:02:50.3916138\u002B00:00"
       }
     }
   ],

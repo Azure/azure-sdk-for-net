@@ -93,7 +93,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessTokenResult> response = RestClient.CreateIdentity(cancellationToken: cancellationToken);
+                Response<CommunicationIdentityAccessTokenResult> response = RestClient.CreateIdentity(Array.Empty<CommunicationTokenScope>(), cancellationToken);
                 var id = response.Value.Identity.Id;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
@@ -112,7 +112,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessTokenResult> response = await RestClient.CreateIdentityAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessTokenResult> response = await RestClient.CreateIdentityAsync(Array.Empty<CommunicationTokenScope>(), cancellationToken).ConfigureAwait(false);
                 var id = response.Value.Identity.Id;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }

@@ -1,13 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/identities?api-version=2020-07-20-preview2",
+      "RequestUri": "https://sanitized.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 19 Jan 2021 18:31:41 GMT",
-        "traceparent": "00-fe904cab97cf8743b4591b0ef71d843f-45ca4723271b4d48-00",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "Date": "Tue, 19 Jan 2021 23:02:28 GMT",
+        "traceparent": "00-7f039040750188419e1d613c2cd21d36-b4cd9384c5a24c4b-00",
         "User-Agent": [
           "azsdk-net-Communication.Administration/1.0.0-alpha.20210119.1",
           "(.NET 5.0.2; Microsoft Windows 10.0.18363)"
@@ -16,21 +18,23 @@
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": null,
+      "RequestBody": {},
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 18:31:40 GMT",
-        "MS-CV": "lKFLuN0j/Ui\u002BlOatpt6EgQ.0",
+        "Date": "Tue, 19 Jan 2021 23:02:27 GMT",
+        "MS-CV": "FqZA6U5PtUinCr0VwBSNlg.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0jCUHYAAAAADfHFTeHHFVRoBfLAEW85j3WVZSMzBFREdFMDMxNAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0BGUHYAAAAACqim4gArBaQ4j0Ie1w3MGlWVZSMzBFREdFMDMxOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "x-ms-client-request-id": "29bffe49a55706b616cc1b1d25322c09",
-        "X-Processing-Time": "21ms"
+        "X-Processing-Time": "19ms"
       },
       "ResponseBody": {
-        "id": "Sanitized"
+        "identity": {
+          "id": "Sanitized"
+        }
       }
     }
   ],

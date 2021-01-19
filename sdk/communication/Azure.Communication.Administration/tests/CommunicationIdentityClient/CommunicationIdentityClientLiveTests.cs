@@ -48,7 +48,7 @@ namespace Azure.Communication.Administration.Tests
             };
 
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
-            Response<CommunicationIdentityAccessToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
+            Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
             ValidateScopesIfNotSanitized();
