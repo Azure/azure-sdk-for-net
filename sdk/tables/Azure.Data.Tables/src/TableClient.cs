@@ -1087,7 +1087,7 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual TableTransactionalBatch CreateTransactionalBatch(string partitionKey)
         {
-            return new TableTransactionalBatch(_table, _tableOperations, _defaultQueryOptions.Format.Value);
+            return new TableTransactionalBatch(_table, partitionKey, _tableOperations, _defaultQueryOptions.Format.Value);
         }
 
         internal static string Bind(Expression expression)
