@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-dc4f29d6-35c5-bca6-650e-dbeb10bf53b6?restype=container\u0026comp=rename",
+      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-30942606-a508-d270-0583-036a0ba1c452?restype=container\u0026comp=rename",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "ad5ffd85-1855-3188-b97d-d641323bb1c3",
         "x-ms-date": "Mon, 23 Nov 2020 22:21:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-source-container-name": "test-container-30942606-a508-d270-0583-036a0ba1c452",
+        "x-ms-source-container-name": "test-container-dc4f29d6-35c5-bca6-650e-dbeb10bf53b6",
         "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
