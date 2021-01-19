@@ -34,9 +34,9 @@ namespace Azure.Communication.Administration.Tests
         [TestCase(AuthMethod.ConnectionString, "chat", TestName = "IssuingTokenWithSingleScopeWithConnectionString")]
         [TestCase(AuthMethod.KeyCredential, "chat", TestName = "IssuingTokenWithSingleScopeWithKeyCredential")]
         [TestCase(AuthMethod.TokenCredential, "chat", TestName = "IssuingTokenWithSingleScopeWithTokenCredential")]
-        [TestCase(AuthMethod.ConnectionString, "chat", "pstn", TestName = "IssuingTokenWithMultipleScopesWithConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, "chat", "pstn", TestName = "IssuingTokenWithMultipleScopesWithKeyCredential")]
-        [TestCase(AuthMethod.TokenCredential, "chat", "pstn", TestName = "IssuingTokenWithMultipleScopesWithTokenCredential")]
+        [TestCase(AuthMethod.ConnectionString, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithTokenCredential")]
         public async Task IssuingTokenGeneratesTokenAndIdentityWithScopes(AuthMethod authMethod, params string[] scopes)
         {
             CommunicationIdentityClient client = authMethod switch

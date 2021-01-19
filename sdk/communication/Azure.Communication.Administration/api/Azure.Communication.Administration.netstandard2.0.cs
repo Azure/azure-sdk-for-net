@@ -31,7 +31,6 @@ namespace Azure.Communication.Administration
         private readonly int _dummyPrimitive;
         public CommunicationTokenScope(string value) { throw null; }
         public static Azure.Communication.Administration.CommunicationTokenScope Chat { get { throw null; } }
-        public static Azure.Communication.Administration.CommunicationTokenScope Pstn { get { throw null; } }
         public static Azure.Communication.Administration.CommunicationTokenScope VoIP { get { throw null; } }
         public bool Equals(Azure.Communication.Administration.CommunicationTokenScope other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
