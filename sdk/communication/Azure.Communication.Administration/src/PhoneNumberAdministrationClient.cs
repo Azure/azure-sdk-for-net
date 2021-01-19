@@ -21,17 +21,31 @@ namespace Azure.Communication.Administration
         internal ClientDiagnostics ClientDiagnostics { get; private set; }
         internal PhoneNumberAdministrationRestClient RestClient { get; }
 
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberAdministrationClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public PhoneNumberAdministrationClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationIdentityClientOptions? options = default)
+            : this(
+                AssertNotNull(endpoint, nameof(endpoint)),
+                options ?? new CommunicationIdentityClientOptions(),
+                AssertNotNull(keyCredential, nameof(keyCredential)))
+        { }
+
         /// <summary>
-        /// Initializes a phone number administration client with an Azure resource connection string and optional client options.
+        /// Initializes a phone number administration client with an Azure resource connection string and client options.
         /// </summary>
         public PhoneNumberAdministrationClient(string connectionString, PhoneNumberAdministrationClientOptions? options = default)
             : this(
                   options ?? new PhoneNumberAdministrationClientOptions(),
-                  ConnectionString.Parse(connectionString))
+                  ConnectionString.Parse(AssertNotNull(connectionString, nameof(connectionString))))
         { }
 
         /// <summary>
         /// Initializes a phone number administration client with a token credential.
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="tokenCredential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         /// </summary>
         public PhoneNumberAdministrationClient(Uri endpoint, TokenCredential tokenCredential, PhoneNumberAdministrationClientOptions? options = default)
             : this(
@@ -40,18 +54,26 @@ namespace Azure.Communication.Administration
                   tokenCredential)
         { }
 
-        private PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
+        internal PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
             : this(new ClientDiagnostics(options), options.BuildHttpPipeline(connectionString), connectionString.GetRequired("endpoint"))
         { }
 
-        private PhoneNumberAdministrationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
+        internal PhoneNumberAdministrationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
         {
-            Argument.AssertNotNullOrEmpty(endpointUrl, nameof(endpointUrl));
             RestClient = new PhoneNumberAdministrationRestClient(clientDiagnostics, pipeline, endpointUrl);
             ClientDiagnostics = clientDiagnostics;
         }
 
-        private PhoneNumberAdministrationClient(Uri endpoint, PhoneNumberAdministrationClientOptions options, TokenCredential tokenCredential)
+        internal PhoneNumberAdministrationClient(Uri endpoint, CommunicationIdentityClientOptions options, AzureKeyCredential credential)
+        {
+            ClientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new PhoneNumberAdministrationRestClient(
+                ClientDiagnostics,
+                options.BuildHttpPipeline(credential),
+                endpoint.AbsoluteUri);
+        }
+
+        internal PhoneNumberAdministrationClient(Uri endpoint, PhoneNumberAdministrationClientOptions options, TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
@@ -304,7 +326,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return await RestClient.GetNumberConfigurationAsync(phoneNumber.Value, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetNumberConfigurationAsync(phoneNumber.PhoneNumber, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -323,7 +345,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return RestClient.GetNumberConfiguration(phoneNumber.Value, cancellationToken);
+                return RestClient.GetNumberConfiguration(phoneNumber.PhoneNumber, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -343,7 +365,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return await RestClient.ConfigureNumberAsync(pstnConfiguration, phoneNumber.Value, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ConfigureNumberAsync(pstnConfiguration, phoneNumber.PhoneNumber, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -363,7 +385,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return RestClient.ConfigureNumber(pstnConfiguration, phoneNumber.Value, cancellationToken);
+                return RestClient.ConfigureNumber(pstnConfiguration, phoneNumber.PhoneNumber, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -382,7 +404,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return await RestClient.UnconfigureNumberAsync(phoneNumber.Value, cancellationToken).ConfigureAwait(false);
+                return await RestClient.UnconfigureNumberAsync(phoneNumber.PhoneNumber, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -401,7 +423,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return RestClient.UnconfigureNumber(phoneNumber.Value, cancellationToken);
+                return RestClient.UnconfigureNumber(phoneNumber.PhoneNumber, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -633,7 +655,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                var response = await RestClient.ReleasePhoneNumbersAsync(phoneNumbers.Select(phoneNumber => phoneNumber.Value), cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.ReleasePhoneNumbersAsync(phoneNumbers.Select(phoneNumber => phoneNumber.PhoneNumber), cancellationToken).ConfigureAwait(false);
                 return new ReleasePhoneNumberOperation(
                        this,
                        response.Value.ReleaseId,
@@ -676,7 +698,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                var response = RestClient.ReleasePhoneNumbers(phoneNumbers.Select(phoneNumber => phoneNumber.Value), cancellationToken);
+                var response = RestClient.ReleasePhoneNumbers(phoneNumbers.Select(phoneNumber => phoneNumber.PhoneNumber), cancellationToken);
                 return new ReleasePhoneNumberOperation(
                        this,
                        response.Value.ReleaseId,
@@ -959,6 +981,13 @@ namespace Azure.Communication.Administration
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        private static T AssertNotNull<T>(T argument, string argumentName)
+            where T : class
+        {
+            Argument.AssertNotNull(argument, argumentName);
+            return argument;
         }
     }
 }
