@@ -223,39 +223,39 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expectedMethod, httpMethod);
         }
 
-        public static object[] AllHeadersWithValuesAndType =>
-            HeadersWithValuesAndType.Concat(SpecialHeadersWithValuesAndType).ToArray();
-
-         public static object[] HeadersWithValuesAndType =>
+         public static object[] HeadersWithValues =>
             new object[]
             {
-                new object[] { "Allow", "adcde", true },
-                new object[] { "Accept", "adcde", true },
-                new object[] { "Referer", "adcde", true },
-                new object[] { "User-Agent", "adcde", true },
-                new object[] { "Content-Disposition", "adcde", true },
-                new object[] { "Content-Encoding", "adcde", true },
-                new object[] { "Content-Language", "en-US", true },
-                new object[] { "Content-Location", "adcde", true },
-                new object[] { "Content-MD5", "adcde", true },
-                new object[] { "Content-Range", "adcde", true },
-                new object[] { "Content-Type", "text/xml", true },
-                new object[] { "Expires", "11/12/19", true },
-                new object[] { "Last-Modified", "11/12/19", true },
-                new object[] { "Custom-Header", "11/12/19", false },
-            };
-
-         public static object[] SpecialHeadersWithValuesAndType =>
-             new object[]
-             {
-                 new object[] { "Range", "bytes=0-", false },
-                 new object[] { "Range", "bytes=0-100", false },
-                 new object[] { "Content-Length", "16", true },
-                 new object[] { "Date", "Tue, 12 Nov 2019 08:00:00 GMT", false }
+                // Name, value, is content, supports multiple
+                new object[] { "Allow", "adcde", true, true },
+                new object[] { "Accept", "adcde", true, true },
+                new object[] { "Referer", "adcde", true, true },
+                new object[] { "User-Agent", "adcde", true, true },
+                new object[] { "Content-Disposition", "adcde", true, true },
+                new object[] { "Content-Encoding", "adcde", true, true },
+                new object[] { "Content-Language", "en-US", true, true },
+                new object[] { "Content-Location", "adcde", true, true },
+                new object[] { "Content-MD5", "adcde", true, true },
+                new object[] { "Content-Range", "adcde", true, true },
+                new object[] { "Content-Type", "text/xml", true, true },
+                new object[] { "Expires", "11/12/19", true, true },
+                new object[] { "Last-Modified", "11/12/19", true, true },
+                new object[] { "If-Modified-Since", "Tue, 12 Nov 2019 08:00:00 GMT", false, false },
+                new object[] { "Custom-Header", "11/12/19", false, true },
+                new object[] { "Expect", "text/json", false, true },
+                new object[] { "Host", "example.com", false, false },
+                new object[] { "Keep-Alive", "true", false, true },
+                new object[] { "Referer", "example.com", false, true },
+                new object[] { "WWW-Authenticate", "Basic realm=\"Access to the staging site\", charset=\"UTF-8\"", false, true },
+                new object[] { "Custom-Header", "11/12/19", false, true },
+                new object[] { "Range", "bytes=0-", false, false },
+                new object[] { "Range", "bytes=0-100", false, false },
+                new object[] { "Content-Length", "16", true, false },
+                new object[] { "Date", "Tue, 12 Nov 2019 08:00:00 GMT", false, false },
              };
 
-         [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
-         public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
+         [TestCaseSource(nameof(HeadersWithValues))]
+         public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
          {
             StringValues httpHeaderValues = default;
 
@@ -291,14 +291,14 @@ namespace Azure.Core.Tests
              Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
          }
 
-         [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
-         public async Task CanGetAndAddRequestHeadersUppercase(string headerName, string headerValue, bool contentHeader)
+         [TestCaseSource(nameof(HeadersWithValues))]
+         public async Task CanGetAndAddRequestHeadersUppercase(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
          {
-             await CanGetAndAddRequestHeaders(headerName.ToUpperInvariant(), headerValue, contentHeader);
+             await CanGetAndAddRequestHeaders(headerName.ToUpperInvariant(), headerValue, contentHeader, supportsMultiple);
          }
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public void TryGetReturnsCorrectValuesWhenNotFound(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public void TryGetReturnsCorrectValuesWhenNotFound(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
             var transport = GetTransport();
             Request request = transport.CreateRequest();
@@ -310,9 +310,11 @@ namespace Azure.Core.Tests
             Assert.IsNull(values);
         }
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanAddMultipleValuesToRequestHeader(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanAddMultipleValuesToRequestHeader(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
+            if (!supportsMultiple) return;
+
             var anotherHeaderValue = headerValue + "1";
             var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
 
@@ -349,13 +351,14 @@ namespace Azure.Core.Tests
             StringAssert.Contains(anotherHeaderValue, httpHeaderValues.ToString());
         }
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanGetAndSetResponseHeaders(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanGetAndSetResponseHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
             using TestServer testServer = new TestServer(
                 context =>
                 {
                     context.Response.Headers.Add(headerName, headerValue);
+                    context.Response.WriteAsync("1234567890123456");
                 });
 
             var transport = GetTransport();
@@ -374,9 +377,11 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
         }
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanGetAndSetMultiValueResponseHeaders(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanGetAndSetMultiValueResponseHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
+            if (!supportsMultiple) return;
+
             var anotherHeaderValue = headerValue + "1";
             var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
 
@@ -407,13 +412,19 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, joinedHeaderValues));
         }
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanRemoveHeaders(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanRemoveHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
+            // Some headers are required
+            bool checkOnServer = headerName != "Content-Length" && headerName != "Host";
+
             using TestServer testServer = new TestServer(
                 context =>
                 {
-                    Assert.False(context.Request.Headers.TryGetValue(headerName, out _));
+                    if (checkOnServer)
+                    {
+                        Assert.False(context.Request.Headers.TryGetValue(headerName, out _));
+                    }
                 });
 
             var transport = GetTransport();
@@ -430,8 +441,8 @@ namespace Azure.Core.Tests
             await ExecuteRequest(request, transport);
         }
 
-        [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
-        public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
             StringValues httpHeaderValues = default;
 
