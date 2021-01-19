@@ -6,9 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Mon, 18 Jan 2021 23:12:03 GMT",
-        "traceparent": "00-96e8210fb4577d4f84e23f7b94d75f8b-51a02deb444dd045-00",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20210118.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.18363 )",
+        "Date": "Tue, 19 Jan 2021 17:32:21 GMT",
+        "traceparent": "00-fcb1616ad03aa04798f5c09c8737be91-eedb2ee36b1e8c45-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20210119.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "599e3f91a5e52c4751efeb3d362c83bf",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -16,13 +19,13 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-01-15-preview3, 2020-07-20-preview1, 2020-07-20-preview2",
+        "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 18 Jan 2021 23:12:00 GMT",
-        "MS-CV": "GllDH2giEkCugm\u002BGZ\u002BSdyw.0",
+        "Date": "Tue, 19 Jan 2021 17:32:20 GMT",
+        "MS-CV": "ry3SbC2WKU\u002BFD5aIyhndUQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0wBUGYAAAAADfqnJX96onRpvf0geTR64YWVZSMzBFREdFMDQwNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0pBcHYAAAAADYff9ZFW8DQKHC\u002B4txqh\u002BIWVZSMzBFREdFMDMxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "x-ms-client-request-id": "599e3f91a5e52c4751efeb3d362c83bf",
         "X-Processing-Time": "18ms"
       },
@@ -38,9 +41,12 @@
         "Authorization": "Sanitized",
         "Content-Length": "19",
         "Content-Type": "application/json",
-        "Date": "Mon, 18 Jan 2021 23:12:09 GMT",
-        "traceparent": "00-96dbe9d4343f024ca8df0440dcb5f9a3-3a52ec1f99fb524b-00",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20210118.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.18363 )",
+        "Date": "Tue, 19 Jan 2021 17:32:21 GMT",
+        "traceparent": "00-55af68a792262b49a433158f2f90fdf2-4bd16bf693970942-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20210119.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "dd177535773c27b192187e24181c490b",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -52,20 +58,20 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-01-15-preview3, 2020-07-20-preview1, 2020-07-20-preview2",
+        "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 18 Jan 2021 23:12:06 GMT",
-        "MS-CV": "xSmzXnQOu0C2kdagpXdoBA.0",
+        "Date": "Tue, 19 Jan 2021 17:32:20 GMT",
+        "MS-CV": "HCp63hzGvk2isgV2RUQ61Q.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0xhUGYAAAAAB\u002B2IUx9REjRYLIsNn5jWrTWVZSMzBFREdFMDQwNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0pBcHYAAAAAB04mV/DUR\u002BSIGXF6jx7qSiWVZSMzBFREdFMDMxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "x-ms-client-request-id": "dd177535773c27b192187e24181c490b",
-        "X-Processing-Time": "25ms"
+        "X-Processing-Time": "26ms"
       },
       "ResponseBody": {
         "id": "Sanitized",
         "token": "Sanitized",
-        "expiresOn": "2021-01-19T23:12:05.4291448\u002B00:00"
+        "expiresOn": "2021-01-20T17:32:19.8098459\u002B00:00"
       }
     },
     {
@@ -75,9 +81,12 @@
         "Authorization": "Sanitized",
         "Content-Length": "50",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "Date": "Mon, 18 Jan 2021 23:12:13 GMT",
-        "traceparent": "00-14b2a2389d624047bd5c4469db130488-b3d400b66838f142-00",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20210118.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.18363 )",
+        "Date": "Tue, 19 Jan 2021 17:32:21 GMT",
+        "traceparent": "00-aa10a1d86800f54bb9bc81d996aabf28-e682b4efca0ebe4b-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20210119.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "24686484effdecd466d71c62c8c84196",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -87,13 +96,13 @@
       },
       "StatusCode": 204,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-01-15-preview3, 2020-07-20-preview1, 2020-07-20-preview2",
-        "Date": "Mon, 18 Jan 2021 23:12:10 GMT",
-        "MS-CV": "zEo5WD5RYkGHbfw96WU2UQ.0",
+        "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
+        "Date": "Tue, 19 Jan 2021 17:32:20 GMT",
+        "MS-CV": "2ABPNtyw6kuHZhVVbBQ60g.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0yhUGYAAAAADDkWeN5dA\u002BR7f2pGPAMUMQWVZSMzBFREdFMDQwNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0pBcHYAAAAACSchDzaPxnSLUAaCMFD2UPWVZSMzBFREdFMDMxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "x-ms-client-request-id": "24686484effdecd466d71c62c8c84196",
-        "X-Processing-Time": "11ms"
+        "X-Processing-Time": "12ms"
       },
       "ResponseBody": []
     },
@@ -102,9 +111,12 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Mon, 18 Jan 2021 23:12:14 GMT",
-        "traceparent": "00-a6e011137125a240914ce27f72d29e77-d354d4193022134a-00",
-        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20210118.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.18363 )",
+        "Date": "Tue, 19 Jan 2021 17:32:21 GMT",
+        "traceparent": "00-38abdc3b60d3b24a8f2a3be4c2f47ae4-74861c5a8eba2b4b-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20210119.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.18363)"
+        ],
         "x-ms-client-request-id": "9e29fde5a0d719fa8d77c7cc26221435",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -112,13 +124,13 @@
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-01-15-preview3, 2020-07-20-preview1, 2020-07-20-preview2",
-        "Date": "Mon, 18 Jan 2021 23:12:12 GMT",
-        "MS-CV": "j71Cyh7T00i3GOgWwakraA.0",
+        "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
+        "Date": "Tue, 19 Jan 2021 17:32:21 GMT",
+        "MS-CV": "JWzwTOCuZkWw3/Nk16og\u002BQ.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0yxUGYAAAAACDdebgf/dsQazNR9OFxKiLWVZSMzBFREdFMDQwNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0pBcHYAAAAAAgJex4qB90RqFYLtURefU9WVZSMzBFREdFMDMxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "x-ms-client-request-id": "9e29fde5a0d719fa8d77c7cc26221435",
-        "X-Processing-Time": "714ms"
+        "X-Processing-Time": "959ms"
       },
       "ResponseBody": []
     }

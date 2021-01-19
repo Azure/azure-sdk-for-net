@@ -103,7 +103,7 @@ namespace Azure.Communication.Administration.Samples
         public async Task CreateIdentityWithToken()
         {
             #region Snippet:CreateCommunicationIdentityFromToken
-            var endpoint = new Uri("my-resource.communication.azure.com");
+            var endpoint = new Uri("https://my-resource.communication.azure.com");
             /*@@*/ endpoint = TestEnvironment.Endpoint;
             TokenCredential tokenCredential = new DefaultAzureCredential();
             var client = new CommunicationIdentityClient(endpoint, tokenCredential);

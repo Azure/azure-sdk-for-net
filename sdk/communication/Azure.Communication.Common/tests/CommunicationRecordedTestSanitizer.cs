@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -17,6 +16,7 @@ namespace Azure.Communication.Pipeline
         private static readonly Regex _guidRegEx = new Regex(@"(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}", RegexOptions.Compiled);
 
         internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
+        internal const string EndpointEnvironmentVariableName = "COMMUNICATION_ENDPOINT";
 
         public CommunicationRecordedTestSanitizer() : base()
         {
@@ -25,7 +25,6 @@ namespace Azure.Communication.Pipeline
             JsonPathSanitizers.Add("$..phonePlanId");
             JsonPathSanitizers.Add("$..phonePlanGroupId");
             JsonPathSanitizers.Add("$..phonePlanIds[:]");
-            JsonPathSanitizers.Add("$..COMMUNICATION_ENDPOINT_STRING");
         }
 
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
@@ -52,6 +51,7 @@ namespace Azure.Communication.Pipeline
             => variableName switch
             {
                 ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
+                EndpointEnvironmentVariableName => SanitizeAzureResource(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
 
