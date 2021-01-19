@@ -12,18 +12,20 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
     {
         private readonly RemoteRenderingAccount _account;
         private readonly string _accountKey;
+        private readonly Uri _serviceEndpoint;
 
         public RemoteRenderingCreateSessionSample()
         {
             _account = new RemoteRenderingAccount(TestEnvironment.AccountId, TestEnvironment.AccountDomain);
             _accountKey = TestEnvironment.AccountKey;
+            _serviceEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
         }
 
         public void CreateSession()
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
 
-            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential, _serviceEndpoint);
 
             #region Snippet:CreateASession
 
@@ -72,7 +74,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
 
-            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential, _serviceEndpoint);
 
             string sessionId = Guid.NewGuid().ToString();
 
@@ -95,7 +97,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
 
-            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential, _serviceEndpoint);
 
             string sessionId = Guid.NewGuid().ToString();
 

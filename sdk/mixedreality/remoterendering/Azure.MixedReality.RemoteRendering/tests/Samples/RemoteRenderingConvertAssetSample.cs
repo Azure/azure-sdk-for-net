@@ -12,18 +12,20 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
     {
         private readonly RemoteRenderingAccount _account;
         private readonly string _accountKey;
+        private readonly Uri _serviceEndpoint;
 
         public RemoteRenderingConvertAssetSample()
         {
             _account = new RemoteRenderingAccount(TestEnvironment.AccountId, TestEnvironment.AccountDomain);
             _accountKey = TestEnvironment.AccountKey;
+            _serviceEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
         }
 
         public void ConvertAsset()
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
 
-            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential, _serviceEndpoint);
 
             #region Snippet:StartAnAssetConversion
 
@@ -63,7 +65,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
 
-            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential);
+            RemoteRenderingClient client = new RemoteRenderingClient(_account, accountKeyCredential, _serviceEndpoint);
 
             ConversionInputSettings input = new ConversionInputSettings("MyInputContainer", "box.fbx");
             ConversionOutputSettings output = new ConversionOutputSettings("MyOutputContainer");

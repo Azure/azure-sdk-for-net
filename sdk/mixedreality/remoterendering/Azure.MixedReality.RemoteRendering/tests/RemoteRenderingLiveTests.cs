@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
-using Azure.Core;
 using Azure.MixedReality.RemoteRendering.Models;
 using NUnit.Framework;
+using System;
 
 namespace Azure.MixedReality.RemoteRendering.Tests
 {
@@ -12,12 +12,14 @@ namespace Azure.MixedReality.RemoteRendering.Tests
     {
         private readonly RemoteRenderingAccount _account;
         private readonly string _accountKey;
+        private readonly Uri _serviceEndpoint;
 
         public RemoteRenderingLiveTests(bool isAsync) :
             base(isAsync /*, RecordedTestMode.Record */)
         {
             _account = new RemoteRenderingAccount(TestEnvironment.AccountId, TestEnvironment.AccountDomain);
             _accountKey = TestEnvironment.AccountKey;
+            _serviceEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
         }
 
         //[RecordedTest]
@@ -79,7 +81,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
 
             var options = InstrumentClientOptions(new RemoteRenderingClientOptions());
-            return InstrumentClient(new RemoteRenderingClient(_account, accountKeyCredential));
+            return InstrumentClient(new RemoteRenderingClient(_account, accountKeyCredential, _serviceEndpoint));
         }
     }
 }

@@ -21,17 +21,11 @@ namespace Azure.MixedReality.RemoteRendering
         internal Uri? AuthenticationEndpoint { get; }
 
         /// <summary>
-        /// Gets the service endpoint.
-        /// </summary>
-        internal Uri? ServiceEndpoint { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClientOptions"/> class.
         /// </summary>
         /// <param name="version">The version.</param>
-        /// <param name="serviceEndpoint">The service endpoint.</param>
         /// <param name="authenticationEndpoint">The authentication endpoint.</param>
-        public RemoteRenderingClientOptions(ServiceVersion version = ServiceVersion.V2021_01_01_preview, Uri? serviceEndpoint = null, Uri? authenticationEndpoint = null)
+        public RemoteRenderingClientOptions(ServiceVersion version = ServiceVersion.V2021_01_01_preview, Uri? authenticationEndpoint = null)
         {
             Version = version switch
             {
@@ -39,7 +33,6 @@ namespace Azure.MixedReality.RemoteRendering
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
 
-            ServiceEndpoint = serviceEndpoint;
             AuthenticationEndpoint = authenticationEndpoint;
         }
 

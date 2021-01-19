@@ -8,7 +8,7 @@ Azure Remote Rendering (ARR) is a service that enables you to render high-qualit
   - [Getting started](#getting-started)
     - [Install the package](#install-the-package)
     - [Prerequisites](#prerequisites)
-    - [Authenticate the client](#authenticate-the-client)
+    - [Creating the client](#creating-the-client)
       - [Authenticating with account key authentication](#authenticating-with-account-key-authentication)
       - [Authenticating with an AAD client secret](#authenticating-with-an-aad-client-secret)
       - [Authenticating a user using device code authentication](#authenticating-a-user-using-device-code-authentication)
@@ -59,7 +59,9 @@ Include a section after the install command that details any requirements that m
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
 
-### Authenticate the client
+### Creating the client
+
+Constructing a remote rendering client requires an authenticated account, and a service endpoint.
 
 Azure Remote Rendering supports a few different forms of authentication:
 
@@ -76,12 +78,17 @@ Azure Remote Rendering supports a few different forms of authentication:
 
 See [here](https://docs.microsoft.com/azure/remote-rendering/how-tos/authentication) for detailed instructions and information.
 
+In all the following examples, the client is constructed with a provided service endpoint, `serviceUri`.
+The available endpoints correspond to regions, and the choice of endpoint determines the region in which the service performs its work.
+For converting assets, it is preferable to pick a region close to the storage containing the assets.
+For rendering, it is strongly recommended that you pick the closest region to the devices using the service.
+
 #### Authenticating with account key authentication
 
 Use the `AccountKeyCredential` object to use an account identifier and account key to authenticate:
 
 ```csharp
-RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
+RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain, serviceUri);
 AzureKeyCredential accountKeyCredential = new AzureKeyCredential(accountKey);
 
 RemoteRenderingClient client = new RemoteRenderingClient(account, accountKeyCredential);
@@ -99,7 +106,7 @@ TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clie
     AuthorityHost = new Uri($"https://login.microsoftonline.com/{tenantId}")
 });
 
-RemoteRenderingClient client = new RemoteRenderingClient(account, credential);
+RemoteRenderingClient client = new RemoteRenderingClient(account, credential, serviceUri);
 ```
 
 #### Authenticating a user using device code authentication
@@ -121,7 +128,7 @@ TokenCredential credential = new DeviceCodeCredential(deviceCodeCallback, tenant
     AuthorityHost = new Uri($"https://login.microsoftonline.com/{tenantId}"),
 });
 
-RemoteRenderingClient client = new RemoteRenderingClient(account, credential);
+RemoteRenderingClient client = new RemoteRenderingClient(account, credential, serviceUri);
 ```
 
 See [here](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow) for more
@@ -136,7 +143,7 @@ flow:
 RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 TokenCredential credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
 
-RemoteRenderingClient client = new RemoteRenderingClient(account, credential);
+RemoteRenderingClient client = new RemoteRenderingClient(account, credential, serviceUri);
 ```
 
 #### Authenticating with a static access token
@@ -153,7 +160,7 @@ RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDo
 // to the client.
 AccessToken accessToken = GetMixedRealityAccessTokenFromWebService();
 
-RemoteRenderingClient client = new RemoteRenderingClient(account, accessToken);
+RemoteRenderingClient client = new RemoteRenderingClient(account, accessToken, serviceUri);
 ```
 
 ## Key concepts

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using System;
 
 namespace Azure.MixedReality.RemoteRendering.Tests
 {
@@ -32,5 +33,13 @@ namespace Azure.MixedReality.RemoteRendering.Tests
         /// Set the MIXEDREALITY_ACCOUNT_KEY environment variable.
         /// </remarks>
         public string AccountKey => GetRecordedVariable("ACCOUNT_KEY");
+
+        /// <summary>
+        /// Gets the service endpoint.
+        /// </summary>
+        /// <remarks>
+        /// Set the MIXEDREALITY_ACCOUNT_KEY environment variable.
+        /// </remarks>
+        public string ServiceEndpoint => GetRecordedVariable("SERVICE_ENDPOINT");
     }
 }

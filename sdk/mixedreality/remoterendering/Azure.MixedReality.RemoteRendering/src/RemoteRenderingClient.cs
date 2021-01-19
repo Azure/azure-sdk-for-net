@@ -34,26 +34,29 @@ namespace Azure.MixedReality.RemoteRendering
         /// </summary>
         /// <param name="account">The Azure Remote Rendering account details.</param>
         /// <param name="accessToken">An access token used to access the specified Azure Remote Rendering account.</param>
+        /// <param name="serviceEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
         /// <param name="options">The options.</param>
-        public RemoteRenderingClient(RemoteRenderingAccount account, AccessToken accessToken, RemoteRenderingClientOptions? options = null)
-            : this(account, new StaticAccessTokenCredential(accessToken), options) { }
+        public RemoteRenderingClient(RemoteRenderingAccount account, AccessToken accessToken, Uri serviceEndpoint, RemoteRenderingClientOptions? options = null)
+            : this(account, new StaticAccessTokenCredential(accessToken), serviceEndpoint, options) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
         /// <param name="account">The Azure Remote Rendering account details.</param>
         /// <param name="keyCredential">The Azure Remote Rendering account primary or secondary key credential.</param>
+        /// <param name="serviceEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
         /// <param name="options">The options.</param>
-        public RemoteRenderingClient(RemoteRenderingAccount account, AzureKeyCredential keyCredential, RemoteRenderingClientOptions? options = null)
-            : this(account, new MixedRealityAccountKeyCredential(account.AccountId, keyCredential), options) { }
+        public RemoteRenderingClient(RemoteRenderingAccount account, AzureKeyCredential keyCredential, Uri serviceEndpoint, RemoteRenderingClientOptions? options = null)
+            : this(account, new MixedRealityAccountKeyCredential(account.AccountId, keyCredential), serviceEndpoint, options) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
         /// <param name="account">The Azure Remote Rendering account details.</param>
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
+        /// <param name="serviceEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
         /// <param name="options">The options.</param>
-        public RemoteRenderingClient(RemoteRenderingAccount account, TokenCredential credential, RemoteRenderingClientOptions? options = null)
+        public RemoteRenderingClient(RemoteRenderingAccount account, TokenCredential credential, Uri serviceEndpoint, RemoteRenderingClientOptions? options = null)
         {
             Argument.AssertNotNull(account, nameof(account));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -62,7 +65,6 @@ namespace Azure.MixedReality.RemoteRendering
 
             Uri authenticationEndpoint = options.AuthenticationEndpoint ?? AuthenticationEndpoint.ConstructFromDomain(account.AccountDomain);
             TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(account.AccountId, authenticationEndpoint, credential);
-            Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructRemoteRenderingEndpointUrl(account.AccountDomain);
 
             _account = account;
             // TODO Would be better is account.AccountId _was_ a GUID already.
@@ -510,7 +512,7 @@ namespace Azure.MixedReality.RemoteRendering
         {
             Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
 
-            if (!Uri.TryCreate($"https://manage.sa.{accountDomain}", UriKind.Absolute, out Uri result))
+            if (!Uri.TryCreate($"https://remoterendering.mixedreality.{accountDomain}", UriKind.Absolute, out Uri result))
             {
                 throw new ArgumentException("The value could not be used to construct a valid endpoint.", nameof(accountDomain));
             }
