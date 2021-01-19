@@ -580,6 +580,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/18058
         public async Task SetBlobAccessTier_Basic_AccountSas()
         {
             BlobServiceClient blobServiceClient = InstrumentClient(GetServiceClient_AccountSas());
