@@ -1066,7 +1066,7 @@ namespace Azure.Data.Tables.Tests
 
             // Add a Delete operation.
             var entityToDelete = entitiesToCreate[1];
-            batch.DeleteEntity(entityToDelete.PartitionKey, entityToDelete.RowKey, ETag.All);
+            batch.DeleteEntity(entityToDelete.RowKey, ETag.All);
 
             // Add an Upsert operation to replace the entity with an updated value.
             entitiesToCreate[2].StringTypeProperty = updatedString;
