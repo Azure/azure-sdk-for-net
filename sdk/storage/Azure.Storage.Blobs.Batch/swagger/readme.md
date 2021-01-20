@@ -204,21 +204,3 @@ directive:
   transform: >
     delete $.enum
 ```
-
-### Hide BlobDeleteType
-``` yaml
-directive:
-- from: swagger-document
-  where: $.parameters.BlobDeleteType
-  transform: >
-    $["x-az-public"] = false;
-```
-
-### Treat the API version as a parameter instead of a constant
-``` yaml
-directive:
-- from: swagger-document
-  where: $.parameters.ApiVersionParameter
-  transform: >
-    delete $.enum
-```
