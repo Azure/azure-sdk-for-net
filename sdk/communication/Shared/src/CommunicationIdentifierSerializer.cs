@@ -34,7 +34,7 @@ namespace Azure.Communication
             {
                 CommunicationUserIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.CommunicationUser) { Id = u.Id },
                 CallingApplicationIdentifier a => new CommunicationIdentifierModel(CommunicationIdentifierKind.CallingApplication) { Id = a.Id },
-                PhoneNumberIdentifier p => new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber) { PhoneNumber = p.Value },
+                PhoneNumberIdentifier p => new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber) { PhoneNumber = p.PhoneNumber },
                 MicrosoftTeamsUserIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { MicrosoftTeamsUserId = u.UserId, IsAnonymous = u.IsAnonymous },
                 UnknownIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.Unknown) { Id = u.Id },
                 _ => throw new NotSupportedException(),

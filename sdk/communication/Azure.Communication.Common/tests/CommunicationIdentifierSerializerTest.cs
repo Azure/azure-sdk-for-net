@@ -132,7 +132,7 @@ namespace Azure.Communication
             PhoneNumberIdentifier expectedIdentifier = new PhoneNumberIdentifier("+12223334444");
 
             Assert.True(identifier is PhoneNumberIdentifier);
-            Assert.AreEqual(expectedIdentifier.Value, ((PhoneNumberIdentifier)identifier).Value);
+            Assert.AreEqual(expectedIdentifier.PhoneNumber, ((PhoneNumberIdentifier)identifier).PhoneNumber);
             Assert.AreEqual(expectedIdentifier, identifier);
         }
 

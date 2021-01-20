@@ -47,7 +47,7 @@ namespace Azure.Communication
     public partial class PhoneNumberIdentifier : Azure.Communication.CommunicationIdentifier
     {
         public PhoneNumberIdentifier(string phoneNumber) { }
-        public string Value { get { throw null; } }
+        public string PhoneNumber { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
