@@ -162,7 +162,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     {
                     }
 
-                    if (batch.Count <= 4500)
+                    if (batch.Count < 4500)
                     {
                         // the difference in size from the max allowable size should be less than the size of 1 message
                         Assert.IsTrue(batch.MaxSizeInBytes - batch.SizeInBytes < 180);
