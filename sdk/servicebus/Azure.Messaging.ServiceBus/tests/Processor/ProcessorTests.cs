@@ -281,5 +281,40 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
         }
+
+        [Test]
+        public async Task CanDisposeStartedProcessorMultipleTimes()
+        {
+            var processor = new ServiceBusProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                false,
+                new ServiceBusPlugin[] { },
+                new ServiceBusProcessorOptions());
+            processor.ProcessMessageAsync += _ => Task.CompletedTask;
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+            await processor.StartProcessingAsync().ConfigureAwait(false);
+
+            await processor.DisposeAsync();
+            await processor.DisposeAsync();
+        }
+
+        [Test]
+        public async Task CanDisposeClosedProcessor()
+        {
+            var processor = new ServiceBusProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                false,
+                new ServiceBusPlugin[] { },
+                new ServiceBusProcessorOptions());
+
+            processor.ProcessMessageAsync += _ => Task.CompletedTask;
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+            await processor.StartProcessingAsync().ConfigureAwait(false);
+            await processor.CloseAsync();
+
+            await processor.DisposeAsync();
+        }
     }
 }

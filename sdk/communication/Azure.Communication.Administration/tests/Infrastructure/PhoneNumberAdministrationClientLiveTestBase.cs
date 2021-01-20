@@ -26,7 +26,9 @@ namespace Azure.Communication.Administration.Tests
                     TestEnvironment.ConnectionString,
                     InstrumentClientOptions(new PhoneNumberAdministrationClientOptions()));
 
-            return isInstrumented ? InstrumentClient(client) : client;
+            // We always create the instrumented client to suppress the instrumentation check
+            var instrumentedClient = InstrumentClient(client);
+            return isInstrumented ? instrumentedClient : client;
         }
     }
 }

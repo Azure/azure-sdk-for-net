@@ -25,7 +25,6 @@ extends:
   parameters:
     ServiceDirectory: timeseriesinsights
     ArtifactName: packages
-    TestPipeline: true
     Artifacts:
     - name: Azure.Iot.TimeSeriesInsights
       safeName: AzureTimeSeriesInsights

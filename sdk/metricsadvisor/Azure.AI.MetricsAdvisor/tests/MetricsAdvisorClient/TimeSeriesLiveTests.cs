@@ -17,11 +17,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetDimensionValuesWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetDimensionValuesWithMinimumSetup(bool useTokenCredential)
         {
             const string dimensionName = "city";
 
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var valueCount = 0;
 
@@ -68,9 +70,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetMetricSeriesDefinitionsWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricSeriesDefinitionsWithMinimumSetup(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var options = new GetMetricSeriesDefinitionsOptions(SamplingStartTime);
 
@@ -132,9 +136,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetMetricSeriesData()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricSeriesData(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var seriesKey1 = new DimensionKey();
             seriesKey1.AddDimensionColumn("city", "Delhi");
@@ -173,9 +179,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetMetricEnrichmentStatuses()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricEnrichmentStatuses(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var options = new GetMetricEnrichmentStatusesOptions(SamplingStartTime, SamplingEndTime);
 

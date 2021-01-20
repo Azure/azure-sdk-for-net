@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             // Replace the string below with your actual datalake endpoint url.
             string dataLakeEndpoint = "<my-datalake-url>";
-            /*@@*/endpoint = "adl://test.azuredatalakestore.net/";
+            /*@@*/dataLakeEndpoint = "adl://test.azuredatalakestore.net/";
 
             string serviceName = "Test-LinkedService";
             #endregion

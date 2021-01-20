@@ -39,48 +39,40 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         {
             // Start the Spark session
             SparkSessionOptions createParams = this.CreateSparkSessionRequestParameters();
-            SparkSession sessionCreateResponse = (await SparkSessionClient.CreateSparkSessionAsync(createParams)).Value;
-
-            // Poll the spark session initialization until it is successful.
-            SparkSession getSessionResponse = await this.PollSparkSessionAsync(sessionCreateResponse);
+            SparkSessionOperation sessionOperation = await SparkSessionClient.StartCreateSparkSessionAsync(createParams);
+            SparkSession sessionCreateResponse = await sessionOperation.WaitForCompletionAsync();
 
             // Verify the Spark session completes successfully
-            Assert.True("idle".Equals(getSessionResponse.State, StringComparison.OrdinalIgnoreCase) && getSessionResponse.Result == SparkSessionResultType.Succeeded,
+            Assert.True("idle".Equals(sessionCreateResponse.State, StringComparison.OrdinalIgnoreCase) && sessionCreateResponse.Result == SparkSessionResultType.Succeeded,
                 string.Format(
                     "Session: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
-                    getSessionResponse.Id,
-                    getSessionResponse.State,
-                    getSessionResponse.Result,
-                    string.Join(", ", getSessionResponse.Errors ?? new List<SparkServiceError>())
+                    sessionCreateResponse.Id,
+                    sessionCreateResponse.State,
+                    sessionCreateResponse.Result,
+                    string.Join(", ", sessionCreateResponse.Errors ?? new List<SparkServiceError>())
                 )
             );
 
             // Execute Spark statement in the session
-            SparkStatement createStatementResponse = (await SparkSessionClient.CreateSparkStatementAsync(
-                getSessionResponse.Id,
-                new SparkStatementOptions
-                {
+            var sparkStatementOptions = new SparkStatementOptions {
                     Kind = SparkStatementLanguageType.Spark,
                     Code = @"print(""Hello world\n"")"
-                })).Value;
-
-            SparkStatement getStatementResponse = await this.PollSparkSessionStatementAsync(
-                getSessionResponse.Id,
-                createStatementResponse);
-
-            Assert.NotNull(getSessionResponse);
+            };
+            SparkStatementOperation statementOperation = await SparkSessionClient.StartCreateSparkStatementAsync(sessionCreateResponse.Id, sparkStatementOptions);
+            SparkStatement createStatementResponse = await statementOperation.WaitForCompletionAsync();
+            Assert.NotNull(createStatementResponse);
 
             // Verify the Spark statement completes successfully
-            Assert.True("ok".Equals(getStatementResponse.State, StringComparison.OrdinalIgnoreCase),
+            Assert.True("ok".Equals(createStatementResponse.State, StringComparison.OrdinalIgnoreCase),
                 string.Format(
                     "Spark statement: {0} did not return success. Current job state: {1}. Error (if any): {2}",
-                    getStatementResponse.Id,
-                    getStatementResponse.State,
-                    getStatementResponse.Output.ErrorValue)
+                    createStatementResponse.Id,
+                    createStatementResponse.State,
+                    createStatementResponse.Output.ErrorValue)
             );
 
             // Verify the output
-            Dictionary<string, string> outputData = JsonSerializer.Deserialize<Dictionary<string, string>>(getStatementResponse.Output.Data as string);
+            Dictionary<string, string> outputData = JsonSerializer.Deserialize<Dictionary<string, string>>(createStatementResponse.Output.Data as string);
             Assert.Equals("Hello world", outputData["text/plain"]);
 
             // Get the list of Spark statements and check that the executed statement exists
