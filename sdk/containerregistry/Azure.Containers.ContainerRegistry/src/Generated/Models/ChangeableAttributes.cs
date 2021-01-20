@@ -8,20 +8,33 @@
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> The ChangeableAttributes. </summary>
-    internal partial class ChangeableAttributes
+    public partial class ChangeableAttributes
     {
         /// <summary> Initializes a new instance of ChangeableAttributes. </summary>
-        internal ChangeableAttributes()
+        public ChangeableAttributes()
         {
         }
 
+        /// <summary> Initializes a new instance of ChangeableAttributes. </summary>
+        /// <param name="deleteEnabled"> Delete enabled. </param>
+        /// <param name="writeEnabled"> Write enabled. </param>
+        /// <param name="listEnabled"> List enabled. </param>
+        /// <param name="readEnabled"> Read enabled. </param>
+        internal ChangeableAttributes(bool? deleteEnabled, bool? writeEnabled, bool? listEnabled, bool? readEnabled)
+        {
+            DeleteEnabled = deleteEnabled;
+            WriteEnabled = writeEnabled;
+            ListEnabled = listEnabled;
+            ReadEnabled = readEnabled;
+        }
+
         /// <summary> Delete enabled. </summary>
-        public bool? DeleteEnabled { get; }
+        public bool? DeleteEnabled { get; set; }
         /// <summary> Write enabled. </summary>
-        public bool? WriteEnabled { get; }
+        public bool? WriteEnabled { get; set; }
         /// <summary> List enabled. </summary>
-        public bool? ListEnabled { get; }
+        public bool? ListEnabled { get; set; }
         /// <summary> Read enabled. </summary>
-        public bool? ReadEnabled { get; }
+        public bool? ReadEnabled { get; set; }
     }
 }

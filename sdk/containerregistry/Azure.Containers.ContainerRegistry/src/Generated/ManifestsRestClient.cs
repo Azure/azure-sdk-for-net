@@ -290,5 +290,251 @@ namespace Azure.Containers.ContainerRegistry
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateGetListRequest(string name, string last, int? n, string orderby)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_manifests", false);
+            if (last != null)
+            {
+                uri.AppendQuery("last", last, true);
+            }
+            if (n != null)
+            {
+                uri.AppendQuery("n", n.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> List manifests of a repository. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
+        /// <param name="n"> query parameter for max number of items. </param>
+        /// <param name="orderby"> orderby query parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public async Task<Response<AcrManifests>> GetListAsync(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var message = CreateGetListRequest(name, last, n, orderby);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AcrManifests value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AcrManifests.DeserializeAcrManifests(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> List manifests of a repository. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
+        /// <param name="n"> query parameter for max number of items. </param>
+        /// <param name="orderby"> orderby query parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public Response<AcrManifests> GetList(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var message = CreateGetListRequest(name, last, n, orderby);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AcrManifests value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AcrManifests.DeserializeAcrManifests(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAttributesRequest(string name, string reference)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_manifests/", false);
+            uri.AppendPath(reference, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get manifest attributes. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        public async Task<Response<ManifestAttributes>> GetAttributesAsync(string name, string reference, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (reference == null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            using var message = CreateGetAttributesRequest(name, reference);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManifestAttributes value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ManifestAttributes.DeserializeManifestAttributes(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get manifest attributes. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        public Response<ManifestAttributes> GetAttributes(string name, string reference, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (reference == null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            using var message = CreateGetAttributesRequest(name, reference);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManifestAttributes value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ManifestAttributes.DeserializeManifestAttributes(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateAttributesRequest(string name, string reference, ChangeableAttributes value)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_manifests/", false);
+            uri.AppendPath(reference, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (value != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(value);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Update attributes of a manifest. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
+        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        public async Task<Response> UpdateAttributesAsync(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (reference == null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            using var message = CreateUpdateAttributesRequest(name, reference, value);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Update attributes of a manifest. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
+        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        public Response UpdateAttributes(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (reference == null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            using var message = CreateUpdateAttributesRequest(name, reference, value);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }

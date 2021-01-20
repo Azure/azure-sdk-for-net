@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -35,6 +36,596 @@ namespace Azure.Containers.ContainerRegistry
             this.url = url;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+        }
+
+        internal HttpMessage CreateGetRequest(string name, string digest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
+            return message;
+        }
+
+        /// <summary> Retrieve the blob from the registry identified by digest. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="digest"> Digest of a BLOB. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
+        public async Task<ResponseWithHeaders<Stream, BlobGetHeaders>> GetAsync(string name, string digest, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+
+            using var message = CreateGetRequest(name, digest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobGetHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                case 307:
+                    return ResponseWithHeaders.FromValue<Stream, BlobGetHeaders>(null, headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Retrieve the blob from the registry identified by digest. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="digest"> Digest of a BLOB. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
+        public ResponseWithHeaders<Stream, BlobGetHeaders> Get(string name, string digest, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+
+            using var message = CreateGetRequest(name, digest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobGetHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                case 307:
+                    return ResponseWithHeaders.FromValue<Stream, BlobGetHeaders>(null, headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCheckRequest(string name, string digest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Same as GET, except only the headers are returned. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="digest"> Digest of a BLOB. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobCheckHeaders>> CheckAsync(string name, string digest, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+
+            using var message = CreateCheckRequest(name, digest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobCheckHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 307:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Same as GET, except only the headers are returned. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="digest"> Digest of a BLOB. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
+        public ResponseWithHeaders<BlobCheckHeaders> Check(string name, string digest, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+
+            using var message = CreateCheckRequest(name, digest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobCheckHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 307:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteRequest(string name, string digest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
+            return message;
+        }
+
+        /// <summary> Removes an already uploaded blob. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="digest"> Digest of a BLOB. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
+        public async Task<ResponseWithHeaders<Stream, BlobDeleteHeaders>> DeleteAsync(string name, string digest, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+
+            using var message = CreateDeleteRequest(name, digest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobDeleteHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Removes an already uploaded blob. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="digest"> Digest of a BLOB. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
+        public ResponseWithHeaders<Stream, BlobDeleteHeaders> Delete(string name, string digest, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+
+            using var message = CreateDeleteRequest(name, digest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobDeleteHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateMountRequest(string name, string @from, string mount)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/uploads/", false);
+            uri.AppendQuery("from", @from, true);
+            uri.AppendQuery("mount", mount, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Mount a blob identified by the `mount` parameter from another repository. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="from"> Name of the source repository. </param>
+        /// <param name="mount"> Digest of blob to mount from the source repository. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="from"/>, or <paramref name="mount"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobMountHeaders>> MountAsync(string name, string @from, string mount, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (@from == null)
+            {
+                throw new ArgumentNullException(nameof(@from));
+            }
+            if (mount == null)
+            {
+                throw new ArgumentNullException(nameof(mount));
+            }
+
+            using var message = CreateMountRequest(name, @from, mount);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobMountHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Mount a blob identified by the `mount` parameter from another repository. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="from"> Name of the source repository. </param>
+        /// <param name="mount"> Digest of blob to mount from the source repository. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="from"/>, or <paramref name="mount"/> is null. </exception>
+        public ResponseWithHeaders<BlobMountHeaders> Mount(string name, string @from, string mount, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (@from == null)
+            {
+                throw new ArgumentNullException(nameof(@from));
+            }
+            if (mount == null)
+            {
+                throw new ArgumentNullException(nameof(mount));
+            }
+
+            using var message = CreateMountRequest(name, @from, mount);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobMountHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetStatusRequest(string location)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(location, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Retrieve status of upload identified by uuid. The primary purpose of this endpoint is to resolve the current status of a resumable upload. </summary>
+        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobGetStatusHeaders>> GetStatusAsync(string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var message = CreateGetStatusRequest(location);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobGetStatusHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Retrieve status of upload identified by uuid. The primary purpose of this endpoint is to resolve the current status of a resumable upload. </summary>
+        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public ResponseWithHeaders<BlobGetStatusHeaders> GetStatus(string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var message = CreateGetStatusRequest(location);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobGetStatusHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUploadRequest(string location, Stream value)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(location, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/octet-stream");
+            request.Content = RequestContent.Create(value);
+            return message;
+        }
+
+        /// <summary> Upload a stream of data without completing the upload. </summary>
+        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="value"> Raw data of blob. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="value"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobUploadHeaders>> UploadAsync(string location, Stream value, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var message = CreateUploadRequest(location, value);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobUploadHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Upload a stream of data without completing the upload. </summary>
+        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="value"> Raw data of blob. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="value"/> is null. </exception>
+        public ResponseWithHeaders<BlobUploadHeaders> Upload(string location, Stream value, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var message = CreateUploadRequest(location, value);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobUploadHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateEndUploadRequest(string digest, string location, Stream value)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(location, false);
+            uri.AppendQuery("digest", digest, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/octet-stream");
+            request.Content = RequestContent.Create(value);
+            return message;
+        }
+
+        /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
+        /// <param name="digest"> Digest of a BLOB. </param>
+        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="value"> Optional raw data of blob. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/>, <paramref name="location"/>, or <paramref name="value"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobEndUploadHeaders>> EndUploadAsync(string digest, string location, Stream value, CancellationToken cancellationToken = default)
+        {
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var message = CreateEndUploadRequest(digest, location, value);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobEndUploadHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
+        /// <param name="digest"> Digest of a BLOB. </param>
+        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="value"> Optional raw data of blob. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/>, <paramref name="location"/>, or <paramref name="value"/> is null. </exception>
+        public ResponseWithHeaders<BlobEndUploadHeaders> EndUpload(string digest, string location, Stream value, CancellationToken cancellationToken = default)
+        {
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var message = CreateEndUploadRequest(digest, location, value);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobEndUploadHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCancelUploadRequest(string location)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(location, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Cancel outstanding upload processes, releasing associated resources. If this is not called, the unfinished uploads will eventually timeout. </summary>
+        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public async Task<Response> CancelUploadAsync(string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var message = CreateCancelUploadRequest(location);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Cancel outstanding upload processes, releasing associated resources. If this is not called, the unfinished uploads will eventually timeout. </summary>
+        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public Response CancelUpload(string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var message = CreateCancelUploadRequest(location);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateStartUploadRequest(string name)

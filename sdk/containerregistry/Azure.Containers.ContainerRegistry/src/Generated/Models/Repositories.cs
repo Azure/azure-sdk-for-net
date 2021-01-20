@@ -11,12 +11,19 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> List of repositories. </summary>
-    internal partial class Repositories
+    public partial class Repositories
     {
         /// <summary> Initializes a new instance of Repositories. </summary>
         internal Repositories()
         {
             Names = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of Repositories. </summary>
+        /// <param name="names"> Repository names. </param>
+        internal Repositories(IReadOnlyList<string> names)
+        {
+            Names = names;
         }
 
         /// <summary> Repository names. </summary>

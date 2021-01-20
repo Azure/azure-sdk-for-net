@@ -11,12 +11,23 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> List of tag details. </summary>
-    internal partial class TagList
+    public partial class TagList
     {
         /// <summary> Initializes a new instance of TagList. </summary>
         internal TagList()
         {
             Tags = new ChangeTrackingList<TagAttributesBase>();
+        }
+
+        /// <summary> Initializes a new instance of TagList. </summary>
+        /// <param name="registry"> Registry name. </param>
+        /// <param name="imageName"> Image name. </param>
+        /// <param name="tags"> List of tag attribute details. </param>
+        internal TagList(string registry, string imageName, IReadOnlyList<TagAttributesBase> tags)
+        {
+            Registry = registry;
+            ImageName = imageName;
+            Tags = tags;
         }
 
         /// <summary> Registry name. </summary>

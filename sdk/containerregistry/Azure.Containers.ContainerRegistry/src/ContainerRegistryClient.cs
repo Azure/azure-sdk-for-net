@@ -11,7 +11,6 @@ using Azure.Core.Pipeline;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
-    /// The sample secrets client.
     /// </summary>
     public class ContainerRegistryClient
     {
@@ -54,7 +53,7 @@ namespace Azure.Containers.ContainerRegistry
 
         public virtual async Task<Response> CheckV2SupportAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MiniSecretClient.GetSecret");
+            using var scope = _clientDiagnostics.CreateScope("TODO REPLACE");
             scope.Start();
             try
             {
@@ -82,6 +81,9 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        // TODO: what are the semantics of Create in our APIs?  Does it throw if the resource already exists?
+        // TODO: is there a user scenario where they would want to Set and override?  CreateIfNotExists?
+        // TODO: figure out what Track 2 semantics to copy; what is precedent here?  (What do I think?)
         public virtual Response CreateManifest(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TODO REPLACE");
@@ -97,6 +99,10 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        // TODO: dig into this ManifestWrapper type - will be need to simplify or restructure?
+        // TODO: Rename Manifest
+        // TODO: Rename Descriptor
+        // TODO: Rename Annotations
         public virtual Response<ManifestWrapper> GetManifest(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TODO REPLACE");

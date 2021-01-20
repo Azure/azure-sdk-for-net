@@ -8,11 +8,30 @@
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Repository attributes. </summary>
-    internal partial class RepositoryAttributes
+    public partial class RepositoryAttributes
     {
         /// <summary> Initializes a new instance of RepositoryAttributes. </summary>
         internal RepositoryAttributes()
         {
+        }
+
+        /// <summary> Initializes a new instance of RepositoryAttributes. </summary>
+        /// <param name="registry"> Registry name. </param>
+        /// <param name="imageName"> Image name. </param>
+        /// <param name="createdTime"> Image created time. </param>
+        /// <param name="lastUpdateTime"> Image last update time. </param>
+        /// <param name="manifestCount"> Number of the manifests. </param>
+        /// <param name="tagCount"> Number of the tags. </param>
+        /// <param name="changeableAttributes"> Changeable attributes. </param>
+        internal RepositoryAttributes(string registry, string imageName, string createdTime, string lastUpdateTime, int? manifestCount, int? tagCount, ChangeableAttributes changeableAttributes)
+        {
+            Registry = registry;
+            ImageName = imageName;
+            CreatedTime = createdTime;
+            LastUpdateTime = lastUpdateTime;
+            ManifestCount = manifestCount;
+            TagCount = tagCount;
+            ChangeableAttributes = changeableAttributes;
         }
 
         /// <summary> Registry name. </summary>

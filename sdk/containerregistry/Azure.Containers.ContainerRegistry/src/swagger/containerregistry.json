@@ -225,7 +225,810 @@
           }
         }
       }
+    },
+    "/v2/{name}/blobs/{digest}": {
+      "get": {
+        "produces": [
+          "application/octet-stream"
+        ],
+        "tags": [
+          "Layer"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/Digest"
+          }
+        ],
+        "x-ms-examples": {
+          "Get a blob from digest": {
+            "$ref": "./examples/GetBlob.json"
+          }
+        },
+        "description": "Retrieve the blob from the registry identified by digest.",
+        "operationId": "Blob_Get",
+        "responses": {
+          "200": {
+            "description": "The blob identified by digest is available. The blob content will be present in the body of the response.",
+            "schema": {
+              "description": "blob binary data",
+              "type": "file",
+              "format": "file"
+            },
+            "headers": {
+              "Content-Length": {
+                "type": "integer",
+                "format": "int64",
+                "description": "The length of the requested blob content."
+              },
+              "Docker-Content-Digest": {
+                "description": "Digest of the targeted content for the request.",
+                "type": "string"
+              }
+            }
+          },
+          "307": {
+            "description": "The blob identified by digest is available at the provided location.",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "The location where the layer should be accessible."
+              }
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Layer"
+        ],
+        "description": "Same as GET, except only the headers are returned.",
+        "operationId": "Blob_Check",
+        "x-ms-examples": {
+          "Head for a Blob Chunk": {
+            "$ref": "./examples/CheckBlob.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/Digest"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The blob identified by digest is available. The blob content will be present in the body of the response.",
+            "headers": {
+              "Content-Length": {
+                "type": "integer",
+                "format": "int64",
+                "description": "The length of the requested blob content."
+              },
+              "Docker-Content-Digest": {
+                "description": "Digest of the targeted content for the request.",
+                "type": "string"
+              }
+            }
+          },
+          "307": {
+            "description": "The blob identified by digest is available at the provided location.",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "The location where the layer should be accessible."
+              }
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/Digest"
+          }
+        ],
+        "description": "Removes an already uploaded blob.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "tags": [
+          "Layer"
+        ],
+        "operationId": "Blob_Delete",
+        "x-ms-examples": {
+          "Delete a blob": {
+            "$ref": "./examples/DeleteBlob.json"
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "The blob identified by digest is available. The blob content will be present in the body of the response.",
+            "schema": {
+              "description": "blob binary data",
+              "type": "file",
+              "format": "file"
+            },
+            "headers": {
+              "Docker-Content-Digest": {
+                "description": "Digest of the targeted content for the request.",
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      }
+    },
+    "/v2/{name}/blobs/uploads/": {
+      "post": {
+        "tags": [
+          "Layer"
+        ],
+        "description": "Mount a blob identified by the `mount` parameter from another repository.",
+        "operationId": "Blob_Mount",
+        "x-ms-examples": {
+          "Mount a blob from repository": {
+            "$ref": "./examples/MountBlob.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/From"
+          },
+          {
+            "$ref": "#/parameters/Mount"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The blob has been created in the registry and is available at the provided location.",
+            "headers": {
+              "Location": {
+                "description": "Provided location for blob",
+                "type": "string"
+              },
+              "Docker-Upload-UUID": {
+                "description": "Identifies the docker upload uuid for the current request.",
+                "type": "string"
+              },
+              "Docker-Content-Digest": {
+                "description": "Digest of the targeted content for the request.",
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      }
+    },
+    "/{nextBlobUuidLink}": {
+      "get": {
+        "tags": [
+          "Layer"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/NextLink"
+          }
+        ],
+        "description": "Retrieve status of upload identified by uuid. The primary purpose of this endpoint is to resolve the current status of a resumable upload.",
+        "operationId": "Blob_GetStatus",
+        "x-ms-examples": {
+          "Get blob status": {
+            "$ref": "./examples/GetBlobStatus.json"
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The upload is known and in progress. The last received offset is available in the Range header.",
+            "headers": {
+              "Range": {
+                "description": "Range indicating the current progress of the upload.",
+                "type": "string"
+              },
+              "Docker-Upload-UUID": {
+                "description": "Identifies the docker upload uuid for the current request.",
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "patch": {
+        "security": [
+          {
+            "registry_auth": [],
+            "registry_oauth2": []
+          }
+        ],
+        "tags": [
+          "Layer"
+        ],
+        "description": "Upload a stream of data without completing the upload.",
+        "operationId": "Blob_Upload",
+        "x-ms-examples": {
+          "Upload Blob": {
+            "$ref": "./examples/UploadBlob.json"
+          }
+        },
+        "consumes": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/RawData"
+          },
+          {
+            "$ref": "#/parameters/NextLink"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The stream of data has been accepted and the current progress is available in the range header. The updated upload location is available in the Location header.",
+            "headers": {
+              "Location": {
+                "description": "Provided location for blob",
+                "type": "string"
+              },
+              "Range": {
+                "description": "Range indicating the current progress of the upload.",
+                "type": "string"
+              },
+              "Docker-Upload-UUID": {
+                "description": "Identifies the docker upload uuid for the current request.",
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Layer"
+        ],
+        "consumes": [
+          "application/octet-stream"
+        ],
+        "description": "Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content.",
+        "operationId": "Blob_EndUpload",
+        "x-ms-examples": {
+          "End a blob upload": {
+            "$ref": "./examples/EndBlobUpload.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/BlobQueryDigest"
+          },
+          {
+            "$ref": "#/parameters/RawDataOptional"
+          },
+          {
+            "$ref": "#/parameters/NextLink"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The upload has been completed and accepted by the registry.",
+            "headers": {
+              "Location": {
+                "description": "Provided location for blob",
+                "type": "string"
+              },
+              "Range": {
+                "description": "Range indicating the current progress of the upload.",
+                "type": "string"
+              },
+              "Docker-Content-Digest": {
+                "description": "Digest of the targeted content for the request.",
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Layer"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/NextLink"
+          }
+        ],
+        "description": "Cancel outstanding upload processes, releasing associated resources. If this is not called, the unfinished uploads will eventually timeout.",
+        "operationId": "Blob_CancelUpload",
+        "x-ms-examples": {
+          "End a blob upload": {
+            "$ref": "./examples/CancelBlobUpload.json"
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The upload has been successfully deleted."
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      }
+    },
+    "/acr/v1/_catalog": {
+      "get": {
+        "tags": [
+          "AcrRepository"
+        ],
+        "description": "List repositories",
+        "operationId": "Repository_GetList",
+        "x-ms-examples": {
+          "Get repositories in a registry": {
+            "$ref": "./examples/GetRepositoryList.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/QueryLast"
+          },
+          {
+            "$ref": "#/parameters/QueryNum"
+          }
+        ],
+        "responses": {
+          "200": {
+            "headers": {
+              "Link": {
+                "description": "next paginated result",
+                "type": "string"
+              }
+            },
+            "description": "Returns a list of repositories",
+            "schema": {
+              "$ref": "#/definitions/Repositories"
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      }
+    },
+    "/acr/v1/{name}": {
+      "get": {
+        "tags": [
+          "AcrRepository",
+          "AcrMetadata"
+        ],
+        "description": "Get repository attributes",
+        "operationId": "Repository_GetAttributes",
+        "x-ms-examples": {
+          "Get details of repository": {
+            "$ref": "./examples/GetRepositoryAttributes.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of attributes",
+            "schema": {
+              "$ref": "#/definitions/RepositoryAttributes"
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AcrRepository"
+        ],
+        "description": "Delete the repository identified by `name`",
+        "operationId": "Repository_Delete",
+        "x-ms-examples": {
+          "Delete a repository": {
+            "$ref": "./examples/DeleteAcrRepository.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The repository is deleted",
+            "schema": {
+              "$ref": "#/definitions/DeletedRepository"
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "AcrRepository",
+          "AcrMetadata"
+        ],
+        "description": "Update the attribute identified by `name` where `reference` is the name of the repository.",
+        "operationId": "Repository_UpdateAttributes",
+        "x-ms-examples": {
+          "Update repository attributes": {
+            "$ref": "./examples/UpdateRepositoryAttributes.json"
+          }
+        },
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "name": "value",
+            "in": "body",
+            "description": "Repository attribute value",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ChangeableAttributes"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The attributes are updated"
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      }
+    },
+    "/acr/v1/{name}/_tags": {
+      "get": {
+        "tags": [
+          "AcrTag",
+          "AcrMetadata"
+        ],
+        "description": "List tags of a repository",
+        "operationId": "Tag_GetList",
+        "x-ms-examples": {
+          "Get tags of a repository": {
+            "$ref": "./examples/GetTagList.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/QueryLast"
+          },
+          {
+            "$ref": "#/parameters/QueryNum"
+          },
+          {
+            "$ref": "#/parameters/QueryOrderBy"
+          },
+          {
+            "$ref": "#/parameters/QueryDigest"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tag details of a repository",
+            "schema": {
+              "$ref": "#/definitions/TagList"
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      }
+    },
+    "/acr/v1/{name}/_tags/{reference}": {
+      "get": {
+        "tags": [
+          "AcrTag",
+          "AcrMetadata"
+        ],
+        "description": "Get tag attributes by tag",
+        "operationId": "Tag_GetAttributes",
+        "x-ms-examples": {
+          "Get tag attributes": {
+            "$ref": "./examples/GetTagAttributes.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/TagReference"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tag attributes",
+            "schema": {
+              "$ref": "#/definitions/TagAttributes"
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "AcrTag",
+          "AcrMetadata"
+        ],
+        "description": "Update tag attributes",
+        "operationId": "Tag_UpdateAttributes",
+        "consumes": [
+          "application/json"
+        ],
+        "x-ms-examples": {
+          "Update attributes of a tag": {
+            "$ref": "./examples/UpdateTagAttributes.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/TagReference"
+          },
+          {
+            "$ref": "#/parameters/RepoValue"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The attributes are updated"
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AcrTag",
+          "AcrMetadata"
+        ],
+        "description": "Delete tag",
+        "operationId": "Tag_Delete",
+        "consumes": [
+          "application/json"
+        ],
+        "x-ms-examples": {
+          "Delete a tag": {
+            "$ref": "./examples/DeleteTag.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/TagReference"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The tag is deleted"
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      }
+    },
+    "/acr/v1/{name}/_manifests": {
+      "get": {
+        "tags": [
+          "AcrManifest",
+          "AcrMetadata"
+        ],
+        "description": "List manifests of a repository",
+        "operationId": "Manifests_GetList",
+        "x-ms-examples": {
+          "Get list of available manifests": {
+            "$ref": "./examples/GetManifestList.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/QueryLast"
+          },
+          {
+            "$ref": "#/parameters/QueryNum"
+          },
+          {
+            "$ref": "#/parameters/QueryOrderBy"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of manifests",
+            "schema": {
+              "$ref": "#/definitions/AcrManifests"
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      }
+    },
+    "/acr/v1/{name}/_manifests/{reference}": {
+      "get": {
+        "tags": [
+          "AcrManifest",
+          "AcrMetadata"
+        ],
+        "description": "Get manifest attributes",
+        "operationId": "Manifests_GetAttributes",
+        "x-ms-examples": {
+          "Get manifest attributes": {
+            "$ref": "./examples/GetManifestAttributes.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/ImageReference"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of attributes",
+            "schema": {
+              "$ref": "#/definitions/ManifestAttributes"
+            }
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "AcrManifest",
+          "AcrMetadata"
+        ],
+        "description": "Update attributes of a manifest",
+        "operationId": "Manifests_UpdateAttributes",
+        "consumes": [
+          "application/json"
+        ],
+        "x-ms-examples": {
+          "Update attributes of a manifest": {
+            "$ref": "./examples/UpdateManifestAttributes.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ImageName"
+          },
+          {
+            "$ref": "#/parameters/ImageReference"
+          },
+          {
+            "$ref": "#/parameters/RepoValue"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The attributes are updated"
+          },
+          "default": {
+            "description": "ACR error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/AcrErrors"
+            }
+          }
+        }
+      }
     }
+
   },
   "x-ms-paths": {
     "/v2/{name}/blobs/uploads/?mode=resumable": {
