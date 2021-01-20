@@ -12,18 +12,6 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Signed identifier. </summary>
     public partial class ShareSignedIdentifier
     {
-        /// <summary> Initializes a new instance of ShareSignedIdentifier. </summary>
-        /// <param name="id"> A unique id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ShareSignedIdentifier(string id)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
-        }
 
         /// <summary> Initializes a new instance of ShareSignedIdentifier. </summary>
         /// <param name="id"> A unique id. </param>

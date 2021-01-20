@@ -15,5 +15,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareRetentionPolicy instance.
         /// </summary>
         public ShareRetentionPolicy() { }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareRetentionPolicy(bool enabled)
+        {
+            Enabled = enabled;
+        }
     }
 }

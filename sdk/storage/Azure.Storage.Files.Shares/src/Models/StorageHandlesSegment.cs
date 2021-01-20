@@ -6,7 +6,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// An enumeration of handles.
     /// </summary>
-    public class StorageHandlesSegment
+    internal class StorageHandlesSegment
     {
         /// <summary>
         /// NextMarker

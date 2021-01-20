@@ -40,6 +40,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// The SMB properties for the directory.
         /// </summary>
         public FileSmbProperties SmbProperties { get; set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareDirectoryProperties() { }
     }
 
     /// <summary>

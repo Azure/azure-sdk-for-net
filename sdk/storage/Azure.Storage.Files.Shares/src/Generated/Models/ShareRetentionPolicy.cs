@@ -10,12 +10,6 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> The retention policy. </summary>
     public partial class ShareRetentionPolicy
     {
-        /// <summary> Initializes a new instance of ShareRetentionPolicy. </summary>
-        /// <param name="enabled"> Indicates whether a retention policy is enabled for the File service. If false, metrics data is retained, and the user is responsible for deleting it. </param>
-        public ShareRetentionPolicy(bool enabled)
-        {
-            Enabled = enabled;
-        }
 
         /// <summary> Initializes a new instance of ShareRetentionPolicy. </summary>
         /// <param name="enabled"> Indicates whether a retention policy is enabled for the File service. If false, metrics data is retained, and the user is responsible for deleting it. </param>

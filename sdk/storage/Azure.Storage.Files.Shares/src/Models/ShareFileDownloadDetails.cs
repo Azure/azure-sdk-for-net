@@ -119,6 +119,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// The SMB properties for the file
         /// </summary>
         public FileSmbProperties SmbProperties { get; set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareFileDownloadDetails() { }
     }
 
     /// <summary>

@@ -15,5 +15,19 @@ namespace Azure.Storage.Files.Shares.Models
         /// Constructor.
         /// </summary>
         public ShareCorsRule() { }
+
+        internal ShareCorsRule(
+            string allowedOrigins,
+            string allowedMethods,
+            string allowedHeaders,
+            string exposedHeaders,
+            int maxAgeInSeconds)
+        {
+            AllowedOrigins = allowedOrigins;
+            AllowedMethods = allowedMethods;
+            AllowedHeaders = allowedHeaders;
+            ExposedHeaders = exposedHeaders;
+            MaxAgeInSeconds = maxAgeInSeconds;
+        }
     }
 }

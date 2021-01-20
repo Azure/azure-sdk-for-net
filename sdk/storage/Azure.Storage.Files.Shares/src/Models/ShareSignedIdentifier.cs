@@ -15,5 +15,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// Constructor.
         /// </summary>
         public ShareSignedIdentifier() { }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareSignedIdentifier(string id)
+        {
+            Id = id;
+        }
     }
 }

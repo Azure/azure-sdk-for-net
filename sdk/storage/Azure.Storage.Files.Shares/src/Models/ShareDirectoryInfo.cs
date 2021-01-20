@@ -29,7 +29,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// The directory's SMB properties.
         /// </summary>
         public FileSmbProperties SmbProperties { get; set; }
-    }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareDirectoryInfo() { }
+}
 
     /// <summary>
     /// FilesModelFactory provides utilities for mocking.

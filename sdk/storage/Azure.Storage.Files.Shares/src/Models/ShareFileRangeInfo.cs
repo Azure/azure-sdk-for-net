@@ -36,6 +36,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// Clear ranges for the file.
         /// </summary>
         public IEnumerable<HttpRange> ClearRanges { get; internal set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareFileRangeInfo() { }
     }
 
     /// <summary>

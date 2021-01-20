@@ -21,5 +21,14 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         [CodeGenMember("IncludeAPIs")]
         public bool? IncludeApis { get; set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareMetrics(string version, bool enabled)
+        {
+            Version = version;
+            Enabled = enabled;
+        }
     }
 }

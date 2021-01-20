@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class FileRange
+    internal partial class FileRange
     {
         internal static FileRange DeserializeFileRange(XElement element)
         {

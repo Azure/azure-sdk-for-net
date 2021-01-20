@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Parameter group. </summary>
-    public partial class SourceModifiedAccessConditions
+    internal partial class SourceModifiedAccessConditions
     {
         /// <summary> Initializes a new instance of SourceModifiedAccessConditions. </summary>
         public SourceModifiedAccessConditions()

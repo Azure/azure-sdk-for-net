@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> A permission (a security descriptor) at the share level. </summary>
-    public partial class SharePermission
+    internal partial class SharePermission
     {
         /// <summary> Initializes a new instance of SharePermission. </summary>
         /// <param name="permission"> The permission in the Security Descriptor Definition Language (SDDL). </param>

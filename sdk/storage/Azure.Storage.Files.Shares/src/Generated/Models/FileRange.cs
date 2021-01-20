@@ -8,7 +8,7 @@
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> An Azure Storage file range. </summary>
-    public partial class FileRange
+    internal partial class FileRange
     {
         /// <summary> Initializes a new instance of FileRange. </summary>
         /// <param name="start"> Start of the range. </param>

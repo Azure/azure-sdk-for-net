@@ -118,6 +118,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// The current lease status of the file.
         /// </summary>
         public ShareLeaseStatus LeaseStatus { get; internal set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareFileProperties() { }
     }
 
     /// <summary>
