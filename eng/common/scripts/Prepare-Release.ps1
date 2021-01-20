@@ -82,7 +82,7 @@ if ($null -eq $newVersionParsed)
 
 if (Test-Path "Function:SetPackageVersion")
 {
-    SetPackageVersion -PackageName $PackageName -Version $newVersion -ServiceDirectory $serviceDirectory -ReleaseDate $releaseDateString `
+    SetPackageVersion -PackageName $packageProperties.Name -Version $newVersion -ServiceDirectory $serviceDirectory -ReleaseDate $releaseDateString `
     -BuildType $BuildType -GroupId $packageProperties.Group
 }
 else
@@ -94,7 +94,7 @@ else
 }
 
 &$EngCommonScriptsDir/Update-DevOps-Release-WorkItem.ps1 `
--language $Language `
+-language $LanguageDisplayName `
 -packageName $packageProperties.Name `
 -version $newVersion `
 -plannedDate $releaseDateString `

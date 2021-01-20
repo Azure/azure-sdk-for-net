@@ -109,7 +109,7 @@ function Get-PkgProperties
             return $pkgProps
         }
     }
-    LogError "Failed to retrive Properties for $PackageName"
+    LogWarning "Failed to retrive Properties for $PackageName"
     return $null
 }
 
@@ -151,6 +151,14 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
     }
 
     return $pkgPropsResult
+}
+
+# Given the metadata url under https://github.com/Azure/azure-sdk/tree/master/_data/releases/latest, 
+# the function will return the csv metadata back as part of response.
+function Get-CSVMetadata ([string]$MetadataUri=$MetadataUri)
+{
+    $metadataResponse = Invoke-RestMethod -Uri $MetadataUri -method "GET" -MaximumRetryCount 3 -RetryIntervalSec 10 | ConvertFrom-Csv
+    return $metadataResponse
 }
 
 function Operate-OnPackages ($activePkgList, $ServiceDirectory, [Array]$pkgPropsResult)

@@ -34,7 +34,6 @@ $parsedNewVersion = [AzureEngSemanticVersion]::new($version)
 $state = "In Release"
 $releaseType = $parsedNewVersion.VersionType
 $versionMajorMinor = "" + $parsedNewVersion.Major + "." + $parsedNewVersion.Minor
-$language = Get-LanguageName -lang $language
 
 $packageInfo = [PSCustomObject][ordered]@{
   Package = $packageName
