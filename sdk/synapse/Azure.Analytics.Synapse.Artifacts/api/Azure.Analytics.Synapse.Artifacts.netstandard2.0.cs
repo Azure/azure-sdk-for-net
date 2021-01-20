@@ -1415,9 +1415,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public BigDataPoolResourceInfo(string location) : base (default(string)) { }
         public Azure.Analytics.Synapse.Artifacts.Models.AutoPauseProperties AutoPause { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.AutoScaleProperties AutoScale { get { throw null; } set { } }
+        public int? CacheSize { get { throw null; } set { } }
         public System.DateTimeOffset? CreationDate { get { throw null; } set { } }
         public string DefaultSparkLogFolder { get { throw null; } set { } }
-        public bool? HaveLibraryRequirementsChanged { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.DynamicExecutorAllocation DynamicExecutorAllocation { get { throw null; } set { } }
         public bool? IsComputeIsolationEnabled { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.LibraryRequirements LibraryRequirements { get { throw null; } set { } }
         public int? NodeCount { get { throw null; } set { } }
@@ -2407,6 +2408,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DWCopyCommandSettings() { }
         public System.Collections.Generic.IDictionary<string, string> AdditionalOptions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DWCopyCommandDefaultValue> DefaultValues { get { throw null; } }
+    }
+    public partial class DynamicExecutorAllocation
+    {
+        public DynamicExecutorAllocation() { }
+        public bool? Enabled { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynamicsAuthenticationType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.DynamicsAuthenticationType>
@@ -7245,6 +7251,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class Workspace : Azure.Analytics.Synapse.Artifacts.Models.TrackedResource
     {
         public Workspace(string location) : base (default(string)) { }
+        public string AdlaResourceId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ConnectivityEndpoints { get { throw null; } }
         public Azure.Analytics.Synapse.Artifacts.Models.DataLakeStorageAccountDetails DefaultDataLakeStorage { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.EncryptionDetails Encryption { get { throw null; } set { } }
@@ -7274,9 +7281,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string AccountName { get { throw null; } set { } }
         public string CollaborationBranch { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
+        public string LastCommitId { get { throw null; } set { } }
         public string ProjectName { get { throw null; } set { } }
         public string RepositoryName { get { throw null; } set { } }
         public string RootFolder { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
     }
     public partial class XeroLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
