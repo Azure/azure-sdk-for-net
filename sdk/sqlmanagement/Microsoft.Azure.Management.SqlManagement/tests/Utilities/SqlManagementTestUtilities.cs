@@ -35,6 +35,8 @@ namespace Sql.Tests
 
         public const string TestPrefix = "sqlcrudtest-";
 
+        public const string TestPublicMaintenanceConfiguration = "DB_1";
+
         public static string GenerateName(
             string prefix = TestPrefix,
             [System.Runtime.CompilerServices.CallerMemberName]
@@ -227,6 +229,11 @@ namespace Sql.Tests
             {
                 Assert.Equal(expected.StorageAccountType, actual.StorageAccountType);
             }
+
+            if (!string.IsNullOrEmpty(expected.MaintenanceConfigurationId))
+            {
+                Assert.Equal(expected.MaintenanceConfigurationId, actual.MaintenanceConfigurationId);
+            }
         }
 
         public static void ValidateDatabaseEx(Database expected, Database actual)
@@ -368,6 +375,11 @@ namespace Sql.Tests
             if(expected.Tags != null)
             {
                 AssertCollection(expected.Tags, actual.Tags);
+            }
+
+            if (!string.IsNullOrEmpty(expected.MaintenanceConfigurationId))
+            {
+                Assert.Equal(expected.MaintenanceConfigurationId, actual.MaintenanceConfigurationId);
             }
 
             Assert.NotNull(actual.CreationDate);
@@ -632,6 +644,11 @@ namespace Sql.Tests
                     TestUtilities.Wait(retryDelay);
                 }
             }
+        }
+
+        public static string GetTestMaintenanceConfigurationId(string subscriptionId)
+        {
+            return $"/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_{TestEnvironmentUtilities.DefaultLocation.Replace(" ", string.Empty)}_{TestPublicMaintenanceConfiguration}";
         }
     }
 }

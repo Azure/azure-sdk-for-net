@@ -51,8 +51,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/~search", false);
             uri.AppendQuery("api-version", "2020-11-01-preview3", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new PhoneNumberSearchRequest(phoneNumberType, assignmentType, capabilities)
             {
                 AreaCode = areaCode,
@@ -207,8 +207,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/availablePhoneNumbers/~purchase", false);
             uri.AppendQuery("api-version", "2020-11-01-preview3", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new PhoneNumberPurchaseRequest(searchId);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -524,8 +524,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath(phoneNumber, true);
             uri.AppendQuery("api-version", "2020-11-01-preview3", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             var model = new AcquiredPhoneNumberUpdate()
             {
                 CallbackUri = callbackUri,
@@ -668,8 +668,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/capabilities", false);
             uri.AppendQuery("api-version", "2020-11-01-preview3", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             var model = new PhoneNumberCapabilitiesRequest()
             {
                 Sms = sms,

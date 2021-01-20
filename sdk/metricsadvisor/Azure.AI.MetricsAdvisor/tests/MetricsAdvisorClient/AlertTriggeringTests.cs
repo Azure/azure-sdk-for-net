@@ -27,11 +27,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetAlertsAsync(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAlertsAsync("", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetAlertsAsync("configId", null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAlertsAsync("configId", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetAlertsAsync(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
 
             Assert.That(() => client.GetAlerts(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAlerts("", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetAlerts("configId", null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAlerts("configId", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetAlerts(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -58,13 +60,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetAnomaliesAsync(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAnomaliesAsync("", "alertId"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetAnomaliesAsync("configId", alertId: null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetAnomaliesAsync("configId", ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAnomaliesAsync("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetAnomaliesAsync(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomaliesAsync(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
 
             Assert.That(() => client.GetAnomalies(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAnomalies("", "alertId"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetAnomalies("configId", alertId: null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetAnomalies("configId", ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAnomalies("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetAnomalies(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomalies(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
@@ -89,13 +93,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => client.GetIncidentsAsync(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetIncidentsAsync("", "alertId"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetIncidentsAsync("configId", alertId: null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetIncidentsAsync("configId", ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetIncidentsAsync("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetIncidentsAsync(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetIncidentsAsync(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
 
             Assert.That(() => client.GetIncidents(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetIncidents("", "alertId"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetIncidents("configId", alertId: null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetIncidents("configId", ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetIncidents("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetIncidents(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetIncidents(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]

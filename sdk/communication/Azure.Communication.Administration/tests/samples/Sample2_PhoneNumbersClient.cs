@@ -41,14 +41,16 @@ namespace Azure.Communication.Administration.Samples
             capabilitiesRequest.Calling = PhoneNumberCapabilityValue.InboundOutbound;
 
             var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.Geographic, PhoneNumberAssignmentType.Person, capabilitiesRequest);
-            await searchOperation.WaitForCompletionAsync();
+            //@@ await purchaseOperation.WaitForCompletionAsync();
+            /*@@*/ await WaitForCompletionAsync(searchOperation);
 
             #endregion Snippet:ReservePhoneNumbersAsync
 
             #region Snippet:StartPurchaseReservationAsync
 
             var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Id);
-            await purchaseOperation.WaitForCompletionAsync();
+            //@@ await purchaseOperation.WaitForCompletionAsync();
+            /*@@*/ await WaitForCompletionAsync(purchaseOperation);
 
             #endregion Snippet:StartPurchaseReservationAsync
 
@@ -70,7 +72,8 @@ namespace Azure.Communication.Administration.Samples
 
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
             var releaseOperation = client.StartReleasePhoneNumber(acquiredPhoneNumber);
-            await releaseOperation.WaitForCompletionAsync();
+            //@@ await purchaseOperation.WaitForCompletionAsync();
+            /*@@*/ await WaitForCompletionAsync(releaseOperation);
 
             #endregion Snippet:ReleasePhoneNumbersAsync
 
@@ -78,6 +81,9 @@ namespace Azure.Communication.Administration.Samples
             var afterReleaseNumberCount = (await acquiredPhoneNumbers.ToEnumerableAsync()).Count;
             Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
         }
+
+        private ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation) where T : notnull
+            => operation.WaitForCompletionAsync(TestEnvironment.Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromSeconds(2), default);
 
         [Test]
         [SyncOnly]
@@ -107,7 +113,9 @@ namespace Azure.Communication.Administration.Samples
 
             while (!searchOperation.HasCompleted)
             {
-                Thread.Sleep(2000);
+                //@@ Thread.Sleep(2000);
+                /*@@*/
+                SleepIfNotInPlaybackMode();
 
                 searchOperation.UpdateStatus();
             }
@@ -119,7 +127,9 @@ namespace Azure.Communication.Administration.Samples
 
             while (!purchaseOperation.HasCompleted)
             {
-                Thread.Sleep(2000);
+                //@@ Thread.Sleep(2000);
+                /*@@*/
+                SleepIfNotInPlaybackMode();
 
                 purchaseOperation.UpdateStatus();
             }
@@ -144,7 +154,8 @@ namespace Azure.Communication.Administration.Samples
 
             while (!releaseOperation.HasCompleted)
             {
-                Thread.Sleep(2000);
+                //@@ Thread.Sleep(2000);
+                /*@@*/ SleepIfNotInPlaybackMode();
 
                 releaseOperation.UpdateStatus();
             }
@@ -153,6 +164,12 @@ namespace Azure.Communication.Administration.Samples
             acquiredPhoneNumbers = client.ListPhoneNumbers();
             var afterReleaseNumberCount = acquiredPhoneNumbers.Count();
             Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
+        }
+
+        private void SleepIfNotInPlaybackMode()
+        {
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                Thread.Sleep(2000);
         }
     }
 }

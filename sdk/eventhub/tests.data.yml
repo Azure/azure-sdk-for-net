@@ -1,0 +1,10 @@
+trigger: none
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    MaxParallel: 6
+    ServiceDirectory: eventhub
+    SDKType: data
+    TimeoutInMinutes: 190
+    Clouds: 'Public,Canary'

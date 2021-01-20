@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -623,6 +623,14 @@ namespace Azure.Storage.Test
         [Test]
         [Description("UseDevelopmentStorage should fail when used with a custom endpoint")]
         public void DevStorePlusEndpointFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false;BlobEndpoint=http://127.0.0.1:1000/devstoreaccount1", out _));
+
+        [Test]
+        [Description("UseDevelopmentStorage=true should succeed")]
+        public void DevStoreTrueLowerCase() => Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true", out _));
+
+        [Test]
+        [Description("UseDevelopmentStorage=True should succeed")]
+        public void DevStoreTrueUpperCase() => Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=True", out _));
 
         [Test]
         [Description("Custom endpoints")]

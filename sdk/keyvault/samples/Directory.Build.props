@@ -8,4 +8,8 @@
   </PropertyGroup>
 
   <Import Project="..\Directory.Build.props" />
+
+  <PropertyGroup>
+    <InheritDocEnabled>false</InheritDocEnabled>
+  </PropertyGroup>
 </Project>

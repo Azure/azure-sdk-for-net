@@ -43,6 +43,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         public ScaleMonitorDescriptor Descriptor { get; }
 
+        /// <summary>
+        /// Returns the state of the event hub for scaling purposes.
+        /// </summary>
         async Task<ScaleMetrics> IScaleMonitor.GetMetricsAsync()
         {
             return await GetMetricsAsync().ConfigureAwait(false);
@@ -180,6 +183,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             return (count < 0) ? 0 : count;
         }
 
+        /// <summary>
+        /// Return the current scaling decision based on the EventHub status.
+        /// </summary>
         ScaleStatus IScaleMonitor.GetScaleStatus(ScaleStatusContext context)
         {
             return GetScaleStatusCore(context.WorkerCount, context.Metrics?.Cast<EventHubsTriggerMetrics>().ToArray());

@@ -50,8 +50,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/identities", false);
             uri.AppendQuery("api-version", "2021-03-07", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             CommunicationIdentityCreateRequest communicationIdentityCreateRequest = new CommunicationIdentityCreateRequest();
             foreach (var value in createTokenWithScopes)
             {
@@ -235,8 +235,8 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/:issueAccessToken", false);
             uri.AppendQuery("api-version", "2021-03-07", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new CommunicationIdentityAccessTokenRequest(scopes);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);

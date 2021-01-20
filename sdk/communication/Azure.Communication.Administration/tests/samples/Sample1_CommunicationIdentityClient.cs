@@ -5,7 +5,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
 using Azure.Communication.Administration.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
@@ -17,8 +19,8 @@ namespace Azure.Communication.Administration.Samples
     /// </summary>
     public partial class Sample1_CommunicationIdentityClient : CommunicationIdentityClientLiveTestBase
     {
-        public Sample1_CommunicationIdentityClient(bool isAsync): base(isAsync)
-            => Matcher.ExcludeHeaders.Add("x-ms-content-sha256");
+        public Sample1_CommunicationIdentityClient(bool isAsync) : base(isAsync)
+            => Matcher.IgnoredHeaders.Add("x-ms-content-sha256");
 
         [Test]
         [AsyncOnly]
@@ -31,7 +33,7 @@ namespace Azure.Communication.Administration.Samples
             var client = new CommunicationIdentityClient(connectionString);
             #endregion Snippet:CreateCommunicationIdentityClientAsync
 
-            client = CreateInstrumentedCommunicationIdentityClient();
+            client = CreateClientWithConnectionString();
 
             #region  Snippet:CreateCommunicationUserAsync
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(scopes: new[] { CommunicationIdentityTokenScope.Chat });
@@ -66,7 +68,7 @@ namespace Azure.Communication.Administration.Samples
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationIdentityClient(connectionString);
             #endregion Snippet:CreateCommunicationIdentityClient
-            client = CreateInstrumentedCommunicationIdentityClient();
+            client = CreateClientWithConnectionString();
 
             #region  Snippet:CreateCommunicationUser
             Response<CommunicationUserIdentifier> userResponse = client.CreateUser(new[] { CommunicationIdentityTokenScope.Chat });
@@ -99,7 +101,7 @@ namespace Azure.Communication.Administration.Samples
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationIdentityClient(connectionString);
-            /*@@*/ client = CreateInstrumentedCommunicationIdentityClient();
+            /*@@*/ client = CreateClientWithConnectionString();
 
             try
             {

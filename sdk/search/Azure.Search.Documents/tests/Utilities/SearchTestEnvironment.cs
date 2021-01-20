@@ -36,13 +36,6 @@ namespace Azure.Search.Documents.Tests
         public const string CognitiveKeyVariableName = "SEARCH_COGNITIVE_KEY";
 
         /// <summary>
-        /// Creates a new instance of the <see cref="SearchTestEnvironment"/> class.
-        /// </summary>
-        public SearchTestEnvironment() : base("search")
-        {
-        }
-
-        /// <summary>
         /// Gets the service name.
         /// </summary>
         public string SearchServiceName => GetRecordedVariable("SEARCH_SERVICE_NAME");

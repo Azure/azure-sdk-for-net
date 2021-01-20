@@ -22,6 +22,17 @@ namespace Azure.Communication.Administration
         internal InternalCommunicationIdentityRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CommunicationIdentityClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationIdentityClientOptions? options = default)
+            : this(
+                AssertNotNull(endpoint, nameof(endpoint)),
+                options ?? new CommunicationIdentityClientOptions(),
+                AssertNotNull(keyCredential, nameof(keyCredential)))
+        { }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(string connectionString, CommunicationIdentityClientOptions? options = default)
@@ -30,13 +41,42 @@ namespace Azure.Communication.Administration
                   ConnectionString.Parse(AssertNotNull(connectionString, nameof(connectionString))))
         { }
 
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="tokenCredential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CommunicationIdentityClient(Uri endpoint, TokenCredential tokenCredential, CommunicationIdentityClientOptions? options = default)
+            : this(
+                AssertNotNull(endpoint, nameof(endpoint)),
+                options ?? new CommunicationIdentityClientOptions(),
+                AssertNotNull(tokenCredential, nameof(tokenCredential)))
+        { }
+
         private CommunicationIdentityClient(CommunicationIdentityClientOptions options, ConnectionString connectionString)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new InternalCommunicationIdentityRestClient(
                 _clientDiagnostics,
-                options.BuildHttpPipline(connectionString),
+                options.BuildHttpPipeline(connectionString),
                 connectionString.GetRequired("endpoint"));
+        }
+
+        private CommunicationIdentityClient(Uri endpoint, CommunicationIdentityClientOptions options, AzureKeyCredential credential)
+        {
+            _clientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new InternalCommunicationIdentityRestClient(
+                _clientDiagnostics,
+                options.BuildHttpPipeline(credential),
+                endpoint.AbsoluteUri);
+        }
+
+        private CommunicationIdentityClient(Uri endpoint, CommunicationIdentityClientOptions options, TokenCredential tokenCredential)
+        {
+            _clientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new InternalCommunicationIdentityRestClient(
+                _clientDiagnostics,
+                options.BuildHttpPipeline(tokenCredential),
+                endpoint.AbsoluteUri);
         }
 
         /// <summary>Initializes a new instance of <see cref="CommunicationIdentityClient"/> for mocking.</summary>
@@ -51,16 +91,39 @@ namespace Azure.Communication.Administration
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationUserIdentifier>> CreateUserAsync(IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            await Task.Yield();
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUser)}");
+            scope.Start();
+            try
+            {
+                Response<CommunicationIdentityAccessTokenResult> response = await RestClient.CreateIdentityAsync(scopes, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CommunicationUserIdentifier(response.Value.Identity.Id), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
-        /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <returns>A <see cref="Response{CommunicationUserIdentifier}"/>.</returns>
         /// <param name="scopes">The scopes that the access token should have.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<CommunicationUserIdentifier> CreateUser(IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUser)}");
+            scope.Start();
+            try
+            {
+                Response<CommunicationIdentityAccessTokenResult> response = RestClient.CreateIdentity(scopes, cancellationToken);
+                return Response.FromValue(new CommunicationUserIdentifier(response.Value.Identity.Id), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>Asynchronously deletes a <see cref="CommunicationUserIdentifier"/>, revokes its tokens and deletes its data.</summary>
@@ -100,7 +163,7 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary>Asynchronously revokes all the access tokens created for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <summary>Asynchronously revokes all the tokens created for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> whose tokens should get revoked.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response> RevokeAccessTokensAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
@@ -118,7 +181,7 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary>Revokes all the access tokens created for a user.</summary>
+        /// <summary>Revokes all the tokens created for a user.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> whose tokens will be revoked.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
@@ -137,9 +200,9 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary>Asynchronously issues an access token for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <summary>Asynchronously issues a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="scopes">The scopes that the token should have.</param>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
-        /// <param name="scopes">The scopes that the access token should have.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationIdentityAccessToken>> IssueAccessTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)
         {
@@ -156,9 +219,9 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary>Issues an access token for a <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
+        /// <summary>Issues a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">The scopes that the token should have.</param>
+        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<CommunicationIdentityAccessToken> IssueAccessToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationIdentityTokenScope> scopes, CancellationToken cancellationToken = default)

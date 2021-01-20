@@ -1,0 +1,91 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c/anomalies/dimension/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "148",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "d29884ddd40165db7c0645df5ce2a08a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "startTime": "2020-10-01T00:00:00Z",
+        "endTime": "2020-10-31T00:00:00Z",
+        "dimensionName": "city",
+        "dimensionFilter": {
+          "dimension": {
+            "category": "Handmade"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "23e46525-bd43-46fc-9c87-604777ac5e1c",
+        "Content-Length": "437",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 15 Dec 2020 01:34:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "224",
+        "x-request-id": "23e46525-bd43-46fc-9c87-604777ac5e1c"
+      },
+      "ResponseBody": {
+        "value": [
+          "__SUM__",
+          "Karachi",
+          "Delhi",
+          "Manila",
+          "Mumbai",
+          "Beijing",
+          "Cairo",
+          "Osaka",
+          "New York",
+          "Los Angeles",
+          "Mexico City",
+          "Santiago",
+          "Tianjin",
+          "Miami",
+          "Philadelphia",
+          "Taipei",
+          "Istanbul",
+          "Belo Horizonte",
+          "Madrid",
+          "Dallas",
+          "Moscow",
+          "Bogota",
+          "Shanghai",
+          "Chicago",
+          "Lima",
+          "Hyderabad",
+          "Jakarta",
+          "Lahore",
+          "Dhaka",
+          "Paris",
+          "Bangkok",
+          "Kinshasa",
+          "Houston",
+          "Bengaluru",
+          "London",
+          "Hong Kong",
+          "Lagos",
+          "Chennai",
+          "Guangzhou",
+          "Sao Paulo"
+        ],
+        "@nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "1179662981"
+  }
+}

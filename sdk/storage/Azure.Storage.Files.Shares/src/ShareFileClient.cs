@@ -274,6 +274,31 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="ShareClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public ShareFileClient(Uri fileUri, AzureSasCredential credential, ShareClientOptions options = default)
+            : this(fileUri, credential.AsPolicy<ShareUriBuilder>(fileUri), options, null)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ShareFileClient"/>
         /// class.
         /// </summary>
@@ -299,6 +324,7 @@ namespace Azure.Storage.Files.Shares
             ShareClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
             _pipeline = options.Build(authentication);
@@ -4716,6 +4742,7 @@ namespace Azure.Storage.Files.Shares
                         marker: marker,
                         maxresults: maxResults,
                         async: async,
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(GetHandles)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

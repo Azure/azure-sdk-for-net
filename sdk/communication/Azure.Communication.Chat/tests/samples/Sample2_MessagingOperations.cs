@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Administration;
 using Azure.Communication.Administration.Models;
-using Azure.Communication.Identity;
+using Azure.Communication;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -26,7 +26,7 @@ namespace Azure.Communication.Chat.Tests.samples
 
             ChatClient chatClient = new ChatClient(
                 new Uri(endpoint),
-                new CommunicationUserCredential(userToken));
+                new CommunicationTokenCredential(userToken));
 
             var chatThreadMember = new ChatThreadMember(new CommunicationUserIdentifier(theadCreatorMemberId))
             {

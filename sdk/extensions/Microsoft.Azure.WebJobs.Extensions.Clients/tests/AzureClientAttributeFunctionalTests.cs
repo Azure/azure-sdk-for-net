@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
         {
             Matcher = new RecordMatcher()
             {
-                VolatileQueryParameters =
+                IgnoredQueryParameters =
                 {
                     // Ignore KeyVault client API Version when matching
                     "api-version"
@@ -31,6 +31,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
         [RecordedTest]
         public async Task CanInjectKeyVaultClient()
         {
+            // We don't controll the client creation
+            ValidateClientInstrumentation = false;
             var host = new HostBuilder()
                 .ConfigureServices(services => services.AddAzureClients(builder => builder
                     .ConfigureDefaults(options => InstrumentClientOptions<ClientOptions>(options))

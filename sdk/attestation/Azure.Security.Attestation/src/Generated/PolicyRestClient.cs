@@ -114,8 +114,8 @@ namespace Azure.Security.Attestation
             uri.AppendPath(attestationType.ToString(), true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "text/plain");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "text/plain");
             request.Content = new StringRequestContent(newAttestationPolicy);
             return message;
         }
@@ -188,8 +188,8 @@ namespace Azure.Security.Attestation
             uri.AppendPath(":reset", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "text/plain");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "text/plain");
             request.Content = new StringRequestContent(policyJws);
             return message;
         }

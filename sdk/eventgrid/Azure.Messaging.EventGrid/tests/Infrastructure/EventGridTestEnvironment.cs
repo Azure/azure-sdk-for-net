@@ -8,10 +8,6 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class EventGridTestEnvironment : TestEnvironment
     {
-        public EventGridTestEnvironment() : base("eventgrid")
-        {
-        }
-
         public const string TopicKeyEnvironmentVariableName = "EVENT_GRID_TOPIC_KEY";
         public const string TopicEndpointEnvironmentVariableName = "EVENT_GRID_TOPIC_ENDPOINT";
 

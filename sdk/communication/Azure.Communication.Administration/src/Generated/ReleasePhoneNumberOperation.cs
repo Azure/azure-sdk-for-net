@@ -23,8 +23,6 @@ namespace Azure.Communication.Administration.Models
         {
             _operation = new ArmOperationHelpers<AcquiredPhoneNumber>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ReleasePhoneNumberOperation");
         }
-        /// <inheritdoc />
-        public override string Id => _operation.Id;
 
         /// <inheritdoc />
         public override AcquiredPhoneNumber Value => _operation.Value;
