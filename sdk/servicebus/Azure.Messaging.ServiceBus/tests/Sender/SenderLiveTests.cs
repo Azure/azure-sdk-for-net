@@ -150,8 +150,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
                 async Task AddAndSendMessages()
                 {
-                    // service limits to 5000 messages but we have not added this to our client validation yet
-                    while (batch.Count < 5000 && batch.TryAddMessage(
+                    // service limits to 4500 messages but we have not added this to our client validation yet
+                    while (batch.Count < 4500 && batch.TryAddMessage(
                         new ServiceBusMessage(new byte[50])
                         {
                             MessageId = "new message ID that takes up some space",
@@ -162,7 +162,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     {
                     }
 
-                    if (batch.Count <= 5000)
+                    if (batch.Count <= 4500)
                     {
                         // the difference in size from the max allowable size should be less than the size of 1 message
                         Assert.IsTrue(batch.MaxSizeInBytes - batch.SizeInBytes < 180);
