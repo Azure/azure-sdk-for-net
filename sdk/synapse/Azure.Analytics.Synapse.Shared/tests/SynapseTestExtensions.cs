@@ -32,10 +32,5 @@ namespace Azure.Analytics.Synapse.Tests
             }
             return all;
         }
-
-        public static string GenerateName(this TestRecording recording, string prefix)
-        {
-            return prefix + recording.GenerateId();
-        }
     }
 }

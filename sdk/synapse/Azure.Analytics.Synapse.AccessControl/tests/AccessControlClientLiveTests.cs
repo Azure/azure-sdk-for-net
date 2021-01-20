@@ -102,7 +102,6 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
         [Test]
         public async Task DeleteRoleAssignments()
         {
-            // Non-disposable as we'll be deleting it ourselves
             AccessControlClient client = CreateClient();
             RoleAssignmentDetails assignment = await DisposableClientRole.CreateResource (client, this.Recording);
 

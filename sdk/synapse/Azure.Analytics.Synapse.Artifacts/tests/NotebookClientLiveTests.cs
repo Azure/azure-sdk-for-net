@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestGetNotebook()
         {
-            NotebookClient client = CreateClient ();
+            NotebookClient client = CreateClient();
             await foreach (var expectedNotebook in client.GetNotebooksByWorkspaceAsync())
             {
                 NotebookResource actualNotebook = await client.GetNotebookAsync(expectedNotebook.Name);
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestCreateNotebook()
         {
-            NotebookClient client = CreateClient ();
+            NotebookClient client = CreateClient();
 
             Notebook notebook = new Notebook(
                 new NotebookMetadata
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
                 nbformatMinor: 2,
                 new List<NotebookCell>()
             );
-            string notebookName = Recording.GenerateName("Notebook");
+            string notebookName = Recording.GenerateId("Notebook", 16);
             NotebookCreateOrUpdateNotebookOperation operation = await client.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebookName, notebook));
             NotebookResource notebookResource = await operation.WaitForCompletionAsync();
             Assert.AreEqual(notebookName, notebookResource.Name);
@@ -70,9 +70,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestDeleteNotebook()
         {
-            NotebookClient client = CreateClient ();
+            NotebookClient client = CreateClient();
 
-            string notebookName = Recording.GenerateName("Notebook");
+            string notebookName = Recording.GenerateId("Notebook", 16);
 
             Notebook notebook = new Notebook(
                 new NotebookMetadata

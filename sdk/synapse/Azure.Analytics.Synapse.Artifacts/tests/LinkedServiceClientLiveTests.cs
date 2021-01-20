@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestGetLinkedService()
         {
-            LinkedServiceClient client = CreateClient ();
+            LinkedServiceClient client = CreateClient();
 
             await foreach (var expectedLinkedService in client.GetLinkedServicesByWorkspaceAsync())
             {
@@ -50,9 +50,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestCreateLinkedService()
         {
-            LinkedServiceClient client = CreateClient ();
+            LinkedServiceClient client = CreateClient();
 
-            string linkedServiceName = Recording.GenerateName("LinkedSercive");
+            string linkedServiceName = Recording.GenerateId("LinkedService", 16);
             LinkedServiceCreateOrUpdateLinkedServiceOperation operation = await client.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
             LinkedServiceResource linkedService = await operation.WaitForCompletionAsync();
             Assert.AreEqual(linkedServiceName, linkedService.Name);
@@ -61,9 +61,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestDeleteLinkedService()
         {
-            LinkedServiceClient client = CreateClient ();
+            LinkedServiceClient client = CreateClient();
 
-            string linkedServiceName = Recording.GenerateName("LinkedSercive");
+            string linkedServiceName = Recording.GenerateId("LinkedService", 16);
 
             LinkedServiceCreateOrUpdateLinkedServiceOperation createOperation = await client.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
             await createOperation.WaitForCompletionAsync();

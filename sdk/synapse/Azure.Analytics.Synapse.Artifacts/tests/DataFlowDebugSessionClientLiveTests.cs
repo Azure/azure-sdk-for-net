@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Ignore ("SYNAPSE_API_ISSUE issues preventing test from working")]
+        [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 prevents test from working")]
         [Test]
         public async Task AddDataFlow()
         {
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             Assert.GreaterOrEqual((await sessions.ToListAsync()).Count, 1);
         }
 
-        [Ignore ("SYNAPSE_API_ISSUE issues preventing test from working")]
+        [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 prevents test from working")]
         [Test]
         public async Task ExecuteCommand()
         {

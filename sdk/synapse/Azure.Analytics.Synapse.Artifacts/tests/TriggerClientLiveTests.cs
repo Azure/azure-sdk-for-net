@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             TriggerClient client = CreateClient();
 
-            string triggerName = Recording.GenerateName("Trigger");
+            string triggerName = Recording.GenerateId("Trigger", 16);
             TriggerCreateOrUpdateTriggerOperation operation = await client.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence())));
             TriggerResource trigger = await operation.WaitForCompletionAsync();
             Assert.AreEqual(triggerName, trigger.Name);
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             TriggerClient client = CreateClient();
 
-            string triggerName = Recording.GenerateName("Trigger");
+            string triggerName = Recording.GenerateId("Trigger", 16);
 
             TriggerCreateOrUpdateTriggerOperation createOperation = await client.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence())));
             await createOperation.WaitForCompletionAsync();

@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestGetPipeline()
         {
-            PipelineClient client = CreateClient ();
+            PipelineClient client = CreateClient();
 
             await foreach (var expectedPipeline in client.GetPipelinesByWorkspaceAsync())
             {
@@ -50,9 +50,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestCreatePipeline()
         {
-            PipelineClient client = CreateClient ();
+            PipelineClient client = CreateClient();
 
-            string pipelineName = Recording.GenerateName("Pipeline");
+            string pipelineName = Recording.GenerateId("Pipeline", 16);
             PipelineCreateOrUpdatePipelineOperation operation = await client.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
             PipelineResource pipeline = await operation.WaitForCompletionAsync();
             Assert.AreEqual(pipelineName, pipeline.Name);
@@ -61,9 +61,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [Test]
         public async Task TestDeletePipeline()
         {
-            PipelineClient client = CreateClient ();
+            PipelineClient client = CreateClient();
 
-            string pipelineName = Recording.GenerateName("Pipeline");
+            string pipelineName = Recording.GenerateId("Pipeline", 16);
 
             PipelineCreateOrUpdatePipelineOperation createOperation = await client.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
             await createOperation.WaitForCompletionAsync();

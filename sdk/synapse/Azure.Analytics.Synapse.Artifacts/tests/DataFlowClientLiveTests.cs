@@ -78,7 +78,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             DataFlowClient client = CreateClient();
 
-            // Non-disposable as we'll be deleting it ourselves
             DataFlowResource resource = await DisposableDataFlow.CreateResource (client, this.Recording);
 
             DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync (resource.Name);
