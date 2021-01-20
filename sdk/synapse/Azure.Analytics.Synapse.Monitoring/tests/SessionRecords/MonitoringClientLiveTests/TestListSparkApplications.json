@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-28ee79980286254887ec44487dde9ce2-867e980b0872be46-00",
+        "traceparent": "00-5dce5ff2eb3284418f11442309f2a4db-310d740ff6f65748-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Monitoring/1.0.0-alpha.20210115.1",
+          "azsdk-net-Analytics.Synapse.Monitoring/1.0.0-alpha.20210120.1",
           "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
         "x-ms-client-request-id": "69644d7d181d474eb1cdece64493d155",
@@ -18,7 +18,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Jan 2021 18:21:07 GMT",
+        "Date": "Wed, 20 Jan 2021 21:41:26 GMT",
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
@@ -26,10 +26,10 @@
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "69644d7d181d474eb1cdece64493d155",
-        "x-ms-request-id": "629ef355-e696-43a9-a895-aaa7bd1eca50"
+        "x-ms-request-id": "ef36ee52-ee05-45f8-a041-06b00bdeb195"
       },
       "ResponseBody": {
-        "nJobs": 187,
+        "nJobs": 105,
         "sparkJobs": [
           {
             "state": "Failed",
@@ -41,7 +41,7 @@
             "livyId": "287",
             "timing": [
               "Ended",
-              "68h 43m"
+              "192h 3m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -63,7 +63,7 @@
             "livyId": "286",
             "timing": [
               "Ended",
-              "68h 43m"
+              "192h 3m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -85,7 +85,7 @@
             "livyId": "285",
             "timing": [
               "Ended",
-              "68h 43m"
+              "192h 3m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -107,7 +107,7 @@
             "livyId": "284",
             "timing": [
               "Ended",
-              "68h 45m"
+              "192h 5m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -129,7 +129,7 @@
             "livyId": "283",
             "timing": [
               "Ended",
-              "68h 45m"
+              "192h 5m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -151,7 +151,7 @@
             "livyId": "282",
             "timing": [
               "Ended",
-              "68h 45m"
+              "192h 5m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -173,7 +173,7 @@
             "livyId": "281",
             "timing": [
               "Ended",
-              "68h 45m"
+              "192h 6m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -195,7 +195,7 @@
             "livyId": "280",
             "timing": [
               "Ended",
-              "68h 45m"
+              "192h 6m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -217,7 +217,7 @@
             "livyId": "279",
             "timing": [
               "Ended",
-              "68h 46m"
+              "192h 6m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -239,7 +239,7 @@
             "livyId": "278",
             "timing": [
               "Ended",
-              "68h 46m"
+              "192h 6m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -261,7 +261,7 @@
             "livyId": "277",
             "timing": [
               "Ended",
-              "68h 46m"
+              "192h 6m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -283,7 +283,7 @@
             "livyId": "276",
             "timing": [
               "Ended",
-              "68h 46m"
+              "192h 6m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -305,7 +305,7 @@
             "livyId": "275",
             "timing": [
               "Ended",
-              "68h 46m"
+              "192h 7m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -327,7 +327,7 @@
             "livyId": "274",
             "timing": [
               "Ended",
-              "68h 51m"
+              "192h 12m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -349,7 +349,7 @@
             "livyId": "273",
             "timing": [
               "Ended",
-              "68h 51m"
+              "192h 12m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -371,7 +371,7 @@
             "livyId": "272",
             "timing": [
               "Ended",
-              "68h 51m"
+              "192h 12m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -393,7 +393,7 @@
             "livyId": "271",
             "timing": [
               "Ended",
-              "68h 52m"
+              "192h 12m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -415,7 +415,7 @@
             "livyId": "270",
             "timing": [
               "Ended",
-              "68h 52m"
+              "192h 12m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -437,7 +437,7 @@
             "livyId": "269",
             "timing": [
               "Ended",
-              "68h 53m"
+              "192h 13m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -459,7 +459,7 @@
             "livyId": "268",
             "timing": [
               "Ended",
-              "68h 53m"
+              "192h 13m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -481,7 +481,7 @@
             "livyId": "267",
             "timing": [
               "Ended",
-              "68h 53m"
+              "192h 13m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -503,7 +503,7 @@
             "livyId": "266",
             "timing": [
               "Ended",
-              "68h 53m"
+              "192h 13m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -525,7 +525,7 @@
             "livyId": "265",
             "timing": [
               "Ended",
-              "68h 53m"
+              "192h 14m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -547,7 +547,7 @@
             "livyId": "264",
             "timing": [
               "Ended",
-              "68h 55m"
+              "192h 15m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -569,7 +569,7 @@
             "livyId": "263",
             "timing": [
               "Ended",
-              "69h 8m"
+              "192h 28m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -591,7 +591,7 @@
             "livyId": "262",
             "timing": [
               "Ended",
-              "69h 9m"
+              "192h 29m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -613,7 +613,7 @@
             "livyId": "261",
             "timing": [
               "Ended",
-              "69h 14m"
+              "192h 34m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -635,7 +635,7 @@
             "livyId": "260",
             "timing": [
               "Ended",
-              "69h 19m"
+              "192h 39m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -657,7 +657,7 @@
             "livyId": "259",
             "timing": [
               "Ended",
-              "69h 35m"
+              "192h 56m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -679,7 +679,7 @@
             "livyId": "258",
             "timing": [
               "Ended",
-              "69h 37m"
+              "192h 57m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -701,7 +701,7 @@
             "livyId": "257",
             "timing": [
               "Ended",
-              "69h 40m"
+              "193h 0m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -723,7 +723,7 @@
             "livyId": "256",
             "timing": [
               "Ended",
-              "69h 40m"
+              "193h 0m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -745,7 +745,7 @@
             "livyId": "255",
             "timing": [
               "Ended",
-              "69h 40m"
+              "193h 0m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -767,7 +767,7 @@
             "livyId": "254",
             "timing": [
               "Ended",
-              "69h 40m"
+              "193h 0m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -789,7 +789,7 @@
             "livyId": "253",
             "timing": [
               "Ended",
-              "69h 40m"
+              "193h 0m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -811,7 +811,7 @@
             "livyId": "252",
             "timing": [
               "Ended",
-              "69h 42m"
+              "193h 2m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -833,7 +833,7 @@
             "livyId": "251",
             "timing": [
               "Ended",
-              "69h 42m"
+              "193h 2m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -855,7 +855,7 @@
             "livyId": "250",
             "timing": [
               "Ended",
-              "69h 48m"
+              "193h 8m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -877,7 +877,7 @@
             "livyId": "249",
             "timing": [
               "Ended",
-              "69h 53m"
+              "193h 13m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -899,7 +899,7 @@
             "livyId": "248",
             "timing": [
               "Ended",
-              "69h 58m"
+              "193h 18m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -921,7 +921,7 @@
             "livyId": "247",
             "timing": [
               "Ended",
-              "70h 3m"
+              "193h 24m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -943,7 +943,7 @@
             "livyId": "246",
             "timing": [
               "Ended",
-              "70h 8m"
+              "193h 29m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -965,7 +965,7 @@
             "livyId": "245",
             "timing": [
               "Ended",
-              "70h 14m"
+              "193h 34m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -987,7 +987,7 @@
             "livyId": "244",
             "timing": [
               "Ended",
-              "70h 20m"
+              "193h 40m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1009,7 +1009,7 @@
             "livyId": "243",
             "timing": [
               "Ended",
-              "70h 25m"
+              "193h 45m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1031,7 +1031,7 @@
             "livyId": "242",
             "timing": [
               "Ended",
-              "378h 40m"
+              "502h 0m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1053,7 +1053,7 @@
             "livyId": "241",
             "timing": [
               "Ended",
-              "378h 40m"
+              "502h 1m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1075,7 +1075,7 @@
             "livyId": "240",
             "timing": [
               "Ended",
-              "378h 41m"
+              "502h 1m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1097,7 +1097,7 @@
             "livyId": "239",
             "timing": [
               "Ended",
-              "378h 46m"
+              "502h 7m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1119,7 +1119,7 @@
             "livyId": "238",
             "timing": [
               "Ended",
-              "378h 52m"
+              "502h 13m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1141,7 +1141,7 @@
             "livyId": "237",
             "timing": [
               "Ended",
-              "378h 53m"
+              "502h 13m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1163,7 +1163,7 @@
             "livyId": "236",
             "timing": [
               "Ended",
-              "378h 54m"
+              "502h 14m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1185,7 +1185,7 @@
             "livyId": "235",
             "timing": [
               "Ended",
-              "378h 59m"
+              "502h 19m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1207,7 +1207,7 @@
             "livyId": "234",
             "timing": [
               "Ended",
-              "379h 5m"
+              "502h 26m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1229,7 +1229,7 @@
             "livyId": "233",
             "timing": [
               "Ended",
-              "379h 6m"
+              "502h 26m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1251,7 +1251,7 @@
             "livyId": "232",
             "timing": [
               "Ended",
-              "379h 7m"
+              "502h 27m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1273,7 +1273,7 @@
             "livyId": "231",
             "timing": [
               "Ended",
-              "379h 12m"
+              "502h 32m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1295,7 +1295,7 @@
             "livyId": "230",
             "timing": [
               "Ended",
-              "384h 28m"
+              "507h 48m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1317,7 +1317,7 @@
             "livyId": "229",
             "timing": [
               "Ended",
-              "384h 29m"
+              "507h 49m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1339,7 +1339,7 @@
             "livyId": "228",
             "timing": [
               "Ended",
-              "384h 30m"
+              "507h 50m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1361,7 +1361,7 @@
             "livyId": "227",
             "timing": [
               "Ended",
-              "384h 35m"
+              "507h 55m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1383,7 +1383,7 @@
             "livyId": "226",
             "timing": [
               "Ended",
-              "384h 53m"
+              "508h 13m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1405,7 +1405,7 @@
             "livyId": "225",
             "timing": [
               "Ended",
-              "384h 53m"
+              "508h 14m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1427,7 +1427,7 @@
             "livyId": "224",
             "timing": [
               "Ended",
-              "384h 54m"
+              "508h 14m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1449,7 +1449,7 @@
             "livyId": "223",
             "timing": [
               "Ended",
-              "384h 59m"
+              "508h 19m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1471,7 +1471,7 @@
             "livyId": "222",
             "timing": [
               "Ended",
-              "385h 4m"
+              "508h 24m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1493,7 +1493,7 @@
             "livyId": "221",
             "timing": [
               "Ended",
-              "385h 9m"
+              "508h 30m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1515,7 +1515,7 @@
             "livyId": "220",
             "timing": [
               "Ended",
-              "385h 10m"
+              "508h 31m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1537,7 +1537,7 @@
             "livyId": "219",
             "timing": [
               "Ended",
-              "385h 11m"
+              "508h 32m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1559,7 +1559,7 @@
             "livyId": "218",
             "timing": [
               "Ended",
-              "385h 16m"
+              "508h 37m"
             ],
             "sparkJobDefinition": null,
             "pipeline": null,
@@ -1570,138 +1570,6 @@
             "runningDuration": "6m 18s",
             "totalDuration": "6m 18s",
             "isJobTimedOut": ""
-          },
-          {
-            "state": "Stopped",
-            "name": "session-d4bbf79c-0cc9-4605-a365-64536438bcb9",
-            "submitter": "00b81593-6414-45e8-98bf-c0396b2972ee",
-            "compute": "sparkchhamosyna",
-            "sparkPoolName": "sparkchhamosyna",
-            "sparkApplicationId": "application_1608747708498_0024",
-            "livyId": "217",
-            "timing": [
-              "Ended",
-              "549h 37m"
-            ],
-            "sparkJobDefinition": null,
-            "pipeline": null,
-            "jobType": "Spark session",
-            "submitTime": "2020-12-23T20:43:22\u002B00:00",
-            "endTime": "2020-12-23T20:44:08\u002B00:00",
-            "queuedDuration": "2s",
-            "runningDuration": "44s",
-            "totalDuration": "46s",
-            "isJobTimedOut": "false"
-          },
-          {
-            "state": "Stopped",
-            "name": "session-a293cd7c-a4a1-40e3-9484-e4215601bb31",
-            "submitter": "00b81593-6414-45e8-98bf-c0396b2972ee",
-            "compute": "sparkchhamosyna",
-            "sparkPoolName": "sparkchhamosyna",
-            "sparkApplicationId": "application_1608747708498_0023",
-            "livyId": "216",
-            "timing": [
-              "Ended",
-              "549h 37m"
-            ],
-            "sparkJobDefinition": null,
-            "pipeline": null,
-            "jobType": "Spark session",
-            "submitTime": "2020-12-23T20:42:26\u002B00:00",
-            "endTime": "2020-12-23T20:43:28\u002B00:00",
-            "queuedDuration": "2s",
-            "runningDuration": "1m 0s",
-            "totalDuration": "1m 2s",
-            "isJobTimedOut": "false"
-          },
-          {
-            "state": "Failed",
-            "name": "batch-e1dded7d-3d12-4537-a10e-23e9e2a9d00f",
-            "submitter": "00b81593-6414-45e8-98bf-c0396b2972ee",
-            "compute": "sparkchhamosyna",
-            "sparkPoolName": "sparkchhamosyna",
-            "sparkApplicationId": null,
-            "livyId": "215",
-            "timing": [
-              "Ended",
-              "549h 38m"
-            ],
-            "sparkJobDefinition": null,
-            "pipeline": null,
-            "jobType": "Batch job",
-            "submitTime": "2020-12-23T20:37:17\u002B00:00",
-            "endTime": "2020-12-23T20:42:23\u002B00:00",
-            "queuedDuration": "2s",
-            "runningDuration": "5m 4s",
-            "totalDuration": "5m 6s",
-            "isJobTimedOut": ""
-          },
-          {
-            "state": "Failed",
-            "name": "batch-4a6962e0-4715-45e7-a0f1-a01e5e885afa",
-            "submitter": "00b81593-6414-45e8-98bf-c0396b2972ee",
-            "compute": "sparkchhamosyna",
-            "sparkPoolName": "sparkchhamosyna",
-            "sparkApplicationId": null,
-            "livyId": "214",
-            "timing": [
-              "Ended",
-              "549h 43m"
-            ],
-            "sparkJobDefinition": null,
-            "pipeline": null,
-            "jobType": "Batch job",
-            "submitTime": "2020-12-23T20:32:08\u002B00:00",
-            "endTime": "2020-12-23T20:37:14\u002B00:00",
-            "queuedDuration": "2s",
-            "runningDuration": "5m 4s",
-            "totalDuration": "5m 6s",
-            "isJobTimedOut": ""
-          },
-          {
-            "state": "Stopped",
-            "name": "session-28deccb5-2254-440c-86ca-57a8e7fa3a38",
-            "submitter": "00b81593-6414-45e8-98bf-c0396b2972ee",
-            "compute": "sparkchhamosyna",
-            "sparkPoolName": "sparkchhamosyna",
-            "sparkApplicationId": "application_1608747708498_0020",
-            "livyId": "213",
-            "timing": [
-              "Ended",
-              "549h 57m"
-            ],
-            "sparkJobDefinition": null,
-            "pipeline": null,
-            "jobType": "Spark session",
-            "submitTime": "2020-12-23T20:23:19\u002B00:00",
-            "endTime": "2020-12-23T20:24:05\u002B00:00",
-            "queuedDuration": "2s",
-            "runningDuration": "44s",
-            "totalDuration": "46s",
-            "isJobTimedOut": "false"
-          },
-          {
-            "state": "Stopped",
-            "name": "session-310e8a43-79c0-4167-b52e-8ce0418da40a",
-            "submitter": "00b81593-6414-45e8-98bf-c0396b2972ee",
-            "compute": "sparkchhamosyna",
-            "sparkPoolName": "sparkchhamosyna",
-            "sparkApplicationId": "application_1608747708498_0019",
-            "livyId": "212",
-            "timing": [
-              "Ended",
-              "549h 57m"
-            ],
-            "sparkJobDefinition": null,
-            "pipeline": null,
-            "jobType": "Spark session",
-            "submitTime": "2020-12-23T20:22:37\u002B00:00",
-            "endTime": "2020-12-23T20:23:23\u002B00:00",
-            "queuedDuration": "2s",
-            "runningDuration": "44s",
-            "totalDuration": "46s",
-            "isJobTimedOut": "false"
           }
         ]
       }
