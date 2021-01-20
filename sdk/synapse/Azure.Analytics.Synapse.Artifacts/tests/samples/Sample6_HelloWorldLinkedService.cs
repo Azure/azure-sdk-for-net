@@ -12,7 +12,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class Sample6_HelloWorldLinkedService : SampleFixture
     {
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
         public async Task LinkedServiceSample()
         {
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             // Replace the string below with your actual datalake endpoint url.
             string dataLakeEndpoint = "<my-datalake-url>";
-            /*@@*/endpoint = "adl://test.azuredatalakestore.net/";
+            /*@@*/dataLakeEndpoint = "adl://test.azuredatalakestore.net/";
 
             string serviceName = "Test-LinkedService";
             #endregion

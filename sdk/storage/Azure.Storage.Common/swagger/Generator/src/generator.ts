@@ -630,17 +630,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     w.line(`${types.getDeclarationType(header.model, true, false, true)} ${naming.parameter(header.clientName)} = default;`);
                 }
             }
+            const prefixedHeaders: IHeader[] = [];
             for (const header of headers) {
                 if (isPrimitiveType(header.model) && header.model.type === 'dictionary') {
-                    const prefix = header.model.dictionaryPrefix || `x-ms-meta-`;
-                    w.line(`${valueName}.${naming.pascalCase(header.clientName)} = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);`);
-                    w.line(`foreach (Azure.Core.HttpHeader ${pairName} in ${responseName}.Headers)`);
-                    w.scope(`{`, `}`, () => {
-                        w.line(`if (${pairName}.Name.StartsWith("${prefix}", System.StringComparison.InvariantCulture))`);
-                        w.scope(`{`, `}`, () => {
-                            w.line(`${valueName}.${naming.pascalCase(header.clientName)}[${pairName}.Name.Substring(${prefix.length})] = ${pairName}.Value;`);
-                        });
-                    });
+                    prefixedHeaders.push(header);
                 } else {
                     w.line(`if (${responseName}.Headers.TryGetValue("${header.name}", out ${headerName}))`);
                     w.scope('{', '}', () => {
@@ -660,6 +653,25 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         w.line(`;`);
                     });
                 }
+            }
+            if (prefixedHeaders.length > 0) {
+                for (const header of prefixedHeaders) {
+                    w.line(`${valueName}.${naming.pascalCase(header.clientName)} = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);`);
+                }
+                w.line(`foreach (Azure.Core.HttpHeader ${pairName} in ${responseName}.Headers)`);
+                w.scope(`{`, `}`, () => {
+                    let sep = ``;
+                    for (const header of prefixedHeaders) {
+                        if (isPrimitiveType(header.model) && header.model.type === 'dictionary') {
+                            const prefix = header.model.dictionaryPrefix || `x-ms-meta-`;
+                            w.line(`${sep}if (${pairName}.Name.StartsWith("${prefix}", System.StringComparison.OrdinalIgnoreCase))`);
+                            w.scope(`{`, `}`, () => {
+                                w.line(`${valueName}.${naming.pascalCase(header.clientName)}[${pairName}.Name.Substring(${prefix.length})] = ${pairName}.Value;`);
+                            });
+                            sep = `else `;
+                        }
+                    }
+                });
             }
             if (response.struct) {
                 w.line();

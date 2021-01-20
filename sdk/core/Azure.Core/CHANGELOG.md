@@ -2,6 +2,10 @@
 
 ## 1.9.0-beta.1 (Unreleased)
 
+### Key Bug Fixes
+
+- Avoid `ObjectDisposedException` when the request is cancelled during content upload over HTTPS.
+- Fix exception while setting `If-Modified-Since` header on .NET Framework.
 
 ## 1.8.1 (2020-01-11)
 

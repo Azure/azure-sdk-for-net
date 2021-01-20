@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.AppPlatform.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -37,15 +38,25 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="error">Error when apply Monitoring Setting
         /// changes.</param>
         /// <param name="traceEnabled">Indicates whether enable the trace
-        /// functionality</param>
+        /// functionality, which will be deprecated since api version
+        /// 2020-11-01-preview. Please leverage appInsightsInstrumentationKey
+        /// to indicate if monitoringSettings enabled or not</param>
         /// <param name="appInsightsInstrumentationKey">Target application
-        /// insight instrumentation key</param>
-        public MonitoringSettingProperties(string provisioningState = default(string), Error error = default(Error), bool? traceEnabled = default(bool?), string appInsightsInstrumentationKey = default(string))
+        /// insight instrumentation key, null or whitespace include empty will
+        /// disable monitoringSettings</param>
+        /// <param name="appInsightsSamplingRate">Indicates the sampling rate
+        /// of application insight agent, should be in range [0.0,
+        /// 100.0]</param>
+        /// <param name="appInsightsAgentVersions">Indicates the versions of
+        /// application insight agent</param>
+        public MonitoringSettingProperties(string provisioningState = default(string), Error error = default(Error), bool? traceEnabled = default(bool?), string appInsightsInstrumentationKey = default(string), double? appInsightsSamplingRate = default(double?), ApplicationInsightsAgentVersions appInsightsAgentVersions = default(ApplicationInsightsAgentVersions))
         {
             ProvisioningState = provisioningState;
             Error = error;
             TraceEnabled = traceEnabled;
             AppInsightsInstrumentationKey = appInsightsInstrumentationKey;
+            AppInsightsSamplingRate = appInsightsSamplingRate;
+            AppInsightsAgentVersions = appInsightsAgentVersions;
             CustomInit();
         }
 
@@ -68,16 +79,50 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public Error Error { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates whether enable the trace functionality
+        /// Gets or sets indicates whether enable the trace functionality,
+        /// which will be deprecated since api version 2020-11-01-preview.
+        /// Please leverage appInsightsInstrumentationKey to indicate if
+        /// monitoringSettings enabled or not
         /// </summary>
         [JsonProperty(PropertyName = "traceEnabled")]
         public bool? TraceEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets target application insight instrumentation key
+        /// Gets or sets target application insight instrumentation key, null
+        /// or whitespace include empty will disable monitoringSettings
         /// </summary>
         [JsonProperty(PropertyName = "appInsightsInstrumentationKey")]
         public string AppInsightsInstrumentationKey { get; set; }
 
+        /// <summary>
+        /// Gets or sets indicates the sampling rate of application insight
+        /// agent, should be in range [0.0, 100.0]
+        /// </summary>
+        [JsonProperty(PropertyName = "appInsightsSamplingRate")]
+        public double? AppInsightsSamplingRate { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the versions of application insight agent
+        /// </summary>
+        [JsonProperty(PropertyName = "appInsightsAgentVersions")]
+        public ApplicationInsightsAgentVersions AppInsightsAgentVersions { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (AppInsightsSamplingRate > 100)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "AppInsightsSamplingRate", 100);
+            }
+            if (AppInsightsSamplingRate < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "AppInsightsSamplingRate", 0);
+            }
+        }
     }
 }
