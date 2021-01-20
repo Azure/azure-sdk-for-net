@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Parameter group. </summary>
-    public partial class FileHttpHeaders
+    internal partial class FileHttpHeaders
     {
         /// <summary> Initializes a new instance of FileHttpHeaders. </summary>
         public FileHttpHeaders()

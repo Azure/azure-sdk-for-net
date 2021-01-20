@@ -254,7 +254,7 @@ namespace Azure.Storage.Files.Shares
             {
                 return null;
             }
-            return new ShareFileProperties
+            ShareFileProperties shareFileProperties = new ShareFileProperties
             {
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 Metadata = response.Headers.Metadata,
@@ -262,12 +262,8 @@ namespace Azure.Storage.Files.Shares
                 ContentType = response.Headers.ContentType,
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
-                // TODO
-                //ContentEncoding = response.Headers.ContentEncoding,
                 CacheControl = response.Headers.CacheControl,
                 ContentDisposition = response.Headers.ContentDisposition,
-                // TODO
-                //ContentLanguage = response.Headers.ContentLanguage,
                 CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
                 CopyStatusDescription = response.Headers.CopyStatusDescription,
                 CopyId = response.Headers.CopyId,
@@ -289,6 +285,20 @@ namespace Azure.Storage.Files.Shares
                 LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
                 LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault()
             };
+
+            if (response.Headers.ContentEncoding != null)
+            {
+                // TODO make this a constant
+                shareFileProperties.ContentEncoding = response.Headers.ContentEncoding.Split(',');
+            }
+
+            if (response.Headers.ContentLanguage != null)
+            {
+                // TODO make this a constant
+                shareFileProperties.ContentLanguage = response.Headers.ContentLanguage.Split(',');
+            }
+
+            return shareFileProperties;
         }
 
         internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileSetHttpHeadersHeaders> response)
@@ -800,6 +810,35 @@ namespace Azure.Storage.Files.Shares
                     }
                 }
             };
+        }
+
+        internal static FileHttpHeaders ToFileHttpHeaders(this ShareFileHttpHeaders shareFileHttpHeaders)
+        {
+            if (shareFileHttpHeaders == null)
+            {
+                return null;
+            }
+            FileHttpHeaders httpHeaders = new FileHttpHeaders
+            {
+                FileContentType = shareFileHttpHeaders.ContentType,
+                FileContentDisposition = shareFileHttpHeaders.ContentDisposition,
+                FileCacheControl = shareFileHttpHeaders.CacheControl,
+                FileContentMD5 = shareFileHttpHeaders.ContentHash
+            };
+
+            if (shareFileHttpHeaders.ContentEncoding != null)
+            {
+                // TODO make this a constant
+                httpHeaders.FileContentEncoding = string.Join(",", shareFileHttpHeaders.ContentEncoding);
+            }
+
+            if (shareFileHttpHeaders.ContentLanguage != null)
+            {
+                // TODO make this a constant
+                httpHeaders.FileContentLanguage = string.Join(",", shareFileHttpHeaders.ContentLanguage);
+            }
+
+            return httpHeaders;
         }
     }
 }

@@ -3042,8 +3042,7 @@ namespace Azure.Storage.Files.Shares
                             fileContentLength: newSize,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
-                            // TODO
-                            fileHttpHeaders: null,
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -3057,8 +3056,7 @@ namespace Azure.Storage.Files.Shares
                             fileContentLength: newSize,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
-                            // TODO
-                            fileHttpHeaders: null,
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
