@@ -61,13 +61,13 @@ namespace Azure.Data.Tables.Samples
             };
 
             // Create the batch.
-            TableTransactionalBatch addBatch = client.CreateTransactionalBatch(partitionKey);
+            TableTransactionalBatch addEntitiesBatch = client.CreateTransactionalBatch(partitionKey);
 
             // Add the entities to be added to the batch.
-            addBatch.AddEntities(entityList);
+            addEntitiesBatch.AddEntities(entityList);
 
             // Submit the batch.
-            TableBatchResponse response = await addBatch.SubmitBatchAsync().ConfigureAwait(false);
+            TableBatchResponse response = await addEntitiesBatch.SubmitBatchAsync().ConfigureAwait(false);
 
             foreach (TableEntity entity in entityList)
             {
@@ -109,16 +109,16 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:BatchDelete
             // Create a new batch.
-            TableTransactionalBatch deleteBatch = client.CreateTransactionalBatch(partitionKey);
+            TableTransactionalBatch deleteEntitiesBatch = client.CreateTransactionalBatch(partitionKey);
 
             // Add the entities for deletion to the batch.
             foreach (TableEntity entity in entityList)
             {
-                deleteBatch.DeleteEntity(entity.RowKey);
+                deleteEntitiesBatch.DeleteEntity(entity.RowKey);
             }
 
             // Submit the batch.
-            await deleteBatch.SubmitBatchAsync().ConfigureAwait(false);
+            await deleteEntitiesBatch.SubmitBatchAsync().ConfigureAwait(false);
             #endregion
 
             // Delete the table.

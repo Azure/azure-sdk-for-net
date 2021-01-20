@@ -1,6 +1,6 @@
 # Updating and Upserting Table Entities
 
-This sample demonstrates how to query a table for entities. You will have needed to [create a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it. To get started, you'll need access to either a Storage or Cosmos DB account.
+This sample demonstrates how to query a table for entities. You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it. To get started, you'll need access to either a Storage or Cosmos DB account.
 
 ## Create a `TableClient`
 
@@ -25,7 +25,7 @@ If you are not familiar with creating tables, refer to the sample on [creating a
 
 ## Upsert an entity
 
-The upsert operation combines the capabilities of insert and update unconditionally.
+The upsert operation combines the capabilities of insert and update unconditionally. 
 
 ```C# Snippet:TablesSample5UpsertEntityAsync
 var entity = new TableEntity(partitionKey, rowKey)
@@ -43,7 +43,7 @@ await tableClient.UpsertEntityAsync(entity);
 // Delete an entity property.
 entity.Remove("Brand");
 
-// Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode, which defaults to Merge if not given.
+// The entity does exist in the table, so invoking UpsertEntity will update the entity. It will apply the configured UpdateMode, which defaults to Merge if not specified.
 // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
 await tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
 ```

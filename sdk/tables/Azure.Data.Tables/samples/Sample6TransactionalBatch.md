@@ -4,7 +4,7 @@ This sample demonstrates how to create and submit transactional batches for tabl
 The Table service supports batch transactions on entities that are in the same table and belong to the same partition group.\
 Multiple Add, Update, Upsert, and Delete operations are supported within a single transaction.
 
-You will have needed to [create a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to submit a transactional batch request.
+You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to submit a transactional batch request.
 To get started, you'll need access to either a Storage or Cosmos DB account.
 
 ## Create a `TableClient`

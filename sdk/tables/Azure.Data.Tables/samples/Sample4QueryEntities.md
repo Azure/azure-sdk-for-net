@@ -1,6 +1,6 @@
 # Query Entities
 
-This sample demonstrates how to query a table for entities. You will have needed to [create a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it. To get started, you'll need access to either a Storage or Cosmos DB account.
+This sample demonstrates how to query a table for entities. You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it. To get started, you'll need access to either a Storage or Cosmos DB account.
 
 ## Create a `TableClient`
 
