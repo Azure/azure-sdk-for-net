@@ -301,7 +301,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return await RestClient.GetNumberConfigurationAsync(phoneNumber.Value, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetNumberConfigurationAsync(phoneNumber.PhoneNumber, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -320,7 +320,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return RestClient.GetNumberConfiguration(phoneNumber.Value, cancellationToken);
+                return RestClient.GetNumberConfiguration(phoneNumber.PhoneNumber, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -340,7 +340,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return await RestClient.ConfigureNumberAsync(pstnConfiguration, phoneNumber.Value, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ConfigureNumberAsync(pstnConfiguration, phoneNumber.PhoneNumber, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -360,7 +360,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return RestClient.ConfigureNumber(pstnConfiguration, phoneNumber.Value, cancellationToken);
+                return RestClient.ConfigureNumber(pstnConfiguration, phoneNumber.PhoneNumber, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -379,7 +379,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return await RestClient.UnconfigureNumberAsync(phoneNumber.Value, cancellationToken).ConfigureAwait(false);
+                return await RestClient.UnconfigureNumberAsync(phoneNumber.PhoneNumber, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -398,7 +398,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                return RestClient.UnconfigureNumber(phoneNumber.Value, cancellationToken);
+                return RestClient.UnconfigureNumber(phoneNumber.PhoneNumber, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -630,7 +630,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                var response = await RestClient.ReleasePhoneNumbersAsync(phoneNumbers.Select(phoneNumber => phoneNumber.Value), cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.ReleasePhoneNumbersAsync(phoneNumbers.Select(phoneNumber => phoneNumber.PhoneNumber), cancellationToken).ConfigureAwait(false);
                 return new ReleasePhoneNumberOperation(
                        this,
                        response.Value.ReleaseId,
@@ -673,7 +673,7 @@ namespace Azure.Communication.Administration
             scope.Start();
             try
             {
-                var response = RestClient.ReleasePhoneNumbers(phoneNumbers.Select(phoneNumber => phoneNumber.Value), cancellationToken);
+                var response = RestClient.ReleasePhoneNumbers(phoneNumbers.Select(phoneNumber => phoneNumber.PhoneNumber), cancellationToken);
                 return new ReleasePhoneNumberOperation(
                        this,
                        response.Value.ReleaseId,
