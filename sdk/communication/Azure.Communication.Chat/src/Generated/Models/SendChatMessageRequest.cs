@@ -25,8 +25,6 @@ namespace Azure.Communication.Chat
             Content = content;
         }
 
-        /// <summary> The chat message priority. </summary>
-        public ChatMessagePriority? Priority { get; set; }
         /// <summary> Chat message content. </summary>
         public string Content { get; }
         /// <summary> The display name of the chat message sender. This property is used to populate sender name for push notifications. </summary>

@@ -17,7 +17,5 @@ namespace Azure.Communication.Chat
 
         /// <summary> Chat message content. </summary>
         public string Content { get; set; }
-        /// <summary> The chat message priority. </summary>
-        public ChatMessagePriority? Priority { get; set; }
     }
 }

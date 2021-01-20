@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of AddChatParticipantsErrors. </summary>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="invalidParticipants"/> is null. </exception>
-        internal AddChatParticipantsErrors(IEnumerable<ChatError> invalidParticipants)
+        internal AddChatParticipantsErrors(IEnumerable<CommunicationError> invalidParticipants)
         {
             if (invalidParticipants == null)
             {
@@ -29,12 +29,12 @@ namespace Azure.Communication.Chat
 
         /// <summary> Initializes a new instance of AddChatParticipantsErrors. </summary>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
-        internal AddChatParticipantsErrors(IReadOnlyList<ChatError> invalidParticipants)
+        internal AddChatParticipantsErrors(IReadOnlyList<CommunicationError> invalidParticipants)
         {
             InvalidParticipants = invalidParticipants;
         }
 
         /// <summary> The participants that failed to be added to the chat thread. </summary>
-        public IReadOnlyList<ChatError> InvalidParticipants { get; }
+        public IReadOnlyList<CommunicationError> InvalidParticipants { get; }
     }
 }

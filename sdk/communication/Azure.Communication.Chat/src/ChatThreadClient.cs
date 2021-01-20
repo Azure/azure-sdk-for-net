@@ -94,17 +94,17 @@ namespace Azure.Communication.Chat
         #region Message Operations
         /// <summary> Sends a message to a thread asynchronously. </summary>
         /// <param name="content"> Chat message content. </param>
-        /// <param name="priority"> The chat message priority. </param>
+        /// <param name="type"> The chat message type. </param>
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<string>> SendMessageAsync(string content, ChatMessagePriority? priority = null, string? senderDisplayName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> SendMessageAsync(string content, ChatMessageType? type = null, string? senderDisplayName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendMessage)}");
             scope.Start();
             try
             {
-                Response<SendChatMessageResult> sendChatMessageResult = await _chatThreadRestClient.SendChatMessageAsync(Id, content, priority, senderDisplayName, null, cancellationToken).ConfigureAwait(false);
+                Response<SendChatMessageResult> sendChatMessageResult = await _chatThreadRestClient.SendChatMessageAsync(Id, content, senderDisplayName, type: null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(sendChatMessageResult.Value.Id, sendChatMessageResult.GetRawResponse());
             }
             catch (Exception ex)
@@ -116,17 +116,17 @@ namespace Azure.Communication.Chat
 
         /// <summary> Sends a message to a thread. </summary>
         /// <param name="content"> Message content. </param>
-        /// <param name="priority"> Message priority. </param>
+        /// <param name="type"> The chat message type. </param>
         /// <param name="senderDisplayName"> The display name of the message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<string> SendMessage(string content, ChatMessagePriority? priority = null, string? senderDisplayName = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> SendMessage(string content, ChatMessageType? type = null, string? senderDisplayName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendMessage)}");
             scope.Start();
             try
             {
-                Response<SendChatMessageResult> sendChatMessageResult = _chatThreadRestClient.SendChatMessage(Id, content, priority, senderDisplayName, null, cancellationToken);
+                Response<SendChatMessageResult> sendChatMessageResult = _chatThreadRestClient.SendChatMessage(Id, content, senderDisplayName, type, cancellationToken);
                 return Response.FromValue(sendChatMessageResult.Value.Id, sendChatMessageResult.GetRawResponse());
             }
             catch (Exception ex)
@@ -271,7 +271,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.UpdateChatMessageAsync(Id, messageId, content, null, cancellationToken).ConfigureAwait(false);
+                return await _chatThreadRestClient.UpdateChatMessageAsync(Id, messageId, content, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -291,7 +291,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.UpdateChatMessage(Id, messageId, content, null, cancellationToken);
+                return _chatThreadRestClient.UpdateChatMessage(Id, messageId, content, cancellationToken);
             }
             catch (Exception ex)
             {

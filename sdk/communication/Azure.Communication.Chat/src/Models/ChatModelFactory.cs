@@ -16,7 +16,6 @@ namespace Azure.Communication.Chat
         /// </summary>
         /// <param name="id"> The id of the chat message. </param>
         /// <param name="type"> The chat message priority. </param>
-        /// <param name="priority"> The chat message priority. </param>
         /// <param name="sequenceId"> The sequenceId of the chat message. </param>
         /// <param name="version"> Version of the chat message. </param>
         /// <param name="content"> Content of the chat message. </param>
@@ -27,8 +26,8 @@ namespace Azure.Communication.Chat
         /// <param name="editedOn"> The timestamp when the chat message was edited. </param>
         /// <returns>A new <see cref="ChatMessage"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChatMessage ChatMessage(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
-            => new ChatMessage(id, type, priority, sequenceId, version, content, senderDisplayName, createdOn, senderId, deletedOn, editedOn);
+        public static ChatMessage ChatMessage(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
+            => new ChatMessage(id, type, sequenceId, version, content, senderDisplayName, createdOn, senderId, deletedOn, editedOn);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatThreadInfo"/> class.

@@ -227,9 +227,9 @@ Use `SendMessage` to send a message to a thread.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
 var content = "hello world";
-var priority = ChatMessagePriority.Normal;
+var type = ChatMessageType.Html;
 var senderDisplayName = "sender name";
-var messageId = await chatThreadClient.SendMessageAsync(content, priority, senderDisplayName);
+var messageId = await chatThreadClient.SendMessageAsync(content, type, senderDisplayName);
 ```
 ### Get a message
 
@@ -249,7 +249,8 @@ Use `GetMessages` to retrieve all messages for the chat thread.
 AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
 await foreach (ChatMessage message in allMessages)
 {
-    Console.WriteLine($"{message.Id}:{message.Sender.Id}:{message.Content}");
+    CommunicationUserIdentifier sender =  (CommunicationUserIdentifier)message.Sender;
+    Console.WriteLine($"{message.Id}:{sender.Id}:{message.Content}");
 }
 ```
 ### Update a message
@@ -280,7 +281,7 @@ Use `GetParticipants` to retrieve the participants of the chat thread.
 AsyncPageable<ChatParticipant> allParticipants = chatThreadClient.GetParticipantsAsync();
 await foreach (ChatParticipant participant in allParticipants)
 {
-    Console.WriteLine($"{participant.User.Id}:{participant.DisplayName}:{participant.ShareHistoryTime}");
+    Console.WriteLine($"{((CommunicationUserIdentifier)participant.User).Id}:{participant.DisplayName}:{participant.ShareHistoryTime}");
 }
 ```
 ### Add thread participants
@@ -336,7 +337,7 @@ Use `GetReadReceipts` to check the status of messages to see which ones are read
 AsyncPageable<ChatMessageReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
 await foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
 {
-    Console.WriteLine($"{readReceipt.ChatMessageId}:{readReceipt.Sender.Id}:{readReceipt.ReadOn}");
+    Console.WriteLine($"{readReceipt.ChatMessageId}:{((CommunicationUserIdentifier)readReceipt.Sender).Id}:{readReceipt.ReadOn}");
 }
 ```
 

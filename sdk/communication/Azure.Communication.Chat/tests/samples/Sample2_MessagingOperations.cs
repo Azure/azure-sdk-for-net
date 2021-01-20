@@ -37,9 +37,9 @@ namespace Azure.Communication.Chat.Tests.samples
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
             var content = "hello world";
-            var priority = ChatMessagePriority.Normal;
+            var type = ChatMessageType.Html;
             var senderDisplayName = "sender name";
-            var messageId = await chatThreadClient.SendMessageAsync(content, priority, senderDisplayName);
+            var messageId = await chatThreadClient.SendMessageAsync(content, type, senderDisplayName);
             #endregion Snippet:Azure_Communication_Chat_Tests_SendMessage
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage
@@ -50,7 +50,8 @@ namespace Azure.Communication.Chat.Tests.samples
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
             await foreach (ChatMessage message in allMessages)
             {
-                Console.WriteLine($"{message.Id}:{message.Sender.Id}:{message.Content}");
+                CommunicationUserIdentifier sender =  (CommunicationUserIdentifier)message.Sender;
+                Console.WriteLine($"{message.Id}:{sender.Id}:{message.Content}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetMessages
 
@@ -67,7 +68,7 @@ namespace Azure.Communication.Chat.Tests.samples
             AsyncPageable<ChatMessageReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
             await foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
             {
-                Console.WriteLine($"{readReceipt.ChatMessageId}:{readReceipt.Sender.Id}:{readReceipt.ReadOn}");
+                Console.WriteLine($"{readReceipt.ChatMessageId}:{((CommunicationUserIdentifier)readReceipt.Sender).Id}:{readReceipt.ReadOn}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts
 

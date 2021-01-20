@@ -15,15 +15,22 @@ namespace Azure.Communication.Chat
     {
         internal static AddChatParticipantsErrors DeserializeAddChatParticipantsErrors(JsonElement element)
         {
-            IReadOnlyList<ChatError> invalidParticipants = default;
+            IReadOnlyList<CommunicationError> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("invalidParticipants"))
                 {
-                    List<ChatError> array = new List<ChatError>();
+                    List<CommunicationError> array = new List<CommunicationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatError.DeserializeChatError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CommunicationError.DeserializeCommunicationError(item));
+                        }
                     }
                     invalidParticipants = array;
                     continue;

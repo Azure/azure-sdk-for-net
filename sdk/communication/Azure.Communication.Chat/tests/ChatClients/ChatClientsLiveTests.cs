@@ -15,6 +15,7 @@ using Azure.Communication.Administration.Models;
 
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Chat.Tests
 {
@@ -94,15 +95,15 @@ namespace Azure.Communication.Chat.Tests
             string messageId = chatThreadClient.SendMessage("Let's meet at 11am");
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_SendMessage
             string messageContent2 = "Content for message 2";
-            string messageId2 = chatThreadClient2.SendMessage(messageContent2, ChatMessagePriority.High, displayNameMessage);
+            string messageId2 = chatThreadClient2.SendMessage(messageContent2, ChatMessageType.Text, displayNameMessage);
             string messageContent3 = "Content for message 3";
-            string messageId3 = chatThreadClient3.SendMessage(messageContent3, ChatMessagePriority.High, displayNameMessage);
+            string messageId3 = chatThreadClient3.SendMessage(messageContent3, ChatMessageType.Html, displayNameMessage);
             string messageContent4 = "Content for message 4";
-            string messageId4 = chatThreadClient3.SendMessage(messageContent4, ChatMessagePriority.High, displayNameMessage);
+            string messageId4 = chatThreadClient3.SendMessage(messageContent4, ChatMessageType.Text, displayNameMessage);
             string messageContent5 = "Content for message 5";
-            string messageId5 = chatThreadClient3.SendMessage(messageContent5, ChatMessagePriority.High, displayNameMessage);
+            string messageId5 = chatThreadClient3.SendMessage(messageContent5, ChatMessageType.Html, displayNameMessage);
             string messageContent6 = "Content for message 6";
-            string messageId6 = chatThreadClient3.SendMessage(messageContent6, ChatMessagePriority.High, displayNameMessage);
+            string messageId6 = chatThreadClient3.SendMessage(messageContent6, ChatMessageType.Text, displayNameMessage);
 
             #region Snippet:Azure_Communication_Chat_Tests_E2E_GetMessage
             ChatMessage message = chatThreadClient.GetMessage(messageId);
@@ -177,7 +178,7 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(3, chatParticipantsOnCreationCount);
             Assert.AreEqual(messageContent, message.Content.Message);
             Assert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content.Message);
-            Assert.AreEqual(ChatMessagePriority.Normal, message.Priority);
+            Assert.AreEqual(ChatMessageType.Text, message.Type);
 
             Assert.AreEqual(messageContent2, message2.Content.Message);
             Assert.AreEqual(displayNameMessage, message2.SenderDisplayName);
@@ -292,17 +293,17 @@ namespace Azure.Communication.Chat.Tests
             ChatThread chatThread = await chatClient.GetChatThreadAsync(threadId);
 
             string messageContent = "Content for message 1";
-            string messageId = await chatThreadClient.SendMessageAsync(messageContent, ChatMessagePriority.High, displayNameMessage);
+            string messageId = await chatThreadClient.SendMessageAsync(messageContent, ChatMessageType.Text, displayNameMessage);
             string messageContent2 = "Content for message 2";
-            string messageId2 = await chatThreadClient2.SendMessageAsync(messageContent2, ChatMessagePriority.High, displayNameMessage);
+            string messageId2 = await chatThreadClient2.SendMessageAsync(messageContent2, ChatMessageType.Html, displayNameMessage);
             string messageContent3 = "Content for message 3";
-            string messageId3 = await chatThreadClient3.SendMessageAsync(messageContent3, ChatMessagePriority.High, displayNameMessage);
+            string messageId3 = await chatThreadClient3.SendMessageAsync(messageContent3, ChatMessageType.Text, displayNameMessage);
             string messageContent4 = "Content for message 4";
-            string messageId4 = await chatThreadClient3.SendMessageAsync(messageContent4, ChatMessagePriority.High, displayNameMessage);
+            string messageId4 = await chatThreadClient3.SendMessageAsync(messageContent4, ChatMessageType.Html, displayNameMessage);
             string messageContent5 = "Content for message 5";
-            string messageId5 = await chatThreadClient3.SendMessageAsync(messageContent5, ChatMessagePriority.High, displayNameMessage);
+            string messageId5 = await chatThreadClient3.SendMessageAsync(messageContent5, ChatMessageType.Text, displayNameMessage);
             string messageContent6 = "Content for message 6";
-            string messageId6 = await chatThreadClient3.SendMessageAsync(messageContent6, ChatMessagePriority.High, displayNameMessage);
+            string messageId6 = await chatThreadClient3.SendMessageAsync(messageContent6, ChatMessageType.Html, displayNameMessage);
 
             ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
             ChatMessage message2 = await chatThreadClient2.GetMessageAsync(messageId2);
@@ -362,7 +363,7 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(messageContent, message.Content.Message);
             Assert.AreEqual(displayNameMessage, message.SenderDisplayName);
             Assert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content.Message);
-            Assert.AreEqual(ChatMessagePriority.High, message.Priority);
+            Assert.AreEqual(ChatMessageType.Text, message.Type);
 
             Assert.AreEqual(messageContent2, message2.Content.Message);
             Assert.AreEqual(messageContent3, message3.Content.Message);

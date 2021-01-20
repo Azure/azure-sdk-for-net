@@ -18,7 +18,7 @@ namespace Azure.Communication.Chat
 
             Message = chatMessageContentInternal.Message;
             Topic = chatMessageContentInternal.Topic;
-            Participants = chatMessageContentInternal.Participants.Select(x => new ChatParticipant(x)).ToList();
+            Participants = chatMessageContentInternal.Participants.Select(x => new ChatParticipant(x)).ToList().AsReadOnly();
         }
 
         internal ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IReadOnlyList<ChatParticipant> participants)
@@ -36,6 +36,6 @@ namespace Azure.Communication.Chat
         /// <summary> Chat message content for type 'participantAdded' or 'participantRemoved' messages. </summary>
         public IReadOnlyList<ChatParticipant> Participants { get; }
         /// <summary> Chat message content for type 'participantAdded' or 'participantRemoved' messages. </summary>
-        public CommunicationUserIdentifier? Initiator { get; }
+        public CommunicationIdentifier? Initiator { get; }
     }
 }

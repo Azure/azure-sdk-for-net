@@ -15,13 +15,11 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of ChatMessageInternal. </summary>
         /// <param name="id"> The id of the chat message. This id is server generated. </param>
         /// <param name="type"> The chat message type. </param>
-        /// <param name="priority"> The chat message priority. </param>
         /// <param name="sequenceId"> Sequence of the chat message in the conversation. </param>
         /// <param name="version"> Version of the chat message. </param>
         /// <param name="createdOn"> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="senderId"> The id of the chat message sender. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="sequenceId"/>, <paramref name="version"/>, or <paramref name="senderId"/> is null. </exception>
-        internal ChatMessageInternal(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, DateTimeOffset createdOn, string senderId)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="sequenceId"/>, or <paramref name="version"/> is null. </exception>
+        internal ChatMessageInternal(string id, ChatMessageType type, string sequenceId, string version, DateTimeOffset createdOn)
         {
             if (id == null)
             {
@@ -35,24 +33,17 @@ namespace Azure.Communication.Chat
             {
                 throw new ArgumentNullException(nameof(version));
             }
-            if (senderId == null)
-            {
-                throw new ArgumentNullException(nameof(senderId));
-            }
 
             Id = id;
             Type = type;
-            Priority = priority;
             SequenceId = sequenceId;
             Version = version;
             CreatedOn = createdOn;
-            SenderId = senderId;
         }
 
         /// <summary> Initializes a new instance of ChatMessageInternal. </summary>
         /// <param name="id"> The id of the chat message. This id is server generated. </param>
         /// <param name="type"> The chat message type. </param>
-        /// <param name="priority"> The chat message priority. </param>
         /// <param name="sequenceId"> Sequence of the chat message in the conversation. </param>
         /// <param name="version"> Version of the chat message. </param>
         /// <param name="content"> Content of a chat message. </param>
@@ -61,11 +52,10 @@ namespace Azure.Communication.Chat
         /// <param name="senderId"> The id of the chat message sender. </param>
         /// <param name="deletedOn"> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="editedOn"> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatMessageInternal(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, ChatMessageContentInternal content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
+        internal ChatMessageInternal(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContentInternal content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
         {
             Id = id;
             Type = type;
-            Priority = priority;
             SequenceId = sequenceId;
             Version = version;
             Content = content;
@@ -80,8 +70,6 @@ namespace Azure.Communication.Chat
         public string Id { get; }
         /// <summary> The chat message type. </summary>
         public ChatMessageType Type { get; }
-        /// <summary> The chat message priority. </summary>
-        public ChatMessagePriority Priority { get; }
         /// <summary> Sequence of the chat message in the conversation. </summary>
         public string SequenceId { get; }
         /// <summary> Version of the chat message. </summary>

@@ -20,10 +20,10 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Initializes a new instance of ChatMessageContentInternal. </summary>
-        /// <param name="message"> Chat message content for type &quot;text&quot; or &quot;html&quot; messages. </param>
-        /// <param name="topic"> Chat message content for type &quot;topicUpdated&quot; messages. </param>
-        /// <param name="participants"> Chat message content for type &quot;participantAdded&quot; or &quot;participantRemoved&quot; messages. </param>
-        /// <param name="initiator"> Chat message content for type &quot;participantAdded&quot; or &quot;participantRemoved&quot; messages. </param>
+        /// <param name="message"> Chat message content for messages of types text or html. </param>
+        /// <param name="topic"> Chat message content for messages of type topicUpdated. </param>
+        /// <param name="participants"> Chat message content for messages of types participantAdded or participantRemoved. </param>
+        /// <param name="initiator"> Chat message content for messages of types participantAdded or participantRemoved. </param>
         internal ChatMessageContentInternal(string message, string topic, IReadOnlyList<ChatParticipantInternal> participants, string initiator)
         {
             Message = message;
@@ -32,13 +32,13 @@ namespace Azure.Communication.Chat
             Initiator = initiator;
         }
 
-        /// <summary> Chat message content for type &quot;text&quot; or &quot;html&quot; messages. </summary>
+        /// <summary> Chat message content for messages of types text or html. </summary>
         public string Message { get; }
-        /// <summary> Chat message content for type &quot;topicUpdated&quot; messages. </summary>
+        /// <summary> Chat message content for messages of type topicUpdated. </summary>
         public string Topic { get; }
-        /// <summary> Chat message content for type &quot;participantAdded&quot; or &quot;participantRemoved&quot; messages. </summary>
+        /// <summary> Chat message content for messages of types participantAdded or participantRemoved. </summary>
         public IReadOnlyList<ChatParticipantInternal> Participants { get; }
-        /// <summary> Chat message content for type &quot;participantAdded&quot; or &quot;participantRemoved&quot; messages. </summary>
+        /// <summary> Chat message content for messages of types participantAdded or participantRemoved. </summary>
         public string Initiator { get; }
     }
 }

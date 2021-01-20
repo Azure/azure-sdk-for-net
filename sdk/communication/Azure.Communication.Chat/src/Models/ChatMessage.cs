@@ -13,7 +13,6 @@ namespace Azure.Communication.Chat
         {
             Id = chatMessageInternal.Id;
             Type = chatMessageInternal.Type;
-            Priority = chatMessageInternal.Priority;
             SequenceId = chatMessageInternal.SequenceId;
             Version = chatMessageInternal.Version;
             Content = new ChatMessageContent(chatMessageInternal.Content);
@@ -24,11 +23,10 @@ namespace Azure.Communication.Chat
             EditedOn = chatMessageInternal.EditedOn;
         }
 
-        internal ChatMessage(string id, ChatMessageType type, ChatMessagePriority priority, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
+        internal ChatMessage(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
         {
             Id = id;
             Type = type;
-            Priority = priority;
             SequenceId = sequenceId;
             Version = version;
             Content = content;
@@ -43,8 +41,6 @@ namespace Azure.Communication.Chat
         public string Id { get; }
         /// <summary> The chat message type. </summary>
         public ChatMessageType Type { get; }
-        /// <summary> The chat message priority. </summary>
-        public ChatMessagePriority Priority { get; }
         /// <summary> Sequence of the chat message in the conversation. </summary>
         public string SequenceId { get; }
         /// <summary> Version of the chat message. </summary>
@@ -56,7 +52,7 @@ namespace Azure.Communication.Chat
         /// <summary> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset CreatedOn { get; }
         /// <summary> The identifier of the chat message sender. </summary>
-        public CommunicationUserIdentifier Sender { get; }
+        public CommunicationIdentifier Sender { get; }
         /// <summary> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

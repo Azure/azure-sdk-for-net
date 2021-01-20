@@ -20,7 +20,7 @@ namespace Azure.Communication.Chat
         /// <summary>
         /// The <see cref="CommunicationUserIdentifier" /> for the message.
         /// </summary>
-        public CommunicationUserIdentifier Sender { get; }
+        public CommunicationIdentifier Sender { get; }
         internal string SenderId { get; }
     }
 }

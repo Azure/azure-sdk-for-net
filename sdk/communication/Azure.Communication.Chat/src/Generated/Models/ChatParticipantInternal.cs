@@ -14,9 +14,8 @@ namespace Azure.Communication.Chat
     {
         /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
         /// <param name="id"> The id of the chat participant. </param>
-        /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ChatParticipantInternal(string id, DateTimeOffset shareHistoryTime)
+        public ChatParticipantInternal(string id)
         {
             if (id == null)
             {
@@ -24,14 +23,13 @@ namespace Azure.Communication.Chat
             }
 
             Id = id;
-            ShareHistoryTime = shareHistoryTime;
         }
 
         /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
         /// <param name="id"> The id of the chat participant. </param>
         /// <param name="displayName"> Display name for the chat participant. </param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatParticipantInternal(string id, string displayName, DateTimeOffset shareHistoryTime)
+        internal ChatParticipantInternal(string id, string displayName, DateTimeOffset? shareHistoryTime)
         {
             Id = id;
             DisplayName = displayName;
@@ -43,6 +41,6 @@ namespace Azure.Communication.Chat
         /// <summary> Display name for the chat participant. </summary>
         public string DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
-        public DateTimeOffset ShareHistoryTime { get; set; }
+        public DateTimeOffset? ShareHistoryTime { get; set; }
     }
 }

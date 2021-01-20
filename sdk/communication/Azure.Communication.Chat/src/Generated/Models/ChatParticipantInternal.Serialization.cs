@@ -23,8 +23,11 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("displayName");
                 writer.WriteStringValue(DisplayName);
             }
-            writer.WritePropertyName("shareHistoryTime");
-            writer.WriteStringValue(ShareHistoryTime, "O");
+            if (Optional.IsDefined(ShareHistoryTime))
+            {
+                writer.WritePropertyName("shareHistoryTime");
+                writer.WriteStringValue(ShareHistoryTime.Value, "O");
+            }
             writer.WriteEndObject();
         }
 
@@ -32,7 +35,7 @@ namespace Azure.Communication.Chat
         {
             string id = default;
             Optional<string> displayName = default;
-            DateTimeOffset shareHistoryTime = default;
+            Optional<DateTimeOffset> shareHistoryTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -47,11 +50,16 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("shareHistoryTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     shareHistoryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new ChatParticipantInternal(id, displayName.Value, shareHistoryTime);
+            return new ChatParticipantInternal(id, displayName.Value, Optional.ToNullable(shareHistoryTime));
         }
     }
 }

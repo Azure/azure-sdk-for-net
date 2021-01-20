@@ -11,14 +11,10 @@ namespace Azure.Communication.Chat
         /// <summary>
         ///  A member of the chat thread.
         /// </summary>
-        /// <param name="communicationUserIdentifier">Instance of <see cref="CommunicationUserIdentifier"/>.</param>
-        public ChatParticipant(CommunicationUserIdentifier communicationUserIdentifier)
+        /// <param name="communicationIdentifier">Instance of <see cref="CommunicationIdentifier"/>.</param>
+        public ChatParticipant(CommunicationIdentifier communicationIdentifier)
         {
-            if (communicationUserIdentifier == null || communicationUserIdentifier.Id == null)
-            {
-                throw new ArgumentNullException(nameof(communicationUserIdentifier));
-            }
-            User = communicationUserIdentifier;
+            User = communicationIdentifier;
         }
 
         internal ChatParticipant(ChatParticipantInternal chatParticipantInternal)
@@ -28,16 +24,16 @@ namespace Azure.Communication.Chat
             ShareHistoryTime = chatParticipantInternal.ShareHistoryTime;
         }
 
-        ///<summary>Instance of <see cref="CommunicationUserIdentifier"/>. </summary>
-        public CommunicationUserIdentifier User { get; set; }
+        ///<summary>Instance of <see cref="CommunicationIdentifier"/>. </summary>
+        public CommunicationIdentifier User { get; set; }
         /// <summary> Display name for the chat thread member. </summary>
         public string? DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
-        public DateTimeOffset ShareHistoryTime { get; set; }
+        public DateTimeOffset? ShareHistoryTime { get; set; }
 
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
-            return new ChatParticipantInternal(User.Id, DisplayName, ShareHistoryTime);
+            return new ChatParticipantInternal(((CommunicationUserIdentifier)User).Id, DisplayName, ShareHistoryTime);
         }
     }
 }

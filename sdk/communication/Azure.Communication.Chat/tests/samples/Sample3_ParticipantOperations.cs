@@ -42,7 +42,7 @@ namespace Azure.Communication.Chat.Tests.samples
             AsyncPageable<ChatParticipant> allParticipants = chatThreadClient.GetParticipantsAsync();
             await foreach (ChatParticipant participant in allParticipants)
             {
-                Console.WriteLine($"{participant.User.Id}:{participant.DisplayName}:{participant.ShareHistoryTime}");
+                Console.WriteLine($"{((CommunicationUserIdentifier)participant.User).Id}:{participant.DisplayName}:{participant.ShareHistoryTime}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_GetMembers
 

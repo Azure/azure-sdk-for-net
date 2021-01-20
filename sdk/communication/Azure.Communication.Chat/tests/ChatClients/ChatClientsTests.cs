@@ -252,7 +252,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Assert.AreEqual(3, addChatParticipantsResult.Errors.InvalidParticipants.Count);
         }
 
-        private void AsssertParticipantError(ChatError chatParticipantError, string expectedMessage, string expectedTarget)
+        private void AsssertParticipantError(CommunicationError chatParticipantError, string expectedMessage, string expectedTarget)
         {
             Assert.AreEqual(expectedMessage, chatParticipantError.Message);
             Assert.AreEqual(expectedTarget, chatParticipantError.Target);
