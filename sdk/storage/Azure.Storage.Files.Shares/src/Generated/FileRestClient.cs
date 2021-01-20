@@ -11528,7 +11528,7 @@ namespace Azure.Storage.Files.Shares.Models
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
             if (value.Smb != null)
             {
-                _element.Add(Azure.Storage.Files.Shares.Models.ShareSmbSettings.ToXml(value.Smb, "Smb", ""));
+                _element.Add(Azure.Storage.Files.Shares.Models.ShareSmbSettings.ToXml(value.Smb, "SMB", ""));
             }
             return _element;
         }
@@ -11742,7 +11742,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (value.Protocol != null)
             {
-                _element.Add(Azure.Storage.Files.Shares.Models.ShareProtocolSettings.ToXml(value.Protocol, "Protocol", ""));
+                _element.Add(Azure.Storage.Files.Shares.Models.ShareProtocolSettings.ToXml(value.Protocol, "ProtocolSettings", ""));
             }
             return _element;
         }

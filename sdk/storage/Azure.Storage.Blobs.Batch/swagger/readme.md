@@ -204,3 +204,30 @@ directive:
   transform: >
     delete $.enum
 ```
+
+### Hide BlobDeleteType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.BlobDeleteType
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide BlobRetentionPolicy.AllowPermanentDelete
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.RetentionPolicy
+  transform: >
+    delete $.properties.AllowPermanentDelete;
+```
+
+### Hide ContainerSubmitBatchResult
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}?restype=container&comp=batch"]
+  transform: >
+    $.post.responses["202"]["x-az-public"] = false;
+```

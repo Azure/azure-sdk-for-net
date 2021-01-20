@@ -1709,4 +1709,22 @@ directive:
     delete $.properties.AllowPermanentDelete;
 ```
 
+### Hide BlobDeleteType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.BlobDeleteType
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Treat the API version as a parameter instead of a constant
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ApiVersionParameter
+  transform: >
+    delete $.enum
+```
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs%2Fswagger%2Freadme.png)
