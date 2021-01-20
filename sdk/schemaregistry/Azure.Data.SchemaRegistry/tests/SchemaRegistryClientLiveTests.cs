@@ -9,9 +9,9 @@ using NUnit.Framework;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
-    public class SchemaRegistryClientLiveTest : RecordedTestBase<SchemaRegistryClientTestEnvironment>
+    public class SchemaRegistryClientLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
-        public SchemaRegistryClientLiveTest(bool isAsync) : base(isAsync)
+        public SchemaRegistryClientLiveTests(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
         }

@@ -14,9 +14,9 @@ using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 {
-    public class SchemaRegistryAvroObjectSerializerLiveTest : RecordedTestBase<SchemaRegistryClientTestEnvironment>
+    public class SchemaRegistryAvroObjectSerializerLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
-        public SchemaRegistryAvroObjectSerializerLiveTest(bool isAsync) : base(isAsync)
+        public SchemaRegistryAvroObjectSerializerLiveTests(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
         }
