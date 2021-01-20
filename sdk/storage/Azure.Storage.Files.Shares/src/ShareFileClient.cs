@@ -1322,15 +1322,9 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
-#pragma warning disable CA1801 // Review unused parameters
             PermissionCopyMode? filePermissionCopyMode,
-#pragma warning restore CA1801 // Review unused parameters
-#pragma warning disable CA1801 // Review unused parameters
             bool? ignoreReadOnly,
-#pragma warning restore CA1801 // Review unused parameters
-#pragma warning disable CA1801 // Review unused parameters
             bool? setArchiveAttribute,
-#pragma warning restore CA1801 // Review unused parameters
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1350,6 +1344,16 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     ResponseWithHeaders<FileStartCopyHeaders> response;
 
+                    CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
+                    {
+                        FilePermissionCopyMode = filePermissionCopyMode,
+                        IgnoreReadOnly = ignoreReadOnly,
+                        FileAttributes = smbProperties?.FileAttributes?.ToAttributesString(),
+                        FileCreationTime = smbProperties?.FileCreatedOn.ToFileDateTimeString(),
+                        FileLastWriteTime = smbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
+                        SetArchiveAttribute = setArchiveAttribute
+                    };
+
                     if (async)
                     {
                         response = await _fileRestClient.StartCopyAsync(
@@ -1357,8 +1361,7 @@ namespace Azure.Storage.Files.Shares
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProperties?.FilePermissionKey,
-                            // TODO
-                            copyFileSmbInfo: null,
+                            copyFileSmbInfo: copyFileSmbInfo,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1370,8 +1373,7 @@ namespace Azure.Storage.Files.Shares
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProperties?.FilePermissionKey,
-                            // TODO
-                            copyFileSmbInfo: null,
+                            copyFileSmbInfo: copyFileSmbInfo,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
