@@ -1242,20 +1242,12 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     ShareClient shareClient = GetShareClient(deletedShareName);
 
-                    //ShareRestClient shareRestClient = new ShareRestClient(
-                    //    _clientDiagnostics,
-                    //    _pipeline,
-                    //    _uri.ToString(),
-                    //    version: _version.ToVersionString(),
-                    //    // TODO
-                    //    sharesnapshot: null);
-
                     ResponseWithHeaders<ShareRestoreHeaders> response;
 
                     if (async)
                     {
                         response = await shareClient.ShareRestClient.RestoreAsync(
-                            shareName: deletedShareName,
+                            path: deletedShareName,
                             deletedShareName: deletedShareName,
                             deletedShareVersion: deletedShareVersion,
                             cancellationToken: cancellationToken)
@@ -1264,7 +1256,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = shareClient.ShareRestClient.Restore(
-                            shareName: deletedShareName,
+                            path: deletedShareName,
                             deletedShareName: deletedShareName,
                             deletedShareVersion: deletedShareVersion,
                             cancellationToken: cancellationToken);

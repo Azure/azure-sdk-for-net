@@ -59,46 +59,15 @@ directive:
 - from: swagger-document
   where: $.parameters
   transform: >
-    $.ShareName = {
-      "name": "shareName",
+    $.Path = {
+      "name": "path",
       "in": "path",
       "required": true,
       "type": "string",
       "x-ms-parameter-location": "method",
-      "description": "The share name."
+      "description": "path.",
+      "x-ms-skip-url-encoding": false
     };
-- from: swagger-document
-  where: $.parameters
-  transform: >
-    $.DirectoryName = {
-      "name": "directory",
-      "in": "path",
-      "required": true,
-      "type": "string",
-      "x-ms-parameter-location": "method",
-      "description": "The directory name."
-    };
-- from: swagger-document
-  where: $.parameters
-  transform: >
-    $.FileName = {
-      "name": "fileName",
-      "in": "path",
-      "required": true,
-      "type": "string",
-      "x-ms-parameter-location": "method",
-      "description": "The file name."
-    };
-- from: swagger-document
-  where: $["x-ms-paths"]
-  transform: >
-   Object.keys($).map(id => {
-     if (id.includes('{directory}/{fileName}'))
-     {
-       $[id.replace('{directory}/{fileName}', '{fileName}')] = $[id];
-       delete $[id];
-     }
-   });
 - from: swagger-document
   where: $["x-ms-paths"]
   transform: >
@@ -107,21 +76,29 @@ directive:
         if (property.includes('{shareName}'))
         {
             $[property].parameters.push({
-                "$ref": "#/parameters/ShareName"
+                "$ref": "#/parameters/Path"
             });
         };
-        if (property.includes('{directory}'))
-        {
-            $[property].parameters.push({
-                "$ref": "#/parameters/DirectoryName"
-            });
-        };
-        if (property.includes('{fileName}'))
-        {
-            $[property].parameters.push({
-                "$ref": "#/parameters/FileName"
-            });
-        }
     }
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+   Object.keys($).map(id => {
+     if (id.includes('{shareName}/{directory}/{fileName}'))
+     {
+       $[id.replace('{shareName}/{directory}/{fileName}', '{path}?restype=file')] = $[id];
+       delete $[id];
+     }
+     if (id.includes('{shareName}/{directory}'))
+     {
+       $[id.replace('{shareName}/{directory}', '{path}?restype=directory')] = $[id];
+       delete $[id];
+     }
+     if (id.includes('{shareName}'))
+     {
+       $[id.replace('{shareName}', '{path}')] = $[id];
+       delete $[id];
+     }
+   });
 ```
 

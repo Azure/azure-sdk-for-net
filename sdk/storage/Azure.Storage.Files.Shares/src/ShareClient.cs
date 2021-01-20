@@ -629,7 +629,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.CreateAsync(
-                            shareName: Name,
+                            path: Name,
                             metadata: metadata,
                             quota: quotaInGB,
                             accessTier: accessTier,
@@ -641,7 +641,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.Create(
-                            shareName: Name,
+                            path: Name,
                             metadata: metadata,
                             quota: quotaInGB,
                             accessTier: accessTier,
@@ -1333,7 +1333,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.CreateSnapshotAsync(
-                            shareName: Name,
+                            path: Name,
                             metadata: metadata,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1341,7 +1341,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.CreateSnapshot(
-                            shareName: Name,
+                            path: Name,
                             metadata: metadata,
                             cancellationToken: cancellationToken);
                     }
@@ -1575,7 +1575,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.DeleteAsync(
-                            shareName: Name,
+                            path: Name,
                             deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -1584,7 +1584,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.Delete(
-                            shareName: Name,
+                            path: Name,
                             deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -1795,7 +1795,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.GetPropertiesAsync(
-                            shareName: Name,
+                            path: Name,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1803,7 +1803,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.GetProperties(
-                            shareName: Name,
+                            path: Name,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -1954,7 +1954,8 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessTier)}: {accessTier}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(SetProperties)}");
+                operationName ??= $"{nameof(ShareClient)}.{nameof(SetProperties)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -1965,7 +1966,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.SetPropertiesAsync(
-                            shareName: Name,
+                            path: Name,
                             quota: quotaInGB,
                             accessTier: accessTier,
                             rootSquash: rootSquash,
@@ -1976,7 +1977,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.SetProperties(
-                            shareName: Name,
+                            path: Name,
                             quota: quotaInGB,
                             accessTier: accessTier,
                             rootSquash: rootSquash,
@@ -2371,7 +2372,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.SetMetadataAsync(
-                            shareName: Name,
+                            path: Name,
                             metadata: metadata,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -2380,7 +2381,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.SetMetadata(
-                            shareName: Name,
+                            path: Name,
                             metadata: metadata,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -2587,7 +2588,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.GetAccessPolicyAsync(
-                            shareName: Name,
+                            path: Name,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2595,7 +2596,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.GetAccessPolicy(
-                            shareName: Name,
+                            path: Name,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2834,7 +2835,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.SetAccessPolicyAsync(
-                            shareName: Name,
+                            path: Name,
                             shareAcl: permissions,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -2843,7 +2844,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.SetAccessPolicy(
-                            shareName: Name,
+                            path: Name,
                             shareAcl: permissions,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -3041,7 +3042,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.GetStatisticsAsync(
-                            shareName: Name,
+                            path: Name,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -3049,7 +3050,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.GetStatistics(
-                            shareName: Name,
+                            path: Name,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -3140,7 +3141,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.GetPermissionAsync(
-                            shareName: Name,
+                            path: Name,
                             filePermissionKey: filePermissionKey,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -3148,7 +3149,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.GetPermission(
-                            shareName: Name,
+                            path: Name,
                             filePermissionKey: filePermissionKey,
                             cancellationToken: cancellationToken);
                     }
@@ -3279,7 +3280,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _shareRestClient.CreatePermissionAsync(
-                            shareName: Name,
+                            path: Name,
                             sharePermission: sharePermission,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -3287,7 +3288,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _shareRestClient.CreatePermission(
-                            shareName: Name,
+                            path: Name,
                             sharePermission: sharePermission,
                             cancellationToken: cancellationToken);
                     }

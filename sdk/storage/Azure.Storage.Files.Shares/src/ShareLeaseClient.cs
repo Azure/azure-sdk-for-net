@@ -377,8 +377,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         if (async)
                         {
                             response = await _fileRestClient.AcquireLeaseAsync(
-                                shareName: FileClient.ShareName,
-                                fileName: FileClient.Path,
+                                path: $"{FileClient.ShareName}/{FileClient.Path}",
                                 duration: (int)Constants.File.Lease.InfiniteLeaseDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken)
@@ -387,8 +386,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             response = _fileRestClient.AcquireLease(
-                                shareName: FileClient.ShareName,
-                                fileName: FileClient.Path,
+                                path: $"{FileClient.ShareName}/{FileClient.Path}",
                                 duration: (int)Constants.File.Lease.InfiniteLeaseDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken);
@@ -417,7 +415,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         if (async)
                         {
                             response = await _shareRestClient.AcquireLeaseAsync(
-                                shareName: ShareClient.Name,
+                                path: ShareClient.Name,
                                 duration: (int)serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken)
@@ -426,7 +424,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             response = _shareRestClient.AcquireLease(
-                                shareName: ShareClient.Name,
+                                path: ShareClient.Name,
                                 duration: (int)serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken);
@@ -561,8 +559,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         if (async)
                         {
                             response = await _fileRestClient.ReleaseLeaseAsync(
-                                shareName: FileClient.ShareName,
-                                fileName: FileClient.Path,
+                                path: $"{FileClient.ShareName}/{FileClient.Path}",
                                 leaseId: LeaseId,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
@@ -570,8 +567,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             response = _fileRestClient.ReleaseLease(
-                                shareName: FileClient.ShareName,
-                                fileName: FileClient.Path,
+                                path: $"{FileClient.ShareName}/{FileClient.Path}",
                                 leaseId: LeaseId,
                                 cancellationToken: cancellationToken);
                         }
@@ -587,7 +583,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         if (async)
                         {
                             response = await _shareRestClient.ReleaseLeaseAsync(
-                                shareName: ShareClient.Name,
+                                path: ShareClient.Name,
                                 leaseId: LeaseId,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
@@ -595,7 +591,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             response = _shareRestClient.ReleaseLease(
-                                shareName: ShareClient.Name,
+                                path: ShareClient.Name,
                                 leaseId: LeaseId,
                                 cancellationToken: cancellationToken);
                         }
@@ -736,8 +732,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         if (async)
                         {
                             response = await _fileRestClient.ChangeLeaseAsync(
-                                shareName: FileClient.ShareName,
-                                fileName: FileClient.Path,
+                                path: $"{FileClient.ShareName}/{FileClient.Path}",
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 cancellationToken: cancellationToken)
@@ -746,8 +741,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             response = _fileRestClient.ChangeLease(
-                                shareName: FileClient.ShareName,
-                                fileName: FileClient.Path,
+                                path: $"{FileClient.ShareName}/{FileClient.Path}",
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 cancellationToken: cancellationToken);
@@ -764,7 +758,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         if (async)
                         {
                             response = await _shareRestClient.ChangeLeaseAsync(
-                                shareName: ShareClient.Name,
+                                path: ShareClient.Name,
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 cancellationToken: cancellationToken)
@@ -773,7 +767,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             response = _shareRestClient.ChangeLease(
-                                shareName: ShareClient.Name,
+                                path: ShareClient.Name,
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 cancellationToken: cancellationToken);
@@ -915,8 +909,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         if (async)
                         {
                             response = await _fileRestClient.BreakLeaseAsync(
-                                shareName: FileClient.ShareName,
-                                fileName: FileClient.Path,
+                                path: $"{FileClient.ShareName}/{FileClient.Path}",
                                 leaseAccessConditions: null,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
@@ -924,8 +917,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             response = _fileRestClient.BreakLease(
-                                shareName: FileClient.ShareName,
-                                fileName: FileClient.Path,
+                                path: $"{FileClient.ShareName}/{FileClient.Path}",
                                 leaseAccessConditions: null,
                                 cancellationToken: cancellationToken);
                         }
@@ -941,7 +933,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         if (async)
                         {
                             response = await _shareRestClient.BreakLeaseAsync(
-                                shareName: ShareClient.Name,
+                                path: ShareClient.Name,
                                 breakPeriod: null,
                                 leaseAccessConditions: null,
                                 cancellationToken: cancellationToken)
@@ -950,7 +942,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             response = _shareRestClient.BreakLease(
-                                shareName: ShareClient.Name,
+                                path: ShareClient.Name,
                                 breakPeriod: null,
                                 leaseAccessConditions: null,
                                 cancellationToken: cancellationToken);
@@ -1075,8 +1067,12 @@ namespace Azure.Storage.Files.Shares.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Renew)}");
+
                 try
                 {
+                    scope.Start();
                     if (FileClient != null)
                     {
                         throw new InvalidOperationException($"{nameof(Renew)} only supports Share Leases");
@@ -1088,8 +1084,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         if (async)
                         {
                             response = await _fileRestClient.ReleaseLeaseAsync(
-                                shareName: FileClient.ShareName,
-                                fileName: FileClient.Path,
+                                path: $"{FileClient.ShareName}/{FileClient.Path}",
                                 leaseId: LeaseId,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
@@ -1097,8 +1092,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             response = _fileRestClient.ReleaseLease(
-                                shareName: FileClient.ShareName,
-                                fileName: FileClient.Path,
+                                path: $"{FileClient.ShareName}/{FileClient.Path}",
                                 leaseId: LeaseId,
                                 cancellationToken: cancellationToken);
                         }
@@ -1106,27 +1100,18 @@ namespace Azure.Storage.Files.Shares.Specialized
                         return Response.FromValue(
                             response.ToShareFileLease(),
                             response.GetRawResponse());
-
-                        //return await FileRestClient.Share.RenewLeaseAsync(
-                        //    ClientDiagnostics,
-                        //    Pipeline,
-                        //    Uri,
-                        //    LeaseId,
-                        //    Version.ToVersionString(),
-                        //    async: async,
-                        //    operationName: $"{nameof(ShareLeaseClient)}.{nameof(Renew)}",
-                        //    cancellationToken: cancellationToken)
-                        //    .ConfigureAwait(false);
                     }
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
