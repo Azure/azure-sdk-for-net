@@ -214,7 +214,6 @@ try {
         LogError "Generated code is manually altered, you may need to re-run sdk\<RP_Name>\generate.ps1"
         Write-Host "For reference, we are using this command for the code check: " -ForegroundColor red -BackgroundColor white
         Write-Host "  autorest https://github.com/<Repo_Name>/azure-rest-api-specs/blob/<Commit_Id>/specification/<RP_Name>/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=<SDK_Repo_Path>/sdk --use:@microsoft.azure/autorest.csharp@2.3.90" -ForegroundColor red -BackgroundColor white
-
     }
 }
 finally {
