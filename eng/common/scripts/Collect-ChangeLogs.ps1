@@ -7,8 +7,7 @@ param(
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-$InstallNotes = "";
-$ReleaseNotes = "";
+$releaseHighlights = @{}
 
 $date = Get-Date -Month $month -Format "yyyy-MM"
 $date += "-\d\d"
@@ -17,9 +16,8 @@ $allPackageProps = Get-AllPkgProperties
 
 foreach ($packageProp in $allPackageProps) {
     $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $packageProp.ChangeLogPath
-    $package = $packageProp.Name
+    $packageName = $packageProp.Name
     $serviceDirectory = $packageProp.ServiceDirectory
-    $groupId = $packageProp.Group
 
     foreach ($changeLogEntry in $changeLogEntries.Values) {
         if ($changeLogEntry.ReleaseStatus -notmatch $date)
@@ -27,33 +25,23 @@ foreach ($packageProp in $allPackageProps) {
             continue;
         }
 
-        $version = $changeLogEntry.ReleaseVersion
+        $releaseVersion = $changeLogEntry.ReleaseVersion
         $githubAnchor = $changeLogEntry.ReleaseTitle.Replace("## ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace(" ", "-")
 
-        if (Test-Path "Function:GetPackageInstallNote")
-        {
-            $InstallNotes += GetPackageInstallNote -Package $package -Version $version -GroupId $groupId
-        }
-        else
-        {
-            LogError "The function 'GetPackageInstallNote' was not found."
-            return $null
-        }
+        $releaseTag = "${packageName}_${releaseVersion}"
+        $key = "${packageName}:${releaseVersion}"
 
-        $highlightsTitle = "$package $version"
-        if (-not ([string]::IsNullOrEmpty($groupId))
-        {
-            $highlightsTitle = "$groupId $highlightsTitle"
-        }
+        $releaseHighlights[$key] = @{}
+        $releaseHighlights[$key]["ChangelogUrl"] = "https://github.com/Azure/azure-sdk-for-${LanguageShort}/blob/${releaseTag}/sdk/${serviceDirectory}/${packageName}/CHANGELOG.md#${githubAnchor}"
+        $releaseHighlights[$key]["Content"] = @()
 
-        $ReleaseNotes += "### $groupId $package $version [Changelog](https://github.com/Azure/azure-sdk-for-$LanguageShort/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)`n"
         $changeLogEntry.ReleaseContent | %{ 
 
-            $ReleaseNotes += $_.Replace("###", "####")
-            $ReleaseNotes += "`n"            
+            $releaseHighlights[$key]["Content"] += $_.Replace("###", "####")
+            $releaseHighlights[$key]["Content"] += "`n"            
         }
-        $ReleaseNotes += "`n"
+        $releaseHighlights[$key]["Content"] += "`n"
     }
 }
 
-return $InstallNotes, $ReleaseNotes
+return $releaseHighlights

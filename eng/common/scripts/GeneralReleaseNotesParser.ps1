@@ -43,26 +43,26 @@ function Parse-ReleaseHighlights ($content)
         $content = $content.Split("`n")
     }
 
-    $parsedContent = @{}
+    $releaseHighlights = @{}
     $addContent = $false
 
     foreach ($line in $content)
     {
         if ($line -match $HEADER_REGEX)
         {
-            $packageFriendlyName = ($matches["PackageName"]).Trim()
+            $packageName = ($matches["PackageName"]).Trim()
             $packageVersion = ($matches["PackageVersion"]).Trim()
             $changelogUrl = ($matches["ChangelogUrl"]).Trim()
-            $parsedContentKey = "${packageFriendlyName}:${packageVersion}"
-            $parsedContent[$parsedContentKey] = @{}
-            $parsedContent[$parsedContentKey]["ChangelogUrl"] = $changelogUrl
-            $parsedContent[$parsedContentKey]["Content"] = @()
+            $key = "${packageName}:${packageVersion}"
+            $releaseHighlights[$key] = @{}
+            $releaseHighlights[$key]["ChangelogUrl"] = $changelogUrl
+            $releaseHighlights[$key]["Content"] = @()
             $addContent = $true
             continue
         }
         elseif ($addContent) {
-            $parsedContent[$parsedContentKey]["Content"] += $line
+            $releaseHighlights[$key]["Content"] += $line
         }
     }
-    return $parsedContent
+    return $releaseHighlights
 }
