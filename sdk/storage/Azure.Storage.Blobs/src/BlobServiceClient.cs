@@ -126,7 +126,12 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential StorageSharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
         /// </summary>
         private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
 

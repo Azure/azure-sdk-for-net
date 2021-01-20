@@ -75,6 +75,15 @@ namespace Azure.Storage.Blobs
         internal virtual BlobClientOptions.ServiceVersion Version => _version;
 
         /// <summary>
+        /// The authentication policy for our pipeline.  We cache it here in
+        /// case we need to construct a pipeline for authenticating batch
+        /// operations.
+        /// </summary>
+        private readonly HttpPipelinePolicy _authenticationPolicy;
+
+        internal virtual HttpPipelinePolicy AuthenticationPolicy => _authenticationPolicy;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -223,6 +232,7 @@ namespace Azure.Storage.Blobs
             var builder = new BlobUriBuilder(conn.BlobEndpoint) { BlobContainerName = blobContainerName };
             _uri = builder.ToUri();
             options ??= new BlobClientOptions();
+            _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -345,6 +355,7 @@ namespace Azure.Storage.Blobs
         {
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
             _uri = blobContainerUri;
+            _authenticationPolicy = authentication;
             options ??= new BlobClientOptions();
             _pipeline = options.Build(authentication);
             _version = options.Version;
@@ -391,6 +402,7 @@ namespace Azure.Storage.Blobs
             _uri = containerUri;
             _pipeline = pipeline;
             _storageSharedKeyCredential = storageSharedKeyCredential;
+            _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(storageSharedKeyCredential);
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
@@ -433,6 +445,42 @@ namespace Azure.Storage.Blobs
                 encryptionScope: null);
         }
         #endregion ctor
+
+        #region protected static accessors for Azure.Storage.Blobs.Batch
+        /// <summary>
+        /// Get a <see cref="BlobContainerClient"/>'s <see cref="HttpPipeline"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+        protected static HttpPipeline GetHttpPipeline(BlobContainerClient client) =>
+            client.Pipeline;
+
+        /// <summary>
+        /// Get a <see cref="BlobContainerClient"/>'s authentication
+        /// <see cref="HttpPipelinePolicy"/> for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's authentication policy.</returns>
+        protected static HttpPipelinePolicy GetAuthenticationPolicy(BlobContainerClient client) =>
+            client.AuthenticationPolicy;
+
+        /// <summary>
+        /// Get a <see cref="BlobContainerClient"/>'s <see cref="BlobClientOptions"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+        protected static BlobClientOptions GetClientOptions(BlobContainerClient client) =>
+            new BlobClientOptions(client.Version)
+            {
+                // We only use this for communicating diagnostics, at the moment
+                Diagnostics =
+                {
+                    IsDistributedTracingEnabled = client.ClientDiagnostics.IsActivityEnabled
+                }
+            };
+        #endregion protected static accessors for Azure.Storage.Blobs.Batch
 
         /// <summary>
         /// Create a new <see cref="BlobBaseClient"/> object by appending

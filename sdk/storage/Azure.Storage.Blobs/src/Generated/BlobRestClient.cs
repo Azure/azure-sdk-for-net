@@ -2688,8 +2688,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerSubmitBatchResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerSubmitBatchResult>> SubmitBatchAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult>> SubmitBatchAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2813,8 +2813,8 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerSubmitBatchResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerSubmitBatchResult> SubmitBatchAsync_CreateResponse(
+            /// <returns>The Container.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult> SubmitBatchAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -2824,8 +2824,8 @@ namespace Azure.Storage.Blobs
                     case 202:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.ContainerSubmitBatchResult _value = new Azure.Storage.Blobs.Models.ContainerSubmitBatchResult();
-                        _value.Body = response.ContentStream; // You should manually wrap with RetriableStream!
+                        Azure.Storage.Blobs.Models.BlobBatchResult _value = new Azure.Storage.Blobs.Models.BlobBatchResult();
+                        _value.Content = response.ContentStream; // You should manually wrap with RetriableStream!
 
                         // Get response headers
                         string _header;
@@ -21349,33 +21349,6 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class ConditionNotMetError
-
-#region class ContainerSubmitBatchResult
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Container SubmitBatchResult
-    /// </summary>
-    internal partial class ContainerSubmitBatchResult
-    {
-        /// <summary>
-        /// The media type of the body of the response. For batch requests, this is multipart/mixed; boundary=batchresponse_GUID
-        /// </summary>
-        public string ContentType { get; internal set; }
-
-        /// <summary>
-        /// Body
-        /// </summary>
-        public System.IO.Stream Body { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of ContainerSubmitBatchResult instances.
-        /// You can use BlobsModelFactory.ContainerSubmitBatchResult instead.
-        /// </summary>
-        internal ContainerSubmitBatchResult() { }
-    }
-}
-#endregion class ContainerSubmitBatchResult
 
 #region enum CopyStatus
 namespace Azure.Storage.Blobs.Models

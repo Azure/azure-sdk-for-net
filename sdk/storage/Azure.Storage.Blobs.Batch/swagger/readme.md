@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate blob storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-02-02/blob.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -120,6 +120,22 @@ directive:
     }
 ```
 
+### Batch returns a 202
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}?restype=container&comp=batch"].post.responses
+  transform: >
+    const response = $["202"];
+    if (response) {
+        delete $["202"];
+        $["202"] = response;
+        $["202"]["x-az-public"] = false;
+        $["202"]["x-az-response-name"] = "BlobBatchResult";
+        $["202"]["x-az-response-schema-name"] = "Content";
+    }
+```
+
 ### Delete all operations except SubmitBatch and operations
 ``` yaml
 directive:
@@ -128,6 +144,7 @@ directive:
   transform: >
     return {
         "/?comp=batch": $["/?comp=batch"],
+        "/{containerName}?restype=container&comp=batch": $["/{containerName}?restype=container&comp=batch"],
         "/{containerName}/{blob}?comp=tier": {
             "put": {
                 ...$["/{containerName}/{blob}?comp=tier"].put,
@@ -179,7 +196,10 @@ directive:
         "IfModifiedSince": $.IfModifiedSince,
         "IfUnmodifiedSince": $.IfUnmodifiedSince,
         "IfMatch": $.IfMatch,
-        "IfNoneMatch": $.IfNoneMatch
+        "IfNoneMatch": $.IfNoneMatch,
+        "VersionId": $.VersionId,
+        "IfTags": $.IfTags,
+        "BlobDeleteType": $.BlobDeleteType
     };
 
     $.AccessTierRequired["x-az-external"] = true;
@@ -194,6 +214,15 @@ directive:
     $.DeleteSnapshots["x-az-enum-skip-value"] = "none";
 
     return $;
+```
+
+### Hide BlobDeleteType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.BlobDeleteType
+  transform: >
+    $["x-az-public"] = false;
 ```
 
 ### Treat the API version as a parameter instead of a constant
