@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         }
 
         [Test]
-        [Ignore("This test case cannot pass due to backend limitations for service principals.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot pass due to backend limitations for service principals.")]
         public async Task TestSparkBatchJob()
         {
             SparkBatchClient client = CreateClient();

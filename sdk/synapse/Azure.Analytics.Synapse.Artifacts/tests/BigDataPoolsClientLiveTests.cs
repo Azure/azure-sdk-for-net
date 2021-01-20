@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Ignore("This test case cannot be automated due to the inability to configure infrastructure to test against.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot be automated due to the inability to configure infrastructure to test against.")]
         [Test]
         public async Task ListPools()
         {
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             Assert.GreaterOrEqual(1, pools.Value.Count);
         }
 
-        [Ignore("This test case cannot be automated due to the inability to configure infrastructure to test against.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot be automated due to the inability to configure infrastructure to test against.")]
         [Test]
         public async Task GetPool()
         {
