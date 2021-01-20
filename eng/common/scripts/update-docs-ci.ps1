@@ -62,7 +62,9 @@ foreach ($config in $targets) {
     }
     else
     {
-      LogWarning "The function '$UpdateDocCIFn' was not found."
+      LogWarning "The function for '$UpdateDocCIFn' was not found.`
+      Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
+      See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
     }
   }
 }

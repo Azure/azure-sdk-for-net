@@ -38,7 +38,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="keyCredential">The Mixed Reality service account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
         public MixedRealityStsClient(string accountId, string accountDomain, AzureKeyCredential keyCredential, MixedRealityStsClientOptions? options = null)
-            : this(accountId, ConstructStsEndpointUrl(accountDomain), new MixedRealityAccountKeyCredential(accountId, keyCredential), options) { }
+            : this(accountId, AuthenticationEndpoint.ConstructFromDomain(accountDomain), new MixedRealityAccountKeyCredential(accountId, keyCredential), options) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MixedRealityStsClient" /> class.
@@ -58,7 +58,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
         /// <param name="options">The options.</param>
         public MixedRealityStsClient(string accountId, string accountDomain, TokenCredential credential, MixedRealityStsClientOptions? options = null)
-            : this(accountId, ConstructStsEndpointUrl(accountDomain), credential, options) { }
+            : this(accountId, AuthenticationEndpoint.ConstructFromDomain(accountDomain), credential, options) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MixedRealityStsClient" /> class.
@@ -146,18 +146,6 @@ namespace Azure.MixedReality.Authentication
                 scope.Failed(ex);
                 throw;
             }
-        }
-
-        internal static Uri ConstructStsEndpointUrl(string accountDomain)
-        {
-            Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
-
-            if (!Uri.TryCreate($"https://sts.{accountDomain}", UriKind.Absolute, out Uri result))
-            {
-                throw new ArgumentException("The value could not be used to construct a valid endpoint.", nameof(accountDomain));
-            }
-
-            return result;
         }
 
         private static string GetDefaultScope(Uri uri)

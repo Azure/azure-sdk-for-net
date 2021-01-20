@@ -21,9 +21,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private DateTimeOffset CreatedFeedbackEndTime => DateTimeOffset.Parse("2020-09-29T00:00:00Z");
 
         [RecordedTest]
-        public async Task AddAndGetAnomalyFeedbackWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AddAndGetAnomalyFeedbackWithMinimumSetup(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var dimensionKey = new DimensionKey();
             dimensionKey.AddDimensionColumn("city", "Delhi");
@@ -225,9 +227,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllFeedbackWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetAllFeedbackWithMinimumSetup(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var feedbackCount = 0;
 

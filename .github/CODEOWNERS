@@ -345,7 +345,7 @@ sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamat
 /sdk/marketplaceordering/Microsoft.Azure.Management.MarketplaceOrdering/            @prbansa
 
 # ServiceLabel: %Media Services %Service Attention
-/sdk/mediaservices/            @akucer
+/sdk/mediaservices/            @akucer @naiteeks @bennage @giakas
 
 # ServiceLabel: %Migrate %Service Attention
 /sdk/resourcemover/Microsoft.Azure.Management.Migrate/            @shijojoy

@@ -18,19 +18,6 @@ namespace Azure.Messaging.EventGrid
     /// <summary> Properties of an event published to an Event Grid topic using the CloudEvent 1.0 Schema. </summary>
     public class CloudEvent
     {
-        /// <summary> Initializes a new instance of the <see cref="CloudEvent"/> class. </summary>
-        /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
-        /// <param name="type"> Type of event related to the originating occurrence. </param>
-        public CloudEvent(string source, string type)
-        {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(type, nameof(type));
-
-            Source = source;
-            Type = type;
-            ExtensionAttributes = new Dictionary<string, object>();
-        }
-
         /// <summary> Initializes a new instance of the <see cref="CloudEvent"/> class.
         /// If the format and encoding of the data is not a JSON value, consider specifying the content type
         /// of the payload in <see cref="DataContentType"/>. For example, if passing in an XML payload, the
@@ -41,15 +28,17 @@ namespace Azure.Messaging.EventGrid
         /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified if payload is not JSON. </param>
-        public CloudEvent(string source, string type, object data, string dataContentType = default)
+        /// <param name="dataSerializationType">The type to use when serializing the data.
+        /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="data"/>.</param>
+        public CloudEvent(string source, string type, object data, string dataContentType = default, Type dataSerializationType = default)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
-            Argument.AssertNotNull(data, nameof(data));
 
             Source = source;
             Type = type;
             DataContentType = dataContentType;
+            DataSerializationType = dataSerializationType ?? data?.GetType() ?? null;
 
             if (data is IEnumerable<byte> enumerable)
             {
@@ -66,40 +55,21 @@ namespace Azure.Messaging.EventGrid
             ExtensionAttributes = new Dictionary<string, object>();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CloudEvent"/> class.
-        /// </summary>
-        /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
-        /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
-        /// <param name="data"> Event data specific to the event type. </param>
-        /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified when sending binary data. </param>
-        public CloudEvent(string source, string type, BinaryData data, string dataContentType = default)
-        {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(type, nameof(type));
-
-            Source = source;
-            Type = type;
-            DataContentType = dataContentType;
-            DataBase64 = data.ToArray();
-            ExtensionAttributes = new Dictionary<string, object>();
-        }
-
-        internal CloudEvent(string id, string source, string type, DateTimeOffset? time, string dataSchema, string dataContentType, string subject, JsonElement serializedData, byte[] dataBase64)
+        internal CloudEvent(CloudEventInternal cloudEventInternal)
         {
             // we only validate that the type is required when deserializing since the service allows sending a CloudEvent without a Source.
-            Argument.AssertNotNull(type, nameof(type));
+            Argument.AssertNotNull(cloudEventInternal.Type, nameof(cloudEventInternal.Type));
 
-            Id = id;
-            Source = source;
-            Type = type;
-            Time = time;
-            DataSchema = dataSchema;
-            DataContentType = dataContentType;
-            Subject = subject;
-            SerializedData = serializedData;
-            DataBase64 = dataBase64;
-            ExtensionAttributes = new Dictionary<string, object>();
+            Id = cloudEventInternal.Id;
+            Source = cloudEventInternal.Source;
+            Type = cloudEventInternal.Type;
+            Time = cloudEventInternal.Time;
+            DataSchema = cloudEventInternal.Dataschema;
+            DataContentType = cloudEventInternal.Datacontenttype;
+            Subject = cloudEventInternal.Subject;
+            SerializedData = cloudEventInternal.Data;
+            DataBase64 = cloudEventInternal.DataBase64;
+            ExtensionAttributes = new Dictionary<string, object>(cloudEventInternal.AdditionalProperties);
         }
 
         /// <summary>
@@ -125,6 +95,8 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary>Gets or sets the content type of the data.</summary>
         public string DataContentType { get; set; }
+
+        internal Type DataSerializationType { get; }
 
         /// <summary>Gets or sets the subject of the event in the context of the event producer (identified by source). </summary>
         public string Subject { get; set; }
@@ -185,26 +157,7 @@ namespace Azure.Messaging.EventGrid
 
             foreach (CloudEventInternal cloudEventInternal in cloudEventsInternal)
             {
-                CloudEvent cloudEvent = new CloudEvent(
-                    cloudEventInternal.Id,
-                    cloudEventInternal.Source,
-                    cloudEventInternal.Type,
-                    cloudEventInternal.Time,
-                    cloudEventInternal.Dataschema,
-                    cloudEventInternal.Datacontenttype,
-                    cloudEventInternal.Subject,
-                    cloudEventInternal.Data,
-                    cloudEventInternal.DataBase64);
-
-                if (cloudEventInternal.AdditionalProperties != null)
-                {
-                    foreach (KeyValuePair<string, object> kvp in cloudEventInternal.AdditionalProperties)
-                    {
-                        cloudEvent.ExtensionAttributes.Add(kvp.Key, kvp.Value);
-                    }
-                }
-
-                cloudEvents.Add(cloudEvent);
+                cloudEvents.Add(new CloudEvent(cloudEventInternal));
             }
 
             return cloudEvents.ToArray();
@@ -325,7 +278,7 @@ namespace Azure.Messaging.EventGrid
             {
                 // The data has not been serialized yet, but we still return it as BinaryData
                 // which uses System.Text.Json.
-                return new BinaryData(Data);
+                return new BinaryData(Data, type: DataSerializationType);
             }
             else
             {
@@ -348,7 +301,7 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-        private static MemoryStream SerializePayloadToStream(object payload, CancellationToken cancellationToken = default)
+        private static MemoryStream SerializePayloadToStream(JsonElement payload, CancellationToken cancellationToken = default)
         {
             MemoryStream dataStream = new MemoryStream();
             s_jsonSerializer.Serialize(dataStream, payload, payload.GetType(), cancellationToken);

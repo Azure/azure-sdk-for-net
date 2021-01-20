@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType");
-                writer.WriteStringValue(StringIndexType.Value.ToString());
+                writer.WriteStringValue(StringIndexType.ToString());
             }
             writer.WriteEndObject();
         }

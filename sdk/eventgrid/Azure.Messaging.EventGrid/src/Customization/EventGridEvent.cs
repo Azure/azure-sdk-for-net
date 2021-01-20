@@ -23,32 +23,36 @@ namespace Azure.Messaging.EventGrid
         /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="eventType"> The type of the event that occurred. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
-        public EventGridEvent(object data, string subject, string eventType, string dataVersion)
+        /// <param name="dataSerializationType">The type to use when serializing the data.
+        /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="data"/>.</param>
+        public EventGridEvent(object data, string subject, string eventType, string dataVersion, Type dataSerializationType = default)
         {
             Argument.AssertNotNull(subject, nameof(subject));
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(eventType, nameof(eventType));
             Argument.AssertNotNull(dataVersion, nameof(dataVersion));
 
+            DataSerializationType = dataSerializationType ?? data?.GetType() ?? null;
             Subject = subject;
             Data = data;
             EventType = eventType;
             DataVersion = dataVersion;
         }
 
-        internal EventGridEvent(JsonElement serializedData, string subject, string eventType, string dataVersion, DateTimeOffset eventTime, string id)
+        internal EventGridEvent(EventGridEventInternal eventGridEventInternal)
         {
-            Argument.AssertNotNull(subject, nameof(subject));
-            Argument.AssertNotNull(eventType, nameof(eventType));
-            Argument.AssertNotNull(dataVersion, nameof(dataVersion));
-            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(eventGridEventInternal.Subject, nameof(eventGridEventInternal.Subject));
+            Argument.AssertNotNull(eventGridEventInternal.EventType, nameof(eventGridEventInternal.EventType));
+            Argument.AssertNotNull(eventGridEventInternal.DataVersion, nameof(eventGridEventInternal.DataVersion));
+            Argument.AssertNotNull(eventGridEventInternal.Id, nameof(eventGridEventInternal.Id));
 
-            Subject = subject;
-            SerializedData = serializedData;
-            EventType = eventType;
-            DataVersion = dataVersion;
-            EventTime = eventTime;
-            Id = id;
+            Subject = eventGridEventInternal.Subject;
+            SerializedData = eventGridEventInternal.Data;
+            EventType = eventGridEventInternal.EventType;
+            DataVersion = eventGridEventInternal.DataVersion;
+            EventTime = eventGridEventInternal.EventTime;
+            Id = eventGridEventInternal.Id;
+            Topic = eventGridEventInternal.Topic;
         }
 
         /// <summary> Gets or sets a unique identifier for the event. </summary>
@@ -58,6 +62,7 @@ namespace Azure.Messaging.EventGrid
         /// This must be set when publishing the event to a domain, and must not be set when publishing the event to a topic.
         /// </summary>
         public string Topic { get; set; }
+        internal Type DataSerializationType { get; }
 
         /// <summary>Gets or sets a resource path relative to the topic path.</summary>
         public string Subject { get; set; }
@@ -119,18 +124,7 @@ namespace Azure.Messaging.EventGrid
 
             foreach (EventGridEventInternal egEventInternal in egEventsInternal)
             {
-                EventGridEvent egEvent = new EventGridEvent(
-                    egEventInternal.Data,
-                    egEventInternal.Subject,
-                    egEventInternal.EventType,
-                    egEventInternal.DataVersion,
-                    egEventInternal.EventTime,
-                    egEventInternal.Id)
-                {
-                    Topic = egEventInternal.Topic
-                };
-
-                egEvents.Add(egEvent);
+                egEvents.Add(new EventGridEvent(egEventInternal));
             }
 
             return egEvents.ToArray();
@@ -241,7 +235,7 @@ namespace Azure.Messaging.EventGrid
         {
             if (Data != null)
             {
-                return new BinaryData(Data);
+                return new BinaryData(Data, type: DataSerializationType);
             }
             else
             {
@@ -249,7 +243,7 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-        private static MemoryStream SerializePayloadToStream(object payload, CancellationToken cancellationToken = default)
+        private static MemoryStream SerializePayloadToStream(JsonElement payload, CancellationToken cancellationToken = default)
         {
             MemoryStream dataStream = new MemoryStream();
             s_jsonSerializer.Serialize(dataStream, payload, payload.GetType(), cancellationToken);

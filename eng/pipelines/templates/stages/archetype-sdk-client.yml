@@ -49,7 +49,8 @@ stages:
         ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         Artifacts: ${{ parameters.Artifacts }}
-        TestPipeline: ${{ parameters.TestPipeline }}
+        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+          TestPipeline: true
         ArtifactName: packages
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         WindowsPool: ${{ parameters.WindowsPool }}
@@ -63,7 +64,8 @@ stages:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         DependsOn: Build
         Artifacts: ${{ parameters.Artifacts }}
-        TestPipeline: ${{ parameters.TestPipeline }}
+        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+          TestPipeline: true
         ArtifactName: packages
         TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
         TargetDocRepoName: ${{ parameters.TargetDocRepoName }}
