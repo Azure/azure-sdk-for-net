@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Identity
 {
     /// <summary> List of scopes for an access token. </summary>
     public readonly partial struct CommunicationTokenScope : IEquatable<CommunicationTokenScope>

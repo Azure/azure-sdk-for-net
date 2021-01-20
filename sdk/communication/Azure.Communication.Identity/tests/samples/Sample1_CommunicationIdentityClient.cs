@@ -3,8 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Communication.Administration.Models;
-using Azure.Communication.Administration.Tests;
+using Azure.Communication.Identity.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -12,7 +11,7 @@ using NUnit.Framework;
 
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
 
-namespace Azure.Communication.Administration.Samples
+namespace Azure.Communication.Identity.Samples
 {
     /// <summary>
     /// Basic Azure Communication Identity samples.

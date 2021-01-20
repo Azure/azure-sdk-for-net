@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Identity
 {
     public partial class CommunicationUserToken
     {

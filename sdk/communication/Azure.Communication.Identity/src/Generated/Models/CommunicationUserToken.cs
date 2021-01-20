@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Identity
 {
     /// <summary> An access token. </summary>
     public partial class CommunicationUserToken

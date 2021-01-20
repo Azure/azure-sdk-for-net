@@ -1,59 +1,10 @@
 namespace Azure.Communication.Administration
 {
-    public partial class CommunicationIdentityClient
-    {
-        protected CommunicationIdentityClient() { }
-        public CommunicationIdentityClient(string connectionString, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
-        public CommunicationIdentityClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
-        public CommunicationIdentityClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
-        public virtual Azure.Response<Azure.Communication.CommunicationUserIdentifier> CreateUser(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CommunicationUserIdentifier>> CreateUserAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<(Azure.Communication.CommunicationUserIdentifier user, Azure.Communication.Administration.CommunicationUserToken token)> CreateUserWithToken(System.Collections.Generic.IEnumerable<Azure.Communication.Administration.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<(Azure.Communication.CommunicationUserIdentifier user, Azure.Communication.Administration.CommunicationUserToken token)>> CreateUserWithTokenAsync(System.Collections.Generic.IEnumerable<Azure.Communication.Administration.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteUser(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Administration.CommunicationUserToken> IssueToken(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Administration.CommunicationUserToken>> IssueTokenAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Administration.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RevokeTokens(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RevokeTokensAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class CommunicationIdentityClientOptions : Azure.Core.ClientOptions
-    {
-        public CommunicationIdentityClientOptions(Azure.Communication.Administration.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Administration.CommunicationIdentityClientOptions.ServiceVersion.V1, Azure.Core.RetryOptions? retryOptions = null, Azure.Core.Pipeline.HttpPipelineTransport? transport = null) { }
-        public enum ServiceVersion
-        {
-            V1 = 1,
-        }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommunicationTokenScope : System.IEquatable<Azure.Communication.Administration.CommunicationTokenScope>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CommunicationTokenScope(string value) { throw null; }
-        public static Azure.Communication.Administration.CommunicationTokenScope Chat { get { throw null; } }
-        public static Azure.Communication.Administration.CommunicationTokenScope VoIP { get { throw null; } }
-        public bool Equals(Azure.Communication.Administration.CommunicationTokenScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.Administration.CommunicationTokenScope left, Azure.Communication.Administration.CommunicationTokenScope right) { throw null; }
-        public static implicit operator Azure.Communication.Administration.CommunicationTokenScope (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.Administration.CommunicationTokenScope left, Azure.Communication.Administration.CommunicationTokenScope right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CommunicationUserToken
-    {
-        internal CommunicationUserToken() { }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } }
-        public string Token { get { throw null; } }
-    }
     public partial class PhoneNumberAdministrationClient
     {
         protected PhoneNumberAdministrationClient() { }
         public PhoneNumberAdministrationClient(string connectionString, Azure.Communication.Administration.PhoneNumberAdministrationClientOptions? options = null) { }
-        public PhoneNumberAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
+        public PhoneNumberAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.Administration.PhoneNumberAdministrationClientOptions? options = null) { }
         public PhoneNumberAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.Administration.PhoneNumberAdministrationClientOptions? options = null) { }
         public virtual Azure.Response CancelReservation(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelReservationAsync(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

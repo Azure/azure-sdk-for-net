@@ -12,7 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
-    <ProjectReference Include="..\src\Azure.Communication.Administration.csproj" />
+    <ProjectReference Include="..\src\Azure.Communication.Identity.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -22,7 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\samples\README.md" Link="samples\README.md" />
-    <None Include="..\samples\Sample2_PhoneNumberAdministrationClient.md" Link="samples\Sample2_PhoneNumberAdministrationClient.md" />
-    <None Include="..\samples\Sample2_PhoneNumberAdministrationClientAsync.md" Link="samples\Sample2_PhoneNumberAdministrationClientAsync.md" />
+    <None Include="..\samples\Sample1_CommunicationIdentityClient.md" Link="samples\Sample1_CommunicationIdentityClient.md" />
+    <None Include="..\samples\Sample1_CommunicationIdentityClientAsync.md" Link="samples\Sample1_CommunicationIdentityClientAsync.md" />
   </ItemGroup>
 </Project>

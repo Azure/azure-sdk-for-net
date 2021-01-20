@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Communication.Administration.Models
+namespace Azure.Communication.Identity.Models
 {
-    internal partial class CommunicationIdentity
+    internal partial class CommunicationIdentityAccessTokenResult
     {
     }
 }

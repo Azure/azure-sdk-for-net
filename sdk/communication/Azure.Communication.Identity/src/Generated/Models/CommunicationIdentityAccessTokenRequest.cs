@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.Administration;
+using Azure.Communication.Identity;
 
-namespace Azure.Communication.Administration.Models
+namespace Azure.Communication.Identity.Models
 {
     /// <summary> The CommunicationIdentityAccessTokenRequest. </summary>
     internal partial class CommunicationIdentityAccessTokenRequest

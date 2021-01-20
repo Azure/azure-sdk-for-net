@@ -3,8 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Communication.Administration;
-using Azure.Communication.Administration.Models;
+using Azure.Communication.Identity;
 using Azure.Communication;
 using Azure.Core.TestFramework;
 using NUnit.Framework;

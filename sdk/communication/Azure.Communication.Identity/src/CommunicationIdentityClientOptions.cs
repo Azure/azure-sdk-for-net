@@ -5,7 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Identity
 {
     /// <summary>
     /// The options for communication <see cref="CommunicationIdentityClientOptions"/>.

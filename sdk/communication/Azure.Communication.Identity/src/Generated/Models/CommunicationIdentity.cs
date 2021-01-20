@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.Administration.Models
+namespace Azure.Communication.Identity.Models
 {
     /// <summary> A communication identity. </summary>
     internal partial class CommunicationIdentity

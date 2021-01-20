@@ -5,7 +5,7 @@ using System;
 using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 
-namespace Azure.Communication.Administration.Tests
+namespace Azure.Communication.Identity.Tests
 {
     public class CommunicationIdentityClientTestEnvironment: TestEnvironment
     {

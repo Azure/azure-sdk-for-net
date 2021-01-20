@@ -38,7 +38,7 @@ For the generation of user access tokens, refer to [User Access Tokens][useracce
 ### Using statements
 ```C# Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
 using Azure.Communication;
-using Azure.Communication.Administration;
+using Azure.Communication.Identity;
 using Azure.Communication.Chat;
 ```
 

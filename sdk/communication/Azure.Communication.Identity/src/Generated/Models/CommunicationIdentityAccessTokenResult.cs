@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
-using Azure.Communication.Administration;
+using Azure.Communication.Identity;
 
-namespace Azure.Communication.Administration.Models
+namespace Azure.Communication.Identity.Models
 {
     /// <summary> A communication identity with access token. </summary>
     internal partial class CommunicationIdentityAccessTokenResult

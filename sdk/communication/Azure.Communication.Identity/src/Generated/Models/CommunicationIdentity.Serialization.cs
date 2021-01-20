@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Administration.Models
+namespace Azure.Communication.Identity.Models
 {
     internal partial class CommunicationIdentity
     {

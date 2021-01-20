@@ -7,7 +7,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 
-namespace Azure.Communication.Administration.Tests
+namespace Azure.Communication.Identity.Tests
 {
     public class CommunicationIdentityClientLiveTestBase : RecordedTestBase<CommunicationIdentityClientTestEnvironment>
     {

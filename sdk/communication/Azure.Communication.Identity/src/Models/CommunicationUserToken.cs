@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Identity
 {
     [CodeGenModel("CommunicationIdentityAccessToken")]
     public partial class CommunicationUserToken

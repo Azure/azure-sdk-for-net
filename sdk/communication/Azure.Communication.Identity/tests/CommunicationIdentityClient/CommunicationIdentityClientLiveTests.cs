@@ -4,14 +4,12 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Communication.Administration.Models;
-using Azure.Communication;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.Communication.Administration.Tests
+namespace Azure.Communication.Identity.Tests
 {
     /// <summary>
     /// The suite of tests for the <see cref="CommunicationIdentityClient"/> class.

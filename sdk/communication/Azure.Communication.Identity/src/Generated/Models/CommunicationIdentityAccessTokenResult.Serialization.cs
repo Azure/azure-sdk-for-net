@@ -6,10 +6,10 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.Administration;
+using Azure.Communication.Identity;
 using Azure.Core;
 
-namespace Azure.Communication.Administration.Models
+namespace Azure.Communication.Identity.Models
 {
     internal partial class CommunicationIdentityAccessTokenResult
     {

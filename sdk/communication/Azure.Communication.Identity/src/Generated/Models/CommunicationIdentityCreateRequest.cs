@@ -6,10 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication.Administration;
+using Azure.Communication.Identity;
 using Azure.Core;
 
-namespace Azure.Communication.Administration.Models
+namespace Azure.Communication.Identity.Models
 {
     /// <summary> The CommunicationIdentityCreateRequest. </summary>
     internal partial class CommunicationIdentityCreateRequest

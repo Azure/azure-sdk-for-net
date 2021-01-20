@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Identity
 {
     [CodeGenModel("CommunicationIdentityTokenScope")]
     public readonly partial struct CommunicationTokenScope

@@ -8,7 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 #region Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
 using Azure.Communication;
-using Azure.Communication.Administration;
+using Azure.Communication.Identity;
 //@@ using Azure.Communication.Chat;
 #endregion Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
 
