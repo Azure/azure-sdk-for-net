@@ -91,7 +91,7 @@ try {
     }
     $changeList | ForEach-Object {
         $fileName = $_.filename
-        if ($fileName -match 'sdk/' -and $fileName -match '/Microsoft') {
+        if ($fileName -match 'sdk/' -and $fileName -match '/Microsoft.Azure.Management') {
             $name = $fileName.substring(4, (($fileName.indexof('/Microsoft') - 4)))
             If ($folderName -notcontains $name) {
                 $folderName += $name
@@ -211,7 +211,9 @@ try {
         $diffResult | ForEach-Object {
             Write-Output $_
         }
-        LogError "Generated code is manually altered, you may need to re-run sdk\<RP_Name>\generate.ps1"
+        LogError "============================"
+        LogError "Discrepancy detected between generated code in PR and reference generation. Please note, the files in the Generated folder should not be modified OR adding/excluding files. You may need to re-run sdk<RP_Name>\generate.ps1."
+        LogError "============================"
         Write-Host "For reference, we are using this command for the code check: " -ForegroundColor red -BackgroundColor white
         Write-Host "  autorest https://github.com/<Repo_Name>/azure-rest-api-specs/blob/<Commit_Id>/specification/<RP_Name>/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=<SDK_Repo_Path>/sdk --use:@microsoft.azure/autorest.csharp@2.3.90" -ForegroundColor red -BackgroundColor white
     }
