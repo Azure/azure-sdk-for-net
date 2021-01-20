@@ -1988,7 +1988,7 @@ namespace Azure.Storage.Files.Shares
                 response = await _fileRestClient.DownloadAsync(
                     // TODO this might not work
                     range: range.ToString(),
-                    rangeGetContentMD5: rangeGetContentHash,
+                    rangeGetContentMD5: range == default ? null : rangeGetContentHash,
                     leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -1998,7 +1998,7 @@ namespace Azure.Storage.Files.Shares
                 response = _fileRestClient.Download(
                     // TODO this might not work
                     range: range.ToString(),
-                    rangeGetContentMD5: rangeGetContentHash,
+                    rangeGetContentMD5: range == default ? null : rangeGetContentHash,
                     leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken);
             }
@@ -3446,7 +3446,8 @@ namespace Azure.Storage.Files.Shares
                             range: range.ToString(),
                             fileRangeWrite: ShareFileRangeWriteType.Clear,
                             contentLength: 0,
-                            optionalbody: null,
+                            // TODO remove this
+                            optionalbody: new MemoryStream(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -3457,7 +3458,8 @@ namespace Azure.Storage.Files.Shares
                             range: range.ToString(),
                             fileRangeWrite: ShareFileRangeWriteType.Clear,
                             contentLength: 0,
-                            optionalbody: null,
+                            // TODO remove this
+                            optionalbody: new MemoryStream(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
