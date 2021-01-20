@@ -11,12 +11,37 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Manifest details. </summary>
-    internal partial class ManifestAttributesBase
+    public partial class ManifestAttributesBase
     {
         /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
         internal ManifestAttributesBase()
         {
             Tags = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
+        /// <param name="digest"> Manifest. </param>
+        /// <param name="imageSize"> Image size. </param>
+        /// <param name="createdTime"> Created time. </param>
+        /// <param name="lastUpdateTime"> Last update time. </param>
+        /// <param name="architecture"> CPU architecture. </param>
+        /// <param name="os"> Operating system. </param>
+        /// <param name="mediaType"> Media type. </param>
+        /// <param name="configMediaType"> Config blob media type. </param>
+        /// <param name="tags"> List of tags. </param>
+        /// <param name="changeableAttributes"> Changeable attributes. </param>
+        internal ManifestAttributesBase(string digest, long? imageSize, string createdTime, string lastUpdateTime, string architecture, string os, string mediaType, string configMediaType, IReadOnlyList<string> tags, ChangeableAttributes changeableAttributes)
+        {
+            Digest = digest;
+            ImageSize = imageSize;
+            CreatedTime = createdTime;
+            LastUpdateTime = lastUpdateTime;
+            Architecture = architecture;
+            Os = os;
+            MediaType = mediaType;
+            ConfigMediaType = configMediaType;
+            Tags = tags;
+            ChangeableAttributes = changeableAttributes;
         }
 
         /// <summary> Manifest. </summary>

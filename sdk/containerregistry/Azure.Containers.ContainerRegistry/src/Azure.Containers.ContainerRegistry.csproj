@@ -27,7 +27,8 @@
       CA1062; 
       CA1031; 
       CA2000; 
-      CA2012; ;IDT001;CA1812;AZC0001; CS1573;CS1591;AZC0012</NoWarn>
+      CA2012; 
+      IDT001;CA1812;AZC0001; CS1573;CS1591;AZC0012; SA1028</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

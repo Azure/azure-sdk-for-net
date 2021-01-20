@@ -11,12 +11,23 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Manifest attributes. </summary>
-    internal partial class AcrManifests
+    public partial class AcrManifests
     {
         /// <summary> Initializes a new instance of AcrManifests. </summary>
         internal AcrManifests()
         {
             ManifestsAttributes = new ChangeTrackingList<ManifestAttributesBase>();
+        }
+
+        /// <summary> Initializes a new instance of AcrManifests. </summary>
+        /// <param name="registry"> Registry name. </param>
+        /// <param name="imageName"> Image name. </param>
+        /// <param name="manifestsAttributes"> List of manifests. </param>
+        internal AcrManifests(string registry, string imageName, IReadOnlyList<ManifestAttributesBase> manifestsAttributes)
+        {
+            Registry = registry;
+            ImageName = imageName;
+            ManifestsAttributes = manifestsAttributes;
         }
 
         /// <summary> Registry name. </summary>

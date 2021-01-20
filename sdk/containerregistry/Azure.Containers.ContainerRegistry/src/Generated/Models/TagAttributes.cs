@@ -8,11 +8,22 @@
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Tag attributes. </summary>
-    internal partial class TagAttributes
+    public partial class TagAttributes
     {
         /// <summary> Initializes a new instance of TagAttributes. </summary>
         internal TagAttributes()
         {
+        }
+
+        /// <summary> Initializes a new instance of TagAttributes. </summary>
+        /// <param name="registry"> Registry name. </param>
+        /// <param name="imageName"> Image name. </param>
+        /// <param name="attributes"> List of tag attribute details. </param>
+        internal TagAttributes(string registry, string imageName, TagAttributesBase attributes)
+        {
+            Registry = registry;
+            ImageName = imageName;
+            Attributes = attributes;
         }
 
         /// <summary> Registry name. </summary>
