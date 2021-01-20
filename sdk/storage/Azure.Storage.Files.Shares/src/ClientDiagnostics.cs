@@ -25,9 +25,7 @@ namespace Azure.Core.Pipeline
 #pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
         partial void ExtractFailureContent(
             string? content,
-#pragma warning disable CA1801 // Review unused parameters
             ResponseHeaders responseHeaders,
-#pragma warning restore CA1801 // Review unused parameters
             ref string? message,
             ref string? errorCode,
             ref IDictionary<string, string>? additionalInfo
@@ -35,12 +33,13 @@ namespace Azure.Core.Pipeline
 #pragma warning restore CA1822
             )
         {
+            additionalInfo = new Dictionary<string, string>();
+
             if (content != null)
             {
                 XDocument xml = XDocument.Parse(content);
                 errorCode = xml.Root.Element(Constants.ErrorCode).Value;
                 message = xml.Root.Element(Constants.ErrorMessage).Value;
-                additionalInfo = new Dictionary<string, string>();
 
                 foreach (XElement element in xml.Root.Elements())
                 {
@@ -51,6 +50,26 @@ namespace Azure.Core.Pipeline
                             continue;
                         default:
                             additionalInfo[element.Name.LocalName] = element.Value;
+                            break;
+                    }
+                }
+            }
+            // Error response does not have a content body.
+            else
+            {
+                if (responseHeaders.TryGetValue(Constants.HeaderNames.ErrorCode, out string value))
+                {
+                    errorCode = value;
+                }
+
+                foreach (HttpHeader header in responseHeaders)
+                {
+                    switch (header.Name)
+                    {
+                        case Constants.HeaderNames.ErrorCode:
+                            continue;
+                        default:
+                            additionalInfo[header.Name] = header.Value;
                             break;
                     }
                 }
