@@ -14,12 +14,12 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal static ShareStatistics DeserializeShareStatistics(XElement element)
         {
-            int shareUsageBytes = default;
+            long shareUsageInBytes = default;
             if (element.Element("ShareUsageBytes") is XElement shareUsageBytesElement)
             {
-                shareUsageBytes = (int)shareUsageBytesElement;
+                shareUsageInBytes = (long)shareUsageBytesElement;
             }
-            return new ShareStatistics(shareUsageBytes);
+            return new ShareStatistics(shareUsageInBytes);
         }
     }
 }
