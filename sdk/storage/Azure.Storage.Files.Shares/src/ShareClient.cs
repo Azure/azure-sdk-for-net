@@ -189,17 +189,7 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
-
-            uriBuilder.ShareName = null;
-
-            _shareRestClient = new ShareRestClient(
-                _clientDiagnostics,
-                _pipeline,
-                uriBuilder.ToUri().ToString(),
-                path: Name,
-                _version.ToVersionString(),
-                // TODO
-                sharesnapshot: null);
+            _shareRestClient = BuildShareRestClient(_uri);
         }
 
         /// <summary>
@@ -272,18 +262,7 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
-
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(shareUri);
-            uriBuilder.ShareName = null;
-
-            _shareRestClient = new ShareRestClient(
-                _clientDiagnostics,
-                _pipeline,
-                uriBuilder.ToUri().ToString(),
-                path: Name,
-                _version.ToVersionString(),
-                // TODO
-                sharesnapshot: null);
+            _shareRestClient = BuildShareRestClient(shareUri);
         }
 
         /// <summary>
@@ -319,16 +298,21 @@ namespace Azure.Storage.Files.Shares
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
+            _shareRestClient = BuildShareRestClient(shareUri);
+        }
 
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(shareUri);
-            uriBuilder.ShareName = null;
-
-            _shareRestClient = new ShareRestClient(
-                _clientDiagnostics,
-                _pipeline,
+        private ShareRestClient BuildShareRestClient(Uri uri)
+        {
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
+            {
+                ShareName = null
+            };
+            return new ShareRestClient(
+                ClientDiagnostics,
+                Pipeline,
                 uriBuilder.ToUri().ToString(),
                 path: Name,
-                _version.ToVersionString(),
+                Version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
         }

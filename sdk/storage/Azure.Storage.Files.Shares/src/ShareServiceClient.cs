@@ -166,12 +166,7 @@ namespace Azure.Storage.Files.Shares
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
 
-            _serviceRestClient = new ServiceRestClient(
-                _clientDiagnostics,
-                _pipeline,
-                // TODO this might now work.
-                _uri.ToString(),
-                _version.ToVersionString());
+            _serviceRestClient = BuildServiceRestClient();
         }
 
         /// <summary>
@@ -242,13 +237,15 @@ namespace Azure.Storage.Files.Shares
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
 
-            _serviceRestClient = new ServiceRestClient(
-                _clientDiagnostics,
-                _pipeline,
-                // TODO this might now work.
-                _uri.ToString(),
-                _version.ToVersionString());
+            _serviceRestClient = BuildServiceRestClient();
         }
+
+        private ServiceRestClient BuildServiceRestClient()
+            => new ServiceRestClient(
+                ClientDiagnostics,
+                Pipeline,
+                Uri.ToString(),
+                Version.ToVersionString());
         #endregion ctors
 
         /// <summary>

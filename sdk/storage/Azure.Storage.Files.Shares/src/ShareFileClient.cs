@@ -242,18 +242,7 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
-
-            uriBuilder.ShareName = null;
-            uriBuilder.DirectoryOrFilePath = null;
-
-            _fileRestClient = new FileRestClient(
-                _clientDiagnostics,
-                _pipeline,
-                uriBuilder.ToUri().ToString(),
-                path: $"{ShareName}/{Path.EscapePath()}",
-                _version.ToVersionString(),
-                // TODO
-                sharesnapshot: null);
+            _fileRestClient = BuildFileRestClient(_uri);
         }
 
         /// <summary>
@@ -327,21 +316,7 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
-
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(fileUri)
-            {
-                ShareName = null,
-                DirectoryOrFilePath = null
-            };
-
-            _fileRestClient = new FileRestClient(
-                _clientDiagnostics,
-                _pipeline,
-                uriBuilder.ToUri().ToString(),
-                path: $"{ShareName}/{Path.EscapePath()}",
-                _version.ToVersionString(),
-                // TODO
-                sharesnapshot: null);
+            _fileRestClient = BuildFileRestClient(fileUri);
         }
 
         /// <summary>
@@ -376,14 +351,17 @@ namespace Azure.Storage.Files.Shares
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
+            _fileRestClient = BuildFileRestClient(fileUri);
+        }
 
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(fileUri)
+        private FileRestClient BuildFileRestClient(Uri uri)
+        {
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
             {
                 ShareName = null,
                 DirectoryOrFilePath = null
             };
-
-            _fileRestClient = new FileRestClient(
+            return new FileRestClient(
                 _clientDiagnostics,
                 _pipeline,
                 uriBuilder.ToUri().ToString(),
