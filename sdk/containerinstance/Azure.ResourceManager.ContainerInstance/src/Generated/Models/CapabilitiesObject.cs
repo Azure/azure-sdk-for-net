@@ -8,28 +8,28 @@
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The regional capabilities. </summary>
-    public partial class Capabilities
+    public partial class CapabilitiesObject
     {
-        /// <summary> Initializes a new instance of Capabilities. </summary>
-        internal Capabilities()
+        /// <summary> Initializes a new instance of CapabilitiesObject. </summary>
+        internal CapabilitiesObject()
         {
         }
 
-        /// <summary> Initializes a new instance of Capabilities. </summary>
+        /// <summary> Initializes a new instance of CapabilitiesObject. </summary>
         /// <param name="resourceType"> The resource type that this capability describes. </param>
         /// <param name="osType"> The OS type that this capability describes. </param>
         /// <param name="location"> The resource location. </param>
         /// <param name="ipAddressType"> The ip address type that this capability describes. </param>
         /// <param name="gpu"> The GPU sku that this capability describes. </param>
-        /// <param name="capabilitiesProperty"> The supported capabilities. </param>
-        internal Capabilities(string resourceType, string osType, string location, string ipAddressType, string gpu, CapabilitiesProperty capabilitiesProperty)
+        /// <param name="capabilities"> The supported capabilities. </param>
+        internal CapabilitiesObject(string resourceType, string osType, string location, string ipAddressType, string gpu, CapabilitiesCapabilities capabilities)
         {
             ResourceType = resourceType;
             OsType = osType;
             Location = location;
             IpAddressType = ipAddressType;
             Gpu = gpu;
-            CapabilitiesProperty = capabilitiesProperty;
+            Capabilities = capabilities;
         }
 
         /// <summary> The resource type that this capability describes. </summary>
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The GPU sku that this capability describes. </summary>
         public string Gpu { get; }
         /// <summary> The supported capabilities. </summary>
-        public CapabilitiesProperty CapabilitiesProperty { get; }
+        public CapabilitiesCapabilities Capabilities { get; }
     }
 }

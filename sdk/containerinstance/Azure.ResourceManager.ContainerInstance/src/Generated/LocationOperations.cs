@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual AsyncPageable<Capabilities> ListCapabilitiesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CapabilitiesObject> ListCapabilitiesAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            async Task<Page<Capabilities>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CapabilitiesObject>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("LocationOperations.ListCapabilities");
                 scope.Start();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     throw;
                 }
             }
-            async Task<Page<Capabilities>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CapabilitiesObject>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("LocationOperations.ListCapabilities");
                 scope.Start();
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual Pageable<Capabilities> ListCapabilities(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<CapabilitiesObject> ListCapabilities(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            Page<Capabilities> FirstPageFunc(int? pageSizeHint)
+            Page<CapabilitiesObject> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("LocationOperations.ListCapabilities");
                 scope.Start();
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     throw;
                 }
             }
-            Page<Capabilities> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CapabilitiesObject> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("LocationOperations.ListCapabilities");
                 scope.Start();

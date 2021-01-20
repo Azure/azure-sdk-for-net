@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.ContainerInstance.Tests.Tests
 {
     /// <summary>
-    /// Tests for container instance SDK.
+    /// Tests for container instance groups SDK.
     /// </summary>
     public partial class ContainerGroupsTests : ContainerInstanceManagementClientBase
     {
@@ -94,7 +94,6 @@ namespace Azure.ResourceManager.ContainerInstance.Tests.Tests
             var containerGroupName = Recording.GenerateAssetName(Helper.ContainerGroupPrefix);
             var containerGroupParam = Helper.CreateTestContainerGroup(containerGroupName, location);
             var containerGroup = (await WaitForCompletionAsync(await ContainerGroupsOperations.StartCreateOrUpdateAsync(resourceGroup, containerGroupName, containerGroupParam))).Value;
-
             // Update container group
             var resourceParam = new Resource() { Tags = { { "key1", "value1" },{ "key2", "value2"}, { "key3", "value3" } } };
             var containerGroupUpdated = (await ContainerGroupsOperations.UpdateAsync(resourceGroup, containerGroupName, resourceParam)).Value;
@@ -119,6 +118,35 @@ namespace Azure.ResourceManager.ContainerInstance.Tests.Tests
             // List container groups unde a resource group
             var containerGroups = await ContainerGroupsOperations.ListByResourceGroupAsync(resourceGroup).ToEnumerableAsync();
             Assert.AreEqual(0, containerGroups.Count);
+        }
+
+        [Test]
+        public async Task ContainerGroupsStartRestartStopTest()
+        {
+            // Create resource group for test
+            var location = await GetLocationAsync();
+            var resourceGroup = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
+            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, location, resourceGroup);
+
+            // Create container group for test
+            var containerGroupName = Recording.GenerateAssetName(Helper.ContainerGroupPrefix);
+            var containerGroupParam = Helper.CreateTestContainerGroup(containerGroupName, location);
+            var containerGroup = (await WaitForCompletionAsync(await ContainerGroupsOperations.StartCreateOrUpdateAsync(resourceGroup, containerGroupName, containerGroupParam))).Value;
+
+            // Stop contaniner group for test
+            await ContainerGroupsOperations.StopAsync(resourceGroup, containerGroupName);
+            containerGroup = (await ContainerGroupsOperations.GetAsync(resourceGroup, containerGroupName)).Value;
+            Assert.AreEqual("Stopped", containerGroup.InstanceView.State);
+
+            // Start contaniner group for test
+            await WaitForCompletionAsync(await ContainerGroupsOperations.StartStartAsync(resourceGroup, containerGroupName));
+            containerGroup = (await ContainerGroupsOperations.GetAsync(resourceGroup, containerGroupName)).Value;
+            Assert.AreEqual("Running", containerGroup.InstanceView.State);
+
+            // Restart contaniner group for test
+            await WaitForCompletionAsync(await ContainerGroupsOperations.StartRestartAsync(resourceGroup, containerGroupName));
+            containerGroup = (await ContainerGroupsOperations.GetAsync(resourceGroup, containerGroupName)).Value;
+            Assert.AreEqual("Running", containerGroup.InstanceView.State);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static CapabilitiesListResult DeserializeCapabilitiesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Capabilities>> value = default;
+            Optional<IReadOnlyList<CapabilitiesObject>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Capabilities> array = new List<Capabilities>();
+                    List<CapabilitiesObject> array = new List<CapabilitiesObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Capabilities.DeserializeCapabilities(item));
+                        array.Add(CapabilitiesObject.DeserializeCapabilitiesObject(item));
                     }
                     value = array;
                     continue;

@@ -1,0 +1,498 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9e223dbe-3399-4e19-88eb-0975f02ac87f/providers/Microsoft.ContainerInstance?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-68963f399cce2142ba6d9b5ca7984e7e-0b2015909452f148-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-preview.2",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "35edf9ae617f924c661db5834aaffb42",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "5887",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 07:41:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "05325d93-b51f-4f8f-85b9-bc37830dd647",
+        "x-ms-ratelimit-remaining-subscription-reads": "11708",
+        "x-ms-request-id": "05325d93-b51f-4f8f-85b9-bc37830dd647",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210120T074129Z:05325d93-b51f-4f8f-85b9-bc37830dd647"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/9e223dbe-3399-4e19-88eb-0975f02ac87f/providers/Microsoft.ContainerInstance",
+        "namespace": "Microsoft.ContainerInstance",
+        "authorizations": [
+          {
+            "applicationId": "6bb8e274-af5d-4df2-98a3-4fd78b4cafd9",
+            "roleDefinitionId": "3c60422b-a83a-428d-9830-22609c77aa6c"
+          }
+        ],
+        "resourceTypes": [
+          {
+            "resourceType": "containerGroups",
+            "locations": [
+              "West Central US",
+              "West US",
+              "East US",
+              "West Europe",
+              "West US 2",
+              "North Europe",
+              "Southeast Asia",
+              "East US 2",
+              "Central US",
+              "Australia East",
+              "UK South",
+              "South Central US",
+              "Central India",
+              "Brazil South",
+              "South India",
+              "North Central US",
+              "East Asia",
+              "Canada Central",
+              "Japan East",
+              "Korea Central",
+              "France Central",
+              "Switzerland North",
+              "Germany West Central",
+              "UAE North"
+            ],
+            "apiVersions": [
+              "2020-11-01",
+              "2019-12-01",
+              "2018-10-01",
+              "2018-09-01",
+              "2018-07-01",
+              "2018-06-01",
+              "2018-04-01",
+              "2018-02-01-preview",
+              "2017-12-01-preview",
+              "2017-10-01-preview",
+              "2017-08-01-preview"
+            ],
+            "capabilities": "SystemAssignedResourceIdentity, SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "serviceAssociationLinks",
+            "locations": [
+              "West Central US",
+              "West US",
+              "East US",
+              "West Europe",
+              "West US 2",
+              "North Europe",
+              "Southeast Asia",
+              "East US 2",
+              "Central US",
+              "Australia East",
+              "UK South",
+              "South Central US",
+              "Central India",
+              "Brazil South",
+              "South India",
+              "North Central US",
+              "East Asia",
+              "Canada Central",
+              "Japan East",
+              "Korea Central",
+              "France Central",
+              "Switzerland North",
+              "Germany West Central",
+              "UAE North"
+            ],
+            "apiVersions": [
+              "2020-11-01",
+              "2019-12-01",
+              "2018-10-01",
+              "2018-09-01",
+              "2018-07-01",
+              "2018-06-01",
+              "2018-04-01",
+              "2018-02-01-preview",
+              "2017-12-01-preview",
+              "2017-10-01-preview",
+              "2017-08-01-preview"
+            ],
+            "capabilities": "SupportsExtension"
+          },
+          {
+            "resourceType": "locations",
+            "locations": [],
+            "apiVersions": [
+              "2020-11-01",
+              "2019-12-01",
+              "2018-10-01",
+              "2018-09-01",
+              "2018-07-01",
+              "2018-06-01",
+              "2018-04-01",
+              "2018-02-01-preview",
+              "2017-12-01-preview",
+              "2017-10-01-preview",
+              "2017-08-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/capabilities",
+            "locations": [
+              "West Central US",
+              "West US",
+              "East US",
+              "West Europe",
+              "West US 2",
+              "North Europe",
+              "Southeast Asia",
+              "East US 2",
+              "Central US",
+              "Australia East",
+              "UK South",
+              "South Central US",
+              "Central India",
+              "Brazil South",
+              "South India",
+              "North Central US",
+              "East Asia",
+              "Canada Central",
+              "Japan East",
+              "Korea Central",
+              "France Central",
+              "Switzerland North",
+              "Germany West Central",
+              "UAE North"
+            ],
+            "apiVersions": [
+              "2020-11-01",
+              "2019-12-01",
+              "2018-10-01",
+              "2018-09-01",
+              "2018-07-01",
+              "2018-06-01",
+              "2018-04-01",
+              "2018-02-01-preview",
+              "2017-12-01-preview",
+              "2017-10-01-preview",
+              "2017-08-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/usages",
+            "locations": [
+              "West Central US",
+              "West US",
+              "East US",
+              "West Europe",
+              "West US 2",
+              "North Europe",
+              "Southeast Asia",
+              "East US 2",
+              "Central US",
+              "Australia East",
+              "UK South",
+              "South Central US",
+              "Central India",
+              "Brazil South",
+              "South India",
+              "North Central US",
+              "East Asia",
+              "Canada Central",
+              "Japan East",
+              "Korea Central",
+              "France Central",
+              "Switzerland North",
+              "Germany West Central",
+              "UAE North"
+            ],
+            "apiVersions": [
+              "2020-11-01",
+              "2019-12-01",
+              "2018-10-01",
+              "2018-09-01",
+              "2018-07-01",
+              "2018-06-01",
+              "2018-04-01",
+              "2018-02-01-preview",
+              "2017-12-01-preview",
+              "2017-10-01-preview",
+              "2017-08-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/operations",
+            "locations": [
+              "West US",
+              "East US",
+              "West Europe",
+              "West US 2",
+              "North Europe",
+              "Southeast Asia",
+              "East US 2",
+              "Central US",
+              "Australia East",
+              "UK South",
+              "South Central US",
+              "Central India",
+              "West Central US",
+              "Brazil South",
+              "South India",
+              "North Central US",
+              "East Asia",
+              "Canada Central",
+              "Japan East",
+              "Korea Central",
+              "France Central",
+              "Switzerland North",
+              "Germany West Central",
+              "UAE North"
+            ],
+            "apiVersions": [
+              "2020-11-01",
+              "2019-12-01",
+              "2018-10-01",
+              "2018-09-01",
+              "2018-07-01",
+              "2018-06-01",
+              "2018-04-01",
+              "2018-02-01-preview",
+              "2017-12-01-preview",
+              "2017-10-01-preview",
+              "2017-08-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/operationresults",
+            "locations": [
+              "West US",
+              "East US",
+              "West Europe",
+              "West US 2",
+              "North Europe",
+              "Southeast Asia",
+              "East US 2",
+              "Central US",
+              "Australia East",
+              "UK South",
+              "South Central US",
+              "Central India",
+              "West Central US",
+              "Brazil South",
+              "South India",
+              "North Central US",
+              "East Asia",
+              "Canada Central",
+              "Japan East",
+              "Korea Central",
+              "France Central",
+              "Switzerland North",
+              "Germany West Central",
+              "UAE North"
+            ],
+            "apiVersions": [
+              "2020-11-01",
+              "2019-12-01",
+              "2018-10-01",
+              "2018-09-01",
+              "2018-07-01",
+              "2018-06-01",
+              "2018-04-01",
+              "2018-02-01-preview",
+              "2017-12-01-preview",
+              "2017-10-01-preview",
+              "2017-08-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "operations",
+            "locations": [],
+            "apiVersions": [
+              "2020-11-01",
+              "2019-12-01",
+              "2018-10-01",
+              "2018-09-01",
+              "2018-07-01",
+              "2018-06-01",
+              "2018-04-01",
+              "2018-02-01-preview",
+              "2017-12-01-preview",
+              "2017-10-01-preview",
+              "2017-08-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/cachedImages",
+            "locations": [
+              "West Central US",
+              "West US",
+              "East US",
+              "West Europe",
+              "West US 2",
+              "North Europe",
+              "Southeast Asia",
+              "East US 2",
+              "Central US",
+              "Australia East",
+              "UK South",
+              "South Central US",
+              "Central India",
+              "Brazil South",
+              "South India",
+              "North Central US",
+              "East Asia",
+              "Canada Central",
+              "Japan East",
+              "Korea Central",
+              "France Central",
+              "Switzerland North",
+              "Germany West Central",
+              "UAE North"
+            ],
+            "apiVersions": [
+              "2020-11-01",
+              "2019-12-01",
+              "2018-10-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/deleteVirtualNetworkOrSubnets",
+            "locations": [
+              "West Central US",
+              "West US",
+              "East US",
+              "West Europe",
+              "West US 2",
+              "North Europe",
+              "Southeast Asia",
+              "East US 2",
+              "Central US",
+              "Australia East",
+              "UK South",
+              "South Central US",
+              "Central India",
+              "Brazil South",
+              "South India",
+              "North Central US",
+              "East Asia",
+              "Canada Central",
+              "Japan East",
+              "Korea Central",
+              "France Central",
+              "Switzerland North",
+              "Germany West Central",
+              "UAE North"
+            ],
+            "apiVersions": [
+              "2020-11-01",
+              "2019-12-01",
+              "2018-12-01",
+              "2018-10-01",
+              "2018-09-01",
+              "2018-07-01",
+              "2018-06-01",
+              "2018-04-01",
+              "2018-02-01-preview",
+              "2017-12-01-preview",
+              "2017-10-01-preview",
+              "2017-08-01-preview"
+            ],
+            "capabilities": "None"
+          }
+        ],
+        "registrationState": "Registered",
+        "registrationPolicy": "RegistrationRequired"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9e223dbe-3399-4e19-88eb-0975f02ac87f/providers/Microsoft.ContainerInstance/locations/West%20Central%20US/capabilities?api-version=2020-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a7d14b3bd681d745904658db58c56fdc-f051bf0aa81e664b-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.ContainerInstance/1.0.0-alpha.20210120.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "07303822b7189418d6d98f7005568296",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "566",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 07:41:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e874e7a8-81bf-4b8a-b38e-e1fee33732be",
+        "x-ms-ratelimit-remaining-subscription-reads": "11707",
+        "x-ms-request-id": "westcentralus:8ae003c4-b58d-44b5-8968-11abee36a2b4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210120T074130Z:e874e7a8-81bf-4b8a-b38e-e1fee33732be"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "containerGroups",
+            "osType": "Linux",
+            "location": "WESTCENTRALUS",
+            "ipAddressType": "Public",
+            "gpu": "None",
+            "capabilities": {
+              "maxMemoryInGB": 16.0,
+              "maxCpu": 4.0,
+              "maxGpuCount": 0
+            }
+          },
+          {
+            "resourceType": "containerGroups",
+            "osType": "Linux",
+            "location": "WESTCENTRALUS",
+            "ipAddressType": "Private",
+            "gpu": "None",
+            "capabilities": {
+              "maxMemoryInGB": 16.0,
+              "maxCpu": 4.0,
+              "maxGpuCount": 0
+            }
+          },
+          {
+            "resourceType": "containerGroups",
+            "osType": "Windows",
+            "location": "WESTCENTRALUS",
+            "ipAddressType": "Public",
+            "gpu": "None",
+            "capabilities": {
+              "maxMemoryInGB": 16.0,
+              "maxCpu": 4.0,
+              "maxGpuCount": 0
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2082588214",
+    "SUBSCRIPTION_ID": "9e223dbe-3399-4e19-88eb-0975f02ac87f"
+  }
+}

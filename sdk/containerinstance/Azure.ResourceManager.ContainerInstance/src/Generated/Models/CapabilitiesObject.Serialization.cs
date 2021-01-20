@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class Capabilities
+    public partial class CapabilitiesObject
     {
-        internal static Capabilities DeserializeCapabilities(JsonElement element)
+        internal static CapabilitiesObject DeserializeCapabilitiesObject(JsonElement element)
         {
             Optional<string> resourceType = default;
             Optional<string> osType = default;
             Optional<string> location = default;
             Optional<string> ipAddressType = default;
             Optional<string> gpu = default;
-            Optional<CapabilitiesProperty> capabilitiesProperty = default;
+            Optional<CapabilitiesCapabilities> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
@@ -47,18 +47,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     gpu = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capabilitiesProperty"))
+                if (property.NameEquals("capabilities"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capabilitiesProperty = CapabilitiesProperty.DeserializeCapabilitiesProperty(property.Value);
+                    capabilities = CapabilitiesCapabilities.DeserializeCapabilitiesCapabilities(property.Value);
                     continue;
                 }
             }
-            return new Capabilities(resourceType.Value, osType.Value, location.Value, ipAddressType.Value, gpu.Value, capabilitiesProperty.Value);
+            return new CapabilitiesObject(resourceType.Value, osType.Value, location.Value, ipAddressType.Value, gpu.Value, capabilities.Value);
         }
     }
 }

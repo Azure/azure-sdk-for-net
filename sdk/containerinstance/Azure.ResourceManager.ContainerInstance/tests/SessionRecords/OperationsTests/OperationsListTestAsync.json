@@ -1,0 +1,408 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.ContainerInstance/operations?api-version=2020-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d318f7a06779b543b3eba50a6f0f4d1a-29589dc20a410847-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.ContainerInstance/1.0.0-alpha.20210120.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "1286c86aa746d0a66c36ee0096b3b455",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "8976",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 07:41:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2413b4bd-74db-4561-b7d7-47fbb524ab24",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "southeastasia:445daadf-b2c3-4124-aff0-5f9fe3514515",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210120T074133Z:2413b4bd-74db-4561-b7d7-47fbb524ab24"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "Microsoft.ContainerInstance/register/action",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Register Microsoft Container Instance",
+              "description": "Registers the subscription for the container instance resource provider and enables the creation of container groups."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Get Container Groups",
+              "description": "Get all container goups."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/write",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Create or update Container Group",
+              "description": "Create or update a specific container group."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/delete",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Delete Container Group",
+              "description": "Delete the specific container group."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/restart/action",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Restart Container Group",
+              "description": "Restarts a specific container group."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/stop/action",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Stop Container Group",
+              "description": "Stops a specific container group. Compute resources will be deallocated and billing will stop."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/start/action",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Start Container Group",
+              "description": "Starts a specific container group."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/detectors/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Container Group Detectors",
+              "description": "List Container Group Detectors"
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/containers/logs/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Get Container Logs",
+              "description": "Get logs for a specific container."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/containers/buildlogs/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Get Container Build Logs",
+              "description": "Get build logs for a specific container."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/containers/exec/action",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Exec Into a Container",
+              "description": "Exec into a specific container."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/containers/attach/action",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Attach to a container",
+              "description": "Attach to the output stream of a container."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/locations/operationResults/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Resource provider operations.",
+              "operation": "Async operation result",
+              "description": "Get async operation result"
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/operationResults/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Resource provider operations.",
+              "operation": "Async operation result",
+              "description": "Get async operation result"
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/locations/cachedImages/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Cached Images",
+              "operation": "Get cached images.",
+              "description": "Gets the cached images for the subscription in a region."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/locations/capabilities/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Capabilities",
+              "operation": "Get Capabilities",
+              "description": "Get the capabilities for a region."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/locations/usages/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Usages",
+              "operation": "Get Regional Usage",
+              "description": "Get the usage for a specific region."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/providers/Microsoft.Insights/metricDefinitions/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Read container group metric definitions",
+              "description": "Gets the available metrics for container group."
+            },
+            "origin": "System",
+            "properties": {
+              "serviceSpecification": {
+                "metricSpecifications": [
+                  {
+                    "name": "CpuUsage",
+                    "displayName": "CPU Usage",
+                    "displayDescription": "CPU usage on all cores in millicores.",
+                    "unit": "Count",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Maximum",
+                      "Minimum",
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "PT1D"
+                    ],
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftContainerInstanceShoebox",
+                    "sourceMdmNamespace": "AzureMonitoringMetrics",
+                    "fillGapWithZero": false,
+                    "dimensions": [
+                      {
+                        "name": "containerName",
+                        "displayName": "Container Name",
+                        "toBeExportedForShoebox": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "MemoryUsage",
+                    "displayName": "Memory Usage",
+                    "displayDescription": "Total memory usage in byte.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Maximum",
+                      "Minimum",
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "PT1D"
+                    ],
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftContainerInstanceShoebox",
+                    "sourceMdmNamespace": "AzureMonitoringMetrics",
+                    "fillGapWithZero": false,
+                    "dimensions": [
+                      {
+                        "name": "containerName",
+                        "displayName": "Container Name",
+                        "toBeExportedForShoebox": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "NetworkBytesReceivedPerSecond",
+                    "displayName": "Network Bytes Received Per Second",
+                    "displayDescription": "The network bytes received per second.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Maximum",
+                      "Minimum",
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "PT1D"
+                    ],
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftContainerInstanceShoebox",
+                    "sourceMdmNamespace": "AzureMonitoringMetrics",
+                    "fillGapWithZero": false
+                  },
+                  {
+                    "name": "NetworkBytesTransmittedPerSecond",
+                    "displayName": "Network Bytes Transmitted Per Second",
+                    "displayDescription": "The network bytes transmitted per second.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Maximum",
+                      "Minimum",
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "PT1D"
+                    ],
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftContainerInstanceShoebox",
+                    "sourceMdmNamespace": "AzureMonitoringMetrics",
+                    "fillGapWithZero": false
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/providers/Microsoft.Insights/diagnosticSettings/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Read Diagnostic Setting",
+              "description": "Gets the diagnostic setting for the container group."
+            },
+            "origin": "System"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/containerGroups/providers/Microsoft.Insights/diagnosticSettings/write",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Container Group",
+              "operation": "Write Diagnostic Setting",
+              "description": "Creates or updates the diagnostic setting for the container group."
+            },
+            "origin": "System"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/locations/deleteVirtualNetworkOrSubnets/action",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Delete virtual network or subnet notification",
+              "operation": "Delete virtual network or subnet notification",
+              "description": "Notifies Microsoft.ContainerInstance that virtual network or subnet is being deleted."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/locations/operations/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Resource provider operations.",
+              "operation": "Read operations.",
+              "description": "List the operations for Azure Container Instance service."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/operations/read",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Resource provider operations.",
+              "operation": "Read operations.",
+              "description": "List the operations for Azure Container Instance service."
+            },
+            "origin": "User"
+          },
+          {
+            "name": "Microsoft.ContainerInstance/serviceassociationlinks/delete",
+            "display": {
+              "provider": "Microsoft Container Instance",
+              "resource": "Service Association Link.",
+              "operation": "Delete Service Association Link.",
+              "description": "Delete the service association link created by azure container instance resource provider on a subnet."
+            },
+            "origin": "User"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1024781545",
+    "SUBSCRIPTION_ID": "9e223dbe-3399-4e19-88eb-0975f02ac87f"
+  }
+}
