@@ -11519,16 +11519,16 @@ namespace Azure.Storage.Files.Shares.Models
         /// Serialize a ShareProtocolSettings instance as XML.
         /// </summary>
         /// <param name="value">The ShareProtocolSettings instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "ShareProtocolSettings".</param>
+        /// <param name="name">An optional name to use for the root element instead of "ProtocolSettings".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareProtocolSettings value, string name = "ShareProtocolSettings", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareProtocolSettings value, string name = "ProtocolSettings", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
             if (value.Smb != null)
             {
-                _element.Add(Azure.Storage.Files.Shares.Models.ShareSmbSettings.ToXml(value.Smb, "SMB", ""));
+                _element.Add(Azure.Storage.Files.Shares.Models.ShareSmbSettings.ToXml(value.Smb, "Smb", ""));
             }
             return _element;
         }
@@ -11742,7 +11742,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (value.Protocol != null)
             {
-                _element.Add(Azure.Storage.Files.Shares.Models.ShareProtocolSettings.ToXml(value.Protocol, "ProtocolSettings", ""));
+                _element.Add(Azure.Storage.Files.Shares.Models.ShareProtocolSettings.ToXml(value.Protocol, "Protocol", ""));
             }
             return _element;
         }
@@ -11918,10 +11918,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// Serialize a ShareSmbSettings instance as XML.
         /// </summary>
         /// <param name="value">The ShareSmbSettings instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "ShareSmbSettings".</param>
+        /// <param name="name">An optional name to use for the root element instead of "SMB".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareSmbSettings value, string name = "ShareSmbSettings", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareSmbSettings value, string name = "SMB", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
