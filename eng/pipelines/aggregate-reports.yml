@@ -34,7 +34,7 @@ jobs:
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
         displayName: 'Run CredScan'
         inputs:
-          debugMode: false
+          suppressionsFile: 'eng\CredScanSuppression.json'
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
         displayName: 'Post Analysis'
         inputs:
