@@ -18,8 +18,13 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
   </ItemGroup>
 
-  <!-- Import the Azure.Core project -->
+  <!-- Import the Azure.Core project
+  TODO: revert this when Azure.Core ships the TokenCredential updates
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+  -->
+  <ItemGroup>  
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Memory" />

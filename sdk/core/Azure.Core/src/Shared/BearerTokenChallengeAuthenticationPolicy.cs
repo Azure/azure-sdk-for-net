@@ -109,6 +109,26 @@ namespace Azure.Core.Pipeline
 
             if (async)
             {
+                await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
+
+            // If the message already has a challenge response due to a sub-class pre-processing the request, get the context from the challenge.
+            if (message.HasResponse && message.Response.Status == 401 && message.Response.Headers.Contains("WWW-Authenticate"))
+            {
+                if (!TryGetTokenRequestContextFromChallenge(message, out context))
+                {
+                    // We were unsuccessful in handling the challenge, so bail out now.
+                    return;
+                }
+            }
+            else
+            {
+                context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+            }
+
+            await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
+
+            if (async)
+            {
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
