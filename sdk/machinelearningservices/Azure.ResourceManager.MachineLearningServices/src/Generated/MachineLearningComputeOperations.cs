@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="subscriptionId"> Azure subscription identifier. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal MachineLearningComputeOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-12-01-preview")
+        internal MachineLearningComputeOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01-preview")
         {
             RestClient = new MachineLearningComputeRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;

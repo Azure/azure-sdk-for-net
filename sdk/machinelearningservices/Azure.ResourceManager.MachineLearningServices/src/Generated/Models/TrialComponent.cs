@@ -10,24 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The TrialJob. </summary>
-    public partial class TrialJob
+    /// <summary> The TrialComponent. </summary>
+    public partial class TrialComponent
     {
-        /// <summary> Initializes a new instance of TrialJob. </summary>
-        public TrialJob()
+        /// <summary> Initializes a new instance of TrialComponent. </summary>
+        public TrialComponent()
         {
             DataBindings = new ChangeTrackingDictionary<string, DataBinding>();
         }
 
-        /// <summary> Initializes a new instance of TrialJob. </summary>
+        /// <summary> Initializes a new instance of TrialComponent. </summary>
         /// <param name="codeConfiguration"> . </param>
         /// <param name="environmentId"> Environment id of the job. </param>
         /// <param name="dataBindings"> Mapping of data bindings used in the job. </param>
-        internal TrialJob(CodeConfiguration codeConfiguration, string environmentId, IDictionary<string, DataBinding> dataBindings)
+        /// <param name="distributionConfiguration"> . </param>
+        internal TrialComponent(CodeConfiguration codeConfiguration, string environmentId, IDictionary<string, DataBinding> dataBindings, DistributionConfiguration distributionConfiguration)
         {
             CodeConfiguration = codeConfiguration;
             EnvironmentId = environmentId;
             DataBindings = dataBindings;
+            DistributionConfiguration = distributionConfiguration;
         }
 
         public CodeConfiguration CodeConfiguration { get; set; }
@@ -35,5 +37,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string EnvironmentId { get; set; }
         /// <summary> Mapping of data bindings used in the job. </summary>
         public IDictionary<string, DataBinding> DataBindings { get; }
+        public DistributionConfiguration DistributionConfiguration { get; set; }
     }
 }

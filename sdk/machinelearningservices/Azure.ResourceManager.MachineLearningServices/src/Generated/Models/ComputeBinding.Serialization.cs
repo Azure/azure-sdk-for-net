@@ -15,20 +15,29 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("computeId");
-            writer.WriteStringValue(ComputeId);
+            if (Optional.IsDefined(ComputeId))
+            {
+                writer.WritePropertyName("computeId");
+                writer.WriteStringValue(ComputeId);
+            }
             if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount");
                 writer.WriteNumberValue(NodeCount.Value);
+            }
+            if (Optional.IsDefined(IsLocal))
+            {
+                writer.WritePropertyName("isLocal");
+                writer.WriteBooleanValue(IsLocal.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ComputeBinding DeserializeComputeBinding(JsonElement element)
         {
-            string computeId = default;
+            Optional<string> computeId = default;
             Optional<int> nodeCount = default;
+            Optional<bool> isLocal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeId"))
@@ -46,8 +55,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("isLocal"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isLocal = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new ComputeBinding(computeId, Optional.ToNullable(nodeCount));
+            return new ComputeBinding(computeId.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(isLocal));
         }
     }
 }

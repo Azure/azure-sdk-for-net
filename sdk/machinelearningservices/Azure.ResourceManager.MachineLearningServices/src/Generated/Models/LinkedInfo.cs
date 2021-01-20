@@ -13,14 +13,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of LinkedInfo. </summary>
         public LinkedInfo()
         {
-            Origin = "Synapse";
         }
 
         /// <summary> Initializes a new instance of LinkedInfo. </summary>
         /// <param name="linkedId"> Linked service ID. </param>
         /// <param name="linkedResourceName"> Linked service resource name. </param>
         /// <param name="origin"> Type of the linked service. </param>
-        internal LinkedInfo(string linkedId, string linkedResourceName, string origin)
+        internal LinkedInfo(string linkedId, string linkedResourceName, OriginType? origin)
         {
             LinkedId = linkedId;
             LinkedResourceName = linkedResourceName;
@@ -32,6 +31,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Linked service resource name. </summary>
         public string LinkedResourceName { get; set; }
         /// <summary> Type of the linked service. </summary>
-        public string Origin { get; set; }
+        public OriginType? Origin { get; set; }
     }
 }

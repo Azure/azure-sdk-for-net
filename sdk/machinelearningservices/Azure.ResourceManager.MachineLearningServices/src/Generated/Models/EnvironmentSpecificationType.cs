@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary>
@@ -12,11 +15,41 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     /// 
     /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;.
     /// </summary>
-    public enum EnvironmentSpecificationType
+    public readonly partial struct EnvironmentSpecificationType : IEquatable<EnvironmentSpecificationType>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="EnvironmentSpecificationType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EnvironmentSpecificationType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string CuratedValue = "Curated";
+        private const string UserCreatedValue = "UserCreated";
+
         /// <summary> Curated. </summary>
-        Curated,
+        public static EnvironmentSpecificationType Curated { get; } = new EnvironmentSpecificationType(CuratedValue);
         /// <summary> UserCreated. </summary>
-        UserCreated
+        public static EnvironmentSpecificationType UserCreated { get; } = new EnvironmentSpecificationType(UserCreatedValue);
+        /// <summary> Determines if two <see cref="EnvironmentSpecificationType"/> values are the same. </summary>
+        public static bool operator ==(EnvironmentSpecificationType left, EnvironmentSpecificationType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="EnvironmentSpecificationType"/> values are not the same. </summary>
+        public static bool operator !=(EnvironmentSpecificationType left, EnvironmentSpecificationType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="EnvironmentSpecificationType"/>. </summary>
+        public static implicit operator EnvironmentSpecificationType(string value) => new EnvironmentSpecificationType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is EnvironmentSpecificationType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(EnvironmentSpecificationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

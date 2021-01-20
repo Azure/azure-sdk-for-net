@@ -5,16 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Type of the hyperparameter sampling algorithms. </summary>
-    public enum ParameterSamplingType
+    public readonly partial struct ParameterSamplingType : IEquatable<ParameterSamplingType>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="ParameterSamplingType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ParameterSamplingType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string GridValue = "Grid";
+        private const string RandomValue = "Random";
+        private const string BayesianValue = "Bayesian";
+
         /// <summary> Grid. </summary>
-        Grid,
+        public static ParameterSamplingType Grid { get; } = new ParameterSamplingType(GridValue);
         /// <summary> Random. </summary>
-        Random,
+        public static ParameterSamplingType Random { get; } = new ParameterSamplingType(RandomValue);
         /// <summary> Bayesian. </summary>
-        Bayesian
+        public static ParameterSamplingType Bayesian { get; } = new ParameterSamplingType(BayesianValue);
+        /// <summary> Determines if two <see cref="ParameterSamplingType"/> values are the same. </summary>
+        public static bool operator ==(ParameterSamplingType left, ParameterSamplingType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ParameterSamplingType"/> values are not the same. </summary>
+        public static bool operator !=(ParameterSamplingType left, ParameterSamplingType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ParameterSamplingType"/>. </summary>
+        public static implicit operator ParameterSamplingType(string value) => new ParameterSamplingType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ParameterSamplingType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ParameterSamplingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

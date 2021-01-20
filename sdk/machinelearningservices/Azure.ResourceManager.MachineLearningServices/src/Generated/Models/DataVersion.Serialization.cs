@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             if (Optional.IsDefined(DatasetType))
             {
                 writer.WritePropertyName("datasetType");
-                writer.WriteStringValue(DatasetType.Value.ToSerialString());
+                writer.WriteStringValue(DatasetType.Value.ToString());
             }
             if (Optional.IsDefined(DatastoreId))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    datasetType = property.Value.GetString().ToDatasetType();
+                    datasetType = new DatasetType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("datastoreId"))

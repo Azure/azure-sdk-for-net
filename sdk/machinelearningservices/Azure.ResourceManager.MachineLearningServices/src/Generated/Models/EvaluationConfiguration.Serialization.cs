@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WritePropertyName("primaryMetricName");
             writer.WriteStringValue(PrimaryMetricName);
             writer.WritePropertyName("primaryMetricGoal");
-            writer.WriteStringValue(PrimaryMetricGoal.ToSerialString());
+            writer.WriteStringValue(PrimaryMetricGoal.ToString());
             writer.WriteEndObject();
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("primaryMetricGoal"))
                 {
-                    primaryMetricGoal = property.Value.GetString().ToPrimaryMetricGoal();
+                    primaryMetricGoal = new PrimaryMetricGoal(property.Value.GetString());
                     continue;
                 }
             }

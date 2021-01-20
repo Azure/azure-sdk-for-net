@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WritePropertyName("parameterSamplingConfiguration");
             writer.WriteObjectValue(ParameterSamplingConfiguration);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             writer.WritePropertyName("evaluationConfiguration");
             writer.WriteObjectValue(EvaluationConfiguration);
-            if (Optional.IsDefined(TrialJob))
+            if (Optional.IsDefined(TrialComponent))
             {
-                writer.WritePropertyName("trialJob");
-                writer.WriteObjectValue(TrialJob);
+                writer.WritePropertyName("trialComponent");
+                writer.WriteObjectValue(TrialComponent);
             }
             if (Optional.IsDefined(ExperimentName))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WriteObjectValue(Output);
             }
             writer.WritePropertyName("jobType");
-            writer.WriteStringValue(JobType.ToSerialString());
+            writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             ParameterSamplingConfiguration parameterSamplingConfiguration = default;
             Optional<TerminationConfiguration> terminationConfiguration = default;
             EvaluationConfiguration evaluationConfiguration = default;
-            Optional<TrialJob> trialJob = default;
+            Optional<TrialComponent> trialComponent = default;
             Optional<string> experimentName = default;
             ComputeBinding computeBinding = default;
             Optional<JobOutput> output = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToJobStatus();
+                    status = new JobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameterSamplingConfiguration"))
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     evaluationConfiguration = EvaluationConfiguration.DeserializeEvaluationConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("trialJob"))
+                if (property.NameEquals("trialComponent"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    trialJob = TrialJob.DeserializeTrialJob(property.Value);
+                    trialComponent = TrialComponent.DeserializeTrialComponent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("experimentName"))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("jobType"))
                 {
-                    jobType = property.Value.GetString().ToJobType();
+                    jobType = new JobType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interactionEndpoints"))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new SweepJob(jobType, interactionEndpoints.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties), experimentName.Value, computeBinding, output.Value, Optional.ToNullable(status), parameterSamplingConfiguration, terminationConfiguration.Value, evaluationConfiguration, trialJob.Value);
+            return new SweepJob(jobType, interactionEndpoints.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties), experimentName.Value, computeBinding, output.Value, Optional.ToNullable(status), parameterSamplingConfiguration, terminationConfiguration.Value, evaluationConfiguration, trialComponent.Value);
         }
     }
 }

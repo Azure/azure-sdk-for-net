@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString().ToEnvironmentSpecificationType();
+                    type = new EnvironmentSpecificationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("docker"))

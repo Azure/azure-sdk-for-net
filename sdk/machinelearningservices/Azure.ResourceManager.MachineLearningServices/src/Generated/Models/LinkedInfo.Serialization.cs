@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("origin");
-                writer.WriteStringValue(Origin);
+                writer.WriteStringValue(Origin.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             Optional<string> linkedId = default;
             Optional<string> linkedResourceName = default;
-            Optional<string> origin = default;
+            Optional<OriginType> origin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedId"))
@@ -52,11 +52,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("origin"))
                 {
-                    origin = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    origin = new OriginType(property.Value.GetString());
                     continue;
                 }
             }
-            return new LinkedInfo(linkedId.Value, linkedResourceName.Value, origin.Value);
+            return new LinkedInfo(linkedId.Value, linkedResourceName.Value, Optional.ToNullable(origin));
         }
     }
 }

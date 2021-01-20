@@ -15,15 +15,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        /// <summary> Initializes a new instance of AuthKeys. </summary>
-        /// <param name="primaryKey"> The primary key. </param>
-        /// <param name="secondaryKey"> The secondary key. </param>
-        internal AuthKeys(string primaryKey, string secondaryKey)
-        {
-            PrimaryKey = primaryKey;
-            SecondaryKey = secondaryKey;
-        }
-
         /// <summary> The primary key. </summary>
         public string PrimaryKey { get; set; }
         /// <summary> The secondary key. </summary>

@@ -95,12 +95,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Returns an instance of WorkspaceConnectionsOperations. </summary>
         public virtual WorkspaceConnectionsOperations WorkspaceConnections => new WorkspaceConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of BatchDeploymentsOperations. </summary>
-        public virtual BatchDeploymentsOperations BatchDeployments => new BatchDeploymentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of BatchEndpointsOperations. </summary>
-        public virtual BatchEndpointsOperations BatchEndpoints => new BatchEndpointsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
         /// <summary> Returns an instance of CodeContainersOperations. </summary>
         public virtual CodeContainersOperations CodeContainers => new CodeContainersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
@@ -133,11 +127,5 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Returns an instance of ModelVersionsOperations. </summary>
         public virtual ModelVersionsOperations ModelVersions => new ModelVersionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of OnlineDeploymentsOperations. </summary>
-        public virtual OnlineDeploymentsOperations OnlineDeployments => new OnlineDeploymentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of OnlineEndpointsOperations. </summary>
-        public virtual OnlineEndpointsOperations OnlineEndpoints => new OnlineEndpointsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

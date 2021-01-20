@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey");
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString().ToCredentialsType();
+                    type = new CredentialsType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accountKey"))

@@ -24,7 +24,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of LabelingJob. </summary>
         /// <param name="jobType"> Specifies the type of job. </param>
-        /// <param name="interactionEndpoints"> Dictonary of endpoint URIs, keyed by enumerated job endpoints. </param>
+        /// <param name="interactionEndpoints">
+        /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
+        /// 
+        /// For local jobs, a job endpoint will have a value of FileStreamObject.
+        /// </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>

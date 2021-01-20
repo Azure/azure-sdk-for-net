@@ -27,25 +27,5 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             writer.WriteEndObject();
         }
-
-        internal static CreateServiceRequestKeys DeserializeCreateServiceRequestKeys(JsonElement element)
-        {
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("primaryKey"))
-                {
-                    primaryKey = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secondaryKey"))
-                {
-                    secondaryKey = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new CreateServiceRequestKeys(primaryKey.Value, secondaryKey.Value);
-        }
     }
 }

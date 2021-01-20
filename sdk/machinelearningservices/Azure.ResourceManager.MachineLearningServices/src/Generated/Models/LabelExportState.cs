@@ -5,18 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The state of the Export Labels operation. </summary>
-    public enum LabelExportState
+    public readonly partial struct LabelExportState : IEquatable<LabelExportState>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="LabelExportState"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LabelExportState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string RequestedValue = "Requested";
+        private const string RunningValue = "Running";
+        private const string FailedValue = "Failed";
+        private const string CompletedValue = "Completed";
+
         /// <summary> Requested. </summary>
-        Requested,
+        public static LabelExportState Requested { get; } = new LabelExportState(RequestedValue);
         /// <summary> Running. </summary>
-        Running,
+        public static LabelExportState Running { get; } = new LabelExportState(RunningValue);
         /// <summary> Failed. </summary>
-        Failed,
+        public static LabelExportState Failed { get; } = new LabelExportState(FailedValue);
         /// <summary> Completed. </summary>
-        Completed
+        public static LabelExportState Completed { get; } = new LabelExportState(CompletedValue);
+        /// <summary> Determines if two <see cref="LabelExportState"/> values are the same. </summary>
+        public static bool operator ==(LabelExportState left, LabelExportState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="LabelExportState"/> values are not the same. </summary>
+        public static bool operator !=(LabelExportState left, LabelExportState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="LabelExportState"/>. </summary>
+        public static implicit operator LabelExportState(string value) => new LabelExportState(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is LabelExportState other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(LabelExportState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

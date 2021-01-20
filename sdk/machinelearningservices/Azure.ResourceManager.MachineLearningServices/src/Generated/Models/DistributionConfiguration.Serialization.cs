@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("distributionType");
-            writer.WriteStringValue(DistributionType.ToSerialString());
+            writer.WriteStringValue(DistributionType.ToString());
             writer.WriteEndObject();
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             {
                 if (property.NameEquals("distributionType"))
                 {
-                    distributionType = property.Value.GetString().ToDistributionType();
+                    distributionType = new DistributionType(property.Value.GetString());
                     continue;
                 }
             }

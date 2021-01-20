@@ -14,12 +14,5 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public CreateServiceRequestKeys()
         {
         }
-
-        /// <summary> Initializes a new instance of CreateServiceRequestKeys. </summary>
-        /// <param name="primaryKey"> The primary key. </param>
-        /// <param name="secondaryKey"> The secondary key. </param>
-        internal CreateServiceRequestKeys(string primaryKey, string secondaryKey) : base(primaryKey, secondaryKey)
-        {
-        }
     }
 }

@@ -8,23 +8,14 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The InnerErrorResponse. </summary>
-    public partial class InnerErrorResponse
+    internal partial class InnerErrorResponse
     {
         /// <summary> Initializes a new instance of InnerErrorResponse. </summary>
-        public InnerErrorResponse()
+        internal InnerErrorResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of InnerErrorResponse. </summary>
-        /// <param name="code"> . </param>
-        /// <param name="innerError"> . </param>
-        internal InnerErrorResponse(string code, InnerErrorResponse innerError)
-        {
-            Code = code;
-            InnerError = innerError;
-        }
-
-        public string Code { get; set; }
-        public InnerErrorResponse InnerError { get; set; }
+        public string Code { get; }
+        public InnerErrorResponse InnerError { get; }
     }
 }

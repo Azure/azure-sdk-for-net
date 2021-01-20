@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("mediaType");
-            writer.WriteStringValue(MediaType.ToSerialString());
+            writer.WriteStringValue(MediaType.ToString());
             writer.WriteEndObject();
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             {
                 if (property.NameEquals("mediaType"))
                 {
-                    mediaType = property.Value.GetString().ToMediaType();
+                    mediaType = new MediaType(property.Value.GetString());
                     continue;
                 }
             }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("jobType");
-            writer.WriteStringValue(JobType.ToSerialString());
+            writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             {
                 if (property.NameEquals("jobType"))
                 {
-                    jobType = property.Value.GetString().ToJobType();
+                    jobType = new JobType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interactionEndpoints"))

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = property.Value.GetString().ToStatusMessageLevel();
+                    level = new StatusMessageLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("code"))

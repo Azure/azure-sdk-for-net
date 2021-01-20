@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Dictonary of endpoint URIs, keyed by enumerated job endpoints. </summary>
+    /// <summary>
+    /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
+    /// 
+    /// For local jobs, a job endpoint will have a value of FileStreamObject.
+    /// </summary>
     public partial class JobBaseInteractionEndpoints
     {
         /// <summary> Initializes a new instance of JobBaseInteractionEndpoints. </summary>
@@ -16,21 +20,33 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of JobBaseInteractionEndpoints. </summary>
-        /// <param name="tracking"> . </param>
-        /// <param name="studio"> . </param>
-        /// <param name="grafana"> . </param>
-        /// <param name="tensorboard"> . </param>
-        internal JobBaseInteractionEndpoints(string tracking, string studio, string grafana, string tensorboard)
+        /// <param name="tracking"> Any object. </param>
+        /// <param name="studio"> Any object. </param>
+        /// <param name="grafana"> Any object. </param>
+        /// <param name="tensorboard"> Any object. </param>
+        /// <param name="local"> Any object. </param>
+        /// <param name="localRequest"> Any object. </param>
+        internal JobBaseInteractionEndpoints(object tracking, object studio, object grafana, object tensorboard, object local, object localRequest)
         {
             Tracking = tracking;
             Studio = studio;
             Grafana = grafana;
             Tensorboard = tensorboard;
+            Local = local;
+            LocalRequest = localRequest;
         }
 
-        public string Tracking { get; }
-        public string Studio { get; }
-        public string Grafana { get; }
-        public string Tensorboard { get; }
+        /// <summary> Any object. </summary>
+        public object Tracking { get; }
+        /// <summary> Any object. </summary>
+        public object Studio { get; }
+        /// <summary> Any object. </summary>
+        public object Grafana { get; }
+        /// <summary> Any object. </summary>
+        public object Tensorboard { get; }
+        /// <summary> Any object. </summary>
+        public object Local { get; }
+        /// <summary> Any object. </summary>
+        public object LocalRequest { get; }
     }
 }

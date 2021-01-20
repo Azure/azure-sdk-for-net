@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode");
-                writer.WriteStringValue(Mode.Value.ToSerialString());
+                writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mode = property.Value.GetString().ToDataBindingMode();
+                    mode = new DataBindingMode(property.Value.GetString());
                     continue;
                 }
             }

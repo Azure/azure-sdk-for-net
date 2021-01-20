@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WritePropertyName("parameterSpace");
             writer.WriteObjectValue(ParameterSpace);
             writer.WritePropertyName("samplingType");
-            writer.WriteStringValue(SamplingType.ToSerialString());
+            writer.WriteStringValue(SamplingType.ToString());
             writer.WriteEndObject();
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("samplingType"))
                 {
-                    samplingType = property.Value.GetString().ToParameterSamplingType();
+                    samplingType = new ParameterSamplingType(property.Value.GetString());
                     continue;
                 }
             }

@@ -14,34 +14,76 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static JobBaseInteractionEndpoints DeserializeJobBaseInteractionEndpoints(JsonElement element)
         {
-            Optional<string> tracking = default;
-            Optional<string> studio = default;
-            Optional<string> grafana = default;
-            Optional<string> tensorboard = default;
+            Optional<object> tracking = default;
+            Optional<object> studio = default;
+            Optional<object> grafana = default;
+            Optional<object> tensorboard = default;
+            Optional<object> local = default;
+            Optional<object> localRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Tracking"))
                 {
-                    tracking = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tracking = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("Studio"))
                 {
-                    studio = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    studio = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("Grafana"))
                 {
-                    grafana = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    grafana = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("Tensorboard"))
                 {
-                    tensorboard = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tensorboard = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("Local"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    local = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("LocalRequest"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    localRequest = property.Value.GetObject();
                     continue;
                 }
             }
-            return new JobBaseInteractionEndpoints(tracking.Value, studio.Value, grafana.Value, tensorboard.Value);
+            return new JobBaseInteractionEndpoints(tracking.Value, studio.Value, grafana.Value, tensorboard.Value, local.Value, localRequest.Value);
         }
     }
 }

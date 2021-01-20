@@ -40,7 +40,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of SweepJob. </summary>
         /// <param name="jobType"> Specifies the type of job. </param>
-        /// <param name="interactionEndpoints"> Dictonary of endpoint URIs, keyed by enumerated job endpoints. </param>
+        /// <param name="interactionEndpoints">
+        /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
+        /// 
+        /// For local jobs, a job endpoint will have a value of FileStreamObject.
+        /// </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
@@ -51,14 +55,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="parameterSamplingConfiguration"> class for all hyperparameter sampling algorithms. </param>
         /// <param name="terminationConfiguration"> . </param>
         /// <param name="evaluationConfiguration"> . </param>
-        /// <param name="trialJob"> . </param>
-        internal SweepJob(JobType jobType, JobBaseInteractionEndpoints interactionEndpoints, string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string experimentName, ComputeBinding computeBinding, JobOutput output, JobStatus? status, ParameterSamplingConfiguration parameterSamplingConfiguration, TerminationConfiguration terminationConfiguration, EvaluationConfiguration evaluationConfiguration, TrialJob trialJob) : base(jobType, interactionEndpoints, description, tags, properties, experimentName, computeBinding, output)
+        /// <param name="trialComponent"> . </param>
+        internal SweepJob(JobType jobType, JobBaseInteractionEndpoints interactionEndpoints, string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string experimentName, ComputeBinding computeBinding, JobOutput output, JobStatus? status, ParameterSamplingConfiguration parameterSamplingConfiguration, TerminationConfiguration terminationConfiguration, EvaluationConfiguration evaluationConfiguration, TrialComponent trialComponent) : base(jobType, interactionEndpoints, description, tags, properties, experimentName, computeBinding, output)
         {
             Status = status;
             ParameterSamplingConfiguration = parameterSamplingConfiguration;
             TerminationConfiguration = terminationConfiguration;
             EvaluationConfiguration = evaluationConfiguration;
-            TrialJob = trialJob;
+            TrialComponent = trialComponent;
             JobType = jobType;
         }
 
@@ -68,6 +72,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public ParameterSamplingConfiguration ParameterSamplingConfiguration { get; set; }
         public TerminationConfiguration TerminationConfiguration { get; set; }
         public EvaluationConfiguration EvaluationConfiguration { get; set; }
-        public TrialJob TrialJob { get; set; }
+        public TrialComponent TrialComponent { get; set; }
     }
 }

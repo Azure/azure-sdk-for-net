@@ -5,16 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The format of exported labels. </summary>
-    public enum ExportFormatType
+    public readonly partial struct ExportFormatType : IEquatable<ExportFormatType>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="ExportFormatType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExportFormatType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string DatasetValue = "Dataset";
+        private const string CocoValue = "Coco";
+        private const string CSVValue = "CSV";
+
         /// <summary> Dataset. </summary>
-        Dataset,
+        public static ExportFormatType Dataset { get; } = new ExportFormatType(DatasetValue);
         /// <summary> Coco. </summary>
-        Coco,
+        public static ExportFormatType Coco { get; } = new ExportFormatType(CocoValue);
         /// <summary> CSV. </summary>
-        CSV
+        public static ExportFormatType CSV { get; } = new ExportFormatType(CSVValue);
+        /// <summary> Determines if two <see cref="ExportFormatType"/> values are the same. </summary>
+        public static bool operator ==(ExportFormatType left, ExportFormatType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ExportFormatType"/> values are not the same. </summary>
+        public static bool operator !=(ExportFormatType left, ExportFormatType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ExportFormatType"/>. </summary>
+        public static implicit operator ExportFormatType(string value) => new ExportFormatType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ExportFormatType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ExportFormatType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

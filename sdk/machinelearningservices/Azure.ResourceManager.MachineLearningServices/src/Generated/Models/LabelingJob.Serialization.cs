@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(ProgressMetrics))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WriteStringValue(CreatedTimeUtc.Value, "O");
             }
             writer.WritePropertyName("jobType");
-            writer.WriteStringValue(JobType.ToSerialString());
+            writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToJobStatus();
+                    status = new JobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("progressMetrics"))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("jobType"))
                 {
-                    jobType = property.Value.GetString().ToJobType();
+                    jobType = new JobType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interactionEndpoints"))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("policyType");
-            writer.WriteStringValue(PolicyType.ToSerialString());
+            writer.WriteStringValue(PolicyType.ToString());
             if (Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval");
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             {
                 if (property.NameEquals("policyType"))
                 {
-                    policyType = property.Value.GetString().ToEarlyTerminationPolicyType();
+                    policyType = new EarlyTerminationPolicyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("evaluationInterval"))

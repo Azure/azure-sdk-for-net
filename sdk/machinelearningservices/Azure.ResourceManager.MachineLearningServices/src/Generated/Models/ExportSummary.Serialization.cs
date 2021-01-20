@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             {
                 if (property.NameEquals("format"))
                 {
-                    format = property.Value.GetString().ToExportFormatType();
+                    format = new ExportFormatType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("exportId"))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = property.Value.GetString().ToLabelExportState();
+                    state = new LabelExportState(property.Value.GetString());
                     continue;
                 }
             }

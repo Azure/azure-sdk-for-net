@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class TrialJob : IUtf8JsonSerializable
+    public partial class TrialComponent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,14 +37,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(DistributionConfiguration))
+            {
+                writer.WritePropertyName("distributionConfiguration");
+                writer.WriteObjectValue(DistributionConfiguration);
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrialJob DeserializeTrialJob(JsonElement element)
+        internal static TrialComponent DeserializeTrialComponent(JsonElement element)
         {
             Optional<CodeConfiguration> codeConfiguration = default;
             Optional<string> environmentId = default;
             Optional<IDictionary<string, DataBinding>> dataBindings = default;
+            Optional<DistributionConfiguration> distributionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeConfiguration"))
@@ -77,8 +83,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     dataBindings = dictionary;
                     continue;
                 }
+                if (property.NameEquals("distributionConfiguration"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    distributionConfiguration = DistributionConfiguration.DeserializeDistributionConfiguration(property.Value);
+                    continue;
+                }
             }
-            return new TrialJob(codeConfiguration.Value, environmentId.Value, Optional.ToDictionary(dataBindings));
+            return new TrialComponent(codeConfiguration.Value, environmentId.Value, Optional.ToDictionary(dataBindings), distributionConfiguration.Value);
         }
     }
 }

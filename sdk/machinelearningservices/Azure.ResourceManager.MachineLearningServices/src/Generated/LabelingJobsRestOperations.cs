@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public LabelingJobsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-12-01-preview")
+        public LabelingJobsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01-preview")
         {
             if (subscriptionId == null)
             {
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStringValue(body.Value.ToSerialString());
+                content.JsonWriter.WriteStringValue(body.Value.ToString());
                 request.Content = content;
             }
             return message;
