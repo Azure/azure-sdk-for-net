@@ -64,9 +64,8 @@ directive:
       "in": "path",
       "required": true,
       "type": "string",
-      "x-ms-parameter-location": "method",
       "description": "path.",
-      "x-ms-skip-url-encoding": false
+      "x-ms-skip-url-encoding": true
     };
 - from: swagger-document
   where: $["x-ms-paths"]

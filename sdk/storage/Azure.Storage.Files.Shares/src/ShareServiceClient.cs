@@ -1247,7 +1247,6 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await shareClient.ShareRestClient.RestoreAsync(
-                            path: deletedShareName,
                             deletedShareName: deletedShareName,
                             deletedShareVersion: deletedShareVersion,
                             cancellationToken: cancellationToken)
@@ -1256,7 +1255,6 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = shareClient.ShareRestClient.Restore(
-                            path: deletedShareName,
                             deletedShareName: deletedShareName,
                             deletedShareVersion: deletedShareVersion,
                             cancellationToken: cancellationToken);

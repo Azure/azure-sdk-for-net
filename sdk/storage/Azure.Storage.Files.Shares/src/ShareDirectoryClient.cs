@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.Shares
@@ -235,6 +236,7 @@ namespace Azure.Storage.Files.Shares
                 _clientDiagnostics,
                 _pipeline,
                 uriBuilder.ToUri().ToString(),
+                path: $"{ShareName}/{Path.EscapePath()}",
                 _version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
@@ -324,6 +326,7 @@ namespace Azure.Storage.Files.Shares
                 _clientDiagnostics,
                 _pipeline,
                 uriBuilder.ToUri().ToString(),
+                path: $"{ShareName}/{Path.EscapePath()}",
                 _version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
@@ -374,6 +377,7 @@ namespace Azure.Storage.Files.Shares
                 _clientDiagnostics,
                 _pipeline,
                 uriBuilder.ToUri().ToString(),
+                path: $"{ShareName}/{Path.EscapePath()}",
                 _version.ToVersionString(),
                 // TODO
                 sharesnapshot: null);
@@ -617,7 +621,6 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _directoryRestClient.CreateAsync(
-                            path: $"{ShareName}/{Path}",
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
@@ -630,7 +633,6 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.Create(
-                            path: $"{ShareName}/{Path}",
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
@@ -1136,14 +1138,12 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _directoryRestClient.DeleteAsync(
-                            path: $"{ShareName}/{Path}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _directoryRestClient.Delete(
-                            path: $"{ShareName}/{Path}",
                             cancellationToken: cancellationToken);
                     }
 
@@ -1274,14 +1274,12 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _directoryRestClient.GetPropertiesAsync(
-                            path: $"{ShareName}/{Path}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _directoryRestClient.GetProperties(
-                            path: $"{ShareName}/{Path}",
                             cancellationToken: cancellationToken);
                     }
 
@@ -1443,7 +1441,6 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _directoryRestClient.SetPropertiesAsync(
-                            path: $"{ShareName}/{Path}",
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
@@ -1455,7 +1452,6 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.SetProperties(
-                            path: $"{ShareName}/{Path}",
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
@@ -1592,7 +1588,6 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _directoryRestClient.SetMetadataAsync(
-                            path: $"{ShareName}/{Path}",
                             metadata: metadata,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1600,7 +1595,6 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.SetMetadata(
-                            path: $"{ShareName}/{Path}",
                             metadata: metadata,
                             cancellationToken: cancellationToken);
                     }
@@ -1754,7 +1748,6 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _directoryRestClient.ListFilesAndDirectoriesSegmentAsync(
-                            path: $"{ShareName}/{Path}",
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -1764,7 +1757,6 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.ListFilesAndDirectoriesSegment(
-                            path: $"{ShareName}/{Path}",
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -1917,7 +1909,6 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _directoryRestClient.ListHandlesAsync(
-                            path: $"{ShareName}/{Path}",
                             marker: marker,
                             maxresults: maxResults,
                             recursive: recursive,
@@ -1927,7 +1918,6 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.ListHandles(
-                            path: $"{ShareName}/{Path}",
                             marker: marker,
                             maxresults: maxResults,
                             recursive: recursive,
@@ -2268,7 +2258,6 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await _directoryRestClient.ForceCloseHandlesAsync(
-                            path: $"{ShareName}/{Path}",
                             handleId: handleId,
                             marker: marker,
                             recursive: recursive,
@@ -2278,7 +2267,6 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = _directoryRestClient.ForceCloseHandles(
-                            path: $"{ShareName}/{Path}",
                             handleId: handleId,
                             marker: marker,
                             recursive: recursive,
