@@ -214,20 +214,11 @@ directive:
     $["x-az-public"] = false;
 ```
 
-### Hide BlobRetentionPolicy.AllowPermanentDelete
+### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions.RetentionPolicy
+  where: $.parameters.ApiVersionParameter
   transform: >
-    delete $.properties.AllowPermanentDelete;
-```
-
-### Hide ContainerSubmitBatchResult
-``` yaml
-directive:
-- from: swagger-document
-  where: $["x-ms-paths"]["/{containerName}?restype=container&comp=batch"]
-  transform: >
-    $.post.responses["202"]["x-az-public"] = false;
+    delete $.enum
 ```

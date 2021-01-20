@@ -21347,7 +21347,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Container SubmitBatchResult
     /// </summary>
-    public partial class ContainerSubmitBatchResult
+    internal partial class ContainerSubmitBatchResult
     {
         /// <summary>
         /// The media type of the body of the response. For batch requests, this is multipart/mixed; boundary=batchresponse_GUID
@@ -21364,26 +21364,6 @@ namespace Azure.Storage.Blobs.Models
         /// You can use BlobsModelFactory.ContainerSubmitBatchResult instead.
         /// </summary>
         internal ContainerSubmitBatchResult() { }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new ContainerSubmitBatchResult instance for mocking.
-        /// </summary>
-        public static ContainerSubmitBatchResult ContainerSubmitBatchResult(
-            string contentType,
-            System.IO.Stream body)
-        {
-            return new ContainerSubmitBatchResult()
-            {
-                ContentType = contentType,
-                Body = body,
-            };
-        }
     }
 }
 #endregion class ContainerSubmitBatchResult
