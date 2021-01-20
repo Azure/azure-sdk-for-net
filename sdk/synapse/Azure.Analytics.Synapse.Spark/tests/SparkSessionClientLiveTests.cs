@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         /// Azure Synapse Analytics service and perform operations.
         /// </summary>
         [Test]
-        [Ignore("This test case cannot pass due to backend limitations for service principals.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot pass due to backend limitations for service principals.")]
         public async Task TestSparkSessionJob()
         {
             SparkSessionClient client = CreateClient();
