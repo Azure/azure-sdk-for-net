@@ -739,7 +739,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.CreateAsync(
+                        response = await FileRestClient.CreateAsync(
                             fileContentLength: maxSize,
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
@@ -755,7 +755,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.Create(
+                        response = FileRestClient.Create(
                             fileContentLength: maxSize,
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
@@ -1356,7 +1356,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.StartCopyAsync(
+                        response = await FileRestClient.StartCopyAsync(
                             copySource: sourceUri.ToString(),
                             metadata: metadata,
                             filePermission: filePermission,
@@ -1368,7 +1368,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.StartCopy(
+                        response = FileRestClient.StartCopy(
                             copySource: sourceUri.ToString(),
                             metadata: metadata,
                             filePermission: filePermission,
@@ -1591,7 +1591,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.AbortCopyAsync(
+                        response = await FileRestClient.AbortCopyAsync(
                             copyId: copyId,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -1599,7 +1599,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.AbortCopy(
+                        response = FileRestClient.AbortCopy(
                             copyId: copyId,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -1987,7 +1987,7 @@ namespace Azure.Storage.Files.Shares
 
             if (async)
             {
-                response = await _fileRestClient.DownloadAsync(
+                response = await FileRestClient.DownloadAsync(
                     // TODO this might not work
                     range: range.ToString(),
                     rangeGetContentMD5: range == default ? null : rangeGetContentHash,
@@ -1997,7 +1997,7 @@ namespace Azure.Storage.Files.Shares
             }
             else
             {
-                response = _fileRestClient.Download(
+                response = FileRestClient.Download(
                     // TODO this might not work
                     range: range.ToString(),
                     rangeGetContentMD5: range == default ? null : rangeGetContentHash,
@@ -2479,14 +2479,14 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.DeleteAsync(
+                        response = await FileRestClient.DeleteAsync(
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = _fileRestClient.Delete(
+                        response = FileRestClient.Delete(
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2699,14 +2699,14 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.GetPropertiesAsync(
+                        response = await FileRestClient.GetPropertiesAsync(
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = _fileRestClient.GetProperties(
+                        response = FileRestClient.GetProperties(
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -3035,7 +3035,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.SetHttpHeadersAsync(
+                        response = await FileRestClient.SetHttpHeadersAsync(
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
@@ -3050,7 +3050,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.SetHttpHeaders(
+                        response = FileRestClient.SetHttpHeaders(
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
@@ -3282,7 +3282,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.SetMetadataAsync(
+                        response = await FileRestClient.SetMetadataAsync(
                             metadata: metadata,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -3290,7 +3290,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.SetMetadata(
+                        response = FileRestClient.SetMetadata(
                             metadata: metadata,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -3444,7 +3444,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.UploadRangeAsync(
+                        response = await FileRestClient.UploadRangeAsync(
                             range: range.ToString(),
                             fileRangeWrite: ShareFileRangeWriteType.Clear,
                             contentLength: 0,
@@ -3456,7 +3456,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.UploadRange(
+                        response = FileRestClient.UploadRange(
                             range: range.ToString(),
                             fileRangeWrite: ShareFileRangeWriteType.Clear,
                             contentLength: 0,
@@ -3798,7 +3798,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.UploadRangeAsync(
+                        response = await FileRestClient.UploadRangeAsync(
                             range: range.ToString(),
                             fileRangeWrite: ShareFileRangeWriteType.Update,
                             contentLength: (content?.Length - content?.Position) ?? 0,
@@ -3810,7 +3810,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.UploadRange(
+                        response = FileRestClient.UploadRange(
                             range: range.ToString(),
                             fileRangeWrite: ShareFileRangeWriteType.Update,
                             contentLength: (content?.Length - content?.Position) ?? 0,
@@ -4078,7 +4078,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.UploadRangeFromURLAsync(
+                        response = await FileRestClient.UploadRangeFromURLAsync(
                             range: range.ToString(),
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
@@ -4091,7 +4091,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.UploadRangeFromURL(
+                        response = FileRestClient.UploadRangeFromURL(
                             range: range.ToString(),
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
@@ -4728,7 +4728,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.GetRangeListAsync(
+                        response = await FileRestClient.GetRangeListAsync(
                             prevsharesnapshot: previousSnapshot,
                             range: range?.ToString(),
                             leaseAccessConditions: conditions,
@@ -4737,7 +4737,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.GetRangeList(
+                        response = FileRestClient.GetRangeList(
                             prevsharesnapshot: previousSnapshot,
                             range: range?.ToString(),
                             leaseAccessConditions: conditions,
@@ -4947,7 +4947,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.ListHandlesAsync(
+                        response = await FileRestClient.ListHandlesAsync(
                             marker: marker,
                             maxresults: maxResults,
                             cancellationToken: cancellationToken)
@@ -4955,7 +4955,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.ListHandles(
+                        response = FileRestClient.ListHandles(
                             marker: marker,
                             maxresults: maxResults,
                             cancellationToken: cancellationToken);
@@ -5260,7 +5260,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _fileRestClient.ForceCloseHandlesAsync(
+                        response = await FileRestClient.ForceCloseHandlesAsync(
                             handleId: handleId,
                             marker: marker,
                             cancellationToken: cancellationToken)
@@ -5268,7 +5268,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _fileRestClient.ForceCloseHandles(
+                        response = FileRestClient.ForceCloseHandles(
                             handleId: handleId,
                             marker: marker,
                             cancellationToken: cancellationToken);

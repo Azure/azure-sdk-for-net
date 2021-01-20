@@ -165,7 +165,6 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
-
             _serviceRestClient = BuildServiceRestClient();
         }
 
@@ -236,7 +235,6 @@ namespace Azure.Storage.Files.Shares
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
-
             _serviceRestClient = BuildServiceRestClient();
         }
 
@@ -421,7 +419,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _serviceRestClient.ListSharesSegmentAsync(
+                        response = await ServiceRestClient.ListSharesSegmentAsync(
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -431,7 +429,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = _serviceRestClient.ListSharesSegment(
+                        response = ServiceRestClient.ListSharesSegment(
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -568,13 +566,13 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _serviceRestClient.GetPropertiesAsync(
+                        response = await ServiceRestClient.GetPropertiesAsync(
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = _serviceRestClient.GetProperties(
+                        response = ServiceRestClient.GetProperties(
                             cancellationToken: cancellationToken);
                     }
 
@@ -712,14 +710,14 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await _serviceRestClient.SetPropertiesAsync(
+                        response = await ServiceRestClient.SetPropertiesAsync(
                             storageServiceProperties: properties,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = _serviceRestClient.SetProperties(
+                        response = ServiceRestClient.SetProperties(
                             storageServiceProperties: properties,
                             cancellationToken: cancellationToken);
                     }
