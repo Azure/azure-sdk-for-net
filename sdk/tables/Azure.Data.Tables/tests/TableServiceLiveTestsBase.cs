@@ -59,7 +59,8 @@ namespace Azure.Data.Tables.Tests
             {"EntityMergeDoesPartialPropertyUpdates", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
             {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},
             {"GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints."},
-            {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."}
+            {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."},
+            {"ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges", "Shared access signature with PartitionKey or RowKey are not supported"}
         };
 
         /// <summary>
@@ -105,7 +106,7 @@ namespace Azure.Data.Tables.Tests
 
             await CosmosThrottleWrapper(async () => await service.CreateTableAsync(tableName).ConfigureAwait(false));
 
-            client = service.GetTableClient(tableName);
+            client = InstrumentClient(service.GetTableClient(tableName));
         }
 
         [TearDown]

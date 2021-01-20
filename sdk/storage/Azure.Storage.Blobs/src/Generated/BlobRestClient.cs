@@ -1606,14 +1606,6 @@ namespace Azure.Storage.Blobs
 
                         // Get response headers
                         string _header;
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
                             _value.ETag = new Azure.ETag(_header);
@@ -1653,6 +1645,14 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-deny-encryption-scope-override", out _header))
                         {
                             _value.DenyEncryptionScopeOverride = bool.Parse(_header);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -3997,25 +3997,9 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("x-ms-or-policy-id", out _header))
                         {
                             _value.ObjectReplicationPolicyId = _header;
-                        }
-                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
-                            }
                         }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
@@ -4137,6 +4121,19 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastAccessed = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
+                            else if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
+                            }
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -4153,25 +4150,9 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("x-ms-or-policy-id", out _header))
                         {
                             _value.ObjectReplicationPolicyId = _header;
-                        }
-                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
-                            }
                         }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
@@ -4292,6 +4273,19 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-last-access-time", out _header))
                         {
                             _value.LastAccessed = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
+                            else if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -4513,25 +4507,9 @@ namespace Azure.Storage.Blobs
                         {
                             _value.CreatedOn = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("x-ms-or-policy-id", out _header))
                         {
                             _value.ObjectReplicationPolicyId = _header;
-                        }
-                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
-                            }
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-type", out _header))
                         {
@@ -4680,6 +4658,19 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-last-access-time", out _header))
                         {
                             _value.LastAccessed = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
+                            else if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -8669,14 +8660,6 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
                             _value.ContentLength = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -8781,6 +8764,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.BlobContentMD5 = System.Convert.FromBase64String(_header);
                         }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -8796,14 +8787,6 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
                         }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
@@ -8912,6 +8895,14 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-blob-content-md5", out _header))
                         {
                             _value.BlobContentMD5 = System.Convert.FromBase64String(_header);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response

@@ -370,18 +370,20 @@ namespace Azure.Messaging.EventHubs.Processor
                     using var memoryStream = new MemoryStream();
                     await blobClient.DownloadToAsync(memoryStream, listCheckpointsToken).ConfigureAwait(false);
 
-                    TryReadLegacyCheckpoint(
+                    if (TryReadLegacyCheckpoint(
                         memoryStream.GetBuffer().AsSpan(0, (int)memoryStream.Length),
                         out long? offset,
-                        out long? sequenceNumber);
-
-                    if (offset.HasValue)
+                        out long? sequenceNumber))
                     {
-                        startingPosition = EventPosition.FromOffset(offset.Value, false);
-                    }
-                    else if (sequenceNumber.HasValue)
-                    {
-                        startingPosition = EventPosition.FromSequenceNumber(sequenceNumber.Value, false);
+                        if (offset.HasValue)
+                        {
+                            startingPosition = EventPosition.FromOffset(offset.Value, false);
+                        }
+                        else
+                        {
+                            // Skip checkpoints without an offset without logging an error
+                            continue;
+                        }
                     }
 
                     if (startingPosition.HasValue)
@@ -598,36 +600,51 @@ namespace Azure.Messaging.EventHubs.Processor
         ///       "SequenceNumber":960180
         ///   }
         /// /// </remarks>
-        private static void TryReadLegacyCheckpoint(Span<byte> data, out long? offset, out long? sequenceNumber)
+        private static bool TryReadLegacyCheckpoint(Span<byte> data, out long? offset, out long? sequenceNumber)
         {
             offset = null;
             sequenceNumber = null;
 
+            var hadOffset = false;
             var jsonReader = new Utf8JsonReader(data);
 
             try
             {
-                if (!jsonReader.Read() || jsonReader.TokenType != JsonTokenType.StartObject) return;
+                if (!jsonReader.Read() || jsonReader.TokenType != JsonTokenType.StartObject)
+                    return false;
 
                 while (jsonReader.Read() && jsonReader.TokenType == JsonTokenType.PropertyName)
                 {
                     switch (jsonReader.GetString())
                     {
                         case "Offset":
-                            if (!jsonReader.Read() ||
-                                jsonReader.GetString() is not string offsetString ||
-                                !long.TryParse(offsetString, out long offsetValue))
+
+                            if (!jsonReader.Read())
                             {
-                                return;
+                                return false;
                             }
 
-                            offset = offsetValue;
+                            hadOffset = true;
+
+                            var offsetString = jsonReader.GetString();
+                            if (!string.IsNullOrEmpty(offsetString))
+                            {
+                                if (long.TryParse(offsetString, out long offsetValue))
+                                {
+                                    offset = offsetValue;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+
                             break;
                         case "SequenceNumber":
                             if (!jsonReader.Read() ||
                                 !jsonReader.TryGetInt64(out long sequenceNumberValue))
                             {
-                                return;
+                                return false;
                             }
 
                             sequenceNumber = sequenceNumberValue;
@@ -641,7 +658,10 @@ namespace Azure.Messaging.EventHubs.Processor
             catch (JsonException)
             {
                 // Ignore this because if the data is malformed, it will be treated as if the checkpoint didn't exist.
+                return false;
             }
+
+            return hadOffset && sequenceNumber != null;
         }
 
         /// <summary>

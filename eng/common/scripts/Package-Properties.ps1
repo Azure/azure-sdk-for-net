@@ -99,7 +99,9 @@ function Get-PkgProperties
         }
         else
         {
-            LogError "The function '$GetPackageInfoFromRepoFn' was not found."
+            LogError "The function for '$GetPackageInfoFromRepoFn' was not found.`
+            Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
+            See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
         }
 
         if ($pkgProps -ne $null)

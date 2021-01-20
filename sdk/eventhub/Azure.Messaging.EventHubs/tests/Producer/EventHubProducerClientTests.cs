@@ -440,7 +440,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ReadPartitionPublishingPropertiesAsyncReturnsPartitionState()
+        public async Task ReadPartitionPublishingPropertiesAsyncReturnsPartitionStateWhenIdempotentPublishingEnabled()
         {
             var expectedPartition = "5";
             var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
@@ -477,6 +477,41 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()),
                 Times.Never,
                 "Partition state should not have been initialized twice.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.GetPartitionPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReadPartitionPublishingPropertiesAsyncReturnsEmptyPartitionStateWhenIdempotentPublishingDisabled()
+        {
+            var expectedPartition = "5";
+            var expectedProperties = PartitionPublishingProperties.Empty;
+            var mockTransport = new Mock<TransportProducer>();
+            var connection = new MockConnection(() => mockTransport.Object);
+
+            var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
+            {
+                EnableIdempotentPartitions = false
+            });
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var readProperties = await producer.GetPartitionPublishingPropertiesAsync(expectedPartition, cancellationSource.Token);
+
+            Assert.That(readProperties, Is.Not.Null, "The read properties should have been created.");
+            Assert.That(readProperties.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
+            Assert.That(readProperties.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
+            Assert.That(readProperties.LastPublishedSequenceNumber, Is.EqualTo(expectedProperties.LastPublishedSequenceNumber), "The sequence number should match.");
+
+            mockTransport
+                .Verify(transportProducer => transportProducer.ReadInitializationPublishingPropertiesAsync(
+                    It.IsAny<CancellationToken>()),
+                Times.Never,
+                "Partition state should not have been initialized.");
         }
 
         /// <summary>
@@ -723,6 +758,8 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 EnableIdempotentPartitions = true
             });
+
+            Assert.That(async () => await producer.SendAsync(events), Throws.InstanceOf<InvalidOperationException>(), "Idempotent publishing requires the send options.");
 
             var sendOptions = new SendEventOptions();
             Assert.That(async () => await producer.SendAsync(events, sendOptions), Throws.InstanceOf<InvalidOperationException>(), "Automatic routing cannot be used with idempotent publishing.");
