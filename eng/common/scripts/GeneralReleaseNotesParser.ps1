@@ -1,73 +1,68 @@
 . (Join-Path $PSScriptRoot common.ps1)
 
-function Parse-LinesAsIs ($lineNo, $releaseNotesContent, $exitHeader1, $exitHeader2) 
-{
-    $content = @()
-    while(($lineNo -lt $releaseNotesContent.Count) -and 
-    ($releaseNotesContent[$lineNo] -ne $exitHeader1) -and ($releaseNotesContent[$lineNo] -ne $exitHeader2))
-    {
-        $line = $releaseNotesContent[$lineNo]
-        if (-not $line.StartsWith("[comment]"))
-        {
-            $content += $line
-        }
-        $lineNo++
-    }
-    return $content
-}
+$SECTION_REGEX = "^\[(?<SectionName>\w+)\.(?<Command>\w+)\]:\s#\s\((?<Comment>.*)\)"
 
 function Parse-GeneralReleaseNotesFile ($releaseNotesLocation) 
 {
     $releaseNotesContent = Get-Content -Path $releaseNotesLocation
     $lineNumber = 0
+    $releaseHighlights = @()
+    $addLines = $false
 
     while ($lineNumber -lt $ReleaseNotesContent.Count)
     {
         $line = $ReleaseNotesContent[$lineNumber]
-        if ($line -eq "## Release highlights")
+        if (($line -match $SECTION_REGEX) -and ($matches["SectionName"] -eq "releasehighlights"))
         {
-            $releaseHighlights = Parse-LinesAsIs -lineNo ($lineNumber + 1) -releaseNotesContent $ReleaseNotesContent `
-            -exitHeader1 "## Need help" -exitHeader2 "## Latest Releases"
-            break
+            if ($matches["Command"] -eq "start")
+            {
+                $addLines = $true
+            }
+            if ($matches["Command"] -eq "end")
+            {
+                $addLines = $false
+                break
+            }
+        }
+        if ($addLines)
+        {
+            $releaseHighlights += $line
         }
         $lineNumber++
 
     }
-    return $releaseHighlights
+    return Parse-ReleaseHighlights -content $releaseHighlights
 }
 
 
 function Parse-ReleaseHighlights ($content)
 {
-    $HEADER_REGEX = "^\#+(?<HighlightHeader>.*)\[Changelog\]\((?<ChangelogUrl>.*)\)"
+    $HEADER_REGEX = "^#{3}(?<PackageName>[^0-9]*)(?<PackageVersion>.*)\[Changelog\]\((?<ChangelogUrl>.*)\)"
     if ($content -isnot [Array]) 
     {
         $content = $content.Split("`n")
     }
 
     $parsedContent = @{}
+    $addContent = $false
 
     foreach ($line in $content)
     {
         if ($line -match $HEADER_REGEX)
         {
-            $HighlightHeader = ($matches["HighlightHeader"]).Trim()
-            $ChangeLogLink = ($matches["ChangelogUrl"]).Trim()
-            $parsedContent[$HighlightHeader] = @{}
-            $parsedContent[$HighlightHeader].Add("ChangeLogLink", $ChangeLogLink)
-            $parsedContent[$HighlightHeader].Add("Content", @())
+            $packageFriendlyName = ($matches["PackageName"]).Trim()
+            $packageVersion = ($matches["PackageVersion"]).Trim()
+            $changelogUrl = ($matches["ChangelogUrl"]).Trim()
+            $parsedContentKey = "${packageFriendlyName}:${packageVersion}"
+            $parsedContent[$parsedContentKey] = @{}
+            $parsedContent[$parsedContentKey]["ChangelogUrl"] = $changelogUrl
+            $parsedContent[$parsedContentKey]["Content"] = @()
+            $addContent = $true
             continue
         }
-        if ($fillPreContent)
-        {
-            $preContent += $line
-        }
-        else {
-            $mainContent[$HighlightHeader]["Content"] += $line
+        elseif ($addContent) {
+            $parsedContent[$parsedContentKey]["Content"] += $line
         }
     }
-    $changeLogSection = @{}
-    $changeLogSection.Add("PreContent", $preContent)
-    $changeLogSection.Add("MainContent", $mainContent)
-    return $changeLogSection
+    return $parsedContent
 }
