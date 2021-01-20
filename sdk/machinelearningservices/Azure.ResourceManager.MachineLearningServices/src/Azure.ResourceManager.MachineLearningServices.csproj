@@ -13,6 +13,6 @@
     <PropertyGroup>
     <!-- TODO: Temp workaround to avoid error for preapproved namespace groups. Should be fixed prior to release  -->
     <!-- Link to preapproved, registered namespaces: https://azure.github.io/azure-sdk/registered_namespaces.html  -->
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
   </PropertyGroup>
 </Project>
