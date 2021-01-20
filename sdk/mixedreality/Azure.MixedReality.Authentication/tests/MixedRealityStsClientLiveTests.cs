@@ -8,9 +8,9 @@ using NUnit.Framework;
 
 namespace Azure.MixedReality.Authentication.Tests
 {
-    public class MixedRealityStsClientLiveTest : RecordedTestBase<MixedRealityTestEnvironment>
+    public class MixedRealityStsClientLiveTests : RecordedTestBase<MixedRealityTestEnvironment>
     {
-        public MixedRealityStsClientLiveTest(bool isAsync)
+        public MixedRealityStsClientLiveTests(bool isAsync)
             : base(isAsync)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
