@@ -376,10 +376,16 @@ namespace Azure.Storage.Files.Shares
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 FileContentLength = response.Headers.FileContentLength.GetValueOrDefault(),
-                Ranges = (IEnumerable<HttpRange>)response.Value.Ranges.ToList(),
-                ClearRanges = (IEnumerable<HttpRange>)response.Value.ClearRanges.ToList(),
+                Ranges = response.Value.Ranges.Select(r => r.ToHttpRange()).ToList(),
+                ClearRanges = response.Value.ClearRanges.Select(r => r.ToHttpRange()).ToList(),
             };
         }
+
+        internal static HttpRange ToHttpRange(this FileRange fileRange)
+            => new HttpRange(fileRange.Start, fileRange.End - fileRange.Start + 1);
+
+        internal static HttpRange ToHttpRange(this ClearRange clearRange)
+            => new HttpRange(clearRange.Start, clearRange.End - clearRange.Start + 1);
 
         internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this ResponseWithHeaders<FileForceCloseHandlesHeaders> response)
         {

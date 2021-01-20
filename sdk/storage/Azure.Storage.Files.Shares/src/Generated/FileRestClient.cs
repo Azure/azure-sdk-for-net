@@ -1153,9 +1153,9 @@ namespace Azure.Storage.Files.Shares
                     {
                         ShareFileRangeList value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("ShareFileRangeList") is XElement shareFileRangeListElement)
+                        if (document.Element("Ranges") is XElement rangesElement)
                         {
-                            value = ShareFileRangeList.DeserializeShareFileRangeList(shareFileRangeListElement);
+                            value = ShareFileRangeList.DeserializeShareFileRangeList(rangesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -1181,9 +1181,9 @@ namespace Azure.Storage.Files.Shares
                     {
                         ShareFileRangeList value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("ShareFileRangeList") is XElement shareFileRangeListElement)
+                        if (document.Element("Ranges") is XElement rangesElement)
                         {
-                            value = ShareFileRangeList.DeserializeShareFileRangeList(shareFileRangeListElement);
+                            value = ShareFileRangeList.DeserializeShareFileRangeList(rangesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

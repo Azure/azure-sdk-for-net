@@ -53,7 +53,18 @@ directive:
     $.name = "ShareErrorCode";
 ```
 
-### Add ShareName, Directory, and FileName as a parameters
+### ShareFileRangeList
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ShareFileRangeList.xml = {
+        "name": "Ranges"
+    };
+```
+
+### Replace ShareName, Directory, and FileName with path
 ``` yaml
 directive:
 - from: swagger-document
