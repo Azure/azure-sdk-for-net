@@ -35,12 +35,9 @@ foreach ($packageProp in $allPackageProps) {
         $releaseHighlights[$key]["ChangelogUrl"] = "https://github.com/Azure/azure-sdk-for-${LanguageShort}/blob/${releaseTag}/sdk/${serviceDirectory}/${packageName}/CHANGELOG.md#${githubAnchor}"
         $releaseHighlights[$key]["Content"] = @()
 
-        $changeLogEntry.ReleaseContent | %{ 
-
+        $changeLogEntry.ReleaseContent | %{
             $releaseHighlights[$key]["Content"] += $_.Replace("###", "####")
-            $releaseHighlights[$key]["Content"] += "`n"            
         }
-        $releaseHighlights[$key]["Content"] += "`n"
     }
 }
 
