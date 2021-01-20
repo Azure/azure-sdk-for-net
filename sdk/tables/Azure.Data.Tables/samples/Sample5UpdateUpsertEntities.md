@@ -8,14 +8,14 @@ A `TableClient` is needed to perform table-level operations like inserting and d
 - Call `GetTableClient` from the `TableServiceClient` with the table name.
 
 ```C# Snippet:TablesSample1GetTableClient
-tableName = "OfficeSupplies1p2";
+string tableName = "OfficeSupplies1p2";
 var tableClient = serviceClient.GetTableClient(tableName);
 ```
 
 - Create a `TableClient` with a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
 ```C# Snippet:TablesSample1CreateTableClient
-tableClient = new TableClient(
+var tableClient = new TableClient(
     new Uri(storageUri),
     tableName,
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -43,7 +43,7 @@ await tableClient.UpsertEntityAsync(entity);
 // Delete an entity property.
 entity.Remove("Brand");
 
-// The entity does exist in the table, so invoking UpsertEntity will update the entity. It will apply the configured UpdateMode, which defaults to Merge if not specified.
+// Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode, which defaults to Merge if not given.
 // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
 await tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
 ```

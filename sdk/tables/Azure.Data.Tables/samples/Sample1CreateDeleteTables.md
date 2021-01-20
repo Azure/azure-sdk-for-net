@@ -22,14 +22,14 @@ A `TableClient` is needed to perform table-level operations like inserting and d
 - Call `GetTableClient` from the `TableServiceClient` with the table name.
 
 ```C# Snippet:TablesSample1GetTableClient
-tableName = "OfficeSupplies1p2";
+string tableName = "OfficeSupplies1p2";
 var tableClient = serviceClient.GetTableClient(tableName);
 ```
 
 - Create a `TableClient` with a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
 ```C# Snippet:TablesSample1CreateTableClient
-tableClient = new TableClient(
+var tableClient = new TableClient(
     new Uri(storageUri),
     tableName,
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -46,6 +46,7 @@ To create a table, invoke `CreateTable` with the table name.
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
 
+string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTable(tableName);
 Console.WriteLine($"The created table's name is {table.TableName}.");
 ```
@@ -67,6 +68,7 @@ To delete the table, invoke `DeleteTable` with the table name.
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
 
+string tableName = "OfficeSupplies1p1";
 serviceClient.DeleteTable(tableName);
 ```
 

@@ -13,14 +13,14 @@ A `TableClient` is needed to perform table-level operations like inserting and d
 - Call `GetTableClient` from the `TableServiceClient` with the table name.
 
 ```C# Snippet:TablesSample1GetTableClient
-tableName = "OfficeSupplies1p2";
+string tableName = "OfficeSupplies1p2";
 var tableClient = serviceClient.GetTableClient(tableName);
 ```
 
 - Create a `TableClient` with a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
 ```C# Snippet:TablesSample1CreateTableClient
-tableClient = new TableClient(
+var tableClient = new TableClient(
     new Uri(storageUri),
     tableName,
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -63,13 +63,13 @@ List<TableEntity> entityList = new List<TableEntity>{
 };
 
 // Create the batch.
-TableTransactionalBatch addBatch = client.CreateTransactionalBatch(partitionKey);
+TableTransactionalBatch addEntitiesBatch = client.CreateTransactionalBatch(partitionKey);
 
 // Add the entities to be added to the batch.
-addBatch.AddEntities(entityList);
+addEntitiesBatch.AddEntities(entityList);
 
 // Submit the batch.
-TableBatchResponse response = await addBatch.SubmitBatchAsync().ConfigureAwait(false);
+TableBatchResponse response = await addEntitiesBatch.SubmitBatchAsync().ConfigureAwait(false);
 
 foreach (TableEntity entity in entityList)
 {
@@ -120,16 +120,16 @@ Let's clean up the rest of the entities remaining in the table with a batch dele
 
 ```C# Snippet:BatchDelete
 // Create a new batch.
-TableTransactionalBatch deleteBatch = client.CreateTransactionalBatch(partitionKey);
+TableTransactionalBatch deleteEntitiesBatch = client.CreateTransactionalBatch(partitionKey);
 
 // Add the entities for deletion to the batch.
 foreach (TableEntity entity in entityList)
 {
-    deleteBatch.DeleteEntity(entity.RowKey);
+    deleteEntitiesBatch.DeleteEntity(entity.RowKey);
 }
 
 // Submit the batch.
-await deleteBatch.SubmitBatchAsync().ConfigureAwait(false);
+await deleteEntitiesBatch.SubmitBatchAsync().ConfigureAwait(false);
 ```
 
 ---
