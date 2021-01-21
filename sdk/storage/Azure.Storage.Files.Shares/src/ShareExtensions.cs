@@ -288,14 +288,12 @@ namespace Azure.Storage.Files.Shares
 
             if (response.Headers.ContentEncoding != null)
             {
-                // TODO make this a constant
-                shareFileProperties.ContentEncoding = response.Headers.ContentEncoding.Split(',');
+                shareFileProperties.ContentEncoding = response.Headers.ContentEncoding.Split(Constants.CommaChar);
             }
 
             if (response.Headers.ContentLanguage != null)
             {
-                // TODO make this a constant
-                shareFileProperties.ContentLanguage = response.Headers.ContentLanguage.Split(',');
+                shareFileProperties.ContentLanguage = response.Headers.ContentLanguage.Split(Constants.CommaChar);
             }
 
             return shareFileProperties;
@@ -334,13 +332,9 @@ namespace Azure.Storage.Files.Shares
             return new ShareFileInfo
             {
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                // TODO
-                //LastModified =
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                // TODO
-                SmbProperties = new FileSmbProperties
-                {
-                }
+                SmbProperties = new FileSmbProperties {}
             };
         }
 

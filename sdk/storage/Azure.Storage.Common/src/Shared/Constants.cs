@@ -91,6 +91,9 @@ namespace Azure.Storage
         public const string ErrorCode = "Code";
         public const string ErrorMessage = "Message";
 
+        public const string CommaString = ",";
+        public const char CommaChar = ',';
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>

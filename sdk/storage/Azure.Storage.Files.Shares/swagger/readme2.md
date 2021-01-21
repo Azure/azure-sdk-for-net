@@ -64,6 +64,19 @@ directive:
     };
 ```
 
+### Add LastModified to SetMetadata
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=metadata"]
+  transform: >
+    $.put.responses["200"].headers["Last-Modified"] = {
+        "type": "string",
+        "format": "date-time-rfc1123",
+        "description": "Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the last-modified time of the file."
+    }
+```
+
 ### Replace ShareName, Directory, and FileName with path
 ``` yaml
 directive:
