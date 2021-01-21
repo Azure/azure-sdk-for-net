@@ -491,6 +491,29 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
+        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareRenewLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            int? leaseTime = null;
+
+            if (response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
+            {
+                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
+            }
+
+            return new ShareFileLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = leaseTime
+            };
+        }
+
         internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareChangeLeaseHeaders> response)
         {
             if (response == null)

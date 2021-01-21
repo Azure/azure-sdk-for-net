@@ -1016,18 +1016,18 @@ namespace Azure.Storage.Files.Shares.Specialized
                     }
                     else
                     {
-                        ResponseWithHeaders<FileReleaseLeaseHeaders> response;
+                        ResponseWithHeaders<ShareRenewLeaseHeaders> response;
 
                         if (async)
                         {
-                            response = await FileClient.FileRestClient.ReleaseLeaseAsync(
+                            response = await ShareClient.ShareRestClient.RenewLeaseAsync(
                                 leaseId: LeaseId,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         }
                         else
                         {
-                            response = FileClient.FileRestClient.ReleaseLease(
+                            response = ShareClient.ShareRestClient.RenewLease(
                                 leaseId: LeaseId,
                                 cancellationToken: cancellationToken);
                         }
