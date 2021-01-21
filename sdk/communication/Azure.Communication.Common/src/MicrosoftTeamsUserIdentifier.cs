@@ -25,7 +25,7 @@ namespace Azure.Communication
         /// </summary>
         /// <param name="userId">Id of the Microsoft Teams user. If the user isn't anonymous, the id is the AAD object id of the user.</param>
         /// <param name="isAnonymous">Set this to true if the user is anonymous, for example when joining a meeting with a share link.</param>
-        /// <param name="id">Id of the Microsoft Teams user.</param>
+        /// <param name="id">Full id of the Microsoft Teams user, optional.</param>
         /// <param name="cloud">Id of the Microsoft Teams user.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="userId"/> is null.
