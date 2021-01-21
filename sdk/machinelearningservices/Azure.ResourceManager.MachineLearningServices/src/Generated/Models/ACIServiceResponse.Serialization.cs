@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<bool> authEnabled = default;
             Optional<bool> sslEnabled = default;
             Optional<bool> appInsightsEnabled = default;
-            Optional<ModelDataCollection> dataCollection = default;
+            Optional<ACIServiceResponseDataCollection> dataCollection = default;
             Optional<string> sslCertificate = default;
             Optional<string> sslKey = default;
             Optional<string> cname = default;
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> swaggerUri = default;
             Optional<IReadOnlyDictionary<string, object>> modelConfigMap = default;
             Optional<IList<Model>> models = default;
-            Optional<EnvironmentImageResponse> environmentImageRequest = default;
-            Optional<VnetConfiguration> vnetConfiguration = default;
-            Optional<EncryptionProperties> encryptionProperties = default;
+            Optional<ACIServiceResponseEnvironmentImageRequest> environmentImageRequest = default;
+            Optional<ACIServiceResponseVnetConfiguration> vnetConfiguration = default;
+            Optional<ACIServiceResponseEncryptionProperties> encryptionProperties = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> kvTags = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<WebServiceState> state = default;
-            Optional<ErrorResponse> error = default;
+            Optional<ServiceResponseBaseError> error = default;
             ComputeEnvironmentType computeType = default;
             Optional<DeploymentType> deploymentType = default;
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataCollection = ModelDataCollection.DeserializeModelDataCollection(property.Value);
+                    dataCollection = ACIServiceResponseDataCollection.DeserializeACIServiceResponseDataCollection(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sslCertificate"))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    environmentImageRequest = EnvironmentImageResponse.DeserializeEnvironmentImageResponse(property.Value);
+                    environmentImageRequest = ACIServiceResponseEnvironmentImageRequest.DeserializeACIServiceResponseEnvironmentImageRequest(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vnetConfiguration"))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vnetConfiguration = VnetConfiguration.DeserializeVnetConfiguration(property.Value);
+                    vnetConfiguration = ACIServiceResponseVnetConfiguration.DeserializeACIServiceResponseVnetConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptionProperties"))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encryptionProperties = EncryptionProperties.DeserializeEncryptionProperties(property.Value);
+                    encryptionProperties = ACIServiceResponseEncryptionProperties.DeserializeACIServiceResponseEncryptionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ServiceResponseBaseError.DeserializeServiceResponseBaseError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeType"))

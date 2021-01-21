@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="environmentImageRequest"> The Environment, models and assets used for inferencing. </param>
         /// <param name="vnetConfiguration"> The virtual network configuration. </param>
         /// <param name="encryptionProperties"> The encryption properties. </param>
-        internal ACIServiceResponse(string description, IDictionary<string, string> kvTags, IDictionary<string, string> properties, WebServiceState? state, ErrorResponse error, ComputeEnvironmentType computeType, DeploymentType? deploymentType, ContainerResourceRequirements containerResourceRequirements, string scoringUri, string location, bool? authEnabled, bool? sslEnabled, bool? appInsightsEnabled, ModelDataCollection dataCollection, string sslCertificate, string sslKey, string cname, string publicIp, string publicFqdn, string swaggerUri, IReadOnlyDictionary<string, object> modelConfigMap, IList<Model> models, EnvironmentImageResponse environmentImageRequest, VnetConfiguration vnetConfiguration, EncryptionProperties encryptionProperties) : base(description, kvTags, properties, state, error, computeType, deploymentType)
+        internal ACIServiceResponse(string description, IDictionary<string, string> kvTags, IDictionary<string, string> properties, WebServiceState? state, ServiceResponseBaseError error, ComputeEnvironmentType computeType, DeploymentType? deploymentType, ContainerResourceRequirements containerResourceRequirements, string scoringUri, string location, bool? authEnabled, bool? sslEnabled, bool? appInsightsEnabled, ACIServiceResponseDataCollection dataCollection, string sslCertificate, string sslKey, string cname, string publicIp, string publicFqdn, string swaggerUri, IReadOnlyDictionary<string, object> modelConfigMap, IList<Model> models, ACIServiceResponseEnvironmentImageRequest environmentImageRequest, ACIServiceResponseVnetConfiguration vnetConfiguration, ACIServiceResponseEncryptionProperties encryptionProperties) : base(description, kvTags, properties, state, error, computeType, deploymentType)
         {
             ContainerResourceRequirements = containerResourceRequirements;
             ScoringUri = scoringUri;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Whether or not Application Insights is enabled. </summary>
         public bool? AppInsightsEnabled { get; set; }
         /// <summary> Details of the data collection options specified. </summary>
-        public ModelDataCollection DataCollection { get; set; }
+        public ACIServiceResponseDataCollection DataCollection { get; set; }
         /// <summary> The public SSL certificate in PEM format to use if SSL is enabled. </summary>
         public string SslCertificate { get; set; }
         /// <summary> The public SSL key in PEM format for the certificate. </summary>
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The list of models. </summary>
         public IList<Model> Models { get; }
         /// <summary> The Environment, models and assets used for inferencing. </summary>
-        public EnvironmentImageResponse EnvironmentImageRequest { get; set; }
+        public ACIServiceResponseEnvironmentImageRequest EnvironmentImageRequest { get; set; }
         /// <summary> The virtual network configuration. </summary>
-        public VnetConfiguration VnetConfiguration { get; set; }
+        public ACIServiceResponseVnetConfiguration VnetConfiguration { get; set; }
         /// <summary> The encryption properties. </summary>
-        public EncryptionProperties EncryptionProperties { get; set; }
+        public ACIServiceResponseEncryptionProperties EncryptionProperties { get; set; }
     }
 }

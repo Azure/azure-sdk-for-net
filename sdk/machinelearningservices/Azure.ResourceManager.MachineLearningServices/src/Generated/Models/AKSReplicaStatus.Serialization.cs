@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<int> desiredReplicas = default;
             Optional<int> updatedReplicas = default;
             Optional<int> availableReplicas = default;
-            Optional<ErrorResponse> error = default;
+            Optional<AKSReplicaStatusError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desiredReplicas"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = AKSReplicaStatusError.DeserializeAKSReplicaStatusError(property.Value);
                     continue;
                 }
             }

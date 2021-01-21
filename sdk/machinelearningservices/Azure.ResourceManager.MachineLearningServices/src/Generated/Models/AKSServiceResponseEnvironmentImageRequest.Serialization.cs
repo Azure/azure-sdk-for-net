@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<IList<ImageAsset>> assets = default;
             Optional<IList<string>> modelIds = default;
             Optional<IList<Model>> models = default;
-            Optional<ModelEnvironmentDefinitionResponse> environment = default;
-            Optional<EnvironmentReference> environmentReference = default;
+            Optional<EnvironmentImageResponseEnvironment> environment = default;
+            Optional<EnvironmentImageResponseEnvironmentReference> environmentReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("driverProgram"))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    environment = ModelEnvironmentDefinitionResponse.DeserializeModelEnvironmentDefinitionResponse(property.Value);
+                    environment = EnvironmentImageResponseEnvironment.DeserializeEnvironmentImageResponseEnvironment(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentReference"))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    environmentReference = EnvironmentReference.DeserializeEnvironmentReference(property.Value);
+                    environmentReference = EnvironmentImageResponseEnvironmentReference.DeserializeEnvironmentImageResponseEnvironmentReference(property.Value);
                     continue;
                 }
             }

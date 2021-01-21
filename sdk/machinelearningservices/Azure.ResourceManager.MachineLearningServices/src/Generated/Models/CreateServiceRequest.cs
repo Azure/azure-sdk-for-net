@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The service properties dictionary. Properties are immutable. </summary>
         public IDictionary<string, string> Properties { get; }
         /// <summary> The authentication keys. </summary>
-        public AuthKeys Keys { get; set; }
+        public CreateServiceRequestKeys Keys { get; set; }
         /// <summary> The compute environment type for the service. </summary>
         internal ComputeEnvironmentType ComputeType { get; set; }
         /// <summary> The Environment, models and assets needed for inferencing. </summary>
-        public EnvironmentImageRequest EnvironmentImageRequest { get; set; }
+        public CreateServiceRequestEnvironmentImageRequest EnvironmentImageRequest { get; set; }
         /// <summary> The name of the Azure location/region. </summary>
         public string Location { get; set; }
     }
