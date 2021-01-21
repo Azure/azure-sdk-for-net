@@ -158,6 +158,7 @@ namespace Azure.Storage
             public const string Range = "Range";
             public const string ContentRange = "Content-Range";
             public const string VersionId = "x-ms-version-id";
+            public const string LeaseTime = "x-ms-lease-time";
         }
 
         internal static class ErrorCodes

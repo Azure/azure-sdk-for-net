@@ -363,8 +363,7 @@ namespace Azure.Storage.Files.Shares
             {
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // TODO
-                //ContentHash = response.Headers.con
+                ContentHash = response.Headers.ContentMD5,
                 IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
             };
         }
@@ -414,8 +413,7 @@ namespace Azure.Storage.Files.Shares
 
             int? leaseTime = null;
 
-            // TODO make this a constant.
-            if (response.GetRawResponse().Headers.TryGetValue("x-ms-lease-time", out string leaseTimeString))
+            if (response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
             {
                 leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
             }
@@ -440,8 +438,7 @@ namespace Azure.Storage.Files.Shares
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LeaseId = response.Headers.LeaseId,
-                // TODO
-                //LeaseTime = response.Headers.LeaseTime
+                // File Aquire Lease does not return LeastTime.
             };
         }
 
@@ -480,8 +477,7 @@ namespace Azure.Storage.Files.Shares
 
             int? leaseTime = null;
 
-            // TODO make this a constant
-            if (response.GetRawResponse().Headers.TryGetValue("x-ms-lease-time", out string leaseTimeString))
+            if (response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
             {
                 leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
             }
@@ -504,8 +500,7 @@ namespace Azure.Storage.Files.Shares
 
             int? leaseTime = null;
 
-            // TODO make this a constant
-            if (response.GetRawResponse().Headers.TryGetValue("x-ms-lease-time", out string leaseTimeString))
+            if (response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
             {
                 leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
             }
@@ -528,8 +523,7 @@ namespace Azure.Storage.Files.Shares
 
             int? leaseTime = null;
 
-            // TODO make this a constant
-            if (response.GetRawResponse().Headers.TryGetValue("x-ms-lease-time", out string leaseTimeString))
+            if (response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
             {
                 leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
             }
@@ -569,10 +563,7 @@ namespace Azure.Storage.Files.Shares
             {
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // TODO
-                //LeaseId = response.Headers.LeaseId
-                // TODO
-                //LeaseTime = response.Headers.LeaseTime
+                // File Release Lease does not return LeaseId or LeaseTime
             };
         }
 
@@ -614,8 +605,7 @@ namespace Azure.Storage.Files.Shares
             return new ShareProperties
             {
                 LastModified = response.Headers.LastModified,
-                // TODO fix this.
-                ETag = new ETag(""),
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 ProvisionedIops = response.Headers.ProvisionedIops,
                 ProvisionedIngressMBps = response.Headers.ProvisionedIngressMBps,
                 ProvisionedEgressMBps = response.Headers.ProvisionedEgressMBps,
@@ -761,7 +751,7 @@ namespace Azure.Storage.Files.Shares
             {
                 return null;
             }
-            return new ShareFileDownloadInfo
+            ShareFileDownloadInfo shareFileDownloadInfo = new ShareFileDownloadInfo
             {
                 ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
                 Content = response.Value,
@@ -773,12 +763,8 @@ namespace Azure.Storage.Files.Shares
                     Metadata = response.Headers.Metadata,
                     ContentRange = response.Headers.ContentRange,
                     ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                    // TODO
-                    //ContentEncoding = fileDownloadHeaders.ContentEncoding,
                     CacheControl = response.Headers.CacheControl,
                     ContentDisposition = response.Headers.ContentDisposition,
-                    // TODO
-                    //ContentLanguage = fileDownloadHeaders.ContentLanguage,
                     AcceptRanges = response.Headers.AcceptRanges,
                     CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
                     CopyStatusDescription = response.Headers.CopyStatusDescription,
@@ -804,6 +790,18 @@ namespace Azure.Storage.Files.Shares
                     }
                 }
             };
+
+            if (response.Headers.ContentEncoding != null)
+            {
+                shareFileDownloadInfo.Details.ContentEncoding = response.Headers.ContentEncoding.Split(Constants.CommaChar);
+            }
+
+            if (response.Headers.ContentLanguage != null)
+            {
+                shareFileDownloadInfo.Details.ContentLanguage = response.Headers.ContentLanguage.Split(Constants.CommaChar);
+            }
+
+            return shareFileDownloadInfo;
         }
 
         internal static FileHttpHeaders ToFileHttpHeaders(this ShareFileHttpHeaders shareFileHttpHeaders)
@@ -822,14 +820,12 @@ namespace Azure.Storage.Files.Shares
 
             if (shareFileHttpHeaders.ContentEncoding != null)
             {
-                // TODO make this a constant
-                httpHeaders.FileContentEncoding = string.Join(",", shareFileHttpHeaders.ContentEncoding);
+                httpHeaders.FileContentEncoding = string.Join(Constants.CommaString, shareFileHttpHeaders.ContentEncoding);
             }
 
             if (shareFileHttpHeaders.ContentLanguage != null)
             {
-                // TODO make this a constant
-                httpHeaders.FileContentLanguage = string.Join(",", shareFileHttpHeaders.ContentLanguage);
+                httpHeaders.FileContentLanguage = string.Join(Constants.CommaString, shareFileHttpHeaders.ContentLanguage);
             }
 
             return httpHeaders;
