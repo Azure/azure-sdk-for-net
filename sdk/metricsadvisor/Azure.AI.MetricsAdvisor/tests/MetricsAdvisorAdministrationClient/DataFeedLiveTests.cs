@@ -567,7 +567,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureApplicationInsightsDataFeedWithMinimumSetupAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -595,7 +594,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureApplicationInsightsDataFeedWithMinimumSetupAndNewInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -623,7 +621,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureApplicationInsightsDataFeedWithEveryMemberAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -650,7 +647,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureApplicationInsightsDataFeedWithEveryMemberAndNewInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -785,7 +781,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureCosmosDbDataFeedWithMinimumSetupAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -813,7 +808,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureCosmosDbDataFeedWithMinimumSetupAndNewInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -841,7 +835,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureCosmosDbDataFeedWithEveryMemberAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -868,7 +861,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureCosmosDbDataFeedWithEveryMemberAndNewInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -895,7 +887,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureDataExplorerDataFeedWithMinimumSetupAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -923,7 +914,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureDataExplorerDataFeedWithMinimumSetupAndNewInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -951,7 +941,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureDataExplorerDataFeedWithEveryMemberAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -978,7 +967,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17726")]
         public async Task UpdateAzureDataExplorerDataFeedWithEveryMemberAndNewInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
