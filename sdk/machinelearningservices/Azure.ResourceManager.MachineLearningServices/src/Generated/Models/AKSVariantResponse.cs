@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="isDefault"> Is this the default variant. </param>
         /// <param name="trafficPercentile"> The amount of traffic variant receives. </param>
         /// <param name="type"> The type of the variant. </param>
-        internal AKSVariantResponse(string description, IDictionary<string, string> kvTags, IDictionary<string, string> properties, WebServiceState? state, ErrorResponse error, ComputeEnvironmentType computeType, DeploymentType? deploymentType, bool? isDefault, float? trafficPercentile, VariantType? type) : base(description, kvTags, properties, state, error, computeType, deploymentType)
+        internal AKSVariantResponse(string description, IDictionary<string, string> kvTags, IDictionary<string, string> properties, WebServiceState? state, ServiceResponseBaseError error, ComputeEnvironmentType computeType, DeploymentType? deploymentType, bool? isDefault, float? trafficPercentile, VariantType? type) : base(description, kvTags, properties, state, error, computeType, deploymentType)
         {
             IsDefault = isDefault;
             TrafficPercentile = trafficPercentile;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="updatedReplicas"> The number of updated replicas. </param>
         /// <param name="availableReplicas"> The number of available replicas. </param>
         /// <param name="error"> The error details. </param>
-        internal AKSServiceResponseDeploymentStatus(int? desiredReplicas, int? updatedReplicas, int? availableReplicas, ErrorResponse error) : base(desiredReplicas, updatedReplicas, availableReplicas, error)
+        internal AKSServiceResponseDeploymentStatus(int? desiredReplicas, int? updatedReplicas, int? availableReplicas, AKSReplicaStatusError error) : base(desiredReplicas, updatedReplicas, availableReplicas, error)
         {
         }
     }

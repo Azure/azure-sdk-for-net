@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Whether or not Application Insights is enabled. </summary>
         public bool? AppInsightsEnabled { get; set; }
         /// <summary> Details of the data collection options specified. </summary>
-        public ModelDataCollection DataCollection { get; set; }
+        public ACIServiceCreateRequestDataCollection DataCollection { get; set; }
         /// <summary> The public SSL certificate in PEM format to use if SSL is enabled. </summary>
         public string SslCertificate { get; set; }
         /// <summary> The public SSL key in PEM format for the certificate. </summary>
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The Dns label for the service. </summary>
         public string DnsNameLabel { get; set; }
         /// <summary> The virtual network configuration. </summary>
-        public VnetConfiguration VnetConfiguration { get; set; }
+        public ACIServiceCreateRequestVnetConfiguration VnetConfiguration { get; set; }
         /// <summary> The encryption properties. </summary>
-        public EncryptionProperties EncryptionProperties { get; set; }
+        public ACIServiceCreateRequestEncryptionProperties EncryptionProperties { get; set; }
     }
 }

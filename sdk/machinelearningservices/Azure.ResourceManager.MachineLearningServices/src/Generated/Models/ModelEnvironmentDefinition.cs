@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The environment version. </summary>
         public string Version { get; set; }
         /// <summary> Settings for a Python environment. </summary>
-        public ModelPythonSection Python { get; set; }
+        public ModelEnvironmentDefinitionPython Python { get; set; }
         /// <summary> Definition of environment variables to be defined in the environment. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; }
         /// <summary> The definition of a Docker container. </summary>
-        public ModelDockerSection Docker { get; set; }
+        public ModelEnvironmentDefinitionDocker Docker { get; set; }
         /// <summary> The configuration for a Spark environment. </summary>
-        public ModelSparkSection Spark { get; set; }
+        public ModelEnvironmentDefinitionSpark Spark { get; set; }
         /// <summary> Settings for a R environment. </summary>
-        public RSection R { get; set; }
+        public ModelEnvironmentDefinitionR R { get; set; }
         /// <summary> The inferencing stack version added to the image. To avoid adding an inferencing stack, do not set this value. Valid values: &quot;latest&quot;. </summary>
         public string InferencingStackVersion { get; set; }
     }

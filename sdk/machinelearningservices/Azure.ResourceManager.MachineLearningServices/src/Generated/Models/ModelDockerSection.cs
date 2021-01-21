@@ -20,6 +20,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Base Dockerfile used for Docker-based runs. Mutually exclusive with BaseImage. </summary>
         public string BaseDockerfile { get; set; }
         /// <summary> Image registry that contains the base image. </summary>
-        public ContainerRegistry BaseImageRegistry { get; set; }
+        public ModelDockerSectionBaseImageRegistry BaseImageRegistry { get; set; }
     }
 }

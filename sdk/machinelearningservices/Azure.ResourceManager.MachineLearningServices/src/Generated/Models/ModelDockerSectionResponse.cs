@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="baseImage"> Base image used for Docker-based runs. Mutually exclusive with BaseDockerfile. </param>
         /// <param name="baseDockerfile"> Base Dockerfile used for Docker-based runs. Mutually exclusive with BaseImage. </param>
         /// <param name="baseImageRegistry"> Image registry that contains the base image. </param>
-        internal ModelDockerSectionResponse(string baseImage, string baseDockerfile, ContainerRegistryResponse baseImageRegistry)
+        internal ModelDockerSectionResponse(string baseImage, string baseDockerfile, ModelDockerSectionResponseBaseImageRegistry baseImageRegistry)
         {
             BaseImage = baseImage;
             BaseDockerfile = baseDockerfile;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Base Dockerfile used for Docker-based runs. Mutually exclusive with BaseImage. </summary>
         public string BaseDockerfile { get; set; }
         /// <summary> Image registry that contains the base image. </summary>
-        public ContainerRegistryResponse BaseImageRegistry { get; set; }
+        public ModelDockerSectionResponseBaseImageRegistry BaseImageRegistry { get; set; }
     }
 }

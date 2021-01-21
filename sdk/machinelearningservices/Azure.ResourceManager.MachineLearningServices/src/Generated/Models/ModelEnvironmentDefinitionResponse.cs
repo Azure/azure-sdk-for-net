@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="spark"> The configuration for a Spark environment. </param>
         /// <param name="r"> Settings for a R environment. </param>
         /// <param name="inferencingStackVersion"> The inferencing stack version added to the image. To avoid adding an inferencing stack, do not set this value. Valid values: &quot;latest&quot;. </param>
-        internal ModelEnvironmentDefinitionResponse(string name, string version, ModelPythonSection python, IDictionary<string, string> environmentVariables, ModelDockerSectionResponse docker, ModelSparkSection spark, RSectionResponse r, string inferencingStackVersion)
+        internal ModelEnvironmentDefinitionResponse(string name, string version, ModelEnvironmentDefinitionResponsePython python, IDictionary<string, string> environmentVariables, ModelEnvironmentDefinitionResponseDocker docker, ModelEnvironmentDefinitionResponseSpark spark, ModelEnvironmentDefinitionResponseR r, string inferencingStackVersion)
         {
             Name = name;
             Version = version;
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The environment version. </summary>
         public string Version { get; set; }
         /// <summary> Settings for a Python environment. </summary>
-        public ModelPythonSection Python { get; set; }
+        public ModelEnvironmentDefinitionResponsePython Python { get; set; }
         /// <summary> Definition of environment variables to be defined in the environment. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; }
         /// <summary> The definition of a Docker container. </summary>
-        public ModelDockerSectionResponse Docker { get; set; }
+        public ModelEnvironmentDefinitionResponseDocker Docker { get; set; }
         /// <summary> The configuration for a Spark environment. </summary>
-        public ModelSparkSection Spark { get; set; }
+        public ModelEnvironmentDefinitionResponseSpark Spark { get; set; }
         /// <summary> Settings for a R environment. </summary>
-        public RSectionResponse R { get; set; }
+        public ModelEnvironmentDefinitionResponseR R { get; set; }
         /// <summary> The inferencing stack version added to the image. To avoid adding an inferencing stack, do not set this value. Valid values: &quot;latest&quot;. </summary>
         public string InferencingStackVersion { get; set; }
     }
