@@ -19,19 +19,98 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [Ignore("Blocked on https://github.com/Azure/azure-rest-api-specs/pull/12501")]
     public class PipelineRunClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
         public PipelineRunClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
-        private PipelineRunClient CreateClient()
+        private PipelineClient CreatePipelineClient()
+        {
+            return InstrumentClient(new PipelineClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ArtifactsClientOptions())
+            ));
+        }
+
+        private PipelineRunClient CreatePipelineRunClient()
         {
             return InstrumentClient(new PipelineRunClient(
                 new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
+        }
+
+        [Test]
+        public async Task TestCancelRun()
+        {
+            PipelineClient pipelineClient = CreatePipelineClient();
+            PipelineRunClient runClient = CreatePipelineRunClient();
+
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
+
+            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
+            Assert.NotNull(runResponse.RunId);
+
+            Response response = await runClient.CancelPipelineRunAsync (runResponse.RunId);
+
+            switch (response.Status) {
+                case 200:
+                case 204:
+                    break;
+                default:
+                    Assert.Fail($"Unexpected status ${response.Status} returned");
+                    break;
+            }
+        }
+
+        [Test]
+        public async Task TestGet()
+        {
+            PipelineClient pipelineClient = CreatePipelineClient();
+            PipelineRunClient runClient = CreatePipelineRunClient();
+
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
+
+            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
+            Assert.NotNull(runResponse.RunId);
+
+            PipelineRun run = await runClient.GetPipelineRunAsync (runResponse.RunId);
+            Assert.AreEqual (run.RunId, runResponse.RunId);
+            Assert.NotNull (run.Status);
+        }
+
+        [Test]
+        public async Task TestQueryActivity()
+        {
+            PipelineClient pipelineClient = CreatePipelineClient();
+            PipelineRunClient runClient = CreatePipelineRunClient();
+
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
+
+            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
+            Assert.NotNull(runResponse.RunId);
+
+            PipelineRunsQueryResponse queryResponse = await runClient.QueryPipelineRunsByWorkspaceAsync (new RunFilterParameters (DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
+            Assert.GreaterOrEqual (queryResponse.Value.Count, 1);
+        }
+
+        [Test]
+        public async Task TestQueryRuns()
+        {
+            PipelineClient pipelineClient = CreatePipelineClient();
+            PipelineRunClient runClient = CreatePipelineRunClient();
+
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
+
+            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
+            Assert.NotNull(runResponse.RunId);
+
+            PipelineRunsQueryResponse queryResponse = await runClient.QueryPipelineRunsByWorkspaceAsync (new RunFilterParameters (DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
+            Assert.GreaterOrEqual (queryResponse.Value.Count, 1);
         }
     }
 }

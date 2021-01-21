@@ -33,5 +33,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
         }
+
+        [Test]
+        public async Task TestGet()
+        {
+            IntegrationRuntimesClient client = CreateClient();
+            IntegrationRuntimeListResponse integrations = await client.ListAsync ();
+            foreach (IntegrationRuntimeResource integration in integrations.Value)
+            {
+                IntegrationRuntimeResource fetchedIntegration = await client.GetAsync (integration.Name);
+                Assert.AreEqual (integration.Name, fetchedIntegration.Name);
+                Assert.AreEqual (integration.Id, fetchedIntegration.Id);
+                Assert.AreEqual (integration.Type, fetchedIntegration.Type);
+            }
+        }
+
+        [Test]
+        public async Task TestList()
+        {
+            IntegrationRuntimesClient client = CreateClient();
+            IntegrationRuntimeListResponse integrations = await client.ListAsync ();
+            foreach (IntegrationRuntimeResource integration in integrations.Value)
+            {
+                Assert.NotNull (integration.Id);
+                Assert.NotNull (integration.Name);
+            }
+        }
     }
 }
