@@ -29,10 +29,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<SBMessage> source)
+        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<SBMessage> source, bool forceBatch = false)
         {
             Argument.AssertNotNull(source, nameof(source));
-            return BuildAmqpBatchFromMessage(source);
+            return BuildAmqpBatchFromMessage(source, forceBatch);
         }
 
         /// <summary>
@@ -41,10 +41,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="source">The set of messages to use as the body of the batch message.</param>
+        /// <param name="forceBatch">Set to true to force creating as a batch even when only one message.</param>
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessage(IEnumerable<SBMessage> source)
+        private static AmqpMessage BuildAmqpBatchFromMessage(IEnumerable<SBMessage> source, bool forceBatch)
         {
             AmqpMessage firstAmqpMessage = null;
             SBMessage firstMessage = null;
@@ -62,7 +63,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         return SBMessageToAmqpMessage(sbMessage);
                     }
-                }).ToList(), firstMessage);
+                }).ToList(), firstMessage, forceBatch);
         }
 
         /// <summary>
@@ -70,17 +71,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="batchMessages">The set of messages to use as the body of the batch message.</param>
-        /// <param name="firstMessage"></param>
+        /// <param name="firstMessage">The first message being sent in the batch.</param>
+        /// <param name="forceBatch">Set to true to force creating as a batch even when only one message.</param>
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
         private static AmqpMessage BuildAmqpBatchFromMessages(
             IList<AmqpMessage> batchMessages,
-            SBMessage firstMessage = null)
+            SBMessage firstMessage,
+            bool forceBatch)
         {
             AmqpMessage batchEnvelope;
 
-            if (batchMessages.Count == 1)
+            if (batchMessages.Count == 1 && !forceBatch)
             {
                 batchEnvelope = batchMessages[0];
             }

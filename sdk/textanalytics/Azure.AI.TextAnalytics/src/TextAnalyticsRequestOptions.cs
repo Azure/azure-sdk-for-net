@@ -40,5 +40,10 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-sentiment-analysis#model-versioning"/>.
         /// </summary>
         public string ModelVersion { get; set; }
+
+        /// <summary>
+        /// StringIndexType
+        /// </summary>
+        public StringIndexType StringIndexType { get; set; } = StringIndexType.Utf16CodeUnit;
     }
 }

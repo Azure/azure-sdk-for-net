@@ -184,6 +184,11 @@ jobs:
           Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
           OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net5.0
+        Windows_Net50_ProjectReferences:
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
+          TestTargetFramework: net5.0
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
     pool:
       vmImage: "$(OSVmImage)"
       name: "$(Pool)"
