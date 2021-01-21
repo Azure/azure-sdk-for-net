@@ -5,12 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Azure.Identity;
 using Microsoft.Azure.Quantum.Optimization;
 using NUnit.Framework;
 
 
-namespace Azure.Storage.Blobs.Samples
+namespace Microsoft.Azure.Quantum.Samples
 {
     /// <summary>
     /// Authenticate with <see cref="DefaultAzureCredential"/>.
@@ -18,7 +17,6 @@ namespace Azure.Storage.Blobs.Samples
     public void Solve()
     {
         #region Snippet:SampleSnippetsQio
-        using Microsoft.Azure.Quantum.Optimization;
 
         IProblem problem = new Problem(
             name: "myOptimizationProblem",
