@@ -3145,44 +3145,10 @@ namespace Azure.Storage.Files.Shares
                             cancellationToken: cancellationToken);
                     }
 
-                    // TODO this won't work.
                     return Response.FromValue(
                         response.Value.Permission,
                         response.GetRawResponse());
                 }
-                // TODO remove this
-                //    // Get the permission as a JSON object
-                //    Response<string> jsonResponse =
-                //        await FileRestClient.Share.GetPermissionAsync(
-                //            ClientDiagnostics,
-                //            Pipeline,
-                //            Uri,
-                //            filePermissionKey: filePermissionKey,
-                //            version: Version.ToVersionString(),
-                //            async: async,
-                //            operationName: $"{nameof(ShareClient)}.{nameof(GetPermission)}",
-                //            cancellationToken: cancellationToken)
-                //            .ConfigureAwait(false);
-
-                //    // Return an exploding Response on 304
-                //    if (jsonResponse.IsUnavailable())
-                //    {
-                //        return jsonResponse;
-                //    }
-
-                //    // Parse the JSON object
-                //    using var doc = JsonDocument.Parse(jsonResponse.Value);
-                //    if (doc.RootElement.ValueKind != JsonValueKind.Object ||
-                //        !doc.RootElement.TryGetProperty("permission", out JsonElement permissionProperty) ||
-                //        permissionProperty.ValueKind != JsonValueKind.String)
-                //    {
-                //        throw ShareErrors.InvalidPermissionJson(jsonResponse.Value);
-                //    }
-                //    var permission = permissionProperty.GetString();
-
-                //    // Return the Permission string
-                //    return Response.FromValue(permission, jsonResponse.GetRawResponse());
-                //}
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
