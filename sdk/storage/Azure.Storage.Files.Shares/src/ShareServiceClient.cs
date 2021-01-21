@@ -365,7 +365,6 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             new GetSharesAsyncCollection(this, traits, states, prefix).ToAsyncCollection(cancellationToken);
 
-        // TODO fix this
         /// <summary>
         /// The <see cref="GetSharesInternal"/> operation returns a
         /// single segment of shares in the storage account, starting
@@ -748,18 +747,6 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return response.GetRawResponse();
-
-                    // TODO remove this.
-                    //return await FileRestClient.Service.SetPropertiesAsync(
-                    //    ClientDiagnostics,
-                    //    Pipeline,
-                    //    Uri,
-                    //    version: Version.ToVersionString(),
-                    //    properties: properties,
-                    //    async: async,
-                    //    operationName: $"{nameof(ShareServiceClient)}.{nameof(SetProperties)}",
-                    //    cancellationToken: cancellationToken)
-                    //    .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

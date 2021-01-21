@@ -47,28 +47,27 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareDirectoryInfo StorageDirectoryInfo(
             ETag eTag,
             DateTimeOffset lastModified,
-#pragma warning disable CA1801 // Review unused parameters
             string filePermissionKey,
             string fileAttributes,
             DateTimeOffset fileCreationTime,
             DateTimeOffset fileLastWriteTime,
             DateTimeOffset fileChangeTime,
             string fileId,
-            string fileParentId
-#pragma warning restore CA1801 // Review unused parameters
-            )
+            string fileParentId)
             => new ShareDirectoryInfo
             {
                 ETag = eTag,
                 LastModified = lastModified,
-                // TODO fix this
-                //FilePermissionKey = filePermissionKey,
-                //FileAttributes = fileAttributes,
-                //FileCreationTime = fileCreationTime,
-                //FileLastWriteTime = fileLastWriteTime,
-                //FileChangeTime = fileChangeTime,
-                //FileId = fileId,
-                //FileParentId = fileParentId
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                    FilePermissionKey = filePermissionKey,
+                    FileCreatedOn = fileCreationTime,
+                    FileLastWrittenOn = fileLastWriteTime,
+                    FileChangedOn = fileChangeTime,
+                    FileId = fileId,
+                    ParentId = fileParentId
+                }
             };
     }
 }

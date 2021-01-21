@@ -383,9 +383,7 @@ namespace Azure.Storage.Files.Shares
                 _pipeline,
                 uriBuilder.ToUri().ToString(),
                 path: $"{ShareName}/{Path.EscapePath()}",
-                _version.ToVersionString(),
-                // TODO
-                sharesnapshot: null);
+                _version.ToVersionString());
         }
         #endregion ctors
 

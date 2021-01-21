@@ -392,9 +392,7 @@ namespace Azure.Storage.Files.Shares
                 _pipeline,
                 uriBuilder.ToUri().ToString(),
                 path: $"{ShareName}/{Path.EscapePath()}",
-                _version.ToVersionString(),
-                // TODO
-                sharesnapshot: null);
+                _version.ToVersionString());
         }
         #endregion ctors
 
@@ -773,8 +771,7 @@ namespace Azure.Storage.Files.Shares
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
-                            // TODO
-                            fileHttpHeaders: null,
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -789,8 +786,7 @@ namespace Azure.Storage.Files.Shares
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
-                            // TODO
-                            fileHttpHeaders: null,
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
