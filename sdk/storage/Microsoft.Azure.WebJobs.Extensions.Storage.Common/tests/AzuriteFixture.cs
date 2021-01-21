@@ -139,7 +139,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
                     process.Kill();
                     process.WaitForExit();
                     var message = $"azurite process could not initialize within timeout with following output:\n{azuriteOutput}\nerror:\n{azuriteError}";
-                    if (includeDebugLog)
+                    if (includeDebugLog && File.Exists(debugLogPath))
                     {
                         using var fileStream = File.Open(debugLogPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                         using var streamReader = new StreamReader(fileStream);
