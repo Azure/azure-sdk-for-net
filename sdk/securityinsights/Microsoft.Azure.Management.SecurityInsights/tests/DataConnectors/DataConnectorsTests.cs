@@ -21,8 +21,8 @@ namespace SecurityInsights.Tests
     {
         #region Test setup
 
-        private static string ResourceGroup = "CXP-Nicholas";
-        private static string WorkspaceName = "SecureScoreData-t4ah4xsttcevs";
+        private static string ResourceGroup = "ndicola-azsposh";
+        private static string WorkspaceName = "azsposh";
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
