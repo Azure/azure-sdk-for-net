@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.True(outProximityPlacementGroup == null, "ProximityPlacementGroup in response should be null.");
 
             //Patch and expect success
-            UpdateResource proximityPlacementGroupUpdate = new UpdateResource();
+            ProximityPlacementGroupUpdate proximityPlacementGroupUpdate = new ProximityPlacementGroupUpdate();
             proximityPlacementGroupUpdate.Tags.InitializeFrom(inputProximityPlacementGroup.Tags);
             //Note: Same Tags object is referred in proximityPlacementGroupUpdate and expectedProximityPlacementGroup,
             //hence this will also update tags in expectedProximityPlacementGroup.

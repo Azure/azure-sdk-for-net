@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Pipeline resource type. </summary>
-    public partial class PipelineResource : AzureEntityResource, IDictionary<string, object>
+    public partial class PipelineResource : SubResource, IDictionary<string, object>
     {
         /// <summary> Initializes a new instance of PipelineResource. </summary>
         public PipelineResource()

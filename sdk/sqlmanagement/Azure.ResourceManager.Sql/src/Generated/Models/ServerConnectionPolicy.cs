@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A server secure connection policy. </summary>
-    public partial class ServerConnectionPolicy : Resource
+    public partial class ServerConnectionPolicy : ProxyResource
     {
         /// <summary> Initializes a new instance of ServerConnectionPolicy. </summary>
         public ServerConnectionPolicy()
