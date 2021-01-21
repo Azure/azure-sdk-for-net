@@ -12,7 +12,8 @@ extends:
   parameters:
     AdditionalPlatforms:
       Linux_NetCore_Keyring:
-        OSVmImage: "ubuntu-18.04"
+        Pool: azsdk-pool-mms-ubuntu-1804-general
+        OSVmImage: MMSUbuntu18.04
         TestTargetFramework: 'netcoreapp2.1'
         Container: 'ubuntu_netcore_keyring'
         SupportedClouds: 'Public,Canary,Preview'
