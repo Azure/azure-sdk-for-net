@@ -4,7 +4,6 @@
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Microsoft.Azure.Batch;
 using Microsoft.Azure.Batch.FileStaging;
@@ -75,15 +74,15 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// <param name="blobEndpoint">A string specifying the primary Blob service endpoint.</param>
         public StagingStorageAccount(string storageAccount, string storageAccountKey, string blobEndpoint)
         {
-            this.StorageAccount = storageAccount;
-            this.StorageAccountKey = storageAccountKey;
+            StorageAccount = storageAccount;
+            StorageAccountKey = storageAccountKey;
 
-            if (string.IsNullOrWhiteSpace(this.StorageAccount))
+            if (string.IsNullOrWhiteSpace(StorageAccount))
             {
                 throw new ArgumentOutOfRangeException("storageAccount");
             }
 
-            if (string.IsNullOrWhiteSpace(this.StorageAccountKey))
+            if (string.IsNullOrWhiteSpace(StorageAccountKey))
             {
                 throw new ArgumentOutOfRangeException("storageAccountKey");
             }
@@ -94,7 +93,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             }
 
             // Constructed here to give immediate validation/failure experience.
-            this.BlobUri = new Uri(blobEndpoint);
+            BlobUri = new Uri(blobEndpoint);
         }
     }
 
@@ -148,19 +147,19 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         }
 
         /// <summary>
-        /// Specifies that a local file should be staged to blob storage.  
+        /// Specifies that a local file should be staged to blob storage.
         /// The specified account will be charged for storage costs.
         /// </summary>
         /// <param name="localFileToStage">The name of the local file.</param>
         /// <param name="storageCredentials">The storage credentials to be used when creating the default container.</param>
-        /// <param name="nodeFileName">Optional name to be given to the file on the compute node.  If this parameter is null or missing 
+        /// <param name="nodeFileName">Optional name to be given to the file on the compute node.  If this parameter is null or missing
         /// the name on the compute node will be set to the value of localFileToStage stripped of all path information.</param>
         public FileToStage(string localFileToStage, StagingStorageAccount storageCredentials, string nodeFileName = null)
         {
-            this.LocalFileToStage = localFileToStage;
-            this.StagingStorageAccount = storageCredentials;
+            LocalFileToStage = localFileToStage;
+            StagingStorageAccount = storageCredentials;
 
-            if (string.IsNullOrWhiteSpace(this.LocalFileToStage))
+            if (string.IsNullOrWhiteSpace(LocalFileToStage))
             {
                 throw new ArgumentOutOfRangeException("localFileToStage");
             }
@@ -168,11 +167,11 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             // map null to base name of local file
             if (string.IsNullOrWhiteSpace(nodeFileName))
             {
-                this.NodeFileName = Path.GetFileName(this.LocalFileToStage);
+                NodeFileName = Path.GetFileName(LocalFileToStage);
             }
             else
             {
-                this.NodeFileName = nodeFileName;
+                NodeFileName = nodeFileName;
             }
         }
 
@@ -209,9 +208,9 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         /// </summary>
         public void Validate()
         {
-            if (!File.Exists(this.LocalFileToStage))
+            if (!File.Exists(LocalFileToStage))
             {
-                throw new FileNotFoundException($"The following local file cannot be staged because it cannot be found: {this.LocalFileToStage}");
+                throw new FileNotFoundException($"The following local file cannot be staged because it cannot be found: {LocalFileToStage}");
             }
         }
 
@@ -234,7 +233,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             if (index != -1)
             {
-                //SAS                
+                //SAS
                 string containerAbsoluteUrl = container.Substring(0, index);
                 return containerAbsoluteUrl + "/" + blob + container.Substring(index);
             }
@@ -263,7 +262,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             StorageSharedKeyCredential shardKeyCredentials = new StorageSharedKeyCredential(account, key);
             BlobContainerClient containerClient = BlobUtilities.GetBlobContainerClient(containerName, stagingCredentials);
             // 2. create container if it doesn't exist
-            await containerClient.CreateIfNotExistsAsync();
+            containerClient.CreateIfNotExists();
 
             // 3. validate policy, create/overwrite if doesn't match
             BlobSignedIdentifier identifier = new BlobSignedIdentifier
@@ -274,7 +273,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                     Permissions = permissions,
                     StartsOn = start,
                     ExpiresOn = end,
-                    
+
                 },
             };
 
@@ -283,7 +282,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             if (policyFound == false)
             {
-                await containerClient.SetAccessPolicyAsync(PublicAccessType.Blob, permissions: new List<BlobSignedIdentifier> { identifier });
+                await containerClient.SetAccessPolicyAsync(PublicAccessType.BlobContainer, permissions: new List<BlobSignedIdentifier> { identifier });
             }
 
             BlobSasBuilder sasBuilder = new BlobSasBuilder
@@ -294,8 +293,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             };
 
             sasBuilder.SetPermissions(permissions);
-            BlobUriBuilder builder = new BlobUriBuilder(containerClient.Uri);
-            builder.Sas = sasBuilder.ToSasQueryParameters(shardKeyCredentials);
+            BlobUriBuilder builder = new BlobUriBuilder(containerClient.Uri) { Sas = sasBuilder.ToSasQueryParameters(shardKeyCredentials) };
             string fullSas = builder.ToString();
             return fullSas;
         }
@@ -397,7 +395,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         }
 
         /// <summary>
-        /// Stages all files in the queue 
+        /// Stages all files in the queue
         /// </summary>
         private async static Task StageFilesAsync(List<IFileStagingProvider> filesToStage, SequentialFileStagingArtifact seqArtifacts)
         {
@@ -428,16 +426,16 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             string blobName = Path.GetFileName(stageThisFile.LocalFileToStage);
 
             BlobContainerClient blobContainerClient = BlobUtilities.GetBlobContainerClient(containerName, storecreds);
-            BlockBlobClient blobClient = blobContainerClient.GetBlockBlobClient(blobName);
+            BlobClient blobClient = blobContainerClient.GetBlobClient(blobName);
 
-            bool doesBlobExist = await blobClient.ExistsAsync(); 
+            bool doesBlobExist = await blobClient.ExistsAsync().ConfigureAwait(false);
             bool mustUploadBlob = true;  // we do not re-upload blobs if they have already been uploaded
 
             if (doesBlobExist) // if the blob exists, compare
             {
                 FileInfo fi = new FileInfo(stageThisFile.LocalFileToStage);
 
-                var properties = await blobClient.GetPropertiesAsync();
+                var properties = await blobClient.GetPropertiesAsync().ConfigureAwait(false);
                 var length = properties.Value.ContentLength;
                 // since we don't have a hash of the contents... we check length
                 if (length == fi.Length)
@@ -448,12 +446,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             if (mustUploadBlob)
             {
-                using FileStream stream = new FileStream(stageThisFile.LocalFileToStage, FileMode.Open);
-                
-                // upload the file
-                Task uploadTask = blobClient.UploadAsync(stream);
-
-                await uploadTask.ConfigureAwait(continueOnCapturedContext: false);
+                await blobClient.UploadAsync(stageThisFile.LocalFileToStage).ConfigureAwait(false);
             }
 
             // get the SAS for the blob
@@ -473,16 +466,16 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
     public sealed class SequentialFileStagingArtifact : IFileStagingArtifact
     {
         /// <summary>
-        /// The name of any blob container created.  
-        /// 
-        /// A blob container is created if there is at least one file 
+        /// The name of any blob container created.
+        ///
+        /// A blob container is created if there is at least one file
         /// to be uploaded that does not have an explicit container specified.
         /// </summary>
         public string BlobContainerCreated { get; internal set; }
 
         /// <summary>
         /// Optionally set by caller.  Optionally used by implementation. A name fragment that can be used when constructing default names.
-        /// 
+        ///
         /// Can only be set once.
         /// </summary>
         public string NamingFragment { get; set; }
@@ -504,7 +497,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             if (!string.IsNullOrWhiteSpace(namingFragment))
             {
                 newNameBuilder.Append(namingFragment);
-                newNameBuilder.Append("-");
+                newNameBuilder.Append('-');
             }
 
             string newName = newNameBuilder.ToString();

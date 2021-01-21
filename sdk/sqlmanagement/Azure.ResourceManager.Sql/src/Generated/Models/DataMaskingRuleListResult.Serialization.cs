@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DataMaskingRule> array = new List<DataMaskingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

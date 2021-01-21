@@ -24,6 +24,9 @@ namespace Azure.AI.FormRecognizer
         /// <summary>The set of bytes expected to be present at the start of TIFF (big-endian) files.</summary>
         private static byte[] TiffBeHeader = new byte[] { 0x4D, 0x4D, 0x00, 0x2A };
 
+        /// <summary>The set of bytes expected to be present at the start of BMP files.</summary>
+        private static byte[] BmpHeader = new byte[] { 0x42, 0x4D };
+
         /// <summary>
         /// Attemps to detect the <see cref="FormContentType"/> of a stream of bytes. The algorithm searches through
         /// the first set of bytes in the stream and compares it to well-known file signatures.
@@ -49,6 +52,10 @@ namespace Azure.AI.FormRecognizer
             else if (stream.BeginsWithHeader(TiffLeHeader) || stream.BeginsWithHeader(TiffBeHeader))
             {
                 contentType = FormContentType.Tiff;
+            }
+            else if (stream.BeginsWithHeader(BmpHeader))
+            {
+                contentType = FormContentType.Bmp;
             }
             else
             {

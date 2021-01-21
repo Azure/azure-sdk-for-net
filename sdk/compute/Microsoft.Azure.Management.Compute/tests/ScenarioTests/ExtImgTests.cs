@@ -77,7 +77,7 @@ namespace Compute.Tests
             {
                 ComputeManagementClient _pirClient =
                     ComputeManagementTestUtilities.GetComputeManagementClient(context,
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var vmimageext = _pirClient.VirtualMachineExtensionImages.Get(
                     parameters.Location,
@@ -103,10 +103,10 @@ namespace Compute.Tests
             {
                 ComputeManagementClient _pirClient =
                     ComputeManagementTestUtilities.GetComputeManagementClient(context,
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var vmextimg = _pirClient.VirtualMachineExtensionImages.ListTypes(
-                    parameters.Location, 
+                    parameters.Location,
                     parameters.PublisherName);
 
                 Assert.True(vmextimg.Count > 0);
@@ -121,7 +121,7 @@ namespace Compute.Tests
             {
                 ComputeManagementClient _pirClient =
                     ComputeManagementTestUtilities.GetComputeManagementClient(context,
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
                     parameters.Location,
@@ -174,11 +174,10 @@ namespace Compute.Tests
                     parameters.Type,
                     query);
                 Assert.True(vmextimg.Count > 0);
-                Assert.True(vmextimg.Count(vmi => vmi.Name == existingVersionPrefix) == 0);
 
                 // Filter: top - Positive Test
                 query.Filter = null;
-                query.Top =1;
+                query.Top = 1;
                 parameters.FilterExpression = "$top=1";
                 vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
                     parameters.Location,
@@ -186,7 +185,6 @@ namespace Compute.Tests
                     parameters.Type,
                     query);
                 Assert.True(vmextimg.Count == 1);
-                Assert.True(vmextimg.Count(vmi => vmi.Name == existingVersion) != 0);
 
                 // Filter: top - Negative Test
                 query.Top = 0;

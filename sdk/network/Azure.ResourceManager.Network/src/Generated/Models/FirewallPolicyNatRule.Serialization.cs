@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("action"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     action = FirewallPolicyNatRuleAction.DeserializeFirewallPolicyNatRuleAction(property.Value);
                     continue;
                 }
@@ -78,6 +83,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ruleCondition"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ruleCondition = FirewallPolicyRuleCondition.DeserializeFirewallPolicyRuleCondition(property.Value);
                     continue;
                 }
@@ -93,6 +103,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("priority"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     priority = property.Value.GetInt32();
                     continue;
                 }

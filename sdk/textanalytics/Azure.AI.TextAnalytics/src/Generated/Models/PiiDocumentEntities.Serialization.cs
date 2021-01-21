@@ -17,15 +17,20 @@ namespace Azure.AI.TextAnalytics.Models
         internal static PiiDocumentEntities DeserializePiiDocumentEntities(JsonElement element)
         {
             string id = default;
+            string redactedText = default;
             IReadOnlyList<Entity> entities = default;
             IReadOnlyList<TextAnalyticsWarningInternal> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
-            Optional<string> redactedText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("redactedText"))
+                {
+                    redactedText = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("entities"))
@@ -50,16 +55,16 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("statistics"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("redactedText"))
-                {
-                    redactedText = property.Value.GetString();
-                    continue;
-                }
             }
-            return new PiiDocumentEntities(id, entities, warnings, Optional.ToNullable(statistics), redactedText.Value);
+            return new PiiDocumentEntities(id, redactedText, entities, warnings, Optional.ToNullable(statistics));
         }
     }
 }

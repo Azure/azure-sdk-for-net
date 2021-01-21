@@ -22,10 +22,10 @@ namespace Microsoft.Azure.Management.Media
     public static partial class LiveEventsOperationsExtensions
     {
             /// <summary>
-            /// List Live Events
+            /// List live events
             /// </summary>
             /// <remarks>
-            /// Lists the Live Events in the account.
+            /// Lists all the live events in the account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// List Live Events
+            /// List live events
             /// </summary>
             /// <remarks>
-            /// Lists the Live Events in the account.
+            /// Lists all the live events in the account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Media
             /// Get Live Event
             /// </summary>
             /// <remarks>
-            /// Gets a Live Event.
+            /// Gets properties of a live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             public static LiveEvent Get(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName)
             {
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Media
             /// Get Live Event
             /// </summary>
             /// <remarks>
-            /// Gets a Live Event.
+            /// Gets properties of a live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create Live Event
             /// </summary>
             /// <remarks>
-            /// Creates a Live Event.
+            /// Creates a new live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -135,10 +135,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='parameters'>
-            /// Live Event properties needed for creation.
+            /// Live event properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
             /// The flag indicates if the resource should be automatically started on
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create Live Event
             /// </summary>
             /// <remarks>
-            /// Creates a Live Event.
+            /// Creates a new live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,10 +165,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='parameters'>
-            /// Live Event properties needed for creation.
+            /// Live event properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
             /// The flag indicates if the resource should be automatically started on
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Updates a existing Live Event.
+            /// Updates settings on an existing live event.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -198,10 +198,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='parameters'>
-            /// Live Event properties needed for creation.
+            /// Live event properties needed for patch.
             /// </param>
             public static LiveEvent Update(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName, LiveEvent parameters)
             {
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Updates a existing Live Event.
+            /// Updates settings on an existing live event.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -221,10 +221,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='parameters'>
-            /// Live Event properties needed for creation.
+            /// Live event properties needed for patch.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.Media
             /// Delete Live Event
             /// </summary>
             /// <remarks>
-            /// Deletes a Live Event.
+            /// Deletes a live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             public static void Delete(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName)
             {
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.Media
             /// Delete Live Event
             /// </summary>
             /// <remarks>
-            /// Deletes a Live Event.
+            /// Deletes a live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -287,10 +287,11 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Start Live Event
+            /// Allocate resources for a live event
             /// </summary>
             /// <remarks>
-            /// Starts an existing Live Event.
+            /// A live event is in StandBy state after allocation completes, and is ready
+            /// to start.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -302,7 +303,58 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
+            /// </param>
+            public static void Allocate(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName)
+            {
+                operations.AllocateAsync(resourceGroupName, accountName, liveEventName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Allocate resources for a live event
+            /// </summary>
+            /// <remarks>
+            /// A live event is in StandBy state after allocation completes, and is ready
+            /// to start.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='liveEventName'>
+            /// The name of the live event, maximum length is 32.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task AllocateAsync(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.AllocateWithHttpMessagesAsync(resourceGroupName, accountName, liveEventName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Start Live Event
+            /// </summary>
+            /// <remarks>
+            /// A live event in Stopped or StandBy state will be in Running state after the
+            /// start operation completes.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='liveEventName'>
+            /// The name of the live event, maximum length is 32.
             /// </param>
             public static void Start(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName)
             {
@@ -313,7 +365,8 @@ namespace Microsoft.Azure.Management.Media
             /// Start Live Event
             /// </summary>
             /// <remarks>
-            /// Starts an existing Live Event.
+            /// A live event in Stopped or StandBy state will be in Running state after the
+            /// start operation completes.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -325,7 +378,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -339,7 +392,7 @@ namespace Microsoft.Azure.Management.Media
             /// Stop Live Event
             /// </summary>
             /// <remarks>
-            /// Stops an existing Live Event.
+            /// Stops a running live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -351,10 +404,12 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='removeOutputsOnStop'>
-            /// The flag indicates if remove LiveOutputs on Stop.
+            /// The flag indicates whether live outputs are automatically deleted when live
+            /// event is being stopped. Deleting live outputs do not delete the underlying
+            /// assets.
             /// </param>
             public static void Stop(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName, bool? removeOutputsOnStop = default(bool?))
             {
@@ -365,7 +420,7 @@ namespace Microsoft.Azure.Management.Media
             /// Stop Live Event
             /// </summary>
             /// <remarks>
-            /// Stops an existing Live Event.
+            /// Stops a running live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -377,10 +432,12 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='removeOutputsOnStop'>
-            /// The flag indicates if remove LiveOutputs on Stop.
+            /// The flag indicates whether live outputs are automatically deleted when live
+            /// event is being stopped. Deleting live outputs do not delete the underlying
+            /// assets.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -394,7 +451,10 @@ namespace Microsoft.Azure.Management.Media
             /// Reset Live Event
             /// </summary>
             /// <remarks>
-            /// Resets an existing Live Event.
+            /// Resets an existing live event. All live outputs for the live event are
+            /// deleted and the live event is stopped and will be started again. All assets
+            /// used by the live outputs and streaming locators created on these assets are
+            /// unaffected.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -406,7 +466,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             public static void Reset(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName)
             {
@@ -417,7 +477,10 @@ namespace Microsoft.Azure.Management.Media
             /// Reset Live Event
             /// </summary>
             /// <remarks>
-            /// Resets an existing Live Event.
+            /// Resets an existing live event. All live outputs for the live event are
+            /// deleted and the live event is stopped and will be started again. All assets
+            /// used by the live outputs and streaming locators created on these assets are
+            /// unaffected.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -429,7 +492,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -443,7 +506,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create Live Event
             /// </summary>
             /// <remarks>
-            /// Creates a Live Event.
+            /// Creates a new live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -455,10 +518,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='parameters'>
-            /// Live Event properties needed for creation.
+            /// Live event properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
             /// The flag indicates if the resource should be automatically started on
@@ -473,7 +536,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create Live Event
             /// </summary>
             /// <remarks>
-            /// Creates a Live Event.
+            /// Creates a new live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -485,10 +548,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='parameters'>
-            /// Live Event properties needed for creation.
+            /// Live event properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
             /// The flag indicates if the resource should be automatically started on
@@ -506,7 +569,7 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Updates a existing Live Event.
+            /// Updates settings on an existing live event.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -518,10 +581,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='parameters'>
-            /// Live Event properties needed for creation.
+            /// Live event properties needed for patch.
             /// </param>
             public static LiveEvent BeginUpdate(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName, LiveEvent parameters)
             {
@@ -529,7 +592,7 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Updates a existing Live Event.
+            /// Updates settings on an existing live event.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -541,10 +604,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='parameters'>
-            /// Live Event properties needed for creation.
+            /// Live event properties needed for patch.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -561,7 +624,7 @@ namespace Microsoft.Azure.Management.Media
             /// Delete Live Event
             /// </summary>
             /// <remarks>
-            /// Deletes a Live Event.
+            /// Deletes a live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -573,7 +636,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             public static void BeginDelete(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName)
             {
@@ -584,7 +647,7 @@ namespace Microsoft.Azure.Management.Media
             /// Delete Live Event
             /// </summary>
             /// <remarks>
-            /// Deletes a Live Event.
+            /// Deletes a live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -596,7 +659,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -607,10 +670,11 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// Start Live Event
+            /// Allocate resources for a live event
             /// </summary>
             /// <remarks>
-            /// Starts an existing Live Event.
+            /// A live event is in StandBy state after allocation completes, and is ready
+            /// to start.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -622,7 +686,58 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
+            /// </param>
+            public static void BeginAllocate(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName)
+            {
+                operations.BeginAllocateAsync(resourceGroupName, accountName, liveEventName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Allocate resources for a live event
+            /// </summary>
+            /// <remarks>
+            /// A live event is in StandBy state after allocation completes, and is ready
+            /// to start.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='liveEventName'>
+            /// The name of the live event, maximum length is 32.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginAllocateAsync(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginAllocateWithHttpMessagesAsync(resourceGroupName, accountName, liveEventName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Start Live Event
+            /// </summary>
+            /// <remarks>
+            /// A live event in Stopped or StandBy state will be in Running state after the
+            /// start operation completes.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='liveEventName'>
+            /// The name of the live event, maximum length is 32.
             /// </param>
             public static void BeginStart(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName)
             {
@@ -633,7 +748,8 @@ namespace Microsoft.Azure.Management.Media
             /// Start Live Event
             /// </summary>
             /// <remarks>
-            /// Starts an existing Live Event.
+            /// A live event in Stopped or StandBy state will be in Running state after the
+            /// start operation completes.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -645,7 +761,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -659,7 +775,7 @@ namespace Microsoft.Azure.Management.Media
             /// Stop Live Event
             /// </summary>
             /// <remarks>
-            /// Stops an existing Live Event.
+            /// Stops a running live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -671,10 +787,12 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='removeOutputsOnStop'>
-            /// The flag indicates if remove LiveOutputs on Stop.
+            /// The flag indicates whether live outputs are automatically deleted when live
+            /// event is being stopped. Deleting live outputs do not delete the underlying
+            /// assets.
             /// </param>
             public static void BeginStop(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName, bool? removeOutputsOnStop = default(bool?))
             {
@@ -685,7 +803,7 @@ namespace Microsoft.Azure.Management.Media
             /// Stop Live Event
             /// </summary>
             /// <remarks>
-            /// Stops an existing Live Event.
+            /// Stops a running live event.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -697,10 +815,12 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='removeOutputsOnStop'>
-            /// The flag indicates if remove LiveOutputs on Stop.
+            /// The flag indicates whether live outputs are automatically deleted when live
+            /// event is being stopped. Deleting live outputs do not delete the underlying
+            /// assets.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -714,7 +834,10 @@ namespace Microsoft.Azure.Management.Media
             /// Reset Live Event
             /// </summary>
             /// <remarks>
-            /// Resets an existing Live Event.
+            /// Resets an existing live event. All live outputs for the live event are
+            /// deleted and the live event is stopped and will be started again. All assets
+            /// used by the live outputs and streaming locators created on these assets are
+            /// unaffected.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -726,7 +849,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             public static void BeginReset(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName)
             {
@@ -737,7 +860,10 @@ namespace Microsoft.Azure.Management.Media
             /// Reset Live Event
             /// </summary>
             /// <remarks>
-            /// Resets an existing Live Event.
+            /// Resets an existing live event. All live outputs for the live event are
+            /// deleted and the live event is stopped and will be started again. All assets
+            /// used by the live outputs and streaming locators created on these assets are
+            /// unaffected.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -749,7 +875,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='liveEventName'>
-            /// The name of the Live Event.
+            /// The name of the live event, maximum length is 32.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -760,10 +886,10 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// List Live Events
+            /// List live events
             /// </summary>
             /// <remarks>
-            /// Lists the Live Events in the account.
+            /// Lists all the live events in the account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -777,10 +903,10 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
-            /// List Live Events
+            /// List live events
             /// </summary>
             /// <remarks>
-            /// Lists the Live Events in the account.
+            /// Lists all the live events in the account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

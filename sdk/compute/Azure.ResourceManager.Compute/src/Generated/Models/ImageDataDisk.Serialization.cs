@@ -74,11 +74,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("snapshot"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     snapshot = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedDisk"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     managedDisk = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
@@ -89,21 +99,41 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("caching"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     caching = property.Value.GetString().ToCachingTypes();
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("storageAccountType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     storageAccountType = new StorageAccountTypes(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSet"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     diskEncryptionSet = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }

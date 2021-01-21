@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
@@ -150,6 +151,26 @@ namespace Azure.Search.Documents.Tests
                 // We created no index, but others tests might. We'll check when cleaning up.
                 RequiresCleanup = fixture.Recording.Mode != RecordedTestMode.Playback,
             };
+        }
+
+        /// <summary>
+        /// Create a new Search Service resource with an empty index for a
+        /// given model type.
+        /// </summary>
+        /// <param name="fixture">
+        /// The TestFixture with context about our current test run,
+        /// recordings, instrumentation, etc.
+        /// </param>
+        /// <returns>A new TestResources context.</returns>
+        public static async Task<SearchResources> CreateWithEmptyIndexAsync<T>(SearchTestBase fixture)
+        {
+            var resources = new SearchResources(fixture);
+            await resources.CreateSearchServiceAndIndexAsync(name =>
+                new SearchIndex(name)
+                {
+                    Fields = new FieldBuilder().Build(typeof(T))
+                });
+            return resources;
         }
 
         /// <summary>
@@ -348,9 +369,15 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// Create a new Search Service and empty Hotels Index.
         /// </summary>
+        /// <param name="getIndex">
+        /// Function to get an index definition using the provided name.
+        /// </param>
         /// <returns>This TestResources context.</returns>
-        private async Task<SearchResources> CreateSearchServiceAndIndexAsync()
+        private async Task<SearchResources> CreateSearchServiceAndIndexAsync(
+            Func<string, SearchIndex> getIndex = null)
         {
+            getIndex ??= GetHotelIndex;
+
             // Create the index
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
@@ -358,7 +385,7 @@ namespace Azure.Search.Documents.Tests
                 IndexName = Random.GetName(8);
 
                 SearchIndexClient client = new SearchIndexClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
-                await client.CreateIndexAsync(GetHotelIndex(IndexName));
+                await client.CreateIndexAsync(getIndex(IndexName));
 
                 RequiresCleanup = true;
 

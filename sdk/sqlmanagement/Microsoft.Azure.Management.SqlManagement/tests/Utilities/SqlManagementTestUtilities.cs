@@ -218,9 +218,9 @@ namespace Sql.Tests
                 Assert.Equal(expected.ReadScale, actual.ReadScale);
             }
 
-            if (expected.ReadReplicaCount != null)
+            if (expected.HighAvailabilityReplicaCount != null)
             {
-                Assert.Equal(expected.ReadReplicaCount, actual.ReadReplicaCount);
+                Assert.Equal(expected.HighAvailabilityReplicaCount, actual.HighAvailabilityReplicaCount);
             }
 
             if (!string.IsNullOrEmpty(expected.StorageAccountType))

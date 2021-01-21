@@ -87,11 +87,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("osType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     osType = property.Value.GetString().ToOperatingSystemTypes();
                     continue;
                 }
                 if (property.NameEquals("encryptionSettings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     encryptionSettings = DiskEncryptionSettings.DeserializeDiskEncryptionSettings(property.Value);
                     continue;
                 }
@@ -102,26 +112,51 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("vhd"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     vhd = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("image"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     image = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("caching"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     caching = property.Value.GetString().ToCachingTypes();
                     continue;
                 }
                 if (property.NameEquals("writeAcceleratorEnabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     writeAcceleratorEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("diffDiskSettings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     diffDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value);
                     continue;
                 }
@@ -132,11 +167,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("diskSizeGB"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("managedDisk"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     managedDisk = ManagedDiskParameters.DeserializeManagedDiskParameters(property.Value);
                     continue;
                 }

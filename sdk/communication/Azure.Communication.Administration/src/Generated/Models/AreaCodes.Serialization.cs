@@ -22,6 +22,11 @@ namespace Azure.Communication.Administration.Models
             {
                 if (property.NameEquals("primaryAreaCodes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -32,6 +37,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("secondaryAreaCodes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

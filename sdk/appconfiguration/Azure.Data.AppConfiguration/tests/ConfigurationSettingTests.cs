@@ -44,7 +44,6 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
             Assert.AreEqual(@"http://localhost/?key=my_key%2Ckey%5C%2Ckey&label=my_label%2Clabel%5C%2Clabel", builder.ToUri().AbsoluteUri);
-
         }
 
         [Test]

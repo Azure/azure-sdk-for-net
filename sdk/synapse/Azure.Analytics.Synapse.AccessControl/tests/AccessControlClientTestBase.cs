@@ -16,9 +16,6 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
 
         protected AccessControlClientTestBase(bool isAsync) : base(isAsync)
         {
-#if DEBUG
-            SaveDebugRecordingsOnFailure = true;
-#endif
         }
 
         public override void StartTestRecording()
@@ -49,7 +46,7 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
         internal AccessControlClient CreateAccessControlClient()
         {
             return InstrumentClient(new AccessControlClient(
-                new Uri(TestEnvironment.WorkspaceUrl),
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new AccessControlClientOptions())));
         }

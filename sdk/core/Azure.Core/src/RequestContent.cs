@@ -170,7 +170,9 @@ namespace Azure.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
+#pragma warning disable CA1835 // WriteAsync(Memory<>) overload is not available in all targets
                 await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
+#pragma warning restore // WriteAsync(Memory<>) overload is not available in all targets
             }
         }
 

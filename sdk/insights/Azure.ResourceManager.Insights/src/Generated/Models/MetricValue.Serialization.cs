@@ -30,26 +30,51 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("average"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     average = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("minimum"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minimum = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("maximum"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maximum = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("total"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     total = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("count"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     count = property.Value.GetDouble();
                     continue;
                 }

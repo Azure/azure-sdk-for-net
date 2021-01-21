@@ -64,7 +64,6 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
         }
 
-
         [Test]
         [NonParallelizable]
         public void ActivityShouldBeStoppedWhenTransportThrows()
@@ -146,7 +145,11 @@ namespace Azure.Core.Tests
 
             activity.Stop();
 
+#if NET5_0
+            Assert.True(transport.SingleRequest.TryGetHeader("traceparent", out string requestId));
+#else
             Assert.True(transport.SingleRequest.TryGetHeader("Request-Id", out string requestId));
+#endif
             Assert.AreEqual(activity.Id, requestId);
         }
 

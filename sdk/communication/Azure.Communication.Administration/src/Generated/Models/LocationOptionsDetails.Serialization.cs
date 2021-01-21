@@ -58,6 +58,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("locationOptions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LocationOptions> array = new List<LocationOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

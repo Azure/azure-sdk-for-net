@@ -30,23 +30,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string NoDataValue = "NoData";
         private const string ErrorValue = "Error";
         private const string PausedValue = "Paused";
-
-        /// <summary> NotStarted. </summary>
-        public static IngestionStatusType NotStarted { get; } = new IngestionStatusType(NotStartedValue);
-        /// <summary> Scheduled. </summary>
-        public static IngestionStatusType Scheduled { get; } = new IngestionStatusType(ScheduledValue);
-        /// <summary> Running. </summary>
-        public static IngestionStatusType Running { get; } = new IngestionStatusType(RunningValue);
-        /// <summary> Succeeded. </summary>
-        public static IngestionStatusType Succeeded { get; } = new IngestionStatusType(SucceededValue);
-        /// <summary> Failed. </summary>
-        public static IngestionStatusType Failed { get; } = new IngestionStatusType(FailedValue);
-        /// <summary> NoData. </summary>
-        public static IngestionStatusType NoData { get; } = new IngestionStatusType(NoDataValue);
-        /// <summary> Error. </summary>
-        public static IngestionStatusType Error { get; } = new IngestionStatusType(ErrorValue);
-        /// <summary> Paused. </summary>
-        public static IngestionStatusType Paused { get; } = new IngestionStatusType(PausedValue);
         /// <summary> Determines if two <see cref="IngestionStatusType"/> values are the same. </summary>
         public static bool operator ==(IngestionStatusType left, IngestionStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IngestionStatusType"/> values are not the same. </summary>
