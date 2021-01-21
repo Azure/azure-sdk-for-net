@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,9 +55,40 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
         ///
         public abstract Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
-                                                                                         string eventHubName,
-                                                                                         string consumerGroup,
-                                                                                         CancellationToken cancellationToken);
+            string eventHubName,
+            string consumerGroup,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        ///   Retrieves a checkpoint information from the chosen storage service. The default implementation calls <see cref="ListCheckpointsAsync"/> and selects a checkpoint by id.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        /// <param name="partitionId">The id of the partition to get checkpoint for.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="EventProcessorCheckpoint"/> instance if a checkpoint is found for a particular partition otherwise, <code>null</code>.</returns>
+        ///
+        public virtual async Task<EventProcessorCheckpoint> GetCheckpointAsync(string fullyQualifiedNamespace,
+            string eventHubName,
+            string consumerGroup,
+            string partitionId,
+            CancellationToken cancellationToken)
+        {
+            var checkpoints = await ListCheckpointsAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, cancellationToken).ConfigureAwait(false);
+
+            foreach (EventProcessorCheckpoint checkpoint in checkpoints)
+            {
+                if (string.Equals(checkpoint.PartitionId, partitionId, StringComparison.Ordinal))
+                {
+                    return checkpoint;
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
