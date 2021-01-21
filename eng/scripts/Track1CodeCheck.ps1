@@ -49,7 +49,7 @@ try {
     Write-Host "Check PR associate"
     Write-Host "REPOSITORY_NAME: $Env:REPOSITORY_NAME"
     Write-Host "PULLREQUEST_ID: $Env:PULLREQUEST_ID"
-    if (($null -eq $Env:REPOSITORY_NAME) -or ($null -eq $Env:PULLREQUEST_ID) -or ($Env:REPOSITORY_NAME -eq "") -or ($Env:PULLREQUEST_ID -eq "")) {
+    if (($null -eq $Env:REPOSITORY_NAME) -or ($null -eq $Env:PULLREQUEST_ID) -or ($Env:REPOSITORY_NAME -eq "") -or ($Env:PULLREQUEST_ID -eq "") -or ($Env:PULLREQUEST_ID -match 'PullRequestNumber')) {
         Write-Host "There is no PR associate with this run, skip the code check." -ForegroundColor red -BackgroundColor white
         break
     }
