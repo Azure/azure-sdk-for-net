@@ -51,7 +51,7 @@ var client = new CommunicationIdentityClient(endpoint, tokenCredential);
 
 ### Key concepts
 
-`CommunicationIdentityClient` provides the functionalities to manage user access tokens: creating new ones, renewing and revoking them.
+`CommunicationIdentityClient` provides the functionalities to manage user access tokens: creating new ones and revoking them.
 
 ## Examples
 
