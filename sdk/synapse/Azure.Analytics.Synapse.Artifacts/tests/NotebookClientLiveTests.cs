@@ -1,13 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
-using Azure.Analytics.Synapse.Artifacts.Models;
-using Azure.Analytics.Synapse.Artifacts;
-using NUnit.Framework;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
+using Azure.Analytics.Synapse.Artifacts.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Tests.Artifacts
+namespace Azure.Analytics.Synapse.Artifacts.Tests
 {
     /// <summary>
     /// The suite of tests for the <see cref="NotebookClient"/> class.
@@ -16,22 +19,28 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class NotebookClientLiveTests : ArtifactsClientTestBase
+    public class NotebookClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NotebookClientLiveTests"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public NotebookClientLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        private NotebookClient CreateClient()
+        {
+            return InstrumentClient(new NotebookClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ArtifactsClientOptions())
+            ));
         }
 
         [Test]
         public async Task TestGetNotebook()
         {
-            await foreach (var expectedNotebook in NotebookClient.GetNotebooksByWorkspaceAsync())
+            NotebookClient client = CreateClient();
+            await foreach (var expectedNotebook in client.GetNotebooksByWorkspaceAsync())
             {
-                NotebookResource actualNotebook = await NotebookClient.GetNotebookAsync(expectedNotebook.Name);
+                NotebookResource actualNotebook = await client.GetNotebookAsync(expectedNotebook.Name);
                 Assert.AreEqual(expectedNotebook.Name, actualNotebook.Name);
                 Assert.AreEqual(expectedNotebook.Id, actualNotebook.Id);
                 Assert.AreEqual(expectedNotebook.Properties.BigDataPool?.ReferenceName, actualNotebook.Properties.BigDataPool?.ReferenceName);
@@ -41,6 +50,8 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         [Test]
         public async Task TestCreateNotebook()
         {
+            NotebookClient client = CreateClient();
+
             Notebook notebook = new Notebook(
                 new NotebookMetadata
                 {
@@ -50,8 +61,8 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
                 nbformatMinor: 2,
                 new List<NotebookCell>()
             );
-            string notebookName = Recording.GenerateName("Notebook");
-            NotebookCreateOrUpdateNotebookOperation operation = await NotebookClient.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebookName, notebook));
+            string notebookName = Recording.GenerateId("Notebook", 16);
+            NotebookCreateOrUpdateNotebookOperation operation = await client.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebookName, notebook));
             NotebookResource notebookResource = await operation.WaitForCompletionAsync();
             Assert.AreEqual(notebookName, notebookResource.Name);
         }
@@ -59,7 +70,9 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         [Test]
         public async Task TestDeleteNotebook()
         {
-            string notebookName = Recording.GenerateName("Notebook");
+            NotebookClient client = CreateClient();
+
+            string notebookName = Recording.GenerateId("Notebook", 16);
 
             Notebook notebook = new Notebook(
                 new NotebookMetadata
@@ -70,10 +83,10 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
                 nbformatMinor: 2,
                 new List<NotebookCell>()
             );
-            NotebookCreateOrUpdateNotebookOperation createOperation = await NotebookClient.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebookName, notebook));
+            NotebookCreateOrUpdateNotebookOperation createOperation = await client.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebookName, notebook));
             await createOperation.WaitForCompletionAsync();
 
-            NotebookDeleteNotebookOperation deleteOperation = await NotebookClient.StartDeleteNotebookAsync(notebookName);
+            NotebookDeleteNotebookOperation deleteOperation = await client.StartDeleteNotebookAsync(notebookName);
             Response response = await deleteOperation.WaitForCompletionAsync();
             Assert.AreEqual(200, response.Status);
         }

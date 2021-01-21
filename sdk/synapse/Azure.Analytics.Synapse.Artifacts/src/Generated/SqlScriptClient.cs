@@ -37,46 +37,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             _pipeline = pipeline;
         }
 
-        /// <summary> Creates or updates a Sql Script. </summary>
-        /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="sqlScript"> Sql Script resource definition. </param>
-        /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlScriptResource>> CreateOrUpdateSqlScriptAsync(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.CreateOrUpdateSqlScript");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateOrUpdateSqlScriptAsync(sqlScriptName, sqlScript, ifMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a Sql Script. </summary>
-        /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="sqlScript"> Sql Script resource definition. </param>
-        /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlScriptResource> CreateOrUpdateSqlScript(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.CreateOrUpdateSqlScript");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateOrUpdateSqlScript(sqlScriptName, sqlScript, ifMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a sql script. </summary>
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -107,42 +67,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             try
             {
                 return RestClient.GetSqlScript(sqlScriptName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a Sql Script. </summary>
-        /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteSqlScriptAsync(string sqlScriptName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.DeleteSqlScript");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteSqlScriptAsync(sqlScriptName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a Sql Script. </summary>
-        /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteSqlScript(string sqlScriptName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.DeleteSqlScript");
-            scope.Start();
-            try
-            {
-                return RestClient.DeleteSqlScript(sqlScriptName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -223,6 +147,118 @@ namespace Azure.Analytics.Synapse.Artifacts
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Creates or updates a Sql Script. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="sqlScript"> Sql Script resource definition. </param>
+        /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="sqlScript"/> is null. </exception>
+        public virtual async Task<SqlScriptCreateOrUpdateSqlScriptOperation> StartCreateOrUpdateSqlScriptAsync(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (sqlScriptName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlScriptName));
+            }
+            if (sqlScript == null)
+            {
+                throw new ArgumentNullException(nameof(sqlScript));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartCreateOrUpdateSqlScript");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreateOrUpdateSqlScriptAsync(sqlScriptName, sqlScript, ifMatch, cancellationToken).ConfigureAwait(false);
+                return new SqlScriptCreateOrUpdateSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateSqlScriptRequest(sqlScriptName, sqlScript, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a Sql Script. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="sqlScript"> Sql Script resource definition. </param>
+        /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="sqlScript"/> is null. </exception>
+        public virtual SqlScriptCreateOrUpdateSqlScriptOperation StartCreateOrUpdateSqlScript(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (sqlScriptName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlScriptName));
+            }
+            if (sqlScript == null)
+            {
+                throw new ArgumentNullException(nameof(sqlScript));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartCreateOrUpdateSqlScript");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreateOrUpdateSqlScript(sqlScriptName, sqlScript, ifMatch, cancellationToken);
+                return new SqlScriptCreateOrUpdateSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateSqlScriptRequest(sqlScriptName, sqlScript, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a Sql Script. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
+        public virtual async Task<SqlScriptDeleteSqlScriptOperation> StartDeleteSqlScriptAsync(string sqlScriptName, CancellationToken cancellationToken = default)
+        {
+            if (sqlScriptName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlScriptName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartDeleteSqlScript");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeleteSqlScriptAsync(sqlScriptName, cancellationToken).ConfigureAwait(false);
+                return new SqlScriptDeleteSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSqlScriptRequest(sqlScriptName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a Sql Script. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
+        public virtual SqlScriptDeleteSqlScriptOperation StartDeleteSqlScript(string sqlScriptName, CancellationToken cancellationToken = default)
+        {
+            if (sqlScriptName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlScriptName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartDeleteSqlScript");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.DeleteSqlScript(sqlScriptName, cancellationToken);
+                return new SqlScriptDeleteSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSqlScriptRequest(sqlScriptName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Renames a sqlScript. </summary>
