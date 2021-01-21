@@ -179,15 +179,16 @@ namespace Azure.Storage.Files.Shares.Models
                 CopySource = copySource,
                 CopyStatus = copyStatus,
                 IsServerEncrypted = isServerEncrypted,
-
-                // TODO fix this
-                //FileAttributes = fileAttributes,
-                //FilePermissionKey = filePermissionKey,
-                //FileCreationTime = fileCreationTime,
-                //FileLastWriteTime = fileLastWriteTime,
-                //FileChangeTime = fileChangeTime,
-                //FileId = fileId,
-                //FileParentId = fileParentId
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                    FilePermissionKey = filePermissionKey,
+                    FileCreatedOn = fileCreationTime,
+                    FileLastWrittenOn = fileLastWriteTime,
+                    FileChangedOn = fileChangeTime,
+                    FileId = fileId,
+                    ParentId = fileParentId
+                }
             };
     }
 }
