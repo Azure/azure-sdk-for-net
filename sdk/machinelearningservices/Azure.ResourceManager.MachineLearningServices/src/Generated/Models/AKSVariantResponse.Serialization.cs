@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<IDictionary<string, string>> kvTags = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<WebServiceState> state = default;
-            Optional<ErrorResponse> error = default;
+            Optional<ServiceResponseBaseError> error = default;
             ComputeEnvironmentType computeType = default;
             Optional<DeploymentType> deploymentType = default;
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ServiceResponseBaseError.DeserializeServiceResponseBaseError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeType"))

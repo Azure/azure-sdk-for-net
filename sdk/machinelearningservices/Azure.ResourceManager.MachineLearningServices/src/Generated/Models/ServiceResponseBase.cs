@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="error"> The error details. </param>
         /// <param name="computeType"> The compute environment type for the service. </param>
         /// <param name="deploymentType"> The deployment type for the service. </param>
-        internal ServiceResponseBase(string description, IDictionary<string, string> kvTags, IDictionary<string, string> properties, WebServiceState? state, ErrorResponse error, ComputeEnvironmentType computeType, DeploymentType? deploymentType)
+        internal ServiceResponseBase(string description, IDictionary<string, string> kvTags, IDictionary<string, string> properties, WebServiceState? state, ServiceResponseBaseError error, ComputeEnvironmentType computeType, DeploymentType? deploymentType)
         {
             Description = description;
             KvTags = kvTags;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The current state of the service. </summary>
         public WebServiceState? State { get; }
         /// <summary> The error details. </summary>
-        public ErrorResponse Error { get; }
+        public ServiceResponseBaseError Error { get; }
         /// <summary> The compute environment type for the service. </summary>
         internal ComputeEnvironmentType ComputeType { get; set; }
         /// <summary> The deployment type for the service. </summary>

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             Optional<string> baseImage = default;
             Optional<string> baseDockerfile = default;
-            Optional<ContainerRegistryResponse> baseImageRegistry = default;
+            Optional<ModelDockerSectionResponseBaseImageRegistry> baseImageRegistry = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseImage"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    baseImageRegistry = ContainerRegistryResponse.DeserializeContainerRegistryResponse(property.Value);
+                    baseImageRegistry = ModelDockerSectionResponseBaseImageRegistry.DeserializeModelDockerSectionResponseBaseImageRegistry(property.Value);
                     continue;
                 }
             }

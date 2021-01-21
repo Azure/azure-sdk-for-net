@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The number of replicas on the cluster. </summary>
         public int? NumReplicas { get; set; }
         /// <summary> Details of the data collection options specified. </summary>
-        public ModelDataCollection DataCollection { get; set; }
+        public AKSServiceCreateRequestDataCollection DataCollection { get; set; }
         /// <summary> The name of the compute resource. </summary>
         public string ComputeName { get; set; }
         /// <summary> Whether or not Application Insights is enabled. </summary>
         public bool? AppInsightsEnabled { get; set; }
         /// <summary> The auto scaler properties. </summary>
-        public AutoScaler AutoScaler { get; set; }
+        public AKSServiceCreateRequestAutoScaler AutoScaler { get; set; }
         /// <summary> The container resource requirements. </summary>
         public ContainerResourceRequirements ContainerResourceRequirements { get; set; }
         /// <summary> The maximum number of concurrent requests per container. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Whether or not authentication is enabled. </summary>
         public bool? AuthEnabled { get; set; }
         /// <summary> The liveness probe requirements. </summary>
-        public LivenessProbeRequirements LivenessProbeRequirements { get; set; }
+        public AKSServiceCreateRequestLivenessProbeRequirements LivenessProbeRequirements { get; set; }
         /// <summary> Whether or not AAD authentication is enabled. </summary>
         public bool? AadAuthEnabled { get; set; }
     }

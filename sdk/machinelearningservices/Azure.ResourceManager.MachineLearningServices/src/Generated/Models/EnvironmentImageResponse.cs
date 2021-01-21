@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="models"> The list of models. </param>
         /// <param name="environment"> The details of the AZURE ML environment. </param>
         /// <param name="environmentReference"> The unique identifying details of the AZURE ML environment. </param>
-        internal EnvironmentImageResponse(string driverProgram, IList<ImageAsset> assets, IList<string> modelIds, IList<Model> models, ModelEnvironmentDefinitionResponse environment, EnvironmentReference environmentReference)
+        internal EnvironmentImageResponse(string driverProgram, IList<ImageAsset> assets, IList<string> modelIds, IList<Model> models, EnvironmentImageResponseEnvironment environment, EnvironmentImageResponseEnvironmentReference environmentReference)
         {
             DriverProgram = driverProgram;
             Assets = assets;
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The list of models. </summary>
         public IList<Model> Models { get; }
         /// <summary> The details of the AZURE ML environment. </summary>
-        public ModelEnvironmentDefinitionResponse Environment { get; set; }
+        public EnvironmentImageResponseEnvironment Environment { get; set; }
         /// <summary> The unique identifying details of the AZURE ML environment. </summary>
-        public EnvironmentReference EnvironmentReference { get; set; }
+        public EnvironmentImageResponseEnvironmentReference EnvironmentReference { get; set; }
     }
 }
