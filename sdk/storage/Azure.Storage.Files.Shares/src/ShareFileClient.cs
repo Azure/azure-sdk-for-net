@@ -2685,15 +2685,12 @@ namespace Azure.Storage.Files.Shares
                             cancellationToken: cancellationToken);
                     }
 
-                    return Response.FromValue(
+                    // Return an exploding Response on 304
+                    return response.GetRawResponse().Status == Constants.HttpStatusCode.NotModified
+                        ? response.GetRawResponse().AsNoBodyResponse<ShareFileProperties>()
+                        : Response.FromValue(
                         response.ToShareFileProperties(),
-                        response.GetRawResponse());
-
-                    // TODO
-                    //// Return an exploding Response on 304
-                    //return response.IsUnavailable() ?
-                    //    response.GetRawResponse().AsNoBodyResponse<ShareFileProperties>() :
-                    //    Response.FromValue(new ShareFileProperties(response.Value), response.GetRawResponse());
+                            response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

@@ -598,6 +598,7 @@ namespace Azure.Storage
         internal static class HttpStatusCode
         {
             internal const int NotFound = 404;
+            internal const int NotModified = 304;
         }
     }
 }

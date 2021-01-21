@@ -713,14 +713,7 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            // TODO there has to be a better way to do this.
-            IDictionary<string, string> metadata = null;
-
-            if (rawMetadata != null)
-            {
-                metadata = new Dictionary<string, string>();
-                rawMetadata.AsEnumerable().ToList().ForEach(r => metadata.Add(r));
-            }
+            IDictionary<string, string> metadata = rawMetadata.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
             return new ShareProperties
             {
@@ -770,7 +763,6 @@ namespace Azure.Storage.Files.Shares
                     CopyStatusDescription = response.Headers.CopyStatusDescription,
                     CopyId = response.Headers.CopyId,
                     CopyProgress = response.Headers.CopyProgress,
-                    // TODO investigate this
                     CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
                     CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
                     FileContentHash = response.Headers.FileContentMD5,
