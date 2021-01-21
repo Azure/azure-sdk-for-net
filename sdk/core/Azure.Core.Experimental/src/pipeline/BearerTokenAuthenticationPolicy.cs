@@ -15,7 +15,7 @@ namespace Azure.Core.Experimental.Pipeline
     /// <summary>
     /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an Authentication header.
     /// </summary>
-    public class BearerTokenAuthenticationPolicy : Core.Pipeline.HttpPipelinePolicy
+    public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
     {
         private const string AuthenticationChallengePattern = @"(\w+) ((?:\w+="".*?""(?:, )?)+)(?:, )?";
         private const string ChallengeParameterPattern = @"(?:(\w+)=""([^""]*)"")+";
@@ -31,17 +31,17 @@ namespace Azure.Core.Experimental.Pipeline
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scope">The scope to authenticate for.</param>
-        public BearerTokenAuthenticationPolicy(Experimental.TokenCredential credential, string scope) : this(credential, new[] { scope }) { }
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope }) { }
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to authenticate for.</param>
-        public BearerTokenAuthenticationPolicy(Experimental.TokenCredential credential, IEnumerable<string> scopes)
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
             : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30)) { }
 
-        internal BearerTokenAuthenticationPolicy(Experimental.TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
+        internal BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
@@ -69,7 +69,7 @@ namespace Azure.Core.Experimental.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            await AuthenticateRequestAsync(message, new Experimental.TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
+            await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
 
             if (async)
             {
@@ -123,7 +123,7 @@ namespace Azure.Core.Experimental.Pipeline
         /// <param name="async">Specifies if the method is being called in an asynchronous context</param>
         protected virtual async Task OnBeforeRequestAsync(HttpMessage message, bool async)
         {
-            await AuthenticateRequestAsync(message, new Experimental.TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
+            await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -131,15 +131,15 @@ namespace Azure.Core.Experimental.Pipeline
         /// </summary>
         /// <remarks>This implementation handles common authentication challenges such as claims challenges. Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
         /// <param name="message">The HttpMessage to be authenticated.</param>
-        /// <param name="async">Specifies if the method is being called in an asynchronous context</param>
-        /// <returns>A boolean indicated whether the request should be retried</returns>
+        /// <param name="async">Specifies if the method is being called in an asynchronous context.</param>
+        /// <returns>A boolean indicated whether the request should be retried.</returns>
         protected virtual async Task<bool> OnChallengeAsync(HttpMessage message, bool async)
         {
             var claimsChallenge = GetClaimsChallenge(message.Response);
 
             if (claimsChallenge != null)
             {
-                await AuthenticateRequestAsync(message, new Experimental.TokenRequestContext(_scopes, message.Request.ClientRequestId, claimsChallenge), async).ConfigureAwait(false);
+                await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId, claimsChallenge), async).ConfigureAwait(false);
 
                 return true;
             }
@@ -172,7 +172,7 @@ namespace Azure.Core.Experimental.Pipeline
             return null;
         }
 
-        private async Task AuthenticateRequestAsync(HttpMessage message, Experimental.TokenRequestContext context, bool async)
+        private async Task AuthenticateRequestAsync(HttpMessage message, TokenRequestContext context, bool async)
         {
             string headerValue;
             if (async)
@@ -191,22 +191,22 @@ namespace Azure.Core.Experimental.Pipeline
         private class AccessTokenCache
         {
             private readonly object _syncObj = new object();
-            private readonly Experimental.TokenCredential _credential;
+            private readonly TokenCredential _credential;
             private readonly TimeSpan _tokenRefreshOffset;
             private readonly TimeSpan _tokenRefreshRetryDelay;
 
-            private Experimental.TokenRequestContext? _currentContext;
+            private TokenRequestContext? _currentContext;
             private TaskCompletionSource<HeaderValueInfo>? _infoTcs;
             private TaskCompletionSource<HeaderValueInfo>? _backgroundUpdateTcs;
-            public AccessTokenCache(Experimental.TokenCredential credential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, string[] initialScopes)
+            public AccessTokenCache(TokenCredential credential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, string[] initialScopes)
             {
                 _credential = credential;
                 _tokenRefreshOffset = tokenRefreshOffset;
                 _tokenRefreshRetryDelay = tokenRefreshRetryDelay;
-                _currentContext = new Experimental.TokenRequestContext(initialScopes);
+                _currentContext = new TokenRequestContext(initialScopes);
             }
 
-            public async ValueTask<string> GetHeaderValueAsync(HttpMessage message, Experimental.TokenRequestContext context, bool async)
+            public async ValueTask<string> GetHeaderValueAsync(HttpMessage message, TokenRequestContext context, bool async)
             {
                 bool getTokenFromCredential;
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
@@ -279,7 +279,7 @@ namespace Azure.Core.Experimental.Pipeline
                 return info.HeaderValue;
             }
 
-            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources(Experimental.TokenRequestContext context)
+            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources(TokenRequestContext context)
             {
                 lock (_syncObj)
                 {
@@ -327,7 +327,7 @@ namespace Azure.Core.Experimental.Pipeline
             }
 
             // must be called under lock (_syncObj)
-            private bool RequestRequiresNewToken(Experimental.TokenRequestContext context)
+            private bool RequestRequiresNewToken(TokenRequestContext context)
             {
                 if (_currentContext == null)
                 {
@@ -353,7 +353,7 @@ namespace Azure.Core.Experimental.Pipeline
                 return false;
             }
 
-            private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, HeaderValueInfo info, Experimental.TokenRequestContext context, bool async)
+            private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, HeaderValueInfo info, TokenRequestContext context, bool async)
             {
                 var cts = new CancellationTokenSource(_tokenRefreshRetryDelay);
                 try
@@ -377,7 +377,7 @@ namespace Azure.Core.Experimental.Pipeline
                 }
             }
 
-            private async ValueTask<HeaderValueInfo> GetHeaderValueFromCredentialAsync(Experimental.TokenRequestContext context, bool async, CancellationToken cancellationToken)
+            private async ValueTask<HeaderValueInfo> GetHeaderValueFromCredentialAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
             {
                 AccessToken token = async
                     ? await _credential.GetTokenAsync(context, cancellationToken).ConfigureAwait(false)
