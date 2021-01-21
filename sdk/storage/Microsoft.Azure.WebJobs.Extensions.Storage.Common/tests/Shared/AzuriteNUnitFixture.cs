@@ -33,6 +33,15 @@ public class AzuriteNUnitFixture
                 exceptions.Add(e);
             }
         }
+        try
+        {
+            // an extra attempt to capture azurite debug log.
+            return new AzuriteFixture(includeDebugLog: true);
+        }
+        catch (Exception e)
+        {
+            exceptions.Add(e);
+        }
         throw new AggregateException(exceptions);
     }
 
