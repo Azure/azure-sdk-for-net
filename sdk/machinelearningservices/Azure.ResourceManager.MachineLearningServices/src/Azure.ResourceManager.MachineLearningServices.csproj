@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0-beta.1</Version>
     <Description>
-      Azure management client SDK for Azure resource provider Microsoft.MachineLearningServices.
-      This is a beta preview vesion. This version uses a next-generation code generator that introduces important breaking changes.
+      Azure management client SDK for Azure resource provider MachineLearningServices.
+      This is the first beta preview version, so expect incompatible changes in subsequent releases as we improve the product.
     </Description>
     <PackageId>Azure.ResourceManager.MachineLearningServices</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
