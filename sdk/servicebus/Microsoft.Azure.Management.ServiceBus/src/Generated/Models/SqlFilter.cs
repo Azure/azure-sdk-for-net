@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -57,11 +58,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string SqlExpression { get; set; }
 
         /// <summary>
-        /// Gets this property is reserved for future use. An integer value
-        /// showing the compatibility level, currently hard-coded to 20.
+        /// Gets or sets this property is reserved for future use. An integer
+        /// value showing the compatibility level, currently hard-coded to 20.
         /// </summary>
         [JsonProperty(PropertyName = "compatibilityLevel")]
-        public int? CompatibilityLevel { get; private set; }
+        public int? CompatibilityLevel { get; set; }
 
         /// <summary>
         /// Gets or sets value that indicates whether the rule action requires
@@ -70,5 +71,22 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         [JsonProperty(PropertyName = "requiresPreprocessing")]
         public bool? RequiresPreprocessing { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CompatibilityLevel > 20)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "CompatibilityLevel", 20);
+            }
+            if (CompatibilityLevel < 20)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "CompatibilityLevel", 20);
+            }
+        }
     }
 }

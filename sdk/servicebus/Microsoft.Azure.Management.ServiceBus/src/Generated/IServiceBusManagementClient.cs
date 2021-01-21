@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.ServiceBus
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Azure Service Bus client
     /// </summary>
     public partial interface IServiceBusManagementClient : System.IDisposable
     {
@@ -72,24 +71,24 @@ namespace Microsoft.Azure.Management.ServiceBus
 
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         INamespacesOperations Namespaces { get; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
         /// Gets the IDisasterRecoveryConfigsOperations.
         /// </summary>
         IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; }
-
-        /// <summary>
-        /// Gets the IMigrationConfigsOperations.
-        /// </summary>
-        IMigrationConfigsOperations MigrationConfigs { get; }
 
         /// <summary>
         /// Gets the IQueuesOperations.
@@ -102,6 +101,26 @@ namespace Microsoft.Azure.Management.ServiceBus
         ITopicsOperations Topics { get; }
 
         /// <summary>
+        /// Gets the IEventHubsOperations.
+        /// </summary>
+        IEventHubsOperations EventHubs { get; }
+
+        /// <summary>
+        /// Gets the IMigrationConfigsOperations.
+        /// </summary>
+        IMigrationConfigsOperations MigrationConfigs { get; }
+
+        /// <summary>
+        /// Gets the IPremiumMessagingRegionsOperations.
+        /// </summary>
+        IPremiumMessagingRegionsOperations PremiumMessagingRegions { get; }
+
+        /// <summary>
+        /// Gets the IRegionsOperations.
+        /// </summary>
+        IRegionsOperations Regions { get; }
+
+        /// <summary>
         /// Gets the ISubscriptionsOperations.
         /// </summary>
         ISubscriptionsOperations Subscriptions { get; }
@@ -112,19 +131,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         IRulesOperations Rules { get; }
 
         /// <summary>
-        /// Gets the IRegionsOperations.
+        /// Gets the IOperations.
         /// </summary>
-        IRegionsOperations Regions { get; }
-
-        /// <summary>
-        /// Gets the IPremiumMessagingRegionsOperations.
-        /// </summary>
-        IPremiumMessagingRegionsOperations PremiumMessagingRegions { get; }
-
-        /// <summary>
-        /// Gets the IEventHubsOperations.
-        /// </summary>
-        IEventHubsOperations EventHubs { get; }
+        IOperations Operations { get; }
 
     }
 }
