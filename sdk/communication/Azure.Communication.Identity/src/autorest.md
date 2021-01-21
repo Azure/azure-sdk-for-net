@@ -1,4 +1,4 @@
-# Azure.Communication.Administration
+# Azure.Communication.Identity
 
 Run `dotnet msbuild /t:GenerateCode` to generate code.
 
