@@ -33,7 +33,7 @@ Here's an example using the Azure CLI:
 
 ### Authenticate the client
 
-Identity client can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
+The identity client can be authenticated using a connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
 
 ```C# Snippet:CreateCommunicationIdentityClient
 // Get a connection string to our Azure Communication resource.
