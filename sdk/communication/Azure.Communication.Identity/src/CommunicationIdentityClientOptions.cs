@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Identity
 {
@@ -22,24 +21,13 @@ namespace Azure.Communication.Identity
         /// <summary>
         /// Initializes a new instance of the <see cref="CommunicationIdentityClientOptions"/>.
         /// </summary>
-        public CommunicationIdentityClientOptions(ServiceVersion version = LatestVersion, RetryOptions? retryOptions = default, HttpPipelineTransport? transport = default)
+        public CommunicationIdentityClientOptions(ServiceVersion version = LatestVersion)
         {
             ApiVersion = version switch
             {
                 ServiceVersion.V1 => "2021-03-07",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
-
-            if (transport != default)
-                Transport = transport;
-
-            if (retryOptions != null)
-            {
-                Retry.Mode = retryOptions.Mode;
-                Retry.MaxRetries = retryOptions.MaxRetries;
-                Retry.Delay = retryOptions.Delay;
-                Retry.MaxDelay = retryOptions.MaxDelay;
-            }
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace Azure.Communication.Identity
     }
     public partial class CommunicationIdentityClientOptions : Azure.Core.ClientOptions
     {
-        public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V1, Azure.Core.RetryOptions? retryOptions = null, Azure.Core.Pipeline.HttpPipelineTransport? transport = null) { }
+        public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V1) { }
         public enum ServiceVersion
         {
             V1 = 1,
