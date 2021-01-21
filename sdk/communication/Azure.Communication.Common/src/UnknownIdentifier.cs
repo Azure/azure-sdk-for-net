@@ -9,7 +9,7 @@ namespace Azure.Communication
     public class UnknownIdentifier : CommunicationIdentifier
     {
         /// <summary>The id of the endpoint.</summary>
-        public new string Id => base.Id!;
+        public string Id { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="UnknownIdentifier"/>.
@@ -22,8 +22,10 @@ namespace Azure.Communication
         /// Thrown when the <paramref name="id"/> is empty.
         /// </exception>
         public UnknownIdentifier(string id)
-            : base(id)
-            => Argument.AssertNotNullOrEmpty(id, nameof(id));
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Id = id;
+        }
 
         /// <inheritdoc />
         public override string ToString() => Id;

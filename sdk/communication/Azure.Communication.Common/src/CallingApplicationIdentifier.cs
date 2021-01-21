@@ -9,7 +9,7 @@ namespace Azure.Communication
     public class CallingApplicationIdentifier : CommunicationIdentifier
     {
         /// <summary>The id of the application.</summary>
-        public new string Id => base.Id!;
+        public string Id { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="CallingApplicationIdentifier"/>.
@@ -22,8 +22,10 @@ namespace Azure.Communication
         /// Thrown when the <paramref name="id"/> is empty.
         /// </exception>
         public CallingApplicationIdentifier(string id)
-            : base(id)
-            => Argument.AssertNotNullOrEmpty(id, nameof(id));
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Id = id;
+        }
 
         /// <inheritdoc />
         public override string ToString() => Id;

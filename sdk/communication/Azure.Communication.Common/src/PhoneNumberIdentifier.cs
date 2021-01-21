@@ -9,6 +9,9 @@ namespace Azure.Communication
     /// <summary>Represents a Phone Number.</summary>
     public class PhoneNumberIdentifier : CommunicationIdentifier
     {
+        /// <summary>The id of the phone number.</summary>
+        public string? Id { get; }
+
         /// <summary>The phone number in E.164 format.</summary>
         public string PhoneNumber { get; }
 
@@ -22,10 +25,10 @@ namespace Azure.Communication
         /// Thrown when the <paramref name="phoneNumber"/> is empty.
         /// </exception>
         public PhoneNumberIdentifier(string phoneNumber, string? id = null)
-            : base(id)
         {
             Argument.AssertNotNullOrEmpty(phoneNumber, nameof(phoneNumber));
             PhoneNumber = phoneNumber;
+            Id = id;
         }
 
         /// <inheritdoc />
@@ -36,6 +39,6 @@ namespace Azure.Communication
 
         /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
-            => other is PhoneNumberIdentifier otherId && otherId.PhoneNumber == PhoneNumber && (Id is null || other.Id is null || Id == other.Id);
+            => other is PhoneNumberIdentifier otherId && otherId.PhoneNumber == PhoneNumber && (Id is null || otherId.Id is null || Id == otherId.Id);
     }
 }

@@ -9,7 +9,7 @@ namespace Azure.Communication
     public class CommunicationUserIdentifier : CommunicationIdentifier
     {
         /// <summary>The id of the communication user.</summary>
-        public new string Id => base.Id!;
+        public string Id { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationUserIdentifier"/>.
@@ -22,8 +22,10 @@ namespace Azure.Communication
         /// Thrown when the <paramref name="id"/> is empty.
         /// </exception>
         public CommunicationUserIdentifier(string id)
-            : base(id)
-            => Argument.AssertNotNullOrEmpty(id, nameof(id));
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Id = id;
+        }
 
         /// <inheritdoc />
         public override string ToString() => Id;
