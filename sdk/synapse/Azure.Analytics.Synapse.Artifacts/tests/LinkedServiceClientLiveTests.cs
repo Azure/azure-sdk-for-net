@@ -1,12 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Tests.Artifacts
+namespace Azure.Analytics.Synapse.Artifacts.Tests
 {
     /// <summary>
     /// The suite of tests for the <see cref="LinkedServiceClient"/> class.
@@ -15,22 +19,29 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class LinkedServiceClientLiveTests : ArtifactsClientTestBase
+    public class LinkedServiceClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LinkedServiceClientLiveTests"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public LinkedServiceClientLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        private LinkedServiceClient CreateClient()
+        {
+            return InstrumentClient(new LinkedServiceClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ArtifactsClientOptions())
+            ));
         }
 
         [Test]
         public async Task TestGetLinkedService()
         {
-            await foreach (var expectedLinkedService in LinkedServiceClient.GetLinkedServicesByWorkspaceAsync())
+            LinkedServiceClient client = CreateClient();
+
+            await foreach (var expectedLinkedService in client.GetLinkedServicesByWorkspaceAsync())
             {
-                LinkedServiceResource actualLinkedService = await LinkedServiceClient.GetLinkedServiceAsync(expectedLinkedService.Name);
+                LinkedServiceResource actualLinkedService = await client.GetLinkedServiceAsync(expectedLinkedService.Name);
                 Assert.AreEqual(expectedLinkedService.Name, actualLinkedService.Name);
                 Assert.AreEqual(expectedLinkedService.Id, actualLinkedService.Id);
             }
@@ -39,8 +50,10 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         [Test]
         public async Task TestCreateLinkedService()
         {
-            string linkedServiceName = Recording.GenerateName("LinkedSercive");
-            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = await LinkedServiceClient.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
+            LinkedServiceClient client = CreateClient();
+
+            string linkedServiceName = Recording.GenerateId("LinkedService", 16);
+            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = await client.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
             LinkedServiceResource linkedService = await operation.WaitForCompletionAsync();
             Assert.AreEqual(linkedServiceName, linkedService.Name);
         }
@@ -48,12 +61,14 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         [Test]
         public async Task TestDeleteLinkedService()
         {
-            string linkedServiceName = Recording.GenerateName("LinkedSercive");
+            LinkedServiceClient client = CreateClient();
 
-            LinkedServiceCreateOrUpdateLinkedServiceOperation createOperation = await LinkedServiceClient.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
+            string linkedServiceName = Recording.GenerateId("LinkedService", 16);
+
+            LinkedServiceCreateOrUpdateLinkedServiceOperation createOperation = await client.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
             await createOperation.WaitForCompletionAsync();
 
-            LinkedServiceDeleteLinkedServiceOperation deleteOperation = await LinkedServiceClient.StartDeleteLinkedServiceAsync(linkedServiceName);
+            LinkedServiceDeleteLinkedServiceOperation deleteOperation = await client.StartDeleteLinkedServiceAsync(linkedServiceName);
             Response response = await deleteOperation.WaitForCompletionAsync();
             Assert.AreEqual(200, response.Status);
         }
