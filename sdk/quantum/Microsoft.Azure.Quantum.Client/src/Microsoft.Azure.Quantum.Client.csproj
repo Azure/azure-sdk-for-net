@@ -3,7 +3,7 @@
     <PackageTags>Microsoft Azure Quantum Client;Microsoft Azure Quantum Client;Quantum Client</PackageTags>
     <Description>Use this package if you're developing a Quantum client.</Description>
     <AssemblyTitle>Microsoft Azure Quantum Client Library</AssemblyTitle>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net5</TargetFrameworks>
     <PackageReleaseNotes>See the Microsoft.Azure.Quantum.Client package for detailed release notes on the entire Quantum Client .NET SDK.</PackageReleaseNotes>
 
     <Version>10.1.0</Version>
