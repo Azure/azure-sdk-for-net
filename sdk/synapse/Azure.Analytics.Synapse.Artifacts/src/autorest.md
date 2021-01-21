@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ```yaml
-repo: https://github.com/Azure/azure-rest-api-specs/tree/6636b93e2c9eb979336841289ce08d7c6043ea0e
+repo: https://github.com/Azure/azure-rest-api-specs/blob/b9fbfae938a0ec0e8a696b450a917b47bea1f2e3
 ```
 
 ``` yaml
