@@ -12,14 +12,5 @@ namespace Azure.Storage.Files.Shares.Models
 {
     public partial class ShareStatistics
     {
-        internal static ShareStatistics DeserializeShareStatistics(XElement element)
-        {
-            int shareUsageBytes = default;
-            if (element.Element("ShareUsageBytes") is XElement shareUsageBytesElement)
-            {
-                shareUsageBytes = (int)shareUsageBytesElement;
-            }
-            return new ShareStatistics(shareUsageBytes);
-        }
     }
 }
