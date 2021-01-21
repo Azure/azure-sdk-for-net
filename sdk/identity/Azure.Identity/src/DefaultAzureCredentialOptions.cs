@@ -97,7 +97,7 @@ namespace Azure.Identity
 
         private static string GetNonEmptyStringOrNull(string str)
         {
-            return string.IsNullOrEmpty(str) ? null : str;
+            return !string.IsNullOrEmpty(str) ? str : null;
         }
     }
 }
