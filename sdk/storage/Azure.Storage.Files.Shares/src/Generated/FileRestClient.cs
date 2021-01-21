@@ -22,7 +22,6 @@ namespace Azure.Storage.Files.Shares
         private string url;
         private string path;
         private string version;
-        private string sharesnapshot;
         private string fileRangeWriteFromUrl;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -33,10 +32,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="path"> path. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="path"/>, <paramref name="version"/>, or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string path, string version = "2020-04-08", string sharesnapshot = null, string fileRangeWriteFromUrl = "update")
+        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string path, string version = "2020-04-08", string fileRangeWriteFromUrl = "update")
         {
             if (url == null)
             {
@@ -58,7 +56,6 @@ namespace Azure.Storage.Files.Shares
             this.url = url;
             this.path = path;
             this.version = version;
-            this.sharesnapshot = sharesnapshot;
             this.fileRangeWriteFromUrl = fileRangeWriteFromUrl;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -287,7 +284,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout, ShareFileRequestConditions leaseAccessConditions)
+        internal HttpMessage CreateGetPropertiesRequest(string sharesnapshot, int? timeout, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -315,12 +312,13 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns all user-defined metadata, standard HTTP properties, and system properties for the file. It does not return the content of the file. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileGetPropertiesHeaders>> GetPropertiesAsync(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout, leaseAccessConditions);
+            using var message = CreateGetPropertiesRequest(sharesnapshot, timeout, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -333,12 +331,13 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns all user-defined metadata, standard HTTP properties, and system properties for the file. It does not return the content of the file. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileGetPropertiesHeaders> GetProperties(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileGetPropertiesHeaders> GetProperties(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout, leaseAccessConditions);
+            using var message = CreateGetPropertiesRequest(sharesnapshot, timeout, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -1100,7 +1099,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateGetRangeListRequest(string prevsharesnapshot, int? timeout, string range, ShareFileRequestConditions leaseAccessConditions)
+        internal HttpMessage CreateGetRangeListRequest(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1137,14 +1136,15 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns the list of valid ranges for a file. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders>> GetRangeListAsync(string prevsharesnapshot = null, int? timeout = null, string range = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders>> GetRangeListAsync(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRangeListRequest(prevsharesnapshot, timeout, range, leaseAccessConditions);
+            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileGetRangeListHeaders(message.Response);
             switch (message.Response.Status)
@@ -1165,14 +1165,15 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns the list of valid ranges for a file. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> GetRangeList(string prevsharesnapshot = null, int? timeout = null, string range = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> GetRangeList(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRangeListRequest(prevsharesnapshot, timeout, range, leaseAccessConditions);
+            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileGetRangeListHeaders(message.Response);
             switch (message.Response.Status)
@@ -1386,7 +1387,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateListHandlesRequest(string marker, int? maxresults, int? timeout)
+        internal HttpMessage CreateListHandlesRequest(string marker, int? maxresults, int? timeout, string sharesnapshot)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1422,10 +1423,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListHandlesResponse, FileListHandlesHeaders>> ListHandlesAsync(string marker = null, int? maxresults = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListHandlesResponse, FileListHandlesHeaders>> ListHandlesAsync(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListHandlesRequest(marker, maxresults, timeout);
+            using var message = CreateListHandlesRequest(marker, maxresults, timeout, sharesnapshot);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileListHandlesHeaders(message.Response);
             switch (message.Response.Status)
@@ -1449,10 +1451,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListHandlesResponse, FileListHandlesHeaders> ListHandles(string marker = null, int? maxresults = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListHandlesResponse, FileListHandlesHeaders> ListHandles(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListHandlesRequest(marker, maxresults, timeout);
+            using var message = CreateListHandlesRequest(marker, maxresults, timeout, sharesnapshot);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileListHandlesHeaders(message.Response);
             switch (message.Response.Status)
@@ -1472,7 +1475,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateForceCloseHandlesRequest(string handleId, int? timeout, string marker)
+        internal HttpMessage CreateForceCloseHandlesRequest(string handleId, int? timeout, string marker, string sharesnapshot)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1505,16 +1508,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="handleId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileForceCloseHandlesHeaders>> ForceCloseHandlesAsync(string handleId, int? timeout = null, string marker = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileForceCloseHandlesHeaders>> ForceCloseHandlesAsync(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
             if (handleId == null)
             {
                 throw new ArgumentNullException(nameof(handleId));
             }
 
-            using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker);
+            using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileForceCloseHandlesHeaders(message.Response);
             switch (message.Response.Status)
@@ -1530,16 +1534,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="handleId"/> is null. </exception>
-        public ResponseWithHeaders<FileForceCloseHandlesHeaders> ForceCloseHandles(string handleId, int? timeout = null, string marker = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileForceCloseHandlesHeaders> ForceCloseHandles(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
             if (handleId == null)
             {
                 throw new ArgumentNullException(nameof(handleId));
             }
 
-            using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker);
+            using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileForceCloseHandlesHeaders(message.Response);
             switch (message.Response.Status)

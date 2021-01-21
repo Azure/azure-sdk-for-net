@@ -4721,9 +4721,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileRangeInfo>> GetRangeListInternal(
             HttpRange? range,
-#pragma warning disable CA1801 // Review unused parameters
             string snapshot,
-#pragma warning restore CA1801 // Review unused parameters
             string previousSnapshot,
             ShareFileRequestConditions conditions,
             string operationName,
@@ -4748,6 +4746,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await FileRestClient.GetRangeListAsync(
+                            sharesnapshot: snapshot,
                             prevsharesnapshot: previousSnapshot,
                             range: range?.ToString(),
                             leaseAccessConditions: conditions,
@@ -4757,6 +4756,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = FileRestClient.GetRangeList(
+                            sharesnapshot: snapshot,
                             prevsharesnapshot: previousSnapshot,
                             range: range?.ToString(),
                             leaseAccessConditions: conditions,

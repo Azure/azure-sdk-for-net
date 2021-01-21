@@ -22,15 +22,6 @@ directive:
     $.Metrics.type = "object";
 ```
 
-### Remove ShareSnapshot as a method parameter.
-``` yaml
-directive:
-- from: swagger-document
-  where: $.parameters
-  transform: >
-    delete $.ShareSnapshot["x-ms-parameter-location"];
-```
-
 ### Times aren't required
 ``` yaml
 directive:

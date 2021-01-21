@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares.Models
             int numberOfHandlesClosed)
             => StorageClosedHandlesSegment(
                 marker: marker,
-                numberOfHandlesClosed: numberOfHandlesClosed));
+                numberOfHandlesClosed: numberOfHandlesClosed);
 
         /// <summary>
         /// Creates a new ShareProperties instance for mocking.
