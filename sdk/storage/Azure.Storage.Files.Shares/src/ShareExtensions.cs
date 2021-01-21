@@ -614,6 +614,7 @@ namespace Azure.Storage.Files.Shares
                 RemainingRetentionDays = null,
                 AccessTier = response.Headers.AccessTier,
                 AccessTierChangeTime = response.Headers.AccessTierChangeTime,
+                AccessTierTransitionState = response.Headers.AccessTierTransitionState,
                 LeaseStatus = response.Headers.LeaseStatus,
                 LeaseState = response.Headers.LeaseState,
                 LeaseDuration = response.Headers.LeaseDuration,

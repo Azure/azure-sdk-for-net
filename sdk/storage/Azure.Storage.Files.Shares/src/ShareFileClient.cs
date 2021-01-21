@@ -4051,8 +4051,6 @@ namespace Azure.Storage.Files.Shares
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
-                            // TODO
-                            sourceModifiedAccessConditions: null,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4064,8 +4062,6 @@ namespace Azure.Storage.Files.Shares
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
-                            // TODO
-                            sourceModifiedAccessConditions: null,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
