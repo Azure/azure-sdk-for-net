@@ -610,9 +610,7 @@ namespace Azure.Storage.Files.Shares
                 ProvisionedIngressMBps = response.Headers.ProvisionedIngressMBps,
                 ProvisionedEgressMBps = response.Headers.ProvisionedEgressMBps,
                 NextAllowedQuotaDowngradeTime = response.Headers.NextAllowedQuotaDowngradeTime,
-                // TODO fix this.
                 DeletedOn = null,
-                // TODO fix this.
                 RemainingRetentionDays = null,
                 AccessTier = response.Headers.AccessTier,
                 AccessTierChangeTime = response.Headers.AccessTierChangeTime,
@@ -713,7 +711,7 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            IDictionary<string, string> metadata = rawMetadata.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            IDictionary<string, string> metadata = rawMetadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
             return new ShareProperties
             {

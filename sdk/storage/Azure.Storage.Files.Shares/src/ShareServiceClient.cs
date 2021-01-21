@@ -429,17 +429,29 @@ namespace Azure.Storage.Files.Shares
                             cancellationToken: cancellationToken);
                     }
 
+                    ListSharesResponse listSharesResponse = response.Value;
+
                     if ((traits & ShareTraits.Metadata) != ShareTraits.Metadata)
                     {
-                        IEnumerable<ShareItemInternal> shareItemInternals = response.Value.ShareItems;
-                        foreach (ShareItemInternal shareItemInternal in shareItemInternals)
-                        {
-                            // TODO fix this
-                            //shareItemInternal.Metadata = null;
-                        }
+                        List<ShareItemInternal> shareItemInternals = response.Value.ShareItems.Select(r => new ShareItemInternal(
+                            r.Name,
+                            r.Snapshot,
+                            r.Deleted,
+                            r.Version,
+                            r.Properties,
+                            metadata: null))
+                            .ToList();
+
+                        listSharesResponse = new ListSharesResponse(
+                            response.Value.ServiceEndpoint,
+                            response.Value.Prefix,
+                            response.Value.Marker,
+                            response.Value.MaxResults,
+                            shareItemInternals.AsReadOnly(),
+                            response.Value.NextMarker);
                     }
                     return Response.FromValue(
-                        response.Value,
+                        listSharesResponse,
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
