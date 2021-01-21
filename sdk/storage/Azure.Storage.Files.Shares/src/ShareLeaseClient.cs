@@ -52,21 +52,9 @@ namespace Azure.Storage.Files.Shares.Specialized
         public virtual string LeaseId { get; private set; }
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="ShareClientConfiguration"/>.
         /// </summary>
-        private HttpPipeline Pipeline => FileClient?.Pipeline ?? ShareClient?.Pipeline;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        internal virtual ShareClientOptions.ServiceVersion Version => FileClient?.Version ?? ShareClient.Version;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => FileClient?.ClientDiagnostics ?? ShareClient?.ClientDiagnostics;
+        internal virtual ShareClientConfiguration ClientConfiguration => FileClient?.ClientConfiguration ?? ShareClient?.ClientConfiguration;
 
         /// <summary>
         /// The <see cref="TimeSpan"/> representing an infinite lease duration.
@@ -322,15 +310,15 @@ namespace Azure.Storage.Files.Shares.Specialized
             CancellationToken cancellationToken)
         {
             EnsureClient();
-            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Acquire)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Acquire)}");
 
                 try
                 {
@@ -398,13 +386,13 @@ namespace Azure.Storage.Files.Shares.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareLeaseClient));
                     scope.Dispose();
                 }
             }
@@ -500,15 +488,15 @@ namespace Azure.Storage.Files.Shares.Specialized
             CancellationToken cancellationToken)
         {
             EnsureClient();
-            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Release)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Release)}");
 
                 try
                 {
@@ -560,13 +548,13 @@ namespace Azure.Storage.Files.Shares.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareLeaseClient));
                     scope.Dispose();
                 }
             }
@@ -667,16 +655,16 @@ namespace Azure.Storage.Files.Shares.Specialized
             CancellationToken cancellationToken)
         {
             EnsureClient();
-            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(proposedId)}: {proposedId}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Change)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Change)}");
 
                 try
                 {
@@ -733,13 +721,13 @@ namespace Azure.Storage.Files.Shares.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareLeaseClient));
                     scope.Dispose();
                 }
             }
@@ -841,15 +829,15 @@ namespace Azure.Storage.Files.Shares.Specialized
             CancellationToken cancellationToken)
         {
             EnsureClient();
-            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Break)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Break)}");
 
                 try
                 {
@@ -904,13 +892,13 @@ namespace Azure.Storage.Files.Shares.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareLeaseClient));
                     scope.Dispose();
                 }
             }
@@ -1009,15 +997,15 @@ namespace Azure.Storage.Files.Shares.Specialized
             CancellationToken cancellationToken)
         {
             EnsureClient();
-            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Renew)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Renew)}");
 
                 try
                 {
@@ -1051,13 +1039,13 @@ namespace Azure.Storage.Files.Shares.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareLeaseClient));
                     scope.Dispose();
                 }
             }

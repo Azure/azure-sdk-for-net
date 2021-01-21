@@ -31,38 +31,14 @@ namespace Azure.Storage.Files.Shares
         public virtual Uri Uri => _uri;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="ShareClientConfiguration"/>.
         /// </summary>
-        private readonly HttpPipeline _pipeline;
+        private readonly ShareClientConfiguration _clientConfiguration;
 
         /// <summary>
-        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="ShareClientConfiguration"/>.
         /// </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        private readonly ShareClientOptions.ServiceVersion _version;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        internal virtual ShareClientOptions.ServiceVersion Version => _version;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual ShareClientConfiguration ClientConfiguration => _clientConfiguration;
 
         /// <summary>
         /// DirectoryRestClient.
@@ -143,20 +119,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
-        /// </summary>
-        internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
-
-        /// <summary>
-        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
-        /// </summary>
-        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
-
-        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => SharedKeyCredential != null;
+        public bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -224,10 +190,11 @@ namespace Azure.Storage.Files.Shares
                     DirectoryOrFilePath = directoryPath
                 };
             _uri = uriBuilder.ToUri();
-            _pipeline = options.Build(conn.Credentials);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(conn.Credentials),
+                sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version);
             _directoryRestClient = BuildDirectoryRestClient(_uri);
         }
 
@@ -327,10 +294,11 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(directoryUri, nameof(directoryUri));
             options ??= new ShareClientOptions();
             _uri = directoryUri;
-            _pipeline = options.Build(authentication);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _storageSharedKeyCredential = storageSharedKeyCredential;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version);
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
 
@@ -343,31 +311,15 @@ namespace Azure.Storage.Files.Shares
         /// name of the account, the name of the share, and the path of the
         /// directory.
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
-        /// </param>
-        /// <param name="clientDiagnostics">
-        /// The <see cref="ClientDiagnostics"/> instance used to create
-        /// diagnostic scopes every request.
+        /// <param name="clientConfiguration">
+        /// <see cref="ShareClientConfiguration"/>
         /// </param>
         internal ShareDirectoryClient(
             Uri directoryUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            ShareClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics)
+            ShareClientConfiguration clientConfiguration)
         {
             _uri = directoryUri;
-            _pipeline = pipeline;
-            _version = version;
-            _storageSharedKeyCredential = storageSharedKeyCredential;
-            _clientDiagnostics = clientDiagnostics;
+            _clientConfiguration = clientConfiguration;
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
 
@@ -379,11 +331,11 @@ namespace Azure.Storage.Files.Shares
                 DirectoryOrFilePath = null
             };
             return new DirectoryRestClient(
-                _clientDiagnostics,
-                _pipeline,
+                ClientConfiguration.ClientDiagnostics,
+                ClientConfiguration.Pipeline,
                 uriBuilder.ToUri().ToString(),
                 path: $"{ShareName}/{Path.EscapePath()}",
-                _version.ToVersionString());
+                ClientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
 
@@ -410,10 +362,7 @@ namespace Azure.Storage.Files.Shares
             var p = new ShareUriBuilder(Uri) { Snapshot = snapshot };
             return new ShareDirectoryClient(
                 p.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics);
+                ClientConfiguration);
         }
 
         /// <summary>
@@ -430,10 +379,7 @@ namespace Azure.Storage.Files.Shares
             shareUriBuilder.DirectoryOrFilePath += $"/{fileName}";
             return new ShareFileClient(
                 shareUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics);
+                ClientConfiguration);
         }
 
         /// <summary>
@@ -450,10 +396,7 @@ namespace Azure.Storage.Files.Shares
             shareUriBuilder.DirectoryOrFilePath += $"/{subdirectoryName}";
             return new ShareDirectoryClient(
                 shareUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics);
+                ClientConfiguration);
         }
 
         /// <summary>
@@ -599,14 +542,14 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
                 operationName ??= $"{nameof(ShareDirectoryClient)}.{nameof(Create)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -651,13 +594,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                     scope.Dispose();
                 }
             }
@@ -793,9 +736,9 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message: $"{nameof(Uri)}: {Uri}");
                 try
@@ -818,12 +761,12 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                 }
             }
         }
@@ -897,9 +840,9 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
@@ -923,12 +866,12 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                 }
             }
         }
@@ -1012,9 +955,9 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message: $"{nameof(Uri)}: {Uri}");
                 try
@@ -1035,12 +978,12 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                 }
             }
         }
@@ -1124,14 +1067,14 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
                 operationName ??= $"{nameof(ShareDirectoryClient)}.{nameof(Delete)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -1154,13 +1097,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                     scope.Dispose();
                 }
             }
@@ -1259,15 +1202,15 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
 
                 operationName ??= $"{nameof(ShareDirectoryClient)}.{nameof(GetProperties)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -1298,13 +1241,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                     scope.Dispose();
                 }
             }
@@ -1419,14 +1362,14 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(SetHttpHeaders)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(SetHttpHeaders)}");
 
                 try
                 {
@@ -1469,13 +1412,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                     scope.Dispose();
                 }
             }
@@ -1575,13 +1518,13 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(SetMetadata)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(SetMetadata)}");
 
                 try
                 {
@@ -1608,13 +1551,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                     scope.Dispose();
                 }
             }
@@ -1732,16 +1675,16 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(prefix)}: {prefix}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(GetFilesAndDirectories)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(GetFilesAndDirectories)}");
 
                 try
                 {
@@ -1772,13 +1715,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                     scope.Dispose();
                 }
             }
@@ -1891,9 +1834,9 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -1902,7 +1845,7 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(recursive)}: {recursive}");
 
                 string operationName = $"{nameof(ShareDirectoryClient)}.{nameof(GetHandles)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -1933,13 +1876,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                     scope.Dispose();
                 }
             }
@@ -2240,9 +2183,9 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = null)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -2251,7 +2194,7 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(recursive)}: {recursive}");
 
                 operationName ??= $"{nameof(ShareDirectoryClient)}.{nameof(ForceCloseAllHandles)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -2282,13 +2225,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                     scope.Dispose();
                 }
             }
@@ -2916,7 +2859,7 @@ namespace Azure.Storage.Files.Shares
             }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

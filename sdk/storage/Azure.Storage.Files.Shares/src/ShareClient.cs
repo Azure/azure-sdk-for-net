@@ -35,38 +35,14 @@ namespace Azure.Storage.Files.Shares
         public virtual Uri Uri => _uri;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="ShareClientConfiguration"/>.
         /// </summary>
-        private readonly HttpPipeline _pipeline;
+        private readonly ShareClientConfiguration _clientConfiguration;
 
         /// <summary>
-        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="ShareClientConfiguration"/>.
         /// </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        private readonly ShareClientOptions.ServiceVersion _version;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        internal virtual ShareClientOptions.ServiceVersion Version => _version;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual ShareClientConfiguration ClientConfiguration => _clientConfiguration;
 
         /// <summary>
         /// ShareRestClient.
@@ -113,20 +89,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
-        /// </summary>
-        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
-
-        /// <summary>
-        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
-        /// </summary>
-        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
-
-        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => SharedKeyCredential != null;
+        public bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -185,10 +151,11 @@ namespace Azure.Storage.Files.Shares
             var conn = StorageConnectionString.Parse(connectionString);
             ShareUriBuilder uriBuilder = new ShareUriBuilder(conn.FileEndpoint) { ShareName = shareName };
             _uri = uriBuilder.ToUri();
-            _pipeline = options.Build(conn.Credentials);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(conn.Credentials),
+                sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version);
             _shareRestClient = BuildShareRestClient(_uri);
         }
 
@@ -284,10 +251,11 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(shareUri, nameof(shareUri));
             options ??= new ShareClientOptions();
             _uri = shareUri;
-            _pipeline = options.Build(authentication);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _storageSharedKeyCredential = storageSharedKeyCredential;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version);
             _shareRestClient = BuildShareRestClient(shareUri);
         }
 
@@ -299,31 +267,15 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Uri"/> referencing the share that includes the
         /// name of the account and the name of the share.
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
-        /// </param>
-        /// <param name="clientDiagnostics">
-        /// The <see cref="ClientDiagnostics"/> instance used to create
-        /// diagnostic scopes every request.
+        /// <param name="clientConfiguration">
+        /// <see cref="ShareClientConfiguration"/>.
         /// </param>
         internal ShareClient(
             Uri shareUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            ShareClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics)
+            ShareClientConfiguration clientConfiguration)
         {
             _uri = shareUri;
-            _pipeline = pipeline;
-            _storageSharedKeyCredential = storageSharedKeyCredential;
-            _version = version;
-            _clientDiagnostics = clientDiagnostics;
+            _clientConfiguration = clientConfiguration;
             _shareRestClient = BuildShareRestClient(shareUri);
         }
 
@@ -334,11 +286,11 @@ namespace Azure.Storage.Files.Shares
                 ShareName = null
             };
             return new ShareRestClient(
-                ClientDiagnostics,
-                Pipeline,
+                ClientConfiguration.ClientDiagnostics,
+                ClientConfiguration.Pipeline,
                 uriBuilder.ToUri().ToString(),
                 path: Name,
-                Version.ToVersionString());
+                ClientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
 
@@ -363,7 +315,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new ShareUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareClient(p.ToUri(), Pipeline, SharedKeyCredential, Version, ClientDiagnostics);
+            return new ShareClient(p.ToUri(), ClientConfiguration);
         }
 
         /// <summary>
@@ -382,10 +334,7 @@ namespace Azure.Storage.Files.Shares
             };
             return new ShareDirectoryClient(
                 shareUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics);
+                ClientConfiguration);
         }
 
         /// <summary>
@@ -621,16 +570,16 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(quotaInGB)}: {quotaInGB}");
 
                 operationName ??= $"{nameof(ShareClient)}.{nameof(Create)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -665,13 +614,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -880,9 +829,9 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -908,12 +857,12 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
                 return response;
             }
@@ -988,9 +937,9 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
@@ -1013,12 +962,12 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -1196,9 +1145,9 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
@@ -1221,12 +1170,12 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -1325,13 +1274,13 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(CreateSnapshot)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(CreateSnapshot)}");
 
                 try
                 {
@@ -1359,13 +1308,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -1552,15 +1501,15 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
 
                 operationName ??= $"{nameof(ShareClient)}.{nameof(Delete)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -1599,13 +1548,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -1782,15 +1731,15 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = null)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
 
                 operationName ??= $"{nameof(ShareClient)}.{nameof(GetProperties)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -1817,13 +1766,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -1949,16 +1898,16 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessTier)}: {accessTier}");
 
                 operationName ??= $"{nameof(ShareClient)}.{nameof(SetProperties)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -1992,13 +1941,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -2356,13 +2305,13 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(SetMetadata)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(SetMetadata)}");
 
                 try
                 {
@@ -2392,13 +2341,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -2571,13 +2520,13 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(GetAccessPolicy)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(GetAccessPolicy)}");
 
                 try
                 {
@@ -2606,13 +2555,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -2816,13 +2765,13 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(SetAccessPolicy)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(SetAccessPolicy)}");
 
                 try
                 {
@@ -2851,13 +2800,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -3020,13 +2969,13 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(GetStatistics)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(GetStatistics)}");
 
                 try
                 {
@@ -3054,13 +3003,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -3117,13 +3066,13 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(GetPermission)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(GetPermission)}");
 
                 try
                 {
@@ -3151,13 +3100,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -3220,13 +3169,13 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(CreatePermission)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareClient)}.{nameof(CreatePermission)}");
 
                 try
                 {
@@ -3254,13 +3203,13 @@ namespace Azure.Storage.Files.Shares
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareClient));
                     scope.Dispose();
                 }
             }
@@ -3507,7 +3456,7 @@ namespace Azure.Storage.Files.Shares
             }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }
