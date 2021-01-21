@@ -66,3 +66,30 @@ function Parse-ReleaseHighlights ($content)
     }
     return $releaseHighlights
 }
+
+function Filter-ReleaseHighlights ($releaseHighlights)
+{
+    foreach ($key in $releaseHighlights.Keys)
+    {
+        $keyInfo = $key.Split(":")
+        $packageName = $keyInfo[0]
+        $packageVersion = $keyInfo[1]
+
+        $existingPackages = GetExistingPackageVersions -PackageName $packageName
+
+        if ()
+    }
+}
+
+function Write-GeneralReleaseNote ($releaseHighlights, $releaseFilePath)
+{
+    $releaseContent = Get-Content $releaseFilePath
+    $newReleaseContent = @()
+    $lineNumber = 0
+
+    while ($lineNumber -lt $releaseContent.Count)
+    {
+        $line = $releaseContent[$lineNumber]
+
+    }
+}
