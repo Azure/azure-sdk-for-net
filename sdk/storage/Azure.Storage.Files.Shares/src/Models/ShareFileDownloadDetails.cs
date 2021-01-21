@@ -147,9 +147,7 @@ namespace Azure.Storage.Files.Shares.Models
             string contentDisposition,
             IEnumerable<string> contentLanguage,
             string acceptRanges,
-#pragma warning disable CA1801 // Review unused parameters
             DateTimeOffset copyCompletedOn,
-#pragma warning restore CA1801 // Review unused parameters
             string copyStatusDescription,
             string copyId,
             string copyProgress,
@@ -162,8 +160,6 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 LastModified = lastModified,
                 Metadata = metadata,
-                // TODO
-                //ContentType = contentType,
                 ContentRange = contentRange,
                 ETag = eTag,
                 ContentEncoding = contentEncoding,
@@ -171,8 +167,7 @@ namespace Azure.Storage.Files.Shares.Models
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
                 AcceptRanges = acceptRanges,
-                // TODO
-                //CopyCompletionTime = copyCompletedOn,
+                CopyCompletedOn = copyCompletedOn,
                 CopyStatusDescription = copyStatusDescription,
                 CopyId = copyId,
                 CopyProgress = copyProgress,

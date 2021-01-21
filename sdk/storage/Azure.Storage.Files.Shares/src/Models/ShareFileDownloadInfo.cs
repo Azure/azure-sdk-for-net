@@ -66,73 +66,72 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new StorageFileDownloadInfo instance for mocking.
         /// </summary>
         public static ShareFileDownloadInfo StorageFileDownloadInfo(
-#pragma warning disable CA1801 // Review unused parameters
-            System.DateTimeOffset lastModified = default,
-            System.Collections.Generic.IEnumerable<string> contentLanguage = default,
+            DateTimeOffset lastModified = default,
+            IEnumerable<string> contentLanguage = default,
             string acceptRanges = default,
-            System.DateTimeOffset copyCompletionTime = default,
+            DateTimeOffset copyCompletionTime = default,
             string copyStatusDescription = default,
             string contentDisposition = default,
             string copyProgress = default,
-            System.Uri copySource = default,
-            Azure.Storage.Files.Shares.Models.CopyStatus copyStatus = default,
+            Uri copySource = default,
+            CopyStatus copyStatus = default,
             byte[] fileContentHash = default,
             bool isServerEncrypted = default,
             string cacheControl = default,
             string fileAttributes = default,
-            System.Collections.Generic.IEnumerable<string> contentEncoding = default,
-            System.DateTimeOffset fileCreationTime = default,
+            IEnumerable<string> contentEncoding = default,
+            DateTimeOffset fileCreationTime = default,
             byte[] contentHash = default,
-            System.DateTimeOffset fileLastWriteTime = default,
+            DateTimeOffset fileLastWriteTime = default,
             ETag eTag = default,
-            System.DateTimeOffset fileChangeTime = default,
+            DateTimeOffset fileChangeTime = default,
             string contentRange = default,
             string filePermissionKey = default,
             string contentType = default,
             string fileId = default,
             long contentLength = default,
             string fileParentId = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default,
-            System.IO.Stream content = default,
-            string copyId = default
-#pragma warning restore CA1801 // Review unused parameters
-            )
+            IDictionary<string, string> metadata = default,
+            Stream content = default,
+            string copyId = default)
         {
-            // TODO fix this.
-            return null;
-            //return new ShareFileDownloadInfo(
-            //    new FlattenedStorageFileProperties()
-            //    {
-            //        LastModified = lastModified,
-            //        ContentLanguage = contentLanguage,
-            //        AcceptRanges = acceptRanges,
-            //        CopyCompletionTime = copyCompletionTime,
-            //        CopyStatusDescription = copyStatusDescription,
-            //        ContentDisposition = contentDisposition,
-            //        CopyProgress = copyProgress,
-            //        CopySource = copySource,
-            //        CopyStatus = copyStatus,
-            //        FileContentHash = fileContentHash,
-            //        IsServerEncrypted = isServerEncrypted,
-            //        CacheControl = cacheControl,
-            //        FileAttributes = fileAttributes,
-            //        ContentEncoding = contentEncoding,
-            //        FileCreationTime = fileCreationTime,
-            //        ContentHash = contentHash,
-            //        FileLastWriteTime = fileLastWriteTime,
-            //        ETag = eTag,
-            //        FileChangeTime = fileChangeTime,
-            //        ContentRange = contentRange,
-            //        FilePermissionKey = filePermissionKey,
-            //        ContentType = contentType,
-            //        FileId = fileId,
-            //        ContentLength = contentLength,
-            //        FileParentId = fileParentId,
-            //        Metadata = metadata,
-            //        Content = content,
-            //        CopyId = copyId,
-            //    }
-            //);
+            return new ShareFileDownloadInfo
+            {
+                ContentLength = contentLength,
+                Content = content,
+                ContentType = contentType,
+                ContentHash = contentHash,
+                Details = new ShareFileDownloadDetails
+                {
+                    LastModified = lastModified,
+                    Metadata = metadata,
+                    ContentRange = contentRange,
+                    ETag = eTag,
+                    ContentEncoding = contentEncoding,
+                    CacheControl = cacheControl,
+                    ContentDisposition = contentDisposition,
+                    ContentLanguage = contentLanguage,
+                    AcceptRanges = acceptRanges,
+                    CopyCompletedOn = copyCompletionTime,
+                    CopyStatusDescription = copyStatusDescription,
+                    CopyId = copyId,
+                    CopyProgress = copyProgress,
+                    CopySource = copySource,
+                    CopyStatus = copyStatus,
+                    FileContentHash = fileContentHash,
+                    IsServerEncrypted = isServerEncrypted,
+                    SmbProperties = new FileSmbProperties
+                    {
+                        FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                        FilePermissionKey = filePermissionKey,
+                        FileCreatedOn = fileCreationTime,
+                        FileLastWrittenOn = fileLastWriteTime,
+                        FileChangedOn = fileChangeTime,
+                        FileId = fileId,
+                        ParentId = fileParentId
+                    }
+                }
+            };
         }
     }
 }

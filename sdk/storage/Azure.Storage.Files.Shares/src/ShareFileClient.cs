@@ -4118,8 +4118,7 @@ namespace Azure.Storage.Files.Shares
                             sourceRange: sourceRange.ToString(),
                             // TODO
                             sourceModifiedAccessConditions: null,
-                            // TODO
-                            leaseAccessConditions: null,
+                            leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
