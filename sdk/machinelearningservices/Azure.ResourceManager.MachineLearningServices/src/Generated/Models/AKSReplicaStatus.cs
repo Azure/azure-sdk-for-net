@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="updatedReplicas"> The number of updated replicas. </param>
         /// <param name="availableReplicas"> The number of available replicas. </param>
         /// <param name="error"> The error details. </param>
-        internal AKSReplicaStatus(int? desiredReplicas, int? updatedReplicas, int? availableReplicas, ErrorResponse error)
+        internal AKSReplicaStatus(int? desiredReplicas, int? updatedReplicas, int? availableReplicas, AKSReplicaStatusError error)
         {
             DesiredReplicas = desiredReplicas;
             UpdatedReplicas = updatedReplicas;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The number of available replicas. </summary>
         public int? AvailableReplicas { get; }
         /// <summary> The error details. </summary>
-        public ErrorResponse Error { get; }
+        public AKSReplicaStatusError Error { get; }
     }
 }

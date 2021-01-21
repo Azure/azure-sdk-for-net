@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The list of models. </summary>
         public IList<Model> Models { get; }
         /// <summary> The details of the AZURE ML environment. </summary>
-        public ModelEnvironmentDefinition Environment { get; set; }
+        public EnvironmentImageRequestEnvironment Environment { get; set; }
         /// <summary> The unique identifying details of the AZURE ML environment. </summary>
-        public EnvironmentReference EnvironmentReference { get; set; }
+        public EnvironmentImageRequestEnvironmentReference EnvironmentReference { get; set; }
     }
 }
