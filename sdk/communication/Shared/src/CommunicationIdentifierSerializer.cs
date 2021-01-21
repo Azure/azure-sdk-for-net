@@ -40,7 +40,7 @@ namespace Azure.Communication
             if (cloud == CommunicationCloudEnvironmentModel.Dod)
                 return CommunicationCloudEnvironment.Dod;
 
-            throw new NotSupportedException();
+            return new CommunicationCloudEnvironment(cloud.ToString());
         }
 
         public static CommunicationIdentifierModel Serialize(CommunicationIdentifier identifier)
@@ -82,7 +82,7 @@ namespace Azure.Communication
             if (cloud == CommunicationCloudEnvironment.Dod)
                 return CommunicationCloudEnvironmentModel.Dod;
 
-            throw new NotSupportedException();
+            return new CommunicationCloudEnvironmentModel(cloud.ToString());
         }
 
         private static T AssertNotNull<T>(T value, string name, CommunicationIdentifierKind kind) where T : class?

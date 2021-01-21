@@ -147,10 +147,11 @@ namespace Azure.Communication
         [TestCase(true, "some id")]
         public void SerializeMicrosoftTeamsUser(bool isAnonymous, string? expectedId)
         {
-            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new MicrosoftTeamsUserIdentifier("user id", isAnonymous, expectedId));
+            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new MicrosoftTeamsUserIdentifier("user id", isAnonymous, expectedId, CommunicationCloudEnvironment.Dod));
 
             Assert.AreEqual(CommunicationIdentifierKind.MicrosoftTeamsUser, model.Kind);
             Assert.AreEqual("user id", model.MicrosoftTeamsUserId);
+            Assert.AreEqual(CommunicationCloudEnvironmentModel.Dod, model.Cloud);
             Assert.AreEqual(isAnonymous, model.IsAnonymous);
             Assert.AreEqual(expectedId, model.Id);
         }

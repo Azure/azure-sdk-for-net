@@ -9,7 +9,7 @@ namespace Azure.Communication
     /// <summary>Represents a Phone Number.</summary>
     public class PhoneNumberIdentifier : CommunicationIdentifier
     {
-        /// <summary>The id of the phone number.</summary>
+        /// <summary>The full id of the phone number.</summary>
         public string? Id { get; }
 
         /// <summary>The phone number in E.164 format.</summary>
