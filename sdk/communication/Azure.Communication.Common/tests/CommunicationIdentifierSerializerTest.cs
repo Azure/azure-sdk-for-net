@@ -158,7 +158,7 @@ namespace Azure.Communication
         [Test]
         [TestCase(false)]
         [TestCase(true)]
-        public void DeserializerMicrosoftTeamsUser(bool isAnonymous)
+        public void DeserializeMicrosoftTeamsUser(bool isAnonymous)
         {
             MicrosoftTeamsUserIdentifier identifier = (MicrosoftTeamsUserIdentifier)CommunicationIdentifierSerializer.Deserialize(
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser)
