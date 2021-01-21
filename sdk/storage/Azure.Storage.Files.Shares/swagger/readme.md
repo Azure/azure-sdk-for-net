@@ -1022,4 +1022,22 @@ directive:
     delete $.enum
 ```
 
+### Convert ShareProtocolSettings.properties.Smb.xml from "Smb" to "SMB"
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.ShareProtocolSettings
+  transform: >
+    $.properties.Smb.xml = { "name": "SMB" };
+```
+
+### Convert StorageServiceProperties.properties.Protocol.xml from "ShareProtocolSettings" to "ProtocolSettings"
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.ShareServiceProperties
+  transform: >
+    $.properties.Protocol.xml = { "name": "ProtocolSettings" };
+```
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.Shares%2Fswagger%2Freadme.png)
