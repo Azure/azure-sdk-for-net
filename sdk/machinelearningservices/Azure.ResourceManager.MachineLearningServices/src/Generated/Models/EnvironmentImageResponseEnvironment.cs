@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="spark"> The configuration for a Spark environment. </param>
         /// <param name="r"> Settings for a R environment. </param>
         /// <param name="inferencingStackVersion"> The inferencing stack version added to the image. To avoid adding an inferencing stack, do not set this value. Valid values: &quot;latest&quot;. </param>
-        internal EnvironmentImageResponseEnvironment(string name, string version, ModelPythonSection python, IDictionary<string, string> environmentVariables, ModelDockerSectionResponse docker, ModelSparkSection spark, RSectionResponse r, string inferencingStackVersion) : base(name, version, python, environmentVariables, docker, spark, r, inferencingStackVersion)
+        internal EnvironmentImageResponseEnvironment(string name, string version, ModelEnvironmentDefinitionResponsePython python, IDictionary<string, string> environmentVariables, ModelEnvironmentDefinitionResponseDocker docker, ModelEnvironmentDefinitionResponseSpark spark, ModelEnvironmentDefinitionResponseR r, string inferencingStackVersion) : base(name, version, python, environmentVariables, docker, spark, r, inferencingStackVersion)
         {
         }
     }

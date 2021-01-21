@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             Optional<string> name = default;
             Optional<string> version = default;
-            Optional<ModelPythonSection> python = default;
+            Optional<ModelEnvironmentDefinitionResponsePython> python = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<ModelDockerSectionResponse> docker = default;
-            Optional<ModelSparkSection> spark = default;
-            Optional<RSectionResponse> r = default;
+            Optional<ModelEnvironmentDefinitionResponseDocker> docker = default;
+            Optional<ModelEnvironmentDefinitionResponseSpark> spark = default;
+            Optional<ModelEnvironmentDefinitionResponseR> r = default;
             Optional<string> inferencingStackVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    python = ModelPythonSection.DeserializeModelPythonSection(property.Value);
+                    python = ModelEnvironmentDefinitionResponsePython.DeserializeModelEnvironmentDefinitionResponsePython(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    docker = ModelDockerSectionResponse.DeserializeModelDockerSectionResponse(property.Value);
+                    docker = ModelEnvironmentDefinitionResponseDocker.DeserializeModelEnvironmentDefinitionResponseDocker(property.Value);
                     continue;
                 }
                 if (property.NameEquals("spark"))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    spark = ModelSparkSection.DeserializeModelSparkSection(property.Value);
+                    spark = ModelEnvironmentDefinitionResponseSpark.DeserializeModelEnvironmentDefinitionResponseSpark(property.Value);
                     continue;
                 }
                 if (property.NameEquals("r"))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    r = RSectionResponse.DeserializeRSectionResponse(property.Value);
+                    r = ModelEnvironmentDefinitionResponseR.DeserializeModelEnvironmentDefinitionResponseR(property.Value);
                     continue;
                 }
                 if (property.NameEquals("inferencingStackVersion"))

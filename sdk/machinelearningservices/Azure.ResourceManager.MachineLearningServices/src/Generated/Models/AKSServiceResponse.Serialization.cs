@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> computeName = default;
             Optional<string> @namespace = default;
             Optional<int> numReplicas = default;
-            Optional<ModelDataCollection> dataCollection = default;
+            Optional<AKSServiceResponseDataCollection> dataCollection = default;
             Optional<bool> appInsightsEnabled = default;
-            Optional<AutoScaler> autoScaler = default;
+            Optional<AKSServiceResponseAutoScaler> autoScaler = default;
             Optional<string> scoringUri = default;
-            Optional<AKSReplicaStatus> deploymentStatus = default;
+            Optional<AKSServiceResponseDeploymentStatus> deploymentStatus = default;
             Optional<int> scoringTimeoutMs = default;
-            Optional<LivenessProbeRequirements> livenessProbeRequirements = default;
+            Optional<AKSServiceResponseLivenessProbeRequirements> livenessProbeRequirements = default;
             Optional<bool> authEnabled = default;
             Optional<bool> aadAuthEnabled = default;
             Optional<string> swaggerUri = default;
             Optional<IReadOnlyDictionary<string, object>> modelConfigMap = default;
-            Optional<EnvironmentImageResponse> environmentImageRequest = default;
+            Optional<AKSServiceResponseEnvironmentImageRequest> environmentImageRequest = default;
             Optional<bool> isDefault = default;
             Optional<float> trafficPercentile = default;
             Optional<VariantType> type = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<IDictionary<string, string>> kvTags = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<WebServiceState> state = default;
-            Optional<ErrorResponse> error = default;
+            Optional<ServiceResponseBaseError> error = default;
             ComputeEnvironmentType computeType = default;
             Optional<DeploymentType> deploymentType = default;
             foreach (var property in element.EnumerateObject())
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataCollection = ModelDataCollection.DeserializeModelDataCollection(property.Value);
+                    dataCollection = AKSServiceResponseDataCollection.DeserializeAKSServiceResponseDataCollection(property.Value);
                     continue;
                 }
                 if (property.NameEquals("appInsightsEnabled"))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    autoScaler = AutoScaler.DeserializeAutoScaler(property.Value);
+                    autoScaler = AKSServiceResponseAutoScaler.DeserializeAKSServiceResponseAutoScaler(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scoringUri"))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    deploymentStatus = AKSReplicaStatus.DeserializeAKSReplicaStatus(property.Value);
+                    deploymentStatus = AKSServiceResponseDeploymentStatus.DeserializeAKSServiceResponseDeploymentStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scoringTimeoutMs"))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    livenessProbeRequirements = LivenessProbeRequirements.DeserializeLivenessProbeRequirements(property.Value);
+                    livenessProbeRequirements = AKSServiceResponseLivenessProbeRequirements.DeserializeAKSServiceResponseLivenessProbeRequirements(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authEnabled"))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    environmentImageRequest = EnvironmentImageResponse.DeserializeEnvironmentImageResponse(property.Value);
+                    environmentImageRequest = AKSServiceResponseEnvironmentImageRequest.DeserializeAKSServiceResponseEnvironmentImageRequest(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isDefault"))
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ServiceResponseBaseError.DeserializeServiceResponseBaseError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeType"))

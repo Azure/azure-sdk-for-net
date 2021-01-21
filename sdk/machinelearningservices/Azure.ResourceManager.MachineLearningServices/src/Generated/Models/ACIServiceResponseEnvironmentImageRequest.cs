@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="models"> The list of models. </param>
         /// <param name="environment"> The details of the AZURE ML environment. </param>
         /// <param name="environmentReference"> The unique identifying details of the AZURE ML environment. </param>
-        internal ACIServiceResponseEnvironmentImageRequest(string driverProgram, IList<ImageAsset> assets, IList<string> modelIds, IList<Model> models, ModelEnvironmentDefinitionResponse environment, EnvironmentReference environmentReference) : base(driverProgram, assets, modelIds, models, environment, environmentReference)
+        internal ACIServiceResponseEnvironmentImageRequest(string driverProgram, IList<ImageAsset> assets, IList<string> modelIds, IList<Model> models, EnvironmentImageResponseEnvironment environment, EnvironmentImageResponseEnvironmentReference environmentReference) : base(driverProgram, assets, modelIds, models, environment, environmentReference)
         {
         }
     }

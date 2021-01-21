@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="swaggerUri"> The Uri for sending swagger requests. </param>
         /// <param name="modelConfigMap"> Details on the models and configurations. </param>
         /// <param name="environmentImageRequest"> The Environment, models and assets used for inferencing. </param>
-        internal AKSServiceResponse(string description, IDictionary<string, string> kvTags, IDictionary<string, string> properties, WebServiceState? state, ErrorResponse error, ComputeEnvironmentType computeType, DeploymentType? deploymentType, bool? isDefault, float? trafficPercentile, VariantType? type, IList<Model> models, ContainerResourceRequirements containerResourceRequirements, int? maxConcurrentRequestsPerContainer, int? maxQueueWaitMs, string computeName, string @namespace, int? numReplicas, ModelDataCollection dataCollection, bool? appInsightsEnabled, AutoScaler autoScaler, string scoringUri, AKSReplicaStatus deploymentStatus, int? scoringTimeoutMs, LivenessProbeRequirements livenessProbeRequirements, bool? authEnabled, bool? aadAuthEnabled, string swaggerUri, IReadOnlyDictionary<string, object> modelConfigMap, EnvironmentImageResponse environmentImageRequest) : base(description, kvTags, properties, state, error, computeType, deploymentType, isDefault, trafficPercentile, type)
+        internal AKSServiceResponse(string description, IDictionary<string, string> kvTags, IDictionary<string, string> properties, WebServiceState? state, ServiceResponseBaseError error, ComputeEnvironmentType computeType, DeploymentType? deploymentType, bool? isDefault, float? trafficPercentile, VariantType? type, IList<Model> models, ContainerResourceRequirements containerResourceRequirements, int? maxConcurrentRequestsPerContainer, int? maxQueueWaitMs, string computeName, string @namespace, int? numReplicas, AKSServiceResponseDataCollection dataCollection, bool? appInsightsEnabled, AKSServiceResponseAutoScaler autoScaler, string scoringUri, AKSServiceResponseDeploymentStatus deploymentStatus, int? scoringTimeoutMs, AKSServiceResponseLivenessProbeRequirements livenessProbeRequirements, bool? authEnabled, bool? aadAuthEnabled, string swaggerUri, IReadOnlyDictionary<string, object> modelConfigMap, AKSServiceResponseEnvironmentImageRequest environmentImageRequest) : base(description, kvTags, properties, state, error, computeType, deploymentType, isDefault, trafficPercentile, type)
         {
             Models = models;
             ContainerResourceRequirements = containerResourceRequirements;
@@ -90,19 +90,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The number of replicas on the cluster. </summary>
         public int? NumReplicas { get; set; }
         /// <summary> Details of the data collection options specified. </summary>
-        public ModelDataCollection DataCollection { get; set; }
+        public AKSServiceResponseDataCollection DataCollection { get; set; }
         /// <summary> Whether or not Application Insights is enabled. </summary>
         public bool? AppInsightsEnabled { get; set; }
         /// <summary> The auto scaler properties. </summary>
-        public AutoScaler AutoScaler { get; set; }
+        public AKSServiceResponseAutoScaler AutoScaler { get; set; }
         /// <summary> The Uri for sending scoring requests. </summary>
         public string ScoringUri { get; }
         /// <summary> The deployment status. </summary>
-        public AKSReplicaStatus DeploymentStatus { get; }
+        public AKSServiceResponseDeploymentStatus DeploymentStatus { get; }
         /// <summary> The scoring timeout in milliseconds. </summary>
         public int? ScoringTimeoutMs { get; set; }
         /// <summary> The liveness probe requirements. </summary>
-        public LivenessProbeRequirements LivenessProbeRequirements { get; set; }
+        public AKSServiceResponseLivenessProbeRequirements LivenessProbeRequirements { get; set; }
         /// <summary> Whether or not authentication is enabled. </summary>
         public bool? AuthEnabled { get; set; }
         /// <summary> Whether or not AAD authentication is enabled. </summary>
@@ -112,6 +112,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Details on the models and configurations. </summary>
         public IReadOnlyDictionary<string, object> ModelConfigMap { get; }
         /// <summary> The Environment, models and assets used for inferencing. </summary>
-        public EnvironmentImageResponse EnvironmentImageRequest { get; set; }
+        public AKSServiceResponseEnvironmentImageRequest EnvironmentImageRequest { get; set; }
     }
 }

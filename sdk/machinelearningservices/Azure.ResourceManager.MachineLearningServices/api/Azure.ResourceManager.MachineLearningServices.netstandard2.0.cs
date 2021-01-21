@@ -429,13 +429,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public bool? AuthEnabled { get { throw null; } set { } }
         public string Cname { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ContainerResourceRequirements ContainerResourceRequirements { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelDataCollection DataCollection { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ACIServiceCreateRequestDataCollection DataCollection { get { throw null; } set { } }
         public string DnsNameLabel { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.EncryptionProperties EncryptionProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ACIServiceCreateRequestEncryptionProperties EncryptionProperties { get { throw null; } set { } }
         public string SslCertificate { get { throw null; } set { } }
         public bool? SslEnabled { get { throw null; } set { } }
         public string SslKey { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.VnetConfiguration VnetConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ACIServiceCreateRequestVnetConfiguration VnetConfiguration { get { throw null; } set { } }
     }
     public partial class ACIServiceCreateRequestDataCollection : Azure.ResourceManager.MachineLearningServices.Models.ModelDataCollection
     {
@@ -456,9 +456,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public bool? AuthEnabled { get { throw null; } set { } }
         public string Cname { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ContainerResourceRequirements ContainerResourceRequirements { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelDataCollection DataCollection { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.EncryptionProperties EncryptionProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentImageResponse EnvironmentImageRequest { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ACIServiceResponseDataCollection DataCollection { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ACIServiceResponseEncryptionProperties EncryptionProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ACIServiceResponseEnvironmentImageRequest EnvironmentImageRequest { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> ModelConfigMap { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.Model> Models { get { throw null; } }
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public bool? SslEnabled { get { throw null; } set { } }
         public string SslKey { get { throw null; } set { } }
         public string SwaggerUri { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.VnetConfiguration VnetConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ACIServiceResponseVnetConfiguration VnetConfiguration { get { throw null; } set { } }
     }
     public partial class ACIServiceResponseDataCollection : Azure.ResourceManager.MachineLearningServices.Models.ModelDataCollection
     {
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal AKSReplicaStatus() { }
         public int? AvailableReplicas { get { throw null; } }
         public int? DesiredReplicas { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ErrorResponse Error { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AKSReplicaStatusError Error { get { throw null; } }
         public int? UpdatedReplicas { get { throw null; } }
     }
     public partial class AKSReplicaStatusError : Azure.ResourceManager.MachineLearningServices.Models.ErrorResponse
@@ -535,11 +535,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public bool? AadAuthEnabled { get { throw null; } set { } }
         public bool? AppInsightsEnabled { get { throw null; } set { } }
         public bool? AuthEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.AutoScaler AutoScaler { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AKSServiceCreateRequestAutoScaler AutoScaler { get { throw null; } set { } }
         public string ComputeName { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ContainerResourceRequirements ContainerResourceRequirements { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelDataCollection DataCollection { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.LivenessProbeRequirements LivenessProbeRequirements { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AKSServiceCreateRequestDataCollection DataCollection { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AKSServiceCreateRequestLivenessProbeRequirements LivenessProbeRequirements { get { throw null; } set { } }
         public int? MaxConcurrentRequestsPerContainer { get { throw null; } set { } }
         public int? MaxQueueWaitMs { get { throw null; } set { } }
         public string Namespace { get { throw null; } set { } }
@@ -564,13 +564,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public bool? AadAuthEnabled { get { throw null; } set { } }
         public bool? AppInsightsEnabled { get { throw null; } set { } }
         public bool? AuthEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.AutoScaler AutoScaler { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AKSServiceResponseAutoScaler AutoScaler { get { throw null; } set { } }
         public string ComputeName { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ContainerResourceRequirements ContainerResourceRequirements { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelDataCollection DataCollection { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.AKSReplicaStatus DeploymentStatus { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentImageResponse EnvironmentImageRequest { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.LivenessProbeRequirements LivenessProbeRequirements { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AKSServiceResponseDataCollection DataCollection { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AKSServiceResponseDeploymentStatus DeploymentStatus { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AKSServiceResponseEnvironmentImageRequest EnvironmentImageRequest { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AKSServiceResponseLivenessProbeRequirements LivenessProbeRequirements { get { throw null; } set { } }
         public int? MaxConcurrentRequestsPerContainer { get { throw null; } set { } }
         public int? MaxQueueWaitMs { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> ModelConfigMap { get { throw null; } }
@@ -1116,8 +1116,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         public CreateServiceRequest() { }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentImageRequest EnvironmentImageRequest { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.AuthKeys Keys { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.CreateServiceRequestEnvironmentImageRequest EnvironmentImageRequest { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.CreateServiceRequestKeys Keys { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> KvTags { get { throw null; } }
         public string Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
@@ -1472,8 +1472,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public EnvironmentImageRequest() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ImageAsset> Assets { get { throw null; } }
         public string DriverProgram { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelEnvironmentDefinition Environment { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentReference EnvironmentReference { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentImageRequestEnvironment Environment { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentImageRequestEnvironmentReference EnvironmentReference { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ModelIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.Model> Models { get { throw null; } }
     }
@@ -1490,8 +1490,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public EnvironmentImageResponse() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ImageAsset> Assets { get { throw null; } }
         public string DriverProgram { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelEnvironmentDefinitionResponse Environment { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentReference EnvironmentReference { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentImageResponseEnvironment Environment { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentImageResponseEnvironmentReference EnvironmentReference { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ModelIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.Model> Models { get { throw null; } }
     }
@@ -2002,7 +2002,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public ModelDockerSection() { }
         public string BaseDockerfile { get { throw null; } set { } }
         public string BaseImage { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ContainerRegistry BaseImageRegistry { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelDockerSectionBaseImageRegistry BaseImageRegistry { get { throw null; } set { } }
     }
     public partial class ModelDockerSectionBaseImageRegistry : Azure.ResourceManager.MachineLearningServices.Models.ContainerRegistry
     {
@@ -2013,7 +2013,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public ModelDockerSectionResponse() { }
         public string BaseDockerfile { get { throw null; } set { } }
         public string BaseImage { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ContainerRegistryResponse BaseImageRegistry { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelDockerSectionResponseBaseImageRegistry BaseImageRegistry { get { throw null; } set { } }
     }
     public partial class ModelDockerSectionResponseBaseImageRegistry : Azure.ResourceManager.MachineLearningServices.Models.ContainerRegistryResponse
     {
@@ -2022,13 +2022,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class ModelEnvironmentDefinition
     {
         public ModelEnvironmentDefinition() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelDockerSection Docker { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelEnvironmentDefinitionDocker Docker { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } }
         public string InferencingStackVersion { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelPythonSection Python { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.RSection R { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelSparkSection Spark { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelEnvironmentDefinitionPython Python { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelEnvironmentDefinitionR R { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelEnvironmentDefinitionSpark Spark { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
     public partial class ModelEnvironmentDefinitionDocker : Azure.ResourceManager.MachineLearningServices.Models.ModelDockerSection
@@ -2046,13 +2046,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class ModelEnvironmentDefinitionResponse
     {
         public ModelEnvironmentDefinitionResponse() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelDockerSectionResponse Docker { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelEnvironmentDefinitionResponseDocker Docker { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } }
         public string InferencingStackVersion { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelPythonSection Python { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.RSectionResponse R { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelSparkSection Spark { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelEnvironmentDefinitionResponsePython Python { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelEnvironmentDefinitionResponseR R { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelEnvironmentDefinitionResponseSpark Spark { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
     public partial class ModelEnvironmentDefinitionResponseDocker : Azure.ResourceManager.MachineLearningServices.Models.ModelDockerSectionResponse
@@ -2662,7 +2662,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public ServiceResponseBase() { }
         public Azure.ResourceManager.MachineLearningServices.Models.DeploymentType? DeploymentType { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ErrorResponse Error { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ServiceResponseBaseError Error { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> KvTags { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.WebServiceState? State { get { throw null; } }
