@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Set value for a Variable. </summary>
-    public partial class SetVariableActivity : Activity
+    public partial class SetVariableActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of SetVariableActivity. </summary>
         /// <param name="name"> Activity name. </param>
