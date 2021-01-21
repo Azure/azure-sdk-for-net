@@ -57,21 +57,10 @@ namespace Azure.Core.Pipeline
             // Error response does not have a content body.
             else
             {
+                // The other headers will appear in the "Headers" section of the Exception message.
                 if (responseHeaders.TryGetValue(Constants.HeaderNames.ErrorCode, out string value))
                 {
                     errorCode = value;
-                }
-
-                foreach (HttpHeader header in responseHeaders)
-                {
-                    switch (header.Name)
-                    {
-                        case Constants.HeaderNames.ErrorCode:
-                            continue;
-                        default:
-                            additionalInfo[header.Name] = header.Value;
-                            break;
-                    }
                 }
             }
         }
