@@ -17,8 +17,10 @@ namespace Azure.Communication
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.CommunicationUser), // Missing Id
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.CallingApplication), // Missing Id
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber) { Id = "some id" }, // Missing PhoneNumber
+                new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber) { PhoneNumber = "+12223334444" }, // Missing Id
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { Id = "some id", MicrosoftTeamsUserId = "some id" }, // Missing IsAnonymous
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { Id = "some id", IsAnonymous = true }, // Missing MicrosoftTeamsUserId
+                new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { MicrosoftTeamsUserId = "some id", IsAnonymous = true }, // Missing Id
             };
 
             foreach (CommunicationIdentifierModel item in modelsWithMissingMandatoryProperty)
@@ -112,12 +114,15 @@ namespace Azure.Communication
         }
 
         [Test]
-        public void SerializePhoneNumber()
+        [TestCase(null)]
+        [TestCase("some id")]
+        public void SerializePhoneNumber(string? expectedId)
         {
-            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new PhoneNumberIdentifier("+12223334444"));
+            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new PhoneNumberIdentifier("+12223334444", expectedId));
 
             Assert.AreEqual(CommunicationIdentifierKind.PhoneNumber, model.Kind);
             Assert.AreEqual("+12223334444", model.PhoneNumber);
+            Assert.AreEqual(expectedId, model.Id);
         }
 
         [Test]
@@ -127,25 +132,30 @@ namespace Azure.Communication
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber)
                 {
                     PhoneNumber = "+12223334444",
+                    Id = "some id"
                 });
 
-            PhoneNumberIdentifier expectedIdentifier = new PhoneNumberIdentifier("+12223334444");
+            PhoneNumberIdentifier expectedIdentifier = new PhoneNumberIdentifier("+12223334444", "some id");
 
             Assert.True(identifier is PhoneNumberIdentifier);
             Assert.AreEqual(expectedIdentifier.PhoneNumber, ((PhoneNumberIdentifier)identifier).PhoneNumber);
+            Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
             Assert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
-        [TestCase(false)]
-        [TestCase(true)]
-        public void SerializeMicrosoftTeamsUser(bool isAnonymous)
+        [TestCase(false, null)]
+        [TestCase(true, null)]
+        [TestCase(false, "some id")]
+        [TestCase(true, "some id")]
+        public void SerializeMicrosoftTeamsUser(bool isAnonymous, string? expectedId)
         {
-            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new MicrosoftTeamsUserIdentifier("some id", isAnonymous));
+            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new MicrosoftTeamsUserIdentifier("user id", isAnonymous, expectedId));
 
             Assert.AreEqual(CommunicationIdentifierKind.MicrosoftTeamsUser, model.Kind);
-            Assert.AreEqual("some id", model.MicrosoftTeamsUserId);
+            Assert.AreEqual("user id", model.MicrosoftTeamsUserId);
             Assert.AreEqual(isAnonymous, model.IsAnonymous);
+            Assert.AreEqual(expectedId, model.Id);
         }
 
         [Test]
@@ -156,16 +166,32 @@ namespace Azure.Communication
             CommunicationIdentifier identifier = CommunicationIdentifierSerializer.Deserialize(
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser)
                 {
-                    MicrosoftTeamsUserId = "some id",
+                    MicrosoftTeamsUserId = "user id",
                     IsAnonymous = isAnonymous,
+                    Id = "some id"
                 });
 
-            MicrosoftTeamsUserIdentifier expectedIdentifier = new MicrosoftTeamsUserIdentifier("some id", isAnonymous);
+            MicrosoftTeamsUserIdentifier expectedIdentifier = new MicrosoftTeamsUserIdentifier("user id", isAnonymous, "some id");
 
             Assert.True(identifier is MicrosoftTeamsUserIdentifier);
             Assert.AreEqual(expectedIdentifier.UserId, ((MicrosoftTeamsUserIdentifier)identifier).UserId);
             Assert.AreEqual(expectedIdentifier.IsAnonymous, ((MicrosoftTeamsUserIdentifier)identifier).IsAnonymous);
+            Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
             Assert.AreEqual(expectedIdentifier, identifier);
+        }
+
+        [Test]
+        public void IfIdIsOptional_EqualityOnlyTestIfPresentOnBothSide()
+        {
+            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("user id", true, "some id"), new MicrosoftTeamsUserIdentifier("user id", true));
+            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("user id", true), new MicrosoftTeamsUserIdentifier("user id", true));
+            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("user id", true), new MicrosoftTeamsUserIdentifier("user id", true, "some id"));
+            Assert.AreNotEqual(new MicrosoftTeamsUserIdentifier("user id", true, "some id"), new MicrosoftTeamsUserIdentifier("user id", true, "another id"));
+
+            Assert.AreEqual(new PhoneNumberIdentifier("+12223334444", "some id"), new PhoneNumberIdentifier("+12223334444"));
+            Assert.AreEqual(new PhoneNumberIdentifier("+12223334444"), new PhoneNumberIdentifier("+12223334444"));
+            Assert.AreEqual(new PhoneNumberIdentifier("+12223334444"), new PhoneNumberIdentifier("+12223334444", "some id"));
+            Assert.AreNotEqual(new PhoneNumberIdentifier("+12223334444", "some id"), new PhoneNumberIdentifier("+12223334444", "another id"));
         }
     }
 }

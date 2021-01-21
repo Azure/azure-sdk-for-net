@@ -19,13 +19,15 @@ namespace Azure.Communication
         /// </summary>
         /// <param name="userId">Id of the Microsoft Teams user. If the user isn't anonymous, the id is the AAD object id of the user.</param>
         /// <param name="isAnonymous">Set this to true if the user is anonymous, for example when joining a meeting with a share link.</param>
+        /// <param name="id">Id of the Microsoft Teams user.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="userId"/> is null.
         /// </exception>
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="userId"/> is empty.
         /// </exception>
-        public MicrosoftTeamsUserIdentifier(string userId, bool isAnonymous = false)
+        public MicrosoftTeamsUserIdentifier(string userId, bool isAnonymous = false, string? id = null)
+            : base(id)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             UserId = userId;
@@ -40,6 +42,6 @@ namespace Azure.Communication
 
         /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
-            => other is MicrosoftTeamsUserIdentifier otherId && otherId.UserId == UserId && otherId.IsAnonymous == IsAnonymous;
+            => other is MicrosoftTeamsUserIdentifier otherId && otherId.UserId == UserId && otherId.IsAnonymous == IsAnonymous && (Id is null || other.Id is null || Id == other.Id);
     }
 }

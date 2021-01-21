@@ -18,12 +18,13 @@ namespace Azure.Communication
             if (kind == CommunicationIdentifierKind.CallingApplication)
                 return new CallingApplicationIdentifier(AssertNotNull(id, nameof(identifier.Id), kind));
             if (kind == CommunicationIdentifierKind.PhoneNumber)
-                return new PhoneNumberIdentifier(AssertNotNull(identifier.PhoneNumber, nameof(identifier.PhoneNumber), kind));
+                return new PhoneNumberIdentifier(AssertNotNull(identifier.PhoneNumber, nameof(identifier.PhoneNumber), kind), AssertNotNull(id, nameof(identifier.Id), kind));
             if (kind == CommunicationIdentifierKind.MicrosoftTeamsUser)
             {
                 return new MicrosoftTeamsUserIdentifier(
-                        AssertNotNull(identifier.MicrosoftTeamsUserId, nameof(identifier.MicrosoftTeamsUserId), kind),
-                        AssertNotNull(identifier.IsAnonymous, nameof(identifier.IsAnonymous), kind));
+                    AssertNotNull(identifier.MicrosoftTeamsUserId, nameof(identifier.MicrosoftTeamsUserId), kind),
+                    AssertNotNull(identifier.IsAnonymous, nameof(identifier.IsAnonymous), kind),
+                    AssertNotNull(id, nameof(identifier.Id), kind));
             }
 
             return new UnknownIdentifier(AssertNotNull(id, nameof(identifier.Id), kind));
@@ -34,8 +35,8 @@ namespace Azure.Communication
             {
                 CommunicationUserIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.CommunicationUser) { Id = u.Id },
                 CallingApplicationIdentifier a => new CommunicationIdentifierModel(CommunicationIdentifierKind.CallingApplication) { Id = a.Id },
-                PhoneNumberIdentifier p => new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber) { PhoneNumber = p.PhoneNumber },
-                MicrosoftTeamsUserIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { MicrosoftTeamsUserId = u.UserId, IsAnonymous = u.IsAnonymous },
+                PhoneNumberIdentifier p => new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber) { PhoneNumber = p.PhoneNumber, Id = p.Id },
+                MicrosoftTeamsUserIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { MicrosoftTeamsUserId = u.UserId, IsAnonymous = u.IsAnonymous, Id = u.Id },
                 UnknownIdentifier u => new CommunicationIdentifierModel(CommunicationIdentifierKind.Unknown) { Id = u.Id },
                 _ => throw new NotSupportedException(),
             };
