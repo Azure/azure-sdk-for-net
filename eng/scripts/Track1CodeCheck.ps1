@@ -45,6 +45,13 @@ function Find-Mapping([string]$path) {
 
 try {
     Write-Output "======== Start Code Validation ========"
+    
+    Write-Host "Check PR associate"
+    if (($null -eq $Env:REPOSITORY_NAME) -or ($null -eq $Env:PULLREQUEST_ID) -or ($Env:REPOSITORY_NAME -eq "") -or ($Env:PULLREQUEST_ID -eq "")) {
+        Write-Host "There is no PR associate with this run, skip the code check." -ForegroundColor red -BackgroundColor white
+        break
+    }
+
     # Get RP Mapping
     Write-Output "Start RP mapping "
     $RPMapping = [ordered]@{ }
