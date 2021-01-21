@@ -229,7 +229,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc/>
-        public async override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             ValidateBuffer(buffer, offset, count);
 
@@ -240,10 +240,10 @@ namespace Azure.Core
                 Buffer.BlockCopy(_buffer, _bufferOffset, buffer, offset, toCopy);
                 _bufferOffset += toCopy;
                 _bufferCount -= toCopy;
-                return toCopy;
+                return Task.FromResult(toCopy);
             }
 
-            return await _inner.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+            return _inner.ReadAsync(buffer, offset, count, cancellationToken);
         }
 
         /// <summary>

@@ -67,10 +67,10 @@ namespace Azure
         /// <param name="inputType">The type to use when serializing <paramref name="value"/>. If omitted, the type will be determined using <see cref="object.GetType"/>().</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>The object's binary representation as <see cref="BinaryData"/>.</returns>
-        public static async ValueTask<BinaryData> SerializeToBinaryDataAsync(this ObjectSerializer serializer, object? value, Type? inputType = default, CancellationToken cancellationToken = default)
+        public static ValueTask<BinaryData> SerializeToBinaryDataAsync(this ObjectSerializer serializer, object? value, Type? inputType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(serializer, nameof(serializer));
-            return await SerializeToBinaryDataInternalAsync(serializer, value, inputType, true, cancellationToken).ConfigureAwait(false);
+            return SerializeToBinaryDataInternalAsync(serializer, value, inputType, true, cancellationToken);
         }
 
         private static async ValueTask<BinaryData> SerializeToBinaryDataInternalAsync(ObjectSerializer serializer, object? value, Type? inputType, bool async, CancellationToken cancellationToken)

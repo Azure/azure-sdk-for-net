@@ -228,11 +228,11 @@ namespace Azure.Core.Tests
                         throw new InvalidOperationException();
                     }
                 },
-                async offset =>
+                offset =>
                 {
                     if (offset == 0)
                     {
-                        return await SendTestRequestAsync(pipeline, offset);
+                        return SendTestRequestAsync(pipeline, offset);
                     }
                     else
                     {
@@ -268,11 +268,11 @@ namespace Azure.Core.Tests
 
                     throw new InvalidOperationException();
                 },
-                async offset =>
+                offset =>
                 {
                     if (offset == 0)
                     {
-                        return await SendTestRequestAsync(pipeline, offset);
+                        return SendTestRequestAsync(pipeline, offset);
                     }
 
                     throw new InvalidOperationException();

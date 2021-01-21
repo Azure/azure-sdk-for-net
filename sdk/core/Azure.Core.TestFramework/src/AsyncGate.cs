@@ -12,9 +12,9 @@ namespace Azure.Core.TestFramework
         private TaskCompletionSource<TIn> _signalTaskCompletionSource = new TaskCompletionSource<TIn>(TaskCreationOptions.RunContinuationsAsynchronously);
         private TaskCompletionSource<TOut> _releaseTaskCompletionSource = new TaskCompletionSource<TOut>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-        public async Task<TIn> WaitForSignal()
+        public Task<TIn> WaitForSignal()
         {
-            return await _signalTaskCompletionSource.Task.TimeoutAfterDefault();
+            return _signalTaskCompletionSource.Task.TimeoutAfterDefault();
         }
 
         public async Task<TIn> Cycle(TOut value = default)

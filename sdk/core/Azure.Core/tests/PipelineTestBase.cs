@@ -31,10 +31,10 @@ namespace Azure.Core.Tests
             return message.Response;
         }
 
-        protected async Task<Response> ExecuteRequest(Request request, HttpPipeline pipeline, CancellationToken cancellationToken = default)
+        protected Task<Response> ExecuteRequest(Request request, HttpPipeline pipeline, CancellationToken cancellationToken = default)
         {
             var message = new HttpMessage(request, new ResponseClassifier());
-            return await ExecuteRequest(message, pipeline, cancellationToken);
+            return ExecuteRequest(message, pipeline, cancellationToken);
         }
 
         protected async Task<Response> ExecuteRequest(HttpMessage message, HttpPipeline pipeline, CancellationToken cancellationToken = default)
