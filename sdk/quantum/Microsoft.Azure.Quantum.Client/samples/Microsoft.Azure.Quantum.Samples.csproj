@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net5</TargetFrameworks>
+    <AssemblyTitle>Microsoft Azure.Quantum.Samples client library samples</AssemblyTitle>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Azure.Quantum.Optimization\Microsoft.Azure.Quantum.Optimization.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Quantum.Client.csproj" />
+  </ItemGroup>
+</Project>
