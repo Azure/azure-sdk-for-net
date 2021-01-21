@@ -66,7 +66,7 @@ namespace SecurityInsights.Tests
                     LogicAppResourceId = ActionLAResourceID,
                     TriggerUri = ActionLATriggerUri
                 };
-                SecurityInsightsClient.AlertRules.CreateOrUpdateAction(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
+                SecurityInsightsClient.Actions.CreateOrUpdate(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
                 var Actions = SecurityInsightsClient.Actions.ListByAlertRule(ResourceGroup, WorkspaceName, RuleId);
                 ValidateActions(Actions);
                 SecurityInsightsClient.AlertRules.Delete(ResourceGroup, WorkspaceName, RuleId);

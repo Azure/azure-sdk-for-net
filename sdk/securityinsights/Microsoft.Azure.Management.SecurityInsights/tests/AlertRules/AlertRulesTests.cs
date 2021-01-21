@@ -132,7 +132,7 @@ namespace SecurityInsights.Tests
                     TriggerUri = ActionLATriggerUri
                 };
 
-                var alertRuleAction = SecurityInsightsClient.AlertRules.CreateOrUpdateAction(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
+                var alertRuleAction = SecurityInsightsClient.Actions.CreateOrUpdate(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
                 ValidateAlertRuleAction(alertRuleAction);
                 SecurityInsightsClient.AlertRules.Delete(ResourceGroup, WorkspaceName, RuleId);
             }
@@ -160,8 +160,8 @@ namespace SecurityInsights.Tests
                     TriggerUri = ActionLATriggerUri
                 };
 
-                SecurityInsightsClient.AlertRules.CreateOrUpdateAction(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
-                var alertRuleAction = SecurityInsightsClient.AlertRules.GetAction(ResourceGroup, WorkspaceName, RuleId, ActionId);
+                SecurityInsightsClient.Actions.CreateOrUpdate(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
+                var alertRuleAction = SecurityInsightsClient.Actions.Get(ResourceGroup, WorkspaceName, RuleId, ActionId);
                 ValidateAlertRuleAction(alertRuleAction);
                 SecurityInsightsClient.AlertRules.Delete(ResourceGroup, WorkspaceName, RuleId);
             }
@@ -189,8 +189,8 @@ namespace SecurityInsights.Tests
                     TriggerUri = ActionLATriggerUri
                 };
 
-                SecurityInsightsClient.AlertRules.CreateOrUpdateAction(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
-                SecurityInsightsClient.AlertRules.DeleteAction(ResourceGroup, WorkspaceName, RuleId, ActionId);
+                SecurityInsightsClient.Actions.CreateOrUpdate(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
+                SecurityInsightsClient.Actions.Delete(ResourceGroup, WorkspaceName, RuleId, ActionId);
                 SecurityInsightsClient.AlertRules.Delete(ResourceGroup, WorkspaceName, RuleId);
             }
         }
