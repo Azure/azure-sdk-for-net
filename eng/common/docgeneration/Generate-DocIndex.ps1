@@ -10,13 +10,6 @@ Param (
 )
 . "${PSScriptRoot}\..\scripts\common.ps1"
 
-# Given the metadata url under https://github.com/Azure/azure-sdk/tree/master/_data/releases/latest, 
-# the function will return the csv metadata back as part of response.
-function Get-CSVMetadata ([string]$MetadataUri) {
-    $metadataResponse = Invoke-RestMethod -Uri $MetadataUri -method "GET" -MaximumRetryCount 3 -RetryIntervalSec 10 | ConvertFrom-Csv
-    return $metadataResponse
-}
-  
 # Given the github io blob storage url and language regex,
 # the helper function will return a list of artifact names.
 function Get-BlobStorage-Artifacts($blobStorageUrl, $blobDirectoryRegex, $blobArtifactsReplacement) {
