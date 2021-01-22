@@ -1,0 +1,15 @@
+# Checks spelling of files that changed between the current state of the repo
+# and some ref (branch, tag, etc.) or commit hash
+# TargetRef - The ref (branch name, tag, etc.) or commit hash to compare
+
+parameters:
+  TargetRef: 'master'
+
+steps:
+  - PowerShell@2:
+    displayName: Check spelling (cspell)
+    inputs: 
+      targetType: filePath
+      filePath: eng/common/scripts/Test-Spelling.ps1
+      arguments: -TargetRef ${{ parameters.TargetRef }}
+      pwsh: true

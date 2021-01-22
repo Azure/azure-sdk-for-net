@@ -139,10 +139,12 @@ jobs:
         inputs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
-      - script: npm i -g cspell
-        displayName: Install cspell
-      - script: cspell lint --config cspell.json --no-summary "sdk/${{ parameters.ServiceDirectory }}/**/*"
-        displayName: Spellcheck (run cspell)
+
+      # Only include spell checking if there is a target branch available
+      - ${{ if ne(variables['System.PullRequest.TargetBranch'], '') }}: 
+        - template: /eng/common/pipelines/templates/steps/check-spelling.yml
+          parameters:
+            TargetRef: $(System.PullRequest.TargetBranch)
 
   - job: "Test"
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
