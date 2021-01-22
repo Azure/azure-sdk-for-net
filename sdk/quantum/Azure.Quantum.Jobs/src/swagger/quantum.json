@@ -1,0 +1,662 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Quantum Client",
+    "description": "Azure Quantum REST API client",
+    "version": "2019-11-04-preview"
+  },
+  "host": "quantum.azure.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/jobs": {
+      "get": {
+        "operationId": "Jobs_List",
+        "description": "List jobs.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/workspaceNameParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The operation completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/JobDetailsList"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get list of jobs in a Quantum Workspace": {
+            "$ref": "./examples/jobList.json"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/jobs/{jobId}": {
+      "get": {
+        "operationId": "Jobs_Get",
+        "description": "Get job by id",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/workspaceNameParameter"
+          },
+          {
+            "$ref": "#/parameters/jobIdParameter"
+          }
+        ],
+        "x-ms-examples": {
+          "Get a job's metadata": {
+            "$ref": "./examples/jobGet.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/JobDetails"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/restError"
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "Jobs_Create",
+        "description": "Create a job.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/workspaceNameParameter"
+          },
+          {
+            "$ref": "#/parameters/jobIdParameter"
+          },
+          {
+            "name": "job",
+            "description": "The complete metadata of the job to submit.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/JobDetails"
+            }
+          }
+        ],
+        "x-ms-examples": {
+          "Submit a new job for execution to a Quantum Workspace": {
+            "$ref": "./examples/jobPut.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/JobDetails"
+            }
+          },
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/JobDetails"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/restError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "Jobs_Cancel",
+        "description": "Cancel a job.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/workspaceNameParameter"
+          },
+          {
+            "$ref": "#/parameters/jobIdParameter"
+          }
+        ],
+        "x-ms-examples": {
+          "Cancel the execution of an existing job": {
+            "$ref": "./examples/jobDelete.json"
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "NoContent - The job was successfully cancelled."
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/restError"
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/providerStatus": {
+      "get": {
+        "operationId": "Providers_GetStatus",
+        "description": "Get provider status.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/workspaceNameParameter"
+          }
+        ],
+        "x-ms-examples": {
+          "Get list of of providers and their status for a Quantum Workspace": {
+            "$ref": "./examples/providerStatus.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The operation completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/ProviderStatusList"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/restError"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/storage/sasUri": {
+      "post": {
+        "operationId": "Storage_SasUri",
+        "description": "Gets a URL with SAS token for a container/blob in the storage account associated with the workspace. The SAS URL can be used to upload job input and/or download job output.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/workspaceNameParameter"
+          },
+          {
+            "name": "blobDetails",
+            "description": "The details (name and container) of the blob to store or download data.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BlobDetails"
+            }
+          }
+        ],
+        "x-ms-examples": {
+          "Get a SAS token to upload data for a Quantum Workspace": {
+            "$ref": "./examples/storageGet.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SasUriResponse"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/restError"
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/quotas": {
+      "get": {
+        "operationId": "Quotas_List",
+        "description": "List quotas for the given workspace.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/workspaceNameParameter"
+          }
+        ],
+        "x-ms-examples": {
+          "Get a list of quotas for a particular quantum workspace.": {
+            "$ref": "./examples/quotaList.json"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/QuotaList"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/restError"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "JobDetailsList": {
+      "description": "List of job details.",
+      "properties": {
+        "value": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JobDetails"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Total records count number."
+        },
+        "nextLink": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Link to the next page of results."
+        }
+      }
+    },
+    "JobDetails": {
+      "description": "Job details.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The job id."
+        },
+        "name": {
+          "type": "string",
+          "description": "The job name. Is not required for the name to be unique and it's only used for display purposes."
+        },
+        "containerUri": {
+          "type": "string",
+          "description": "The blob container SAS uri, the container is used to host job data."
+        },
+        "inputDataUri": {
+          "type": "string",
+          "description": "The input blob SAS uri, if specified, it will override the default input blob in the container."
+        },
+        "inputDataFormat": {
+          "type": "string",
+          "description": "The format of the input data."
+        },
+        "inputParams": {
+          "type": "object",
+          "description": "The input parameters for the job. JSON object used by the target solver. It is expected that the size of this object is small and only used to specify parameters for the execution target, not the input data."
+        },
+        "providerId": {
+          "type": "string",
+          "description": "The unique identifier for the provider."
+        },
+        "target": {
+          "type": "string",
+          "description": "The target identifier to run the job."
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The job metadata. Metadata provides client the ability to store client-specific information"
+        },
+        "outputDataUri": {
+          "type": "string",
+          "description": "The output blob SAS uri. When a job finishes successfully, results will be uploaded to this blob."
+        },
+        "outputDataFormat": {
+          "type": "string",
+          "description": "The format of the output data."
+        },
+        "status": {
+          "type": "string",
+          "description": "The job status.",
+          "readOnly": true,
+          "enum": [
+            "Waiting",
+            "Executing",
+            "Succeeded",
+            "Failed",
+            "Cancelled"
+          ],
+          "x-ms-enum": {
+            "name": "JobStatus",
+            "modelAsString": true
+          }
+        },
+        "creationTime": {
+          "type": "string",
+          "readOnly": true,
+          "format": "date-time",
+          "description": "The creation time of the job."
+        },
+        "beginExecutionTime": {
+          "type": "string",
+          "readOnly": true,
+          "format": "date-time",
+          "description": "The time when the job began execution."
+        },
+        "endExecutionTime": {
+          "type": "string",
+          "readOnly": true,
+          "format": "date-time",
+          "description": "The time when the job finished execution."
+        },
+        "cancellationTime": {
+          "type": "string",
+          "readOnly": true,
+          "format": "date-time",
+          "description": "The time when a job was successfully cancelled."
+        },
+        "errorData": {
+          "$ref": "#/definitions/ErrorData",
+          "readOnly": true,
+          "description": "The error data for the job. This is expected only when Status 'Failed'."
+        }
+      },
+      "required": [
+        "containerUri",
+        "inputDataFormat",
+        "providerId",
+        "target"
+      ]
+    },
+    "BlobDetails": {
+      "description": "Blob details.",
+      "type": "object",
+      "properties": {
+        "containerName": {
+          "type": "string",
+          "description": "The container name."
+        },
+        "blobName": {
+          "type": "string",
+          "description": "The blob name."
+        }
+      },
+      "required": [
+        "containerName"
+      ]
+    },
+    "SasUriResponse": {
+      "description": "Get SAS URL operation response.",
+      "type": "object",
+      "properties": {
+        "sasUri": {
+          "type": "string",
+          "description": "A URL with a SAS token to upload a blob for execution in the given workspace."
+        }
+      }
+    },
+    "ProviderStatusList": {
+      "description": "Providers status.",
+      "properties": {
+        "value": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProviderStatus"
+          }
+        },
+        "nextLink": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Link to the next page of results."
+        }
+      }
+    },
+    "ProviderStatus": {
+      "description": "Providers status.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Provider id."
+        },
+        "currentAvailability": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Provider availability.",
+          "enum": [
+            "Available",
+            "Degraded",
+            "Unavailable"
+          ],
+          "x-ms-enum": {
+            "name": "ProviderAvailability",
+            "modelAsString": true
+          }
+        },
+        "targets": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TargetStatus"
+          }
+        }
+      }
+    },
+    "TargetStatus": {
+      "description": "Target status.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Target id."
+        },
+        "currentAvailability": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Target availability.",
+          "enum": [
+            "Available",
+            "Degraded",
+            "Unavailable"
+          ],
+          "x-ms-enum": {
+            "name": "TargetAvailability",
+            "modelAsString": true
+          }
+        },
+        "averageQueueTime": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true,
+          "description": "Average queue time in seconds."
+        },
+        "statusPage": {
+          "type": "string",
+          "readOnly": true,
+          "description": "A page with detailed status of the provider."
+        }
+      }
+    },
+    "QuotaList": {
+      "description": "List of quotas.",
+      "properties": {
+        "value": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Quota"
+          }
+        },
+        "nextLink": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Link to the next page of results."
+        }
+      }
+    },
+    "Quota": {
+      "description": "Quota information.",
+      "type": "object",
+      "properties": {
+        "dimension": {
+          "type": "string",
+          "description": "The name of the dimension associated with the quota."
+        },
+        "scope": {
+          "type": "string",
+          "description": "The scope at which the quota is applied.",
+          "enum": [
+            "Workspace",
+            "Subscription"
+          ],
+          "x-ms-enum": {
+            "name": "DimensionScope",
+            "modelAsString": true
+          }
+        },
+        "providerId": {
+          "type": "string",
+          "description": "The unique identifier for the provider."
+        },
+        "utilization": {
+          "type": "number",
+          "description": "The amount of the usage that has been applied for the current period."
+        },
+        "holds": {
+          "type": "number",
+          "description": "The amount of the usage that has been reserved but not applied for the current period."
+        },
+        "limit": {
+          "type": "number",
+          "description": "The maximum amount of usage allowed for the current period."
+        },
+        "period": {
+          "type": "string",
+          "description": "The time period in which the quota's underlying meter is accumulated. Based on calendar year. 'None' is used for concurrent quotas.",
+          "enum": [
+            "None",
+            "Monthly"
+          ],
+          "x-ms-enum": {
+            "name": "MeterPeriod",
+            "modelAsString": true
+          }
+        }
+      }
+    },
+    "restError": {
+      "type": "object",
+      "description": "Error information returned by the API",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/ErrorData"
+        }
+      }
+    },
+    "ErrorData": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "An identifier for the error. Codes are invariant and are intended to be consumed programmatically."
+        },
+        "message": {
+          "type": "string",
+          "description": "A message describing the error, intended to be suitable for displaying in a user interface."
+        }
+      },
+      "description": "An error response from Azure."
+    }
+  },
+  "parameters": {
+    "subscriptionIdParameter": {
+      "name": "subscriptionId",
+      "description": "The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000)",
+      "in": "path",
+      "required": true,
+      "x-ms-parameter-location": "client",
+      "type": "string"
+    },
+    "resourceGroupNameParameter": {
+      "name": "resourceGroupName",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "client",
+      "description": "Name of an Azure resource group."
+    },
+    "workspaceNameParameter": {
+      "name": "workspaceName",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "client",
+      "description": "Name of the workspace."
+    },
+    "jobIdParameter": {
+      "name": "jobId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method",
+      "description": "Id of the job."
+    }
+  }
+}

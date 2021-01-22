@@ -6,18 +6,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Template.Models;
+using Azure.Quantum.Jobs.Models;
 
-namespace Azure.Template
+namespace Azure.Quantum.Jobs
 {
     /// <summary>
     /// The sample secrets client.
     /// </summary>
-    public class MiniSecretClient
+    public class AzureQuantum
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal TemplateRestClient RestClient { get; }
+        internal JobsRestClient JobsRestClient { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MiniSecretClient"/>.

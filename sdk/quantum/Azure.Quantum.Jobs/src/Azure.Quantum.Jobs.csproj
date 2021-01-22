@@ -4,6 +4,7 @@
     <AssemblyTitle>Azure SDK Template</AssemblyTitle>
     <Version>1.0.3-beta.19</Version>
     <PackageTags>Azure Template</PackageTags>
+    <RequiredTargetFrameworks>netcoreapp3.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 

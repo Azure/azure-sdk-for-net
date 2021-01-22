@@ -1,0 +1,18 @@
+{
+  "parameters": {
+    "resourceGroupName": "quantumResourcegroup",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "workspaceName": "quantumworkspace1",
+    "blobDetails": {
+      "containerName": "some_container",
+      "blobName": "input_blob"
+    }
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "sasUri": "https://storage.blob.core.windows.net/some_container/input_blob?sv=2019-02-02&sr=b&sig=cdO24OOoXterLJVM8T6QpSaog3ST4PjQsDj3mLflfJA%3D&se=2020-10-17T10%3A03%3A01Z&sp=rcw"
+      }
+    }
+  }
+}
