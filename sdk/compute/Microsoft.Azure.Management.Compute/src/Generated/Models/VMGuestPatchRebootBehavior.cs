@@ -12,14 +12,13 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for PatchOperationStatus.
+    /// Defines values for VMGuestPatchRebootBehavior.
     /// </summary>
-    public static class PatchOperationStatus
+    public static class VMGuestPatchRebootBehavior
     {
         public const string Unknown = "Unknown";
-        public const string InProgress = "InProgress";
-        public const string Failed = "Failed";
-        public const string Succeeded = "Succeeded";
-        public const string CompletedWithWarnings = "CompletedWithWarnings";
+        public const string NeverReboots = "NeverReboots";
+        public const string AlwaysRequiresReboot = "AlwaysRequiresReboot";
+        public const string CanRequestReboot = "CanRequestReboot";
     }
 }

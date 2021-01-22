@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="additionalUnattendContent">Specifies additional
         /// base-64 encoded XML formatted information that can be included in
         /// the Unattend.xml file, which is used by Windows Setup.</param>
-        /// <param name="patchSettings">Specifies settings related to in-guest
-        /// patching (KBs).</param>
+        /// <param name="patchSettings">[Preview Feature] Specifies settings
+        /// related to VM Guest Patching on Windows.</param>
         /// <param name="winRM">Specifies the Windows Remote Management
         /// listeners. This enables remote Windows PowerShell.</param>
         public WindowsConfiguration(bool? provisionVMAgent = default(bool?), bool? enableAutomaticUpdates = default(bool?), string timeZone = default(string), IList<AdditionalUnattendContent> additionalUnattendContent = default(IList<AdditionalUnattendContent>), PatchSettings patchSettings = default(PatchSettings), WinRMConfiguration winRM = default(WinRMConfiguration))
@@ -112,7 +112,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<AdditionalUnattendContent> AdditionalUnattendContent { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies settings related to in-guest patching (KBs).
+        /// Gets or sets [Preview Feature] Specifies settings related to VM
+        /// Guest Patching on Windows.
         /// </summary>
         [JsonProperty(PropertyName = "patchSettings")]
         public PatchSettings PatchSettings { get; set; }

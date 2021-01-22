@@ -15,30 +15,33 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains information about SSH certificate public key data.
+    /// ExtendedLocation complex type.
     /// </summary>
-    public partial class ContainerServiceSshPublicKey
+    public partial class ExtendedLocation
     {
         /// <summary>
-        /// Initializes a new instance of the ContainerServiceSshPublicKey
-        /// class.
+        /// Initializes a new instance of the ExtendedLocation class.
         /// </summary>
-        public ContainerServiceSshPublicKey()
+        public ExtendedLocation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ContainerServiceSshPublicKey
-        /// class.
+        /// Initializes a new instance of the ExtendedLocation class.
         /// </summary>
-        /// <param name="keyData">Certificate public key used to authenticate
-        /// with VMs through SSH. The certificate must be in PEM format with or
-        /// without headers.</param>
-        public ContainerServiceSshPublicKey(string keyData)
+        /// <param name="name">The name of the extended location.</param>
+        public ExtendedLocation(string name)
         {
-            KeyData = keyData;
+            Name = name;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for ExtendedLocation class.
+        /// </summary>
+        static ExtendedLocation()
+        {
+            Type = "EdgeZone";
         }
 
         /// <summary>
@@ -47,12 +50,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets certificate public key used to authenticate with VMs
-        /// through SSH. The certificate must be in PEM format with or without
-        /// headers.
+        /// Gets or sets the name of the extended location.
         /// </summary>
-        [JsonProperty(PropertyName = "keyData")]
-        public string KeyData { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The type of the extended location.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public static string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -62,9 +69,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (KeyData == null)
+            if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyData");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
         }
     }
