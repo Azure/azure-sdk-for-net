@@ -11,13 +11,15 @@ using Azure.Quantum.Jobs.Models;
 namespace Azure.Quantum.Jobs
 {
     /// <summary>
-    /// The sample secrets client.
+    /// The sample jobs client.
     /// </summary>
     public class QuantumJobsClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal JobsRestClient JobsRestClient { get; }
+
+        /// <summary> Returns the client to handle the collection of jobs. </summary>
+        public JobsRestClient Jobs { get; private set; }
 
         // <summary>
         // Initializes a new instance of the <see cref="QuantumJobsClient"/>.
@@ -52,7 +54,7 @@ namespace Azure.Quantum.Jobs
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
         internal QuantumJobsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string resourceGroupName, string workspaceName, Uri endpoint = null)
         {
-            JobsRestClient = new JobsRestClient(clientDiagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
+            Jobs = new JobsRestClient(clientDiagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -64,14 +66,14 @@ namespace Azure.Quantum.Jobs
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="job"/> is null. </exception>
         public Response<JobDetails> Create(string jobId, JobDetails job, CancellationToken cancellationToken = default)
         {
-            return JobsRestClient.Create(jobId, job, cancellationToken);
+            return Jobs.Create(jobId, job, cancellationToken);
         }
 
         /// <summary> List jobs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<JobDetailsList> List(CancellationToken cancellationToken = default)
         {
-            return JobsRestClient.List(cancellationToken);
+            return Jobs.List(cancellationToken);
         }
 
         /// <summary> Get job by id. </summary>
@@ -80,7 +82,7 @@ namespace Azure.Quantum.Jobs
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         public Response<JobDetails> Get(string jobId, CancellationToken cancellationToken = default)
         {
-            return JobsRestClient.Get(jobId, cancellationToken);
+            return Jobs.Get(jobId, cancellationToken);
         }
 
         /// <summary> Cancel a job. </summary>
@@ -89,7 +91,7 @@ namespace Azure.Quantum.Jobs
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         public Response Cancel(string jobId, CancellationToken cancellationToken = default)
         {
-            return JobsRestClient.Cancel(jobId, cancellationToken);
+            return Jobs.Cancel(jobId, cancellationToken);
         }
     }
 }

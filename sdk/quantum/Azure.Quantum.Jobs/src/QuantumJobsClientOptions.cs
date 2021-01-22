@@ -7,16 +7,16 @@ using Azure.Core;
 namespace Azure.Quantum.Jobs
 {
     /// <summary>
-    /// The options for <see cref="MiniSecretClient"/>
+    /// The options for <see cref="QuantumJobsClient"/>
     /// </summary>
-    public class MiniSecretClientOptions : ClientOptions
+    public class QuantumJobsClientOptions : ClientOptions
     {
         internal string Version { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MiniSecretClientOptions"/>.
+        /// Initializes a new instance of the <see cref="QuantumJobsClientOptions"/>.
         /// </summary>
-        public MiniSecretClientOptions(ServiceVersion version = ServiceVersion.V7_0)
+        public QuantumJobsClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
             Version = version switch
             {

@@ -16,7 +16,8 @@ using Azure.Quantum.Jobs.Models;
 
 namespace Azure.Quantum.Jobs
 {
-    internal partial class JobsRestClient
+    /// <summary> The client that handles the collection of jobs. </summary>
+    public partial class JobsRestClient
     {
         private string subscriptionId;
         private string resourceGroupName;
@@ -33,7 +34,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="workspaceName"> Name of the workspace. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public JobsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string resourceGroupName, string workspaceName, Uri endpoint = null)
+        internal JobsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string resourceGroupName, string workspaceName, Uri endpoint = null)
         {
             if (subscriptionId == null)
             {
@@ -57,6 +58,11 @@ namespace Azure.Quantum.Jobs
             _pipeline = pipeline;
         }
 
+        /// <summary> For mocking. </summary>
+        protected JobsRestClient()
+        {
+        }
+
         internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -78,7 +84,7 @@ namespace Azure.Quantum.Jobs
 
         /// <summary> List jobs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<JobDetailsList>> ListAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobDetailsList>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,7 +104,7 @@ namespace Azure.Quantum.Jobs
 
         /// <summary> List jobs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<JobDetailsList> List(CancellationToken cancellationToken = default)
+        public virtual Response<JobDetailsList> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -140,7 +146,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public async Task<Response<JobDetails>> GetAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobDetails>> GetAsync(string jobId, CancellationToken cancellationToken = default)
         {
             if (jobId == null)
             {
@@ -167,7 +173,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public Response<JobDetails> Get(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<JobDetails> Get(string jobId, CancellationToken cancellationToken = default)
         {
             if (jobId == null)
             {
@@ -219,7 +225,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="job"> The complete metadata of the job to submit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="job"/> is null. </exception>
-        public async Task<Response<JobDetails>> CreateAsync(string jobId, JobDetails job, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobDetails>> CreateAsync(string jobId, JobDetails job, CancellationToken cancellationToken = default)
         {
             if (jobId == null)
             {
@@ -252,7 +258,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="job"> The complete metadata of the job to submit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="job"/> is null. </exception>
-        public Response<JobDetails> Create(string jobId, JobDetails job, CancellationToken cancellationToken = default)
+        public virtual Response<JobDetails> Create(string jobId, JobDetails job, CancellationToken cancellationToken = default)
         {
             if (jobId == null)
             {
@@ -304,7 +310,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public async Task<Response> CancelAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelAsync(string jobId, CancellationToken cancellationToken = default)
         {
             if (jobId == null)
             {
@@ -326,7 +332,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public Response Cancel(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response Cancel(string jobId, CancellationToken cancellationToken = default)
         {
             if (jobId == null)
             {
@@ -361,7 +367,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<JobDetailsList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobDetailsList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -388,7 +394,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<JobDetailsList> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public virtual Response<JobDetailsList> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
