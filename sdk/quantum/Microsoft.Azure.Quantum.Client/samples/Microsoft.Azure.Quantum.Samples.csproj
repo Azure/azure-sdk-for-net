@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net47;netcoreapp3.1</TargetFrameworks>
     <AssemblyTitle>Microsoft Azure.Quantum.Samples client library samples</AssemblyTitle>
@@ -10,6 +11,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Quantum.Client.csproj" />
-    <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
   </ItemGroup>
 </Project>
