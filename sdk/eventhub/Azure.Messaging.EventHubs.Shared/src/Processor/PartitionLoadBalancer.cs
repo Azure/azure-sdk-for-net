@@ -204,7 +204,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
             // by others.  The expiration time defaults to 30 seconds, but it may be overridden by a derived class.
 
-            var utcNow = DateTimeOffset.UtcNow;
+            var utcNow = GetDateTimeOffsetNow();
 
             ActiveOwnershipWithDistribution.Clear();
             ActiveOwnershipWithDistribution[OwnerIdentifier] = new List<EventProcessorPartitionOwnership>();
@@ -265,6 +265,14 @@ namespace Azure.Messaging.EventHubs.Primitives
             IsBalanced = ((InstanceOwnership.Count >= minimumDesiredPartitions) && (!claimAttempted));
 
             return claimedOwnership;
+        }
+
+        /// <summary>
+        /// Returns <code>DateTimeOffset.UtcNow</code>, is used to make testing deterministic.
+        /// </summary>
+        internal virtual DateTimeOffset GetDateTimeOffsetNow()
+        {
+            return DateTimeOffset.UtcNow;
         }
 
         /// <summary>
@@ -435,10 +443,10 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             Logger.RenewOwnershipStart(OwnerIdentifier);
 
-            var now = DateTimeOffset.UtcNow;
+            var utcNow = GetDateTimeOffsetNow();
 
             List<EventProcessorPartitionOwnership> ownershipToRenew = InstanceOwnership.Values
-                .Where(ownership => ownership.LastModifiedTime - now > LoadBalanceInterval)
+                .Where(ownership => (utcNow - ownership.LastModifiedTime) > LoadBalanceInterval)
                 .Select(ownership => new EventProcessorPartitionOwnership
                 {
                     FullyQualifiedNamespace = ownership.FullyQualifiedNamespace,
@@ -446,7 +454,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     ConsumerGroup = ownership.ConsumerGroup,
                     OwnerIdentifier = ownership.OwnerIdentifier,
                     PartitionId = ownership.PartitionId,
-                    LastModifiedTime = now,
+                    LastModifiedTime = utcNow,
                     Version = ownership.Version
                 })
                 .ToList();

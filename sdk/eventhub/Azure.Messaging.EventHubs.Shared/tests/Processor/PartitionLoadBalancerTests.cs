@@ -719,36 +719,54 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             const int NumberOfPartitions = 4;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
+            string[] CollectVersions() => storageManager.Ownership.OrderBy(pair => pair.Key.Item4).Select(pair => pair.Value.Version).ToArray();
+
+            var now = DateTimeOffset.UtcNow;
+
             var loadbalancerId = Guid.NewGuid().ToString();
-            var loadbalancer = new PartitionLoadBalancer(
-                storageManager, loadbalancerId, ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(60));
+            var loadbalancerMock = new Mock<PartitionLoadBalancer>(
+                storageManager, loadbalancerId, ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(3), TimeSpan.FromSeconds(60));
+            loadbalancerMock.CallBase = true;
+            loadbalancerMock.Setup(b => b.GetDateTimeOffsetNow()).Returns(() => now);
+            var loadbalancer = loadbalancerMock.Object;
 
-            // Create more partitions owned by a different load balancer.
+            storageManager.LastModifiedTime = now;
 
-            var partitions = CreatePartitionOwnership(partitionIds, loadbalancerId, DateTimeOffset.UtcNow.AddHours(-1)).ToList();
-
-            var initialVersions = partitions.Select(p => p.Version).ToList();
-
+            // This run would re-take ownership and update versions
             for (int i = 0; i < NumberOfPartitions; i++)
             {
                 await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
             }
 
-            var balancedVersions = storageManager.Ownership.OrderBy(pair => pair.Key.Item4).Select(pair => pair.Value.Version).ToArray();
+            var claimedVersions = CollectVersions();
 
+            // This run would renew ownership
+            now = now.AddSeconds(65);
+            storageManager.LastModifiedTime = now;
             for (int i = 0; i < NumberOfPartitions; i++)
             {
                 await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
             }
 
-            var renewedVersions = storageManager.Ownership.OrderBy(pair => pair.Key.Item4).Select(pair => pair.Value.Version).ToArray();
+            var renewedVersions = CollectVersions();
+
+            // This run would not review anything as everything is up-to-date
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            }
+
+            var notRenewedVersions = CollectVersions();
 
             for (int i = 0; i < NumberOfPartitions; i++)
             {
-                Assert.That(initialVersions[i], Is.Not.EqualTo(balancedVersions[i]), "Partitions should've been renewed ");
-                Assert.That(balancedVersions[i], Is.EqualTo(renewedVersions[i]), "Partitions should've been skipped for renewal");
+                Assert.That(claimedVersions[i], Is.Not.EqualTo(renewedVersions[i]), "Partitions should've been renewed ");
+                Assert.That(renewedVersions[i], Is.EqualTo(notRenewedVersions[i]), "Partitions should've been renewed ");
             }
+
+            Assert.That(storageManager.TotalRenewals, Is.EqualTo(8), "There should be 4 initial claims and 4 renew claims");
         }
 
         /// <summary>
@@ -757,17 +775,11 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <param name="partitionIds">A collection of partition identifiers that the collection will be associated with.</param>
         /// <param name="identifier">The owner identifier of the EventProcessorClient owning the collection.</param>
-        /// <param name="lastModifiedTime">The valued to use for <see cref="EventProcessorPartitionOwnership.LastModifiedTime"/> property.</param>
         /// <returns>A collection of <see cref="PartitionOwnership" />.</returns>
         ///
         private IEnumerable<EventProcessorPartitionOwnership> CreatePartitionOwnership(IEnumerable<string> partitionIds,
-                                                                                       string identifier,
-                                                                                       DateTimeOffset lastModifiedTime = default)
+                                                                                       string identifier)
         {
-            if (lastModifiedTime == default)
-            {
-                lastModifiedTime = DateTimeOffset.UtcNow;
-            }
             return partitionIds
                 .Select(partitionId =>
                     new EventProcessorPartitionOwnership
@@ -777,7 +789,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         ConsumerGroup = ConsumerGroup,
                         OwnerIdentifier = identifier,
                         PartitionId = partitionId,
-                        LastModifiedTime = lastModifiedTime,
+                        LastModifiedTime = DateTimeOffset.UtcNow,
                         Version = Guid.NewGuid().ToString()
                     }).ToList();
         }
