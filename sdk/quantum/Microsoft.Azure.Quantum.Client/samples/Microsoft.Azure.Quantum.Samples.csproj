@@ -10,6 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Quantum.Client.csproj" />
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
   </ItemGroup>
 </Project>
