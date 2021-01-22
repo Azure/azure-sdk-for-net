@@ -20,6 +20,11 @@ namespace Azure.Communication.Sms
                 writer.WritePropertyName("enableDeliveryReport");
                 writer.WriteBooleanValue(EnableDeliveryReport.Value);
             }
+            if (Optional.IsDefined(Tag))
+            {
+                writer.WritePropertyName("tag");
+                writer.WriteStringValue(Tag);
+            }
             writer.WriteEndObject();
         }
     }

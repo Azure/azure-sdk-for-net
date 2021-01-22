@@ -5,24 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Azure.Communication.Sms
 {
-    /// <summary> Response for a successful send Sms request. </summary>
-    public partial class SendSmsResponse
+    /// <summary> Response for a successful or multi status send Sms request. </summary>
+    internal partial class SendSmsResponse
     {
         /// <summary> Initializes a new instance of SendSmsResponse. </summary>
-        internal SendSmsResponse()
+        /// <param name="value"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SendSmsResponse(IEnumerable<SendSmsResult> value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of SendSmsResponse. </summary>
-        /// <param name="messageId"> The identifier of the outgoing SMS message. </param>
-        internal SendSmsResponse(string messageId)
+        /// <param name="value"> . </param>
+        /// <param name="nextLink"> . </param>
+        internal SendSmsResponse(IReadOnlyList<SendSmsResult> value, string nextLink)
         {
-            MessageId = messageId;
+            Value = value;
+            NextLink = nextLink;
         }
 
-        /// <summary> The identifier of the outgoing SMS message. </summary>
-        public string MessageId { get; }
+        public IReadOnlyList<SendSmsResult> Value { get; }
+        public string NextLink { get; }
     }
 }

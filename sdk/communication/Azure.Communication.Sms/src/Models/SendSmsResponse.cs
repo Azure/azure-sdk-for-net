@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.Communication.Sms
 {
     [CodeGenModel("SendSmsResponse")]
-    public partial class SendSmsResponse
+    internal partial class SendSmsResponse
     {
     }
 }
