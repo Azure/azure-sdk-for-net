@@ -3,39 +3,54 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
-namespace Azure.Quantum.Jobs
+namespace Azure.Quantum
 {
     /// <summary>
-    /// The options for <see cref="QuantumJobsClient"/>
+    /// The options for quantum jobs client <see cref="QuantumJobsClientOptions"/>.
     /// </summary>
     public class QuantumJobsClientOptions : ClientOptions
     {
-        internal string Version { get; }
+        /// <summary>
+        /// The latest version of the service.
+        /// </summary>
+        public const ServiceVersion LatestVersion = ServiceVersion.V1;
+
+        internal string ApiVersion { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QuantumJobsClientOptions"/>.
         /// </summary>
-        public QuantumJobsClientOptions(ServiceVersion version = ServiceVersion.V7_0)
+        public QuantumJobsClientOptions(ServiceVersion version = LatestVersion, RetryOptions retryOptions = default, HttpPipelineTransport transport = default)
         {
-            Version = version switch
+            ApiVersion = version switch
             {
-                ServiceVersion.V7_0 => "7.0",
-                _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
+                ServiceVersion.V1 => "v1.0",
+                _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
+
+            if (transport != default)
+                Transport = transport;
+
+            if (retryOptions != null)
+            {
+                Retry.Mode = retryOptions.Mode;
+                Retry.MaxRetries = retryOptions.MaxRetries;
+                Retry.Delay = retryOptions.Delay;
+                Retry.MaxDelay = retryOptions.MaxDelay;
+            }
         }
 
         /// <summary>
-        /// The template service version.
+        /// The Sms service version.
         /// </summary>
         public enum ServiceVersion
         {
             /// <summary>
-            /// The 7.0 of the secret service.
+            /// The V1 of the Sms service.
             /// </summary>
-#pragma warning disable CA1707 // Remove the underscores from member name
-            V7_0 = 1
-#pragma warning restore
+            V1 = 1
         }
     }
 }
