@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 Top = 2
             };
 
-            HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(list, "en", options);
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartHealthcareBatchAsync(list, "en", options);
 
             AsyncPageable<DocumentHealthcareResult> results = client.GetHealthcareEntities(healthOperation);
 
