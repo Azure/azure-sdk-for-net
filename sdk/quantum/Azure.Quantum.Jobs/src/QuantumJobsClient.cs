@@ -29,7 +29,7 @@ namespace Azure.Quantum.Jobs
         /// <summary>
         /// Initializes a new instance of the <see cref="QuantumJobsClient"/>.
         /// </summary>
-        public QuantumJobsClient(Uri endpoint, TokenCredential credential, MiniSecretClientOptions options): this(
+        public QuantumJobsClient(Uri endpoint, TokenCredential credential, MiniSecretClientOptions options) : this(
             new ClientDiagnostics(options),
             HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default")),
             endpoint.ToString(),
@@ -48,45 +48,29 @@ namespace Azure.Quantum.Jobs
         /// <param name="apiVersion"> Api Version. </param>
         internal QuantumJobsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
         {
-            RestClient = new TemplateRestClient(clientDiagnostics, pipeline, vaultBaseUrl, apiVersion);
+            JobsRestClient = new JobsRestClient(clientDiagnostics, pipeline, vaultBaseUrl, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
-        /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecretBundle>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
+        public Response<JobDetails> Create(string jobId, JobDetails job, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("QuantumJobsClient.GetSecret");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetSecretAsync(secretName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return JobsRestClient.Create(jobId, job, cancellationToken);
         }
 
-        /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
-        /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecretBundle> GetSecret(string secretName, CancellationToken cancellationToken = default)
+        public Response<JobDetailsList> List(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("QuantumJobsClient.GetSecret");
-            scope.Start();
-            try
-            {
-                return RestClient.GetSecret(secretName, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return JobsRestClient.List(cancellationToken);
+        }
+
+        public Response<JobDetails> Get(string jobId, CancellationToken cancellationToken = default)
+        {
+            return JobsRestClient.Get(jobId, cancellationToken);
+        }
+
+        public Response Cancel(string jobId, CancellationToken cancellationToken = default)
+        {
+            return JobsRestClient.Cancel(jobId, cancellationToken);
         }
     }
 }
