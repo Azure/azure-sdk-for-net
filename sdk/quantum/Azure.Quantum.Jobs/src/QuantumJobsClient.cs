@@ -53,21 +53,36 @@ namespace Azure.Quantum.Jobs
             _pipeline = pipeline;
         }
 
+        /// <summary> Create a job. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="job"> The complete metadata of the job to submit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="job"/> is null. </exception>
         public Response<JobDetails> Create(string jobId, JobDetails job, CancellationToken cancellationToken = default)
         {
             return JobsRestClient.Create(jobId, job, cancellationToken);
         }
 
+        /// <summary> List jobs. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<JobDetailsList> List(CancellationToken cancellationToken = default)
         {
             return JobsRestClient.List(cancellationToken);
         }
 
+        /// <summary> Get job by id. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         public Response<JobDetails> Get(string jobId, CancellationToken cancellationToken = default)
         {
             return JobsRestClient.Get(jobId, cancellationToken);
         }
 
+        /// <summary> Cancel a job. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         public Response Cancel(string jobId, CancellationToken cancellationToken = default)
         {
             return JobsRestClient.Cancel(jobId, cancellationToken);
