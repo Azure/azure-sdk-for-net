@@ -22,33 +22,37 @@ namespace Azure.Quantum.Jobs
         /// <summary>
         /// Initializes a new instance of the <see cref="QuantumJobsClient"/>.
         /// </summary>
-        public QuantumJobsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MiniSecretClientOptions())
-        {
-        }
+//TODO         public QuantumJobsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MiniSecretClientOptions())
+//         {
+//         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QuantumJobsClient"/>.
         /// </summary>
-        public QuantumJobsClient(Uri endpoint, TokenCredential credential, MiniSecretClientOptions options) : this(
-            new ClientDiagnostics(options),
-            HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default")),
-            endpoint.ToString(),
-            options.Version)
-        {
-        }
+//TODO         public QuantumJobsClient(Uri endpoint, TokenCredential credential, MiniSecretClientOptions options) : this(
+//             new ClientDiagnostics(options),
+//             HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default")),
+//             endpoint.ToString(),
+//             options.Version)
+//         {
+//         }
 
         /// <summary> Initializes a new instance of QuantumJobsClient for mocking. </summary>
         protected QuantumJobsClient()
         {
         }
-        /// <summary> Initializes a new instance of QuantumJobsClient. </summary>
+
+        /// <summary> Initializes a new instance of JobsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal QuantumJobsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
+        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of an Azure resource group. </param>
+        /// <param name="workspaceName"> Name of the workspace. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
+        internal QuantumJobsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string resourceGroupName, string workspaceName, Uri endpoint = null)
         {
-            JobsRestClient = new JobsRestClient(clientDiagnostics, pipeline, vaultBaseUrl, apiVersion);
+            JobsRestClient = new JobsRestClient(clientDiagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
