@@ -775,6 +775,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <param name="partitionIds">A collection of partition identifiers that the collection will be associated with.</param>
         /// <param name="identifier">The owner identifier of the EventProcessorClient owning the collection.</param>
+        ///
         /// <returns>A collection of <see cref="PartitionOwnership" />.</returns>
         ///
         private IEnumerable<EventProcessorPartitionOwnership> CreatePartitionOwnership(IEnumerable<string> partitionIds,

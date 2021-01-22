@@ -206,15 +206,15 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             var utcNow = GetDateTimeOffsetNow();
 
+            var activeOwnership = default(EventProcessorPartitionOwnership);
+
             ActiveOwnershipWithDistribution.Clear();
             ActiveOwnershipWithDistribution[OwnerIdentifier] = new List<EventProcessorPartitionOwnership>();
-
             foreach (EventProcessorPartitionOwnership ownership in completeOwnershipList)
             {
                 if (utcNow.Subtract(ownership.LastModifiedTime) < OwnershipExpirationInterval && !string.IsNullOrEmpty(ownership.OwnerIdentifier))
                 {
-                    EventProcessorPartitionOwnership activeOwnership = ownership;
-
+                    activeOwnership = ownership;
                     // If a processor crashes and restarts, then it is possible for it to own partitions that it is not currently
                     // tracking as owned.  Test for this case and ensure that ownership is tracked and extended.
 
