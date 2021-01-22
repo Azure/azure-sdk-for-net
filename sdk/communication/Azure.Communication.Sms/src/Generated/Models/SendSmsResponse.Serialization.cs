@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
-    public partial class SendSmsResponse
+    internal partial class SendSmsResponse
     {
         internal static SendSmsResponse DeserializeSendSmsResponse(JsonElement element)
         {
-            Optional<string> messageId = default;
+            IReadOnlyList<SendSmsResult> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("value"))
                 {
-                    messageId = property.Value.GetString();
+                    List<SendSmsResult> array = new List<SendSmsResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SendSmsResult.DeserializeSendSmsResult(item));
+                    }
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new SendSmsResponse(messageId.Value);
+            return new SendSmsResponse(value, nextLink.Value);
         }
     }
 }

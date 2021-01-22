@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
+    /// <summary> Optional configuration for sending SMS messages. </summary>
     [CodeGenModel("SendSmsOptions")]
     public partial class SendSmsOptions
     {

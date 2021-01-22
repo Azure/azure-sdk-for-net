@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -81,11 +80,10 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual async Task<Response<SendSmsResponse>> SendAsync(PhoneNumberIdentifier from, PhoneNumberIdentifier to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendSmsResult>> SendAsync(string from, string to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(from.PhoneNumber, nameof(from));
-            Argument.AssertNotNullOrEmpty(to.PhoneNumber, nameof(to));
-            return await SendAsync(from, new[] { to }, message, sendSmsOptions, cancellationToken).ConfigureAwait(false);
+            await Task.Yield();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -100,11 +98,9 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Response<SendSmsResponse> Send(PhoneNumberIdentifier from, PhoneNumberIdentifier to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SendSmsResult> Send(string from, string to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(from.PhoneNumber, nameof(from));
-            Argument.AssertNotNullOrEmpty(to.PhoneNumber, nameof(to));
-            return Send(from, new[] { to }, message, sendSmsOptions, cancellationToken);
+            throw new NotImplementedException();
         }
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
@@ -117,20 +113,9 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual async Task<Response<SendSmsResponse>> SendAsync(PhoneNumberIdentifier from, IEnumerable<PhoneNumberIdentifier> to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SendSmsResult> SendAsync(string from, IEnumerable<string> to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(from.PhoneNumber, nameof(from));
-                return await RestClient.SendAsync(from.PhoneNumber, to.Select(x => AssertNotNullOrEmpty(x.PhoneNumber, nameof(to))), message, sendSmsOptions, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
@@ -143,20 +128,9 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Response<SendSmsResponse> Send(PhoneNumberIdentifier from, IEnumerable<PhoneNumberIdentifier> to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SendSmsResult> Send(string from, IEnumerable<string> to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(from.PhoneNumber, nameof(from));
-                return RestClient.Send(from.PhoneNumber, to.Select(x => AssertNotNullOrEmpty(x.PhoneNumber, nameof(to))), message, sendSmsOptions, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
         private static T AssertNotNull<T>(T argument, string argumentName)
