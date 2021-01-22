@@ -68,32 +68,26 @@ function FilterMatrix([array]$matrix, [array]$filters) {
 }
 
 function MatchesFilters([hashtable]$entry, [array]$filters) {
-    $nonMatching = $filters | Where-Object { $null -ne $_ } | ForEach-Object {
-        $keyIsOptional, $key, $regex, $excludeKey = ParseFilter $_
-        if ($excludeKey) {
-            if (-not $entry.parameters.Contains($key)) {
-                return
-            }
+    foreach ($filter in $filters) {
+        $keyIsOptional, $key, $regex, $excludeKey = ParseFilter $filter
+        if ($excludeKey -and $entry.parameters.Contains($key)) {
             return $false
         }
         if ($entry.parameters.Contains($key)) {
-            if ($entry.parameters[$key] -match $regex) {
-                return
+            if ($entry.parameters[$key] -notmatch $regex) {
+                return $false
             }
+        } elseif (-not $keyIsOptional) {
             return $false
-        } elseif ($keyIsOptional) {
-            return
         }
-        return $false
     }
 
-    # An empty result means a filter match for the matrix entry
-    return $null -eq $nonMatching
+    return $true
 }
 
 function ParseFilter([string]$filter) {
     if ($filter -match "\!(.*)") {
-        return $false, $matches[1], "", $true
+        return $true, $matches[1], "", $true
     } elseif ($filter -match "(\??)(.*?)=(.*)") {
         $keyIsOptional = $matches[1]
         $key = $matches[2]
