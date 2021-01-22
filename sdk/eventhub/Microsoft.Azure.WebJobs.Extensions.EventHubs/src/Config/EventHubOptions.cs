@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
@@ -39,7 +40,29 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             InitialOffsetOptions = new InitialOffsetOptions();
         }
 
-        public EventProcessorOptions EventProcessorOptions { get; }
+        internal EventProcessorOptions EventProcessorOptions { get; }
+
+        /// <summary>
+        ///   The options used for configuring the connection to the Event Hubs service.
+        /// </summary>
+        ///
+        public EventHubConnectionOptions ConnectionOptions
+        {
+            get => EventProcessorOptions.ConnectionOptions;
+            set => EventProcessorOptions.ConnectionOptions = value;
+        }
+
+        /// <summary>
+        ///   The set of options to use for determining whether a failed operation should be retried and,
+        ///   if so, the amount of time to wait between retry attempts.  These options also control the
+        ///   amount of time allowed for receiving event batches and other interactions with the Event Hubs service.
+        /// </summary>
+        ///
+        public EventHubsRetryOptions RetryOptions
+        {
+            get => EventProcessorOptions.RetryOptions;
+            set => EventProcessorOptions.RetryOptions = value;
+        }
 
         private int _batchCheckpointFrequency = 1;
 
@@ -90,6 +113,55 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// </summary>
         public InitialOffsetOptions InitialOffsetOptions { get; }
 
+        /// <inheritdoc cref="EventProcessorOptions.TrackLastEnqueuedEventProperties"/>
+        public bool TrackLastEnqueuedEventProperties
+        {
+            get => EventProcessorOptions.TrackLastEnqueuedEventProperties;
+            set => EventProcessorOptions.TrackLastEnqueuedEventProperties = value;
+        }
+
+        /// <inheritdoc cref="EventProcessorOptions.PrefetchCount"/>
+        public int PrefetchCount
+        {
+            get => EventProcessorOptions.PrefetchCount;
+            set => EventProcessorOptions.PrefetchCount = value;
+        }
+
+        /// <inheritdoc cref="EventProcessorOptions.PrefetchSizeInBytes"/>
+        public long? PrefetchSizeInBytes
+        {
+            get => EventProcessorOptions.PrefetchSizeInBytes;
+            set => EventProcessorOptions.PrefetchSizeInBytes = value;
+        }
+
+        /// <inheritdoc cref="EventProcessorOptions.Identifier"/>
+        public string Identifier
+        {
+            get => EventProcessorOptions.Identifier;
+            set => EventProcessorOptions.Identifier = value;
+        }
+
+        /// <inheritdoc cref="EventProcessorOptions.MaximumWaitTime"/>
+        public TimeSpan? MaximumWaitTime
+        {
+            get => EventProcessorOptions.MaximumWaitTime;
+            set => EventProcessorOptions.MaximumWaitTime = value;
+        }
+
+        /// <inheritdoc cref="EventProcessorOptions.PartitionOwnershipExpirationInterval"/>
+        public TimeSpan PartitionOwnershipExpirationInterval
+        {
+            get => EventProcessorOptions.PartitionOwnershipExpirationInterval;
+            set => EventProcessorOptions.PartitionOwnershipExpirationInterval = value;
+        }
+
+        /// <inheritdoc cref="EventProcessorOptions.LoadBalancingUpdateInterval"/>
+        public TimeSpan LoadBalancingUpdateInterval
+        {
+            get => EventProcessorOptions.LoadBalancingUpdateInterval;
+            set => EventProcessorOptions.LoadBalancingUpdateInterval = value;
+        }
+
         /// <summary>
         /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.
         /// </summary>
@@ -139,7 +211,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 throw new ArgumentNullException(nameof(sendConnectionString));
             }
 
-            var client = new EventHubProducerClient(EventHubClientFactory.NormalizeConnectionString(sendConnectionString, eventHubName));
+            var client = new EventHubProducerClient(
+                EventHubClientFactory.NormalizeConnectionString(sendConnectionString, eventHubName),
+                new EventHubProducerClientOptions()
+                {
+                    ConnectionOptions = ConnectionOptions,
+                    RetryOptions = RetryOptions
+                });
+
             AddEventHubProducerClient(eventHubName, client);
         }
 
@@ -271,40 +350,48 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         public string Format()
         {
-            JObject eventProcessorOptions = null;
-            if (EventProcessorOptions != null)
-            {
-                eventProcessorOptions = new JObject
+            JObject options = new JObject
                 {
-                    { nameof(EventProcessorOptions.TrackLastEnqueuedEventProperties), EventProcessorOptions.TrackLastEnqueuedEventProperties },
-                    { nameof(EventProcessorOptions.PrefetchCount), EventProcessorOptions.PrefetchCount },
-                    { nameof(EventProcessorOptions.MaximumWaitTime), EventProcessorOptions.MaximumWaitTime },
-                    { nameof(EventProcessorOptions.PartitionOwnershipExpirationInterval), EventProcessorOptions.PartitionOwnershipExpirationInterval },
-                    { nameof(EventProcessorOptions.LoadBalancingUpdateInterval), EventProcessorOptions.LoadBalancingUpdateInterval },
+                    { nameof(MaxBatchSize), MaxBatchSize },
+                    { nameof(InvokeProcessorAfterReceiveTimeout), InvokeProcessorAfterReceiveTimeout },
+                    { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
+                    { nameof(ConnectionOptions), ConstructConnectionOptions() },
+                    { nameof(RetryOptions), ConstructRetryOptions() },
+                    { nameof(Identifier), Identifier },
+                    { nameof(TrackLastEnqueuedEventProperties), TrackLastEnqueuedEventProperties },
+                    { nameof(PrefetchCount), PrefetchCount },
+                    { nameof(PrefetchSizeInBytes), PrefetchSizeInBytes },
+                    { nameof(MaximumWaitTime), MaximumWaitTime },
+                    { nameof(PartitionOwnershipExpirationInterval), PartitionOwnershipExpirationInterval },
+                    { nameof(LoadBalancingUpdateInterval), LoadBalancingUpdateInterval },
+                    { nameof(InitialOffsetOptions), ConstructInitialOffsetOptions() },
                 };
-            }
+            return options.ToString(Formatting.Indented);
+        }
 
-            JObject initialOffsetOptions = null;
-            if (InitialOffsetOptions != null)
+        private JObject ConstructConnectionOptions() =>
+            new JObject
+        {
+            { nameof(EventHubConnectionOptions.TransportType), ConnectionOptions.TransportType.ToString() },
+            { nameof(EventHubConnectionOptions.Proxy), ConnectionOptions.Proxy?.ToString()},
+        };
+
+        private JObject ConstructRetryOptions() =>
+            new JObject
             {
-                initialOffsetOptions = new JObject
+                { nameof(EventHubsRetryOptions.Mode), RetryOptions.Mode.ToString() },
+                { nameof(EventHubsRetryOptions.TryTimeout), RetryOptions.TryTimeout },
+                { nameof(EventHubsRetryOptions.Delay), RetryOptions.Delay },
+                { nameof(EventHubsRetryOptions.MaximumDelay), RetryOptions.MaximumDelay },
+                { nameof(EventHubsRetryOptions.MaximumRetries), RetryOptions.MaximumRetries },
+            };
+
+        private JObject ConstructInitialOffsetOptions() =>
+            new JObject
                 {
                     { nameof(InitialOffsetOptions.Type), InitialOffsetOptions.Type },
                     { nameof(InitialOffsetOptions.EnqueuedTimeUTC), InitialOffsetOptions.EnqueuedTimeUTC },
                 };
-            }
-
-            JObject options = new JObject
-            {
-                { nameof(MaxBatchSize), MaxBatchSize },
-                { nameof(InvokeProcessorAfterReceiveTimeout), InvokeProcessorAfterReceiveTimeout },
-                { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
-                { nameof(EventProcessorOptions), eventProcessorOptions },
-                { nameof(InitialOffsetOptions), initialOffsetOptions }
-            };
-
-            return options.ToString(Formatting.Indented);
-        }
 
         // Hold credentials for a given eventHub name.
         // Multiple consumer groups (and multiple listeners) on the same hub can share the same credentials.
