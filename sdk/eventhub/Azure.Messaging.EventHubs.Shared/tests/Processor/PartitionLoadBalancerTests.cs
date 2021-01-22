@@ -762,8 +762,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (int i = 0; i < NumberOfPartitions; i++)
             {
-                Assert.That(claimedVersions[i], Is.Not.EqualTo(renewedVersions[i]), "Partitions should've been renewed ");
-                Assert.That(renewedVersions[i], Is.EqualTo(notRenewedVersions[i]), "Partitions should've been renewed ");
+                Assert.That(claimedVersions[i], Is.Not.EqualTo(renewedVersions[i]), "Partitions should've been claimed");
+                Assert.That(renewedVersions[i], Is.EqualTo(notRenewedVersions[i]), "Partitions should've been skipped during renewal");
             }
 
             Assert.That(storageManager.TotalRenewals, Is.EqualTo(8), "There should be 4 initial claims and 4 renew claims");
