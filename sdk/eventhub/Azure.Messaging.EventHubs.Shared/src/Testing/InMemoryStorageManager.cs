@@ -210,6 +210,16 @@ namespace Azure.Messaging.EventHubs.Tests
             return Task.CompletedTask;
         }
 
+        public EventProcessorPartitionOwnership TryGetLatestOwnership(EventProcessorPartitionOwnership ownership)
+        {
+            var key = (ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
+            if (Ownership.TryGetValue(key, out ownership))
+            {
+                return ownership;
+            }
+
+            return null;
+        }
         /// <summary>
         ///   Sends a log message to the current logger, if provided by the user.
         /// </summary>

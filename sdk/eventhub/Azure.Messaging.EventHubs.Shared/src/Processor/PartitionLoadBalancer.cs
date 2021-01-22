@@ -435,8 +435,10 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             Logger.RenewOwnershipStart(OwnerIdentifier);
 
+            var now = DateTimeOffset.UtcNow;
+
             List<EventProcessorPartitionOwnership> ownershipToRenew = InstanceOwnership.Values
-                .Where(ownership => (ownership.LastModifiedTime - DateTimeOffset.UtcNow) > LoadBalanceInterval)
+                .Where(ownership => ownership.LastModifiedTime - now > LoadBalanceInterval)
                 .Select(ownership => new EventProcessorPartitionOwnership
                 {
                     FullyQualifiedNamespace = ownership.FullyQualifiedNamespace,
@@ -444,23 +446,27 @@ namespace Azure.Messaging.EventHubs.Primitives
                     ConsumerGroup = ownership.ConsumerGroup,
                     OwnerIdentifier = ownership.OwnerIdentifier,
                     PartitionId = ownership.PartitionId,
-                    LastModifiedTime = DateTimeOffset.UtcNow,
+                    LastModifiedTime = now,
                     Version = ownership.Version
                 })
                 .ToList();
 
-            if (ownershipToRenew.Count == 0)
-            {
-                return;
-            }
-
             try
             {
-                // Dispose of all previous partition ownership instances and get a whole new dictionary.
+                // Update ownerships we renewed and remove the ones we didn't
 
-                InstanceOwnership = (await StorageManager.ClaimOwnershipAsync(ownershipToRenew, cancellationToken)
-                    .ConfigureAwait(false))
-                    .ToDictionary(ownership => ownership.PartitionId);
+                var newOwnerships = await StorageManager.ClaimOwnershipAsync(ownershipToRenew, cancellationToken)
+                    .ConfigureAwait(false);
+
+                foreach (var oldOwnership in ownershipToRenew)
+                {
+                    InstanceOwnership.Remove(oldOwnership.PartitionId);
+                }
+
+                foreach (var newOwnership in newOwnerships)
+                {
+                    InstanceOwnership[newOwnership.PartitionId] = newOwnership;
+                }
             }
             catch (Exception ex)
             {

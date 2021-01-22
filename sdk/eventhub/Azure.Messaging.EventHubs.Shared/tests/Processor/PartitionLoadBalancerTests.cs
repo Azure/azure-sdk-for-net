@@ -711,17 +711,63 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that ownership is renewed only for partitions past LoadBalancingInterval.
+        /// </summary>
+        ///
+        [Test]
+        public async Task RunLoadBalancingAsyncDoesNotRenewFreshPartitions()
+        {
+            const int NumberOfPartitions = 4;
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
+            var loadbalancerId = Guid.NewGuid().ToString();
+            var loadbalancer = new PartitionLoadBalancer(
+                storageManager, loadbalancerId, ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1), TimeSpan.FromSeconds(60));
+
+            // Create more partitions owned by a different load balancer.
+
+            var partitions = CreatePartitionOwnership(partitionIds, loadbalancerId, DateTimeOffset.UtcNow.AddHours(-1)).ToList();
+
+            var initialVersions = partitions.Select(p => p.Version).ToList();
+
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            }
+
+            var balancedVersions = storageManager.Ownership.OrderBy(pair => pair.Key.Item4).Select(pair => pair.Value.Version).ToArray();
+
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            }
+
+            var renewedVersions = storageManager.Ownership.OrderBy(pair => pair.Key.Item4).Select(pair => pair.Value.Version).ToArray();
+
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                Assert.That(initialVersions[i], Is.Not.EqualTo(balancedVersions[i]), "Partitions should've been renewed ");
+                Assert.That(balancedVersions[i], Is.EqualTo(renewedVersions[i]), "Partitions should've been skipped for renewal");
+            }
+        }
+
+        /// <summary>
         ///   Creates a collection of <see cref="PartitionOwnership" /> based on the specified arguments.
         /// </summary>
         ///
         /// <param name="partitionIds">A collection of partition identifiers that the collection will be associated with.</param>
         /// <param name="identifier">The owner identifier of the EventProcessorClient owning the collection.</param>
-        ///
+        /// <param name="lastModifiedTime">The valued to use for <see cref="EventProcessorPartitionOwnership.LastModifiedTime"/> property.</param>
         /// <returns>A collection of <see cref="PartitionOwnership" />.</returns>
         ///
         private IEnumerable<EventProcessorPartitionOwnership> CreatePartitionOwnership(IEnumerable<string> partitionIds,
-                                                                                       string identifier)
+                                                                                       string identifier,
+                                                                                       DateTimeOffset lastModifiedTime = default)
         {
+            if (lastModifiedTime == default)
+            {
+                lastModifiedTime = DateTimeOffset.UtcNow;
+            }
             return partitionIds
                 .Select(partitionId =>
                     new EventProcessorPartitionOwnership
@@ -731,7 +777,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         ConsumerGroup = ConsumerGroup,
                         OwnerIdentifier = identifier,
                         PartitionId = partitionId,
-                        LastModifiedTime = DateTimeOffset.UtcNow,
+                        LastModifiedTime = lastModifiedTime,
                         Version = Guid.NewGuid().ToString()
                     }).ToList();
         }
