@@ -764,6 +764,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>
         ///   Produces a list of the available checkpoints for the Event Hub and consumer group associated with the
         ///   event processor instance, so that processing for a given set of partitions can be properly initialized.
+        ///   It's recommended that <see cref="GetCheckpointAsync"/> is implemented as well as <see cref="ListCheckpointsAsync"/> to achieve an optimal performance.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
@@ -784,6 +785,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>
         ///   Returns a checkpoint for the Event Hub, consumer group, and partition ID associated with the
         ///   event processor instance, so that processing for a given partition can be properly initialized.
+        ///   The default implementation calls the <see cref="ListCheckpointsAsync"/> and filters results by <see cref="EventProcessorCheckpoint.PartitionId"/>.
+        ///   It's recommended that this method is overriden in <see cref="EventProcessor{TPartition}"/> implementations to achieve an optimal performance.
         /// </summary>
         ///
         /// <param name="partitionId"></param>
