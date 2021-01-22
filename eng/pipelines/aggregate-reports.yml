@@ -128,6 +128,10 @@ jobs:
         displayName: 'Run CredScan'
         inputs:
           suppressionsFile: 'eng\CredScanSuppression.json'
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+        displayName: 'Publish Security Analysis Logs'
+        continueOnError: true
+        condition: succeededOrFailed()
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
         displayName: 'Post Analysis'
         inputs:
@@ -135,9 +139,4 @@ jobs:
           GdnBreakGdnToolCredScan: true
           GdnBreakGdnToolCredScanSeverity: Error
           GdnBreakBaselineFiles: $(Build.SourcesDirectory)/eng/dotnet.gdnbaselines
-          GdnBreakBaselines: baseline        
-        continueOnError: true
-      - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
-        displayName: 'Publish Security Analysis Logs'
-        continueOnError: true
-        condition: succeededOrFailed()
+          GdnBreakBaselines: baseline       
