@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Text;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Hosting;
@@ -29,6 +30,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             InvokeProcessorAfterReceiveTimeout = false;
             EventProcessorOptions = new EventProcessorOptions()
             {
+                LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
                 TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(1),
                 PrefetchCount = 300,

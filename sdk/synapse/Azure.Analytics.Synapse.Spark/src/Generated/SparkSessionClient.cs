@@ -85,44 +85,6 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        /// <summary> Create new spark session. </summary>
-        /// <param name="sparkSessionOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkSession>> CreateSparkSessionAsync(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkSession");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateSparkSessionAsync(sparkSessionOptions, detailed, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create new spark session. </summary>
-        /// <param name="sparkSessionOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkSession> CreateSparkSession(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkSession");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateSparkSession(sparkSessionOptions, detailed, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a single spark session. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
@@ -261,44 +223,6 @@ namespace Azure.Analytics.Synapse.Spark
             try
             {
                 return RestClient.GetSparkStatements(sessionId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create statement within a spark session. </summary>
-        /// <param name="sessionId"> Identifier for the session. </param>
-        /// <param name="sparkStatementOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkStatement>> CreateSparkStatementAsync(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkStatement");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateSparkStatementAsync(sessionId, sparkStatementOptions, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create statement within a spark session. </summary>
-        /// <param name="sessionId"> Identifier for the session. </param>
-        /// <param name="sparkStatementOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkStatement> CreateSparkStatement(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkStatement");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateSparkStatement(sessionId, sparkStatementOptions, cancellationToken);
             }
             catch (Exception e)
             {

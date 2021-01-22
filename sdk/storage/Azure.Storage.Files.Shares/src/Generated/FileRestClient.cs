@@ -793,14 +793,6 @@ namespace Azure.Storage.Files.Shares
 
                         // Get response headers
                         string _header;
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
                             _value.ETag = new Azure.ETag(_header);
@@ -860,6 +852,14 @@ namespace Azure.Storage.Files.Shares
                         if (response.Headers.TryGetValue("x-ms-root-squash", out _header))
                         {
                             _value.RootSquash = (Azure.Storage.Files.Shares.Models.ShareRootSquash)System.Enum.Parse(typeof(Azure.Storage.Files.Shares.Models.ShareRootSquash), _header, false);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -3700,14 +3700,6 @@ namespace Azure.Storage.Files.Shares
 
                         // Get response headers
                         string _header;
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
                             _value.ETag = new Azure.ETag(_header);
@@ -3747,6 +3739,14 @@ namespace Azure.Storage.Files.Shares
                         if (response.Headers.TryGetValue("x-ms-file-parent-id", out _header))
                         {
                             _value.FileParentId = _header;
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -5228,14 +5228,6 @@ namespace Azure.Storage.Files.Shares
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
                             _value.ContentLength = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -5347,6 +5339,14 @@ namespace Azure.Storage.Files.Shares
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
                             _value.LeaseStatus = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseStatus(_header);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -5364,14 +5364,6 @@ namespace Azure.Storage.Files.Shares
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
                             _value.ContentLength = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -5483,6 +5475,14 @@ namespace Azure.Storage.Files.Shares
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
                             _value.LeaseStatus = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseStatus(_header);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -5640,14 +5640,6 @@ namespace Azure.Storage.Files.Shares
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
                             _value.ContentLength = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -5747,6 +5739,14 @@ namespace Azure.Storage.Files.Shares
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
                             _value.LeaseStatus = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseStatus(_header);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -11519,10 +11519,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// Serialize a ShareProtocolSettings instance as XML.
         /// </summary>
         /// <param name="value">The ShareProtocolSettings instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "ShareProtocolSettings".</param>
+        /// <param name="name">An optional name to use for the root element instead of "ProtocolSettings".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareProtocolSettings value, string name = "ShareProtocolSettings", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareProtocolSettings value, string name = "ProtocolSettings", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
@@ -11918,10 +11918,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// Serialize a ShareSmbSettings instance as XML.
         /// </summary>
         /// <param name="value">The ShareSmbSettings instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "ShareSmbSettings".</param>
+        /// <param name="name">An optional name to use for the root element instead of "SMB".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareSmbSettings value, string name = "ShareSmbSettings", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareSmbSettings value, string name = "SMB", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));

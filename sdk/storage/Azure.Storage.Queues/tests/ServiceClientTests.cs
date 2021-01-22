@@ -75,6 +75,36 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.Service).ToString();
+            await using DisposingQueue test = await GetTestQueueAsync();
+            Uri uri = GetServiceClient_SharedKey().Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new QueueServiceClient(uri, new AzureSasCredential(sas), GetOptions()));
+            QueueServiceProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public void Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            Uri uri = GetServiceClient_SharedKey().Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new QueueClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
         public async Task GetQueuesAsync()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();

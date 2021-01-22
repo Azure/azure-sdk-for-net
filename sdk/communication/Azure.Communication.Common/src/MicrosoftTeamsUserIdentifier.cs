@@ -9,7 +9,7 @@ namespace Azure.Communication
     public class MicrosoftTeamsUserIdentifier : CommunicationIdentifier
     {
         /// <summary>The id of the Microsoft Teams user. If the user isn't anonymous, the id is the AAD object id of the user.</summary>
-        public string Id { get; }
+        public string UserId { get; }
 
         /// <summary>True if the user is anonymous, for example when joining a meeting with a share link.</summary>
         public bool IsAnonymous { get; }
@@ -28,8 +28,18 @@ namespace Azure.Communication
         public MicrosoftTeamsUserIdentifier(string userId, bool isAnonymous = false)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Id = userId;
+            UserId = userId;
             IsAnonymous = isAnonymous;
         }
+
+        /// <inheritdoc />
+        public override string ToString() => UserId;
+
+        /// <inheritdoc />
+        public override int GetHashCode() => UserId.GetHashCode();
+
+        /// <inheritdoc />
+        public override bool Equals(CommunicationIdentifier other)
+            => other is MicrosoftTeamsUserIdentifier otherId && otherId.UserId == UserId && otherId.IsAnonymous == IsAnonymous;
     }
 }
