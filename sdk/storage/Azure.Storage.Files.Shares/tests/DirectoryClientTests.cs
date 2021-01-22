@@ -397,10 +397,10 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
-        [Ignore("Re-enable this test")]
         public async Task Exists_Error()
         {
             // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
             // Make Read Only SAS for the Share
             AccountSasBuilder sas = new AccountSasBuilder
             {
@@ -410,9 +410,12 @@ namespace Azure.Storage.Files.Shares.Tests
             };
             sas.SetPermissions(AccountSasPermissions.Read);
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-            UriBuilder sasUri = new UriBuilder(TestConfigDefault.FileServiceEndpoint);
+            var sasUri = new ShareUriBuilder(new Uri(TestConfigDefault.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name
+            };
             sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
-            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri, GetOptions()));
+            ShareClient share = InstrumentClient(new ShareClient(sasUri.ToUri(), GetOptions()));
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act
