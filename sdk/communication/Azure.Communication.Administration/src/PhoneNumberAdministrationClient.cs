@@ -33,12 +33,12 @@ namespace Azure.Communication.Administration
         { }
 
         /// <summary>
-        /// Initializes a phone number administration client with an Azure resource connection string and optional client options.
+        /// Initializes a phone number administration client with an Azure resource connection string and client options.
         /// </summary>
         public PhoneNumberAdministrationClient(string connectionString, PhoneNumberAdministrationClientOptions? options = default)
             : this(
                   options ?? new PhoneNumberAdministrationClientOptions(),
-                  ConnectionString.Parse(connectionString))
+                  ConnectionString.Parse(AssertNotNull(connectionString, nameof(connectionString))))
         { }
 
         /// <summary>
