@@ -226,7 +226,7 @@ namespace Azure.Test.Perf
                     var averageCompleted = OperationsPerSecond;
 
                     lastCompleted = totalCompleted;
-                    return $"{currentCompleted}\t\t{totalCompleted}\t\t{averageCompleted:F0}";
+                    return $"{currentCompleted}\t\t{totalCompleted}\t\t{averageCompleted:F2}";
                 },
                 newLine: true,
                 progressStatusCts.Token,
