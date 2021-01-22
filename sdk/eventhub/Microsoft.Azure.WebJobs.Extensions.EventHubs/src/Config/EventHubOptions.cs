@@ -162,6 +162,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             set => EventProcessorOptions.LoadBalancingUpdateInterval = value;
         }
 
+        /// <inheritdoc cref="EventProcessorOptions.LoadBalancingStrategy"/>
+        public LoadBalancingStrategy LoadBalancingStrategy
+        {
+            get => EventProcessorOptions.LoadBalancingStrategy;
+            set => EventProcessorOptions.LoadBalancingStrategy = value;
+        }
+
         /// <summary>
         /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.
         /// </summary>
@@ -364,6 +371,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     { nameof(MaximumWaitTime), MaximumWaitTime },
                     { nameof(PartitionOwnershipExpirationInterval), PartitionOwnershipExpirationInterval },
                     { nameof(LoadBalancingUpdateInterval), LoadBalancingUpdateInterval },
+                    { nameof(LoadBalancingStrategy), LoadBalancingStrategy.ToString() },
                     { nameof(InitialOffsetOptions), ConstructInitialOffsetOptions() },
                 };
             return options.ToString(Formatting.Indented);

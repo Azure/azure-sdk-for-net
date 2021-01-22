@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
@@ -69,6 +70,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(TimeSpan.FromSeconds(33), result.MaximumWaitTime);
             Assert.AreEqual(TimeSpan.FromSeconds(31), result.PartitionOwnershipExpirationInterval);
             Assert.AreEqual(TimeSpan.FromSeconds(21), result.LoadBalancingUpdateInterval);
+            Assert.AreEqual(LoadBalancingStrategy.Greedy, result.LoadBalancingStrategy);
             Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type);
             Assert.AreEqual("2020-09-13T12:00Z", result.InitialOffsetOptions.EnqueuedTimeUTC);
             Assert.AreEqual(5, result.RetryOptions.MaximumRetries);
@@ -130,6 +132,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },
                 { $"{extensionPath}:PartitionOwnershipExpirationInterval", "00:00:31" },
                 { $"{extensionPath}:LoadBalancingUpdateInterval", "00:00:21" },
+                { $"{extensionPath}:LoadBalancingStrategy", "1" },
                 { $"{extensionPath}:InitialOffsetOptions:Type", "FromEnqueuedTime" },
                 { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13T12:00Z" },
                 { $"{extensionPath}:RetryOptions:MaximumRetries", "5" },
