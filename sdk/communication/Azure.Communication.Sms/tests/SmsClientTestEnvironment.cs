@@ -11,9 +11,7 @@ namespace Azure.Communication.Sms.Tests
         public string ConnectionString => GetRecordedVariable(CommunicationRecordedTestSanitizer.ConnectionStringEnvironmentVariableName);
 
         internal const string PhoneNumberEnvironmentVariableName = "AZURE_PHONE_NUMBER";
-        internal const string EndpointEnvironmentVariableName = "COMMUNICATION_ENDPOINT_STRING";
 
         public string PhoneNumber => GetRecordedVariable(PhoneNumberEnvironmentVariableName);
-        public string EndpointString => GetRecordedVariable(EndpointEnvironmentVariableName);
     }
 }

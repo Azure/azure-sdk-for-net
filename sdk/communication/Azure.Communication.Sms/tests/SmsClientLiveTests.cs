@@ -65,7 +65,7 @@ namespace Azure.Communication.Sms.Tests
             }
             SmsClient client = InstrumentClient(
                 new SmsClient(
-                    new Uri(TestEnvironment.EndpointString),
+                    new Uri(ConnectionString.Parse(TestEnvironment.ConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
                     tokenCredential,
                     InstrumentClientOptions(new SmsClientOptions())));
 
