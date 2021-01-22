@@ -27,5 +27,7 @@ namespace Azure.Communication
         public string MicrosoftTeamsUserId { get; set; }
         /// <summary> True if the identifier is anonymous. </summary>
         public bool? IsAnonymous { get; set; }
+        /// <summary> The cloud that the identifier belongs to. </summary>
+        public CommunicationCloudEnvironmentModel? Cloud { get; set; }
     }
 }

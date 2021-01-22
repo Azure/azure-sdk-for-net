@@ -15,6 +15,7 @@ namespace Compute.Tests
             HostGroups = "hostGroups",
             Hosts = "hosts",
             VMScaleSets = "virtualMachineScaleSets",
+            CloudServices = "cloudServices",
             ResourceProviderNamespace = "Microsoft.Compute";
     }
 
