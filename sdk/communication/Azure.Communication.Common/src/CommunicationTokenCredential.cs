@@ -33,8 +33,8 @@ namespace Azure.Communication
             Argument.AssertNotNull(tokenRefreshOptions, nameof(tokenRefreshOptions));
             _tokenCredential = new AutoRefreshTokenCredential(
                tokenRefreshOptions.TokenRefresher,
-               tokenRefreshOptions.AsyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefreshOptions.TokenRefresher(cancellationToken))),
-               tokenRefreshOptions.Token,
+               tokenRefreshOptions.AsyncTokenRefresher,
+               tokenRefreshOptions.InitialToken,
                tokenRefreshOptions.RefreshProactively);
         }
 
