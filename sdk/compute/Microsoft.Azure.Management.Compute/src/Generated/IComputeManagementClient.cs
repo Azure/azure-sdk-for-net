@@ -197,6 +197,11 @@ namespace Microsoft.Azure.Management.Compute
         IDiskAccessesOperations DiskAccesses { get; }
 
         /// <summary>
+        /// Gets the IDiskRestorePointOperations.
+        /// </summary>
+        IDiskRestorePointOperations DiskRestorePoint { get; }
+
+        /// <summary>
         /// Gets the IGalleriesOperations.
         /// </summary>
         IGalleriesOperations Galleries { get; }

@@ -12,11 +12,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for DiskEncryptionSetIdentityType.
+    /// Defines values for ExtendedLocationTypes.
     /// </summary>
-    public static class DiskEncryptionSetIdentityType
+    public static class ExtendedLocationTypes
     {
-        public const string SystemAssigned = "SystemAssigned";
-        public const string None = "None";
+        public const string EdgeZone = "EdgeZone";
     }
 }

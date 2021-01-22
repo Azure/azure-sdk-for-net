@@ -14,31 +14,28 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The snapshots sku name. Can be Standard_LRS, Premium_LRS, or
-    /// Standard_ZRS. This is an optional parameter for incremental snapshot
-    /// and the default behavior is the SKU will be set to the same sku as the
-    /// previous snapshot
+    /// The complex type of the extended location.
     /// </summary>
-    public partial class SnapshotSku
+    public partial class ExtendedLocation
     {
         /// <summary>
-        /// Initializes a new instance of the SnapshotSku class.
+        /// Initializes a new instance of the ExtendedLocation class.
         /// </summary>
-        public SnapshotSku()
+        public ExtendedLocation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SnapshotSku class.
+        /// Initializes a new instance of the ExtendedLocation class.
         /// </summary>
-        /// <param name="name">The sku name. Possible values include:
-        /// 'Standard_LRS', 'Premium_LRS', 'Standard_ZRS'</param>
-        /// <param name="tier">The sku tier.</param>
-        public SnapshotSku(string name = default(string), string tier = default(string))
+        /// <param name="name">The name of the extended location.</param>
+        /// <param name="type">The type of the extended location. Possible
+        /// values include: 'EdgeZone'</param>
+        public ExtendedLocation(string name = default(string), string type = default(string))
         {
             Name = name;
-            Tier = tier;
+            Type = type;
             CustomInit();
         }
 
@@ -48,17 +45,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sku name. Possible values include: 'Standard_LRS',
-        /// 'Premium_LRS', 'Standard_ZRS'
+        /// Gets or sets the name of the extended location.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the sku tier.
+        /// Gets or sets the type of the extended location. Possible values
+        /// include: 'EdgeZone'
         /// </summary>
-        [JsonProperty(PropertyName = "tier")]
-        public string Tier { get; private set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }
