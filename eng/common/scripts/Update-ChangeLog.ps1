@@ -82,8 +82,7 @@ if ($ChangeLogEntries.Contains($Version))
     }
 }
 
-$PresentVersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($ChangeLogEntries.Keys)
-$LatestVersion = $PresentVersionsSorted[0]
+$LatestVersion = $ChangeLogEntries[0].ReleaseVersion
 
 LogDebug "The latest release note entry in the changelog is for version [$($LatestVersion)]"
 
@@ -99,7 +98,9 @@ if ($ReplaceLatestEntryTitle)
     LogDebug "Resetting latest entry title to [$($newChangeLogEntry.ReleaseTitle)]"
     $ChangeLogEntries.Remove($LatestVersion)
     if ($newChangeLogEntry) {
-        $ChangeLogEntries[$Version] = $newChangeLogEntry
+        $ChangeLogEntries = Add-ChangelogEntry -ChangeLogEntries $ChangeLogEntries `
+        -NewChangeLogEntry $newChangeLogEntry `
+        -Version $Version
     }
     else {
         LogError "Failed to create new changelog entry"
@@ -117,7 +118,9 @@ else
     LogDebug "Adding new ChangeLog entry for Version [$Version]"
     $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus
     if ($newChangeLogEntry) {
-        $ChangeLogEntries[$Version] = $newChangeLogEntry
+        $ChangeLogEntries = Add-ChangelogEntry -ChangeLogEntries $ChangeLogEntries `
+        -NewChangeLogEntry $newChangeLogEntry `
+        -Version $Version
     }
     else {
         LogError "Failed to create new changelog entry"

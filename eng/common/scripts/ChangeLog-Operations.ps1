@@ -13,7 +13,7 @@ function Get-ChangeLogEntries {
     [String]$ChangeLogLocation
   )
 
-  $changeLogEntries = @{}
+  $changeLogEntries = [Ordered]@{}
   if (!(Test-Path $ChangeLogLocation)) {
     LogError "ChangeLog[${ChangeLogLocation}] does not exist"
     return $null
@@ -191,16 +191,7 @@ function Set-ChangeLogContent {
   $changeLogContent += "# Release History"
   $changeLogContent += ""
 
-  try
-  {
-    $VersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($ChangeLogEntries.Keys)
-  }
-  catch {
-    LogError "Problem sorting version in ChangeLogEntries"
-    return
-  }
-
-  foreach ($version in $VersionsSorted) {
+  foreach ($version in $ChangeLogEntries.Keys) {
     $changeLogEntry = $ChangeLogEntries[$version]
     $changeLogContent += $changeLogEntry.ReleaseTitle
     if ($changeLogEntry.ReleaseContent.Count -eq 0) {
@@ -212,4 +203,24 @@ function Set-ChangeLogContent {
   }
 
   Set-Content -Path $ChangeLogLocation -Value $changeLogContent
+}
+
+function Add-ChangelogEntry {
+  param (
+    [Parameter(Mandatory = $true)]
+    $ChangeLogEntries,
+    [Parameter(Mandatory = $true)]
+    $NewChangeLogEntry,
+    [Parameter(Mandatory = $true)]
+    $Version
+  )
+
+  $results = [Ordered]@{}
+  $results.Add($Version, $NewChangeLogEntry)
+
+  foreach ($entryVersion in $ChangeLogEntries.Keys) {
+    $results.Add($entryVersion, $ChangeLogEntries[$entryVersion])
+  }
+
+  return $results
 }
