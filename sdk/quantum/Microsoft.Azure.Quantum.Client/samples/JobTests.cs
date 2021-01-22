@@ -18,11 +18,6 @@ namespace Microsoft.Azure.Quantum.JobTests
     {
         public JobTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
-            [RecordedTest]
-            public void MyTest()
-            {
-                //...
-            }
         }
     }
 }

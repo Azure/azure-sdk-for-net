@@ -1,11 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net5</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net47;netcoreapp3.1</TargetFrameworks>
     <AssemblyTitle>Microsoft Azure.Quantum.Samples client library samples</AssemblyTitle>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Azure.Quantum.Optimization\Microsoft.Azure.Quantum.Optimization.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Quantum.Client.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 </Project>
