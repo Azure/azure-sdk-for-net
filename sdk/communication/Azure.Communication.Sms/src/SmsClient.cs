@@ -71,7 +71,6 @@ namespace Azure.Communication.Sms
                   endpointUrl: connectionString.GetRequired("endpoint"))
         { }
 
-<<<<<<< HEAD
         private SmsClient(Uri endpoint, SmsClientOptions options, TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -81,14 +80,15 @@ namespace Azure.Communication.Sms
             RestClient = new SmsRestClient(
                 _clientDiagnostics,
                 options.BuildHttpPipeline(tokenCredential),
-=======
+                endpoint.AbsoluteUri);
+        }
+
         private SmsClient(Uri endpoint, SmsClientOptions options, AzureKeyCredential credential)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new SmsRestClient(
                 _clientDiagnostics,
                 options.BuildHttpPipeline(credential),
->>>>>>> b87be0d6b78269a568c7a13392a9e5267956c7da
                 endpoint.AbsoluteUri);
         }
 
