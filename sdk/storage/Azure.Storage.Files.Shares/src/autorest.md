@@ -5,6 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/011761be1285d14feb41796b5d97df1126495c5c/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-04-08/file.json
-require: C:\Users\seanmcc\git\azure-sdk-for-net\sdk\storage\Azure.Storage.Files.Shares\swagger\readme.md
+require: https://raw.githubusercontent.com/seanmcc-msft/azure-sdk-for-net/9df107ba94b4fab5e053bb1f631371f636cb7cbf/sdk/storage/Azure.Storage.Files.Shares/swagger/readme.md
 
 ```
