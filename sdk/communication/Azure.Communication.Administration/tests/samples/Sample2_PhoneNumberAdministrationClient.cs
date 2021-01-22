@@ -29,7 +29,7 @@ namespace Azure.Communication.Administration.Samples
         [Test]
         public async Task CreatePhoneNumberWithTokenCredential()
         {
-            var endpoint = TestEnvironment.EndpointString;
+            var endpoint = ConnectionString.Parse(TestEnvironment.ConnectionString, allowEmptyValues: true).GetRequired("endpoint");
             #region Snippet:CreatePhoneNumberWithTokenCredential
             //@@var endpoint = "<endpoint_url>";
             TokenCredential tokenCredential = new DefaultAzureCredential();

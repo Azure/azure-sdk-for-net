@@ -27,7 +27,7 @@ namespace Azure.Communication.Administration.Tests
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClientWithToken(TokenCredential token)
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    new Uri(TestEnvironment.EndpointString),
+                    new Uri(ConnectionString.Parse(TestEnvironment.ConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
                     token,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions())));
     }

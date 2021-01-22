@@ -8,9 +8,6 @@ namespace Azure.Communication.Administration.Tests
     public class PhoneNumberAdministrationClientTestEnvironment : TestEnvironment
     {
         private const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
-        private const string EndpointStringEnvironmentVariableName = "COMMUNICATION_ENDPOINT_STRING";
-
         public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
-        public string EndpointString => GetRecordedVariable(EndpointStringEnvironmentVariableName);
     }
 }

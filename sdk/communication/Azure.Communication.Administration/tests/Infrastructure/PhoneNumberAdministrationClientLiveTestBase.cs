@@ -38,7 +38,7 @@ namespace Azure.Communication.Administration.Tests
         protected PhoneNumberAdministrationClient CreateClientWithTokenCredential(TokenCredential token, bool isInstrumented = true)
         {
             var client = new PhoneNumberAdministrationClient(
-                    new Uri(TestEnvironment.EndpointString),
+                    new Uri(ConnectionString.Parse(TestEnvironment.ConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
                     token,
                     InstrumentClientOptions(new PhoneNumberAdministrationClientOptions()));
 
