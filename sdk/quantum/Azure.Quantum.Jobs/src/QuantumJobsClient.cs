@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Quantum.Jobs.Models;
+using Azure.Identity;
 
 namespace Azure.Quantum.Jobs
 {
@@ -15,48 +16,50 @@ namespace Azure.Quantum.Jobs
     /// </summary>
     public class QuantumJobsClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-
         /// <summary> Returns the client to handle the collection of jobs. </summary>
         public JobsRestClient Jobs { get; private set; }
-
-        // <summary>
-        // Initializes a new instance of the <see cref="QuantumJobsClient"/>.
-        // </summary>
-//TODO         public QuantumJobsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MiniSecretClientOptions())
-//         {
-//         }
-
-        // <summary>
-        // Initializes a new instance of the <see cref="QuantumJobsClient"/>.
-        // </summary>
-//TODO         public QuantumJobsClient(Uri endpoint, TokenCredential credential, MiniSecretClientOptions options) : this(
-//             new ClientDiagnostics(options),
-//             HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default")),
-//             endpoint.ToString(),
-//             options.Version)
-//         {
-//         }
 
         /// <summary> Initializes a new instance of QuantumJobsClient for mocking. </summary>
         protected QuantumJobsClient()
         {
         }
 
-        /// <summary> Initializes a new instance of JobsRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of an Azure resource group. </param>
-        /// <param name="workspaceName"> Name of the workspace. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        internal QuantumJobsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string resourceGroupName, string workspaceName, Uri endpoint = null)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QuantumJobsClient"/> class.
+        /// </summary>
+        /// <param name="subscriptionId">The subscription identifier.</param>
+        /// <param name="resourceGroupName">Name of the resource group.</param>
+        /// <param name="workspaceName">Name of the workspace.</param>
+        /// <param name="location">The location.</param>
+        /// <param name="tokenCredential">The token credential.</param>
+        /// <param name="options">The options.</param>
+        public QuantumJobsClient(
+            string subscriptionId,
+            string resourceGroupName,
+            string workspaceName,
+            string location,
+            TokenCredential tokenCredential = default,
+            QuantumJobsClientOptions options = default)
         {
-            Jobs = new JobsRestClient(clientDiagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            if (options == null)
+            {
+                options = new QuantumJobsClientOptions();
+            }
+
+            if (tokenCredential == null)
+            {
+                tokenCredential = new DefaultAzureCredential(new DefaultAzureCredentialOptions());
+            }
+
+            var authPolicy = new BearerTokenAuthenticationPolicy(tokenCredential, "https://quantum.microsoft.com");
+
+            Jobs = new JobsRestClient(
+                new ClientDiagnostics(options),
+                HttpPipelineBuilder.Build(options, authPolicy),
+                subscriptionId,
+                resourceGroupName,
+                workspaceName,
+                new Uri($"https://{location}.quantum.azure.com"));
         }
 
         /// <summary> Create a job. </summary>
