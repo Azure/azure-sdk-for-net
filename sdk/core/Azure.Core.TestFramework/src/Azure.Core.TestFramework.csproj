@@ -5,7 +5,7 @@
 
   <ItemGroup>
     <!--
-      Test framework should depend on lowest version of Azure.Identity for maximum compat, allowing test
+      Test framework should depend on lowest version of Azure.Identity for maximum compatibility, allowing test
       projects to choose a higher version if desired.
     -->
     <PackageReference Include="Azure.Identity" VersionOverride="1.0.0" />
