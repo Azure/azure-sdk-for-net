@@ -260,6 +260,6 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="exception">The message for the exception that occurred.</param>
         ///
         partial void GetCheckpointError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, Exception exception) =>
-            Logger.GetCheckpointError(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, exception.ToString());
+            Logger.GetCheckpointError(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, exception.Message);
     }
 }

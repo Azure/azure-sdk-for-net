@@ -406,7 +406,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
         ///
         [Event(36, Level = EventLevel.Informational, Message = "Starting to retrieve checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'.")]
-        public void GetCheckpointStart(string fullyQualifiedNamespace,
+        public virtual void GetCheckpointStart(string fullyQualifiedNamespace,
                                         string eventHubName,
                                         string consumerGroup,
                                         string partitionId)
