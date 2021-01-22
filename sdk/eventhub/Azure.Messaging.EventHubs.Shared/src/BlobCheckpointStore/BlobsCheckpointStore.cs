@@ -396,17 +396,28 @@ namespace Azure.Messaging.EventHubs.Processor
                         .GetPropertiesAsync(cancellationToken: listCheckpointsToken).ConfigureAwait(false);
 
                     var checkpoint = CreateCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, blob.Value.Metadata);
-                    if (checkpoint == null && InitializeWithLegacyCheckpoints)
-                    {
-                        checkpoint = await CreateLegacyCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, blobName, partitionId, listCheckpointsToken).ConfigureAwait(false);
-                    }
 
                     return checkpoint;
                 }
                 catch (RequestFailedException e) when (e.Status == 404)
                 {
-                    return null;
+                    // ignore
                 }
+
+                try
+                {
+                    if (InitializeWithLegacyCheckpoints)
+                    {
+                        var legacyPrefix = string.Format(CultureInfo.InvariantCulture, LegacyCheckpointPrefix, fullyQualifiedNamespace, eventHubName, consumerGroup) + partitionId;
+                        return await CreateLegacyCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, legacyPrefix, partitionId, listCheckpointsToken).ConfigureAwait(false);
+                    }
+                }
+                catch (RequestFailedException e) when (e.Status == 404)
+                {
+                    // ignore
+                }
+
+                return null;
             }
 
             try
