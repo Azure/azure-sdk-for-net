@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.Template.Tests
+namespace Azure.Quantum.Jobs.Tests
 {
     public class MiniSecretClientTestEnvironment : TestEnvironment
     {

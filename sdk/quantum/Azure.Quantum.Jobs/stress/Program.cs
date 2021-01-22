@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Test.Stress;
 
-namespace Azure.Template.Stress
+namespace Azure.Quantum.Jobs.Stress
 {
     public class Program
     {

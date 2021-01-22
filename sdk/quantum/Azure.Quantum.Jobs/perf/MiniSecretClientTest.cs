@@ -8,7 +8,7 @@ using Azure.Identity;
 using Azure.Test.Perf;
 using CommandLine;
 
-namespace Azure.Template.Perf
+namespace Azure.Quantum.Jobs.Perf
 {
     public class MiniSecretClientTest : PerfTest<MiniSecretClientTest.MiniSecretClientOptions>
     {

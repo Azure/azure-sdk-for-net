@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Test.Perf;
 
-namespace Azure.Template.Perf
+namespace Azure.Quantum.Jobs.Perf
 {
     public class Program
     {

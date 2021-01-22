@@ -8,7 +8,7 @@ using Azure.Identity;
 using Azure.Test.Stress;
 using CommandLine;
 
-namespace Azure.Template.Stress
+namespace Azure.Quantum.Jobs.Stress
 {
     public class MiniSecretClientTest : StressTest<MiniSecretClientTest.MiniSecretClientOptions, MiniSecretClientTest.MiniSecretClientMetrics>
     {

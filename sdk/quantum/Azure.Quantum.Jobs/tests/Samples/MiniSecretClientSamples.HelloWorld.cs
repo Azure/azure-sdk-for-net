@@ -4,10 +4,10 @@
 using System;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Template.Models;
+using Azure.Quantum.Jobs.Models;
 using NUnit.Framework;
 
-namespace Azure.Template.Tests.Samples
+namespace Azure.Quantum.Jobs.Tests.Samples
 {
     public class MiniSecretClientSamples: SamplesBase<MiniSecretClientTestEnvironment>
     {

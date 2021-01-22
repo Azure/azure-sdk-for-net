@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Template.Tests
+namespace Azure.Quantum.Jobs.Tests
 {
     public class MiniSecretClientLiveTests: RecordedTestBase<MiniSecretClientTestEnvironment>
     {

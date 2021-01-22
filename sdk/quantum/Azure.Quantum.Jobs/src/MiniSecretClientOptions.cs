@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Template
+namespace Azure.Quantum.Jobs
 {
     /// <summary>
     /// The options for <see cref="MiniSecretClient"/>
