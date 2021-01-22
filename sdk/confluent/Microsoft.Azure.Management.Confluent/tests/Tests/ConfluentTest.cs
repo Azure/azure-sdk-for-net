@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Confluent.Tests
                 OrganizationResource rp = CreateResource(context, rgName, resourceName);
                 Assert.NotNull(rp);
 
-                DeleteResource(context, rgName, resourceName);
+                // DeleteResource(context, rgName, resourceName);
                 DeleteResourceGroup(context, rgName);
             }
         }

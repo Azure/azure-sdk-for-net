@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A server DNS alias. </summary>
-    public partial class ServerDnsAlias : Resource
+    public partial class ServerDnsAlias : ProxyResource
     {
         /// <summary> Initializes a new instance of ServerDnsAlias. </summary>
         public ServerDnsAlias()

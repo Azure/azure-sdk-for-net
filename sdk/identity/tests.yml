@@ -3,7 +3,7 @@ trigger: none
 resources:
   containers:
     - container: 'ubuntu_netcore_keyring'
-      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:523386'
+      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:689585'
       endpoint: 'azsdkengsys'
       options: -ti --cap-add=IPC_LOCK
 
@@ -12,7 +12,8 @@ extends:
   parameters:
     AdditionalPlatforms:
       Linux_NetCore_Keyring:
-        OSVmImage: "ubuntu-18.04"
+        Pool: azsdk-pool-mms-ubuntu-1804-general
+        OSVmImage: MMSUbuntu18.04
         TestTargetFramework: 'netcoreapp2.1'
         Container: 'ubuntu_netcore_keyring'
         SupportedClouds: 'Public,Canary,Preview'

@@ -112,5 +112,58 @@ namespace Azure.Identity.Tests
 
             await Task.CompletedTask;
         }
+
+        [NonParallelizable]
+        [Test]
+        public void AssertCredentialUnavailableWhenEmptyString()
+        {
+            // ensure no env vars are set before starting the test
+            using (new TestEnvVar("AZURE_CLIENT_ID", null))
+            using (new TestEnvVar("AZURE_TENANT_ID", null))
+            using (new TestEnvVar("AZURE_CLIENT_SECRET", null))
+            using (new TestEnvVar("AZURE_CLIENT_CERTIFICATE_PATH", null))
+            using (new TestEnvVar("AZURE_USERNAME", null))
+            using (new TestEnvVar("AZURE_PASSWORD", null))
+            {
+                using (new TestEnvVar("AZURE_CLIENT_ID", "mockclientid"))
+                using (new TestEnvVar("AZURE_CLIENT_SECRET", "mockclientsecret"))
+                using (new TestEnvVar("AZURE_TENANT_ID", "mocktenantid"))
+                {
+                    SetEnvVarToEmptyStringAndAssertCredentialUnavailable("AZURE_CLIENT_ID");
+                    SetEnvVarToEmptyStringAndAssertCredentialUnavailable("AZURE_CLIENT_SECRET");
+                    SetEnvVarToEmptyStringAndAssertCredentialUnavailable("AZURE_TENANT_ID");
+                }
+
+                using (new TestEnvVar("AZURE_CLIENT_ID", "mockclientid"))
+                using (new TestEnvVar("AZURE_CLIENT_CERTIFICATE_PATH", "mockcertpath"))
+                using (new TestEnvVar("AZURE_TENANT_ID", "mocktenantid"))
+                {
+                    SetEnvVarToEmptyStringAndAssertCredentialUnavailable("AZURE_CLIENT_ID");
+                    SetEnvVarToEmptyStringAndAssertCredentialUnavailable("AZURE_CLIENT_CERTIFICATE_PATH");
+                    SetEnvVarToEmptyStringAndAssertCredentialUnavailable("AZURE_TENANT_ID");
+                }
+
+                using (new TestEnvVar("AZURE_USERNAME", "mockusername"))
+                using (new TestEnvVar("AZURE_PASSWORD", "mockpassword"))
+                using (new TestEnvVar("AZURE_TENANT_ID", "mocktenantid"))
+                using (new TestEnvVar("AZURE_CLIENT_ID", "mockclientid"))
+                {
+                    SetEnvVarToEmptyStringAndAssertCredentialUnavailable("AZURE_CLIENT_ID");
+                    SetEnvVarToEmptyStringAndAssertCredentialUnavailable("AZURE_TENANT_ID");
+                    SetEnvVarToEmptyStringAndAssertCredentialUnavailable("AZURE_USERNAME");
+                    SetEnvVarToEmptyStringAndAssertCredentialUnavailable("AZURE_PASSWORD");
+                }
+            }
+        }
+
+        private void SetEnvVarToEmptyStringAndAssertCredentialUnavailable(string envVar)
+        {
+            using (new TestEnvVar(envVar, string.Empty))
+            {
+                var credential = InstrumentClient(new EnvironmentCredential());
+
+                Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            }
+        }
     }
 }
