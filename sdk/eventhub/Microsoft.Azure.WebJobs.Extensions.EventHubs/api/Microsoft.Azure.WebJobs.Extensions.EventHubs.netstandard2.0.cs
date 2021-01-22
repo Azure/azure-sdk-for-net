@@ -32,6 +32,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public string Identifier { get { throw null; } set { } }
         public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } }
         public bool InvokeProcessorAfterReceiveTimeout { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.Processor.LoadBalancingStrategy LoadBalancingStrategy { get { throw null; } set { } }
         public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
         public int MaxBatchSize { get { throw null; } set { } }
         public System.TimeSpan? MaximumWaitTime { get { throw null; } set { } }
