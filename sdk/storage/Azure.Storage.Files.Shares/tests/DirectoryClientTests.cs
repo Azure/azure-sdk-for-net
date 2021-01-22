@@ -397,6 +397,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        [Ignore("Re-enable this test")]
         public async Task Exists_Error()
         {
             // Arrange
