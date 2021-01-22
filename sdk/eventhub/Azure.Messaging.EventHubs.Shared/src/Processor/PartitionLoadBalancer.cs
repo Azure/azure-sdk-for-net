@@ -205,7 +205,6 @@ namespace Azure.Messaging.EventHubs.Primitives
             // by others.  The expiration time defaults to 30 seconds, but it may be overridden by a derived class.
 
             var utcNow = DateTimeOffset.UtcNow;
-            var activeOwnership = default(EventProcessorPartitionOwnership);
 
             ActiveOwnershipWithDistribution.Clear();
             ActiveOwnershipWithDistribution[OwnerIdentifier] = new List<EventProcessorPartitionOwnership>();
@@ -214,7 +213,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 if (utcNow.Subtract(ownership.LastModifiedTime) < OwnershipExpirationInterval && !string.IsNullOrEmpty(ownership.OwnerIdentifier))
                 {
-                    activeOwnership = ownership;
+                    EventProcessorPartitionOwnership activeOwnership = ownership;
 
                     // If a processor crashes and restarts, then it is possible for it to own partitions that it is not currently
                     // tracking as owned.  Test for this case and ensure that ownership is tracked and extended.
@@ -436,7 +435,8 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             Logger.RenewOwnershipStart(OwnerIdentifier);
 
-            IEnumerable<EventProcessorPartitionOwnership> ownershipToRenew = InstanceOwnership.Values
+            List<EventProcessorPartitionOwnership> ownershipToRenew = InstanceOwnership.Values
+                .Where(ownership => (ownership.LastModifiedTime - DateTimeOffset.UtcNow) > LoadBalanceInterval)
                 .Select(ownership => new EventProcessorPartitionOwnership
                 {
                     FullyQualifiedNamespace = ownership.FullyQualifiedNamespace,
@@ -446,7 +446,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                     PartitionId = ownership.PartitionId,
                     LastModifiedTime = DateTimeOffset.UtcNow,
                     Version = ownership.Version
-                });
+                })
+                .ToList();
+
+            if (ownershipToRenew.Count == 0)
+            {
+                return;
+            }
 
             try
             {
