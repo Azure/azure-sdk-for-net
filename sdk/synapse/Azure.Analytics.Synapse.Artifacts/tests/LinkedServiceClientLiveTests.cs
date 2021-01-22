@@ -21,6 +21,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// </remarks>
     public class LinkedServiceClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
+        internal class DisposableLinkedService : IAsyncDisposable
+        {
+            private readonly LinkedServiceClient _client;
+            public LinkedServiceResource Resource;
+
+            private DisposableLinkedService (LinkedServiceClient client, LinkedServiceResource resource)
+            {
+                _client = client;
+                Resource = resource;
+            }
+
+            public string Name => Resource.Name;
+
+            public static async ValueTask<DisposableLinkedService> Create (LinkedServiceClient client, TestRecording recording) =>
+                new DisposableLinkedService (client, await CreateResource(client, recording));
+
+            public static async ValueTask<LinkedServiceResource> CreateResource (LinkedServiceClient client, TestRecording recording)
+            {
+                string linkedServiceName = recording.GenerateId("LinkedService", 16);
+                LinkedServiceResource resource = new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/"));
+                LinkedServiceCreateOrUpdateLinkedServiceOperation operation = await client.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, resource);
+                return await operation.WaitForCompletionAsync();
+            }
+
+            public async ValueTask DisposeAsync()
+            {
+                LinkedServiceDeleteLinkedServiceOperation operation = await _client.StartDeleteLinkedServiceAsync (Name);
+                await operation.WaitForCompletionAsync ();
+            }
+        }
+
         public LinkedServiceClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -39,7 +70,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             LinkedServiceClient client = CreateClient();
 
-            await foreach (var expectedLinkedService in client.GetLinkedServicesByWorkspaceAsync())
+            await using DisposableLinkedService service = await DisposableLinkedService.Create (client, this.Recording);
+
+            IList<LinkedServiceResource> services = await client.GetLinkedServicesByWorkspaceAsync().ToListAsync();
+            Assert.GreaterOrEqual(services.Count, 1);
+
+            foreach (var expectedLinkedService in services)
             {
                 LinkedServiceResource actualLinkedService = await client.GetLinkedServiceAsync(expectedLinkedService.Name);
                 Assert.AreEqual(expectedLinkedService.Name, actualLinkedService.Name);
@@ -48,29 +84,41 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Test]
-        public async Task TestCreateLinkedService()
-        {
-            LinkedServiceClient client = CreateClient();
-
-            string linkedServiceName = Recording.GenerateId("LinkedService", 16);
-            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = await client.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
-            LinkedServiceResource linkedService = await operation.WaitForCompletionAsync();
-            Assert.AreEqual(linkedServiceName, linkedService.Name);
-        }
-
-        [Test]
         public async Task TestDeleteLinkedService()
         {
             LinkedServiceClient client = CreateClient();
 
-            string linkedServiceName = Recording.GenerateId("LinkedService", 16);
+            LinkedServiceResource resource = await DisposableLinkedService.CreateResource (client, this.Recording);
 
-            LinkedServiceCreateOrUpdateLinkedServiceOperation createOperation = await client.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
-            await createOperation.WaitForCompletionAsync();
+            LinkedServiceDeleteLinkedServiceOperation operation = await client.StartDeleteLinkedServiceAsync (resource.Name);
+            Response response = await operation.WaitForCompletionAsync ();
+            switch (response.Status) {
+                case 200:
+                case 204:
+                    break;
+                default:
+                    Assert.Fail($"Unexpected status ${response.Status} returned");
+                    break;
+            }
+        }
 
-            LinkedServiceDeleteLinkedServiceOperation deleteOperation = await client.StartDeleteLinkedServiceAsync(linkedServiceName);
-            Response response = await deleteOperation.WaitForCompletionAsync();
-            Assert.AreEqual(200, response.Status);
+        [Test]
+        public async Task TestRenameLinkedService()
+        {
+            LinkedServiceClient client = CreateClient();
+
+            LinkedServiceResource resource = await DisposableLinkedService.CreateResource (client, Recording);
+
+            string newLinkedServiceName = Recording.GenerateId("LinkedService2", 16);
+
+            LinkedServiceRenameLinkedServiceOperation renameOperation = await client.StartRenameLinkedServiceAsync (resource.Name, new ArtifactRenameRequest () { NewName = newLinkedServiceName } );
+            await renameOperation.WaitForCompletionAsync ();
+
+            LinkedServiceResource service = await client.GetLinkedServiceAsync (newLinkedServiceName);
+            Assert.AreEqual (newLinkedServiceName, service.Name);
+
+            LinkedServiceDeleteLinkedServiceOperation operation = await client.StartDeleteLinkedServiceAsync (newLinkedServiceName);
+            await operation.WaitForCompletionAsync ();
         }
     }
 }

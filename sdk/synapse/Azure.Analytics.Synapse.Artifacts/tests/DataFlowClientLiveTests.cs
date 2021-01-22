@@ -58,7 +58,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             DataFlowClient client = CreateClient();
 
-            // Non-disposable as we'll rename it underneath (and have to clean up ourselves)
             DataFlowResource resource = await DisposableDataFlow.CreateResource (client, this.Recording);
 
             string newFlowName = Recording.GenerateAssetName("DataFlow2");
