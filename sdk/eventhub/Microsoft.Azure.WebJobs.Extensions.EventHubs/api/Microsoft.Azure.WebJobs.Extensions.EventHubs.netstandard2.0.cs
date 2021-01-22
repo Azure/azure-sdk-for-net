@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public Azure.Messaging.EventHubs.Processor.LoadBalancingStrategy LoadBalancingStrategy { get { throw null; } set { } }
         public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
         public int MaxBatchSize { get { throw null; } set { } }
-        public System.TimeSpan? MaximumWaitTime { get { throw null; } set { } }
+        public System.TimeSpan MaximumWaitTime { get { throw null; } set { } }
         public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public long? PrefetchSizeInBytes { get { throw null; } set { } }

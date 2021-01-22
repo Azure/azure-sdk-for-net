@@ -141,10 +141,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             set => EventProcessorOptions.Identifier = value;
         }
 
-        /// <inheritdoc cref="EventProcessorOptions.MaximumWaitTime"/>
-        public TimeSpan? MaximumWaitTime
+        /// <summary>
+        ///   The maximum amount of time to wait for events to become available. If <see cref="InvokeProcessorAfterReceiveTimeout"/> is true,
+        ///   the function will be triggered with an empty <see cref="EventData"/>.
+        /// </summary>
+        public TimeSpan MaximumWaitTime
         {
-            get => EventProcessorOptions.MaximumWaitTime;
+            get => EventProcessorOptions.MaximumWaitTime.Value;
             set => EventProcessorOptions.MaximumWaitTime = value;
         }
 
