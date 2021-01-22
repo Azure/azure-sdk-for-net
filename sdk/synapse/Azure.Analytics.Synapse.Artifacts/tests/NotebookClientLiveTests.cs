@@ -97,15 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             NotebookResource resource = await DisposableNotebook.CreateResource (client, this.Recording);
 
             NotebookDeleteNotebookOperation operation = await client.StartDeleteNotebookAsync (resource.Name);
-            Response response = await operation.WaitForCompletionAsync ();
-            switch (response.Status) {
-                case 200:
-                case 204:
-                    break;
-                default:
-                    Assert.Fail($"Unexpected status ${response.Status} returned");
-                    break;
-            }
+            await operation.WaitAndAssertSuccessfulCompletion();
         }
 
         [Test]

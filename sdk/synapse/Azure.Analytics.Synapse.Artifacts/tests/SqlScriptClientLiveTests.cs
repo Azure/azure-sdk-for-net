@@ -53,6 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
                 await deleteOperation.WaitForCompletionAsync ();
             }
         }
+
         public SqlScriptClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -92,15 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             SqlScriptResource resource = await DisposableSqlScript.CreateResource (client, Recording);
 
             SqlScriptDeleteSqlScriptOperation deleteOperation = await client.StartDeleteSqlScriptAsync  (resource.Name);
-            Response response = await deleteOperation.WaitForCompletionAsync ();
-            switch (response.Status) {
-                case 200:
-                case 204:
-                    break;
-                default:
-                    Assert.Fail($"Unexpected status ${response.Status} returned");
-                    break;
-            }
+            await deleteOperation.WaitAndAssertSuccessfulCompletion();
         }
 
         [Test]

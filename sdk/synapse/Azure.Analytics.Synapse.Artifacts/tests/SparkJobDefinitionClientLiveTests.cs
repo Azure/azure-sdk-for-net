@@ -95,15 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             SparkJobDefinitionResource resource = await DisposableSparkJobDefinition.CreateResource (client, Recording, TestEnvironment.StorageFileSystemName, TestEnvironment.StorageAccountName);
 
             SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await client.StartDeleteSparkJobDefinitionAsync  (resource.Name);
-            Response response = await deleteOperation.WaitForCompletionAsync ();
-            switch (response.Status) {
-                case 200:
-                case 204:
-                    break;
-                default:
-                    Assert.Fail($"Unexpected status ${response.Status} returned");
-                    break;
-            }
+            await deleteOperation.WaitAndAssertSuccessfulCompletion();
         }
 
         [Test]

@@ -91,15 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             LinkedServiceResource resource = await DisposableLinkedService.CreateResource (client, this.Recording);
 
             LinkedServiceDeleteLinkedServiceOperation operation = await client.StartDeleteLinkedServiceAsync (resource.Name);
-            Response response = await operation.WaitForCompletionAsync ();
-            switch (response.Status) {
-                case 200:
-                case 204:
-                    break;
-                default:
-                    Assert.Fail($"Unexpected status ${response.Status} returned");
-                    break;
-            }
+            await operation.WaitAndAssertSuccessfulCompletion();
         }
 
         [Test]

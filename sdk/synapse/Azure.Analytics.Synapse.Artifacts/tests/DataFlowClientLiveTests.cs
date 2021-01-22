@@ -80,15 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             DataFlowResource resource = await DisposableDataFlow.CreateResource (client, this.Recording);
 
             DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync (resource.Name);
-            Response response = await operation.WaitForCompletionAsync ();
-            switch (response.Status) {
-                case 200:
-                case 204:
-                    break;
-                default:
-                    Assert.Fail($"Unexpected status ${response.Status} returned");
-                    break;
-            }
+            await operation.WaitAndAssertSuccessfulCompletion ();
         }
     }
 }
