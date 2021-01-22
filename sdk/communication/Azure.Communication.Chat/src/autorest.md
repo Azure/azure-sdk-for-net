@@ -2,7 +2,7 @@
 1. When a new version of the swagger needs to be updated:
 - Go to the 'Swagger' folder, and update the swagger.json file with the new version.
 
-2. Go to sdk\communication, and run `dotnet msbuild /t:GenerateCode` to generate code. 
+2. Go to sdk\communication, and run `dotnet msbuild /t:GenerateCode` to generate code.
 
 3. Upload the Azure.Communication.Chat.dll to the apiview.dev tool.
 If any of the new objects needs to be overwritten, add the required changes to the 'Models' folder.
@@ -12,9 +12,11 @@ If any of the new objects needs to be overwritten, add the required changes to t
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
+IMPORTANT: Update input-file to reviewed version before merging to master
+
 ``` yaml
 input-file:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/838c5092f11e8ca26e262b1f1099d5c5cdfedc3f/specification/communication/data-plane/Microsoft.CommunicationServicesChat/preview/2020-09-21-preview2/communicationserviceschat.json
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/5c659a0b9a2826f1133cef96748f5c7b956557bf/specification/communication/data-plane/Microsoft.CommunicationServicesChat/preview/2020-11-01-preview3/communicationserviceschat.json
 payload-flattening-threshold: 10
 directive:
   from: swagger-document

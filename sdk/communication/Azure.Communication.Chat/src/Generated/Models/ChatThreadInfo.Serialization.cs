@@ -15,9 +15,9 @@ namespace Azure.Communication.Chat
     {
         internal static ChatThreadInfo DeserializeChatThreadInfo(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> topic = default;
-            Optional<bool> isDeleted = default;
+            string id = default;
+            string topic = default;
+            Optional<DateTimeOffset> deletedOn = default;
             Optional<DateTimeOffset> lastMessageReceivedOn = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -31,14 +31,14 @@ namespace Azure.Communication.Chat
                     topic = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDeleted"))
+                if (property.NameEquals("deletedOn"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    isDeleted = property.Value.GetBoolean();
+                    deletedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastMessageReceivedOn"))
@@ -52,7 +52,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatThreadInfo(id.Value, topic.Value, Optional.ToNullable(isDeleted), Optional.ToNullable(lastMessageReceivedOn));
+            return new ChatThreadInfo(id, topic, Optional.ToNullable(deletedOn), Optional.ToNullable(lastMessageReceivedOn));
         }
     }
 }

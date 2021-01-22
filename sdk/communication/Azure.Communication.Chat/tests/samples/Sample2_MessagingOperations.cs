@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Administration;
 using Azure.Communication.Administration.Models;
-using Azure.Communication;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -28,22 +27,21 @@ namespace Azure.Communication.Chat.Tests.samples
                 new Uri(endpoint),
                 new CommunicationTokenCredential(userToken));
 
-            var chatThreadMember = new ChatThreadMember(new CommunicationUserIdentifier(theadCreatorMemberId))
+            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier(theadCreatorMemberId))
             {
                 DisplayName = "UserDisplayName",
                 ShareHistoryTime = DateTime.MinValue
             };
-            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", members: new[] { chatThreadMember });
-            string threadId = chatThreadClient.Id;
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
             var content = "hello world";
-            var priority = ChatMessagePriority.Normal;
+            var type = ChatMessageType.Html;
             var senderDisplayName = "sender name";
-            SendChatMessageResult sendMessageResult = await chatThreadClient.SendMessageAsync(content, priority, senderDisplayName);
+            var messageId = await chatThreadClient.SendMessageAsync(content, type, senderDisplayName);
             #endregion Snippet:Azure_Communication_Chat_Tests_SendMessage
 
-            var messageId = sendMessageResult.Id;
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage
             ChatMessage chatMessage = await chatThreadClient.GetMessageAsync(messageId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage
@@ -52,7 +50,8 @@ namespace Azure.Communication.Chat.Tests.samples
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
             await foreach (ChatMessage message in allMessages)
             {
-                Console.WriteLine($"{message.Id}:{message.Sender.Id}:{message.Content}");
+                CommunicationUserIdentifier sender =  (CommunicationUserIdentifier)message.Sender;
+                Console.WriteLine($"{message.Id}:{sender.Id}:{message.Content}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetMessages
 
@@ -66,10 +65,10 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts
-            AsyncPageable<ReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
-            await foreach (ReadReceipt readReceipt in allReadReceipts)
+            AsyncPageable<ChatMessageReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
+            await foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
             {
-                Console.WriteLine($"{readReceipt.ChatMessageId}:{readReceipt.Sender.Id}:{readReceipt.ReadOn}");
+                Console.WriteLine($"{readReceipt.ChatMessageId}:{((CommunicationUserIdentifier)readReceipt.Sender).Id}:{readReceipt.ReadOn}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts
 
@@ -81,7 +80,7 @@ namespace Azure.Communication.Chat.Tests.samples
             await chatThreadClient.SendTypingNotificationAsync();
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_SendTypingNotification
 
-            await chatClient.DeleteChatThreadAsync(threadId);
+            await chatClient.DeleteChatThreadAsync(chatThreadClient.Id);
         }
     }
 }
