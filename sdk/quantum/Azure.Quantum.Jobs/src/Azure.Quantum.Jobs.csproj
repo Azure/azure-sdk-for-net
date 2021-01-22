@@ -6,6 +6,7 @@
     <PackageTags>Azure Template</PackageTags>
     <RequiredTargetFrameworks>netcoreapp3.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);AZC0001</NoWarn> <!-- TODO Namespace not approved yet for public types -->
   </PropertyGroup>
 
   <ItemGroup>

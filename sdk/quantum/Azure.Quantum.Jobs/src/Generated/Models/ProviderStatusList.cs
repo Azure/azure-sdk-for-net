@@ -28,7 +28,9 @@ namespace Azure.Quantum.Jobs.Models
             NextLink = nextLink;
         }
 
+        /// <summary> Provider status. </summary>
         public IReadOnlyList<ProviderStatus> Value { get; }
+
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
     }

@@ -19,16 +19,16 @@ namespace Azure.Quantum.Jobs
         private readonly HttpPipeline _pipeline;
         internal JobsRestClient JobsRestClient { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="QuantumJobsClient"/>.
-        /// </summary>
+        // <summary>
+        // Initializes a new instance of the <see cref="QuantumJobsClient"/>.
+        // </summary>
 //TODO         public QuantumJobsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MiniSecretClientOptions())
 //         {
 //         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="QuantumJobsClient"/>.
-        /// </summary>
+        // <summary>
+        // Initializes a new instance of the <see cref="QuantumJobsClient"/>.
+        // </summary>
 //TODO         public QuantumJobsClient(Uri endpoint, TokenCredential credential, MiniSecretClientOptions options) : this(
 //             new ClientDiagnostics(options),
 //             HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default")),
