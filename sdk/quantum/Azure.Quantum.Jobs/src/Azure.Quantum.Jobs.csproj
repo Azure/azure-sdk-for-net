@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is a template project to demonstrate how to create a package that uses code generation as well as use for testing our build and release pipelines</Description>
     <AssemblyTitle>Azure SDK Template</AssemblyTitle>
@@ -7,6 +7,7 @@
     <RequiredTargetFrameworks>netcoreapp3.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001</NoWarn> <!-- TODO Namespace not approved yet for public types -->
+    <NoWarn>$(NoWarn);AZC0012</NoWarn> <!-- TODO Quota too short -->
   </PropertyGroup>
 
   <ItemGroup>
