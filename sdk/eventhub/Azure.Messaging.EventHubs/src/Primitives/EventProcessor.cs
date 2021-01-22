@@ -800,7 +800,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   starting location set.
         /// </remarks>
         ///
-        protected virtual async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, CancellationToken cancellationToken)
+        protected virtual async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId,
+                                                                                  CancellationToken cancellationToken)
         {
             foreach (var checkpoint in await ListCheckpointsAsync(cancellationToken).ConfigureAwait(false))
             {
@@ -1631,6 +1632,21 @@ namespace Azure.Messaging.EventHubs.Primitives
             public override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
                                                        EventData eventData,
                                                        CancellationToken cancellationToken) => throw new NotImplementedException();
+
+            /// <summary>
+            ///   Retrieves a checkpoint information from the chosen storage service. The default implementation calls <see cref="ListCheckpointsAsync"/> and selects a checkpoint by id.
+            /// </summary>
+            ///
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+            /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+            /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+            /// <param name="partitionId">The id of the partition to get checkpoint for.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+            ///
+            /// <returns>An <see cref="EventProcessorCheckpoint"/> instance if a checkpoint is found for a particular partition otherwise, <code>null</code>.</returns>
+            ///
+            public override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, CancellationToken cancellationToken)
+                => await Processor.GetCheckpointAsync(partitionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

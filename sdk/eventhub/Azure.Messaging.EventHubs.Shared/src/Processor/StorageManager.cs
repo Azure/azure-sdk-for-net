@@ -55,9 +55,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
         ///
         public abstract Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
-            string eventHubName,
-            string consumerGroup,
-            CancellationToken cancellationToken);
+                                                                                         string eventHubName,
+                                                                                         string consumerGroup,
+                                                                                         CancellationToken cancellationToken);
 
         /// <summary>
         ///   Retrieves a checkpoint information from the chosen storage service. The default implementation calls <see cref="ListCheckpointsAsync"/> and selects a checkpoint by id.
@@ -72,10 +72,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <returns>An <see cref="EventProcessorCheckpoint"/> instance if a checkpoint is found for a particular partition otherwise, <code>null</code>.</returns>
         ///
         public virtual async Task<EventProcessorCheckpoint> GetCheckpointAsync(string fullyQualifiedNamespace,
-            string eventHubName,
-            string consumerGroup,
-            string partitionId,
-            CancellationToken cancellationToken)
+                                                                               string eventHubName,
+                                                                               string consumerGroup,
+                                                                               string partitionId,
+                                                                               CancellationToken cancellationToken)
         {
             var checkpoints = await ListCheckpointsAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, cancellationToken).ConfigureAwait(false);
 

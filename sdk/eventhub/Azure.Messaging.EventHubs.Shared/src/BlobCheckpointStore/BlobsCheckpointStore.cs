@@ -445,9 +445,14 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
         /// <param name="metadata">The metadata of the blob that represents the checkpoint.</param>
+        ///
         /// <returns>A <see cref="EventProcessorCheckpoint"/> initialized with checkpoint properties if the checkpoint exists, otherwise <code>null</code>.</returns>
         ///
-        private EventProcessorCheckpoint CreateCheckpoint(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, IDictionary<string, string> metadata)
+        private EventProcessorCheckpoint CreateCheckpoint(string fullyQualifiedNamespace,
+                                                          string eventHubName,
+                                                          string consumerGroup,
+                                                          string partitionId,
+                                                          IDictionary<string, string> metadata)
         {
             var startingPosition = default(EventPosition?);
             var offset = default(long?);
@@ -498,7 +503,12 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A <see cref="EventProcessorCheckpoint"/> initialized with checkpoint properties if the checkpoint exists, otherwise <code>null</code>.</returns>
         ///
-        private async Task<EventProcessorCheckpoint> CreateLegacyCheckpoint(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string blobName, string partitionId, CancellationToken cancellationToken)
+        private async Task<EventProcessorCheckpoint> CreateLegacyCheckpoint(string fullyQualifiedNamespace,
+                                                                            string eventHubName,
+                                                                            string consumerGroup,
+                                                                            string blobName,
+                                                                            string partitionId,
+                                                                            CancellationToken cancellationToken)
         {
             var startingPosition = default(EventPosition?);
 
