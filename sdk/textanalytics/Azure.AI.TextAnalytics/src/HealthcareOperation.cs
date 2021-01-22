@@ -34,6 +34,16 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get; }
 
         /// <summary>
+        /// Properties for healthcare operation
+        /// </summary>
+        public HealthcareOperationProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets an Status representing the operation.
+        /// </summary>
+        public JobStatus Status { get; internal set; }
+
+        /// <summary>
         /// next link string for pagination
         /// </summary>
         internal string NextLink { get; set; }
@@ -48,8 +58,14 @@ namespace Azure.AI.TextAnalytics
         {
             get
             {
-                if (HasCompleted && !HasValue)
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+
+                if (Status == "cancelled")
+                {
+                    throw new RequestFailedException("The operation was canceled so no value is available.");
+                }
+
+                if (HasCompleted && !HasValue)
                     throw _requestFailedException;
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 else
@@ -206,7 +222,7 @@ namespace Azure.AI.TextAnalytics
                     {
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
                         _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results, _idToIndexMap);
-
+                        Status = JobStatus.Succeeded;
                         NextLink = update.Value.NextLink;
                         _hasCompleted = true;
                     }
@@ -214,8 +230,14 @@ namespace Azure.AI.TextAnalytics
                     {
                         _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors)
                             .ConfigureAwait(false);
+                        Status = JobStatus.Failed;
                         _hasCompleted = true;
                         throw _requestFailedException;
+                    }
+                    else if (update.Value.Status == JobStatus.Cancelled)
+                    {
+                        Status = JobStatus.Cancelled;
+                        _hasCompleted = true;
                     }
                 }
                 catch (Exception e)
@@ -226,6 +248,29 @@ namespace Azure.AI.TextAnalytics
             }
 
             return GetRawResponse();
+        }
+
+        /// <summary>
+        /// Cancels a pending or running <see cref="HealthcareOperation"/> from text analytics server.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual void Cancel(CancellationToken cancellationToken = default)
+        {
+            ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = _serviceClient.CancelHealthJob(new Guid(Id), cancellationToken);
+
+            _response = response.GetRawResponse();
+        }
+
+        /// <summary>
+        /// Cancels a pending or running <see cref="HealthcareOperation"/> from text analytics server.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task"/> to track the service request.</returns>
+        public virtual async Task CancelAsync(CancellationToken cancellationToken = default)
+        {
+            ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = await _serviceClient.CancelHealthJobAsync(new Guid(Id), cancellationToken).ConfigureAwait(false);
+
+            _response = response.GetRawResponse();
         }
     }
 }

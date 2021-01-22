@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(batchDocument, "en");
 
-            await client.StartCancelHealthJobAsync(healthOperation);
+            await healthOperation.CancelAsync();
         }
 
         #endregion

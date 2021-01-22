@@ -2336,54 +2336,6 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        /// <summary> Runs the cancel job for healthcare operation which was initialzed using <see cref="StartHealthcareBatchAsync(IEnumerable{string}, string, HealthcareOptions, CancellationToken)"/> or <see cref="StartHealthcareAsync"/> </summary>
-        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A long running operation id once the operation is in calcelled state upon successful.</returns>
-        #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<string> StartCancelHealthJobAsync(HealthcareOperation operation, CancellationToken cancellationToken = default)
-        #pragma warning restore AZC0015 // Unexpected client method return type.
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartCancelHealthJobAsync)}");
-            scope.Start();
-
-            try
-            {
-                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = await _serviceRestClient.CancelHealthJobAsync(new Guid(operation.Id), cancellationToken).ConfigureAwait(false);
-
-                return response.Headers.OperationLocation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Runs the cancel job for healthcare operation which was initialized using <see cref="StartHealthcareBatch(IEnumerable{string}, string, HealthcareOptions, CancellationToken)"/> or <see cref="StartHealthcare"/> </summary>
-        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A long running operation id once the operation is in calcelled state upon successful.</returns>
-        #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual string StartCancelHealthJob(HealthcareOperation operation, CancellationToken cancellationToken = default)
-        #pragma warning restore AZC0015 // Unexpected client method return type.
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartCancelHealthJobAsync)}");
-            scope.Start();
-
-            try
-            {
-                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = _serviceRestClient.CancelHealthJob(new Guid(operation.Id), cancellationToken);
-
-                return response.Headers.OperationLocation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary>
         /// Gets collection of healthcare entities from the HealthOperation using async pageable.
         /// </summary>
