@@ -589,7 +589,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [TestCase("null", "78")]
         [TestCase("\"\"", "0")]
         [TestCase("\"\"", "78")]
-        public async Task ListCheckpointListCheckpoinSkipsCheckpointsWhenOffsetIsNullOrEmptyInLegacyCheckpoint(string offset, string sequenceNumber)
+        public async Task ListCheckpointSkipsCheckpointsWhenOffsetIsNullOrEmptyInLegacyCheckpoint(string offset, string sequenceNumber)
         {
             var blobList = new List<BlobItem>
             {
