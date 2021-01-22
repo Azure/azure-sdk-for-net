@@ -13,23 +13,23 @@ namespace Azure.Quantum.Jobs
     /// <summary>
     /// The sample secrets client.
     /// </summary>
-    public class AzureQuantum
+    public class QuantumJobsClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal JobsRestClient JobsRestClient { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MiniSecretClient"/>.
+        /// Initializes a new instance of the <see cref="QuantumJobsClient"/>.
         /// </summary>
-        public MiniSecretClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MiniSecretClientOptions())
+        public QuantumJobsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MiniSecretClientOptions())
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MiniSecretClient"/>.
+        /// Initializes a new instance of the <see cref="QuantumJobsClient"/>.
         /// </summary>
-        public MiniSecretClient(Uri endpoint, TokenCredential credential, MiniSecretClientOptions options): this(
+        public QuantumJobsClient(Uri endpoint, TokenCredential credential, MiniSecretClientOptions options): this(
             new ClientDiagnostics(options),
             HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default")),
             endpoint.ToString(),
@@ -37,16 +37,16 @@ namespace Azure.Quantum.Jobs
         {
         }
 
-        /// <summary> Initializes a new instance of MiniSecretClient for mocking. </summary>
-        protected MiniSecretClient()
+        /// <summary> Initializes a new instance of QuantumJobsClient for mocking. </summary>
+        protected QuantumJobsClient()
         {
         }
-        /// <summary> Initializes a new instance of MiniSecretClient. </summary>
+        /// <summary> Initializes a new instance of QuantumJobsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal MiniSecretClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
+        internal QuantumJobsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
         {
             RestClient = new TemplateRestClient(clientDiagnostics, pipeline, vaultBaseUrl, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -58,7 +58,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecretBundle>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MiniSecretClient.GetSecret");
+            using var scope = _clientDiagnostics.CreateScope("QuantumJobsClient.GetSecret");
             scope.Start();
             try
             {
@@ -76,7 +76,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecretBundle> GetSecret(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MiniSecretClient.GetSecret");
+            using var scope = _clientDiagnostics.CreateScope("QuantumJobsClient.GetSecret");
             scope.Start();
             try
             {
