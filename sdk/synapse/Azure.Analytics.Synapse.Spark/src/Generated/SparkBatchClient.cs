@@ -85,44 +85,6 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        /// <summary> Create new spark batch job. </summary>
-        /// <param name="sparkBatchJobOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkBatchJob>> CreateSparkBatchJobAsync(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.CreateSparkBatchJob");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateSparkBatchJobAsync(sparkBatchJobOptions, detailed, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create new spark batch job. </summary>
-        /// <param name="sparkBatchJobOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkBatchJob> CreateSparkBatchJob(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.CreateSparkBatchJob");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateSparkBatchJob(sparkBatchJobOptions, detailed, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a single spark batch job. </summary>
         /// <param name="batchId"> Identifier for the batch job. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>

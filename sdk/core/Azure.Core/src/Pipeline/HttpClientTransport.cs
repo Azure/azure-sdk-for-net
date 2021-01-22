@@ -107,8 +107,12 @@ namespace Azure.Core.Pipeline
 #else
                     contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
 #endif
-
                 }
+            }
+            // HttpClient on NET5 throws OperationCanceledException from sync call sites, normalize to TaskCanceledException
+            catch (OperationCanceledException)
+            {
+                throw new TaskCanceledException();
             }
             catch (HttpRequestException e)
             {
@@ -130,7 +134,11 @@ namespace Azure.Core.Pipeline
             ServicePointHelpers.SetLimits(httpClientHandler);
 #endif
 
-            return new HttpClient(httpClientHandler);
+            return new HttpClient(httpClientHandler)
+            {
+                // Timeouts are handled by the pipeline
+                Timeout = Timeout.InfiniteTimeSpan
+            };
         }
 
         private static HttpRequestMessage BuildRequestMessage(HttpMessage message)

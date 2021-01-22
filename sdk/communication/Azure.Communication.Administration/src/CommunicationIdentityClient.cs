@@ -22,6 +22,17 @@ namespace Azure.Communication.Administration
         internal CommunicationIdentityRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CommunicationIdentityClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationIdentityClientOptions? options = default)
+            : this(
+                AssertNotNull(endpoint, nameof(endpoint)),
+                options ?? new CommunicationIdentityClientOptions(),
+                AssertNotNull(keyCredential, nameof(keyCredential)))
+        { }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(string connectionString, CommunicationIdentityClientOptions? options = default)
@@ -29,9 +40,10 @@ namespace Azure.Communication.Administration
                   options ?? new CommunicationIdentityClientOptions(),
                   ConnectionString.Parse(AssertNotNull(connectionString, nameof(connectionString))))
         { }
+
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityClient"/>.</summary>
-        /// <param name="tokenCredential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="tokenCredential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(Uri endpoint, TokenCredential tokenCredential, CommunicationIdentityClientOptions? options = default)
             : this(
@@ -39,6 +51,7 @@ namespace Azure.Communication.Administration
                 options ?? new CommunicationIdentityClientOptions(),
                 AssertNotNull(tokenCredential, nameof(tokenCredential)))
         { }
+
         private CommunicationIdentityClient(CommunicationIdentityClientOptions options, ConnectionString connectionString)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -46,6 +59,15 @@ namespace Azure.Communication.Administration
                 _clientDiagnostics,
                 options.BuildHttpPipeline(connectionString),
                 connectionString.GetRequired("endpoint"));
+        }
+
+        private CommunicationIdentityClient(Uri endpoint, CommunicationIdentityClientOptions options, AzureKeyCredential credential)
+        {
+            _clientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new CommunicationIdentityRestClient(
+                _clientDiagnostics,
+                options.BuildHttpPipeline(credential),
+                endpoint.AbsoluteUri);
         }
 
         private CommunicationIdentityClient(Uri endpoint, CommunicationIdentityClientOptions options, TokenCredential tokenCredential)

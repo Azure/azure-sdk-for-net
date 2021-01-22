@@ -7,12 +7,21 @@ This sample demonstrates basic operations with two core classes in this library:
 To interact with Spark jobs running on Azure Synapse, you need to instantiate a `SparkBatchClient`. It requires an endpoint URL and a `TokenCredential`.
 
 ```C# Snippet:CreateSparkBatchClient
+// Replace the strings below with the spark, endpoint, and file system information
+string sparkPoolName = "<my-spark-pool-name>";
+
+string endpoint = "<my-endpoint-url>";
+
+string storageAccount = "<my-storage-account-name>";
+
+string fileSystem = "<my-storage-filesystem-name>";
+
 SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
 ```
 
 ## Submitting Spark jobs
 
-To submit a Spark job, first create a `SparkBatchJob`, passing in an instance of `SparkBatchJobOptions` describing the job's parameters. Calling `CreateSparkBatchJob` with that job will submit it to Synapse.
+To submit a Spark job, first create a `SparkBatchJob`, passing in an instance of `SparkBatchJobOptions` describing the job's parameters. Calling `StartCreateSparkBatchJob` with that job will submit it to Synapse.
 
 ```C# Snippet:SubmitSparkBatchJob
 string name = $"batch-{Guid.NewGuid()}";
@@ -32,15 +41,21 @@ SparkBatchJobOptions request = new SparkBatchJobOptions(name, file)
     ExecutorCount = 2
 };
 
-SparkBatchJob jobCreated = client.CreateSparkBatchJob(request);
+SparkBatchOperation createOperation = client.StartCreateSparkBatchJob(request);
+while (!createOperation.HasCompleted)
+{
+    System.Threading.Thread.Sleep(2000);
+    createOperation.UpdateStatus();
+}
+SparkBatchJob jobCreated = createOperation.Value;
 ```
 
 ## Retrieve a Spark job
 
-To retrieve the details of a Spark job call `GetSparkBatchJob`, passing in the Spark job ID.
+To retrieve the details of a Spark job call `StartGetSparkBatchJob`, passing in the Spark job ID.
 
 ```C# Snippet:GetSparkBatchJob
-SparkBatchJob retrievedJob = client.GetSparkBatchJob(jobCreated.Id);
+SparkBatchJob retrievedJob = client.GetSparkBatchJob (jobCreated.Id);
 Debug.WriteLine($"Job is returned with name {retrievedJob.Name} and state {retrievedJob.State}");
 ```
 
@@ -60,6 +75,6 @@ foreach (SparkBatchJob job in jobs.Value.Sessions)
 
 To cancel a submitted Spark job call `CancelSparkBatchJob`, passing in the Spark job ID.
 
-```C# Snippet:DeleteSparkBatchJob
+```C# Snippet:CancelSparkBatchJob
 Response operation = client.CancelSparkBatchJob(jobCreated.Id);
 ```

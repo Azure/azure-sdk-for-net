@@ -1,0 +1,67 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/integrationRuntimes?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-39ff85231cac834582bcb95ac2434431-06b40c15f8d2444d-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20210119.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "c91f073928a86edbf04d705f6b4e2bf9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "618",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 19 Jan 2021 16:59:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c91f073928a86edbf04d705f6b4e2bf9",
+        "x-ms-correlation-request-id": "b1a638be-7056-4a74-9756-c21d416bc88a",
+        "x-ms-request-id": "6a3f533f-b8aa-40b5-a6dd-463ed74eac7e",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-chhamosynapse/providers/Microsoft.Synapse/workspaces/workspacechhamosynapse/integrationruntimes/AutoResolveIntegrationRuntime",
+            "name": "AutoResolveIntegrationRuntime",
+            "type": "Microsoft.Synapse/workspaces/integrationruntimes",
+            "properties": {
+              "type": "Managed",
+              "typeProperties": {
+                "computeProperties": {
+                  "location": "AutoResolve"
+                }
+              },
+              "provisioningState": null,
+              "managedVirtualNetwork": {
+                "referenceName": "default",
+                "type": "ManagedVirtualNetworkReference",
+                "id": "00b37b7e-290e-4973-9420-b91c9919100d"
+              }
+            },
+            "etag": "ab033e9d-0000-0800-0000-5fd14daa0000"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://workspacechhamosynapse.dev.azuresynapse.net",
+    "RandomSeed": "936394399"
+  }
+}
