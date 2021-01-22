@@ -43,6 +43,9 @@ namespace Azure.Communication.Administration
 
         /// <summary>
         /// Initializes a phone number administration client with a token credential.
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="tokenCredential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         /// </summary>
         public PhoneNumberAdministrationClient(Uri endpoint, TokenCredential tokenCredential, PhoneNumberAdministrationClientOptions? options = default)
             : this(
@@ -51,32 +54,12 @@ namespace Azure.Communication.Administration
                   tokenCredential)
         { }
 
-        /// <summary>
-        /// Initializes a phone number administration client with a token credential.
-        /// </summary>
-        public PhoneNumberAdministrationClient(Uri endpoint, TokenCredential tokenCredential, PhoneNumberAdministrationClientOptions? options = default)
-            : this(
-                  endpoint,
-                  options ?? new PhoneNumberAdministrationClientOptions(),
-                  tokenCredential)
-        { }
-
-        /// <summary>
-        /// Initializes a phone number administration client with an Azure resource connection string and client options.
-        /// </summary>
-        public PhoneNumberAdministrationClient(string connectionString, PhoneNumberAdministrationClientOptions? options = default)
-            : this(
-                  options ?? new PhoneNumberAdministrationClientOptions(),
-                  ConnectionString.Parse(AssertNotNull(connectionString, nameof(connectionString))))
-        { }
-
-        private PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
+        internal PhoneNumberAdministrationClient(PhoneNumberAdministrationClientOptions options, ConnectionString connectionString)
             : this(new ClientDiagnostics(options), options.BuildHttpPipeline(connectionString), connectionString.GetRequired("endpoint"))
         { }
 
-        private PhoneNumberAdministrationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
+        internal PhoneNumberAdministrationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
         {
-            Argument.AssertNotNullOrEmpty(endpointUrl, nameof(endpointUrl));
             RestClient = new PhoneNumberAdministrationRestClient(clientDiagnostics, pipeline, endpointUrl);
             ClientDiagnostics = clientDiagnostics;
         }
@@ -90,7 +73,7 @@ namespace Azure.Communication.Administration
                 endpoint.AbsoluteUri);
         }
 
-        private PhoneNumberAdministrationClient(Uri endpoint, PhoneNumberAdministrationClientOptions options, TokenCredential tokenCredential)
+        internal PhoneNumberAdministrationClient(Uri endpoint, PhoneNumberAdministrationClientOptions options, TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
