@@ -69,20 +69,67 @@ function Parse-ReleaseHighlights ($content)
 
 function Filter-ReleaseHighlights ($releaseHighlights)
 {
+    $results = @{}
+
     foreach ($key in $releaseHighlights.Keys)
     {
         $keyInfo = $key.Split(":")
         $packageName = $keyInfo[0]
         $packageVersion = $keyInfo[1]
 
-        $existingPackages = GetExistingPackageVersions -PackageName $packageName
+        $csvMetaData = Get-CSVMetadata
+        $packageMetaData = $csvMetaData | Where-Object { $_.Package -eq $packageName }
 
-        if ()
+        if ($packageMetaData.ServiceName -eq "template")
+        {
+            continue
+        }
+
+        $existingPackages = GetExistingPackageVersions -PackageName $packageName `
+        -GroupId $packageMetaData.GroupId
+
+        $versionExists = $existingPackages | Where-Object { $_ -eq $packageVersion }
+
+        if ($null -eq $versionExists)
+        {
+            continue
+        }
+
+        $results.Add($key, $releaseHighlights[$key])
     }
+    return $results
+}
+
+function Write-GeneralReleaseNotesSections ($releaseHighlights, $csvMetaData, $sectionName)
+{
+    $sectionContent = @()
+    $sectionContent += ""
+    foreach ($key in $releaseHighlights.Keys)
+    {
+        $keyInfo = $key.Split(":")
+        $packageName = $keyInfo[0]
+        $packageVersion = $keyInfo[1]
+        $packageSemVer = [AzureEngSemanticVersion]::ParseVersionString($packageVersion)
+        
+        if ($null -eq $packageSemVer)
+        {
+            LogWarning "Invalid version [ $packageVersion ] detected"
+            continue
+        }
+
+        if ($packageSemVer.VersionType -eq $sectionName)
+        {
+            $packageFriendlyName = ($csvMetaData | Where-Object { $_.Package -eq $packageName }).DisplayName
+            $sectionContent += "- ${packageFriendlyName}"
+        }
+    }
+    $sectionContent += ""
+    return $sectionContent
 }
 
 function Write-GeneralReleaseNote ($releaseHighlights, $releaseFilePath)
 {
+    $csvMetaData = Get-CSVMetadata
     $releaseContent = Get-Content $releaseFilePath
     $newReleaseContent = @()
     $lineNumber = 0
@@ -90,6 +137,15 @@ function Write-GeneralReleaseNote ($releaseHighlights, $releaseFilePath)
     while ($lineNumber -lt $releaseContent.Count)
     {
         $line = $releaseContent[$lineNumber]
+        if($line -match $SECTION_REGEX)
+        {
+            if (($matches["SectionName"] -eq "ga") -and ($matches["Command"] -eq "start"))
+            {
+                $newReleaseContent += $line
+
+
+            }
+        }
 
     }
 }
