@@ -105,8 +105,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [Test]
         [NonParallelizable]
-        [Ignore("Need to re-record")]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
