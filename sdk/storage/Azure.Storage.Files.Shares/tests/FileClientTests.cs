@@ -1403,7 +1403,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
-        [Ignore("TODO we need to fix this.")]
         public async Task StartCopyAsync_NonAsciiSourceUri()
         {
             // Arrange

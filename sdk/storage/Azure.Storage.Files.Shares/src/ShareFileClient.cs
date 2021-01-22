@@ -1328,10 +1328,12 @@ namespace Azure.Storage.Files.Shares
                         SetArchiveAttribute = setArchiveAttribute
                     };
 
+                    ShareUriBuilder uriBuilder = new ShareUriBuilder(sourceUri);
+
                     if (async)
                     {
                         response = await FileRestClient.StartCopyAsync(
-                            copySource: sourceUri.ToString(),
+                            copySource: uriBuilder.ToString(),
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProperties?.FilePermissionKey,
@@ -1343,7 +1345,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = FileRestClient.StartCopy(
-                            copySource: sourceUri.ToString(),
+                            copySource: uriBuilder.ToString(),
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProperties?.FilePermissionKey,
