@@ -36,7 +36,7 @@ namespace Azure.Communication
     }
     public sealed partial class CommunicationTokenCredential : System.IDisposable
     {
-        public CommunicationTokenCredential(Azure.Communication.CommunicationTokenRefreshOptions tokenRefreshOptions) { }
+        public CommunicationTokenCredential(Azure.Communication.CommunicationTokenRefreshOptions options) { }
         public CommunicationTokenCredential(string token) { }
         public void Dispose() { }
         public Azure.Core.AccessToken GetToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
