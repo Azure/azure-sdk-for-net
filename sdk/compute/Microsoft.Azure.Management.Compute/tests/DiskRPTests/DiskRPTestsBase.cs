@@ -1066,7 +1066,7 @@ namespace Compute.Tests.DiskRPTests
                     Type = ResourceIdentityType.SystemAssigned.ToString()
                 },
                 Location = location,
-                ActiveKey = new KeyForDiskEncryptionSet
+                ActiveKey = new KeyVaultAndKeyReference
                 {
                     SourceVault = new SourceVault
                     {

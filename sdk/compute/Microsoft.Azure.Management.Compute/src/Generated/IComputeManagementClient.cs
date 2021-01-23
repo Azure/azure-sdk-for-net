@@ -197,11 +197,6 @@ namespace Microsoft.Azure.Management.Compute
         IDiskAccessesOperations DiskAccesses { get; }
 
         /// <summary>
-        /// Gets the IDiskRestorePointOperations.
-        /// </summary>
-        IDiskRestorePointOperations DiskRestorePoint { get; }
-
-        /// <summary>
         /// Gets the IGalleriesOperations.
         /// </summary>
         IGalleriesOperations Galleries { get; }
@@ -230,26 +225,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IContainerServicesOperations.
         /// </summary>
         IContainerServicesOperations ContainerServices { get; }
-
-        /// <summary>
-        /// Gets the ICloudServiceRoleInstancesOperations.
-        /// </summary>
-        ICloudServiceRoleInstancesOperations CloudServiceRoleInstances { get; }
-
-        /// <summary>
-        /// Gets the ICloudServiceRolesOperations.
-        /// </summary>
-        ICloudServiceRolesOperations CloudServiceRoles { get; }
-
-        /// <summary>
-        /// Gets the ICloudServicesOperations.
-        /// </summary>
-        ICloudServicesOperations CloudServices { get; }
-
-        /// <summary>
-        /// Gets the ICloudServicesUpdateDomainOperations.
-        /// </summary>
-        ICloudServicesUpdateDomainOperations CloudServicesUpdateDomain { get; }
 
     }
 }

@@ -12,21 +12,28 @@ namespace Azure.Communication
     {
         private readonly ThreadSafeRefreshableAccessTokenCache _accessTokenCache;
 
-        public AutoRefreshTokenCredential(CommunicationTokenRefreshOptions options)
-            : this(options, null, null)
+        public AutoRefreshTokenCredential(
+            Func<CancellationToken, string> tokenRefresher,
+            Func<CancellationToken, ValueTask<string>> asyncTokenRefresher,
+            string? initialToken,
+            bool refreshProactively)
+            : this(tokenRefresher, asyncTokenRefresher, initialToken, refreshProactively, null, null)
         { }
 
         internal AutoRefreshTokenCredential(
-            CommunicationTokenRefreshOptions options,
+            Func<CancellationToken, string> tokenRefresher,
+            Func<CancellationToken, ValueTask<string>> asyncTokenRefresher,
+            string? initialToken,
+            bool refreshProactively,
             Func<Action, TimeSpan, ThreadSafeRefreshableAccessTokenCache.IScheduledAction>? scheduler,
             Func<DateTimeOffset>? utcNowProvider)
         {
-            if (options.InitialToken is null)
+            if (initialToken == null)
             {
                 _accessTokenCache = new ThreadSafeRefreshableAccessTokenCache(
                     Refresh,
                     RefreshAsync,
-                    options.RefreshProactively,
+                    refreshProactively,
                     scheduler,
                     utcNowProvider);
             }
@@ -35,17 +42,17 @@ namespace Azure.Communication
                 _accessTokenCache = new ThreadSafeRefreshableAccessTokenCache(
                     Refresh,
                     RefreshAsync,
-                    options.RefreshProactively,
-                    initialValue: JwtTokenParser.CreateAccessToken(options.InitialToken),
+                    refreshProactively,
+                    initialValue: JwtTokenParser.CreateAccessToken(initialToken),
                     scheduler,
                     utcNowProvider);
             }
 
             AccessToken Refresh(CancellationToken cancellationToken)
-                => JwtTokenParser.CreateAccessToken(options.TokenRefresher(cancellationToken));
+                => JwtTokenParser.CreateAccessToken(tokenRefresher(cancellationToken));
 
             async ValueTask<AccessToken> RefreshAsync(CancellationToken cancellationToken)
-                => JwtTokenParser.CreateAccessToken(await options.AsyncTokenRefresher(cancellationToken).ConfigureAwait(false));
+                => JwtTokenParser.CreateAccessToken(await asyncTokenRefresher(cancellationToken).ConfigureAwait(false));
         }
 
         public AccessToken GetToken(CancellationToken cancellationToken = default)

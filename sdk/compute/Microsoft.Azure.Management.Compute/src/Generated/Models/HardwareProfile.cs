@@ -32,33 +32,27 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vmSize">Specifies the size of the virtual machine. For
         /// more information about virtual machine sizes, see [Sizes for
         /// virtual
-        /// machines](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes).
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-sizes?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
         /// &lt;br&gt;&lt;br&gt; The available VM sizes depend on region and
         /// availability set. For a list of available sizes use these APIs:
         /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes in
         /// an availability
         /// set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes)
         /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes in a
-        /// region](
-        /// https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
+        /// region](https://docs.microsoft.com/rest/api/compute/virtualmachinesizes/list)
         /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes for
         /// resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes).
-        /// &lt;br&gt;&lt;br&gt; This list of sizes is no longer updated and
-        /// the **VirtualMachineSizeTypes** string constants will be removed
-        /// from the subsequent REST API specification. Use [List all available
-        /// virtual machine sizes in a region](
-        /// https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
-        /// to get the latest sizes. Possible values include: 'Basic_A0',
-        /// 'Basic_A1', 'Basic_A2', 'Basic_A3', 'Basic_A4', 'Standard_A0',
-        /// 'Standard_A1', 'Standard_A2', 'Standard_A3', 'Standard_A4',
-        /// 'Standard_A5', 'Standard_A6', 'Standard_A7', 'Standard_A8',
-        /// 'Standard_A9', 'Standard_A10', 'Standard_A11', 'Standard_A1_v2',
-        /// 'Standard_A2_v2', 'Standard_A4_v2', 'Standard_A8_v2',
-        /// 'Standard_A2m_v2', 'Standard_A4m_v2', 'Standard_A8m_v2',
-        /// 'Standard_B1s', 'Standard_B1ms', 'Standard_B2s', 'Standard_B2ms',
-        /// 'Standard_B4ms', 'Standard_B8ms', 'Standard_D1', 'Standard_D2',
-        /// 'Standard_D3', 'Standard_D4', 'Standard_D11', 'Standard_D12',
-        /// 'Standard_D13', 'Standard_D14', 'Standard_D1_v2', 'Standard_D2_v2',
+        /// Possible values include: 'Basic_A0', 'Basic_A1', 'Basic_A2',
+        /// 'Basic_A3', 'Basic_A4', 'Standard_A0', 'Standard_A1',
+        /// 'Standard_A2', 'Standard_A3', 'Standard_A4', 'Standard_A5',
+        /// 'Standard_A6', 'Standard_A7', 'Standard_A8', 'Standard_A9',
+        /// 'Standard_A10', 'Standard_A11', 'Standard_A1_v2', 'Standard_A2_v2',
+        /// 'Standard_A4_v2', 'Standard_A8_v2', 'Standard_A2m_v2',
+        /// 'Standard_A4m_v2', 'Standard_A8m_v2', 'Standard_B1s',
+        /// 'Standard_B1ms', 'Standard_B2s', 'Standard_B2ms', 'Standard_B4ms',
+        /// 'Standard_B8ms', 'Standard_D1', 'Standard_D2', 'Standard_D3',
+        /// 'Standard_D4', 'Standard_D11', 'Standard_D12', 'Standard_D13',
+        /// 'Standard_D14', 'Standard_D1_v2', 'Standard_D2_v2',
         /// 'Standard_D3_v2', 'Standard_D4_v2', 'Standard_D5_v2',
         /// 'Standard_D2_v3', 'Standard_D4_v3', 'Standard_D8_v3',
         /// 'Standard_D16_v3', 'Standard_D32_v3', 'Standard_D64_v3',
@@ -112,34 +106,29 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the size of the virtual machine. For more
         /// information about virtual machine sizes, see [Sizes for virtual
-        /// machines](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes).
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-sizes?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; The available VM sizes depend
         /// on region and availability set. For a list of available sizes use
         /// these APIs:  &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all
         /// available virtual machine sizes in an availability
         /// set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all available virtual
-        /// machine sizes in a region](
-        /// https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
+        /// machine sizes in a
+        /// region](https://docs.microsoft.com/rest/api/compute/virtualmachinesizes/list)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all available virtual
         /// machine sizes for
         /// resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes).
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This list of sizes is no
-        /// longer updated and the **VirtualMachineSizeTypes** string constants
-        /// will be removed from the subsequent REST API specification. Use
-        /// [List all available virtual machine sizes in a region](
-        /// https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
-        /// to get the latest sizes. Possible values include: 'Basic_A0',
-        /// 'Basic_A1', 'Basic_A2', 'Basic_A3', 'Basic_A4', 'Standard_A0',
-        /// 'Standard_A1', 'Standard_A2', 'Standard_A3', 'Standard_A4',
-        /// 'Standard_A5', 'Standard_A6', 'Standard_A7', 'Standard_A8',
-        /// 'Standard_A9', 'Standard_A10', 'Standard_A11', 'Standard_A1_v2',
-        /// 'Standard_A2_v2', 'Standard_A4_v2', 'Standard_A8_v2',
-        /// 'Standard_A2m_v2', 'Standard_A4m_v2', 'Standard_A8m_v2',
-        /// 'Standard_B1s', 'Standard_B1ms', 'Standard_B2s', 'Standard_B2ms',
-        /// 'Standard_B4ms', 'Standard_B8ms', 'Standard_D1', 'Standard_D2',
-        /// 'Standard_D3', 'Standard_D4', 'Standard_D11', 'Standard_D12',
-        /// 'Standard_D13', 'Standard_D14', 'Standard_D1_v2', 'Standard_D2_v2',
+        /// Possible values include: 'Basic_A0', 'Basic_A1', 'Basic_A2',
+        /// 'Basic_A3', 'Basic_A4', 'Standard_A0', 'Standard_A1',
+        /// 'Standard_A2', 'Standard_A3', 'Standard_A4', 'Standard_A5',
+        /// 'Standard_A6', 'Standard_A7', 'Standard_A8', 'Standard_A9',
+        /// 'Standard_A10', 'Standard_A11', 'Standard_A1_v2', 'Standard_A2_v2',
+        /// 'Standard_A4_v2', 'Standard_A8_v2', 'Standard_A2m_v2',
+        /// 'Standard_A4m_v2', 'Standard_A8m_v2', 'Standard_B1s',
+        /// 'Standard_B1ms', 'Standard_B2s', 'Standard_B2ms', 'Standard_B4ms',
+        /// 'Standard_B8ms', 'Standard_D1', 'Standard_D2', 'Standard_D3',
+        /// 'Standard_D4', 'Standard_D11', 'Standard_D12', 'Standard_D13',
+        /// 'Standard_D14', 'Standard_D1_v2', 'Standard_D2_v2',
         /// 'Standard_D3_v2', 'Standard_D4_v2', 'Standard_D5_v2',
         /// 'Standard_D2_v3', 'Standard_D4_v3', 'Standard_D8_v3',
         /// 'Standard_D16_v3', 'Standard_D32_v3', 'Standard_D64_v3',
