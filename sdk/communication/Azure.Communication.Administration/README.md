@@ -116,6 +116,25 @@ Phone plans come in two types; Geographic and Toll-Free. Geographic phone plans 
 
 All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
 
+### Authenticate the Phone Number Administration client
+
+Phone Number Administration clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
+
+```C# Snippet:CreatePhoneNumberAdministrationClient
+// Get a connection string to our Azure Communication resource.
+var connectionString = "<connection_string>";
+var client = new PhoneNumberAdministrationClient(connectionString);
+```
+
+Phone Number Administration clients also have the option to authenticate using a valid token. With this option,
+`AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication.
+
+```C# Snippet:CreatePhoneNumberWithTokenCredential
+var endpoint = "<endpoint_url>";
+TokenCredential tokenCredential = new DefaultAzureCredential();
+var client = new PhoneNumberAdministrationClient(new Uri(endpoint), tokenCredential);
+```
+
 ### Reserving and acquiring numbers
 
 Phone numbers reservation can be performed through the reservation creation API by providing a phone plan id, an area code and quantity of phone numbers. The provided quantity of phone numbers will be reserved for ten minutes. This reservation of phone numbers can either be cancelled or purchased. If the reservation is cancelled, then the phone numbers will become available to others. If the reservation is purchased, then the phone numbers are acquired for the Azure resources.
