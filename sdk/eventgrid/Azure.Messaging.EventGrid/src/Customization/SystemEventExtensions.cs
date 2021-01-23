@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventGrid
             { SystemEventMappings.KeyVaultSecretNewVersionCreatedEvent, KeyVaultSecretNewVersionCreatedEventData.DeserializeKeyVaultSecretNewVersionCreatedEventData },
             { SystemEventMappings.KeyVaultSecretNearExpiryEvent, KeyVaultSecretNearExpiryEventData.DeserializeKeyVaultSecretNearExpiryEventData },
             { SystemEventMappings.KeyVaultSecretExpiredEvent, KeyVaultSecretExpiredEventData.DeserializeKeyVaultSecretExpiredEventData },
-            { SystemEventMappings.KeyVaultVaultAccessPolicyChangedEvent, KeyVaultAccessPolicyChangedEventData.DeserializeKeyVaultAccessPolicyChangedEventData },
+            { SystemEventMappings.KeyVaultAccessPolicyChangedEvent, KeyVaultAccessPolicyChangedEventData.DeserializeKeyVaultAccessPolicyChangedEventData },
 
             // MachineLearningServices events
             { SystemEventMappings.MachineLearningServicesDatasetDriftDetectedEvent, MachineLearningServicesDatasetDriftDetectedEventData.DeserializeMachineLearningServicesDatasetDriftDetectedEventData },
@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventGrid
             { SystemEventMappings.MediaLiveEventIncomingStreamReceivedEvent, MediaLiveEventIncomingStreamReceivedEventData.DeserializeMediaLiveEventIncomingStreamReceivedEventData },
             { SystemEventMappings.MediaLiveEventIncomingStreamsOutOfSyncEvent, MediaLiveEventIncomingStreamsOutOfSyncEventData.DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData },
             { SystemEventMappings.MediaLiveEventIncomingVideoStreamsOutOfSyncEvent, MediaLiveEventIncomingVideoStreamsOutOfSyncEventData.DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData },
-            { SystemEventMappings.MediaLiveEventIncomingChunkDroppedEvent, MediaLiveEventIncomingDataChunkDroppedEventData.DeserializeMediaLiveEventIncomingDataChunkDroppedEventData },
+            { SystemEventMappings.MediaLiveEventIncomingDataChunkDroppedEventName, MediaLiveEventIncomingDataChunkDroppedEventData.DeserializeMediaLiveEventIncomingDataChunkDroppedEventData },
             { SystemEventMappings.MediaLiveEventIngestHeartbeatEvent, MediaLiveEventIngestHeartbeatEventData.DeserializeMediaLiveEventIngestHeartbeatEventData },
             { SystemEventMappings.MediaLiveEventTrackDiscontinuityDetectedEvent, MediaLiveEventTrackDiscontinuityDetectedEventData.DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData },
 
