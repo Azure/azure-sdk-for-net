@@ -27,11 +27,15 @@ namespace Azure.Communication
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationTokenCredential"/> that automatically renews the token upon expiry or proactively prior to expiration to speed up the requests.
         /// </summary>
-        /// <param name="options">Options for how the token will be refreshed</param>
-        public CommunicationTokenCredential(CommunicationTokenRefreshOptions options)
+        /// <param name="tokenRefreshOptions">Options for how the token will be refreshed</param>
+        public CommunicationTokenCredential(CommunicationTokenRefreshOptions tokenRefreshOptions)
         {
-            Argument.AssertNotNull(options, nameof(options));
-            _tokenCredential = new AutoRefreshTokenCredential(options);
+            Argument.AssertNotNull(tokenRefreshOptions, nameof(tokenRefreshOptions));
+            _tokenCredential = new AutoRefreshTokenCredential(
+               tokenRefreshOptions.TokenRefresher,
+               tokenRefreshOptions.AsyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefreshOptions.TokenRefresher(cancellationToken))),
+               tokenRefreshOptions.Token,
+               tokenRefreshOptions.RefreshProactively);
         }
 
         /// <summary>
