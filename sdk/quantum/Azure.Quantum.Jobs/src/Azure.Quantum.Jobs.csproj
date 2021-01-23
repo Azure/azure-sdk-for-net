@@ -4,7 +4,6 @@
     <AssemblyTitle>Azure SDK Template</AssemblyTitle>
     <Version>1.0.3-beta.19</Version>
     <PackageTags>Azure Template</PackageTags>
-    <RequiredTargetFrameworks>netcoreapp3.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001</NoWarn> <!-- TODO Namespace not approved yet for public types -->
     <NoWarn>$(NoWarn);AZC0012</NoWarn> <!-- TODO Quota too short -->

@@ -10,14 +10,14 @@ using CommandLine;
 
 namespace Azure.Quantum.Jobs.Perf
 {
-    public class MiniSecretClientTest : PerfTest<MiniSecretClientTest.MiniSecretClientOptions>
+    public class QuantumJobsClientTest : PerfTest<QuantumJobsClientTest.QuantumJobsClientOptions>
     {
-        private readonly MiniSecretClient _miniSecretClient;
+        private readonly QuantumJobsClient _miniSecretClient;
 
-        public MiniSecretClientTest(MiniSecretClientOptions options) : base(options)
+        public QuantumJobsClientTest(QuantumJobsClientOptions options) : base(options)
         {
             var keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
-            _miniSecretClient = new MiniSecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
+            _miniSecretClient = new QuantumJobsClient(new Uri(keyVaultUri), new DefaultAzureCredential());
         }
 
         public override void Run(CancellationToken cancellationToken)
@@ -36,7 +36,7 @@ namespace Azure.Quantum.Jobs.Perf
             await _miniSecretClient.GetSecretAsync(Options.SecretName, cancellationToken);
         }
 
-        public class MiniSecretClientOptions : PerfOptions
+        public class QuantumJobsClientOptions : PerfOptions
         {
             [Option("secret-name", Default = "TestSecret", HelpText = "Name of secret to get")]
             public string SecretName { get; set; }

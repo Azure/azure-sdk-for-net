@@ -8,20 +8,20 @@ using NUnit.Framework;
 
 namespace Azure.Quantum.Jobs.Tests
 {
-    public class MiniSecretClientLiveTests: RecordedTestBase<MiniSecretClientTestEnvironment>
+    public class QuantumJobsClientLiveTests: RecordedTestBase<QuantumJobsClientTestEnvironment>
     {
-        public MiniSecretClientLiveTests(bool isAsync) : base(isAsync)
+        public QuantumJobsClientLiveTests(bool isAsync) : base(isAsync)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;
         }
 
-        private MiniSecretClient CreateClient()
+        private QuantumJobsClient CreateClient()
         {
-            return InstrumentClient(new MiniSecretClient(
+            return InstrumentClient(new QuantumJobsClient(
                 new Uri(TestEnvironment.KeyVaultUri),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MiniSecretClientOptions())
+                InstrumentClientOptions(new QuantumJobsClientOptions())
             ));
         }
 

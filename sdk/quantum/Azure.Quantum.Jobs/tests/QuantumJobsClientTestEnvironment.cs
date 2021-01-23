@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Quantum.Jobs.Tests
 {
-    public class MiniSecretClientTestEnvironment : TestEnvironment
+    public class QuantumJobsClientTestEnvironment : TestEnvironment
     {
         public string KeyVaultUri => GetRecordedVariable("KEYVAULT_URL");
     }
