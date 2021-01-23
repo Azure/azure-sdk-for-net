@@ -11,7 +11,7 @@ namespace Azure.Quantum.Jobs.Tests
 {
     public class QuantumJobsClientLiveTests: RecordedTestBase<QuantumJobsClientTestEnvironment>
     {
-        public QuantumJobsClientLiveTests(bool isAsync) : base(isAsync)
+        public QuantumJobsClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;
@@ -37,7 +37,7 @@ namespace Azure.Quantum.Jobs.Tests
         //     }
         // }
 
-        [Test]
+        [RecordedTest]
         public async Task CanGetList()
         {
             var client = CreateClient();
