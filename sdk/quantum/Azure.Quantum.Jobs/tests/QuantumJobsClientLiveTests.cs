@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -18,21 +19,32 @@ namespace Azure.Quantum.Jobs.Tests
 
         private QuantumJobsClient CreateClient()
         {
-            return InstrumentClient(new QuantumJobsClient(
-                new Uri(TestEnvironment.KeyVaultUri),
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new QuantumJobsClientOptions())
-            ));
+            return new QuantumJobsClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus");
+
+//             return InstrumentClient(new QuantumJobsClient(
+//                 new Uri(TestEnvironment.KeyVaultUri),
+//                 TestEnvironment.Credential,
+//                 InstrumentClientOptions(new QuantumJobsClientOptions())
+//             ));
         }
 
+        // Create SubscriptionId.cs like so and put in your id:
+        // namespace Azure.Quantum.Jobs.Tests
+        // {
+        //     internal class SubscriptionId
+        //     {
+        //         public string value = "<yourid>";
+        //     }
+        // }
+
         [Test]
-        public async Task CanGetSecret()
+        public async Task CanGetList()
         {
             var client = CreateClient();
+            var jobs = client.Jobs.ListAsync(CancellationToken.None).Result;
+            var list = await client.ListAsync();
 
-            var secret = await client.GetSecretAsync("TestSecret");
-
-            Assert.AreEqual("Very secret value", secret.Value.Value);
+            //Assert.AreEqual(list);
         }
     }
 }

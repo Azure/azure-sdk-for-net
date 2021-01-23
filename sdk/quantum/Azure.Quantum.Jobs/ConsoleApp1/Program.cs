@@ -18,9 +18,9 @@ namespace ConsoleApp1
 }
 
 // Create SubscriptionId.cs like so and put in your id:
-// namespace ConsoleApp1
+// namespace Azure.Quantum.Jobs.Tests
 // {
-//     class SubscriptionId
+//     internal class SubscriptionId
 //     {
 //         public string value = "<yourid>";
 //     }
