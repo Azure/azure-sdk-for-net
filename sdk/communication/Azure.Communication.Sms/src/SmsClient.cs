@@ -40,6 +40,17 @@ namespace Azure.Communication.Sms
                   ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))))
         { }
 
+        /// <summary> Initializes a new instance of <see cref="SmsClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="tokenCredential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public SmsClient(Uri endpoint, TokenCredential tokenCredential, SmsClientOptions? options = default)
+            : this(
+                  endpoint,
+                  options ?? new SmsClientOptions(),
+                  tokenCredential)
+        { }
+
         /// <summary>Initializes a new instance of <see cref="SmsClient"/> for mocking.</summary>
         protected SmsClient()
         {
@@ -59,6 +70,18 @@ namespace Azure.Communication.Sms
                   pipeline: options.BuildHttpPipeline(connectionString),
                   endpointUrl: connectionString.GetRequired("endpoint"))
         { }
+
+        private SmsClient(Uri endpoint, SmsClientOptions options, TokenCredential tokenCredential)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
+            _clientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new SmsRestClient(
+                _clientDiagnostics,
+                options.BuildHttpPipeline(tokenCredential),
+                endpoint.AbsoluteUri);
+        }
 
         private SmsClient(Uri endpoint, SmsClientOptions options, AzureKeyCredential credential)
         {
