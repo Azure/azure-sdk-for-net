@@ -270,8 +270,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        /// Returns <code>DateTimeOffset.UtcNow</code>, is used to make testing deterministic.
+        ///    Queries the value to use for the current date/time.  This is abstracted to allow for deterministic
+        ///    values to be used for testing.
         /// </summary>
+        ///
+        /// <returns>The current date and time, in UTC.</returns>
         internal virtual DateTimeOffset GetDateTimeOffsetNow()
         {
             return DateTimeOffset.UtcNow;
