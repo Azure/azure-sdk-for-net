@@ -71,32 +71,6 @@
       "properties": {}
     },
     {
-      "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('serviceBusDataOwnerRoleId'))]",
-      "dependsOn": [
-        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]"
-      ],
-      "properties": {
-        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('serviceBusDataOwnerRoleId'))]",
-        "principalId": "[parameters('testApplicationOid')]",
-        "scope": "[resourceGroup().id]"
-      }
-    },
-    {
-      "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('contributorRoleId'))]",
-      "dependsOn": [
-        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]"
-      ],
-      "properties": {
-        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
-        "principalId": "[parameters('testApplicationOid')]",
-        "scope": "[resourceGroup().id]"
-      }
-    },
-    {
       "apiVersion": "[variables('sbVersion')]",
       "name": "[variables('serviceBusSecondaryNamespace')]",
       "type": "Microsoft.ServiceBus/Namespaces",
@@ -111,7 +85,7 @@
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('serviceBusDataOwnerRoleId'))]",
       "dependsOn": [
-        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusSecondaryNamespace'))]"
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]"
       ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('serviceBusDataOwnerRoleId'))]",
@@ -124,7 +98,7 @@
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('contributorRoleId'))]",
       "dependsOn": [
-        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusSecondaryNamespace'))]"
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]"
       ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
