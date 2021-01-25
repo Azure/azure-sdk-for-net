@@ -418,7 +418,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an attempt to retrieve a list of checkpoints has completed.
+        ///   Indicates that an attempt to retrieve a checkpoint has completed.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -439,7 +439,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an unhandled exception was encountered while retrieving a list of checkpoints.
+        ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>

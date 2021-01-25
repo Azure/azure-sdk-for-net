@@ -780,7 +780,7 @@ namespace Azure.Messaging.EventHubs
         ///   event processor instance, so that processing for a given partition can be properly initialized.
         /// </summary>
         ///
-        /// <param name="partitionId"></param>
+        /// <param name="partitionId">The ID of the partition for which to retrieve the checkpoint.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
         /// <returns>The checkpoint for the processor to take into account when initializing partition.</returns>
