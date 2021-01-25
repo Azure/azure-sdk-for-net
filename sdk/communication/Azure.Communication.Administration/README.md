@@ -32,13 +32,13 @@ Here's an example using the Azure CLI:
 ```
 -->
 
-### Phone plans overview
+### Key concepts
 
 Phone plans come in two types; Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
 
 All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
 
-### Authenticate the Phone Number Administration client
+### Authenticate the client
 
 Phone Number Administration clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
 
@@ -178,6 +178,7 @@ await releasePhoneNumberOperation.WaitForCompletionAsync().ConfigureAwait(false)
 
 Console.WriteLine($"ReleaseId: {releasePhoneNumberOperation.Value.ReleaseId}, Status: {releasePhoneNumberOperation.Value.Status}");
 ```
+## Troubleshooting
 
 ## Next steps
 
