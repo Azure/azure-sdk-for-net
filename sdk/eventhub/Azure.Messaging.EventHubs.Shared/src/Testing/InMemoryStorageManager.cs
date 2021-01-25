@@ -67,8 +67,9 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        /// The value to set the ownership LastModifiedTime to.
+        ///   The value to set the ownership LastModifiedTime to.
         /// </summary>
+        ///
         public DateTimeOffset LastModifiedTime { get; set; } = DateTimeOffset.Now;
 
         /// <summary>
