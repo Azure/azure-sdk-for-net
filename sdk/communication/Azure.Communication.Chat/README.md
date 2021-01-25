@@ -294,9 +294,9 @@ Use `AddParticipants` to add one or more participants to the chat thread. The fo
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_AddParticipants
 var participants = new[]
 {
-    new ChatParticipant(josh) { DisplayName ="Josh" },
-    new ChatParticipant(gloria) { DisplayName ="Gloria" },
-    new ChatParticipant(amy) { DisplayName ="Amy" }
+    new ChatParticipant(josh) { DisplayName = "Josh" },
+    new ChatParticipant(gloria) { DisplayName = "Gloria" },
+    new ChatParticipant(amy) { DisplayName = "Amy" }
 };
 
 await chatThreadClient.AddParticipantsAsync(participants);
