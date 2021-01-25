@@ -23,17 +23,7 @@ namespace Azure.Storage.Blobs.Perf.Infrastructure
 
             if (sharedKeyBlobClient.CanGenerateSasUri)
             {
-                var sasBuilder = new BlobSasBuilder()
-                {
-                    BlobContainerName = _blobClient.GetParentBlobContainerClient().Name,
-                    BlobName = _blobClient.Name,
-                    Resource = "b",
-                    ExpiresOn = DateTimeOffset.UtcNow.AddDays(1),
-                };
-
-                sasBuilder.SetPermissions(BlobSasPermissions.Read);
-
-                SasUri = sharedKeyBlobClient.GenerateSasUri(sasBuilder);
+                SasUri = sharedKeyBlobClient.GenerateSasUri(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddDays(1));
             }
             else
             {
