@@ -4,7 +4,7 @@
 namespace Azure.Messaging.ServiceBus.Administration
 {
     /// <summary>
-    ///
+    /// The access rights that may be conferred by an authorization rule.
     /// </summary>
 #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
     public enum AccessRights

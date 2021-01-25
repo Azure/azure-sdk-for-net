@@ -20,7 +20,6 @@ namespace Azure.Data.Tables.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16964")]
     public class TableClientLiveTests : TableServiceLiveTestsBase
     {
         public TableClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
@@ -115,6 +114,63 @@ namespace Azure.Data.Tables.Tests
             // Validate that we are not able to upsert an entity to the table.
 
             Assert.That(async () => await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges()
+        {
+            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 2);
+
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+            var credential = new TableSharedKeyCredential(AccountName, AccountKey);
+
+            // Build a shared access signature with only All permissions.
+            TableSasBuilder sas = client.GetSasBuilder(TableSasPermissions.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+
+            // Add PartitionKey restrictions.
+            sas.PartitionKeyStart = PartitionKeyValue;
+            sas.PartitionKeyEnd = PartitionKeyValue;
+
+            // Add RowKey restrictions so that only the first entity is visible.
+            sas.RowKeyStart = entitiesToCreate[0].RowKey;
+            sas.RowKeyEnd = entitiesToCreate[0].RowKey;
+
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                sas.Version = "2017-07-29";
+            }
+
+            string token = sas.Sign(credential);
+
+            // Build a SAS URI
+            UriBuilder sasUri = new UriBuilder(ServiceUri)
+            {
+                Query = token
+            };
+
+            // Create the TableServiceClient using the SAS URI.
+            var sasAuthedService = InstrumentClient(new TableServiceClient(sasUri.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasTableclient = sasAuthedService.GetTableClient(tableName);
+
+            // Insert the entities
+            foreach (var entity in entitiesToCreate)
+            {
+                await client.AddEntityAsync(entity).ConfigureAwait(false);
+            }
+
+            // Validate that we are able to query the table from the service.
+            var entities = await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entities.Count, Is.EqualTo(1));
+
+            // Validate that we are not able to fetch the entity outside the range of the row key filter.
+            Assert.That(async () => await sasTableclient.GetEntityAsync<TableEntity>(PartitionKeyValue, entitiesToCreate[1].RowKey).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.NotFound));
+
+            // Validate that we are able to fetch the entity with the client with full access.
+            Assert.That(async () => await client.GetEntityAsync<TableEntity>(PartitionKeyValue, entitiesToCreate[1].RowKey).ConfigureAwait(false), Throws.Nothing);
         }
 
         /// <summary>
@@ -283,11 +339,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task EntityMergeRespectsEtag()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13555");
-            }
-
             string tableName = $"testtable{Recording.GenerateId()}";
 
             const string rowKeyValue = "1";
@@ -344,11 +395,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task EntityMergeDoesPartialPropertyUpdates()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13555");
-            }
-
             string tableName = $"testtable{Recording.GenerateId()}";
 
             const string rowKeyValue = "1";
@@ -740,11 +786,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task CustomEntityMergeRespectsEtag()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13555");
-            }
-
             string tableName = $"testtable{Recording.GenerateId()}";
 
             const string rowKeyValue = "1";
@@ -928,11 +969,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task GetAccessPoliciesReturnsPolicies()
         {
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                Assert.Ignore("GetAccessPolicy is currently not supported by Cosmos endpoints.");
-            }
-
             // Create some policies.
 
             var policyToCreate = new List<SignedIdentifier>
@@ -1030,7 +1066,7 @@ namespace Azure.Data.Tables.Tests
 
             // Add a Delete operation.
             var entityToDelete = entitiesToCreate[1];
-            batch.DeleteEntity(entityToDelete.PartitionKey, entityToDelete.RowKey, ETag.All);
+            batch.DeleteEntity(entityToDelete.RowKey, ETag.All);
 
             // Add an Upsert operation to replace the entity with an updated value.
             entitiesToCreate[2].StringTypeProperty = updatedString;

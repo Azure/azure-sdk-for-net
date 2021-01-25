@@ -12,6 +12,9 @@ using Azure.Data.Tables.Sas;
 
 namespace Azure.Data.Tables
 {
+    /// <summary>
+    /// The <see cref="TableServiceClient"/> provides synchronous and asynchronous methods to perform table level operations with Azure Tables hosted in either Azure storage accounts or Azure Cosmos DB table API.
+    /// </summary>
     public class TableServiceClient
     {
         private readonly ClientDiagnostics _diagnostics;
@@ -199,6 +202,11 @@ namespace Azure.Data.Tables
             return new TableAccountSasBuilder(rawPermissions, resourceTypes, expiresOn) { Version = _version };
         }
 
+        /// <summary>
+        /// Gets an instance of a <see cref="TableClient"/> configured with the current <see cref="TableServiceClient"/> options, affinitized to the specified <paramref name="tableName"/>.
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
         public virtual TableClient GetTableClient(string tableName)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
@@ -218,44 +226,44 @@ namespace Azure.Data.Tables
         /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of <see cref="TableItem"/>s.</returns>
         public virtual AsyncPageable<TableItem> GetTablesAsync(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-                return PageableHelpers.CreateAsyncEnumerable(
-                    async pageSizeHint =>
+            return PageableHelpers.CreateAsyncEnumerable(
+                async pageSizeHint =>
+                {
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    scope.Start();
+                    try
                     {
-                        using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-                        scope.Start();
-                        try
-                        {
-                            var response = await _tableOperations.QueryAsync(
-                                null,
-                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
-                                cancellationToken).ConfigureAwait(false);
-                            return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-                        }
-                        catch (Exception ex)
-                        {
-                            scope.Failed(ex);
-                            throw;
-                        }
-                    },
-                    async (nextLink, pageSizeHint) =>
+                        var response = await _tableOperations.QueryAsync(
+                            null,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                            cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
                     {
-                        using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-                        scope.Start();
-                        try
-                        {
-                            var response = await _tableOperations.QueryAsync(
-                                nextTableName: nextLink,
-                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
-                                cancellationToken).ConfigureAwait(false);
-                            return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-                        }
-                        catch (Exception ex)
-                        {
-                            scope.Failed(ex);
-                            throw;
-                        }
-                    },
-                    maxPerPage);
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                async (nextLink, pageSizeHint) =>
+                {
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    scope.Start();
+                    try
+                    {
+                        var response = await _tableOperations.QueryAsync(
+                            nextTableName: nextLink,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                            cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                maxPerPage);
         }
 
         /// <summary>

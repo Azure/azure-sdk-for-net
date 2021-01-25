@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,8 +15,16 @@ namespace Azure.Media.Analytics.Edge.Models
     public partial class MediaGraphNodeInput
     {
         /// <summary> Initializes a new instance of MediaGraphNodeInput. </summary>
-        public MediaGraphNodeInput()
+        /// <param name="nodeName"> The name of another node in the media graph, the output of which is used as input to this node. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
+        public MediaGraphNodeInput(string nodeName)
         {
+            if (nodeName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeName));
+            }
+
+            NodeName = nodeName;
             OutputSelectors = new ChangeTrackingList<MediaGraphOutputSelector>();
         }
 

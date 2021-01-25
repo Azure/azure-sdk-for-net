@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Text;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Hosting;
@@ -29,11 +30,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             InvokeProcessorAfterReceiveTimeout = false;
             EventProcessorOptions = new EventProcessorOptions()
             {
+                LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
                 TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(1),
                 PrefetchCount = 300,
                 DefaultStartingPosition = EventPosition.Earliest,
             };
+            InitialOffsetOptions = new InitialOffsetOptions();
         }
 
         public EventProcessorOptions EventProcessorOptions { get; }
@@ -80,6 +83,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// Returns whether the function would be triggered when a receive timeout occurs.
         /// </summary>
         public bool InvokeProcessorAfterReceiveTimeout { get; set; }
+
+        /// <summary>
+        /// Gets the initial offset options to apply when processing. This only applies
+        /// when no checkpoint information is available.
+        /// </summary>
+        public InitialOffsetOptions InitialOffsetOptions { get; }
 
         /// <summary>
         /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.
@@ -275,12 +284,23 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 };
             }
 
+            JObject initialOffsetOptions = null;
+            if (InitialOffsetOptions != null)
+            {
+                initialOffsetOptions = new JObject
+                {
+                    { nameof(InitialOffsetOptions.Type), InitialOffsetOptions.Type },
+                    { nameof(InitialOffsetOptions.EnqueuedTimeUTC), InitialOffsetOptions.EnqueuedTimeUTC },
+                };
+            }
+
             JObject options = new JObject
             {
                 { nameof(MaxBatchSize), MaxBatchSize },
                 { nameof(InvokeProcessorAfterReceiveTimeout), InvokeProcessorAfterReceiveTimeout },
                 { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                 { nameof(EventProcessorOptions), eventProcessorOptions },
+                { nameof(InitialOffsetOptions), initialOffsetOptions }
             };
 
             return options.ToString(Formatting.Indented);

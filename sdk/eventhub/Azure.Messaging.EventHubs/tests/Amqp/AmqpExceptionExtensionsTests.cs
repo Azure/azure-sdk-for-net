@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Amqp;
+using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
@@ -51,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TranslateServiceExceptionTranslatesAmqpExceptions()
         {
             var eventHub = "someHub";
-            var exception = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, eventHub);
+            var exception = new AmqpException(new Error { Condition = AmqpError.ServerBusyError });
             var translated = exception.TranslateServiceException(eventHub);
 
             Assert.That(translated, Is.Not.Null, "An exception should have been returned.");
@@ -60,6 +61,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventHubsException, Is.Not.Null, "The exception type should be appropriate for the `Server Busy` scenario.");
             Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceBusy), "The exception reason should indicate `Server Busy`.");
             Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
+            Assert.That(eventHubsException.InnerException, Is.EqualTo(exception), "The original exception should have been embedded.");
         }
 
         /// <summary>
@@ -80,6 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventHubsException, Is.Not.Null, "The exception type should be appropriate for the `Server Busy` scenario.");
             Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "The exception reason should indicate a service timeout.");
             Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
+            Assert.That(eventHubsException.InnerException, Is.EqualTo(exception), "The original exception should have been embedded.");
         }
 
         /// <summary>
@@ -91,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TranslateServiceExceptionTranslatesOperationCanceledWithEmbeddedAmqpException()
         {
             var eventHub = "someHub";
-            var exception = new OperationCanceledException("oops", AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, eventHub));
+            var exception = new OperationCanceledException("oops", new AmqpException(new Error { Condition = AmqpError.ServerBusyError }));
             var translated = exception.TranslateServiceException(eventHub);
 
             Assert.That(translated, Is.Not.Null, "An exception should have been returned.");
@@ -100,6 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventHubsException, Is.Not.Null, "The exception type should be appropriate for the `Server Busy` scenario.");
             Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceBusy), "The exception reason should indicate `Server Busy`.");
             Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
+            Assert.That(eventHubsException.InnerException, Is.EqualTo(exception.InnerException), "The AMQP exception should have been embedded.");
         }
 
         /// <summary>

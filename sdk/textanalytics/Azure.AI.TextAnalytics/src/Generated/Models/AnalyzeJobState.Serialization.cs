@@ -21,8 +21,8 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<TextDocumentBatchStatistics> statistics = default;
             AnalyzeTasks tasks = default;
             Optional<string> nextLink = default;
-            DateTimeOffset createdDateTime = default;
             Optional<string> displayName = default;
+            DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -64,14 +64,14 @@ namespace Azure.AI.TextAnalytics.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"))
-                {
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("displayName"))
                 {
                     displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("createdDateTime"))
+                {
+                    createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("expirationDateTime"))
@@ -100,7 +100,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AnalyzeJobState(createdDateTime, displayName.Value, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, Optional.ToList(errors), statistics.Value, tasks, nextLink.Value);
+            return new AnalyzeJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, displayName.Value, Optional.ToList(errors), statistics.Value, tasks, nextLink.Value);
         }
     }
 }

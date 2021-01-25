@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The publishing profile of a gallery Image Version.
+    /// The publishing profile of a gallery image version.
     /// </summary>
     public partial class GalleryApplicationVersionPublishingProfile : GalleryArtifactPublishingProfileBase
     {
@@ -53,16 +53,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// to be used to store the image. This property is not updatable.
         /// Possible values include: 'Standard_LRS', 'Standard_ZRS',
         /// 'Premium_LRS'</param>
-        /// <param name="contentType">Optional. May be used to help process
-        /// this file. The type of file contained in the source, e.g. zip,
-        /// json, etc.</param>
         /// <param name="enableHealthCheck">Optional. Whether or not this
         /// application reports health.</param>
-        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string contentType = default(string), bool? enableHealthCheck = default(bool?))
+        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), UserArtifactManage manageActions = default(UserArtifactManage), bool? enableHealthCheck = default(bool?))
             : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType)
         {
             Source = source;
-            ContentType = contentType;
+            ManageActions = manageActions;
             EnableHealthCheck = enableHealthCheck;
             CustomInit();
         }
@@ -78,11 +75,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public UserArtifactSource Source { get; set; }
 
         /// <summary>
-        /// Gets or sets optional. May be used to help process this file. The
-        /// type of file contained in the source, e.g. zip, json, etc.
         /// </summary>
-        [JsonProperty(PropertyName = "contentType")]
-        public string ContentType { get; set; }
+        [JsonProperty(PropertyName = "manageActions")]
+        public UserArtifactManage ManageActions { get; set; }
 
         /// <summary>
         /// Gets or sets optional. Whether or not this application reports
@@ -106,6 +101,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (Source != null)
             {
                 Source.Validate();
+            }
+            if (ManageActions != null)
+            {
+                ManageActions.Validate();
             }
         }
     }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A job step. </summary>
-    public partial class JobStep : Resource
+    public partial class JobStep : ProxyResource
     {
         /// <summary> Initializes a new instance of JobStep. </summary>
         public JobStep()
