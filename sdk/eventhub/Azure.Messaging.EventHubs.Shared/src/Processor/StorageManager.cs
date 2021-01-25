@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
-        /// <param name="partitionId">The id of the partition to get checkpoint for.</param>
+        /// <param name="partitionId">The identifier of the partition to read a checkpoint for.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An <see cref="EventProcessorCheckpoint"/> instance if a checkpoint is found for a particular partition otherwise, <code>null</code>.</returns>

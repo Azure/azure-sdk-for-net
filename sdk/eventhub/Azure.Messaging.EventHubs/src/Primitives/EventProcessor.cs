@@ -783,13 +783,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected abstract Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken);
 
         /// <summary>
-        ///   Returns a checkpoint for the Event Hub, consumer group, and partition ID associated with the
+         ///   Returns a checkpoint for the Event Hub, consumer group, and identifier of the partition associated with the
         ///   event processor instance, so that processing for a given partition can be properly initialized.
         ///   The default implementation calls the <see cref="ListCheckpointsAsync"/> and filters results by <see cref="EventProcessorCheckpoint.PartitionId"/>.
         ///   It's recommended that this method is overriden in <see cref="EventProcessor{TPartition}"/> implementations to achieve an optimal performance.
         /// </summary>
         ///
-        /// <param name="partitionId">The ID of the partition for which to retrieve the checkpoint.</param>
+        /// <param name="partitionId">The identifier of the partition for which to retrieve the checkpoint.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
         /// <returns>The checkpoint for the processor to take into account when initializing partition.</returns>
@@ -1643,7 +1643,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
             /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
             /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
-            /// <param name="partitionId">The id of the partition to get checkpoint for.</param>
+            /// <param name="partitionId">The identifier of the partition to read a checkpoint for.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
             ///
             /// <returns>An <see cref="EventProcessorCheckpoint"/> instance if a checkpoint is found for a particular partition otherwise, <code>null</code>.</returns>
