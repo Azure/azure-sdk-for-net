@@ -56,11 +56,6 @@ namespace Azure.AI.TextAnalytics
             get
             {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                if (Status == "cancelled")
-                {
-                    throw new RequestFailedException("The operation was canceled so no value is available.");
-                }
-
                 if (HasCompleted && !HasValue)
                     throw _requestFailedException;
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
@@ -231,7 +226,9 @@ namespace Azure.AI.TextAnalytics
                     }
                     else if (update.Value.Status == TextAnalyticsOperationStatus.Cancelled)
                     {
+                        _requestFailedException = new RequestFailedException("The operation was canceled so no value is available.");
                         _hasCompleted = true;
+                        throw _requestFailedException;
                     }
                 }
                 catch (Exception e)
