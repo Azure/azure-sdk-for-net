@@ -122,8 +122,8 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                              bool enableSession,
                                                              bool forceQueueCreation = false,
                                                              TimeSpan? lockDuration = default,
-                                                             [CallerMemberName] string caller = "",
-                                                             string overrideNamespace = default)
+                                                             string overrideNamespace = default,
+                                                             [CallerMemberName] string caller = "")
         {
             // If there was an override and the force flag is not set for creation, then build a scope
             // for the specified queue.

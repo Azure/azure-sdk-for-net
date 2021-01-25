@@ -85,7 +85,8 @@
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('serviceBusDataOwnerRoleId'))]",
       "dependsOn": [
-        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]"
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]",
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusSecondaryNamespace'))]"
       ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('serviceBusDataOwnerRoleId'))]",
@@ -98,7 +99,8 @@
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('contributorRoleId'))]",
       "dependsOn": [
-        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]"
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]",
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusSecondaryNamespace'))]"
       ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
