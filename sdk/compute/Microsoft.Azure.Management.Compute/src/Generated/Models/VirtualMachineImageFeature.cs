@@ -14,27 +14,28 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The Resource model definition.
+    /// Specifies additional capabilities supported by the image
     /// </summary>
-    public partial class PirResource
+    public partial class VirtualMachineImageFeature
     {
         /// <summary>
-        /// Initializes a new instance of the PirResource class.
+        /// Initializes a new instance of the VirtualMachineImageFeature class.
         /// </summary>
-        public PirResource()
+        public VirtualMachineImageFeature()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PirResource class.
+        /// Initializes a new instance of the VirtualMachineImageFeature class.
         /// </summary>
-        /// <param name="name">Resource name</param>
-        /// <param name="location">Resource location</param>
-        public PirResource(string name = default(string), string location = default(string))
+        /// <param name="name">The name of the feature.</param>
+        /// <param name="value">The corresponding value for the
+        /// feature.</param>
+        public VirtualMachineImageFeature(string name = default(string), string value = default(string))
         {
             Name = name;
-            Location = location;
+            Value = value;
             CustomInit();
         }
 
@@ -44,16 +45,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource name
+        /// Gets or sets the name of the feature.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets resource location
+        /// Gets or sets the corresponding value for the feature.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; private set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
     }
 }

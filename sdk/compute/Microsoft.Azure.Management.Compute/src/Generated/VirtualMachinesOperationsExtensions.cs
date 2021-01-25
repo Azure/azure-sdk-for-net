@@ -1008,7 +1008,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='installPatchesInput'>
             /// Input for InstallPatches as directly received by the API
             /// </param>
-            public static VirtualMachineInstallPatchesResult InstallPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput = default(VirtualMachineInstallPatchesParameters))
+            public static VirtualMachineInstallPatchesResult InstallPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput)
             {
                 return operations.InstallPatchesAsync(resourceGroupName, vmName, installPatchesInput).GetAwaiter().GetResult();
             }
@@ -1031,7 +1031,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineInstallPatchesResult> InstallPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput = default(VirtualMachineInstallPatchesParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineInstallPatchesResult> InstallPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.InstallPatchesWithHttpMessagesAsync(resourceGroupName, vmName, installPatchesInput, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1690,7 +1690,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='installPatchesInput'>
             /// Input for InstallPatches as directly received by the API
             /// </param>
-            public static VirtualMachineInstallPatchesResult BeginInstallPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput = default(VirtualMachineInstallPatchesParameters))
+            public static VirtualMachineInstallPatchesResult BeginInstallPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput)
             {
                 return operations.BeginInstallPatchesAsync(resourceGroupName, vmName, installPatchesInput).GetAwaiter().GetResult();
             }
@@ -1713,7 +1713,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineInstallPatchesResult> BeginInstallPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput = default(VirtualMachineInstallPatchesParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineInstallPatchesResult> BeginInstallPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginInstallPatchesWithHttpMessagesAsync(resourceGroupName, vmName, installPatchesInput, null, cancellationToken).ConfigureAwait(false))
                 {

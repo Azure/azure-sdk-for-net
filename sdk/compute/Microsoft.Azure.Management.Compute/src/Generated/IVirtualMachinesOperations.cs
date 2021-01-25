@@ -641,7 +641,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualMachineInstallPatchesResult>> InstallPatchesWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput = default(VirtualMachineInstallPatchesParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineInstallPatchesResult>> InstallPatchesWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Run command on the VM.
         /// </summary>
@@ -1050,7 +1050,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualMachineInstallPatchesResult>> BeginInstallPatchesWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput = default(VirtualMachineInstallPatchesParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineInstallPatchesResult>> BeginInstallPatchesWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Run command on the VM.
         /// </summary>

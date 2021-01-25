@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public static class VMGuestPatchRebootSetting
     {
-        public const string Unknown = "Unknown";
         public const string IfRequired = "IfRequired";
         public const string Never = "Never";
         public const string Always = "Always";

@@ -2121,7 +2121,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineInstallPatchesResult>> InstallPatchesWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput = default(VirtualMachineInstallPatchesParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineInstallPatchesResult>> InstallPatchesWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse<VirtualMachineInstallPatchesResult> _response = await BeginInstallPatchesWithHttpMessagesAsync(resourceGroupName, vmName, installPatchesInput, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -4804,7 +4804,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VirtualMachineInstallPatchesResult>> BeginInstallPatchesWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput = default(VirtualMachineInstallPatchesParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineInstallPatchesResult>> BeginInstallPatchesWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -4813,6 +4813,10 @@ namespace Microsoft.Azure.Management.Compute
             if (vmName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vmName");
+            }
+            if (installPatchesInput == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "installPatchesInput");
             }
             if (installPatchesInput != null)
             {

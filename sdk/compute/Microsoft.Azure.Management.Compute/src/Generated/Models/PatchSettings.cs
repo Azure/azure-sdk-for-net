@@ -16,18 +16,18 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Specifies settings related to VM Guest Patching on Windows.
     /// </summary>
-    public partial class WindowsPatchSettings
+    public partial class PatchSettings
     {
         /// <summary>
-        /// Initializes a new instance of the WindowsPatchSettings class.
+        /// Initializes a new instance of the PatchSettings class.
         /// </summary>
-        public WindowsPatchSettings()
+        public PatchSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WindowsPatchSettings class.
+        /// Initializes a new instance of the PatchSettings class.
         /// </summary>
         /// <param name="patchMode">Specifies the mode of VM Guest Patching to
         /// IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Azure VMs without requiring a reboot. For enableHotpatching, the
         /// 'provisionVMAgent' must be set to true and 'patchMode' must be set
         /// to 'AutomaticByPlatform'.</param>
-        public WindowsPatchSettings(string patchMode = default(string), bool? enableHotpatching = default(bool?))
+        public PatchSettings(string patchMode = default(string), bool? enableHotpatching = default(bool?))
         {
             PatchMode = patchMode;
             EnableHotpatching = enableHotpatching;

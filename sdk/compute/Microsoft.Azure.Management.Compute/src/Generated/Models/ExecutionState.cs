@@ -12,11 +12,16 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SharingProfileGroupTypes.
+    /// Defines values for ExecutionState.
     /// </summary>
-    public static class SharingProfileGroupTypes
+    public static class ExecutionState
     {
-        public const string Subscriptions = "Subscriptions";
-        public const string AADTenants = "AADTenants";
+        public const string Unknown = "Unknown";
+        public const string Pending = "Pending";
+        public const string Running = "Running";
+        public const string Failed = "Failed";
+        public const string Succeeded = "Succeeded";
+        public const string TimedOut = "TimedOut";
+        public const string Canceled = "Canceled";
     }
 }

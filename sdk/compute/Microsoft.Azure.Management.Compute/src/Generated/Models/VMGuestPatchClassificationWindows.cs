@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public static class VMGuestPatchClassificationWindows
     {
-        public const string Unknown = "Unknown";
         public const string Critical = "Critical";
         public const string Security = "Security";
         public const string UpdateRollUp = "UpdateRollUp";

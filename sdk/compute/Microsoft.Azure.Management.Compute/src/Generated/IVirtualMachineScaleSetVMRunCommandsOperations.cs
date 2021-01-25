@@ -19,51 +19,27 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ContainerServicesOperations operations.
+    /// VirtualMachineScaleSetVMRunCommandsOperations operations.
     /// </summary>
-    public partial interface IContainerServicesOperations
+    public partial interface IVirtualMachineScaleSetVMRunCommandsOperations
     {
         /// <summary>
-        /// Gets a list of container services in the specified subscription.
+        /// The operation to create or update the VMSS VM run command.
         /// </summary>
-        /// <remarks>
-        /// Gets a list of container services in the specified subscription.
-        /// The operation returns properties of each container service
-        /// including state, orchestrator, number of masters and agents, and
-        /// FQDNs of masters and agents.
-        /// </remarks>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ContainerService>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates a container service.
-        /// </summary>
-        /// <remarks>
-        /// Creates or updates a container service with the specified
-        /// configuration of orchestrator, masters, and agents.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='containerServiceName'>
-        /// The name of the container service in the specified subscription and
-        /// resource group.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create or Update a Container Service
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
+        /// </param>
+        /// <param name='runCommandName'>
+        /// The name of the virtual machine run command.
+        /// </param>
+        /// <param name='runCommand'>
+        /// Parameters supplied to the Create Virtual Machine RunCommand
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -81,114 +57,24 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ContainerService>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerServiceName, ContainerService parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineRunCommand>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommand runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the properties of the specified container service.
+        /// The operation to update the VMSS VM run command.
         /// </summary>
-        /// <remarks>
-        /// Gets the properties of the specified container service in the
-        /// specified subscription and resource group. The operation returns
-        /// the properties including state, orchestrator, number of masters and
-        /// agents, and FQDNs of masters and agents.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='containerServiceName'>
-        /// The name of the container service in the specified subscription and
-        /// resource group.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
+        /// <param name='runCommandName'>
+        /// The name of the virtual machine run command.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ContainerService>> GetWithHttpMessagesAsync(string resourceGroupName, string containerServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes the specified container service.
-        /// </summary>
-        /// <remarks>
-        /// Deletes the specified container service in the specified
-        /// subscription and resource group. The operation does not delete
-        /// other resources created as part of creating a container service,
-        /// including storage accounts, VMs, and availability sets. All the
-        /// other resources created with the container service are part of the
-        /// same resource group and can be deleted individually.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='containerServiceName'>
-        /// The name of the container service in the specified subscription and
-        /// resource group.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string containerServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets a list of container services in the specified resource group.
-        /// </summary>
-        /// <remarks>
-        /// Gets a list of container services in the specified subscription and
-        /// resource group. The operation returns properties of each container
-        /// service including state, orchestrator, number of masters and
-        /// agents, and FQDNs of masters and agents.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ContainerService>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates a container service.
-        /// </summary>
-        /// <remarks>
-        /// Creates or updates a container service with the specified
-        /// configuration of orchestrator, masters, and agents.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='containerServiceName'>
-        /// The name of the container service in the specified subscription and
-        /// resource group.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create or Update a Container Service
+        /// <param name='runCommand'>
+        /// Parameters supplied to the Update Virtual Machine RunCommand
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -206,24 +92,21 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ContainerService>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerServiceName, ContainerService parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineRunCommand>> UpdateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandUpdate runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified container service.
+        /// The operation to delete the VMSS VM run command.
         /// </summary>
-        /// <remarks>
-        /// Deletes the specified container service in the specified
-        /// subscription and resource group. The operation does not delete
-        /// other resources created as part of creating a container service,
-        /// including storage accounts, VMs, and availability sets. All the
-        /// other resources created with the container service are part of the
-        /// same resource group and can be deleted individually.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='containerServiceName'>
-        /// The name of the container service in the specified subscription and
-        /// resource group.
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
+        /// </param>
+        /// <param name='runCommandName'>
+        /// The name of the virtual machine run command.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -237,16 +120,175 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string containerServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of container services in the specified subscription.
+        /// The operation to get the VMSS VM run command.
         /// </summary>
-        /// <remarks>
-        /// Gets a list of container services in the specified subscription.
-        /// The operation returns properties of each container service
-        /// including state, orchestrator, number of masters and agents, and
-        /// FQDNs of masters and agents.
-        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
+        /// </param>
+        /// <param name='runCommandName'>
+        /// The name of the virtual machine run command.
+        /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on the operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<VirtualMachineRunCommand>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The operation to get all run commands of an instance in Virtual
+        /// Machine Scaleset.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
+        /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on the operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<VirtualMachineRunCommand>>> ListWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The operation to create or update the VMSS VM run command.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
+        /// </param>
+        /// <param name='runCommandName'>
+        /// The name of the virtual machine run command.
+        /// </param>
+        /// <param name='runCommand'>
+        /// Parameters supplied to the Create Virtual Machine RunCommand
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<VirtualMachineRunCommand>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommand runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The operation to update the VMSS VM run command.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
+        /// </param>
+        /// <param name='runCommandName'>
+        /// The name of the virtual machine run command.
+        /// </param>
+        /// <param name='runCommand'>
+        /// Parameters supplied to the Update Virtual Machine RunCommand
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<VirtualMachineRunCommand>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandUpdate runCommand, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The operation to delete the VMSS VM run command.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
+        /// </param>
+        /// <param name='runCommandName'>
+        /// The name of the virtual machine run command.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string runCommandName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The operation to get all run commands of an instance in Virtual
+        /// Machine Scaleset.
+        /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -265,34 +307,6 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ContainerService>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets a list of container services in the specified resource group.
-        /// </summary>
-        /// <remarks>
-        /// Gets a list of container services in the specified subscription and
-        /// resource group. The operation returns properties of each container
-        /// service including state, orchestrator, number of masters and
-        /// agents, and FQDNs of masters and agents.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ContainerService>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachineRunCommand>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

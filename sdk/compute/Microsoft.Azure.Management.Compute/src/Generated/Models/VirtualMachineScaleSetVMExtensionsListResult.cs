@@ -11,29 +11,31 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A feature for gallery image.
+    /// The List VMSS VM Extension operation response
     /// </summary>
-    public partial class GalleryImageFeature
+    public partial class VirtualMachineScaleSetVMExtensionsListResult
     {
         /// <summary>
-        /// Initializes a new instance of the GalleryImageFeature class.
+        /// Initializes a new instance of the
+        /// VirtualMachineScaleSetVMExtensionsListResult class.
         /// </summary>
-        public GalleryImageFeature()
+        public VirtualMachineScaleSetVMExtensionsListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GalleryImageFeature class.
+        /// Initializes a new instance of the
+        /// VirtualMachineScaleSetVMExtensionsListResult class.
         /// </summary>
-        /// <param name="name">The name of the gallery image feature.</param>
-        /// <param name="value">The value of the gallery image feature.</param>
-        public GalleryImageFeature(string name = default(string), string value = default(string))
+        /// <param name="value">The list of VMSS VM extensions</param>
+        public VirtualMachineScaleSetVMExtensionsListResult(IList<VirtualMachineScaleSetVMExtension> value = default(IList<VirtualMachineScaleSetVMExtension>))
         {
-            Name = name;
             Value = value;
             CustomInit();
         }
@@ -44,16 +46,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the gallery image feature.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the value of the gallery image feature.
+        /// Gets or sets the list of VMSS VM extensions
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        public IList<VirtualMachineScaleSetVMExtension> Value { get; set; }
 
     }
 }
