@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="status"> . </param>
         /// <param name="tasks"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasks"/> is null. </exception>
-        internal AnalyzeJobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, AnalyzeTasks tasks) : base(createdDateTime, jobId, lastUpdateDateTime, status)
+        internal AnalyzeJobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, AnalyzeTasks tasks) : base(createdDateTime, jobId, lastUpdateDateTime, status)
         {
             if (jobId == null)
             {
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="tasks"> . </param>
         /// <param name="nextLink"> . </param>
-        internal AnalyzeJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, string displayName, IReadOnlyList<TextAnalyticsErrorInternal> errors, TextDocumentBatchStatistics statistics, AnalyzeTasks tasks, string nextLink) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, displayName)
+        internal AnalyzeJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, string displayName, IReadOnlyList<TextAnalyticsErrorInternal> errors, TextDocumentBatchStatistics statistics, AnalyzeTasks tasks, string nextLink) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, displayName)
         {
             Errors = errors;
             Statistics = statistics;

@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The HealthcareOperation class for LRO. </summary>
-    public class HealthcareOperation : Operation<RecognizeHealthcareEntitiesResultCollection>
+    /// <summary> The AnalyzeHealthcareEntitiesOperation class for LRO. </summary>
+    public class AnalyzeHealthcareEntitiesOperation : Operation<RecognizeHealthcareEntitiesResultCollection>
     {
         /// <summary>Provides communication with the Text Analytics Azure Cognitive Service through its REST API.</summary>
         private readonly TextAnalyticsRestClient _serviceClient;
@@ -22,8 +22,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
 
+        private TextAnalyticsOperationStatus _status;
+
         /// <summary>
-        /// Provides the input to be part of HealthcareOperation class
+        /// Provides the input to be part of AnalyzeHealthcareEntitiesOperation class
         /// </summary>
         internal readonly IDictionary<string, int> _idToIndexMap;
 
@@ -32,6 +34,11 @@ namespace Azure.AI.TextAnalytics
         /// of the long-running operation.
         /// </summary>
         public override string Id { get; }
+
+        /// <summary>
+        /// Gets the status of the operation.
+        /// </summary>
+        public TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
         /// next link string for pagination
@@ -48,8 +55,8 @@ namespace Azure.AI.TextAnalytics
         {
             get
             {
-                if (HasCompleted && !HasValue)
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                if (HasCompleted && !HasValue)
                     throw _requestFailedException;
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 else
@@ -85,11 +92,11 @@ namespace Azure.AI.TextAnalytics
         public override bool HasValue => _value != null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HealthcareOperation"/> class.
+        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public HealthcareOperation(string operationId, TextAnalyticsClient client)
+        public AnalyzeHealthcareEntitiesOperation(string operationId, TextAnalyticsClient client)
         {
             // TODO: Add argument validation here.
 
@@ -99,7 +106,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HealthcareOperation"/> class.
+        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class.
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Text Analytics Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
@@ -108,7 +115,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="top"></param>
         /// <param name="skip"></param>
         /// <param name="showStats"></param>
-        internal HealthcareOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, int? top = default, int? skip = default, bool? showStats = default)
+        internal AnalyzeHealthcareEntitiesOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, int? top = default, int? skip = default, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -127,7 +134,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <remarks>
         /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="HealthcareOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// An instance of <see cref="AnalyzeHealthcareEntitiesOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
         public override Response GetRawResponse() => _response;
@@ -191,7 +198,7 @@ namespace Azure.AI.TextAnalytics
         {
             if (!_hasCompleted)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(HealthcareOperation)}.{nameof(UpdateStatus)}");
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(UpdateStatus)}");
                 scope.Start();
 
                 try
@@ -201,19 +208,25 @@ namespace Azure.AI.TextAnalytics
                         : _serviceClient.HealthStatus(new Guid(Id), _top, _skip, _showStats, cancellationToken);
 
                     _response = update.GetRawResponse();
+                    _status = update.Value.Status;
 
-                    if (update.Value.Status == JobStatus.Succeeded)
+                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded)
                     {
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
                         _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results, _idToIndexMap);
-
                         NextLink = update.Value.NextLink;
                         _hasCompleted = true;
                     }
-                    else if (update.Value.Status == JobStatus.Failed)
+                    else if (update.Value.Status == TextAnalyticsOperationStatus.Failed)
                     {
                         _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors)
                             .ConfigureAwait(false);
+                        _hasCompleted = true;
+                        throw _requestFailedException;
+                    }
+                    else if (update.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+                    {
+                        _requestFailedException = new RequestFailedException("The operation was canceled so no value is available.");
                         _hasCompleted = true;
                         throw _requestFailedException;
                     }
@@ -226,6 +239,48 @@ namespace Azure.AI.TextAnalytics
             }
 
             return GetRawResponse();
+        }
+
+        /// <summary>
+        /// Cancels a pending or running <see cref="AnalyzeHealthcareEntitiesOperation"/>.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual void Cancel(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Cancel)}");
+            scope.Start();
+            try
+            {
+                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = _serviceClient.CancelHealthJob(new Guid(Id), cancellationToken);
+                _response = response.GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels a pending or running <see cref="AnalyzeHealthcareEntitiesOperation"/>.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task"/> to track the service request.</returns>
+        public virtual async Task CancelAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Cancel)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = await _serviceClient.CancelHealthJobAsync(new Guid(Id), cancellationToken).ConfigureAwait(false);
+                _response = response.GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

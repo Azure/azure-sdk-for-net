@@ -40,9 +40,9 @@ namespace Azure.AI.TextAnalytics.Samples
                 batchDocument.Add(document);
             }
 
-            HealthcareOperation healthOperation = client.StartHealthcareBatch(batchDocument, "en");
+            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartHealthcareBatch(batchDocument, "en");
 
-            client.StartCancelHealthJob(healthOperation);
+            healthOperation.Cancel();
         }
 
         #endregion
