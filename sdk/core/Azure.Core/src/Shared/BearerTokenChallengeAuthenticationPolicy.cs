@@ -8,14 +8,13 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
-using Azure.Core.Pipeline;
 
-namespace Azure.Core.Experimental.Pipeline
+namespace Azure.Core.Pipeline
 {
     /// <summary>
     /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an Authentication header.
     /// </summary>
-    public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
+    internal class BearerTokenChallengeAuthenticationPolicy : HttpPipelinePolicy
     {
         private const string AuthenticationChallengePattern = @"(\w+) ((?:\w+="".*?""(?:, )?)+)(?:, )?";
         private const string ChallengeParameterPattern = @"(?:(\w+)=""([^""]*)"")+";
@@ -24,24 +23,35 @@ namespace Azure.Core.Experimental.Pipeline
         private static readonly Regex s_ChallengeParameterRegex = new Regex(ChallengeParameterPattern, RegexOptions.Compiled);
 
         private readonly AccessTokenCache _accessTokenCache;
-        private readonly string[] _scopes;
+        private string[] _scopes;
 
         /// <summary>
-        /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
+        /// Sets the current scopes for the policy.
+        /// </summary>
+        /// <param name="scopes">The scopes.</param>
+        protected void SetScopes(string[] scopes)
+        {
+            Argument.AssertNotNull(scopes, nameof(scopes));
+
+            _scopes = scopes;
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scope">The scope to authenticate for.</param>
-        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope }) { }
+        public BearerTokenChallengeAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope }) { }
 
         /// <summary>
-        /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
+        /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to authenticate for.</param>
-        public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
+        public BearerTokenChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
             : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30)) { }
 
-        internal BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
+        internal BearerTokenChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
@@ -147,9 +157,9 @@ namespace Azure.Core.Experimental.Pipeline
             return false;
         }
 
-        private static string? GetClaimsChallenge(Response response)
+        private static string GetClaimsChallenge(Response response)
         {
-            if (response.Status == 401 && response.Headers.TryGetValue("WWW-Authenticate", out string? headerValue))
+            if (response.Status == 401 && response.Headers.TryGetValue("WWW-Authenticate", out string headerValue))
             {
                 foreach (var challenge in ParseChallenges(headerValue))
                 {
@@ -196,8 +206,8 @@ namespace Azure.Core.Experimental.Pipeline
             private readonly TimeSpan _tokenRefreshRetryDelay;
 
             private TokenRequestContext? _currentContext;
-            private TaskCompletionSource<HeaderValueInfo>? _infoTcs;
-            private TaskCompletionSource<HeaderValueInfo>? _backgroundUpdateTcs;
+            private TaskCompletionSource<HeaderValueInfo> _infoTcs;
+            private TaskCompletionSource<HeaderValueInfo> _backgroundUpdateTcs;
             public AccessTokenCache(TokenCredential credential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, string[] initialScopes)
             {
                 _credential = credential;
@@ -210,7 +220,7 @@ namespace Azure.Core.Experimental.Pipeline
             {
                 bool getTokenFromCredential;
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
-                TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
+                TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs;
                 (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
                 HeaderValueInfo info;
 
@@ -279,7 +289,7 @@ namespace Azure.Core.Experimental.Pipeline
                 return info.HeaderValue;
             }
 
-            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources(TokenRequestContext context)
+            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources(TokenRequestContext context)
             {
                 lock (_syncObj)
                 {
@@ -364,12 +374,12 @@ namespace Azure.Core.Experimental.Pipeline
                 catch (OperationCanceledException oce) when (cts.IsCancellationRequested)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow));
-                    AzureCoreExperimentalEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
+                    AzureCoreSharedEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
                 }
                 catch (Exception e)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
-                    AzureCoreExperimentalEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
+                    AzureCoreSharedEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
                 }
                 finally
                 {
