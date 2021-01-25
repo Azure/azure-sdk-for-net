@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='parameters'>
             /// object which contains security policy parameters
             /// </param>
-            public static SecurityPolicy Create(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters parameters = default(SecurityPolicyWebApplicationFirewallParameters))
+            public static SecurityPolicy Create(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
             {
                 return operations.CreateAsync(resourceGroupName, profileName, securityPolicyName, parameters).GetAwaiter().GetResult();
             }
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityPolicy> CreateAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters parameters = default(SecurityPolicyWebApplicationFirewallParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityPolicy> CreateAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -174,12 +174,12 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
             /// </param>
-            /// <param name='securityPolicyParameters'>
-            /// Security policy update properties
+            /// <param name='parameters'>
+            /// object which contains security policy parameters
             /// </param>
-            public static SecurityPolicy Patch(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters securityPolicyParameters)
+            public static SecurityPolicy Patch(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
             {
-                return operations.PatchAsync(resourceGroupName, profileName, securityPolicyName, securityPolicyParameters).GetAwaiter().GetResult();
+                return operations.PatchAsync(resourceGroupName, profileName, securityPolicyName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -197,15 +197,15 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
             /// </param>
-            /// <param name='securityPolicyParameters'>
-            /// Security policy update properties
+            /// <param name='parameters'>
+            /// object which contains security policy parameters
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityPolicy> PatchAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters securityPolicyParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityPolicy> PatchAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, securityPolicyParameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='parameters'>
             /// object which contains security policy parameters
             /// </param>
-            public static SecurityPolicy BeginCreate(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters parameters = default(SecurityPolicyWebApplicationFirewallParameters))
+            public static SecurityPolicy BeginCreate(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
             {
                 return operations.BeginCreateAsync(resourceGroupName, profileName, securityPolicyName, parameters).GetAwaiter().GetResult();
             }
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityPolicy> BeginCreateAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters parameters = default(SecurityPolicyWebApplicationFirewallParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityPolicy> BeginCreateAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -321,12 +321,12 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
             /// </param>
-            /// <param name='securityPolicyParameters'>
-            /// Security policy update properties
+            /// <param name='parameters'>
+            /// object which contains security policy parameters
             /// </param>
-            public static SecurityPolicy BeginPatch(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters securityPolicyParameters)
+            public static SecurityPolicy BeginPatch(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
             {
-                return operations.BeginPatchAsync(resourceGroupName, profileName, securityPolicyName, securityPolicyParameters).GetAwaiter().GetResult();
+                return operations.BeginPatchAsync(resourceGroupName, profileName, securityPolicyName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -344,15 +344,15 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='securityPolicyName'>
             /// Name of the security policy under the profile.
             /// </param>
-            /// <param name='securityPolicyParameters'>
-            /// Security policy update properties
+            /// <param name='parameters'>
+            /// object which contains security policy parameters
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityPolicy> BeginPatchAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters securityPolicyParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityPolicy> BeginPatchAsync(this ISecurityPoliciesOperations operations, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginPatchWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, securityPolicyParameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginPatchWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

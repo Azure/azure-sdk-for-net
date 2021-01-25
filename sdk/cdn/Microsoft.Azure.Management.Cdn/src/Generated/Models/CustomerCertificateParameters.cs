@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// <summary>
     /// Customer Certificate used for https
     /// </summary>
-    public partial class CustomerCertificateParameters
+    [Newtonsoft.Json.JsonObject("CustomerCertificate")]
+    public partial class CustomerCertificateParameters : SecretParameters
     {
         /// <summary>
         /// Initializes a new instance of the CustomerCertificateParameters
@@ -34,14 +35,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the CustomerCertificateParameters
         /// class.
         /// </summary>
-        /// <param name="type">The type of the Secret to create. Possible
-        /// values include: 'UrlSigningKey', 'CustomerCertificate',
-        /// 'ManagedCertificate'</param>
         /// <param name="secretSource">Resource reference to the KV
         /// secret</param>
-        /// <param name="subject">Subject name in the certificate.</param>
-        /// <param name="expirationDate">Certificate expiration date.</param>
-        /// <param name="thumbprint">Certificate thumbprint.</param>
         /// <param name="secretVersion">Version of the secret to be
         /// used</param>
         /// <param name="certificateAuthority">Certificate issuing
@@ -49,12 +44,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="useLatestVersion">Whether to use the latest version
         /// for the certificate</param>
         /// <param name="subjectAlternativeNames">The list of SANs.</param>
-        public CustomerCertificateParameters(string type, ResourceReference secretSource, string subject = default(string), string expirationDate = default(string), string thumbprint = default(string), string secretVersion = default(string), string certificateAuthority = default(string), bool? useLatestVersion = default(bool?), IList<string> subjectAlternativeNames = default(IList<string>))
+        public CustomerCertificateParameters(ResourceReference secretSource, string secretVersion = default(string), string certificateAuthority = default(string), bool? useLatestVersion = default(bool?), IList<string> subjectAlternativeNames = default(IList<string>))
         {
-            Type = type;
-            Subject = subject;
-            ExpirationDate = expirationDate;
-            Thumbprint = thumbprint;
             SecretSource = secretSource;
             SecretVersion = secretVersion;
             CertificateAuthority = certificateAuthority;
@@ -67,32 +58,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the type of the Secret to create. Possible values
-        /// include: 'UrlSigningKey', 'CustomerCertificate',
-        /// 'ManagedCertificate'
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets subject name in the certificate.
-        /// </summary>
-        [JsonProperty(PropertyName = "subject")]
-        public string Subject { get; set; }
-
-        /// <summary>
-        /// Gets or sets certificate expiration date.
-        /// </summary>
-        [JsonProperty(PropertyName = "expirationDate")]
-        public string ExpirationDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets certificate thumbprint.
-        /// </summary>
-        [JsonProperty(PropertyName = "thumbprint")]
-        public string Thumbprint { get; set; }
 
         /// <summary>
         /// Gets or sets resource reference to the KV secret
@@ -132,10 +97,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
-            }
             if (SecretSource == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SecretSource");

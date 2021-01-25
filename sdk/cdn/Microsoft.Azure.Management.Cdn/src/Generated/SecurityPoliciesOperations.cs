@@ -492,7 +492,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SecurityPolicy>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters parameters = default(SecurityPolicyWebApplicationFirewallParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityPolicy>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<SecurityPolicy> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -511,8 +511,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='securityPolicyName'>
         /// Name of the security policy under the profile.
         /// </param>
-        /// <param name='securityPolicyParameters'>
-        /// Security policy update properties
+        /// <param name='parameters'>
+        /// object which contains security policy parameters
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -520,10 +520,10 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SecurityPolicy>> PatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters securityPolicyParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityPolicy>> PatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<SecurityPolicy> _response = await BeginPatchWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, securityPolicyParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<SecurityPolicy> _response = await BeginPatchWithHttpMessagesAsync(resourceGroupName, profileName, securityPolicyName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -588,7 +588,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SecurityPolicy>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters parameters = default(SecurityPolicyWebApplicationFirewallParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityPolicy>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -720,7 +720,7 @@ namespace Microsoft.Azure.Management.Cdn
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202)
             {
                 var ex = new AfdErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -793,6 +793,24 @@ namespace Microsoft.Azure.Management.Cdn
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+            // Deserialize Response
+            if ((int)_statusCode == 202)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SecurityPolicy>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -812,8 +830,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='securityPolicyName'>
         /// Name of the security policy under the profile.
         /// </param>
-        /// <param name='securityPolicyParameters'>
-        /// Security policy update properties
+        /// <param name='parameters'>
+        /// object which contains security policy parameters
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -836,7 +854,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SecurityPolicy>> BeginPatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters securityPolicyParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityPolicy>> BeginPatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -865,10 +883,6 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "securityPolicyName");
             }
-            if (securityPolicyParameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "securityPolicyParameters");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -876,6 +890,11 @@ namespace Microsoft.Azure.Management.Cdn
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            SecurityPolicyProperties securityPolicyProperties = new SecurityPolicyProperties();
+            if (parameters != null)
+            {
+                securityPolicyProperties.Parameters = parameters;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -887,7 +906,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("securityPolicyName", securityPolicyName);
-                tracingParameters.Add("securityPolicyParameters", securityPolicyParameters);
+                tracingParameters.Add("securityPolicyProperties", securityPolicyProperties);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginPatch", tracingParameters);
             }
@@ -941,9 +960,9 @@ namespace Microsoft.Azure.Management.Cdn
 
             // Serialize Request
             string _requestContent = null;
-            if(securityPolicyParameters != null)
+            if(securityPolicyProperties != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(securityPolicyParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(securityPolicyProperties, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1197,7 +1216,7 @@ namespace Microsoft.Azure.Management.Cdn
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new AfdErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

@@ -364,7 +364,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RankingsResponse>> GetLogAnalyticsRankingsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> rankings, IList<string> metrics, double maxRanking, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, IList<string> customDomains = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RankingsResponse>> GetLogAnalyticsRankingsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> rankings, IList<string> metrics, int maxRanking, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, IList<string> customDomains = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1283,7 +1283,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<WafRankingsResponse>> GetWafLogAnalyticsRankingsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, double maxRanking, IList<string> rankings, IList<string> actions = default(IList<string>), IList<string> ruleTypes = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WafRankingsResponse>> GetWafLogAnalyticsRankingsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, int maxRanking, IList<string> rankings, IList<string> actions = default(IList<string>), IList<string> ruleTypes = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {

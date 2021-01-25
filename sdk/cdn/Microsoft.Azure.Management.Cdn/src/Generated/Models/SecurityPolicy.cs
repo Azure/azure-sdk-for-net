@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed'</param>
         /// <param name="parameters">object which contains security policy
         /// parameters</param>
-        public SecurityPolicy(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string deploymentStatus = default(string), SecurityPolicyWebApplicationFirewallParameters parameters = default(SecurityPolicyWebApplicationFirewallParameters))
+        public SecurityPolicy(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), string deploymentStatus = default(string), SecurityPolicyParameters parameters = default(SecurityPolicyParameters))
             : base(id, name, type, systemData)
         {
             ProvisioningState = provisioningState;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Gets or sets object which contains security policy parameters
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
-        public SecurityPolicyWebApplicationFirewallParameters Parameters { get; set; }
+        public SecurityPolicyParameters Parameters { get; set; }
 
     }
 }

@@ -10,14 +10,14 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Managed Certificate used for https
     /// </summary>
-    public partial class ManagedCertificateParameters
+    [Newtonsoft.Json.JsonObject("ManagedCertificate")]
+    public partial class ManagedCertificateParameters : SecretParameters
     {
         /// <summary>
         /// Initializes a new instance of the ManagedCertificateParameters
@@ -28,68 +28,11 @@ namespace Microsoft.Azure.Management.Cdn.Models
             CustomInit();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the ManagedCertificateParameters
-        /// class.
-        /// </summary>
-        /// <param name="type">The type of the Secret to create. Possible
-        /// values include: 'UrlSigningKey', 'CustomerCertificate',
-        /// 'ManagedCertificate'</param>
-        /// <param name="subject">Subject name in the certificate.</param>
-        /// <param name="expirationDate">Certificate expiration date.</param>
-        /// <param name="thumbprint">Certificate thumbprint.</param>
-        public ManagedCertificateParameters(string type, string subject = default(string), string expirationDate = default(string), string thumbprint = default(string))
-        {
-            Type = type;
-            Subject = subject;
-            ExpirationDate = expirationDate;
-            Thumbprint = thumbprint;
-            CustomInit();
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
 
-        /// <summary>
-        /// Gets or sets the type of the Secret to create. Possible values
-        /// include: 'UrlSigningKey', 'CustomerCertificate',
-        /// 'ManagedCertificate'
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets subject name in the certificate.
-        /// </summary>
-        [JsonProperty(PropertyName = "subject")]
-        public string Subject { get; set; }
-
-        /// <summary>
-        /// Gets or sets certificate expiration date.
-        /// </summary>
-        [JsonProperty(PropertyName = "expirationDate")]
-        public string ExpirationDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets certificate thumbprint.
-        /// </summary>
-        [JsonProperty(PropertyName = "thumbprint")]
-        public string Thumbprint { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
-            }
-        }
     }
 }

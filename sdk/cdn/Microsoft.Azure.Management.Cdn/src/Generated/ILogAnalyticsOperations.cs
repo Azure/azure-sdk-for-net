@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RankingsResponse>> GetLogAnalyticsRankingsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> rankings, IList<string> metrics, double maxRanking, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, IList<string> customDomains = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RankingsResponse>> GetLogAnalyticsRankingsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> rankings, IList<string> metrics, int maxRanking, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, IList<string> customDomains = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all available location names for AFD log analytics report.
         /// </summary>
@@ -232,6 +232,6 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<WafRankingsResponse>> GetWafLogAnalyticsRankingsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, double maxRanking, IList<string> rankings, IList<string> actions = default(IList<string>), IList<string> ruleTypes = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WafRankingsResponse>> GetWafLogAnalyticsRankingsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, int maxRanking, IList<string> rankings, IList<string> actions = default(IList<string>), IList<string> ruleTypes = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

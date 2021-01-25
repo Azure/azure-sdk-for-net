@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             /// <param name='customDomains'>
             /// </param>
-            public static RankingsResponse GetLogAnalyticsRankings(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> rankings, IList<string> metrics, double maxRanking, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, IList<string> customDomains = default(IList<string>))
+            public static RankingsResponse GetLogAnalyticsRankings(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> rankings, IList<string> metrics, int maxRanking, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, IList<string> customDomains = default(IList<string>))
             {
                 return operations.GetLogAnalyticsRankingsAsync(resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains).GetAwaiter().GetResult();
             }
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RankingsResponse> GetLogAnalyticsRankingsAsync(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> rankings, IList<string> metrics, double maxRanking, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, IList<string> customDomains = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RankingsResponse> GetLogAnalyticsRankingsAsync(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> rankings, IList<string> metrics, int maxRanking, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, IList<string> customDomains = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetLogAnalyticsRankingsWithHttpMessagesAsync(resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             /// <param name='ruleTypes'>
             /// </param>
-            public static WafRankingsResponse GetWafLogAnalyticsRankings(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, double maxRanking, IList<string> rankings, IList<string> actions = default(IList<string>), IList<string> ruleTypes = default(IList<string>))
+            public static WafRankingsResponse GetWafLogAnalyticsRankings(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, int maxRanking, IList<string> rankings, IList<string> actions = default(IList<string>), IList<string> ruleTypes = default(IList<string>))
             {
                 return operations.GetWafLogAnalyticsRankingsAsync(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes).GetAwaiter().GetResult();
             }
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WafRankingsResponse> GetWafLogAnalyticsRankingsAsync(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, double maxRanking, IList<string> rankings, IList<string> actions = default(IList<string>), IList<string> ruleTypes = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WafRankingsResponse> GetWafLogAnalyticsRankingsAsync(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, int maxRanking, IList<string> rankings, IList<string> actions = default(IList<string>), IList<string> ruleTypes = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWafLogAnalyticsRankingsWithHttpMessagesAsync(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, null, cancellationToken).ConfigureAwait(false))
                 {

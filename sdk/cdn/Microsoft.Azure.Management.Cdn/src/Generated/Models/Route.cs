@@ -51,19 +51,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="patternsToMatch">The route patterns of the
         /// rule.</param>
         /// <param name="compressionSettings">compression settings.</param>
-        /// <param name="queryStringCachingBehavior">Defines how AzureFrontDoor
-        /// caches requests that include query strings. You can ignore any
-        /// query strings when caching, bypass caching to prevent requests that
+        /// <param name="queryStringCachingBehavior">Defines how CDN caches
+        /// requests that include query strings. You can ignore any query
+        /// strings when caching, bypass caching to prevent requests that
         /// contain query strings from being cached, or cache every request
         /// with a unique URL. Possible values include: 'IgnoreQueryString',
-        /// 'BypassCaching', 'UseQueryString', 'NotSet'</param>
-        /// <param name="optimizationType">Specifies what scenario the customer
-        /// wants this AzureFrontDoor endpoint to optimize for, e.g. Download,
-        /// Media services. With this information, AzureFrontDoor can apply
-        /// scenario driven optimization. Possible values include:
-        /// 'GeneralWebDelivery', 'GeneralMediaStreaming',
-        /// 'VideoOnDemandMediaStreaming', 'LargeFileDownload',
-        /// 'DynamicSiteAcceleration'</param>
+        /// 'UseQueryString', 'NotSet'</param>
         /// <param name="forwardingProtocol">Protocol this rule will use when
         /// forwarding traffic to backends. Possible values include:
         /// 'HttpOnly', 'HttpsOnly', 'MatchRequest'</param>
@@ -82,7 +75,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'Creating'</param>
         /// <param name="deploymentStatus">Possible values include:
         /// 'NotStarted', 'InProgress', 'Succeeded', 'Failed'</param>
-        public Route(ResourceReference originGroup, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<ResourceReference> customDomains = default(IList<ResourceReference>), string originPath = default(string), IList<ResourceReference> ruleSets = default(IList<ResourceReference>), IList<string> supportedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), object compressionSettings = default(object), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), string optimizationType = default(string), string forwardingProtocol = default(string), string linkToDefaultDomain = default(string), string httpsRedirect = default(string), string enabledState = default(string), string provisioningState = default(string), string deploymentStatus = default(string))
+        public Route(ResourceReference originGroup, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<ResourceReference> customDomains = default(IList<ResourceReference>), string originPath = default(string), IList<ResourceReference> ruleSets = default(IList<ResourceReference>), IList<string> supportedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), object compressionSettings = default(object), AfdQueryStringCachingBehavior? queryStringCachingBehavior = default(AfdQueryStringCachingBehavior?), string forwardingProtocol = default(string), string linkToDefaultDomain = default(string), string httpsRedirect = default(string), string enabledState = default(string), string provisioningState = default(string), string deploymentStatus = default(string))
             : base(id, name, type, systemData)
         {
             CustomDomains = customDomains;
@@ -93,7 +86,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
             PatternsToMatch = patternsToMatch;
             CompressionSettings = compressionSettings;
             QueryStringCachingBehavior = queryStringCachingBehavior;
-            OptimizationType = optimizationType;
             ForwardingProtocol = forwardingProtocol;
             LinkToDefaultDomain = linkToDefaultDomain;
             HttpsRedirect = httpsRedirect;
@@ -152,26 +144,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public object CompressionSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets defines how AzureFrontDoor caches requests that
-        /// include query strings. You can ignore any query strings when
-        /// caching, bypass caching to prevent requests that contain query
-        /// strings from being cached, or cache every request with a unique
-        /// URL. Possible values include: 'IgnoreQueryString', 'BypassCaching',
-        /// 'UseQueryString', 'NotSet'
+        /// Gets or sets defines how CDN caches requests that include query
+        /// strings. You can ignore any query strings when caching, bypass
+        /// caching to prevent requests that contain query strings from being
+        /// cached, or cache every request with a unique URL. Possible values
+        /// include: 'IgnoreQueryString', 'UseQueryString', 'NotSet'
         /// </summary>
         [JsonProperty(PropertyName = "properties.queryStringCachingBehavior")]
-        public QueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies what scenario the customer wants this
-        /// AzureFrontDoor endpoint to optimize for, e.g. Download, Media
-        /// services. With this information, AzureFrontDoor can apply scenario
-        /// driven optimization. Possible values include: 'GeneralWebDelivery',
-        /// 'GeneralMediaStreaming', 'VideoOnDemandMediaStreaming',
-        /// 'LargeFileDownload', 'DynamicSiteAcceleration'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.optimizationType")]
-        public string OptimizationType { get; set; }
+        public AfdQueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
 
         /// <summary>
         /// Gets or sets protocol this rule will use when forwarding traffic to

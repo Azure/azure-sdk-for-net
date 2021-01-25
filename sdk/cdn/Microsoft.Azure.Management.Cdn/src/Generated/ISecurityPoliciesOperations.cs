@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SecurityPolicy>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters parameters = default(SecurityPolicyWebApplicationFirewallParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecurityPolicy>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates an existing Secret within a profile.
         /// </summary>
@@ -119,8 +119,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='securityPolicyName'>
         /// Name of the security policy under the profile.
         /// </param>
-        /// <param name='securityPolicyParameters'>
-        /// Security policy update properties
+        /// <param name='parameters'>
+        /// object which contains security policy parameters
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SecurityPolicy>> PatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters securityPolicyParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecurityPolicy>> PatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing security policy within profile.
         /// </summary>
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SecurityPolicy>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters parameters = default(SecurityPolicyWebApplicationFirewallParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecurityPolicy>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates an existing Secret within a profile.
         /// </summary>
@@ -206,8 +206,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='securityPolicyName'>
         /// Name of the security policy under the profile.
         /// </param>
-        /// <param name='securityPolicyParameters'>
-        /// Security policy update properties
+        /// <param name='parameters'>
+        /// object which contains security policy parameters
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SecurityPolicy>> BeginPatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyWebApplicationFirewallParameters securityPolicyParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecurityPolicy>> BeginPatchWithHttpMessagesAsync(string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyParameters parameters = default(SecurityPolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing security policy within profile.
         /// </summary>
