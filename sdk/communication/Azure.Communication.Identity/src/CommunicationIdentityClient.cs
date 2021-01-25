@@ -93,7 +93,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessTokenResult> response = RestClient.CreateIdentity(Array.Empty<CommunicationTokenScope>(), cancellationToken);
+                Response<CommunicationIdentityAccessTokenResult> response = RestClient.Create(Array.Empty<CommunicationTokenScope>(), cancellationToken);
                 var id = response.Value.Identity.Id;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
@@ -112,7 +112,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessTokenResult> response = await RestClient.CreateIdentityAsync(Array.Empty<CommunicationTokenScope>(), cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessTokenResult> response = await RestClient.CreateAsync(Array.Empty<CommunicationTokenScope>(), cancellationToken).ConfigureAwait(false);
                 var id = response.Value.Identity.Id;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
@@ -133,7 +133,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessTokenResult> response = RestClient.CreateIdentity(scopes, cancellationToken);
+                Response<CommunicationIdentityAccessTokenResult> response = RestClient.Create(scopes, cancellationToken);
                 var id = response.Value.Identity.Id;
                 CommunicationUserToken token = response.Value.AccessToken;
                 return Response.FromValue((new CommunicationUserIdentifier(id), token), response.GetRawResponse());
@@ -155,7 +155,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessTokenResult> response = await RestClient.CreateIdentityAsync(scopes, cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessTokenResult> response = await RestClient.CreateAsync(scopes, cancellationToken).ConfigureAwait(false);
                 var id = response.Value.Identity.Id;
                 CommunicationUserToken token = response.Value.AccessToken;
                 return Response.FromValue((new CommunicationUserIdentifier(id), token), response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return RestClient.DeleteIdentity(communicationUser.Id, cancellationToken);
+                return RestClient.Delete(communicationUser.Id, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -195,7 +195,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return await RestClient.DeleteIdentityAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

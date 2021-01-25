@@ -47,7 +47,7 @@ namespace Azure.Communication.Identity
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateIdentityRequest(IEnumerable<CommunicationTokenScope> createTokenWithScopes)
+        internal HttpMessage CreateCreateRequest(IEnumerable<CommunicationTokenScope> createTokenWithScopes)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -74,13 +74,13 @@ namespace Azure.Communication.Identity
         /// <summary> Create a new identity. </summary>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationIdentityAccessTokenResult>> CreateIdentityAsync(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationIdentityAccessTokenResult>> CreateAsync(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateIdentityRequest(createTokenWithScopes);
+            using var message = CreateCreateRequest(createTokenWithScopes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 201:
                     {
                         CommunicationIdentityAccessTokenResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -95,13 +95,13 @@ namespace Azure.Communication.Identity
         /// <summary> Create a new identity. </summary>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationIdentityAccessTokenResult> CreateIdentity(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
+        public Response<CommunicationIdentityAccessTokenResult> Create(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateIdentityRequest(createTokenWithScopes);
+            using var message = CreateCreateRequest(createTokenWithScopes);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 201:
                     {
                         CommunicationIdentityAccessTokenResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -113,7 +113,7 @@ namespace Azure.Communication.Identity
             }
         }
 
-        internal HttpMessage CreateDeleteIdentityRequest(string id)
+        internal HttpMessage CreateDeleteRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -124,6 +124,7 @@ namespace Azure.Communication.Identity
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -131,14 +132,14 @@ namespace Azure.Communication.Identity
         /// <param name="id"> Identifier of the identity to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> DeleteIdentityAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteIdentityRequest(id);
+            using var message = CreateDeleteRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -153,14 +154,14 @@ namespace Azure.Communication.Identity
         /// <param name="id"> Identifier of the identity to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response DeleteIdentity(string id, CancellationToken cancellationToken = default)
+        public Response Delete(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteIdentityRequest(id);
+            using var message = CreateDeleteRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -183,6 +184,7 @@ namespace Azure.Communication.Identity
             uri.AppendPath("/:revokeAccessTokens", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
