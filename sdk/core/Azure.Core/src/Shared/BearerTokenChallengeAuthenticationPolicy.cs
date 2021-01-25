@@ -70,7 +70,10 @@ namespace Azure.Core.Pipeline
         /// <param name="async">Specifies if the method is being called in an asynchronous context</param>
         protected virtual async Task OnBeforeRequestAsync(HttpMessage message, bool async)
         {
-            await Task.CompletedTask.ConfigureAwait(false);
+            if (async)
+            {
+                await Task.CompletedTask.ConfigureAwait(false);
+            }
         }
 
         /// <summary>
