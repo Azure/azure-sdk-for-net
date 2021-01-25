@@ -126,7 +126,7 @@ var connectionString = "<connection_string>";
 var client = new PhoneNumberAdministrationClient(connectionString);
 ```
 
-Phone Number Administration clients also have the option to authenticate using a valid token. With this option,
+Phone Number Administration clients also have the option to authenticate with Azure Active Directory Authentication. With this option,
 `AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication.
 
 ```C# Snippet:CreatePhoneNumberWithTokenCredential
