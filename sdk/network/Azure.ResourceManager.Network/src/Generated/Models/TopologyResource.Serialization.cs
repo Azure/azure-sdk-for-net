@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("associations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TopologyAssociation> array = new List<TopologyAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

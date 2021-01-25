@@ -33,9 +33,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         /// <param name="selectedTags">List of tags selected for this training
         /// session, other tags in the project will be ignored.</param>
-        public TrainingParameters(IList<System.Guid> selectedTags = default(IList<System.Guid>))
+        /// <param name="customBaseModelInfo">Information of the previously
+        /// trained iteration which provides the base model for current
+        /// iteration's training.</param>
+        public TrainingParameters(IList<System.Guid> selectedTags = default(IList<System.Guid>), CustomBaseModelInfo customBaseModelInfo = default(CustomBaseModelInfo))
         {
             SelectedTags = selectedTags;
+            CustomBaseModelInfo = customBaseModelInfo;
             CustomInit();
         }
 
@@ -51,5 +55,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         [JsonProperty(PropertyName = "selectedTags")]
         public IList<System.Guid> SelectedTags { get; set; }
 
+        /// <summary>
+        /// Gets or sets information of the previously trained iteration which
+        /// provides the base model for current iteration's training.
+        /// </summary>
+        [JsonProperty(PropertyName = "customBaseModelInfo")]
+        public CustomBaseModelInfo CustomBaseModelInfo { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CustomBaseModelInfo != null)
+            {
+                CustomBaseModelInfo.Validate();
+            }
+        }
     }
 }

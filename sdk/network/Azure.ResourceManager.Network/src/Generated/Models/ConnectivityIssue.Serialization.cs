@@ -23,21 +23,41 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("origin"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     origin = new Origin(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("severity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     severity = new Severity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new IssueType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("context"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<IDictionary<string, string>> array = new List<IDictionary<string, string>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

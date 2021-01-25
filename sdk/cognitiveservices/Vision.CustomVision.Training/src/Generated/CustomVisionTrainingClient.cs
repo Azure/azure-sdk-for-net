@@ -177,7 +177,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "{Endpoint}/customvision/v3.3/training";
+            BaseUri = "{Endpoint}/customvision/v3.4-preview/training";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -661,6 +661,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='targetExportPlatforms'>
         /// List of platforms the trained model is intending exporting to.
         /// </param>
+        /// <param name='options'>
+        /// Additional project creation options.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -682,7 +685,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), CreateProjectOptions options = default(CreateProjectOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -704,6 +707,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 tracingParameters.Add("domainId", domainId);
                 tracingParameters.Add("classificationType", classificationType);
                 tracingParameters.Add("targetExportPlatforms", targetExportPlatforms);
+                tracingParameters.Add("options", options);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateProject", tracingParameters);
             }
@@ -758,6 +762,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            if(options != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(options, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Credentials != null)
             {
@@ -2966,9 +2976,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The list of image ids to update. Limited to 64.
         /// </param>
         /// <param name='metadata'>
-        /// The metadata to be updated to the specified images. Limited to 50 key-value
-        /// pairs per image. The length of key is limited to 256. The length of value
-        /// is limited to 512.
+        /// The metadata to be updated to the specified images. Limited to 10 key-value
+        /// pairs per image. The length of key is limited to 128. The length of value
+        /// is limited to 256.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -6126,7 +6136,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </param>
         /// <param name='platform'>
         /// The target platform. Possible values include: 'CoreML', 'TensorFlow',
-        /// 'DockerFile', 'ONNX', 'VAIDK'
+        /// 'DockerFile', 'ONNX', 'VAIDK', 'OpenVino'
         /// </param>
         /// <param name='flavor'>
         /// The flavor of the target platform. Possible values include: 'Linux',
@@ -8962,6 +8972,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (trainingParameters != null)
+            {
+                trainingParameters.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

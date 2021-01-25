@@ -6,14 +6,15 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.RecoveryServices.Backup</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services backup feature under Azure Resource manager.</Description>
-		<Version>4.1.2-preview</Version>
+		<Version>4.1.3-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.Backup</AssemblyName>
 		<PackageTags>Recoveryservices;Backup;RestoreWithDiskExclusion;SoftDeleteFeature</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Fix for Prepare Data Move API
-- Added new APIs related to Data Move
+- Added incremental backup feature
+- Added new CMK APIs
+- Added new APIs related to CRR
        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

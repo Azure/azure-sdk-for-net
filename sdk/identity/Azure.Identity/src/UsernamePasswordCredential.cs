@@ -27,13 +27,11 @@ namespace Azure.Identity
         private readonly SecureString _password;
         private AuthenticationRecord _record;
 
-
         /// <summary>
         /// Protected constructor for mocking
         /// </summary>
         protected UsernamePasswordCredential()
         {
-
         }
 
         /// <summary>
@@ -47,7 +45,6 @@ namespace Azure.Identity
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
             : this(username, password, tenantId, clientId, (TokenCredentialOptions)null)
         {
-
         }
 
         /// <summary>
@@ -86,7 +83,7 @@ namespace Azure.Identity
 
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            if (tenantId == null) throw new ArgumentNullException(nameof(tenantId));
+            Validations.ValidateTenantId(tenantId, nameof(tenantId));
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 

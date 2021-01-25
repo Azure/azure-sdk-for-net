@@ -21,7 +21,7 @@ The Azure Tables client library can seamlessly target either Azure Table storage
 Install the Azure Tables client library for .NET with [NuGet][table_client_nuget_package]:
 
 ```
-dotnet add package Azure.Data.Tables --version 3.0.0-beta.1
+dotnet add package Azure.Data.Tables --version 3.0.0-beta.3
 ```
 
 ### Prerequisites
@@ -96,6 +96,7 @@ Next, we can create a new table.
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
 
+string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTable(tableName);
 Console.WriteLine($"The created table's name is {table.TableName}.");
 ```
@@ -125,6 +126,7 @@ Individual tables can be deleted from the service.
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
 
+string tableName = "OfficeSupplies1p1";
 serviceClient.DeleteTable(tableName);
 ```
 

@@ -220,6 +220,7 @@ namespace Sql.Tests
             // Update elasticPool Dtu Max
             // 
             dynamic epInput3 = createModelFunc();
+            epInput3.Sku = returnedEp.Sku;
             epInput3.DatabaseDtuMax = 100;
 
             returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput3);
@@ -233,6 +234,7 @@ namespace Sql.Tests
             // Update elasticPool Dtu Min
             // 
             dynamic epInput4 = createModelFunc();
+            epInput4.Sku = returnedEp.Sku;
             epInput4.DatabaseDtuMin = 10;
 
             returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput4);
@@ -242,6 +244,17 @@ namespace Sql.Tests
             Assert.Equal(4, epa.Count());
             Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
             Assert.Equal(3, epa.Where(a => a.Operation == "UPDATE").Count());
+
+            // Update elasticPool Maintenance Configuration Id
+            dynamic epInput5 = createModelFunc();
+            epInput5.MaintenanceConfigurationId = SqlManagementTestUtilities.GetTestMaintenanceConfigurationId(sqlClient.SubscriptionId);
+            returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput5);
+            SqlManagementTestUtilities.ValidateElasticPool(epInput5, returnedEp, epName);
+            epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
+            Assert.NotNull(epa);
+            Assert.Equal(5, epa.Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+            Assert.Equal(4, epa.Where(a => a.Operation == "UPDATE").Count());
         }
 
         [Fact]

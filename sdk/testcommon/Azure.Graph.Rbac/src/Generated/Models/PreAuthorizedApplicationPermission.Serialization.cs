@@ -42,11 +42,21 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("directAccessGrant"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     directAccessGrant = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("accessGrants"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Probe> array = new List<Probe>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

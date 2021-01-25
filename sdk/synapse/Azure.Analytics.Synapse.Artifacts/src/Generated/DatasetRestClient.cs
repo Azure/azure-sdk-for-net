@@ -115,8 +115,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(dataset);
             request.Content = content;
@@ -317,6 +317,82 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                 case 202:
                 case 204:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateRenameDatasetRequest(string datasetName, ArtifactRenameRequest request)
+        {
+            var message = _pipeline.CreateMessage();
+            var request0 = message.Request;
+            request0.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/datasets/", false);
+            uri.AppendPath(datasetName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(request);
+            request0.Content = content;
+            return message;
+        }
+
+        /// <summary> Renames a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="request"/> is null. </exception>
+        public async Task<Response> RenameDatasetAsync(string datasetName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var message = CreateRenameDatasetRequest(datasetName, request);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Renames a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="request"/> is null. </exception>
+        public Response RenameDataset(string datasetName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var message = CreateRenameDatasetRequest(datasetName, request);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);

@@ -88,6 +88,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("dimensionGroupOverrideConfigurations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MetricSeriesGroupDetectionCondition> array = new List<MetricSeriesGroupDetectionCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -98,6 +103,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("seriesOverrideConfigurations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MetricSingleSeriesDetectionCondition> array = new List<MetricSingleSeriesDetectionCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

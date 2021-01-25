@@ -126,16 +126,31 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("sku"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("plan"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     plan = Plan.DeserializePlan(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VirtualMachineExtension> array = new List<VirtualMachineExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -146,6 +161,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("zones"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -176,6 +196,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -186,10 +211,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("latestModelApplied"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             latestModelApplied = property0.Value.GetBoolean();
                             continue;
                         }
@@ -200,46 +235,91 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("instanceView"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             instanceView = VirtualMachineScaleSetVMInstanceView.DeserializeVirtualMachineScaleSetVMInstanceView(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hardwareProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             osProfile = OSProfile.DeserializeOSProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfileConfiguration"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             networkProfileConfiguration = VirtualMachineScaleSetVMNetworkProfileConfiguration.DeserializeVirtualMachineScaleSetVMNetworkProfileConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("availabilitySet"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             availabilitySet = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
@@ -260,6 +340,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("protectionPolicy"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             protectionPolicy = VirtualMachineScaleSetVMProtectionPolicy.DeserializeVirtualMachineScaleSetVMProtectionPolicy(property0.Value);
                             continue;
                         }

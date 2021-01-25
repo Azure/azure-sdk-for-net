@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextHopIds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -55,6 +60,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("issues"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ConnectivityIssue> array = new List<ConnectivityIssue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

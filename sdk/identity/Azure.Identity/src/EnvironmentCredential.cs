@@ -52,7 +52,6 @@ namespace Azure.Identity
         {
         }
 
-
         internal EnvironmentCredential(CredentialPipeline pipeline)
         {
             _pipeline = pipeline;
@@ -64,22 +63,21 @@ namespace Azure.Identity
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
 
-            if (tenantId != null && clientId != null)
+            if (!string.IsNullOrEmpty(tenantId) && !string.IsNullOrEmpty(clientId))
             {
-                if (clientSecret != null)
+                if (!string.IsNullOrEmpty(clientSecret))
                 {
                     Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, null, _pipeline, null);
                 }
-                else if (username != null && password != null)
+                else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
                     Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, null, _pipeline, null);
                 }
-                else if (clientCertificatePath != null)
+                else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, null, _pipeline, null);
                 }
             }
-
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)

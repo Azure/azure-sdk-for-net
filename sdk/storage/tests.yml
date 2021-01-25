@@ -1,12 +1,14 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: storage
-    BuildInParallel: false
-    TimeoutInMinutes: 360
+    BuildInParallel: true
+    TimeoutInMinutes: 180
     Location: canadacentral
-    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+    Clouds: Preview
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
+    EnvVars:
+      AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> A private endpoint connection. </summary>
-    public partial class PrivateEndpointConnection : Resource
+    public partial class PrivateEndpointConnection : ProxyResource
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
         public PrivateEndpointConnection()

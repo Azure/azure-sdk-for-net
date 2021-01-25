@@ -5,7 +5,13 @@ using System;
 
 namespace Azure.Data.Tables
 {
-
+    /// <summary>
+    /// An interface defining the required properties for a table entity model. Custom entity model types must implement this interface.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// Two options exist for impelemtations of <see cref="ITableEntity"/>: Strongly typed custom entity model classes, and the provided <see cref="TableEntity"/> model.
+    /// </remarks>
     public interface ITableEntity
     {
         /// <summary>

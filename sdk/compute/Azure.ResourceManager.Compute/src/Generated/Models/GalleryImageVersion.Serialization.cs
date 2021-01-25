@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> type = default;
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<GalleryArtifactPublishingProfileBase> publishingProfile = default;
+            Optional<GalleryImageVersionPublishingProfile> publishingProfile = default;
             Optional<GalleryImageVersionPropertiesProvisioningState> provisioningState = default;
             Optional<GalleryImageVersionStorageProfile> storageProfile = default;
             Optional<ReplicationStatus> replicationStatus = default;
@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -90,25 +95,50 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("publishingProfile"))
                         {
-                            publishingProfile = GalleryArtifactPublishingProfileBase.DeserializeGalleryArtifactPublishingProfileBase(property0.Value);
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publishingProfile = GalleryImageVersionPublishingProfile.DeserializeGalleryImageVersionPublishingProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new GalleryImageVersionPropertiesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             storageProfile = GalleryImageVersionStorageProfile.DeserializeGalleryImageVersionStorageProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("replicationStatus"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value);
                             continue;
                         }

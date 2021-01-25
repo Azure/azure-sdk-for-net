@@ -23,16 +23,16 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         private const string SparkValue = "spark";
-        private const string PysparkValue = "pyspark";
-        private const string DotnetsparkValue = "dotnetspark";
+        private const string PySparkValue = "pyspark";
+        private const string DotNetSparkValue = "dotnetspark";
         private const string SqlValue = "sql";
 
         /// <summary> spark. </summary>
         public static SparkStatementLanguageType Spark { get; } = new SparkStatementLanguageType(SparkValue);
         /// <summary> pyspark. </summary>
-        public static SparkStatementLanguageType Pyspark { get; } = new SparkStatementLanguageType(PysparkValue);
+        public static SparkStatementLanguageType PySpark { get; } = new SparkStatementLanguageType(PySparkValue);
         /// <summary> dotnetspark. </summary>
-        public static SparkStatementLanguageType Dotnetspark { get; } = new SparkStatementLanguageType(DotnetsparkValue);
+        public static SparkStatementLanguageType DotNetSpark { get; } = new SparkStatementLanguageType(DotNetSparkValue);
         /// <summary> sql. </summary>
         public static SparkStatementLanguageType Sql { get; } = new SparkStatementLanguageType(SqlValue);
         /// <summary> Determines if two <see cref="SparkStatementLanguageType"/> values are the same. </summary>

@@ -59,10 +59,6 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
-            }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -139,10 +135,6 @@ namespace Azure.Search.Documents
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
-            }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             return message;
         }
@@ -205,10 +197,6 @@ namespace Azure.Search.Documents
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
-            }
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch);
@@ -310,10 +298,6 @@ namespace Azure.Search.Documents
             uri.AppendPath("')", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
-            }
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch);
@@ -388,10 +372,6 @@ namespace Azure.Search.Documents
             uri.AppendPath("')", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
-            }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             return message;
         }
@@ -462,10 +442,6 @@ namespace Azure.Search.Documents
             uri.AppendPath("')/search.stats", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
-            }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             return message;
         }
@@ -536,10 +512,6 @@ namespace Azure.Search.Documents
             uri.AppendPath("')/search.analyze", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request0.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
-            }
             request0.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();

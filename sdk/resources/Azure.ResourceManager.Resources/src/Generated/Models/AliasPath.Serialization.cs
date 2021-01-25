@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("apiVersions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -37,6 +42,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("pattern"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     pattern = AliasPattern.DeserializeAliasPattern(property.Value);
                     continue;
                 }

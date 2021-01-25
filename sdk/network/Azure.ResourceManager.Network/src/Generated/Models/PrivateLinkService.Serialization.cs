@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<NetworkInterface>> networkInterfaces = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<PrivateEndpointConnection>> privateEndpointConnections = default;
-            Optional<ResourceSet> visibility = default;
-            Optional<ResourceSet> autoApproval = default;
+            Optional<PrivateLinkServicePropertiesVisibility> visibility = default;
+            Optional<PrivateLinkServicePropertiesAutoApproval> autoApproval = default;
             Optional<IList<string>> fqdns = default;
             Optional<string> @alias = default;
             Optional<bool> enableProxyProtocol = default;
@@ -135,6 +135,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -145,10 +150,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("loadBalancerFrontendIpConfigurations"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<FrontendIPConfiguration> array = new List<FrontendIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -159,6 +174,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("ipConfigurations"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<PrivateLinkServiceIpConfiguration> array = new List<PrivateLinkServiceIpConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -169,6 +189,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("networkInterfaces"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<NetworkInterface> array = new List<NetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -179,11 +204,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<PrivateEndpointConnection> array = new List<PrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -194,16 +229,31 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("visibility"))
                         {
-                            visibility = ResourceSet.DeserializeResourceSet(property0.Value);
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            visibility = PrivateLinkServicePropertiesVisibility.DeserializePrivateLinkServicePropertiesVisibility(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoApproval"))
                         {
-                            autoApproval = ResourceSet.DeserializeResourceSet(property0.Value);
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            autoApproval = PrivateLinkServicePropertiesAutoApproval.DeserializePrivateLinkServicePropertiesAutoApproval(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fqdns"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -219,6 +269,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("enableProxyProtocol"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enableProxyProtocol = property0.Value.GetBoolean();
                             continue;
                         }

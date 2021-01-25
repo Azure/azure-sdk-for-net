@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains information about a database Threat Detection policy. </summary>
-    public partial class DatabaseSecurityAlertPolicy : Resource
+    public partial class DatabaseSecurityAlertPolicy : ProxyResource
     {
         /// <summary> Initializes a new instance of DatabaseSecurityAlertPolicy. </summary>
         public DatabaseSecurityAlertPolicy()

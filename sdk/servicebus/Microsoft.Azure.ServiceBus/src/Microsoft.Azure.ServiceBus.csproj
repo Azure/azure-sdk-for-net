@@ -2,8 +2,8 @@
   <PropertyGroup>
     <AssemblyTitle>Azure ServiceBus SDK</AssemblyTitle>
     <Description>This is the next generation Azure Service Bus .NET Standard client library that focuses on queues &amp; topics. For more information about Service Bus, see https://azure.microsoft.com/en-us/services/service-bus/</Description>
-    <Version>5.1.0-beta.1</Version>
-    <ApiCompatVersion>5.0.0</ApiCompatVersion>
+    <Version>5.2.0-beta.1</Version>
+    <ApiCompatVersion>5.1.1</ApiCompatVersion>
     <PackageTags>Microsoft;Azure;Service Bus;ServiceBus;.NET;AMQP;IoT;Queue;Topic</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);CS1591;CS1573;NU5125</NoWarn>

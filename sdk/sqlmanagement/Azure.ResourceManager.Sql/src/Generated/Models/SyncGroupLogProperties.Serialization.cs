@@ -25,11 +25,21 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("timestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new SyncGroupLogType(property.Value.GetString());
                     continue;
                 }
@@ -45,6 +55,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("tracingId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     tracingId = property.Value.GetGuid();
                     continue;
                 }

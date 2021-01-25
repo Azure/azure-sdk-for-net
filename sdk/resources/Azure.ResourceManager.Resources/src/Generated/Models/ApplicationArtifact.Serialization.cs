@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = property.Value.GetString().ToApplicationArtifactType();
                     continue;
                 }

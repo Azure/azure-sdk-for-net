@@ -10,8 +10,8 @@ namespace Azure.AI.TextAnalytics
     /// Contains the related opinions, predicted sentiment,
     /// confidence scores and other information about an aspect of a product.
     /// An aspect of a product/service is a key component of that product/service.
-    /// For example in "The food at Hotel Foo is good", "food" is an aspect of
-    /// "Hotel Foo".
+    /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
+    /// "Hotel Foo".</para>
     /// </summary>
     public readonly struct AspectSentiment
     {
@@ -42,6 +42,9 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the aspect text.
+        /// <para>An aspect of a product/service is a key component of that product/service.</para>
+        /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
+        /// "Hotel Foo".</para>
         /// </summary>
         public string Text { get; }
 

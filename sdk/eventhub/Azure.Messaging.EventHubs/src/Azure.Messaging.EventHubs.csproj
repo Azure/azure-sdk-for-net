@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This client library allows for both publishing and consuming events using Azure Event Hubs. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.3.0-beta.4</Version>
+    <Version>5.3.0-beta.5</Version>
     <ApiCompatVersion>5.2.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -13,13 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core.Experimental" /><!-- This package will be removed when v5.3.0 is released for GA -->
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
     <PackageReference Include="System.Threading.Channels" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+    <!-- This package will be removed when v5.3.0 is released for GA as the dependency will be available from Core -->
+    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
   <!-- Import the Azure.Core reference -->

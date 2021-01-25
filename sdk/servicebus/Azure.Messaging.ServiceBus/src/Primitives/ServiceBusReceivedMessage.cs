@@ -12,17 +12,21 @@ using Azure.Messaging.ServiceBus.Amqp;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///
+    /// The <see cref="ServiceBusReceivedMessage"/> is used to receive data from Service Bus Queues and Subscriptions.
+    /// When sending messages, the <see cref="ServiceBusMessage"/> is used.
     /// </summary>
+    /// <remarks>
+    /// The message structure is discussed in detail in the
+    /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
+    /// </remarks>
     public class ServiceBusReceivedMessage
     {
-
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message represented as bytes.</param>
         internal ServiceBusReceivedMessage(ReadOnlyMemory<byte> body)
-            : this(new AmqpAnnotatedMessage(new BinaryData[] { BinaryData.FromBytes(body) }))
+            : this(new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body })))
         {
         }
 
@@ -44,29 +48,24 @@ namespace Azure.Messaging.ServiceBus
         internal bool IsSettled { get; set; }
 
         /// <summary>
-        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// Gets the raw Amqp message data that was transmitted over the wire.
         /// This can be used to enable scenarios that require reading AMQP header, footer, property, or annotation
-        /// data that is not exposed as top level properties in the ServiceBusMessage.
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
-        public AmqpAnnotatedMessage AmqpMessage { get; internal set; }
+        internal AmqpAnnotatedMessage AmqpMessage { get; set; }
+
+        /// <summary>
+        /// Gets the raw Amqp message data that was transmitted over the wire.
+        /// This can be used to enable scenarios that require reading AMQP header, footer, property, or annotation
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusReceivedMessage"/>.
+        /// </summary>
+        /// <returns>The raw Amqp message.</returns>
+        public AmqpAnnotatedMessage GetRawAmqpMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the body of the message.
         /// </summary>
-        public BinaryData Body
-        {
-            get
-            {
-                if (AmqpMessage.Body is AmqpDataBody dataBody)
-                {
-                    return dataBody.Data.ConvertAndFlattenData();
-                }
-                else
-                {
-                    return default;
-                }
-            }
-        }
+        public BinaryData Body => AmqpMessage.GetBody();
 
         /// <summary>
         /// Gets the MessageId to identify the message.
@@ -79,7 +78,7 @@ namespace Azure.Messaging.ServiceBus
         ///    feature identifies and removes second and further submissions of messages with the
         ///    same MessageId.
         /// </remarks>
-        public string MessageId => AmqpMessage.Properties.MessageId;
+        public string MessageId => AmqpMessage.Properties.MessageId?.ToString();
 
         /// <summary>Gets a partition key for sending a message to a partitioned entity.</summary>
         /// <value>The partition key. Maximum length is 128 characters.</value>
@@ -99,7 +98,7 @@ namespace Azure.Messaging.ServiceBus
         ///    messages are kept together and in order as they are transferred.
         ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</a>.
         /// </remarks>
-        public string ViaPartitionKey => AmqpMessage.GetViaPartitionKey();
+        internal string TransactionPartitionKey => AmqpMessage.GetViaPartitionKey();
 
         /// <summary>Gets the session identifier for a session-aware entity.</summary>
         /// <value>The session identifier. Maximum length is 128 characters.</value>
@@ -134,14 +133,14 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public TimeSpan TimeToLive => AmqpMessage.GetTimeToLive();
 
-        /// <summary>Gets the a correlation identifier.</summary>
+        /// <summary>Gets the correlation identifier.</summary>
         /// <value>Correlation identifier.</value>
         /// <remarks>
         ///    Allows an application to specify a context for the message for the purposes of correlation,
         ///    for example reflecting the MessageId of a message that is being replied to.
         ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>.
         /// </remarks>
-        public string CorrelationId => AmqpMessage.Properties.CorrelationId;
+        public string CorrelationId => AmqpMessage.Properties.CorrelationId?.ToString();
 
         /// <summary>Gets an application specific label.</summary>
         /// <value>The application specific label</value>
@@ -159,7 +158,7 @@ namespace Azure.Messaging.ServiceBus
         ///     <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-auto-forwarding">auto-forward chaining</a> scenarios to indicate the
         ///     intended logical destination of the message.
         /// </remarks>
-        public string To => AmqpMessage.Properties.To;
+        public string To => AmqpMessage.Properties.To?.ToString();
 
         /// <summary>Gets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>
@@ -177,7 +176,7 @@ namespace Azure.Messaging.ServiceBus
         ///    absolute or relative path of the queue or topic it expects the reply to be sent to.
         ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>.
         /// </remarks>
-        public string ReplyTo => AmqpMessage.Properties.ReplyTo;
+        public string ReplyTo => AmqpMessage.Properties.ReplyTo?.ToString();
 
         /// <summary>Gets the date and time in UTC at which the message will be enqueued. This
         /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.</summary>
@@ -279,7 +278,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets the name of the queue or subscription that this message was enqueued on, before it was deadlettered.
+        /// Gets the name of the queue or subscription that this message was enqueued on, before it was dead-lettered.
         /// </summary>
         /// <remarks>
         /// 	Only set in messages that have been dead-lettered and subsequently auto-forwarded from the dead-letter queue
@@ -380,7 +379,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets the dead letter reason for the message.
         /// </summary>
         public string DeadLetterReason
         {
@@ -395,7 +394,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets the dead letter error description for the message.
         /// </summary>
         public string DeadLetterErrorDescription
         {

@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
-using Azure.Communication.Identity;
+using Azure.Communication;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.Administration.Tests
@@ -28,12 +31,23 @@ namespace Azure.Communication.Administration.Tests
         }
 
         [Test]
-        [TestCase("chat", TestName = "IssuingTokenWithSingleScope")]
-        [TestCase("chat", "pstn", TestName = "IssuingTokenWithMultipleScopes")]
-        public async Task IssuingTokenGeneratesTokenAndIdentityWithScopes(params string[] scopes)
+        [TestCase(AuthMethod.ConnectionString, "chat", TestName = "IssuingTokenWithSingleScopeWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, "chat", TestName = "IssuingTokenWithSingleScopeWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, "chat", TestName = "IssuingTokenWithSingleScopeWithTokenCredential")]
+        [TestCase(AuthMethod.ConnectionString, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithTokenCredential")]
+        public async Task IssuingTokenGeneratesTokenAndIdentityWithScopes(AuthMethod authMethod, params string[] scopes)
         {
-            CommunicationIdentityClient client = CreateInstrumentedCommunicationIdentityClient();
-            Response<CommunicationUser> userResponse = await client.CreateUserAsync();
+            CommunicationIdentityClient client = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
             Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
@@ -48,6 +62,13 @@ namespace Azure.Communication.Administration.Tests
                     CollectionAssert.AreEquivalent(scopes, payload.Scopes);
                 }
             }
+        }
+
+        public enum AuthMethod
+        {
+            ConnectionString,
+            KeyCredential,
+            TokenCredential,
         }
     }
 }

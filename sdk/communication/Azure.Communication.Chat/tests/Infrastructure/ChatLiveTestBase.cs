@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.Administration;
-using Azure.Communication.Identity;
+using Azure.Communication;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Chat.Tests
@@ -13,9 +13,7 @@ namespace Azure.Communication.Chat.Tests
     public class ChatLiveTestBase : RecordedTestBase<ChatTestEnvironment>
     {
         public ChatLiveTestBase(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new ChatRecordedTestSanitizer();
-        }
+           => Sanitizer = new ChatRecordedTestSanitizer();
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
@@ -37,11 +35,11 @@ namespace Azure.Communication.Chat.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                token = ChatRecordedTestSanitizer.SanitizedChatAuthHeaderValue;
+                token = ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue;
             }
 
-            CommunicationUserCredential communicationUserCredential = new CommunicationUserCredential(token);
-            return InstrumentClient(new ChatClient(new Uri(TestEnvironment.ChatApiUrl()), communicationUserCredential,
+            CommunicationTokenCredential communicationTokenCredential = new CommunicationTokenCredential(token);
+            return InstrumentClient(new ChatClient(new Uri(TestEnvironment.ChatApiUrl()), communicationTokenCredential,
                 InstrumentClientOptions(new ChatClientOptions())));
         }
 

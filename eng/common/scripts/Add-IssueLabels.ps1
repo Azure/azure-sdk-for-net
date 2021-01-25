@@ -16,13 +16,13 @@ param(
   [string]$AuthToken
 )
 
-. "${PSScriptRoot}\common.ps1"
+. (Join-Path $PSScriptRoot common.ps1)
 
 try {
-  Add-IssueLabels -RepoOwner $RepoOwner -RepoName $RepoName `
+  Add-GithubIssueLabels -RepoOwner $RepoOwner -RepoName $RepoName `
   -IssueNumber $IssueNumber -Labels $Labels -AuthToken $AuthToken
 }
 catch {
-  LogError "Add-IssueLabels failed with exception:`n$_"
+  LogError "Add-GithubIssueLabels failed with exception:`n$_"
   exit 1
 }

@@ -36,17 +36,27 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static EncryptionImages DeserializeEncryptionImages(JsonElement element)
         {
-            Optional<DiskImageEncryption> osDiskImage = default;
+            Optional<OSDiskImageEncryption> osDiskImage = default;
             Optional<IList<DataDiskImageEncryption>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDiskImage"))
                 {
-                    osDiskImage = DiskImageEncryption.DeserializeDiskImageEncryption(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    osDiskImage = OSDiskImageEncryption.DeserializeOSDiskImageEncryption(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DataDiskImageEncryption> array = new List<DataDiskImageEncryption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

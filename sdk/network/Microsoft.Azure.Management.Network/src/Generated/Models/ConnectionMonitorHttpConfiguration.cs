@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -101,5 +102,22 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "preferHTTPS")]
         public bool? PreferHTTPS { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Port > 65535)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Port", 65535);
+            }
+            if (Port < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Port", 0);
+            }
+        }
     }
 }

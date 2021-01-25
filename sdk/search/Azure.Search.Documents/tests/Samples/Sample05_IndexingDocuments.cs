@@ -33,9 +33,9 @@ namespace Azure.Search.Documents.Tests.Samples
     }
     #endregion
 
-    public class Sample05_IndexingDocuments : SearchTestBase
+    public class IndexingDocuments : SearchTestBase
     {
-        public Sample05_IndexingDocuments(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+        public IndexingDocuments(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
@@ -105,6 +105,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
         public async Task SimpleIndexing()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

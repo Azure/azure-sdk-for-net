@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("description"))
@@ -67,11 +72,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("version"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             version = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("schedule"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             schedule = JobSchedule.DeserializeJobSchedule(property0.Value);
                             continue;
                         }

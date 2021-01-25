@@ -26,16 +26,31 @@ namespace Azure.Search.Documents.Models
             {
                 if (property.NameEquals("@odata.count"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     odataCount = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("@search.coverage"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     searchCoverage = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("@search.facets"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -51,6 +66,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@search.nextPageParameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
                     continue;
                 }

@@ -21,6 +21,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DataFlowDebugSessionInfo> array = new List<DataFlowDebugSessionInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

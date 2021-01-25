@@ -1,12 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Tests.Artifacts
+namespace Azure.Analytics.Synapse.Artifacts.Tests
 {
     /// <summary>
     /// The suite of tests for the <see cref="DataFlowClient"/> class.
@@ -15,47 +18,77 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class DataFlowClientLiveTests : ArtifactsClientTestBase
+    public class DataFlowClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataFlowClientLiveTests"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public DataFlowClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [Test]
-        public async Task TestGetDataFlow()
+        private DataFlowClient CreateClient()
         {
-            await foreach (var expectedDataFlow in DataFlowClient.GetDataFlowsByWorkspaceAsync())
-            {
-                DataFlowResource actualDataFlow = await DataFlowClient.GetDataFlowAsync(expectedDataFlow.Name);
-                Assert.AreEqual(expectedDataFlow.Name, actualDataFlow.Name);
-                Assert.AreEqual(expectedDataFlow.Id, actualDataFlow.Id);
+            return InstrumentClient(new DataFlowClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ArtifactsClientOptions())
+            ));
+        }
+
+        [Test]
+        public async Task GetDataFlows()
+        {
+            DataFlowClient client = CreateClient();
+            await using DisposableDataFlow flow = await DisposableDataFlow.Create (client, this.Recording);
+
+            AsyncPageable<DataFlowResource> dataFlows = client.GetDataFlowsByWorkspaceAsync ();
+            Assert.GreaterOrEqual((await dataFlows.ToListAsync()).Count, 1);
+        }
+
+        [Test]
+        public async Task GetDataFlow()
+        {
+            DataFlowClient client = CreateClient();
+            await using DisposableDataFlow flow = await DisposableDataFlow.Create (client, this.Recording);
+
+            DataFlowResource dataFlow = await client.GetDataFlowAsync (flow.Name);
+            Assert.AreEqual (flow.Name, dataFlow.Name);
+        }
+
+        [Test]
+        public async Task RenameDataFlow()
+        {
+            DataFlowClient client = CreateClient();
+
+            DataFlowResource resource = await DisposableDataFlow.CreateResource (client, this.Recording);
+
+            string newFlowName = Recording.GenerateAssetName("DataFlow2");
+
+            DataFlowRenameDataFlowOperation renameOperation = await client.StartRenameDataFlowAsync (resource.Name, new ArtifactRenameRequest () { NewName = newFlowName } );
+            await renameOperation.WaitForCompletionAsync ();
+
+            DataFlowResource dataFlow = await client.GetDataFlowAsync (newFlowName);
+            Assert.AreEqual (newFlowName, dataFlow.Name);
+
+            DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync (newFlowName);
+            await operation.WaitForCompletionAsync ();
+        }
+
+        [Test]
+        public async Task DeleteDataFlow()
+        {
+            DataFlowClient client = CreateClient();
+
+            DataFlowResource resource = await DisposableDataFlow.CreateResource (client, this.Recording);
+
+            DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync (resource.Name);
+            Response response = await operation.WaitForCompletionAsync ();
+            switch (response.Status) {
+                case 200:
+                case 204:
+                    break;
+                default:
+                    Assert.Fail($"Unexpected status ${response.Status} returned");
+                    break;
             }
-        }
-
-        [Test]
-        public async Task TestCreateDataFlow()
-        {
-            string dataFlowName = Recording.GenerateName("DataFlow");
-            DataFlowCreateOrUpdateDataFlowOperation operation = await DataFlowClient.StartCreateOrUpdateDataFlowAsync(dataFlowName, new DataFlowResource(new DataFlow()));
-            DataFlowResource dataFlow = await operation.WaitForCompletionAsync();
-            Assert.AreEqual(dataFlowName, dataFlow.Name);
-        }
-
-        [Test]
-        public async Task TestDeleteDataFlow()
-        {
-            string dataFlowName = Recording.GenerateName("DataFlow");
-
-            DataFlowCreateOrUpdateDataFlowOperation createOperation = await DataFlowClient.StartCreateOrUpdateDataFlowAsync(dataFlowName, new DataFlowResource(new DataFlow()));
-            await createOperation.WaitForCompletionAsync();
-
-            DataFlowDeleteDataFlowOperation deleteOperation = await DataFlowClient.StartDeleteDataFlowAsync(dataFlowName);
-            Response response = await deleteOperation.WaitForCompletionAsync();
-            Assert.AreEqual(200, response.Status);
         }
     }
 }

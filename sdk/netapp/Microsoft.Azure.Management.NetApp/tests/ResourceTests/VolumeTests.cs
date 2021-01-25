@@ -18,7 +18,7 @@ namespace NetApp.Tests.ResourceTests
 {
     public class VolumeTests : TestBase
     {
-        private const int delay = 5000;
+        private const int delay = 10000;
         public static ExportPolicyRule exportPolicyRule = new ExportPolicyRule()
         {
             RuleIndex = 1,
@@ -403,9 +403,9 @@ namespace NetApp.Tests.ResourceTests
                     attempts++;
                     if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                     {
-                        Thread.Sleep(100);
+                        Thread.Sleep(1000);
                     }
-                } while (replicationStatus.Healthy.Value || attempts == 5);
+                } while (replicationStatus.Healthy.Value || attempts == 10);
             }
             Assert.True(replicationStatus.Healthy);
         }
@@ -444,19 +444,23 @@ namespace NetApp.Tests.ResourceTests
                 var dpVolume = ResourceUtils.CreateDpVolume(netAppMgmtClient, sourceVolume);
                 Assert.Equal(ResourceUtils.remoteVolumeName1, dpVolume.Name.Substring(dpVolume.Name.LastIndexOf('/') + 1));
                 Assert.NotNull(dpVolume.DataProtection);
-
-                var authorizeRequest = new AuthorizeRequest
-                {
-                    RemoteVolumeResourceId = dpVolume.Id
-                };
-
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(30000);
                 }
 
+                var getDPVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+                var authorizeRequest = new AuthorizeRequest
+                {
+                    RemoteVolumeResourceId = dpVolume.Id
+                };
+
                 netAppMgmtClient.Volumes.AuthorizeReplication(ResourceUtils.repResourceGroup, ResourceUtils.accountName1Repl, ResourceUtils.poolName1Repl, ResourceUtils.volumeName1Repl, authorizeRequest);
 
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
+                }
                 WaitForSucceeded(netAppMgmtClient, accountName: ResourceUtils.accountName1Repl, poolName: ResourceUtils.poolName1Repl, volumeName: ResourceUtils.volumeName1Repl);
 
                 WaitForReplicationStatus(netAppMgmtClient, "Mirrored");
@@ -582,11 +586,35 @@ namespace NetApp.Tests.ResourceTests
             }
         }
 
+        [Fact]
+        public void LongListVolumes()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                //get list of volumnes                
+                var volumesPage = netAppMgmtClient.Volumes.List("sara-systemic", "Sara-Systemic-NA", "Sara-Systemic-CP");
+                // Get all resources by polling on next page link
+                var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);
+                var volumesList = new List<Volume>();
+
+                foreach (var volume in volumeResponseList)
+                {
+                    volumesList.Add(volume);
+                }
+
+                Assert.Equal(166, volumesList.Count());
+
+            }
+        }
+
         private static string GetSessionsDirectoryPath()
         {
             string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.VolumeTests).GetTypeInfo().Assembly.Location;
             return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
+
     }
 }
 

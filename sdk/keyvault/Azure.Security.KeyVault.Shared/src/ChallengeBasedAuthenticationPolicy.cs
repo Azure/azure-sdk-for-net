@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault
 
         private readonly TokenCredential _credential;
 
-        private AuthenticationChallenge _challenge = null;
+        private AuthenticationChallenge _challenge;
         private string _headerValue;
         private DateTimeOffset _refreshOn;
 

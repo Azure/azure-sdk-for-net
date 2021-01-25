@@ -7,10 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/8fee11f5dd30e228a850ee25a2f3368dc1671b53/specification/cognitiveservices/data-plane/FormRecognizer/preview/v2.1-preview.1/FormRecognizer.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/788507c386197b1ba7878fa00fe30871b8b01f22/specification/cognitiveservices/data-plane/FormRecognizer/preview/v2.1-preview.2/FormRecognizer.json
 ```
-
-
 
 
 ### Make AnalyzeResult.readResult optional

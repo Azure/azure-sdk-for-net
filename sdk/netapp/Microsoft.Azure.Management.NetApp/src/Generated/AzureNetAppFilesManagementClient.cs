@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.NetApp
             BackupPolicies = new BackupPoliciesOperations(this);
             Vaults = new VaultsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-06-01";
+            ApiVersion = "2020-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

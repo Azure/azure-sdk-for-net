@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VirtualMachineSize> array = new List<VirtualMachineSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
