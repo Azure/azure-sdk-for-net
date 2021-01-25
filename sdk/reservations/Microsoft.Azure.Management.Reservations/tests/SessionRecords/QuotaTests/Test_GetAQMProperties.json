@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/autoQuotaIncrease?api-version=2019-07-19-preview",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/autoQuotaIncrease?api-version=2020-10-25",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvYXV0b1F1b3RhSW5jcmVhc2U/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",

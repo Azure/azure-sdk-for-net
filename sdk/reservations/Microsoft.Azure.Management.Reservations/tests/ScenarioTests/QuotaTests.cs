@@ -34,7 +34,7 @@ namespace Reservations.Tests.ScenarioTests
         private const string BatchMLProviderId = "Microsoft.MachineLearningServices";
         private const string LocationWUS = "westus";
         private const string LocationEUS = "eastus";
-        private const string version = "2019-07-19-preview";
+        private const string version = "2020-10-25";
         private const string SKUName = "standardFSv2Family";
         private const string QuotaRequestId = "011e1463-c8d7-4a5e-ae35-f15c1f3226b4";
         #endregion

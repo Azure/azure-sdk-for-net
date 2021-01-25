@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2019-04-01",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2019-04-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMDg2NjQxZTUtM2RlNS00MWEzLWFjZGQtMWNhNDBiMWU4OGYxP2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",

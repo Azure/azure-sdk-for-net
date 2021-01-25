@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimits/standardFSv2Family?api-version=2019-07-19-preview",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimits/standardFSv2Family?api-version=2020-10-25",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9zZXJ2aWNlTGltaXRzL3N0YW5kYXJkRlN2MkZhbWlseT9hcGktdmVyc2lvbj0yMDE5LTA3LTE5LXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",

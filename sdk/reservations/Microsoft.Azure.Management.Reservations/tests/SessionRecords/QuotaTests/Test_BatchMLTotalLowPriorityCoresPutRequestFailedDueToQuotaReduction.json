@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimits/TotalLowPriorityCores?api-version=2019-07-19-preview",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimits/TotalLowPriorityCores?api-version=2020-10-25",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvc2VydmljZUxpbWl0cy9Ub3RhbExvd1ByaW9yaXR5Q29yZXM/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"limit\": 2,\r\n    \"name\": {\r\n      \"value\": \"TotalLowPriorityCores\"\r\n    },\r\n    \"resourceType\": \"lowPriority\"\r\n  }\r\n}",
@@ -36,7 +36,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2019-07-19-preview"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2020-10-25"
         ],
         "Retry-After": [
           "30"
@@ -45,7 +45,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2019-07-19-preview"
+          "https://management.azure.com:443/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2020-10-25"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -79,7 +79,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2019-07-19-preview",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2020-10-25",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvb3BlcmF0aW9uc1N0YXR1cy9jYmRiOTkxMC02MmQ2LTQ3MWQtOTdhOS1kMjg0MGJmMmRkNGY/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -108,7 +108,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2019-07-19-preview"
+          "https://management.azure.com:443/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2020-10-25"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -142,7 +142,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2019-07-19-preview",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2020-10-25",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvb3BlcmF0aW9uc1N0YXR1cy9jYmRiOTkxMC02MmQ2LTQ3MWQtOTdhOS1kMjg0MGJmMmRkNGY/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -165,7 +165,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2019-07-19-preview"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/cbdb9910-62d6-471d-97a9-d2840bf2dd4f?api-version=2020-10-25"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -202,7 +202,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimits/TotalLowPriorityCores?api-version=2019-07-19-preview",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimits/TotalLowPriorityCores?api-version=2020-10-25",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvc2VydmljZUxpbWl0cy9Ub3RhbExvd1ByaW9yaXR5Q29yZXM/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
