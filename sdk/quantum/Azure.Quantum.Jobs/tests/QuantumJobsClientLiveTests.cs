@@ -19,13 +19,9 @@ namespace Azure.Quantum.Jobs.Tests
 
         private QuantumJobsClient CreateClient()
         {
-            return new QuantumJobsClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus");
+            var rawClient = new QuantumJobsClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus", default, InstrumentClientOptions(new QuantumJobsClientOptions()));
 
-//             return InstrumentClient(new QuantumJobsClient(
-//                 new Uri(TestEnvironment.KeyVaultUri),
-//                 TestEnvironment.Credential,
-//                 InstrumentClientOptions(new QuantumJobsClientOptions())
-//             ));
+            return InstrumentClient(rawClient);
         }
 
         // Create SubscriptionId.cs like so and put in your id:
