@@ -10,7 +10,7 @@ Time Series Model settings can be managed through the Model Settings API which i
 
 Returns the model settings which includes model display name, Time Series ID properties and default type ID. Every Gen2 environment has a model that is automatically created.
 
-```javascript
+```json
 {
   "parameters": {
     "api-version": "2020-07-31",
@@ -36,6 +36,12 @@ Returns the model settings which includes model display name, Time Series ID pro
 ```
 
 ```csharp
+ /// <summary>
+/// Gets model settings asynchronously.
+/// </summary>
+/// <param name="clientSessionId">A client session ID allows the service to trace a group of related operations across services.</param>
+/// <param name="cancellationToken">The cancellation token.</param>
+/// <returns>The Model Settings which includes model display name, Time Series ID properties and default type ID with the http response <see cref="Response{T}"/>.</returns>
 public virtual async Task<Response<ModelSettingsResponse>> GetAsync(string clientSessionId = null, CancellationToken cancellationToken = default)
 ```
 
@@ -43,7 +49,7 @@ public virtual async Task<Response<ModelSettingsResponse>> GetAsync(string clien
 
 Updates time series model settings - either the model name or default type ID.
 
-```javascript
+```json
 {
   "parameters": {
     "api-version": "2020-07-31",
@@ -71,5 +77,13 @@ Updates time series model settings - either the model name or default type ID.
 }
 ```
 ```csharp
-public virtual async Task<Response<ModelSettingsResponse>> UpdateAsync(UpdateModelSettingsRequest parameters, string clientSessionId = null, CancellationToken cancellationToken = default)
+ /// <summary>
+/// Updates model settings, either the model name or default type ID asynchronously.
+/// </summary>
+/// <param name="modelSettings">Model settings update request body.</param>
+/// <param name="clientSessionId">A client session ID allows the service to trace a group of related operations across services.</param>
+/// <param name="cancellationToken">The cancellation token.</param>
+/// <returns>The updated Model Settings with the http response <see cref="Response{T}"/>.</returns>
+/// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+public virtual async Task<Response<ModelSettingsResponse>> UpdateAsync(UpdateModelSettingsRequest modelSettings, string clientSessionId = null, CancellationToken cancellationToken = default)
 ```
