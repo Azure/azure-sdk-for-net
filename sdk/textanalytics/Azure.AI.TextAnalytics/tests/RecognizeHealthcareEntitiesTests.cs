@@ -279,7 +279,7 @@ namespace Azure.AI.TextAnalytics.Tests
             await operation.CancelAsync();
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async() => await operation.WaitForCompletionAsync());
-            Assert.IsTrue(ex.Message.Contains("Service request failed."));
+            Assert.IsTrue(ex.Message.Contains("The operation was canceled so no value is available."));
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -292,7 +292,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
             catch (RequestFailedException exception)
             {
-                Assert.IsTrue(exception.Message.Contains("Service request failed."));
+                Assert.IsTrue(exception.Message.Contains("The operation was canceled so no value is available."));
             }
         }
 
