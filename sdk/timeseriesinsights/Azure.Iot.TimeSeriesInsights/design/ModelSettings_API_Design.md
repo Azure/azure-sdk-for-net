@@ -42,7 +42,7 @@ Returns the model settings which includes model display name, Time Series ID pro
 /// <param name="clientSessionId">A client session ID allows the service to trace a group of related operations across services.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>The Model Settings which includes model display name, Time Series ID properties and default type ID with the http response <see cref="Response{T}"/>.</returns>
-public virtual async Task<Response<ModelSettingsResponse>> GetAsync(string clientSessionId = null, CancellationToken cancellationToken = default)
+public virtual async Task<Response<ModelSettingsResponse>> GetModelSettingsAsync(string clientSessionId = null, CancellationToken cancellationToken = default)
 ```
 
 ### POST /timeseries/modelSettings
@@ -85,5 +85,5 @@ Updates time series model settings - either the model name or default type ID.
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>The updated Model Settings with the http response <see cref="Response{T}"/>.</returns>
 /// <exception cref="ArgumentNullException"> <paramref name="modelSettings"/> is null. </exception>
-public virtual async Task<Response<ModelSettingsResponse>> UpdateAsync(UpdateModelSettingsRequest modelSettings, string clientSessionId = null, CancellationToken cancellationToken = default)
+public virtual async Task<Response<ModelSettingsResponse>> UpdateModelSettingsAsync(UpdateModelSettingsRequest modelSettings, string clientSessionId = null, CancellationToken cancellationToken = default)
 ```
