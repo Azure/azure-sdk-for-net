@@ -10,7 +10,7 @@
 		<Version>1.15.0</Version>
     <PackageTags>Reservations;Capacity_2020-10-01-preview;Capacity_2020-10-25;</PackageTags>
 		<PackageReleaseNotes>
-      Adding quota GA api to sdk.
+      Adding Quota GA 2020-10-25 APIs and Reservation 2020-10-01-preview APIs to sdk.
       Removed AutoQuotaIncrease APIs from GA version. It's available in preview version -1.14.0-preview.
     </PackageReleaseNotes>
 	</PropertyGroup>
