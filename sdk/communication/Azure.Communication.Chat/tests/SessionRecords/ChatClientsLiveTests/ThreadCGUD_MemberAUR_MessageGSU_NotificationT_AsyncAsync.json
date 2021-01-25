@@ -19,7 +19,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
@@ -96,7 +96,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
@@ -173,7 +173,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
@@ -250,7 +250,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
