@@ -64,7 +64,7 @@ namespace Azure.Search.Documents
         /// Gets the <see cref="Azure.Core.Pipeline.ClientDiagnostics"/> used
         /// to provide tracing support for the client library.
         /// </summary>
-        private ClientDiagnostics ClientDiagnostics { get; }
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// Gets the REST API version of the Search Service to use when making
