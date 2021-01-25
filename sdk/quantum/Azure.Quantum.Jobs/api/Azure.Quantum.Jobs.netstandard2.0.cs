@@ -1,16 +1,16 @@
 namespace Azure.Quantum.Jobs
 {
-    public partial class QuantumJobsClient
+    public partial class QuantumJobClient
     {
-        protected QuantumJobsClient() { }
-        public QuantumJobsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public QuantumJobsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Quantum.Jobs.QuantumJobsClientOptions options) { }
+        protected QuantumJobClient() { }
+        public QuantumJobClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public QuantumJobClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Quantum.Jobs.QuantumJobClientOptions options) { }
         public virtual Azure.Response<Azure.Quantum.Jobs.Models.SecretBundle> GetSecret(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Quantum.Jobs.Models.SecretBundle>> GetSecretAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class QuantumJobsClientOptions : Azure.Core.ClientOptions
+    public partial class QuantumJobClientOptions : Azure.Core.ClientOptions
     {
-        public QuantumJobsClientOptions(Azure.Quantum.Jobs.QuantumJobsClientOptions.ServiceVersion version = Azure.Quantum.Jobs.QuantumJobsClientOptions.ServiceVersion.V7_0) { }
+        public QuantumJobClientOptions(Azure.Quantum.Jobs.QuantumJobClientOptions.ServiceVersion version = Azure.Quantum.Jobs.QuantumJobClientOptions.ServiceVersion.V7_0) { }
         public enum ServiceVersion
         {
             V7_0 = 1,

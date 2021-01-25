@@ -9,17 +9,17 @@ using NUnit.Framework;
 
 namespace Azure.Quantum.Jobs.Tests
 {
-    public class QuantumJobsClientLiveTests: RecordedTestBase<QuantumJobsClientTestEnvironment>
+    public class QuantumJobClientLiveTests: RecordedTestBase<QuantumJobClientTestEnvironment>
     {
-        public QuantumJobsClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public QuantumJobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;
         }
 
-        private QuantumJobsClient CreateClient()
+        private QuantumJobClient CreateClient()
         {
-            var rawClient = new QuantumJobsClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus", default, InstrumentClientOptions(new QuantumJobsClientOptions()));
+            var rawClient = new QuantumJobClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus", default, InstrumentClientOptions(new QuantumJobClientOptions()));
 
             return InstrumentClient(rawClient);
         }

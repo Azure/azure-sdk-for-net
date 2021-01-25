@@ -9,7 +9,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            QuantumJobsClient client = new QuantumJobsClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus");
+            QuantumJobClient client = new QuantumJobClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus");
             var jobs = client.GetJobsClient().ListAsync(CancellationToken.None).Result;
 
             Console.WriteLine(JsonConvert.SerializeObject(jobs));

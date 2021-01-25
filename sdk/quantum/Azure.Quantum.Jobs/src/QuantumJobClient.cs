@@ -14,7 +14,7 @@ namespace Azure.Quantum.Jobs
     /// <summary>
     /// The sample jobs client.
     /// </summary>
-    public class QuantumJobsClient
+    public class QuantumJobClient
     {
         /// <summary> Returns the client to handle the collection of jobs. </summary>
         public virtual JobsRestClient GetJobsClient()
@@ -24,13 +24,13 @@ namespace Azure.Quantum.Jobs
 
         private JobsRestClient _jobs;
 
-        /// <summary> Initializes a new instance of QuantumJobsClient for mocking. </summary>
-        protected QuantumJobsClient()
+        /// <summary> Initializes a new instance of QuantumJobClient for mocking. </summary>
+        protected QuantumJobClient()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="QuantumJobsClient"/> class.
+        /// Initializes a new instance of the <see cref="QuantumJobClient"/> class.
         /// </summary>
         /// <param name="subscriptionId">The subscription identifier.</param>
         /// <param name="resourceGroupName">Name of the resource group.</param>
@@ -38,17 +38,17 @@ namespace Azure.Quantum.Jobs
         /// <param name="location">The location.</param>
         /// <param name="tokenCredential">The token credential.</param>
         /// <param name="options">The options.</param>
-        public QuantumJobsClient(
+        public QuantumJobClient(
             string subscriptionId,
             string resourceGroupName,
             string workspaceName,
             string location,
             TokenCredential tokenCredential = default,
-            QuantumJobsClientOptions options = default)
+            QuantumJobClientOptions options = default)
         {
             if (options == null)
             {
-                options = new QuantumJobsClientOptions();
+                options = new QuantumJobClientOptions();
             }
 
             if (tokenCredential == null)

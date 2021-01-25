@@ -10,16 +10,16 @@ using CommandLine;
 
 namespace Azure.Quantum.Jobs.Stress
 {
-    public class QuantumJobsClientTest : StressTest<QuantumJobsClientTest.QuantumJobsClientOptions, QuantumJobsClientTest.QuantumJobsClientMetrics>
+    public class QuantumJobClientTest : StressTest<QuantumJobClientTest.QuantumJobClientOptions, QuantumJobClientTest.QuantumJobClientMetrics>
     {
-        public QuantumJobsClientTest(QuantumJobsClientOptions options, QuantumJobsClientMetrics metrics) : base(options, metrics)
+        public QuantumJobClientTest(QuantumJobClientOptions options, QuantumJobClientMetrics metrics) : base(options, metrics)
         {
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             var keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
-            var client = new QuantumJobsClient(new Uri(keyVaultUri), new DefaultAzureCredential());
+            var client = new QuantumJobClient(new Uri(keyVaultUri), new DefaultAzureCredential());
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -50,14 +50,14 @@ namespace Azure.Quantum.Jobs.Stress
             }
         }
 
-        public class QuantumJobsClientMetrics : StressMetrics
+        public class QuantumJobClientMetrics : StressMetrics
         {
             public long SecretsReceived;
             public long CorrectValues;
             public long IncorrectValues;
         }
 
-        public class QuantumJobsClientOptions : StressOptions
+        public class QuantumJobClientOptions : StressOptions
         {
             [Option("secret-name", Default = "TestSecret", HelpText = "Name of secret to get")]
             public string SecretName { get; set; }

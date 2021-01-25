@@ -8,9 +8,9 @@ using Azure.Core.Pipeline;
 namespace Azure.Quantum
 {
     /// <summary>
-    /// The options for quantum jobs client <see cref="QuantumJobsClientOptions"/>.
+    /// The options for quantum jobs client <see cref="QuantumJobClientOptions"/>.
     /// </summary>
-    public class QuantumJobsClientOptions : ClientOptions
+    public class QuantumJobClientOptions : ClientOptions
     {
         /// <summary>
         /// The latest version of the service.
@@ -20,9 +20,9 @@ namespace Azure.Quantum
         internal string ApiVersion { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="QuantumJobsClientOptions"/>.
+        /// Initializes a new instance of the <see cref="QuantumJobClientOptions"/>.
         /// </summary>
-        public QuantumJobsClientOptions(ServiceVersion version = LatestVersion, RetryOptions retryOptions = default, HttpPipelineTransport transport = default)
+        public QuantumJobClientOptions(ServiceVersion version = LatestVersion, RetryOptions retryOptions = default, HttpPipelineTransport transport = default)
         {
             ApiVersion = version switch
             {

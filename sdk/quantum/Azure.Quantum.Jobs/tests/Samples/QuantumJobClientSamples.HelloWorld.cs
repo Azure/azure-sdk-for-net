@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Quantum.Jobs.Tests.Samples
 {
-    public class QuantumJobsClientSamples: SamplesBase<QuantumJobsClientTestEnvironment>
+    public class QuantumJobClientSamples: SamplesBase<QuantumJobClientTestEnvironment>
     {
         [Test]
         public void GettingASecret()
@@ -17,7 +17,7 @@ namespace Azure.Quantum.Jobs.Tests.Samples
 //             var endpoint = TestEnvironment.KeyVaultUri;
 //
 //             #region Snippet:GetSecret
-//             var client = new QuantumJobsClient(new Uri(endpoint), new DefaultAzureCredential());
+//             var client = new QuantumJobClient(new Uri(endpoint), new DefaultAzureCredential());
 //
 //             SecretBundle secret = client.GetSecret("TestSecret");
 //
