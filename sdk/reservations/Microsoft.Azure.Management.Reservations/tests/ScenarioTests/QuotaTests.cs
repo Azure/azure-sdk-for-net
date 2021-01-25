@@ -17,7 +17,7 @@ namespace Reservations.Tests.ScenarioTests
 
     using Xunit;
     using Microsoft.Rest.Azure;
-    public class QotaTests : TestBase
+    public class QuotaTests : TestBase
     {
         // ##############
         //  SETUP
@@ -36,7 +36,7 @@ namespace Reservations.Tests.ScenarioTests
         private const string LocationEUS = "eastus";
         private const string version = "2020-10-25";
         private const string SKUName = "standardFSv2Family";
-        private const string QuotaRequestId = "011e1463-c8d7-4a5e-ae35-f15c1f3226b4";
+        private const string QuotaRequestId = "e5fb878d-fa66-46c8-9379-b7e783994b90";
         #endregion
 
         #region Tests
@@ -113,10 +113,10 @@ namespace Reservations.Tests.ScenarioTests
                 var quotaRequests = reservationsClient.QuotaRequestStatus.List(QuotaSubscriptionId, ComputeProviderId, LocationWUS);
 
                 Assert.True(quotaRequests.All(x =>
-                    x.ProvisioningState != null &&
+                    //x.ProvisioningState != null &&
                     x.Name != null &&
                     x.Id != null &&
-                    x.RequestSubmitTime != null
+                    x.Type != null
                 ));
             }
         }
@@ -132,15 +132,15 @@ namespace Reservations.Tests.ScenarioTests
                     context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var quotaRequests = reservationsClient.QuotaRequestStatus.List(QuotaSubscriptionId, ComputeProviderId, LocationWUS, top: noOfItemsRequested);
+                var quotaRequests = reservationsClient.QuotaRequestStatus.List(QuotaSubscriptionId, ComputeProviderId, LocationEUS, top: noOfItemsRequested);
 
                 Assert.True(quotaRequests.Count() == noOfItemsRequested);
 
                 Assert.True(quotaRequests.All(x =>
-                    x.ProvisioningState != null &&
+                   // x.ProvisioningState != null &&
                     x.Name != null &&
                     x.Id != null &&
-                    x.RequestSubmitTime != null
+                    x.Type != null
                 ));
             }
         }
@@ -157,10 +157,11 @@ namespace Reservations.Tests.ScenarioTests
 
                 var quotaRequest = reservationsClient.QuotaRequestStatus.Get(QuotaSubscriptionId, ComputeProviderId, LocationWUS, QuotaRequestId);
 
-                Assert.True(quotaRequest.ProvisioningState != null &&
+                Assert.True(
+                   //quotaRequest.ProvisioningState != null &&
                    quotaRequest.Name != null &&
                    quotaRequest.Id != null &&
-                    quotaRequest.RequestSubmitTime != null
+                    quotaRequest.Type != null
                 );
             }
         }
@@ -234,11 +235,13 @@ namespace Reservations.Tests.ScenarioTests
                         context,
                         new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
                     var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, ComputeProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
+                    System.Diagnostics.Trace.TraceInformation($"Response: {quotaResponse}");
                 }
             }
             catch (CloudException ex)
             {
-                Assert.Contains("Quota reduction is not supported", ex.ToString());
+                System.Diagnostics.Trace.TraceInformation($"Exception: {ex}");
+                Assert.Contains("QuotaReductionNotSupported", ex.ToString());
             }
         }
         
@@ -263,10 +266,12 @@ namespace Reservations.Tests.ScenarioTests
                         context,
                         new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
                     var quotaResponse = reservationsClient.Quota.Update(QuotaSubscriptionId, ComputeProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
+                    System.Diagnostics.Trace.TraceInformation($"Response: {quotaResponse}");
                 }
             }
             catch (CloudException ex)
             {
+                System.Diagnostics.Trace.TraceInformation($"Exception: {ex}");
                 Assert.Contains("Quota reduction is not supported", ex.ToString());
             }
         }
