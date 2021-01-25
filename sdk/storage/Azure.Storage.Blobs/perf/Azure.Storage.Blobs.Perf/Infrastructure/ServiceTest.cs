@@ -8,6 +8,7 @@ namespace Azure.Storage.Blobs.Perf
     public abstract class ServiceTest<TOptions> : PerfTest<TOptions> where TOptions : PerfOptions
     {
         protected BlobServiceClient BlobServiceClient { get; private set; }
+        protected StorageSharedKeyCredential StorageSharedKeyCredential { get; private set; }
 
         public ServiceTest(TOptions options) : base(options)
         {
@@ -17,6 +18,9 @@ namespace Azure.Storage.Blobs.Perf
             };
 
             BlobServiceClient = new BlobServiceClient(PerfTestEnvironment.Instance.BlobStorageConnectionString, blobClientOptions);
+
+            StorageSharedKeyCredential = new StorageSharedKeyCredential(
+                PerfTestEnvironment.Instance.BlobStorageAccountName, PerfTestEnvironment.Instance.BlobStorageAccountKey);
         }
     }
 }
