@@ -499,6 +499,9 @@ Describe "Platform Matrix Generation With Object Fields" -Tag "objectfields" {
             "testObjectName1": { "testObject1Value1": "1", "testObject1Value2": "2" },
             "testObjectName2": { "testObject2Value1": "1", "testObject2Value2": "2" }
         },
+        "secondTestObject": {
+            "secondTestObjectName1": { "secondTestObject1Value1": "1", "secondTestObject1Value2": "2" }
+        },
         "testField": [ "footest", "bartest" ]
     },
     "include": [
@@ -514,21 +517,56 @@ Describe "Platform Matrix Generation With Object Fields" -Tag "objectfields" {
         $objectFieldConfig = GetMatrixConfigFromJson $matrixConfigForObject
     }
 
+    It "Should parse dimensions properly" {
+        [Array]$dimensions = GetMatrixDimensions $objectFieldConfig.orderedMatrix
+        $dimensions.Length | Should -Be 3
+        $dimensions[0] | Should -Be 2
+        $dimensions[1] | Should -Be 1
+        $dimensions[2] | Should -Be 2
+    }
+
+    It "Should populate a sparse matrix dimensions properly" {
+        [Array]$matrix = GenerateMatrix $objectFieldConfig "sparse"
+        $matrix.Length | Should -Be 3
+
+        $matrix[0].name | Should -Be "testObjectName1_secondTestObjectName1_footest"
+        $matrix[0].parameters.testField | Should -Be "footest"
+        $matrix[0].parameters.testObject1Value1 | Should -Be "1"
+        $matrix[0].parameters.testObject1Value2 | Should -Be "2"
+        $matrix[0].parameters.secondTestObject1Value1 | Should -Be "1"
+        $matrix[0].parameters.Count | Should -Be 5
+
+        $matrix[1].name | Should -Be "testObjectName2_secondTestObjectName1_bartest"
+        $matrix[1].parameters.testField | Should -Be "bartest"
+        $matrix[1].parameters.testObject2Value1 | Should -Be "1"
+        $matrix[1].parameters.testObject2Value2 | Should -Be "2"
+        $matrix[1].parameters.secondTestObject1Value1 | Should -Be "1"
+        $matrix[1].parameters.Count | Should -Be 5
+
+        $matrix[2].name | Should -Be "testObjectIncludeName_footest"
+        $matrix[2].parameters.testField | Should -Be "footest"
+        $matrix[2].parameters.testObjectValue1 | Should -Be "1"
+        $matrix[2].parameters.testObjectValue2 | Should -Be "2"
+        $matrix[2].parameters.Count | Should -Be 3
+    }
+
     It "Should splat matrix entries that are objects into key/values" {
         [Array]$matrix = GenerateMatrix $objectFieldConfig "all"
         $matrix.Length | Should -Be 5
 
-        $matrix[0].name | Should -Be "testObjectName1_footest"
+        $matrix[0].name | Should -Be "testObjectName1_secondTestObjectName1_footest"
         $matrix[0].parameters.testField | Should -Be "footest"
         $matrix[0].parameters.testObject1Value1 | Should -Be "1"
         $matrix[0].parameters.testObject1Value2 | Should -Be "2"
-        $matrix[0].parameters.Count | Should -Be 3
+        $matrix[0].parameters.secondTestObject1Value1 | Should -Be "1"
+        $matrix[0].parameters.Count | Should -Be 5
 
-        $matrix[3].name | Should -Be "testObjectName2_bartest"
+        $matrix[3].name | Should -Be "testObjectName2_secondTestObjectName1_bartest"
         $matrix[3].parameters.testField | Should -Be "bartest"
         $matrix[3].parameters.testObject2Value1 | Should -Be "1"
         $matrix[3].parameters.testObject2Value2 | Should -Be "2"
-        $matrix[3].parameters.Count | Should -Be 3
+        $matrix[3].parameters.secondTestObject1Value1 | Should -Be "1"
+        $matrix[3].parameters.Count | Should -Be 5
 
         $matrix[4].name | Should -Be "testObjectIncludeName_footest"
         $matrix[4].parameters.testField | Should -Be "footest"
