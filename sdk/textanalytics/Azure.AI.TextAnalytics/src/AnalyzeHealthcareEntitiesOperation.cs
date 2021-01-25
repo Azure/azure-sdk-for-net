@@ -22,11 +22,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
 
-        /// <summary>Provides communication with the Text Analytics Azure Cognitive Service through its REST API.</summary>
         private TextAnalyticsOperationStatus _status;
 
         /// <summary>
-        /// Provides the input to be part of HealthcareOperation class
+        /// Provides the input to be part of AnalyzeHealthcareEntitiesOperation class
         /// </summary>
         internal readonly IDictionary<string, int> _idToIndexMap;
 
@@ -37,7 +36,7 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get; }
 
         /// <summary>
-        /// Gets an Status representing the operation.
+        /// Gets the status of the operation.
         /// </summary>
         public TextAnalyticsOperationStatus Status => _status;
 

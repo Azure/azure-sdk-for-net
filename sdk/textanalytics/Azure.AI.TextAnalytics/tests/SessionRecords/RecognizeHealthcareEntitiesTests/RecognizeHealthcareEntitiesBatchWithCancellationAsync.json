@@ -5,10 +5,10 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
-        "Content-Length": "15375",
+        "Content-Length": "1555",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1187081f805e684e8a099cf0a8eac3bc-8e7c5d27233a904d-00",
+        "traceparent": "00-26fb7737862e084bb104c96ed0cb6c1f-2740d0556d7efb45-00",
         "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210122.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "174f72762caf768d734c4bc2cef9931d",
         "x-ms-return-client-request-id": "true"
@@ -17,70 +17,70 @@
         "documents": [
           {
             "id": "0",
-            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \\\r\n                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \\\r\n                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \\\r\n                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\\\r\n                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \\\r\n                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \\\r\n                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \\\r\n                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient\u0027s \\\r\n                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
             "language": "en"
           },
           {
             "id": "1",
-            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \\\r\n                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \\\r\n                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \\\r\n                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\\\r\n                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \\\r\n                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \\\r\n                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \\\r\n                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient\u0027s \\\r\n                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
             "language": "en"
           },
           {
             "id": "2",
-            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \\\r\n                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \\\r\n                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \\\r\n                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\\\r\n                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \\\r\n                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \\\r\n                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \\\r\n                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient\u0027s \\\r\n                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
             "language": "en"
           },
           {
             "id": "3",
-            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \\\r\n                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \\\r\n                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \\\r\n                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\\\r\n                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \\\r\n                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \\\r\n                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \\\r\n                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient\u0027s \\\r\n                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
             "language": "en"
           },
           {
             "id": "4",
-            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \\\r\n                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \\\r\n                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \\\r\n                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\\\r\n                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \\\r\n                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \\\r\n                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \\\r\n                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient\u0027s \\\r\n                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
             "language": "en"
           },
           {
             "id": "5",
-            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \\\r\n                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \\\r\n                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \\\r\n                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\\\r\n                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \\\r\n                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \\\r\n                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \\\r\n                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient\u0027s \\\r\n                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
             "language": "en"
           },
           {
             "id": "6",
-            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \\\r\n                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \\\r\n                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \\\r\n                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\\\r\n                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \\\r\n                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \\\r\n                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \\\r\n                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient\u0027s \\\r\n                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
             "language": "en"
           },
           {
             "id": "7",
-            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \\\r\n                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \\\r\n                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \\\r\n                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\\\r\n                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \\\r\n                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \\\r\n                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \\\r\n                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient\u0027s \\\r\n                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
             "language": "en"
           },
           {
             "id": "8",
-            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \\\r\n                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \\\r\n                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \\\r\n                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\\\r\n                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \\\r\n                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \\\r\n                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \\\r\n                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient\u0027s \\\r\n                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
             "language": "en"
           },
           {
             "id": "9",
-            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \\\r\n                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \\\r\n                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \\\r\n                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\\\r\n                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \\\r\n                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \\\r\n                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \\\r\n                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient\u0027s \\\r\n                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
             "language": "en"
           }
         ]
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "93181b65-bcc8-40a3-9173-a8966f40b1ed",
-        "Date": "Fri, 22 Jan 2021 21:30:30 GMT",
-        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/b5ad88c2-41a1-43bf-ab4c-e7cb04774a9c",
+        "apim-request-id": "47910c25-7ff6-4ae9-8143-e5b595752362",
+        "Date": "Mon, 25 Jan 2021 17:10:39 GMT",
+        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/b3aaf1cd-863d-4bd4-84da-ebb38440a90a",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "406"
+        "x-envoy-upstream-service-time": "906"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/b5ad88c2-41a1-43bf-ab4c-e7cb04774a9c",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/b3aaf1cd-863d-4bd4-84da-ebb38440a90a",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
@@ -92,18 +92,18 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "960d4052-93e6-41ad-88f7-9c33535b2514",
-        "Date": "Fri, 22 Jan 2021 21:30:30 GMT",
-        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/b5ad88c2-41a1-43bf-ab4c-e7cb04774a9c",
+        "apim-request-id": "f1bec6bd-12f7-493c-9334-ba7559321ee1",
+        "Date": "Mon, 25 Jan 2021 17:10:39 GMT",
+        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/b3aaf1cd-863d-4bd4-84da-ebb38440a90a",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "159"
+        "x-envoy-upstream-service-time": "27"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/b5ad88c2-41a1-43bf-ab4c-e7cb04774a9c?showStats=false",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/b3aaf1cd-863d-4bd4-84da-ebb38440a90a?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
@@ -115,19 +115,19 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "acad1b24-eb18-4522-8e6b-a9be1635dc5f",
+        "apim-request-id": "fb7fb757-b7fa-4126-a75a-f0f8e3f2da7c",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 22 Jan 2021 21:30:30 GMT",
+        "Date": "Mon, 25 Jan 2021 17:10:39 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "125"
+        "x-envoy-upstream-service-time": "26"
       },
       "ResponseBody": {
-        "jobId": "b5ad88c2-41a1-43bf-ab4c-e7cb04774a9c",
-        "lastUpdateDateTime": "2021-01-22T21:30:30Z",
-        "createdDateTime": "2021-01-22T21:30:30Z",
-        "expirationDateTime": "2021-01-23T21:30:30Z",
+        "jobId": "b3aaf1cd-863d-4bd4-84da-ebb38440a90a",
+        "lastUpdateDateTime": "2021-01-25T17:10:39Z",
+        "createdDateTime": "2021-01-25T17:10:38Z",
+        "expirationDateTime": "2021-01-26T17:10:38Z",
         "status": "cancelled",
         "errors": []
       }
