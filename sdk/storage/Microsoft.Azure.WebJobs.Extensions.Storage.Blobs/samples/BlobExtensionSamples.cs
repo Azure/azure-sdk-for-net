@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -20,9 +21,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
     {
         [TestCase(typeof(BlobFunction_ReactToBlobChange))]
         [TestCase(typeof(BlobFunction_String))]
+        [TestCase(typeof(BlobFunction_ByteArray))]
+        [TestCase(typeof(BlobFunction_String_Write))]
+        [TestCase(typeof(BlobFunction_ByteArray_Write))]
         [TestCase(typeof(BlobFunction_ReadStream))]
         [TestCase(typeof(BlobFunction_WriteStream))]
         [TestCase(typeof(BlobFunction_BlobClient))]
+        [TestCase(typeof(BlobFunction_TextReader_TextWriter))]
         public async Task Run_BlobFunction(Type programType)
         {
             var containerClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient().GetBlobContainerClient("sample-container");
@@ -78,6 +83,37 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
     }
     #endregion
 
+    #region Snippet:BlobFunction_ByteArray
+    public static class BlobFunction_ByteArray
+    {
+        [FunctionName("BlobFunction")]
+        public static void Run(
+            [BlobTrigger("sample-container/sample-blob-1")] byte[] blobContent1,
+            [Blob("sample-container/sample-blob-2")] byte[] blobContent2,
+            ILogger logger)
+        {
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated with content: {content}", Encoding.UTF8.GetString(blobContent1));
+            logger.LogInformation("Blob sample-container/sample-blob-2 has content: {content}", Encoding.UTF8.GetString(blobContent2));
+        }
+    }
+    #endregion
+
+    #region Snippet:BlobFunction_ByteArray_Write
+    public static class BlobFunction_ByteArray_Write
+    {
+        [FunctionName("BlobFunction")]
+        public static void Run(
+            [BlobTrigger("sample-container/sample-blob-1")] byte[] blobContent1,
+            [Blob("sample-container/sample-blob-2")] out byte[] blobContent2,
+            ILogger logger)
+        {
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated with content: {content}", Encoding.UTF8.GetString(blobContent1));
+            blobContent2 = blobContent1;
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been copied to sample-container/sample-blob-2");
+        }
+    }
+    #endregion
+
     #region Snippet:BlobFunction_ReadStream
     public static class BlobFunction_ReadStream
     {
@@ -105,6 +141,40 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
             ILogger logger)
         {
             await blobStream1.CopyToAsync(blobStream2);
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been copied to sample-container/sample-blob-2");
+        }
+    }
+    #endregion
+
+    #region Snippet:BlobFunction_String_Write
+    public static class BlobFunction_String_Write
+    {
+        [FunctionName("BlobFunction")]
+        public static void Run(
+            [BlobTrigger("sample-container/sample-blob-1")] string blobContent1,
+            [Blob("sample-container/sample-blob-2")] out string blobContent2,
+            ILogger logger)
+        {
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated with content: {content}", blobContent1);
+            blobContent2 = blobContent1;
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been copied to sample-container/sample-blob-2");
+        }
+    }
+    #endregion
+
+    #region Snippet:BlobFunction_TextReader_TextWriter
+    public static class BlobFunction_TextReader_TextWriter
+    {
+        [FunctionName("BlobFunction")]
+        public static async Task Run(
+            [BlobTrigger("sample-container/sample-blob-1")] TextReader blobContentReader1,
+            [Blob("sample-container/sample-blob-2")] TextWriter blobContentWriter2,
+            ILogger logger)
+        {
+            while (blobContentReader1.Peek() >= 0)
+            {
+                await blobContentWriter2.WriteLineAsync(await blobContentReader1.ReadLineAsync());
+            }
             logger.LogInformation("Blob sample-container/sample-blob-1 has been copied to sample-container/sample-blob-2");
         }
     }
