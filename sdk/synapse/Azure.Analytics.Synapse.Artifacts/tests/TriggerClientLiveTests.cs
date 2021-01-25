@@ -80,11 +80,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             // SYNAPSE_API_ISSUE - How do we point the trigger to our pipeline
 
             TriggerStartTriggerOperation startOperation = await client.StartStartTriggerAsync (trigger.Name);
-            Response startResponse = await startOperation.WaitForCompletionAsync ();
+            Response startResponse = await startOperation.WaitForCompletionAsync();
             startResponse.AssertSuccess();
 
             TriggerStopTriggerOperation stopOperation = await client.StartStopTriggerAsync (trigger.Name);
-            Response stopResponse = await stopOperation.WaitForCompletionAsync ();
+            Response stopResponse = await stopOperation.WaitForCompletionAsync();
             stopResponse.AssertSuccess();
         }
 
@@ -95,11 +95,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             await using DisposableTrigger trigger = await DisposableTrigger.Create (client, Recording);
             TriggerSubscribeTriggerToEventsOperation subOperation = await client.StartSubscribeTriggerToEventsAsync (trigger.Name);
-            TriggerSubscriptionOperationStatus subResponse = await subOperation.WaitForCompletionAsync ();
+            TriggerSubscriptionOperationStatus subResponse = await subOperation.WaitForCompletionAsync();
             Assert.AreEqual (EventSubscriptionStatus.Enabled, subResponse.Status);
 
             TriggerUnsubscribeTriggerFromEventsOperation unsubOperation = await client.StartUnsubscribeTriggerFromEventsAsync (trigger.Name);
-            TriggerSubscriptionOperationStatus unsubResponse = await unsubOperation.WaitForCompletionAsync ();
+            TriggerSubscriptionOperationStatus unsubResponse = await unsubOperation.WaitForCompletionAsync();
             Assert.AreEqual (EventSubscriptionStatus.Disabled, unsubResponse.Status);
         }
 

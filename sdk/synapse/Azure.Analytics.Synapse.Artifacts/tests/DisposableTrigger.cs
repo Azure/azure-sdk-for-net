@@ -30,13 +30,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string triggerName = recording.GenerateId("Trigger", 16);
             TriggerResource trigger = new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence()));
             TriggerCreateOrUpdateTriggerOperation createOperation = await client.StartCreateOrUpdateTriggerAsync (triggerName, trigger);
-            return await createOperation.WaitForCompletionAsync ();
+            return await createOperation.WaitForCompletionAsync();
         }
 
         public async ValueTask DisposeAsync()
         {
             TriggerDeleteTriggerOperation deleteOperation = await _client.StartDeleteTriggerAsync (Name);
-            await deleteOperation.WaitForCompletionAsync ();
+            await deleteOperation.WaitForCompletionAsync();
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             Assert.NotNull(runResponse.RunId);
 
             Response response = await runClient.CancelPipelineRunAsync (runResponse.RunId);
-            response.AssertSuccess ();
+            response.AssertSuccess();
         }
 
         [Test]
