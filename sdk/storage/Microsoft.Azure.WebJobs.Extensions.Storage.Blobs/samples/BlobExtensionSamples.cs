@@ -53,12 +53,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
     {
         [FunctionName("BlobFunction")]
         public static void Run(
-            [BlobTrigger("sample-container/sample-blob-1")] string blobTriggerContent,
-            [Blob("sample-container/sample-blob-2")] string blobContent,
+            [BlobTrigger("sample-container/sample-blob-1")] string blobContent1,
+            [Blob("sample-container/sample-blob-2")] string blobContent2,
             ILogger logger)
         {
-            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated with content: {content}", blobTriggerContent);
-            logger.LogInformation("Blob sample-container/sample-blob-2 has content: {content}", blobContent);
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated with content: {content}", blobContent1);
+            logger.LogInformation("Blob sample-container/sample-blob-2 has content: {content}", blobContent2);
         }
     }
     #endregion
@@ -68,14 +68,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
     {
         [FunctionName("BlobFunction")]
         public static void Run(
-            [BlobTrigger("sample-container/sample-blob-1")] Stream blobTriggerStream,
-            [Blob("sample-container/sample-blob-2", FileAccess.Read)] Stream blobStream,
+            [BlobTrigger("sample-container/sample-blob-1")] Stream blobStream1,
+            [Blob("sample-container/sample-blob-2", FileAccess.Read)] Stream blobStream2,
             ILogger logger)
         {
-            using var blobTriggerStreamReader = new StreamReader(blobTriggerStream);
-            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated with content: {content}", blobTriggerStreamReader.ReadToEnd());
-            using var blobStreamReader = new StreamReader(blobStream);
-            logger.LogInformation("Blob sample-container/sample-blob-2 has content: {content}", blobStreamReader.ReadToEnd());
+            using var blobStreamReader1 = new StreamReader(blobStream1);
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated with content: {content}", blobStreamReader1.ReadToEnd());
+            using var blobStreamReader2 = new StreamReader(blobStream2);
+            logger.LogInformation("Blob sample-container/sample-blob-2 has content: {content}", blobStreamReader2.ReadToEnd());
         }
     }
     #endregion
@@ -85,11 +85,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
     {
         [FunctionName("BlobFunction")]
         public static async Task Run(
-            [BlobTrigger("sample-container/sample-blob-1")] Stream blobTriggerStream,
-            [Blob("sample-container/sample-blob-2", FileAccess.Write)] Stream blobStream,
+            [BlobTrigger("sample-container/sample-blob-1")] Stream blobStream1,
+            [Blob("sample-container/sample-blob-2", FileAccess.Write)] Stream blobStream2,
             ILogger logger)
         {
-            await blobTriggerStream.CopyToAsync(blobStream);
+            await blobStream1.CopyToAsync(blobStream2);
             logger.LogInformation("Blob sample-container/sample-blob-1 has been copied to sample-container/sample-blob-2");
         }
     }
@@ -100,14 +100,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
     {
         [FunctionName("BlobFunction")]
         public static async Task Run(
-            [BlobTrigger("sample-container/sample-blob-1")] BlobClient blobTriggerClient,
-            [Blob("sample-container/sample-blob-2")] BlobClient blobClient,
+            [BlobTrigger("sample-container/sample-blob-1")] BlobClient blobClient1,
+            [Blob("sample-container/sample-blob-2")] BlobClient blobClient2,
             ILogger logger)
         {
-            BlobProperties blobTriggerProperties = await blobTriggerClient.GetPropertiesAsync();
-            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated on: {datetime}", blobTriggerProperties.LastModified);
-            BlobProperties blobProperties = await blobClient.GetPropertiesAsync();
-            logger.LogInformation("Blob sample-container/sample-blob-2 has been updated on: {datetime}", blobProperties.LastModified);
+            BlobProperties blobProperties1 = await blobClient1.GetPropertiesAsync();
+            logger.LogInformation("Blob sample-container/sample-blob-1 has been updated on: {datetime}", blobProperties1.LastModified);
+            BlobProperties blobProperties2 = await blobClient2.GetPropertiesAsync();
+            logger.LogInformation("Blob sample-container/sample-blob-2 has been updated on: {datetime}", blobProperties2.LastModified);
         }
     }
     #endregion
