@@ -359,6 +359,7 @@
         },
         "metadata": {
           "type": "object",
+          "x-nullable": true,
           "additionalProperties": {
             "type": "string"
           },
@@ -395,24 +396,28 @@
           "description": "The creation time of the job."
         },
         "beginExecutionTime": {
+          "x-nullable": true,
           "type": "string",
           "readOnly": true,
           "format": "date-time",
           "description": "The time when the job began execution."
         },
         "endExecutionTime": {
+          "x-nullable": true,
           "type": "string",
           "readOnly": true,
           "format": "date-time",
           "description": "The time when the job finished execution."
         },
         "cancellationTime": {
+          "x-nullable": true,
           "type": "string",
           "readOnly": true,
           "format": "date-time",
           "description": "The time when a job was successfully cancelled."
         },
         "errorData": {
+          "x-nullable": true,
           "$ref": "#/definitions/ErrorData",
           "readOnly": true,
           "description": "The error data for the job. This is expected only when Status 'Failed'."

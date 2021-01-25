@@ -102,7 +102,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> The target identifier to run the job. </summary>
         public string Target { get; set; }
         /// <summary> The job metadata. Metadata provides client the ability to store client-specific information. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; set; }
         /// <summary> The output blob SAS uri. When a job finishes successfully, results will be uploaded to this blob. </summary>
         public string OutputDataUri { get; set; }
         /// <summary> The format of the output data. </summary>

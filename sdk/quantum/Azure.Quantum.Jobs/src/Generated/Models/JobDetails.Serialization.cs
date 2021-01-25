@@ -47,14 +47,21 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStringValue(Target);
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
+                if (Metadata != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("metadata");
+                    writer.WriteStartObject();
+                    foreach (var item in Metadata)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("metadata");
+                }
             }
             if (Optional.IsDefined(OutputDataUri))
             {
@@ -84,9 +91,9 @@ namespace Azure.Quantum.Jobs.Models
             Optional<string> outputDataFormat = default;
             Optional<JobStatus> status = default;
             Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> beginExecutionTime = default;
-            Optional<DateTimeOffset> endExecutionTime = default;
-            Optional<DateTimeOffset> cancellationTime = default;
+            Optional<DateTimeOffset?> beginExecutionTime = default;
+            Optional<DateTimeOffset?> endExecutionTime = default;
+            Optional<DateTimeOffset?> cancellationTime = default;
             Optional<ErrorData> errorData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -139,7 +146,7 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        metadata = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -184,7 +191,7 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        beginExecutionTime = null;
                         continue;
                     }
                     beginExecutionTime = property.Value.GetDateTimeOffset("O");
@@ -194,7 +201,7 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        endExecutionTime = null;
                         continue;
                     }
                     endExecutionTime = property.Value.GetDateTimeOffset("O");
@@ -204,7 +211,7 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        cancellationTime = null;
                         continue;
                     }
                     cancellationTime = property.Value.GetDateTimeOffset("O");
@@ -214,7 +221,7 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        errorData = null;
                         continue;
                     }
                     errorData = ErrorData.DeserializeErrorData(property.Value);

@@ -28,9 +28,7 @@ namespace Azure.Quantum.Jobs.Models
             NextLink = nextLink;
         }
 
-        /// <summary> Quota object. </summary>
         public IReadOnlyList<Quota> Value { get; }
-
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
     }
