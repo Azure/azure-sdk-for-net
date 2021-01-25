@@ -181,7 +181,7 @@ class AzureEngSemanticVersion {
   {
     $versions = $versionStrings | ForEach-Object { [AzureEngSemanticVersion]::ParseVersionString($_) }
     $sortedVersions = [AzureEngSemanticVersion]::SortVersions($versions)
-    return ($sortedVersions | ForEach-Object { $_.ToString() })
+    return ($sortedVersions | ForEach-Object { $_.RawVersion })
   }
 
   static [AzureEngSemanticVersion[]] SortVersions([AzureEngSemanticVersion[]] $versions)
