@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs
             if (transferOptions.InitialTransferSize.HasValue
                 && transferOptions.InitialTransferSize.Value > 0)
             {
-                _initialRangeSize = transferOptions.MaximumTransferSize.Value;
+                _initialRangeSize = transferOptions.InitialTransferSize.Value;
             }
             else
             {
@@ -338,7 +338,6 @@ namespace Azure.Storage.Blobs
                 cancellationToken)
                 .ConfigureAwait(false);
         }
-
 
         private static void CopyTo(
             BlobDownloadInfo result,

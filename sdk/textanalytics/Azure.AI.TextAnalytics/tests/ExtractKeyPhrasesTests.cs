@@ -13,8 +13,8 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         public ExtractKeyPhrasesTests(bool isAsync) : base(isAsync) { }
 
-        private const string singleEnglish = "My cat might need to see a veterinarian.";
-        private const string singleSpanish = "Mi perro está en el veterinario";
+        private const string SingleEnglish = "My cat might need to see a veterinarian.";
+        private const string SingleSpanish = "Mi perro está en el veterinario";
 
         private static List<string> batchConvenienceDocuments = new List<string>
         {
@@ -35,14 +35,29 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [Test]
-        public async Task ExtractKeyPhrasesTest()
+        public async Task ExtractKeyPhrasesWithAADTest()
         {
-            TextAnalyticsClient client = GetClient();
-            string document = singleEnglish;
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            string document = SingleEnglish;
 
             KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document);
 
-            Assert.AreEqual(2, keyPhrases.Count);
+            ValidateInDocumenResult(keyPhrases, 2);
+
+            Assert.IsTrue(keyPhrases.Contains("cat"));
+            Assert.IsTrue(keyPhrases.Contains("veterinarian"));
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = SingleEnglish;
+
+            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document);
+
+            ValidateInDocumenResult(keyPhrases, 2);
+
             Assert.IsTrue(keyPhrases.Contains("cat"));
             Assert.IsTrue(keyPhrases.Contains("veterinarian"));
         }
@@ -51,11 +66,27 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task ExtractKeyPhrasesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = singleSpanish;
+            string document = SingleSpanish;
 
             KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document, "es");
 
-            Assert.AreEqual(2, keyPhrases.Count);
+            ValidateInDocumenResult(keyPhrases, 2);
+
+            Assert.IsTrue(keyPhrases.Contains("perro"));
+            Assert.IsTrue(keyPhrases.Contains("veterinario"));
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesWithWarningTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
+
+            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document, "es");
+
+            ValidateInDocumenResult(keyPhrases, 1);
+
+            Assert.AreEqual(TextAnalyticsWarningCode.LongWordsInDocument, keyPhrases.Warnings.FirstOrDefault().WarningCode.ToString());
         }
 
         [Test]
@@ -81,21 +112,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task ExtractKeyPhrasesWithWarningTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
-
-            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document, "es");
-
-            Assert.IsNotNull(keyPhrases.Warnings);
-            Assert.GreaterOrEqual(keyPhrases.Warnings.Count, 0);
-            Assert.AreEqual(TextAnalyticsWarningCode.LongWordsInDocument, keyPhrases.Warnings.FirstOrDefault().WarningCode.ToString());
-
-            Assert.GreaterOrEqual(keyPhrases.Count, 1);
-        }
-
-        [Test]
         public async Task ExtractKeyPhrasesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -103,10 +119,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents);
 
-            foreach (ExtractKeyPhrasesResult result in results)
-            {
-                Assert.AreEqual(3, result.KeyPhrases.Count());
-            }
+            ValidateBatchDocumentsResult(results, 3);
         }
 
         [Test]
@@ -117,15 +130,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
-            foreach (ExtractKeyPhrasesResult result in results)
-            {
-                Assert.AreEqual(3, result.KeyPhrases.Count());
-            }
+            ValidateBatchDocumentsResult(results, 3, includeStatistics: true);
 
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
         }
 
         [Test]
@@ -136,10 +143,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents);
 
-            foreach (ExtractKeyPhrasesResult result in results)
-            {
-                Assert.AreEqual(3, result.KeyPhrases.Count());
-            }
+            ValidateBatchDocumentsResult(results, 3);
         }
 
         [Test]
@@ -150,15 +154,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
-            foreach (ExtractKeyPhrasesResult result in results)
-            {
-                Assert.AreEqual(3, result.KeyPhrases.Count());
-            }
+            ValidateBatchDocumentsResult(results, 3, includeStatistics: true);
 
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
         }
 
         [Test]
@@ -182,6 +180,51 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(results[0].HasError);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].KeyPhrases.Count());
             Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        private void ValidateInDocumenResult(KeyPhraseCollection keyPhrases, int minKeyPhrasesCount = default)
+        {
+            Assert.IsNotNull(keyPhrases.Warnings);
+            Assert.GreaterOrEqual(keyPhrases.Count, minKeyPhrasesCount);
+        }
+
+        private void ValidateBatchDocumentsResult(ExtractKeyPhrasesResultCollection results, int minKeyPhrasesCount = default, bool includeStatistics = default)
+        {
+            Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
+
+            if (includeStatistics)
+            {
+                Assert.IsNotNull(results.Statistics);
+                Assert.Greater(results.Statistics.DocumentCount, 0);
+                Assert.Greater(results.Statistics.TransactionCount, 0);
+                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+            }
+            else
+                Assert.IsNull(results.Statistics);
+
+            foreach (ExtractKeyPhrasesResult keyPhrasesInDocument in results)
+            {
+                Assert.That(keyPhrasesInDocument.Id, Is.Not.Null.And.Not.Empty);
+
+                Assert.False(keyPhrasesInDocument.HasError);
+
+                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                Assert.IsNotNull(keyPhrasesInDocument.Statistics);
+
+                if (includeStatistics)
+                {
+                    Assert.GreaterOrEqual(keyPhrasesInDocument.Statistics.CharacterCount, 0);
+                    Assert.Greater(keyPhrasesInDocument.Statistics.TransactionCount, 0);
+                }
+                else
+                {
+                    Assert.AreEqual(0, keyPhrasesInDocument.Statistics.CharacterCount);
+                    Assert.AreEqual(0, keyPhrasesInDocument.Statistics.TransactionCount);
+                }
+
+                ValidateInDocumenResult(keyPhrasesInDocument.KeyPhrases, minKeyPhrasesCount);
+            }
         }
     }
 }

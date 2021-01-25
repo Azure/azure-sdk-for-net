@@ -29,7 +29,11 @@ namespace Azure.Core.Tests
         {
             _app = app;
             _host = new WebHostBuilder()
-                .UseKestrel(options => options.Listen(new IPEndPoint(IPAddress.Loopback, 0)))
+                .UseKestrel(options =>
+                {
+                    options.Limits.MaxRequestBodySize = null;
+                    options.Listen(new IPEndPoint(IPAddress.Loopback, 0));
+                })
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<IStartup>(this);

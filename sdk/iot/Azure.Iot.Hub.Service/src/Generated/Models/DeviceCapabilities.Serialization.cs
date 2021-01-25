@@ -30,6 +30,11 @@ namespace Azure.Iot.Hub.Service.Models
             {
                 if (property.NameEquals("iotEdge"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     iotEdge = property.Value.GetBoolean();
                     continue;
                 }

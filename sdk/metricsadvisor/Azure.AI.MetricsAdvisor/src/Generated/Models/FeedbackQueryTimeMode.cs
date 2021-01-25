@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> time mode to filter feedback. </summary>
     public readonly partial struct FeedbackQueryTimeMode : IEquatable<FeedbackQueryTimeMode>
@@ -24,11 +24,6 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string MetricTimestampValue = "MetricTimestamp";
         private const string FeedbackCreatedTimeValue = "FeedbackCreatedTime";
-
-        /// <summary> MetricTimestamp. </summary>
-        public static FeedbackQueryTimeMode MetricTimestamp { get; } = new FeedbackQueryTimeMode(MetricTimestampValue);
-        /// <summary> FeedbackCreatedTime. </summary>
-        public static FeedbackQueryTimeMode FeedbackCreatedTime { get; } = new FeedbackQueryTimeMode(FeedbackCreatedTimeValue);
         /// <summary> Determines if two <see cref="FeedbackQueryTimeMode"/> values are the same. </summary>
         public static bool operator ==(FeedbackQueryTimeMode left, FeedbackQueryTimeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FeedbackQueryTimeMode"/> values are not the same. </summary>

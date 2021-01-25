@@ -47,6 +47,11 @@ namespace Azure.Communication.Administration.Models
             {
                 if (property.NameEquals("add"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PhoneNumberCapability> array = new List<PhoneNumberCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -57,6 +62,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("remove"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PhoneNumberCapability> array = new List<PhoneNumberCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "c8c2c8c5-e9fc-a50a-b140-3c22b50180ca",
         "x-ms-date": "Thu, 05 Mar 2020 21:42:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "c8c2c8c5-e9fc-a50a-b140-3c22b50180ca",
         "x-ms-request-id": "c9ef6022-f01a-0012-6e36-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -44,7 +44,7 @@
         "x-ms-client-request-id": "4e94d568-20f4-685c-5143-c8d0aca9a5a9",
         "x-ms-date": "Thu, 05 Mar 2020 21:42:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -60,7 +60,7 @@
         "x-ms-client-request-id": "4e94d568-20f4-685c-5143-c8d0aca9a5a9",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "c9ef6024-f01a-0012-6f36-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EResourceNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified resource does not exist.\n",
@@ -82,7 +82,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:42:41 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -95,7 +95,7 @@
         ],
         "x-ms-client-request-id": "2af8c07a-2373-7e3c-f59f-b506946e775a",
         "x-ms-request-id": "c9ef6025-f01a-0012-7036-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

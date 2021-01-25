@@ -30,11 +30,21 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("createdAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new ReleaseStatus(property.Value.GetString());
                     continue;
                 }
@@ -45,6 +55,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("phoneNumberReleaseStatusDetails"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, PhoneNumberReleaseDetails> dictionary = new Dictionary<string, PhoneNumberReleaseDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

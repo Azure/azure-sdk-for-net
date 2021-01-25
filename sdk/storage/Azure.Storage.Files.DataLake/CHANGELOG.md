@@ -1,7 +1,25 @@
 # Release History
 
-## 12.5.0-preview.2 (Unreleased)
+## 12.6.0-beta.2 (Unreleased)
+- Fixed bug where the Stream returned by DataLakeFileClient.OpenRead() would return a different Length after calls to Seek().
+- Added constructors taking connection string to DataLakeServiceClient, DataLakeFileSystemClient, DataLakeDirectoryClient, and DataLakeFileClient.
+- Fixed bug where DataLakePathClient.SetPermissions(), DataLakeFileClient.SetPermissions(), and DataLakeDirectoryClient.SetPermissions() could not just set Owner or Group.
+
+## 12.6.0-beta.1 (2020-12-07)
+- Added support for service version 2020-04-08.
+- Fixed bug where DataLakeServiceClient.GetFileSystemClient(), DataLakeFileSystemClient.GetFileClient(), DataLakeFileSystemClient.GetDirectoryClient(),
+DataLakeDirectoryClient.GetSubDirectoryClient() and DataLakeFileClient.GetFileClient() created clients that could not generate a SAS from clients that could generate a SAS.
+
+## 12.5.0 (2020-11-10)
+- Includes all features from 12.5.0-preview.1
 - Fixed bug where DataLakeFileSystem.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
+- Added additional info to exception messages.
+- Added DataLakeDirectoryClient.GetPaths().
+- Fixed bug where Data Lake SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
+- Added ability to set Position on streams created with DataLakeFileClient.OpenRead().
+- Added CanGenerateSasUri property and GenerateSasUri() to DataLakePathClient, DataLakeFileClient, DataLakeDirectoryClient and DataLakeFileSystemClient.
+- Added CanGenerateAccountSasUri property and GenerateAccountSasUri() to DataLakeServiceClient.
+- Restored single upload threshold for parallel uploads from 5 TB to 256 MB.
 
 ## 12.5.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.
@@ -10,6 +28,7 @@
 - Fixed bug where Stream returned from DataLakeFileClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
 - Fixed bug where DataLakeFileClient.Upload() could not upload read-only files.
 - Fixed bug where DataLakeBlobAccessPolicy.StartsOn and .ExpiresOn would cause the process to crash.
+- Added seekability to DataLakeFileClient.OpenRead().
 - Added Close and RetainUncommitedData to DataLakeFileUploadOptions.
 - Fixed bug where DataLakeDirectoryClient.Rename(), DataLakeFileClient.Rename(), and DataLakeFileClient.Rename() couldn't handle source paths with special characters.
 - Added DataLakeClientBuilderExtensions.

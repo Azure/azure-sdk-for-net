@@ -61,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DateTimeOffset endTime = default;
             AnomalyFeedbackValue value = default;
             Optional<string> anomalyDetectionConfigurationId = default;
-            Optional<MetricAnomalyDetectionConfiguration> anomalyDetectionConfigurationSnapshot = default;
+            Optional<AnomalyDetectionConfiguration> anomalyDetectionConfigurationSnapshot = default;
             FeedbackType feedbackType = default;
             Optional<string> feedbackId = default;
             Optional<DateTimeOffset> createdTime = default;
@@ -102,7 +102,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                         anomalyDetectionConfigurationSnapshot = null;
                         continue;
                     }
-                    anomalyDetectionConfigurationSnapshot = MetricAnomalyDetectionConfiguration.DeserializeMetricAnomalyDetectionConfiguration(property.Value);
+                    anomalyDetectionConfigurationSnapshot = AnomalyDetectionConfiguration.DeserializeAnomalyDetectionConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("feedbackType"))
@@ -117,6 +117,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("createdTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

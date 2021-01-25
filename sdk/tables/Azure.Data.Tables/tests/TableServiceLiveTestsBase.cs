@@ -20,7 +20,6 @@ namespace Azure.Data.Tables.Tests
     /// </remarks>
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
-
         public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
         {
             _endpointType = endpointType;
@@ -60,7 +59,6 @@ namespace Azure.Data.Tables.Tests
         [SetUp]
         public async Task TablesTestSetup()
         {
-
             ServiceUri = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.StorageUri,
@@ -94,7 +92,6 @@ namespace Azure.Data.Tables.Tests
             client = service.GetTableClient(tableName);
         }
 
-
         [TearDown]
         public async Task TablesTeardown()
         {
@@ -113,7 +110,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
@@ -142,7 +138,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
@@ -171,7 +166,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
@@ -200,7 +194,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {

@@ -23,15 +23,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static TriggerResource DeserializeTriggerResource(JsonElement element)
         {
             Trigger properties = default;
+            Optional<string> etag = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
                 {
                     properties = Trigger.DeserializeTrigger(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("etag"))
+                {
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -47,11 +52,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
                     continue;
                 }
             }

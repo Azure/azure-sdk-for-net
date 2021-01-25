@@ -54,15 +54,11 @@ namespace Azure.Core.Samples
             var page = Page<DeletedSecret>.FromValues(pageValues, default, new Mock<Response>().Object);
 
             // Create a mock for the Pageable
-            var pageableMock = new Mock<Pageable<DeletedSecret>> { CallBase = true };
-
-            // Setup AsPages method in the Pageable mock
-            pageableMock.Setup(c => c.AsPages(It.IsAny<string>(), default))
-                .Returns(new[] { page });
+            var pageable = Pageable<DeletedSecret>.FromPages(new[] { page });
 
             // Setup client method that returns Pageable
             mock.Setup(c => c.GetDeletedSecrets(default))
-                .Returns(pageableMock.Object);
+                .Returns(pageable);
 
             // Use the client mock
             SecretClient client = mock.Object;

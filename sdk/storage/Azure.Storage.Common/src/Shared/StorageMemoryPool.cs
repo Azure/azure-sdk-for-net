@@ -47,7 +47,7 @@ namespace Azure.Storage
             public Memory<byte> Memory { get; private set; }
 
             #region IDisposable Support
-            private bool _disposedValue = false; // To detect redundant calls
+            private bool _disposedValue; // To detect redundant calls
 
             public void Dispose()
             {

@@ -211,7 +211,7 @@ namespace Compute.Tests
 
                     inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.Id);
 
-                    inputVM.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
+                    inputVM.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4V2;
                     inputVM.NetworkProfile.NetworkInterfaces[0].Primary = false;
 
                     inputVM.NetworkProfile.NetworkInterfaces.Add(new NetworkInterfaceReference
@@ -289,7 +289,7 @@ namespace Compute.Tests
 
                     inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.Id);
 
-                    inputVM.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
+                    inputVM.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4V2;
                     inputVM.NetworkProfile.NetworkInterfaces[0].Primary = false;
 
                     inputVM.NetworkProfile.NetworkInterfaces.Add(new NetworkInterfaceReference

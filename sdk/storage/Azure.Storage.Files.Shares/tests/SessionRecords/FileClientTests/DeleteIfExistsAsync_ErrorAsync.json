@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://amandadev2.file.core.windows.net/?sv=2020-02-10\u0026ss=f\u0026srt=s\u0026se=2020-08-06T23%3A12%3A52Z\u0026sp=r\u0026sig=Sanitized",
+      "RequestUri": "https://amandadev2.file.core.windows.net/?sv=2020-04-08\u0026ss=f\u0026srt=s\u0026se=2020-08-06T23%3A12%3A52Z\u0026sp=r\u0026sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "traceparent": "00-921edbf08de506409d459da66bfac97a-0761d82d8700fa43-00",
@@ -11,7 +11,7 @@
         ],
         "x-ms-client-request-id": "afecfcd1-00f1-2326-fd79-f9ce927491a1",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 400,
