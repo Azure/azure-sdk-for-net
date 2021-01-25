@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for RebootStatus.
+    /// Defines values for WindowsVMGuestPatchMode.
     /// </summary>
-    public static class RebootStatus
+    public static class WindowsVMGuestPatchMode
     {
-        public const string NotNeeded = "NotNeeded";
-        public const string Required = "Required";
-        public const string Started = "Started";
-        public const string Failed = "Failed";
-        public const string Completed = "Completed";
+        public const string Manual = "Manual";
+        public const string AutomaticByOS = "AutomaticByOS";
+        public const string AutomaticByPlatform = "AutomaticByPlatform";
     }
 }

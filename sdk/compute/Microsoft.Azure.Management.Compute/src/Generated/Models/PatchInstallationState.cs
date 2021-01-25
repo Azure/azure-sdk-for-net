@@ -12,12 +12,15 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for InGuestPatchMode.
+    /// Defines values for PatchInstallationState.
     /// </summary>
-    public static class InGuestPatchMode
+    public static class PatchInstallationState
     {
-        public const string Manual = "Manual";
-        public const string AutomaticByOS = "AutomaticByOS";
-        public const string AutomaticByPlatform = "AutomaticByPlatform";
+        public const string Unknown = "Unknown";
+        public const string Installed = "Installed";
+        public const string Failed = "Failed";
+        public const string Excluded = "Excluded";
+        public const string NotSelected = "NotSelected";
+        public const string Pending = "Pending";
     }
 }

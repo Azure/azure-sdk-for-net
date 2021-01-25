@@ -14,24 +14,25 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// A feature for gallery image.
+    /// Specifies additional capabilities supported by the image
     /// </summary>
-    public partial class GalleryImageFeature
+    public partial class VirtualMachineImageFeature
     {
         /// <summary>
-        /// Initializes a new instance of the GalleryImageFeature class.
+        /// Initializes a new instance of the VirtualMachineImageFeature class.
         /// </summary>
-        public GalleryImageFeature()
+        public VirtualMachineImageFeature()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GalleryImageFeature class.
+        /// Initializes a new instance of the VirtualMachineImageFeature class.
         /// </summary>
-        /// <param name="name">The name of the gallery image feature.</param>
-        /// <param name="value">The value of the gallery image feature.</param>
-        public GalleryImageFeature(string name = default(string), string value = default(string))
+        /// <param name="name">The name of the feature.</param>
+        /// <param name="value">The corresponding value for the
+        /// feature.</param>
+        public VirtualMachineImageFeature(string name = default(string), string value = default(string))
         {
             Name = name;
             Value = value;
@@ -44,13 +45,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the gallery image feature.
+        /// Gets or sets the name of the feature.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of the gallery image feature.
+        /// Gets or sets the corresponding value for the feature.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

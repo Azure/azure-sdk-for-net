@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for GallerySharingPermissionTypes.
+    /// Defines values for LinuxVMGuestPatchMode.
     /// </summary>
-    public static class GallerySharingPermissionTypes
+    public static class LinuxVMGuestPatchMode
     {
-        public const string Private = "Private";
-        public const string Groups = "Groups";
+        public const string ImageDefault = "ImageDefault";
+        public const string AutomaticByPlatform = "AutomaticByPlatform";
     }
 }

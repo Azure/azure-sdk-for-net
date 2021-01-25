@@ -12,10 +12,13 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SharedToValues.
+    /// Defines values for VMGuestPatchRebootBehavior.
     /// </summary>
-    public static class SharedToValues
+    public static class VMGuestPatchRebootBehavior
     {
-        public const string Tenant = "tenant";
+        public const string Unknown = "Unknown";
+        public const string NeverReboots = "NeverReboots";
+        public const string AlwaysRequiresReboot = "AlwaysRequiresReboot";
+        public const string CanRequestReboot = "CanRequestReboot";
     }
 }

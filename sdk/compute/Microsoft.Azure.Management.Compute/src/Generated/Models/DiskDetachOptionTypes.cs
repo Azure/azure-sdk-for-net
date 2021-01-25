@@ -12,12 +12,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SharingUpdateOperationTypes.
+    /// Defines values for DiskDetachOptionTypes.
     /// </summary>
-    public static class SharingUpdateOperationTypes
+    public static class DiskDetachOptionTypes
     {
-        public const string Add = "Add";
-        public const string Remove = "Remove";
-        public const string Reset = "Reset";
+        public const string ForceDetach = "ForceDetach";
     }
 }

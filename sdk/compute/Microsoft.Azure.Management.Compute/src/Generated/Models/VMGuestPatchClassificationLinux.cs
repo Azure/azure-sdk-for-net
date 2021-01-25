@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SharingProfileGroupTypes.
+    /// Defines values for VMGuestPatchClassificationLinux.
     /// </summary>
-    public static class SharingProfileGroupTypes
+    public static class VMGuestPatchClassificationLinux
     {
-        public const string Subscriptions = "Subscriptions";
-        public const string AADTenants = "AADTenants";
+        public const string Critical = "Critical";
+        public const string Security = "Security";
+        public const string Other = "Other";
     }
 }

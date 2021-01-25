@@ -33,8 +33,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="osProfile">Specifies the operating system settings for
         /// the virtual machines in the scale set.</param>
-        /// <param name="applicationProfile">Specifies the gallery applications
-        /// that should be made available to the VM/VMSS</param>
         /// <param name="storageProfile">Specifies the storage settings for the
         /// virtual machine disks.</param>
         /// <param name="networkProfile">Specifies properties of the network
@@ -77,10 +75,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2019-03-01.</param>
         /// <param name="scheduledEventsProfile">Specifies Scheduled Event
         /// related configurations.</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile))
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile))
         {
             OsProfile = osProfile;
-            ApplicationProfile = applicationProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
             SecurityProfile = securityProfile;
@@ -105,13 +102,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "osProfile")]
         public VirtualMachineScaleSetOSProfile OsProfile { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies the gallery applications that should be made
-        /// available to the VM/VMSS
-        /// </summary>
-        [JsonProperty(PropertyName = "applicationProfile")]
-        public ApplicationProfile ApplicationProfile { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the storage settings for the virtual machine

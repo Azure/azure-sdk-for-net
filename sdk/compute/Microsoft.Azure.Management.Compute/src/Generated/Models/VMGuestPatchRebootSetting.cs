@@ -12,10 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SelectPermissions.
+    /// Defines values for VMGuestPatchRebootSetting.
     /// </summary>
-    public static class SelectPermissions
+    public static class VMGuestPatchRebootSetting
     {
-        public const string Permissions = "Permissions";
+        public const string IfRequired = "IfRequired";
+        public const string Never = "Never";
+        public const string Always = "Always";
     }
 }

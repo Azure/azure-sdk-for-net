@@ -44,8 +44,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Enter any required information and then click **Save**.</param>
         /// <param name="hardwareProfile">Specifies the hardware settings for
         /// the virtual machine.</param>
-        /// <param name="applicationProfile">Specifies the gallery applications
-        /// that should be made available to the VM/VMSS</param>
         /// <param name="storageProfile">Specifies the storage settings for the
         /// virtual machine disks.</param>
         /// <param name="additionalCapabilities">Specifies additional
@@ -152,12 +150,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), int? platformFaultDomain = default(int?), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), int? platformFaultDomain = default(int?), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(tags)
         {
             Plan = plan;
             HardwareProfile = hardwareProfile;
-            ApplicationProfile = applicationProfile;
             StorageProfile = storageProfile;
             AdditionalCapabilities = additionalCapabilities;
             OsProfile = osProfile;
@@ -206,13 +203,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hardwareProfile")]
         public HardwareProfile HardwareProfile { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies the gallery applications that should be made
-        /// available to the VM/VMSS
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.applicationProfile")]
-        public ApplicationProfile ApplicationProfile { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the storage settings for the virtual machine

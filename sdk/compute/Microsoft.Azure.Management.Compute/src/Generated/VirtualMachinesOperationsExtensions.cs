@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.
+            /// Optional parameter to force delete virtual machines.(Feature in Preview)
             /// </param>
             public static void Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?))
             {
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.
+            /// Optional parameter to force delete virtual machines.(Feature in Preview)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -994,6 +994,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Installs patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='installPatchesInput'>
+            /// Input for InstallPatches as directly received by the API
+            /// </param>
+            public static VirtualMachineInstallPatchesResult InstallPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput)
+            {
+                return operations.InstallPatchesAsync(resourceGroupName, vmName, installPatchesInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Installs patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='installPatchesInput'>
+            /// Input for InstallPatches as directly received by the API
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineInstallPatchesResult> InstallPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.InstallPatchesWithHttpMessagesAsync(resourceGroupName, vmName, installPatchesInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Run command on the VM.
             /// </summary>
             /// <param name='operations'>
@@ -1194,7 +1240,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.
+            /// Optional parameter to force delete virtual machines.(Feature in Preview)
             /// </param>
             public static void BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?))
             {
@@ -1214,7 +1260,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.
+            /// Optional parameter to force delete virtual machines.(Feature in Preview)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1624,6 +1670,52 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<VirtualMachineAssessPatchesResult> BeginAssessPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginAssessPatchesWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Installs patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='installPatchesInput'>
+            /// Input for InstallPatches as directly received by the API
+            /// </param>
+            public static VirtualMachineInstallPatchesResult BeginInstallPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput)
+            {
+                return operations.BeginInstallPatchesAsync(resourceGroupName, vmName, installPatchesInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Installs patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='installPatchesInput'>
+            /// Input for InstallPatches as directly received by the API
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineInstallPatchesResult> BeginInstallPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginInstallPatchesWithHttpMessagesAsync(resourceGroupName, vmName, installPatchesInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

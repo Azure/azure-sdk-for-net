@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// that has automatic placement enabled. &lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2020-06-01.</param>
         /// <param name="statuses">The resource status information.</param>
-        /// <param name="patchStatus">The status of virtual machine patch
-        /// operations.</param>
+        /// <param name="patchStatus">[Preview Feature] The status of virtual
+        /// machine patch operations.</param>
         public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string computerName = default(string), string osName = default(string), string osVersion = default(string), string hyperVGeneration = default(string), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), VirtualMachineHealthStatus vmHealth = default(VirtualMachineHealthStatus), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), string assignedHost = default(string), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), VirtualMachinePatchStatus patchStatus = default(VirtualMachinePatchStatus))
         {
             PlatformUpdateDomain = platformUpdateDomain;
@@ -195,7 +195,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<InstanceViewStatus> Statuses { get; set; }
 
         /// <summary>
-        /// Gets or sets the status of virtual machine patch operations.
+        /// Gets or sets [Preview Feature] The status of virtual machine patch
+        /// operations.
         /// </summary>
         [JsonProperty(PropertyName = "patchStatus")]
         public VirtualMachinePatchStatus PatchStatus { get; set; }
