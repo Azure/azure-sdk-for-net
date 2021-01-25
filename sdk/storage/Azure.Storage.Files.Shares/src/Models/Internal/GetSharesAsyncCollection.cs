@@ -36,7 +36,7 @@ namespace Azure.Storage.Files.Shares.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<SharesSegment> response = await _client.GetSharesInternal(
+            Response<ListSharesResponse> response = await _client.GetSharesInternal(
                 continuationToken,
                 _traits,
                 _states,
