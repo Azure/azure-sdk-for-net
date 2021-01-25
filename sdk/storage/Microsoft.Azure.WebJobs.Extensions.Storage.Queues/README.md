@@ -241,6 +241,24 @@ public static class QueueSenderFunction_CustomObject_Collector
 }
 ```
 
+### Accessing queue properties
+
+```C# Snippet:Function_BindingToQueueClient
+public static class Function_BindingToQueueClient
+{
+    [FunctionName("QueueFunction")]
+    public static async Task Run(
+        [QueueTrigger("sample-queue")] string message,
+        [Queue("sample-queue")] QueueClient queueClient,
+        ILogger logger)
+    {
+        logger.LogInformation("Received message from sample-queue, content={content}", message);
+        QueueProperties queueProperties = await queueClient.GetPropertiesAsync();
+        logger.LogInformation("There are approximatelly {count} messages", queueProperties.ApproximateMessagesCount);
+    }
+}
+```
+
 ## Troubleshooting
 
 Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
