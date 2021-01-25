@@ -7,22 +7,22 @@ using System;
 namespace Azure.Analytics.Synapse.AccessControl
 {
     /// <summary>
-    /// The options for <see cref="AccessControlClient"/>.
+    /// The options for <see cref="RoleAssignmentsClient"/>.
     /// </summary>
-    public class AccessControlClientOptions : ClientOptions
+    public class RoleAssignmentsClientOptions : ClientOptions
     {
-        private const ServiceVersion Latest = ServiceVersion.V2020_02_01_preview;
+        private const ServiceVersion Latest = ServiceVersion.V2020_08_01_preview;
 
-        internal static AccessControlClientOptions Default { get; } = new AccessControlClientOptions();
+        internal static RoleAssignmentsClientOptions Default { get; } = new RoleAssignmentsClientOptions();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccessControlClientOptions"/>.
+        /// Initializes a new instance of the <see cref="RoleAssignmentsClientOptions"/>.
         /// </summary>
-        public AccessControlClientOptions(ServiceVersion serviceVersion = Latest)
+        public RoleAssignmentsClientOptions(ServiceVersion serviceVersion = Latest)
         {
             VersionString = serviceVersion switch
             {
-                ServiceVersion.V2020_02_01_preview => "2020-02-01-preview",
+                ServiceVersion.V2020_08_01_preview => "2020-08-01-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
             };
         }
@@ -38,10 +38,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         public enum ServiceVersion
         {
             /// <summary>
-            /// The 2019-06-01-preview of the template service.
+            /// The 2020-08-01-preview of the template service.
             /// </summary>
 #pragma warning disable CA1707
-            V2020_02_01_preview = 1
+            V2020_08_01_preview = 1
 #pragma warning restore CA1707
         }
     }

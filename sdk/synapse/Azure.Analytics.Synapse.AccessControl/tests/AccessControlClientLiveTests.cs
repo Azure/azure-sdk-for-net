@@ -24,23 +24,25 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
     {
         internal class DisposableClientRole : IAsyncDisposable
         {
-            private readonly AccessControlClient _client;
+            private readonly RoleAssignmentsClient _client;
             public RoleAssignmentDetails Assignment;
 
-            private DisposableClientRole (AccessControlClient client, RoleAssignmentDetails assignment)
+            private DisposableClientRole (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, RoleAssignmentDetails assignment)
             {
-                _client = client;
+                _client = assignmentsClient;
                 Assignment = assignment;
             }
 
-            public static async ValueTask<DisposableClientRole> Create (AccessControlClient client, TestRecording recording) =>
-                new DisposableClientRole (client, await CreateResource (client, recording));
+            public static async ValueTask<DisposableClientRole> Create (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, TestRecording recording) =>
+                new DisposableClientRole (assignmentsClient, definitionsClient, await CreateResource (assignmentsClient, definitionsClient, recording));
 
-            public static async ValueTask<RoleAssignmentDetails> CreateResource (AccessControlClient client, TestRecording recording)
+            public static async ValueTask<RoleAssignmentDetails> CreateResource (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, TestRecording recording)
             {
-                string roleID = (await client.GetRoleDefinitionsAsync().ToListAsync()).First (x => x.Name == "Workspace Admin").Id;
-                string principalId = recording.Random.NewGuid().ToString();
-                return await client.CreateRoleAssignmentAsync(new RoleAssignmentOptions(roleID, principalId));
+                string scope = (await definitionsClient.ListScopesAsync()).Value.First();
+                Guid? roleID = (await definitionsClient.ListRoleDefinitionsAsync()).Value.First (x => x.Name == "Workspace Admin").Id;
+                string roleAssignmentId = recording.Random.NewGuid().ToString();
+                Guid principalId = recording.Random.NewGuid();
+                return await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, roleID.Value, principalId, scope);
             }
 
             public async ValueTask DisposeAsync() => await _client.DeleteRoleAssignmentByIdAsync(Assignment.Id);
@@ -50,51 +52,65 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
         {
         }
 
-        private AccessControlClient CreateClient()
+        private RoleAssignmentsClient CreateAssignmentClient()
         {
-            return InstrumentClient(new AccessControlClient(
+            return InstrumentClient(new RoleAssignmentsClient(
                 new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new AccessControlClientOptions())
+                InstrumentClientOptions(new RoleAssignmentsClientOptions())
+            ));
+        }
+
+        private RoleDefinitionsClient CreateDefinitionsClient()
+        {
+            return InstrumentClient(new RoleDefinitionsClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new RoleDefinitionsClientOptions())
             ));
         }
 
         [Test]
         public async Task CreateRoleAssignment()
         {
-            AccessControlClient client = CreateClient();
-            await using DisposableClientRole role = await DisposableClientRole.Create (client, this.Recording);
+            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
+            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
+
+            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient, this.Recording);
 
             Assert.NotNull(role.Assignment.Id);
-            Assert.NotNull(role.Assignment.RoleId);
+            Assert.NotNull(role.Assignment.RoleDefinitionId);
             Assert.NotNull(role.Assignment.PrincipalId);
         }
 
         [Test]
         public async Task GetRoleAssignment()
         {
-            AccessControlClient client = CreateClient();
-            await using DisposableClientRole role = await DisposableClientRole.Create (client, this.Recording);
+            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
+            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            RoleAssignmentDetails roleAssignment = await client.GetRoleAssignmentByIdAsync(role.Assignment.Id);
+            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient, this.Recording);
 
-            Assert.AreEqual(role.Assignment.RoleId, roleAssignment.RoleId);
+            RoleAssignmentDetails roleAssignment = await assignmentsClient.GetRoleAssignmentByIdAsync(role.Assignment.Id);
+
+            Assert.AreEqual(role.Assignment.RoleDefinitionId, roleAssignment.RoleDefinitionId);
             Assert.AreEqual(role.Assignment.PrincipalId, roleAssignment.PrincipalId);
         }
 
         [Test]
         public async Task ListRoleAssignments()
         {
-            AccessControlClient client = CreateClient();
-            await using DisposableClientRole role = await DisposableClientRole.Create (client, this.Recording);
+            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
+            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            Response<IReadOnlyList<RoleAssignmentDetails>> roleAssignments = await client.GetRoleAssignmentsAsync();
-            foreach (RoleAssignmentDetails expected in roleAssignments.Value)
+            await using DisposableClientRole role = await DisposableClientRole.Create (assignmentsClient, definitionsClient, this.Recording);
+
+            Response<IReadOnlyList<SynapseRoleDefinition>> roleAssignments = await definitionsClient.ListRoleDefinitionsAsync();
+            foreach (SynapseRoleDefinition expected in roleAssignments.Value)
             {
-                RoleAssignmentDetails actual = await client.GetRoleAssignmentByIdAsync(expected.Id);
+                SynapseRoleDefinition actual = await definitionsClient.GetRoleDefinitionByIdAsync(expected.Id.ToString());
                 Assert.AreEqual(expected.Id, actual.Id);
-                Assert.AreEqual(expected.PrincipalId, actual.PrincipalId);
-                Assert.AreEqual(expected.RoleId, actual.RoleId);
+                Assert.AreEqual(expected.Name, actual.Name);
             }
             Assert.GreaterOrEqual(roleAssignments.Value.Count, 1);
         }
@@ -102,19 +118,13 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
         [Test]
         public async Task DeleteRoleAssignments()
         {
-            AccessControlClient client = CreateClient();
-            RoleAssignmentDetails assignment = await DisposableClientRole.CreateResource (client, this.Recording);
+            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
+            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
 
-            Response response = await client.DeleteRoleAssignmentByIdAsync (assignment.Id);
+            RoleAssignmentDetails assignment = await DisposableClientRole.CreateResource (assignmentsClient, definitionsClient, this.Recording);
+
+            Response response = await assignmentsClient.DeleteRoleAssignmentByIdAsync (assignment.Id);
             response.AssertSuccess();
-        }
-
-        [Test]
-        public async Task GetCallerRoleAssignment()
-        {
-            AccessControlClient client = CreateClient();
-            Response<IReadOnlyList<string>> assignments = await client.GetCallerRoleAssignmentsAsync ();
-            Assert.GreaterOrEqual(assignments.Value.Count, 1);
         }
     }
 }

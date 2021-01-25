@@ -7,20 +7,20 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
-    public partial class AccessControlClient
+    public partial class RoleDefinitionsClient
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccessControlClient"/>.
+        /// Initializes a new instance of the <see cref="RoleDefinitionsClient"/>.
         /// </summary>
-        public AccessControlClient(Uri endpoint, TokenCredential credential)
-            : this(endpoint, credential, AccessControlClientOptions.Default)
+        public RoleDefinitionsClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, RoleDefinitionsClientOptions.Default)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccessControlClient"/>.
+        /// Initializes a new instance of the <see cref="RoleDefinitionsClient"/>.
         /// </summary>
-        public AccessControlClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options)
+        public RoleDefinitionsClient(Uri endpoint, TokenCredential credential, RoleDefinitionsClientOptions options)
             : this(new ClientDiagnostics(options),
                   SynapseClientPipeline.Build(options, credential),
                   endpoint.ToString(),
