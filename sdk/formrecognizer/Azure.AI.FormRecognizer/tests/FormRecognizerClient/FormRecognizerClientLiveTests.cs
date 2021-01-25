@@ -121,7 +121,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 Assert.IsNotNull(line.Appearance);
                 Assert.IsNotNull(line.Appearance.Style);
-                Assert.AreEqual(TextStyle.Other, line.Appearance.Style.Name);
+                Assert.AreEqual(TextStyleName.Other, line.Appearance.Style.Name);
                 Assert.Greater(line.Appearance.Style.Confidence, 0f);
             }
 
@@ -232,11 +232,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 if (lineIndex == 45)
                 {
-                    Assert.AreEqual(TextStyle.Handwriting, line.Appearance.Style.Name);
+                    Assert.AreEqual(TextStyleName.Handwriting, line.Appearance.Style.Name);
                 }
                 else
                 {
-                    Assert.AreEqual(TextStyle.Other, line.Appearance.Style.Name);
+                    Assert.AreEqual(TextStyleName.Other, line.Appearance.Style.Name);
                 }
             }
 
@@ -2352,6 +2352,14 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.NotNull(line.BoundingBox.Points);
                 Assert.AreEqual(4, line.BoundingBox.Points.Length);
                 Assert.NotNull(line.Text);
+
+                if (line.Appearance != null)
+                {
+                    Assert.IsNotNull(line.Appearance.Style);
+                    // TODO: Enable once service bug is fixed => https://github.com/Azure/azure-sdk-for-net/issues/18216
+                   // Assert.IsTrue(line.Appearance.Style.Name == StyleName.Handwriting || line.Appearance.Style.Name == StyleName.Other);
+                    Assert.Greater(line.Appearance.Style.Confidence, 0f);
+                }
 
                 Assert.NotNull(line.Words);
                 Assert.Greater(line.Words.Count, 0);

@@ -5,8 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenModel("Style")]
-    public partial class TextStyle
-    {
-    }
+    [CodeGenModel("TextStyle")]
+    public partial struct TextStyleName
+    { }
 }

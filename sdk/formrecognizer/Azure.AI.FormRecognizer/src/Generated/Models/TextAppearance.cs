@@ -7,15 +7,15 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> An object representing the appearance of the text line. </summary>
-    public partial class Appearance
+    public partial class TextAppearance
     {
-        /// <summary> Initializes a new instance of Appearance. </summary>
+        /// <summary> Initializes a new instance of TextAppearance. </summary>
         /// <param name="style"> An object representing the style of the text line. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="style"/> is null. </exception>
-        internal Appearance(Style style)
+        internal TextAppearance(TextStyle style)
         {
             if (style == null)
             {
@@ -26,6 +26,6 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary> An object representing the style of the text line. </summary>
-        public Style Style { get; }
+        public TextStyle Style { get; }
     }
 }
