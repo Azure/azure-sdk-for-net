@@ -13,8 +13,6 @@ jobs:
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          REPOSITORY_NAME: $(Build.Repository.Name)
-          PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
       - task: PowerShell@2
         displayName: "Verify generated code"
         condition: and(succeeded(), ne(variables['System.TeamProject'],'internal'))
@@ -22,6 +20,9 @@ jobs:
           filePath: "eng/scripts/Track1CodeCheck.ps1"
           pwsh: true
           failOnStderr:  false
+        env:
+          REPOSITORY_NAME: $(Build.Repository.Name)
+          PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
       - task: PublishBuildArtifacts@1
         condition: succeededOrFailed()
         inputs:
