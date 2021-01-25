@@ -42,9 +42,9 @@ namespace Microsoft.Extensions.Hosting
                 {
                     // Map old property names for backwards compatibility
                     // do it before the binding so new property names take precedence
-                    options.InvokeProcessorAfterReceiveTimeout = section.GetValue(
+                    options.InvokeFunctionAfterReceiveTimeout = section.GetValue(
                         "EventProcessorOptions:InvokeProcessorAfterReceiveTimeout",
-                        options.InvokeProcessorAfterReceiveTimeout);
+                        options.InvokeFunctionAfterReceiveTimeout);
 
                     options.TrackLastEnqueuedEventProperties = section.GetValue(
                         "EventProcessorOptions:EnableReceiverRuntimeMetric",

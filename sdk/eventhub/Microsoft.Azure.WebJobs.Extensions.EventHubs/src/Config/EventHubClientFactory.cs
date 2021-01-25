@@ -87,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     eventHubName: eventHubName,
                     options: _options.EventProcessorOptions,
                     eventBatchMaximumCount: _options.MaxBatchSize,
-                    invokeProcessorAfterReceiveTimeout: _options.InvokeProcessorAfterReceiveTimeout,
+                    invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                     exceptionHandler: _options.ExceptionHandler);
             }
             else if (!string.IsNullOrEmpty(connection))
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         credential: info.TokenCredential,
                         options: _options.EventProcessorOptions,
                         eventBatchMaximumCount: _options.MaxBatchSize,
-                        invokeProcessorAfterReceiveTimeout: _options.InvokeProcessorAfterReceiveTimeout,
+                        invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                         exceptionHandler: _options.ExceptionHandler);
                 }
 
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     eventHubName: eventHubName,
                     options: _options.EventProcessorOptions,
                     eventBatchMaximumCount: _options.MaxBatchSize,
-                    invokeProcessorAfterReceiveTimeout: _options.InvokeProcessorAfterReceiveTimeout,
+                    invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                     exceptionHandler: _options.ExceptionHandler);
             }
 

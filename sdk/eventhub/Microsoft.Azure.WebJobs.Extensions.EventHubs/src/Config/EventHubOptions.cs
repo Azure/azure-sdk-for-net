@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubOptions()
         {
             MaxBatchSize = 10;
-            InvokeProcessorAfterReceiveTimeout = false;
+            InvokeFunctionAfterReceiveTimeout = false;
             EventProcessorOptions = new EventProcessorOptions()
             {
                 LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// <summary>
         /// Returns whether the function would be triggered when a receive timeout occurs.
         /// </summary>
-        public bool InvokeProcessorAfterReceiveTimeout { get; set; }
+        public bool InvokeFunctionAfterReceiveTimeout { get; set; }
 
         /// <summary>
         /// Gets the initial offset options to apply when processing. This only applies
@@ -135,14 +135,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
 
         /// <inheritdoc cref="EventProcessorOptions.Identifier"/>
-        public string Identifier
+        public string ProcessorIdentifier
         {
             get => EventProcessorOptions.Identifier;
             set => EventProcessorOptions.Identifier = value;
         }
 
         /// <summary>
-        ///   The maximum amount of time to wait for events to become available. If <see cref="InvokeProcessorAfterReceiveTimeout"/> is true,
+        ///   The maximum amount of time to wait for events to become available. If <see cref="InvokeFunctionAfterReceiveTimeout"/> is true,
         ///   the function will be triggered with an empty <see cref="EventData"/>.
         /// </summary>
         public TimeSpan MaximumWaitTime
@@ -363,11 +363,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             JObject options = new JObject
                 {
                     { nameof(MaxBatchSize), MaxBatchSize },
-                    { nameof(InvokeProcessorAfterReceiveTimeout), InvokeProcessorAfterReceiveTimeout },
+                    { nameof(InvokeFunctionAfterReceiveTimeout), InvokeFunctionAfterReceiveTimeout },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(ConnectionOptions), ConstructConnectionOptions() },
                     { nameof(RetryOptions), ConstructRetryOptions() },
-                    { nameof(Identifier), Identifier },
+                    { nameof(ProcessorIdentifier), ProcessorIdentifier },
                     { nameof(TrackLastEnqueuedEventProperties), TrackLastEnqueuedEventProperties },
                     { nameof(PrefetchCount), PrefetchCount },
                     { nameof(PrefetchSizeInBytes), PrefetchSizeInBytes },

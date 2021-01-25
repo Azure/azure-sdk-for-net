@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(TimeSpan.FromSeconds(33), options.EventProcessorOptions.MaximumWaitTime);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
-            Assert.AreEqual(true, options.InvokeProcessorAfterReceiveTimeout);
+            Assert.AreEqual(true, options.InvokeFunctionAfterReceiveTimeout);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(123, result.MaxBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
-            Assert.True(result.InvokeProcessorAfterReceiveTimeout);
+            Assert.True(result.InvokeFunctionAfterReceiveTimeout);
             Assert.AreEqual(123, result.PrefetchCount);
             Assert.AreEqual(TimeSpan.FromSeconds(33), result.MaximumWaitTime);
             Assert.AreEqual(TimeSpan.FromSeconds(31), result.PartitionOwnershipExpirationInterval);
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(TimeSpan.FromSeconds(33), options.EventProcessorOptions.MaximumWaitTime);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
-            Assert.AreEqual(true, options.InvokeProcessorAfterReceiveTimeout);
+            Assert.AreEqual(true, options.InvokeFunctionAfterReceiveTimeout);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(123, result.MaxBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
-            Assert.True(result.InvokeProcessorAfterReceiveTimeout);
+            Assert.True(result.InvokeFunctionAfterReceiveTimeout);
             Assert.AreEqual(123, result.PrefetchCount);
             Assert.AreEqual(TimeSpan.FromSeconds(33), result.MaximumWaitTime);
             Assert.AreEqual(TimeSpan.FromSeconds(31), result.PartitionOwnershipExpirationInterval);
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:MaximumWaitTime", "00:00:33" },
                 { $"{extensionPath}:TrackLastEnqueuedEventProperties", "true" },
                 { $"{extensionPath}:PrefetchCount", "123" },
-                { $"{extensionPath}:InvokeProcessorAfterReceiveTimeout", "true" },
+                { $"{extensionPath}:InvokeFunctionAfterReceiveTimeout", "true" },
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },
                 { $"{extensionPath}:PartitionOwnershipExpirationInterval", "00:00:31" },
                 { $"{extensionPath}:LoadBalancingUpdateInterval", "00:00:21" },

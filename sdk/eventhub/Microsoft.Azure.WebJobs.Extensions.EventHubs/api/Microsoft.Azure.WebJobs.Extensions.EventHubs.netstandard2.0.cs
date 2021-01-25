@@ -29,9 +29,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubOptions() { }
         public int BatchCheckpointFrequency { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
-        public string Identifier { get { throw null; } set { } }
         public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } }
-        public bool InvokeProcessorAfterReceiveTimeout { get { throw null; } set { } }
+        public bool InvokeFunctionAfterReceiveTimeout { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.Processor.LoadBalancingStrategy LoadBalancingStrategy { get { throw null; } set { } }
         public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
         public int MaxBatchSize { get { throw null; } set { } }
@@ -39,6 +38,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public long? PrefetchSizeInBytes { get { throw null; } set { } }
+        public string ProcessorIdentifier { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
         public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
         public void AddReceiver(string eventHubName, string receiverConnectionString) { }
