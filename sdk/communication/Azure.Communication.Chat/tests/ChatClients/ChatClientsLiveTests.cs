@@ -55,6 +55,9 @@ namespace Azure.Communication.Chat.Tests
             (CommunicationUserIdentifier user4, _) = CreateUserAndToken(communicationIdentityClient);
             (CommunicationUserIdentifier user5, _) = CreateUserAndToken(communicationIdentityClient);
 
+            string repeatabilityRequestId1 = "contoso-F0A747F1-6245-4307-8267-B974340677D2";
+            string repeatabilityRequestId2 = "contoso-A0A747F1-6245-4307-8267-B974340677DA";
+
             var topic = "Thread sync from C# sdk";
             var displayNameMessage = "DisplayName sender message 1";
             var participants = new[]
@@ -70,11 +73,11 @@ namespace Azure.Communication.Chat.Tests
             #region Snippet:Azure_Communication_Chat_Tests_E2E_InitializeChatThreadClient
             //@@ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient("threadId");
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_InitializeChatThreadClient
-            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(topic, participants);
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(topic, participants, repeatabilityRequestId1);
             ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
             var threadId = chatThreadClient.Id;
 
-            CreateChatThreadResult createChatThreadResult2 = chatClient.CreateChatThread(topic, participants);
+            CreateChatThreadResult createChatThreadResult2 = chatClient.CreateChatThread(topic, participants, repeatabilityRequestId2);
             ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult2.ChatThread.Id);
             ChatThreadClient chatThreadClient3 = GetInstrumentedChatThreadClient(chatClient3, threadId);
 
@@ -210,6 +213,8 @@ namespace Azure.Communication.Chat.Tests
             (CommunicationUserIdentifier user1, string token1) = CreateUserAndToken(communicationIdentityClient);
             (CommunicationUserIdentifier user2, string token2) = CreateUserAndToken(communicationIdentityClient);
 
+            string repeatabilityRequestId1 = "contoso-B0A747F1-6245-4307-8267-B974340677DB";
+
             var participants = new List<ChatParticipant>
             {
                 new ChatParticipant(user1),
@@ -219,7 +224,7 @@ namespace Azure.Communication.Chat.Tests
             ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
 
             //act
-            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread("Thread topic - ReadReceipts Test", participants);
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread("Thread topic - ReadReceipts Test", participants, repeatabilityRequestId1);
             ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
             var threadId = chatThreadClient.Id;
             ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient2, threadId);
@@ -265,6 +270,9 @@ namespace Azure.Communication.Chat.Tests
             (CommunicationUserIdentifier user4, _) = await CreateUserAndTokenAsync(communicationIdentityClient);
             (CommunicationUserIdentifier user5, _) = await CreateUserAndTokenAsync(communicationIdentityClient);
 
+            string repeatabilityRequestId1 = "contoso-C0A747F1-6245-4307-8267-B974340677DC";
+            string repeatabilityRequestId2 = "contoso-D0A747F1-6245-4307-8267-B974340677DD";
+
             var topic = "Thread async from C# sdk";
             var displayNameMessage = "DisplayName sender message 1";
             var participants = new List<ChatParticipant>
@@ -277,10 +285,10 @@ namespace Azure.Communication.Chat.Tests
             ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
 
             //act
-            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic, participants);
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic, participants, repeatabilityRequestId1);
             ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
             var threadId = chatThreadClient.Id;
-            CreateChatThreadResult createChatThreadResult2 = await chatClient.CreateChatThreadAsync(topic, participants);
+            CreateChatThreadResult createChatThreadResult2 = await chatClient.CreateChatThreadAsync(topic, participants, repeatabilityRequestId2);
             ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult2.ChatThread.Id);
             ChatThreadClient chatThreadClient3 = GetInstrumentedChatThreadClient(chatClient3, threadId);
 
@@ -403,8 +411,10 @@ namespace Azure.Communication.Chat.Tests
             ChatClient chatClient = CreateInstrumentedChatClient(token1);
             ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
 
+            string repeatabilityRequestId1 = "contoso-E0A747F1-6245-4307-8267-B974340677DE";
+
             //act
-            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("Thread topic - ReadReceipts Async Test", participants);
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("Thread topic - ReadReceipts Async Test", participants, repeatabilityRequestId1);
             ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
             var threadId = chatThreadClient.Id;
             ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient2, threadId);

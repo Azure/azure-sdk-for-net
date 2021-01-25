@@ -63,6 +63,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
+                repeatabilityRequestId ??= Guid.NewGuid().ToString();
                 Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(topic, participants.Select(x => x.ToChatParticipantInternal()), repeatabilityRequestId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
@@ -85,6 +86,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
+                repeatabilityRequestId ??= Guid.NewGuid().ToString();
                 Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(topic, participants.Select(x => x.ToChatParticipantInternal()), repeatabilityRequestId, cancellationToken);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
