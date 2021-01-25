@@ -1,6 +1,6 @@
 ## Microsoft.Azure.Management.Reservations release notes
 
-### Changes in 1.15.0-preview
+### Changes in 1.15.0
 **Notes**
 
 * Add quota GA APIs.
