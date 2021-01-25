@@ -41,7 +41,7 @@ namespace Azure.Core
         /// <summary>
         /// A claims challenge returned from a failed authentication or authorization request.
         /// </summary>
-        public string ClaimsChallenge { get; }
+        public string? ClaimsChallenge { get; }
 
         /// <summary>
         /// The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.

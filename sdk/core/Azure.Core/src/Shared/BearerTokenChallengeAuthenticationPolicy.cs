@@ -9,6 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 
+#nullable enable
+
 namespace Azure.Core.Pipeline
 {
     /// <summary>
@@ -24,17 +26,6 @@ namespace Azure.Core.Pipeline
 
         private readonly AccessTokenCache _accessTokenCache;
         private string[] _scopes;
-
-        /// <summary>
-        /// Sets the current scopes for the policy.
-        /// </summary>
-        /// <param name="scopes">The scopes.</param>
-        protected void SetScopes(string[] scopes)
-        {
-            Argument.AssertNotNull(scopes, nameof(scopes));
-
-            _scopes = scopes;
-        }
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -72,12 +63,46 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
+        /// <summary>
+        /// Executed before initially sending the request to authenticate the request.
+        /// </summary>
+        /// <param name="message">The HttpMessage to be authenticated.</param>
+        /// <param name="async">Specifies if the method is being called in an asynchronous context</param>
+        protected virtual async Task OnBeforeRequestAsync(HttpMessage message, bool async)
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
+        /// </summary>
+        /// <remarks>This implementation handles common authentication challenges such as claims challenges. Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
+        /// <param name="message">The HttpMessage to be authenticated.</param>
+        /// <param name="async">Specifies if the method is being called in an asynchronous context.</param>
+        /// <returns>A boolean indicated whether the request contained a valid challenge and a <see cref="TokenRequestContext"/> was successfully initialized with it.</returns>
+        protected virtual bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)
+        {
+            context = default;
+
+            var claimsChallenge = GetClaimsChallenge(message.Response);
+
+            if (claimsChallenge != null)
+            {
+                context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, claimsChallenge);
+                return true;
+            }
+
+            return false;
+        }
+
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
+
+            await OnBeforeRequestAsync(message, async).ConfigureAwait(false);
 
             await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
 
@@ -90,10 +115,16 @@ namespace Azure.Core.Pipeline
                 ProcessNext(message, pipeline);
             }
 
+            // Check if we have received a challenge.
             if (message.Response.Status == 401 && message.Response.Headers.Contains("WWW-Authenticate"))
             {
-                if (await OnChallengeAsync(message, async).ConfigureAwait(false))
+                // Attempt to get the TokenRequestContext based on the challenge.
+                // If we fail to get the context, the challenge was not present or invalid.
+                // If we succeed in getting the context, authenticate the request and pass it up the policy chain.
+                if (TryGetTokenRequestContextFromChallenge(message, out TokenRequestContext context))
                 {
+                    await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
+
                     if (async)
                     {
                         await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
@@ -106,60 +137,25 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        internal static IEnumerable<(string, string)> ParseChallenges(string headerValue)
+        private async Task AuthenticateRequestAsync(HttpMessage message, TokenRequestContext context, bool async)
         {
-            var challengeMatches = s_AuthenticationChallengeRegex.Matches(headerValue);
-
-            for (int i = 0; i < challengeMatches.Count; i++)
+            string headerValue;
+            if (async)
             {
-                yield return (challengeMatches[i].Groups[1].Value, challengeMatches[i].Groups[2].Value);
+                headerValue = await _accessTokenCache.GetHeaderValueAsync(message, context, async).ConfigureAwait(false);
             }
-        }
-
-        internal static IEnumerable<(string, string)> ParseChallengeParameters(string challengeValue)
-        {
-            var paramMatches = s_ChallengeParameterRegex.Matches(challengeValue);
-
-            for (int i = 0; i < paramMatches.Count; i++)
+            else
             {
-                yield return (paramMatches[i].Groups[1].Value, paramMatches[i].Groups[2].Value);
-            }
-        }
-
-        /// <summary>
-        /// Executed before initially sending the request to authenticate the request.
-        /// </summary>
-        /// <param name="message">The HttpMessage to be authenticated.</param>
-        /// <param name="async">Specifies if the method is being called in an asynchronous context</param>
-        protected virtual async Task OnBeforeRequestAsync(HttpMessage message, bool async)
-        {
-            await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
-        /// </summary>
-        /// <remarks>This implementation handles common authentication challenges such as claims challenges. Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
-        /// <param name="message">The HttpMessage to be authenticated.</param>
-        /// <param name="async">Specifies if the method is being called in an asynchronous context.</param>
-        /// <returns>A boolean indicated whether the request should be retried.</returns>
-        protected virtual async Task<bool> OnChallengeAsync(HttpMessage message, bool async)
-        {
-            var claimsChallenge = GetClaimsChallenge(message.Response);
-
-            if (claimsChallenge != null)
-            {
-                await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId, claimsChallenge), async).ConfigureAwait(false);
-
-                return true;
+                headerValue = _accessTokenCache.GetHeaderValueAsync(message, context, async).EnsureCompleted();
             }
 
-            return false;
+            //TODO: revert to Request.SetHeader if this migrates back to Azure.Core
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
 
-        private static string GetClaimsChallenge(Response response)
+        private static string? GetClaimsChallenge(Response response)
         {
-            if (response.Status == 401 && response.Headers.TryGetValue("WWW-Authenticate", out string headerValue))
+            if (response.Status == 401 && response.Headers.TryGetValue("WWW-Authenticate", out string? headerValue))
             {
                 foreach (var challenge in ParseChallenges(headerValue))
                 {
@@ -182,22 +178,6 @@ namespace Azure.Core.Pipeline
             return null;
         }
 
-        private async Task AuthenticateRequestAsync(HttpMessage message, TokenRequestContext context, bool async)
-        {
-            string headerValue;
-            if (async)
-            {
-                headerValue = await _accessTokenCache.GetHeaderValueAsync(message, context, async).ConfigureAwait(false);
-            }
-            else
-            {
-                headerValue = _accessTokenCache.GetHeaderValueAsync(message, context, async).EnsureCompleted();
-            }
-
-            //TODO: revert to Request.SetHeader if this migrates back to Azure.Core
-            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
-        }
-
         private class AccessTokenCache
         {
             private readonly object _syncObj = new object();
@@ -206,8 +186,8 @@ namespace Azure.Core.Pipeline
             private readonly TimeSpan _tokenRefreshRetryDelay;
 
             private TokenRequestContext? _currentContext;
-            private TaskCompletionSource<HeaderValueInfo> _infoTcs;
-            private TaskCompletionSource<HeaderValueInfo> _backgroundUpdateTcs;
+            private TaskCompletionSource<HeaderValueInfo>? _infoTcs;
+            private TaskCompletionSource<HeaderValueInfo>? _backgroundUpdateTcs;
             public AccessTokenCache(TokenCredential credential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, string[] initialScopes)
             {
                 _credential = credential;
@@ -220,7 +200,7 @@ namespace Azure.Core.Pipeline
             {
                 bool getTokenFromCredential;
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
-                TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs;
+                TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
                 (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
                 HeaderValueInfo info;
 
@@ -289,7 +269,7 @@ namespace Azure.Core.Pipeline
                 return info.HeaderValue;
             }
 
-            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources(TokenRequestContext context)
+            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources(TokenRequestContext context)
             {
                 lock (_syncObj)
                 {
@@ -408,6 +388,26 @@ namespace Azure.Core.Pipeline
                     ExpiresOn = expiresOn;
                     RefreshOn = refreshOn;
                 }
+            }
+        }
+
+        internal static IEnumerable<(string, string)> ParseChallenges(string headerValue)
+        {
+            var challengeMatches = s_AuthenticationChallengeRegex.Matches(headerValue);
+
+            for (int i = 0; i < challengeMatches.Count; i++)
+            {
+                yield return (challengeMatches[i].Groups[1].Value, challengeMatches[i].Groups[2].Value);
+            }
+        }
+
+        internal static IEnumerable<(string, string)> ParseChallengeParameters(string challengeValue)
+        {
+            var paramMatches = s_ChallengeParameterRegex.Matches(challengeValue);
+
+            for (int i = 0; i < paramMatches.Count; i++)
+            {
+                yield return (paramMatches[i].Groups[1].Value, paramMatches[i].Groups[2].Value);
             }
         }
     }
