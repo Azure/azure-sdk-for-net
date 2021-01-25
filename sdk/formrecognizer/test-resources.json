@@ -9,7 +9,7 @@
                 "description": "The base resource name."
             }
         },
-        "formRecognizerLocation": {
+        "location": {
             "type": "string",
             "defaultValue": "canadacentral",
             "metadata": {
@@ -88,7 +88,7 @@
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "2017-04-18",
             "name": "[variables('uniqueSubDomainName')]",
-            "location":"[parameters('formRecognizerLocation')]",
+            "location":"[parameters('location')]",
             "sku": {
                 "name": "S0"
             },
@@ -130,7 +130,7 @@
         },
         "FORM_RECOGNIZER_TARGET_RESOURCE_REGION": {
             "type": "string",
-            "value": "[parameters('formRecognizerLocation')]"
+            "value": "[parameters('location')]"
         },
         "FORM_RECOGNIZER_TARGET_RESOURCE_ID": {
             "type": "string",

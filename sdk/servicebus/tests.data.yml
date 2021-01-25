@@ -7,4 +7,4 @@ extends:
     ServiceDirectory: servicebus
     SDKType: data
     TimeoutInMinutes: 120
-    Clouds: 'Public,Canary'
+    Clouds: 'Public,Preview,UsGov,China,Canary'
