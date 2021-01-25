@@ -37,7 +37,7 @@ namespace Azure.Quantum.Jobs.Tests
         public async Task CanGetList()
         {
             var client = CreateClient();
-            var jobs = client.Jobs.ListAsync(CancellationToken.None).Result;
+            var jobs = client.GetJobsClient().ListAsync(CancellationToken.None).Result;
             var list = await client.ListAsync();
 
             //Assert.AreEqual(list);
