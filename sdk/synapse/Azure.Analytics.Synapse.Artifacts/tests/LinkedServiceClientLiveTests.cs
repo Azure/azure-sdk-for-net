@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             public async ValueTask DisposeAsync()
             {
                 LinkedServiceDeleteLinkedServiceOperation operation = await _client.StartDeleteLinkedServiceAsync (Name);
-                await operation.WaitForCompletionAsync ();
+                await operation.WaitForCompletionAsync();
             }
         }
 
@@ -91,15 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             LinkedServiceResource resource = await DisposableLinkedService.CreateResource (client, this.Recording);
 
             LinkedServiceDeleteLinkedServiceOperation operation = await client.StartDeleteLinkedServiceAsync (resource.Name);
-            Response response = await operation.WaitForCompletionAsync ();
-            switch (response.Status) {
-                case 200:
-                case 204:
-                    break;
-                default:
-                    Assert.Fail($"Unexpected status ${response.Status} returned");
-                    break;
-            }
+            await operation.WaitAndAssertSuccessfulCompletion();
         }
 
         [Test]
@@ -112,13 +104,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string newLinkedServiceName = Recording.GenerateId("LinkedService2", 16);
 
             LinkedServiceRenameLinkedServiceOperation renameOperation = await client.StartRenameLinkedServiceAsync (resource.Name, new ArtifactRenameRequest () { NewName = newLinkedServiceName } );
-            await renameOperation.WaitForCompletionAsync ();
+            await renameOperation.WaitForCompletionAsync();
 
             LinkedServiceResource service = await client.GetLinkedServiceAsync (newLinkedServiceName);
             Assert.AreEqual (newLinkedServiceName, service.Name);
 
             LinkedServiceDeleteLinkedServiceOperation operation = await client.StartDeleteLinkedServiceAsync (newLinkedServiceName);
-            await operation.WaitForCompletionAsync ();
+            await operation.WaitForCompletionAsync();
         }
     }
 }

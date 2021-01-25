@@ -56,15 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             Assert.NotNull(runResponse.RunId);
 
             Response response = await runClient.CancelPipelineRunAsync (runResponse.RunId);
-
-            switch (response.Status) {
-                case 200:
-                case 204:
-                    break;
-                default:
-                    Assert.Fail($"Unexpected status ${response.Status} returned");
-                    break;
-            }
+            response.AssertSuccess();
         }
 
         [Test]

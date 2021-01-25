@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Tests
 {
@@ -31,6 +32,24 @@ namespace Azure.Analytics.Synapse.Tests
                 all.Add(item);
             }
             return all;
+        }
+
+        public static async Task WaitAndAssertSuccessfulCompletion (this Operation<Response> operation)
+        {
+            Response response = await operation.WaitForCompletionAsync();
+            response.AssertSuccess();
+        }
+
+        public static void AssertSuccess (this Response response)
+        {
+            switch (response.Status) {
+                case 200:
+                case 204:
+                    break;
+                default:
+                    Assert.Fail($"Unexpected status ${response.Status} returned");
+                    break;
+            }
         }
     }
 }

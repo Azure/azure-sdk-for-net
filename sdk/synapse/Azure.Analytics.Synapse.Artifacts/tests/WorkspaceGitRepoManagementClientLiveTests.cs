@@ -33,5 +33,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
         }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - Difficulties getting these to work - 'GitHubClientId is invalid'?")]
+        [Test]
+        public async Task TestGetWorkspace()
+        {
+            WorkspaceGitRepoManagementClient client = TriggerRunClient();
+            string clientID = "";
+            string accessToken = "";
+            GitHubAccessTokenRequest request = new GitHubAccessTokenRequest (clientID, accessToken, "https://github.com/login/oauth/access_token");
+            GitHubAccessTokenResponse response = await client.GetGitHubAccessTokenAsync (request);
+            Assert.NotNull (response.GitHubAccessToken);
+        }
     }
 }

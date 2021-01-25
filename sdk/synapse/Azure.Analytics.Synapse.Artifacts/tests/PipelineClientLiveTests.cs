@@ -59,15 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             PipelineResource resource = await DisposablePipeline.CreateResource (client, this.Recording);
 
             PipelineDeletePipelineOperation operation = await client.StartDeletePipelineAsync (resource.Name);
-            Response response = await operation.WaitForCompletionAsync ();
-            switch (response.Status) {
-                case 200:
-                case 204:
-                    break;
-                default:
-                    Assert.Fail($"Unexpected status ${response.Status} returned");
-                    break;
-            }
+            await operation.WaitAndAssertSuccessfulCompletion();
         }
 
         [Test]
@@ -80,13 +72,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string newPipelineName = Recording.GenerateId("Pipeline2", 16);
 
             PipelineRenamePipelineOperation renameOperation = await client.StartRenamePipelineAsync (resource.Name, new ArtifactRenameRequest () { NewName = newPipelineName } );
-            await renameOperation.WaitForCompletionAsync ();
+            await renameOperation.WaitForCompletionAsync();
 
             PipelineResource pipeline = await client.GetPipelineAsync (newPipelineName);
             Assert.AreEqual (newPipelineName, pipeline.Name);
 
             PipelineDeletePipelineOperation operation = await client.StartDeletePipelineAsync (newPipelineName);
-            await operation.WaitForCompletionAsync ();
+            await operation.WaitForCompletionAsync();
         }
 
         [Test]
