@@ -70,7 +70,7 @@ namespace Azure.Core.Pipeline
         /// <param name="async">Specifies if the method is being called in an asynchronous context</param>
         protected virtual async Task OnBeforeRequestAsync(HttpMessage message, bool async)
         {
-            await Task.CompletedTask;
+            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <remarks>This implementation handles common authentication challenges such as claims challenges. Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
         /// <param name="message">The HttpMessage to be authenticated.</param>
-        /// <param name="async">Specifies if the method is being called in an asynchronous context.</param>
+        /// <param name="context">If the return value is <c>true</c>, a <see cref="TokenRequestContext"/>.</param>
         /// <returns>A boolean indicated whether the request contained a valid challenge and a <see cref="TokenRequestContext"/> was successfully initialized with it.</returns>
         protected virtual bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)
         {
