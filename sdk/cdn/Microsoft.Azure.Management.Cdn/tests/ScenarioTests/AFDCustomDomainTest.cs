@@ -48,7 +48,7 @@ namespace Cdn.Tests.ScenarioTests
                     // Create a standard Azure frontdoor profile secret
                     string secretName = TestUtilities.GenerateName("secretName");
                     var secretSource = new ResourceReference("/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdn-powershell-test/providers/Microsoft.KeyVault/vaults/cdn-powershell-test-kv/certificates/cdn-powershell-test-cer");
-                    CustomerCertificateParameters parameters = new CustomerCertificateParameters("CustomerCertificate", secretSource)
+                    CustomerCertificateParameters parameters = new CustomerCertificateParameters(secretSource)
                     {
                         UseLatestVersion = true,
                         SubjectAlternativeNames = new List<string>(),
@@ -117,7 +117,7 @@ namespace Cdn.Tests.ScenarioTests
                     // Create a standard Azure frontdoor profile secret
                     string secretName = TestUtilities.GenerateName("secretName");
                     var secretSource = new ResourceReference("/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdn-powershell-test/providers/Microsoft.KeyVault/vaults/cdn-powershell-test-kv/certificates/cdn-powershell-test-cer");
-                    CustomerCertificateParameters parameters = new CustomerCertificateParameters("CustomerCertificate", secretSource)
+                    CustomerCertificateParameters parameters = new CustomerCertificateParameters(secretSource)
                     {
                         UseLatestVersion = true,
                         SubjectAlternativeNames = new List<string>(),
@@ -197,7 +197,7 @@ namespace Cdn.Tests.ScenarioTests
                     // Create a standard Azure frontdoor profile secret
                     string secretName = TestUtilities.GenerateName("secretName");
                     var secretSource = new ResourceReference("/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdn-powershell-test/providers/Microsoft.KeyVault/vaults/cdn-powershell-test-kv/certificates/cdn-powershell-test-cer");
-                    CustomerCertificateParameters parameters = new CustomerCertificateParameters("CustomerCertificate", secretSource)
+                    CustomerCertificateParameters parameters = new CustomerCertificateParameters(secretSource)
                     {
                         UseLatestVersion = true,
                         SubjectAlternativeNames = new List<string>(),
@@ -265,7 +265,7 @@ namespace Cdn.Tests.ScenarioTests
                     // Create a standard Azure frontdoor profile secret
                     string secretName = TestUtilities.GenerateName("secretName");
                     var secretSource = new ResourceReference("/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdn-powershell-test/providers/Microsoft.KeyVault/vaults/cdn-powershell-test-kv/certificates/cdn-powershell-test-cer");
-                    CustomerCertificateParameters parameters = new CustomerCertificateParameters("CustomerCertificate", secretSource)
+                    CustomerCertificateParameters parameters = new CustomerCertificateParameters(secretSource)
                     {
                         UseLatestVersion = true,
                         SubjectAlternativeNames = new List<string>(),
@@ -343,7 +343,7 @@ namespace Cdn.Tests.ScenarioTests
                     // Create a standard Azure frontdoor profile secret
                     string secretName = TestUtilities.GenerateName("secretName");
                     var secretSource = new ResourceReference("/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdn-powershell-test/providers/Microsoft.KeyVault/vaults/cdn-powershell-test-kv/certificates/cdn-powershell-test-cer");
-                    CustomerCertificateParameters parameters = new CustomerCertificateParameters("CustomerCertificate", secretSource)
+                    CustomerCertificateParameters parameters = new CustomerCertificateParameters(secretSource)
                     {
                         UseLatestVersion = true,
                         SubjectAlternativeNames = new List<string>(),
