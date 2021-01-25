@@ -39,9 +39,13 @@ The connection string can be supplied through [AzureWebJobsStorage app setting](
 
 ### Using Blob trigger
 
+The Blob storage trigger starts a function when a new or updated blob is detected. The blob contents are provided as input to the function.
+
 Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=csharp) to learn about triggering an Azure Function when a blob is modified.
 
 ### Using Blob binding
+
+The input binding allows you to read blob storage data as input to an Azure Function. The output binding allows you to modify and delete blob storage data in an Azure Function.
 
 Please follow the [input binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-input?tabs=csharp) and [output binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-output?tabs=csharp) to learn about using this extension for accessing Blobs.
 

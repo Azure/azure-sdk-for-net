@@ -37,13 +37,17 @@ The connection string can be supplied through [AzureWebJobsStorage app setting](
 
 ## Key concepts
 
-### Using Queue binding
-
-Please follow the [binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-queue-output?tabs=csharp) to learn about using this extension for producing messages into queues in Azure Functions.
-
 ### Using Queue trigger
 
+The queue storage trigger runs a function as messages are added to Azure Queue storage.
+
 Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-queue-trigger?tabs=csharp) to learn about how to listen to queues in Azure Functions.
+
+### Using Queue binding
+
+Azure Functions can create new Azure Queue storage messages by setting up an output binding.
+
+Please follow the [binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-queue-output?tabs=csharp) to learn about using this extension for producing messages into queues in Azure Functions.
 
 ## Examples
 
