@@ -51,8 +51,10 @@
   },
   "variables": {
     "serviceBusNamespace": "[concat('sb-', parameters('baseName'))]",
+    "serviceBusSecondaryNamespace": "[concat('sb-secondary-', parameters('baseName'))]",
     "defaultSASKeyName": "RootManageSharedAccessKey",
     "authRuleResourceId": "[resourceId('Microsoft.ServiceBus/namespaces/authorizationRules', variables('serviceBusNamespace'), variables('defaultSASKeyName'))]",
+    "authRuleSecondaryResourceId": "[resourceId('Microsoft.ServiceBus/namespaces/authorizationRules', variables('serviceBusSecondaryNamespace'), variables('defaultSASKeyName'))]",
     "sbVersion": "2017-04-01",
     "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
     "serviceBusDataOwnerRoleId": "090c5cfd-751d-490a-894a-3ce6f1109419"
@@ -69,11 +71,22 @@
       "properties": {}
     },
     {
+      "apiVersion": "[variables('sbVersion')]",
+      "name": "[variables('serviceBusSecondaryNamespace')]",
+      "type": "Microsoft.ServiceBus/Namespaces",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard"
+      },
+      "properties": {}
+    },
+    {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('serviceBusDataOwnerRoleId'))]",
       "dependsOn": [
-        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]"
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]",
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusSecondaryNamespace'))]"
       ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('serviceBusDataOwnerRoleId'))]",
@@ -86,7 +99,8 @@
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('contributorRoleId'))]",
       "dependsOn": [
-        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]"
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusNamespace'))]",
+        "[resourceId('Microsoft.ServiceBus/Namespaces', variables('serviceBusSecondaryNamespace'))]"
       ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
@@ -99,6 +113,10 @@
     "SERVICEBUS_CONNECTION_STRING": {
       "type": "string",
       "value": "[listkeys(variables('authRuleResourceId'), variables('sbVersion')).primaryConnectionString]"
+    },
+    "SERVICEBUS_SECONDARY_NAMESPACE_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[listkeys(variables('authRuleSecondaryResourceId'), variables('sbVersion')).primaryConnectionString]"
     }
   }
 }

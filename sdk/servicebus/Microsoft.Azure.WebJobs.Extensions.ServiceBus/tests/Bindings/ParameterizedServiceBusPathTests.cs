@@ -1,18 +1,17 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
-using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Bindings.Path;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 {
     public class ParameterizedServiceBusPathTests
     {
-        [Fact]
+        [Test]
         public void Bind_IfNotNullBindingData_ReturnsResolvedQueueName()
         {
             const string queueOrTopicNamePattern = "queue-{name}-with-{parameter}";
@@ -21,16 +20,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             string result = path.Bind(bindingData);
 
-            Assert.Equal("queue-name-with-parameter", result);
+            Assert.AreEqual("queue-name-with-parameter", result);
         }
 
-        [Fact]
+        [Test]
         public void Bind_IfNullBindingData_Throws()
         {
             const string queueOrTopicNamePattern = "queue-{name}-with-{parameter}";
             IBindableServiceBusPath path = CreateProductUnderTest(queueOrTopicNamePattern);
 
-            ExceptionAssert.ThrowsArgumentNull(() => path.Bind(null), "bindingData");
+            Assert.Throws<ArgumentNullException>(() => path.Bind(null), "bindingData");
         }
 
         private static IBindableServiceBusPath CreateProductUnderTest(string queueOrTopicNamePattern)
