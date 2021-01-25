@@ -72,8 +72,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public DateTimeOffset LastModifiedTime { get; set; } = DateTimeOffset.Now;
 
         /// <summary>
-        /// The total lease renewals.
+        ///   The total lease renewals.
         /// </summary>
+        ///
         public int TotalRenewals { get; set; }
 
         /// <summary>
