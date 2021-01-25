@@ -24,22 +24,24 @@ namespace Azure.Storage.Blobs.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            var message = _pipeline.CreateMessage();
-            message.BufferResponse = Options.Buffer;
-            message.Request.Uri.Reset(SasUri);
-
+            var message = CreateMessage();
             _pipeline.Send(message, cancellationToken);
             message.Response.ContentStream.CopyTo(Stream.Null, BufferSize);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
+            var message = CreateMessage();
+            await _pipeline.SendAsync(message, cancellationToken);
+            await message.Response.ContentStream.CopyToAsync(Stream.Null, BufferSize, cancellationToken);
+        }
+
+        private HttpMessage CreateMessage()
+        {
             var message = _pipeline.CreateMessage();
             message.BufferResponse = Options.Buffer;
             message.Request.Uri.Reset(SasUri);
-
-            await _pipeline.SendAsync(message, cancellationToken);
-            await message.Response.ContentStream.CopyToAsync(Stream.Null, BufferSize, cancellationToken);
+            return message;
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible
