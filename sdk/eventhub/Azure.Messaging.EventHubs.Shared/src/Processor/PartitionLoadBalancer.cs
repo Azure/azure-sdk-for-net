@@ -270,17 +270,6 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///    Queries the value to use for the current date/time.  This is abstracted to allow for deterministic
-        ///    values to be used for testing.
-        /// </summary>
-        ///
-        /// <returns>The current date and time, in UTC.</returns>
-        internal virtual DateTimeOffset GetDateTimeOffsetNow()
-        {
-            return DateTimeOffset.UtcNow;
-        }
-
-        /// <summary>
         ///   Relinquishes this instance's ownership so they can be claimed by other processors and clears the OwnedPartitionIds.
         /// </summary>
         ///
@@ -563,6 +552,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             // We are expecting an enumerable with a single element if the claim attempt succeeds.
 
             return (true, claimedOwnership.FirstOrDefault());
+        }
+
+        /// <summary>
+        ///    Queries the value to use for the current date/time.  This is abstracted to allow for deterministic
+        ///    values to be used for testing.
+        /// </summary>
+        ///
+        /// <returns>The current date and time, in UTC.</returns>
+        internal virtual DateTimeOffset GetDateTimeOffsetNow()
+        {
+            return DateTimeOffset.UtcNow;
         }
     }
 }
