@@ -37,15 +37,31 @@ The connection string can be supplied through [AzureWebJobsStorage app setting](
 
 ## Key concepts
 
-### Using Blob binding
-
-Please follow the [input binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-input?tabs=csharp) and [output binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-output?tabs=csharp) to learn about using this extension for accessing Blobs.
-
 ### Using Blob trigger
 
 Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=csharp) to learn about triggering an Azure Function when a blob is modified.
 
+### Using Blob binding
+
+Please follow the [input binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-input?tabs=csharp) and [output binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-output?tabs=csharp) to learn about using this extension for accessing Blobs.
+
 ## Examples
+
+### Reacting to blob change
+
+```C# Snippet:BlobFunction_ReactToBlobChange
+public static class BlobFunction_ReactToBlobChange
+{
+    [FunctionName("BlobFunction")]
+    public static void Run(
+        [BlobTrigger("sample-container/sample-blob")] Stream blobStream,
+        ILogger logger)
+    {
+        using var blobStreamReader = new StreamReader(blobStream);
+        logger.LogInformation("Blob sample-container/sample-blob has been updated with content: {content}", blobStreamReader.ReadToEnd());
+    }
+}
+```
 
 ### Reading from stream
 

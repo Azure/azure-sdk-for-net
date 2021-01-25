@@ -18,6 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
 {
     public class BlobExtensionSamples
     {
+        [TestCase(typeof(BlobFunction_ReactToBlobChange))]
         [TestCase(typeof(BlobFunction_String))]
         [TestCase(typeof(BlobFunction_ReadStream))]
         [TestCase(typeof(BlobFunction_WriteStream))]
@@ -47,6 +48,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
             });
         }
     }
+
+    #region Snippet:BlobFunction_ReactToBlobChange
+    public static class BlobFunction_ReactToBlobChange
+    {
+        [FunctionName("BlobFunction")]
+        public static void Run(
+            [BlobTrigger("sample-container/sample-blob")] Stream blobStream,
+            ILogger logger)
+        {
+            using var blobStreamReader = new StreamReader(blobStream);
+            logger.LogInformation("Blob sample-container/sample-blob has been updated with content: {content}", blobStreamReader.ReadToEnd());
+        }
+    }
+    #endregion
 
     #region Snippet:BlobFunction_String
     public static class BlobFunction_String
