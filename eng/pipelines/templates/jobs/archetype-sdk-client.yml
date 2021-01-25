@@ -149,7 +149,7 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
 
   - job: "Test"
-    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }
+    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     variables:
       - template: ../variables/globals.yml
