@@ -69,15 +69,14 @@ function FilterMatrix([array]$matrix, [array]$filters) {
 
 function MatchesFilters([hashtable]$entry, [array]$filters) {
     foreach ($filter in $filters) {
-        $keyIsOptional, $key, $regex, $excludeKey = ParseFilter $filter
-        if ($excludeKey -and $entry.parameters.Contains($key)) {
-            return $false
-        }
+        $key, $regex = ParseFilter $filter
+        # Default all regex checks to go against empty string when keys are missing.
+        # This simplifies the filter syntax/interface to be regex only.
+        $value = ""
         if ($entry.parameters.Contains($key)) {
-            if ($entry.parameters[$key] -notmatch $regex) {
-                return $false
-            }
-        } elseif (-not $keyIsOptional) {
+            $value = $entry.parameters[$key]
+        }
+        if ($value -notmatch $regex) {
             return $false
         }
     }
@@ -86,15 +85,13 @@ function MatchesFilters([hashtable]$entry, [array]$filters) {
 }
 
 function ParseFilter([string]$filter) {
-    if ($filter -match "\!(.*)") {
-        return $true, $matches[1], "", $true
-    } elseif ($filter -match "(\??)(.*?)=(.*)") {
-        $keyIsOptional = $matches[1]
-        $key = $matches[2]
-        $regex = $matches[3]
-        return $keyIsOptional, $key, $regex, $false
+    # Lazy match key in case value contains '='
+    if ($filter -match "(.+?)=(.+)") {
+        $key = $matches[1]
+        $regex = $matches[2]
+        return $key, $regex
     } else {
-        throw "Invalid filter: `"${filter}`", expected !<key> or <key>=<regex> format"
+        throw "Invalid filter: `"${filter}`", expected <key>=<regex> format"
     }
 }
 

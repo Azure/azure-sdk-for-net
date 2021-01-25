@@ -224,24 +224,22 @@ The logic for generating display names works like this:
 
 #### Filters
 
-Filters can be passed to the matrix as an array of strings, each matching one of three formats below. Multiple filters
-get treated with the `and` operator.
-
-1. `<key>=<regex>` - This will find a matrix parameter matching <key> and include it if the key exists and the value matches the regex filter.
-1. `?<key>=<regex>` - This will find a matrix parameter matching <key> and include it if the value matches the regex filter or the key does not exist.
-1. `!<key>` - This will exclude matrix entries that do not have the specified key.
+Filters can be passed to the matrix as an array of strings, each matching the format of <key>=<regex>. When a matrix entry
+does not contain the specified key, it will default to a value of empty string for regex parsing. This can be used to specify
+filters for keys that don't exist or keys that optionally exist and match a regex, as seen in the below example.
 
 Display name filters can also be passed as a single regex string that runs against the [generated display name](#displaynames) of the matrix job.
 The intent of display name filters is to be defined primarily as a top level variable at template queue time in the azure pipelines UI.
 
-For example:
+For example, the below command will filter for matrix entries with "windows" in the job display name, no matrix variable
+named "ExcludedKey", a framework variable containing either "461" or "5.0", and an optional key "SupportedClouds" that, if exists, must contain "Public":
 
 ```
 ./Create-JobMatrix.ps1 `
   -ConfigPath samples/matrix.json `
   -Selection all `
   -DisplayNameFilter ".*windows.*" `
-  -Filters @("!ExcludedKey", "framework=(461|5\.0)", "?SupportedClouds=.*Public.*")
+  -Filters @("ExcludedKey=^$", "framework=(461|5\.0)", "SupportedClouds=^$|.*Public.*")
 ```
 
 #### Under the hood
