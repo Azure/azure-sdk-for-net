@@ -11,7 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public class DataFeedIngestionSettings
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedIngestionSettings"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedIngestionSettings"/> class.
         /// </summary>
         /// <param name="ingestionStartTime">The starting point in time from which data will be ingested from the data source. Subsequent ingestions happen periodically according to the specified <see cref="DataFeedGranularity"/>.</param>
         public DataFeedIngestionSettings(DateTimeOffset ingestionStartTime)
@@ -38,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The starting point in time from which data will be ingested from the data source. Subsequent
         /// ingestions happen periodically according to the data feed's granularity.
         /// </summary>
-        public DateTimeOffset IngestionStartTime { get; internal set; }
+        public DateTimeOffset IngestionStartTime { get; }
 
         /// <summary>
         /// If the specified data source supports limited concurrency, this can be set to specify the
@@ -46,11 +46,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public int? DataSourceRequestConcurrency { get; set; }
 
-        // TODO: provide link to documentation in IngestionRetryDelay.
-
         /// <summary>
         /// The minimum delay between two consecutive retry attempts, in case data ingestion
         /// fails. If not specified, the service's behavior depends on the data feed's granularity.
+        /// See the <see href="https://docs.microsoft.com/azure/cognitive-services/metrics-advisor/how-tos/onboard-your-data#avoid-loading-partial-data">documentation</see> for details.
         /// </summary>
         public TimeSpan? IngestionRetryDelay { get; set; }
 
@@ -61,8 +60,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public TimeSpan? IngestionStartOffset { get; set; }
 
-        // TODODOCS.
         /// <summary>
+        /// Specifies the maximum amount of time in which to attempt a retry if ingestion fails.
         /// </summary>
         public TimeSpan? StopRetryAfter { get; set; }
     }

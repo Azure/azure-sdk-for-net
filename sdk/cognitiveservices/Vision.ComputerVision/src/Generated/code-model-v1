@@ -181,14 +181,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "FaceRectangle",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/FaceRectangle"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/FaceRectangle"
      ]
     },
     "x-nullable": true
@@ -318,14 +318,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "CelebritiesModel",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/CelebritiesModel"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/CelebritiesModel"
      ]
     },
     "x-nullable": true
@@ -426,14 +426,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "LandmarksModel",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/LandmarksModel"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/LandmarksModel"
      ]
     },
     "x-nullable": true
@@ -532,14 +532,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "CategoryDetail",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/CategoryDetail"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/CategoryDetail"
      ]
     },
     "x-nullable": true
@@ -669,14 +669,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "Category",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/Category"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/Category"
      ]
     },
     "x-nullable": true
@@ -942,14 +942,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "AdultInfo",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/AdultInfo"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/AdultInfo"
      ]
     },
     "x-nullable": true
@@ -1169,14 +1169,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ColorInfo",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ColorInfo"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ColorInfo"
      ]
     },
     "x-nullable": true
@@ -1281,14 +1281,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ImageType",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ImageType"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ImageType"
      ]
     },
     "x-nullable": true
@@ -1426,14 +1426,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ImageTag",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ImageTag"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ImageTag"
      ]
     },
     "x-nullable": true
@@ -1534,14 +1534,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ImageCaption",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ImageCaption"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ImageCaption"
      ]
     },
     "x-nullable": true
@@ -1648,14 +1648,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ImageDescriptionDetails",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ImageDescriptionDetails"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ImageDescriptionDetails"
      ]
     },
     "x-nullable": true
@@ -1727,14 +1727,14 @@
      "extensions": {
       "x-ms-metadata": {
        "apiVersions": [
-        "3.0"
+        "3.1"
        ],
        "filename": [
-        "mem:///163?oai3.shaken.json"
+        "mem:///173?oai3.shaken.json"
        ],
        "name": "Gender",
        "originalLocations": [
-        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/FaceDescription-gender"
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/FaceDescription-gender"
        ]
       },
       "x-ms-enum": {
@@ -1829,14 +1829,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "FaceDescription",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/FaceDescription"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/FaceDescription"
      ]
     },
     "x-nullable": true
@@ -2023,14 +2023,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "BoundingRect",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/BoundingRect"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/BoundingRect"
      ]
     },
     "x-nullable": false
@@ -2160,14 +2160,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ObjectHierarchy",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ObjectHierarchy"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ObjectHierarchy"
      ]
     },
     "x-nullable": true
@@ -2326,14 +2326,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "DetectedObject",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/DetectedObject"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/DetectedObject"
      ]
     },
     "x-nullable": true
@@ -2463,14 +2463,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "DetectedBrand",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/DetectedBrand"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/DetectedBrand"
      ]
     },
     "x-nullable": true
@@ -2612,14 +2612,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ImageMetadata",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ImageMetadata"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ImageMetadata"
      ]
     },
     "x-nullable": true
@@ -3013,14 +3013,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ImageAnalysis",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ImageAnalysis"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ImageAnalysis"
      ]
     },
     "x-nullable": true
@@ -3140,14 +3140,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ImageDescription",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ImageDescription"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ImageDescription"
      ]
     },
     "x-nullable": true
@@ -3273,14 +3273,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "DetectResult",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/DetectResult"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/DetectResult"
      ]
     },
     "x-nullable": true
@@ -3386,14 +3386,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ModelDescription",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ModelDescription"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ModelDescription"
      ]
     },
     "x-nullable": true
@@ -3454,14 +3454,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ListModelsResult",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ListModelsResult"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ListModelsResult"
      ]
     },
     "x-nullable": true
@@ -3589,14 +3589,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "DomainModelResults",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/DomainModelResults"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/DomainModelResults"
      ]
     },
     "x-nullable": true
@@ -3693,14 +3693,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "OcrWord",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/OcrWord"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/OcrWord"
      ]
     },
     "x-nullable": true
@@ -3798,14 +3798,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "OcrLine",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/OcrLine"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/OcrLine"
      ]
     },
     "x-nullable": true
@@ -3903,14 +3903,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "OcrRegion",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/OcrRegion"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/OcrRegion"
      ]
     },
     "x-nullable": true
@@ -4085,14 +4085,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "OcrResult",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/OcrResult"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/OcrResult"
      ]
     },
     "x-nullable": true
@@ -4218,14 +4218,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "TagResult",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/TagResult"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/TagResult"
      ]
     },
     "x-nullable": true
@@ -4342,14 +4342,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "AreaOfInterestResult",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/AreaOfInterestResult"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/AreaOfInterestResult"
      ]
     },
     "x-nullable": true
@@ -4408,16 +4408,16 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json",
-      "mem:///164?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json",
+      "mem:///174?oai3.shaken.json"
      ],
      "name": "ImageUrl",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ImageUrl",
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/schemas/ImageUrl"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ImageUrl",
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/schemas/ImageUrl"
      ]
     }
    },
@@ -4447,16 +4447,16 @@
      "extensions": {
       "x-ms-metadata": {
        "apiVersions": [
-        "3.0"
+        "3.1"
        ],
        "filename": [
-        "mem:///163?oai3.shaken.json",
-        "mem:///164?oai3.shaken.json"
+        "mem:///173?oai3.shaken.json",
+        "mem:///174?oai3.shaken.json"
        ],
        "name": "ComputerVisionErrorCodes",
        "originalLocations": [
-        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ComputerVisionError-code",
-        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/schemas/ComputerVisionError-code"
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ComputerVisionError-code",
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/schemas/ComputerVisionError-code"
        ]
       },
       "x-ms-enum": {
@@ -4574,16 +4574,16 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json",
-      "mem:///164?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json",
+      "mem:///174?oai3.shaken.json"
      ],
      "name": "ComputerVisionError",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/ComputerVisionError",
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/schemas/ComputerVisionError"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/ComputerVisionError",
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/schemas/ComputerVisionError"
      ]
     }
    },
@@ -4708,14 +4708,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "LandmarkResults",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/LandmarkResults"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/LandmarkResults"
      ]
     },
     "x-nullable": true
@@ -4841,14 +4841,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "CelebrityResults",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/schemas/CelebrityResults"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/schemas/CelebrityResults"
      ]
     },
     "x-nullable": true
@@ -4992,14 +4992,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///164?oai3.shaken.json"
+      "mem:///174?oai3.shaken.json"
      ],
      "name": "Word",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/schemas/Word"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/schemas/Word"
      ]
     }
    },
@@ -5179,14 +5179,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///164?oai3.shaken.json"
+      "mem:///174?oai3.shaken.json"
      ],
      "name": "Line",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/schemas/Line"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/schemas/Line"
      ]
     }
    },
@@ -5401,14 +5401,14 @@
      "extensions": {
       "x-ms-metadata": {
        "apiVersions": [
-        "3.0"
+        "3.1"
        ],
        "filename": [
-        "mem:///164?oai3.shaken.json"
+        "mem:///174?oai3.shaken.json"
        ],
        "name": "TextRecognitionResultDimensionUnit",
        "originalLocations": [
-        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/schemas/ReadResult-unit"
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/schemas/ReadResult-unit"
        ]
       },
       "x-ms-enum": {
@@ -5512,14 +5512,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///164?oai3.shaken.json"
+      "mem:///174?oai3.shaken.json"
      ],
      "name": "ReadResult",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/schemas/ReadResult"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/schemas/ReadResult"
      ]
     }
    },
@@ -5616,14 +5616,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///164?oai3.shaken.json"
+      "mem:///174?oai3.shaken.json"
      ],
      "name": "analyzeResults",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/schemas/analyzeResults"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/schemas/analyzeResults"
      ]
     }
    },
@@ -5653,14 +5653,14 @@
      "extensions": {
       "x-ms-metadata": {
        "apiVersions": [
-        "3.0"
+        "3.1"
        ],
        "filename": [
-        "mem:///164?oai3.shaken.json"
+        "mem:///174?oai3.shaken.json"
        ],
        "name": "OperationStatusCodes",
        "originalLocations": [
-        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/schemas/OperationStatus"
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/schemas/OperationStatus"
        ]
       },
       "x-ms-enum": {
@@ -5839,14 +5839,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///164?oai3.shaken.json"
+      "mem:///174?oai3.shaken.json"
      ],
      "name": "ReadOperationResult",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/schemas/ReadOperationResult"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/schemas/ReadOperationResult"
      ]
     }
    },
@@ -5883,14 +5883,14 @@
      "extensions": {
       "x-ms-metadata": {
        "apiVersions": [
-        "3.0"
+        "3.1"
        ],
        "filename": [
-        "mem:///164?oai3.shaken.json"
+        "mem:///174?oai3.shaken.json"
        ],
        "name": "paths·1jj4n3r·read-analyze·post·responses·202·headers·operation_location",
        "originalLocations": [
-        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/headers/paths·1jj4n3r·read-analyze·post·responses·202·headers·operation_location"
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/headers/paths·1jj4n3r·read-analyze·post·responses·202·headers·operation_location"
        ]
       }
      },
@@ -5949,14 +5949,14 @@
      "extensions": {
       "x-ms-metadata": {
        "apiVersions": [
-        "3.0"
+        "3.1"
        ],
        "filename": [
-        "mem:///164?oai3.shaken.json"
+        "mem:///174?oai3.shaken.json"
        ],
        "name": "paths·1xuqulg·read-analyze-overload-stream·post·responses·202·headers·operation_location",
        "originalLocations": [
-        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/headers/paths·1xuqulg·read-analyze-overload-stream·post·responses·202·headers·operation_location"
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/headers/paths·1xuqulg·read-analyze-overload-stream·post·responses·202·headers·operation_location"
        ]
       }
      },
@@ -6386,16 +6386,16 @@
     "extensions": {
      "x-ms-metadata": {
       "apiVersions": [
-       "3.0"
+       "3.1"
       ],
       "filename": [
-       "mem:///163?oai3.shaken.json",
-       "mem:///164?oai3.shaken.json"
+       "mem:///173?oai3.shaken.json",
+       "mem:///174?oai3.shaken.json"
       ],
       "name": "Endpoint",
       "originalLocations": [
-       "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/Endpoint",
-       "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/parameters/Endpoint"
+       "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/Endpoint",
+       "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/parameters/Endpoint"
       ]
      },
      "x-ms-parameter-location": "client",
@@ -6422,13 +6422,13 @@
     }
    },
    "location": "path",
+   "deprecated": false,
    "collectionFormat": "none",
    "defaultValue": {
     "$id": "886",
     "fixed": false,
     "raw": ""
    },
-   "deprecated": false,
    "documentation": {
     "$id": "887",
     "fixed": false,
@@ -6470,8 +6470,8 @@
  "name": "ComputerVisionClient",
  "namespace": "Microsoft.Azure.CognitiveServices.Vision.ComputerVision",
  "modelsName": "Models",
- "apiVersion": "3.0",
- "baseUrl": "{Endpoint}/vision/v3.0",
+ "apiVersion": "3.1",
+ "baseUrl": "{Endpoint}/vision/v3.1",
  "documentation": "The Computer Vision API provides state-of-the-art algorithms to process images and return information. For example, it can be used to determine if an image contains mature content, or it can be used to find all the faces in an image.  It also has other features like estimating dominant and accent colors, categorizing the content of images, and describing an image with complete English sentences.  Additionally, it can also intelligently generate images thumbnails for displaying large images effectively.",
  "extensions": {
   "security": [
@@ -6506,14 +6506,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "ServiceLanguage",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/ServiceLanguage"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/ServiceLanguage"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -6597,14 +6597,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "DescriptionExclude",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/DescriptionExclude"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/DescriptionExclude"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -6651,14 +6651,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "OcrLanguage",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/OcrLanguage"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/OcrLanguage"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -6695,14 +6695,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "VisualFeatures",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/VisualFeatures"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/VisualFeatures"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -6749,14 +6749,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "DetectOrientation",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/DetectOrientation"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/DetectOrientation"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -6801,14 +6801,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·1uo1tld·analyze·post·parameters·1",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·1uo1tld·analyze·post·parameters·1"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·1uo1tld·analyze·post·parameters·1"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -6855,14 +6855,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·17f3675·describe·post·parameters·0",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·17f3675·describe·post·parameters·0"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·17f3675·describe·post·parameters·0"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -6908,14 +6908,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·c5phsp·models-model-analyze·post·parameters·0",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·c5phsp·models-model-analyze·post·parameters·0"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·c5phsp·models-model-analyze·post·parameters·0"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -6964,14 +6964,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·hmfxkk·generatethumbnail·post·parameters·0",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·hmfxkk·generatethumbnail·post·parameters·0"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·hmfxkk·generatethumbnail·post·parameters·0"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7021,14 +7021,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·up25nh·generatethumbnail·post·parameters·1",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·up25nh·generatethumbnail·post·parameters·1"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·up25nh·generatethumbnail·post·parameters·1"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7075,14 +7075,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·1kw45is·generatethumbnail·post·parameters·2",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·1kw45is·generatethumbnail·post·parameters·2"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·1kw45is·generatethumbnail·post·parameters·2"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7127,14 +7127,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·y1kw7v·analyze-overload-stream·post·parameters·1",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·y1kw7v·analyze-overload-stream·post·parameters·1"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·y1kw7v·analyze-overload-stream·post·parameters·1"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7181,14 +7181,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·qb1xy4·describe-overload-stream·post·parameters·0",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·qb1xy4·describe-overload-stream·post·parameters·0"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·qb1xy4·describe-overload-stream·post·parameters·0"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7238,14 +7238,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·u1r5ll·generatethumbnail-overload-stream·post·parameters·0",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·u1r5ll·generatethumbnail-overload-stream·post·parameters·0"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·u1r5ll·generatethumbnail-overload-stream·post·parameters·0"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7295,14 +7295,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·sbu4pk·generatethumbnail-overload-stream·post·parameters·1",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·sbu4pk·generatethumbnail-overload-stream·post·parameters·1"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·sbu4pk·generatethumbnail-overload-stream·post·parameters·1"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7349,14 +7349,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·1fwbec4·generatethumbnail-overload-stream·post·parameters·2",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·1fwbec4·generatethumbnail-overload-stream·post·parameters·2"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·1fwbec4·generatethumbnail-overload-stream·post·parameters·2"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7401,14 +7401,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///163?oai3.shaken.json"
+      "mem:///173?oai3.shaken.json"
      ],
      "name": "paths·sbku6q·models-model-analyze-overload-stream·post·parameters·0",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·sbku6q·models-model-analyze-overload-stream·post·parameters·0"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·sbku6q·models-model-analyze-overload-stream·post·parameters·0"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7449,19 +7449,19 @@
    "documentation": {
     "$id": "1000",
     "fixed": false,
-    "raw": "The BCP-47 language code of the text in the document. Currently, only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto language identification and multilanguage documents, so only provide a language code if you would like to force the documented to be processed as that specific language."
+    "raw": "The BCP-47 language code of the text in the document. Currently, only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto language identification and multi-language documents, so only provide a language code if you would like to force the documented to be processed as that specific language."
    },
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///164?oai3.shaken.json"
+      "mem:///174?oai3.shaken.json"
      ],
      "name": "OcrDetectionLanguage",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/parameters/OcrDetectionLanguage"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/parameters/OcrDetectionLanguage"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7498,14 +7498,14 @@
    "extensions": {
     "x-ms-metadata": {
      "apiVersions": [
-      "3.0"
+      "3.1"
      ],
      "filename": [
-      "mem:///164?oai3.shaken.json"
+      "mem:///174?oai3.shaken.json"
      ],
      "name": "paths·j2nm07·read-analyzeresults-operationid·get·parameters·0",
      "originalLocations": [
-      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/parameters/paths·j2nm07·read-analyzeresults-operationid·get·parameters·0"
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/parameters/paths·j2nm07·read-analyzeresults-operationid·get·parameters·0"
      ]
     },
     "x-ms-parameter-location": "method"
@@ -7545,12 +7545,12 @@
         "$ref": "914"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "csv",
        "defaultValue": {
         "$id": "1011",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1012",
         "fixed": false,
@@ -7559,14 +7559,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "VisualFeatures",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/VisualFeatures"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/VisualFeatures"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -7598,12 +7598,12 @@
         "$ref": "926"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "csv",
        "defaultValue": {
         "$id": "1017",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1018",
         "fixed": false,
@@ -7612,14 +7612,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1uo1tld·analyze·post·parameters·1",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·1uo1tld·analyze·post·parameters·1"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·1uo1tld·analyze·post·parameters·1"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -7651,13 +7651,13 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1023",
         "fixed": false,
         "raw": "en"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1024",
         "fixed": false,
@@ -7666,14 +7666,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "ServiceLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/ServiceLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/ServiceLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -7743,12 +7743,12 @@
         "$ref": "904"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "csv",
        "defaultValue": {
         "$id": "1036",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1037",
         "fixed": false,
@@ -7757,14 +7757,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "DescriptionExclude",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/DescriptionExclude"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/DescriptionExclude"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -7793,12 +7793,12 @@
       {
        "$id": "1041",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1042",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1043",
         "fixed": false,
@@ -7807,14 +7807,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·xp8uev·analyze·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·xp8uev·analyze·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·xp8uev·analyze·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -7858,14 +7858,14 @@
         "$id": "1048",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1knprzx·analyze·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·1knprzx·analyze·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·1knprzx·analyze·post·responses·200"
          ]
         }
        },
@@ -7881,14 +7881,14 @@
        "$id": "1050",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·1kk5ss8·analyze·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·1kk5ss8·analyze·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·1kk5ss8·analyze·post·responses·default"
         ]
        }
       },
@@ -7909,7 +7909,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -8127,13 +8127,13 @@
         "$ref": "932"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1054",
         "fixed": false,
         "raw": "1"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1055",
         "fixed": false,
@@ -8142,14 +8142,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·17f3675·describe·post·parameters·0",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·17f3675·describe·post·parameters·0"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·17f3675·describe·post·parameters·0"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -8181,13 +8181,13 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1060",
         "fixed": false,
         "raw": "en"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1061",
         "fixed": false,
@@ -8196,14 +8196,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "ServiceLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/ServiceLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/ServiceLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -8273,12 +8273,12 @@
         "$ref": "904"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "csv",
        "defaultValue": {
         "$id": "1073",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1074",
         "fixed": false,
@@ -8287,14 +8287,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "DescriptionExclude",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/DescriptionExclude"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/DescriptionExclude"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -8323,12 +8323,12 @@
       {
        "$id": "1078",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1079",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1080",
         "fixed": false,
@@ -8337,14 +8337,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·6ruw4n·describe·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·6ruw4n·describe·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·6ruw4n·describe·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -8388,14 +8388,14 @@
         "$id": "1085",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·wmn3id·describe·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·wmn3id·describe·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·wmn3id·describe·post·responses·200"
          ]
         }
        },
@@ -8411,14 +8411,14 @@
        "$id": "1087",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·w9hvsk·describe·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·w9hvsk·describe·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·w9hvsk·describe·post·responses·default"
         ]
        }
       },
@@ -8439,7 +8439,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -8516,12 +8516,12 @@
       {
        "$id": "1090",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1091",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1092",
         "fixed": false,
@@ -8530,14 +8530,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·nw8zcv·detect·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·nw8zcv·detect·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·nw8zcv·detect·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -8581,14 +8581,14 @@
         "$id": "1097",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·esci4n·detect·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·esci4n·detect·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·esci4n·detect·post·responses·200"
          ]
         }
        },
@@ -8604,14 +8604,14 @@
        "$id": "1099",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·a2h4ik·detect·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·a2h4ik·detect·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·a2h4ik·detect·post·responses·default"
         ]
        }
       },
@@ -8632,7 +8632,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -8720,14 +8720,14 @@
         "$id": "1105",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1h1ygb8·models·get·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·1h1ygb8·models·get·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·1h1ygb8·models·get·responses·200"
          ]
         }
        },
@@ -8743,14 +8743,14 @@
        "$id": "1107",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·13edvii·models·get·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·13edvii·models·get·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·13edvii·models·get·responses·default"
         ]
        }
       },
@@ -8771,7 +8771,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -8831,12 +8831,12 @@
         "$ref": "938"
        },
        "location": "path",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1111",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1112",
         "fixed": false,
@@ -8845,14 +8845,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·c5phsp·models-model-analyze·post·parameters·0",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·c5phsp·models-model-analyze·post·parameters·0"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·c5phsp·models-model-analyze·post·parameters·0"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -8883,13 +8883,13 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1117",
         "fixed": false,
         "raw": "en"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1118",
         "fixed": false,
@@ -8898,14 +8898,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "ServiceLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/ServiceLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/ServiceLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -8972,12 +8972,12 @@
       {
        "$id": "1129",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1130",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1131",
         "fixed": false,
@@ -8986,14 +8986,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·n7oylc·models-model-analyze·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·n7oylc·models-model-analyze·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·n7oylc·models-model-analyze·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -9037,14 +9037,14 @@
         "$id": "1136",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·13hnayf·models-model-analyze·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·13hnayf·models-model-analyze·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·13hnayf·models-model-analyze·post·responses·200"
          ]
         }
        },
@@ -9060,14 +9060,14 @@
        "$id": "1138",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·80s4b7·models-model-analyze·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·80s4b7·models-model-analyze·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·80s4b7·models-model-analyze·post·responses·default"
         ]
        }
       },
@@ -9088,7 +9088,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -9158,13 +9158,13 @@
         "$ref": "920"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1142",
         "fixed": false,
         "raw": "true"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1143",
         "fixed": false,
@@ -9173,14 +9173,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "DetectOrientation",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/DetectOrientation"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/DetectOrientation"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -9211,13 +9211,13 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1148",
         "fixed": false,
         "raw": "unk"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1149",
         "fixed": false,
@@ -9226,14 +9226,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "OcrLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/OcrLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/OcrLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -9253,12 +9253,12 @@
       {
        "$id": "1151",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1152",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1153",
         "fixed": false,
@@ -9267,14 +9267,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·up4di6·ocr·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·up4di6·ocr·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·up4di6·ocr·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -9318,14 +9318,14 @@
         "$id": "1158",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1kym0dj·ocr·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·1kym0dj·ocr·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·1kym0dj·ocr·post·responses·200"
          ]
         }
        },
@@ -9341,14 +9341,14 @@
        "$id": "1160",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·zpmlcl·ocr·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·zpmlcl·ocr·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·zpmlcl·ocr·post·responses·default"
         ]
        }
       },
@@ -9369,7 +9369,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -9482,13 +9482,13 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1164",
         "fixed": false,
         "raw": "en"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1165",
         "fixed": false,
@@ -9497,14 +9497,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "ServiceLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/ServiceLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/ServiceLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -9571,12 +9571,12 @@
       {
        "$id": "1176",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1177",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1178",
         "fixed": false,
@@ -9585,14 +9585,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·16bs95b·tag·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·16bs95b·tag·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·16bs95b·tag·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -9636,14 +9636,14 @@
         "$id": "1183",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·uio9fz·tag·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·uio9fz·tag·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·uio9fz·tag·post·responses·200"
          ]
         }
        },
@@ -9659,14 +9659,14 @@
        "$id": "1185",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·a6ejgv·tag·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·a6ejgv·tag·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·a6ejgv·tag·post·responses·default"
         ]
        }
       },
@@ -9687,7 +9687,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -9776,6 +9776,7 @@
         "$ref": "944"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "constraints": {
         "InclusiveMaximum": "1024",
@@ -9785,7 +9786,6 @@
         "$id": "1189",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1190",
         "fixed": false,
@@ -9794,14 +9794,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·hmfxkk·generatethumbnail·post·parameters·0",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·hmfxkk·generatethumbnail·post·parameters·0"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·hmfxkk·generatethumbnail·post·parameters·0"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -9833,6 +9833,7 @@
         "$ref": "950"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "constraints": {
         "InclusiveMaximum": "1024",
@@ -9842,7 +9843,6 @@
         "$id": "1195",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1196",
         "fixed": false,
@@ -9851,14 +9851,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·up25nh·generatethumbnail·post·parameters·1",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·up25nh·generatethumbnail·post·parameters·1"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·up25nh·generatethumbnail·post·parameters·1"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -9890,13 +9890,13 @@
         "$ref": "956"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1201",
         "fixed": false,
         "raw": "false"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1202",
         "fixed": false,
@@ -9905,14 +9905,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1kw45is·generatethumbnail·post·parameters·2",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·1kw45is·generatethumbnail·post·parameters·2"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·1kw45is·generatethumbnail·post·parameters·2"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -9940,12 +9940,12 @@
       {
        "$id": "1206",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1207",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1208",
         "fixed": false,
@@ -9954,14 +9954,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·qyrz4l·generatethumbnail·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·qyrz4l·generatethumbnail·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·qyrz4l·generatethumbnail·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -10013,14 +10013,14 @@
         "$id": "1215",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·satbeu·generatethumbnail·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·satbeu·generatethumbnail·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·satbeu·generatethumbnail·post·responses·200"
          ]
         }
        },
@@ -10046,7 +10046,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -10095,12 +10095,12 @@
       {
        "$id": "1219",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1220",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1221",
         "fixed": false,
@@ -10109,14 +10109,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·jj7n0r·areaofinterest·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·jj7n0r·areaofinterest·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·jj7n0r·areaofinterest·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -10160,14 +10160,14 @@
         "$id": "1226",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1laidt1·areaofinterest·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·1laidt1·areaofinterest·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·1laidt1·areaofinterest·post·responses·200"
          ]
         }
        },
@@ -10183,14 +10183,14 @@
        "$id": "1228",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·79fh0v·areaofinterest·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·79fh0v·areaofinterest·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·79fh0v·areaofinterest·post·responses·default"
         ]
        }
       },
@@ -10211,7 +10211,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -10273,12 +10273,12 @@
         "$ref": "914"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "csv",
        "defaultValue": {
         "$id": "1232",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1233",
         "fixed": false,
@@ -10287,14 +10287,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "VisualFeatures",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/VisualFeatures"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/VisualFeatures"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -10326,12 +10326,12 @@
         "$ref": "926"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "csv",
        "defaultValue": {
         "$id": "1238",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1239",
         "fixed": false,
@@ -10340,14 +10340,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·y1kw7v·analyze-overload-stream·post·parameters·1",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·y1kw7v·analyze-overload-stream·post·parameters·1"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·y1kw7v·analyze-overload-stream·post·parameters·1"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -10379,13 +10379,13 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1244",
         "fixed": false,
         "raw": "en"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1245",
         "fixed": false,
@@ -10394,14 +10394,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "ServiceLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/ServiceLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/ServiceLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -10471,12 +10471,12 @@
         "$ref": "904"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "csv",
        "defaultValue": {
         "$id": "1257",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1258",
         "fixed": false,
@@ -10485,14 +10485,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "DescriptionExclude",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/DescriptionExclude"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/DescriptionExclude"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -10521,12 +10521,12 @@
       {
        "$id": "1262",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1263",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1264",
         "fixed": false,
@@ -10535,14 +10535,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1w7aq3x·analyze-overload-stream·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·1w7aq3x·analyze-overload-stream·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·1w7aq3x·analyze-overload-stream·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -10593,14 +10593,14 @@
         "$id": "1271",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·bom2uv·analyze-overload-stream·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·bom2uv·analyze-overload-stream·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·bom2uv·analyze-overload-stream·post·responses·200"
          ]
         }
        },
@@ -10616,14 +10616,14 @@
        "$id": "1273",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·rdm799·analyze-overload-stream·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·rdm799·analyze-overload-stream·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·rdm799·analyze-overload-stream·post·responses·default"
         ]
        }
       },
@@ -10644,7 +10644,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -10851,12 +10851,12 @@
       {
        "$id": "1276",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1277",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1278",
         "fixed": false,
@@ -10865,14 +10865,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·sqh5ur·areaofinterest-overload-stream·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·sqh5ur·areaofinterest-overload-stream·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·sqh5ur·areaofinterest-overload-stream·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -10923,14 +10923,14 @@
         "$id": "1285",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·12z3pni·areaofinterest-overload-stream·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·12z3pni·areaofinterest-overload-stream·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·12z3pni·areaofinterest-overload-stream·post·responses·200"
          ]
         }
        },
@@ -10946,14 +10946,14 @@
        "$id": "1287",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·15us345·areaofinterest-overload-stream·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·15us345·areaofinterest-overload-stream·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·15us345·areaofinterest-overload-stream·post·responses·default"
         ]
        }
       },
@@ -10974,7 +10974,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -11034,13 +11034,13 @@
         "$ref": "932"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1291",
         "fixed": false,
         "raw": "1"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1292",
         "fixed": false,
@@ -11049,14 +11049,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·qb1xy4·describe-overload-stream·post·parameters·0",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·qb1xy4·describe-overload-stream·post·parameters·0"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·qb1xy4·describe-overload-stream·post·parameters·0"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -11088,13 +11088,13 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1297",
         "fixed": false,
         "raw": "en"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1298",
         "fixed": false,
@@ -11103,14 +11103,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "ServiceLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/ServiceLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/ServiceLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -11180,12 +11180,12 @@
         "$ref": "904"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "csv",
        "defaultValue": {
         "$id": "1310",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1311",
         "fixed": false,
@@ -11194,14 +11194,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "DescriptionExclude",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/DescriptionExclude"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/DescriptionExclude"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -11230,12 +11230,12 @@
       {
        "$id": "1315",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1316",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1317",
         "fixed": false,
@@ -11244,14 +11244,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·nh2cvu·describe-overload-stream·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·nh2cvu·describe-overload-stream·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·nh2cvu·describe-overload-stream·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -11302,14 +11302,14 @@
         "$id": "1324",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1jcfd91·describe-overload-stream·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·1jcfd91·describe-overload-stream·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·1jcfd91·describe-overload-stream·post·responses·200"
          ]
         }
        },
@@ -11325,14 +11325,14 @@
        "$id": "1326",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·7jqsmz·describe-overload-stream·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·7jqsmz·describe-overload-stream·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·7jqsmz·describe-overload-stream·post·responses·default"
         ]
        }
       },
@@ -11353,7 +11353,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -11428,12 +11428,12 @@
       {
        "$id": "1329",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1330",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1331",
         "fixed": false,
@@ -11442,14 +11442,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1chk7m0·detect-overload-stream·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·1chk7m0·detect-overload-stream·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·1chk7m0·detect-overload-stream·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -11500,14 +11500,14 @@
         "$id": "1338",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·gs32vi·detect-overload-stream·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·gs32vi·detect-overload-stream·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·gs32vi·detect-overload-stream·post·responses·200"
          ]
         }
        },
@@ -11523,14 +11523,14 @@
        "$id": "1340",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·xhi3nx·detect-overload-stream·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·xhi3nx·detect-overload-stream·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·xhi3nx·detect-overload-stream·post·responses·default"
         ]
        }
       },
@@ -11551,7 +11551,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -11620,6 +11620,7 @@
         "$ref": "944"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "constraints": {
         "InclusiveMaximum": "1024",
@@ -11629,7 +11630,6 @@
         "$id": "1344",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1345",
         "fixed": false,
@@ -11638,14 +11638,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·u1r5ll·generatethumbnail-overload-stream·post·parameters·0",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·u1r5ll·generatethumbnail-overload-stream·post·parameters·0"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·u1r5ll·generatethumbnail-overload-stream·post·parameters·0"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -11677,6 +11677,7 @@
         "$ref": "950"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "constraints": {
         "InclusiveMaximum": "1024",
@@ -11686,7 +11687,6 @@
         "$id": "1350",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1351",
         "fixed": false,
@@ -11695,14 +11695,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·sbu4pk·generatethumbnail-overload-stream·post·parameters·1",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·sbu4pk·generatethumbnail-overload-stream·post·parameters·1"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·sbu4pk·generatethumbnail-overload-stream·post·parameters·1"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -11734,13 +11734,13 @@
         "$ref": "956"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1356",
         "fixed": false,
         "raw": "false"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1357",
         "fixed": false,
@@ -11749,14 +11749,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1fwbec4·generatethumbnail-overload-stream·post·parameters·2",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·1fwbec4·generatethumbnail-overload-stream·post·parameters·2"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·1fwbec4·generatethumbnail-overload-stream·post·parameters·2"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -11784,12 +11784,12 @@
       {
        "$id": "1361",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1362",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1363",
         "fixed": false,
@@ -11798,14 +11798,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·181y497·generatethumbnail-overload-stream·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·181y497·generatethumbnail-overload-stream·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·181y497·generatethumbnail-overload-stream·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -11864,14 +11864,14 @@
         "$id": "1372",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1resv60·generatethumbnail-overload-stream·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·1resv60·generatethumbnail-overload-stream·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·1resv60·generatethumbnail-overload-stream·post·responses·200"
          ]
         }
        },
@@ -11897,7 +11897,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -11947,12 +11947,12 @@
         "$ref": "938"
        },
        "location": "path",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1377",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1378",
         "fixed": false,
@@ -11961,14 +11961,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·sbku6q·models-model-analyze-overload-stream·post·parameters·0",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/paths·sbku6q·models-model-analyze-overload-stream·post·parameters·0"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/paths·sbku6q·models-model-analyze-overload-stream·post·parameters·0"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -11999,13 +11999,13 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1383",
         "fixed": false,
         "raw": "en"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1384",
         "fixed": false,
@@ -12014,14 +12014,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "ServiceLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/ServiceLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/ServiceLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -12088,12 +12088,12 @@
       {
        "$id": "1395",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1396",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1397",
         "fixed": false,
@@ -12102,14 +12102,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·mpc3an·models-model-analyze-overload-stream·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·mpc3an·models-model-analyze-overload-stream·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·mpc3an·models-model-analyze-overload-stream·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -12160,14 +12160,14 @@
         "$id": "1404",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·18l335w·models-model-analyze-overload-stream·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·18l335w·models-model-analyze-overload-stream·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·18l335w·models-model-analyze-overload-stream·post·responses·200"
          ]
         }
        },
@@ -12183,14 +12183,14 @@
        "$id": "1406",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·u78yxj·models-model-analyze-overload-stream·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·u78yxj·models-model-analyze-overload-stream·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·u78yxj·models-model-analyze-overload-stream·post·responses·default"
         ]
        }
       },
@@ -12211,7 +12211,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -12279,13 +12279,13 @@
         "$ref": "920"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1410",
         "fixed": false,
         "raw": "true"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1411",
         "fixed": false,
@@ -12294,14 +12294,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "DetectOrientation",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/DetectOrientation"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/DetectOrientation"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -12332,13 +12332,13 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1416",
         "fixed": false,
         "raw": "unk"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1417",
         "fixed": false,
@@ -12347,14 +12347,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "OcrLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/OcrLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/OcrLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -12374,12 +12374,12 @@
       {
        "$id": "1419",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1420",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1421",
         "fixed": false,
@@ -12388,14 +12388,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·ufs5mz·ocr-overload-stream·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·ufs5mz·ocr-overload-stream·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·ufs5mz·ocr-overload-stream·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -12446,14 +12446,14 @@
         "$id": "1428",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·1hmvrpq·ocr-overload-stream·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·1hmvrpq·ocr-overload-stream·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·1hmvrpq·ocr-overload-stream·post·responses·200"
          ]
         }
        },
@@ -12469,14 +12469,14 @@
        "$id": "1430",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·2usitr·ocr-overload-stream·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·2usitr·ocr-overload-stream·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·2usitr·ocr-overload-stream·post·responses·default"
         ]
        }
       },
@@ -12497,7 +12497,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -12608,13 +12608,13 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1434",
         "fixed": false,
         "raw": "en"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1435",
         "fixed": false,
@@ -12623,14 +12623,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "ServiceLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/parameters/ServiceLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/parameters/ServiceLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -12697,12 +12697,12 @@
       {
        "$id": "1446",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1447",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1448",
         "fixed": false,
@@ -12711,14 +12711,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·ysd7hi·tag-overload-stream·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/requestBodies/paths·ysd7hi·tag-overload-stream·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/requestBodies/paths·ysd7hi·tag-overload-stream·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -12769,14 +12769,14 @@
         "$id": "1455",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///163?oai3.shaken.json"
+          "mem:///173?oai3.shaken.json"
          ],
          "name": "paths·2tfixt·tag-overload-stream·post·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·2tfixt·tag-overload-stream·post·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·2tfixt·tag-overload-stream·post·responses·200"
          ]
         }
        },
@@ -12792,14 +12792,14 @@
        "$id": "1457",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///163?oai3.shaken.json"
+         "mem:///173?oai3.shaken.json"
         ],
         "name": "paths·1f3r6jl·tag-overload-stream·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/ComputerVision.json#/components/responses/paths·1f3r6jl·tag-overload-stream·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/ComputerVision.json#/components/responses/paths·1f3r6jl·tag-overload-stream·post·responses·default"
         ]
        }
       },
@@ -12820,7 +12820,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -12907,29 +12907,29 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1461",
         "fixed": false,
         "raw": "en"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1462",
         "fixed": false,
-        "raw": "The BCP-47 language code of the text in the document. Currently, only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto language identification and multilanguage documents, so only provide a language code if you would like to force the documented to be processed as that specific language."
+        "raw": "The BCP-47 language code of the text in the document. Currently, only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto language identification and multi-language documents, so only provide a language code if you would like to force the documented to be processed as that specific language."
        },
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///164?oai3.shaken.json"
+          "mem:///174?oai3.shaken.json"
          ],
          "name": "OcrDetectionLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/parameters/OcrDetectionLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/parameters/OcrDetectionLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -12949,12 +12949,12 @@
       {
        "$id": "1464",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1465",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1466",
         "fixed": false,
@@ -12963,14 +12963,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///164?oai3.shaken.json"
+          "mem:///174?oai3.shaken.json"
          ],
          "name": "paths·dqphmz·read-analyze·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/requestBodies/paths·dqphmz·read-analyze·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/requestBodies/paths·dqphmz·read-analyze·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -13014,14 +13014,14 @@
         "$id": "1471",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///164?oai3.shaken.json"
+          "mem:///174?oai3.shaken.json"
          ],
          "name": "paths·sag1g5·read-analyze·post·responses·202",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/responses/paths·sag1g5·read-analyze·post·responses·202"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/responses/paths·sag1g5·read-analyze·post·responses·202"
          ]
         }
        },
@@ -13040,14 +13040,14 @@
        "$id": "1473",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///164?oai3.shaken.json"
+         "mem:///174?oai3.shaken.json"
         ],
         "name": "paths·3p2p1v·read-analyze·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/responses/paths·3p2p1v·read-analyze·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/responses/paths·3p2p1v·read-analyze·post·responses·default"
         ]
        }
       },
@@ -13068,7 +13068,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -13100,7 +13100,7 @@
         "responses": {
          "202": {
           "header": {
-           "Operation-Location": "https://{domain}/vision/v3.0/read/e56ffa6e-1ee4-4042-bc07-993db706c95f"
+           "Operation-Location": "https://{domain}/vision/v3.1/read/e56ffa6e-1ee4-4042-bc07-993db706c95f"
           }
          }
         }
@@ -13119,12 +13119,12 @@
         "$ref": "1002"
        },
        "location": "path",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1477",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1478",
         "fixed": false,
@@ -13133,14 +13133,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///164?oai3.shaken.json"
+          "mem:///174?oai3.shaken.json"
          ],
          "name": "paths·j2nm07·read-analyzeresults-operationid·get·parameters·0",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/parameters/paths·j2nm07·read-analyzeresults-operationid·get·parameters·0"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/parameters/paths·j2nm07·read-analyzeresults-operationid·get·parameters·0"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -13191,14 +13191,14 @@
         "$id": "1485",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///164?oai3.shaken.json"
+          "mem:///174?oai3.shaken.json"
          ],
          "name": "paths·1ctx3ub·read-analyzeresults-operationid·get·responses·200",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/responses/paths·1ctx3ub·read-analyzeresults-operationid·get·responses·200"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/responses/paths·1ctx3ub·read-analyzeresults-operationid·get·responses·200"
          ]
         }
        },
@@ -13214,14 +13214,14 @@
        "$id": "1487",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///164?oai3.shaken.json"
+         "mem:///174?oai3.shaken.json"
         ],
         "name": "paths·1akxcg8·read-analyzeresults-operationid·get·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/responses/paths·1akxcg8·read-analyzeresults-operationid·get·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/responses/paths·1akxcg8·read-analyzeresults-operationid·get·responses·default"
         ]
        }
       },
@@ -13242,7 +13242,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -13275,7 +13275,7 @@
            "createdDateTime": "2019-10-03T14:32:04.236Z",
            "lastUpdatedDateTime": "2019-10-03T14:38:14.852Z",
            "analyzeResult": {
-            "version": "v3.0",
+            "version": "v3.1",
             "readResults": [
              {
               "page": "1",
@@ -13644,29 +13644,29 @@
         "$ref": "891"
        },
        "location": "query",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1491",
         "fixed": false,
         "raw": "en"
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1492",
         "fixed": false,
-        "raw": "The BCP-47 language code of the text in the document. Currently, only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto language identification and multilanguage documents, so only provide a language code if you would like to force the documented to be processed as that specific language."
+        "raw": "The BCP-47 language code of the text in the document. Currently, only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto language identification and multi-language documents, so only provide a language code if you would like to force the documented to be processed as that specific language."
        },
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///164?oai3.shaken.json"
+          "mem:///174?oai3.shaken.json"
          ],
          "name": "OcrDetectionLanguage",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/parameters/OcrDetectionLanguage"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/parameters/OcrDetectionLanguage"
          ]
         },
         "x-ms-parameter-location": "method"
@@ -13686,12 +13686,12 @@
       {
        "$id": "1494",
        "location": "body",
+       "deprecated": false,
        "collectionFormat": "none",
        "defaultValue": {
         "$id": "1495",
         "fixed": false
        },
-       "deprecated": false,
        "documentation": {
         "$id": "1496",
         "fixed": false,
@@ -13700,14 +13700,14 @@
        "extensions": {
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///164?oai3.shaken.json"
+          "mem:///174?oai3.shaken.json"
          ],
          "name": "paths·1rdtvj7·read-analyze-overload-stream·post·requestbody",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/requestBodies/paths·1rdtvj7·read-analyze-overload-stream·post·requestbody"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/requestBodies/paths·1rdtvj7·read-analyze-overload-stream·post·requestbody"
          ]
         },
         "x-ms-parameter-location": "method",
@@ -13758,14 +13758,14 @@
         "$id": "1503",
         "x-ms-metadata": {
          "apiVersions": [
-          "3.0"
+          "3.1"
          ],
          "filename": [
-          "mem:///164?oai3.shaken.json"
+          "mem:///174?oai3.shaken.json"
          ],
          "name": "paths·1291otw·read-analyze-overload-stream·post·responses·202",
          "originalLocations": [
-          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/responses/paths·1291otw·read-analyze-overload-stream·post·responses·202"
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/responses/paths·1291otw·read-analyze-overload-stream·post·responses·202"
          ]
         }
        },
@@ -13784,14 +13784,14 @@
        "$id": "1505",
        "x-ms-metadata": {
         "apiVersions": [
-         "3.0"
+         "3.1"
         ],
         "filename": [
-         "mem:///164?oai3.shaken.json"
+         "mem:///174?oai3.shaken.json"
         ],
         "name": "paths·q4fqc4·read-analyze-overload-stream·post·responses·default",
         "originalLocations": [
-         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.0/Ocr.json#/components/responses/paths·q4fqc4·read-analyze-overload-stream·post·responses·default"
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.1/Ocr.json#/components/responses/paths·q4fqc4·read-analyze-overload-stream·post·responses·default"
         ]
        }
       },
@@ -13812,7 +13812,7 @@
      "extensions": {
       "servers": [
        {
-        "url": "{Endpoint}/vision/v3.0",
+        "url": "{Endpoint}/vision/v3.1",
         "variables": {
          "Endpoint": {
           "x-name": "Endpoint",
@@ -13842,7 +13842,7 @@
         "responses": {
          "202": {
           "header": {
-           "location": "https://{domain}/vision/v3.0/read/e56ffa6e-1ee4-4042-bc07-993db706c95f"
+           "location": "https://{domain}/vision/v3.1/read/e56ffa6e-1ee4-4042-bc07-993db706c95f"
           }
          }
         }

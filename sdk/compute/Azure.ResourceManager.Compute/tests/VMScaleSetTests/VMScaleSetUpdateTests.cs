@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Compute.Models.Sku;
 
@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.Compute.Tests
             var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
 
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, "VMScaleSetDoesNotExist"));
-
 
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef);
             VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Delete RG
         /// </summary>
         [Test]
-        [Ignore ("this case need to be tested by compute team")]
+        [Ignore("this case need to be tested by compute team")]
         public async Task TestVMScaleSetPatchOperations()
         {
             EnsureClientsInitialized(DefaultLocation);
@@ -170,7 +169,6 @@ namespace Azure.ResourceManager.Compute.Tests
             inputVMScaleSet.VirtualMachineProfile.ExtensionProfile = extensionProfile;
             getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmScaleSet.Name);
             ValidateVMScaleSet(inputVMScaleSet, getResponse);
-
 
             // Scaling the VMScaleSet now to 3 instances
             VirtualMachineScaleSetUpdate patchVMScaleSet2 = new VirtualMachineScaleSetUpdate()

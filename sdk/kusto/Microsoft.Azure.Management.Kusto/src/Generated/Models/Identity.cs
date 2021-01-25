@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Kusto.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -31,8 +32,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Initializes a new instance of the Identity class.
         /// </summary>
-        /// <param name="type">The identity type. Possible values include:
-        /// 'None', 'SystemAssigned'</param>
+        /// <param name="type">The type of managed identity used. The type
+        /// 'SystemAssigned, UserAssigned' includes both an implicitly created
+        /// identity and a set of user-assigned identities. The type 'None'
+        /// will remove all identities. Possible values include: 'None',
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
+        /// UserAssigned'</param>
         /// <param name="principalId">The principal ID of resource
         /// identity.</param>
         /// <param name="tenantId">The tenant ID of resource.</param>
@@ -40,7 +45,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// associated with the Kusto cluster. The user identity dictionary key
         /// references will be ARM resource ids in the form:
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
-        public Identity(IdentityType type, string principalId = default(string), string tenantId = default(string), IDictionary<string, IdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, IdentityUserAssignedIdentitiesValue>))
+        public Identity(string type, string principalId = default(string), string tenantId = default(string), IDictionary<string, IdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, IdentityUserAssignedIdentitiesValue>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -67,11 +72,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string TenantId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the identity type. Possible values include: 'None',
-        /// 'SystemAssigned'
+        /// Gets or sets the type of managed identity used. The type
+        /// 'SystemAssigned, UserAssigned' includes both an implicitly created
+        /// identity and a set of user-assigned identities. The type 'None'
+        /// will remove all identities. Possible values include: 'None',
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned, UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public IdentityType Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the list of user identities associated with the Kusto
@@ -85,11 +93,15 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
         }
     }
 }

@@ -29,7 +29,8 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileStream
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
-                RecognizedFormCollection receipts = await client.StartRecognizeReceiptsAsync(stream).WaitForCompletionAsync();
+                var options = new RecognizeReceiptsOptions() { Locale = "en-US" };
+                RecognizedFormCollection receipts = await client.StartRecognizeReceiptsAsync(stream, options).WaitForCompletionAsync();
 
                 // To see the list of the supported fields returned by service and its corresponding types, consult:
                 // https://aka.ms/formrecognizer/receiptfields

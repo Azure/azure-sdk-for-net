@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TableServiceProperties> array = new List<TableServiceProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

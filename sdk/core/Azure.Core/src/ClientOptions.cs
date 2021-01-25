@@ -79,8 +79,7 @@ namespace Azure.Core
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
-
+        public override string? ToString() => base.ToString();
 
         private static HttpPipelineTransport GetDefaultTransport()
         {
@@ -107,6 +106,5 @@ namespace Azure.Core
 #endif
             return HttpClientTransport.Shared;
         }
-
     }
 }

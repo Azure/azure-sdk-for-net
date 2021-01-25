@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Media
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The Version of the API to be used with the client request.
+        /// The version of the API to be used with the client request.
         /// </summary>
         string ApiVersion { get; }
 
@@ -82,6 +82,16 @@ namespace Microsoft.Azure.Management.Media
         /// Gets the IMediaservicesOperations.
         /// </summary>
         IMediaservicesOperations Mediaservices { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
 
         /// <summary>
         /// Gets the ILocationsOperations.

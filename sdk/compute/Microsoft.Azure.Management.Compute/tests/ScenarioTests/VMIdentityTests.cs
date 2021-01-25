@@ -3,6 +3,8 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Azure.Management.ManagedServiceIdentity;
+using Microsoft.Azure.Management.ManagedServiceIdentity.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
@@ -16,27 +18,26 @@ namespace Compute.Tests
         [Fact]
         public void TestVMIdentitySystemAssignedUserAssigned()
         {
-            //
-            // Prerequisite: in order to record this test, first create a user identity in resource group 'identitytest' and set the value of identity here.
-            // 
-            const string rgName = "identitytest";
-            const string identity = "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/resourcegroups/identitytest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userid";
-
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
 
-                ImageReference imgageRef = GetPlatformVMImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
                 // Create resource group
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string asName = ComputeManagementTestUtilities.GenerateName("as");
+                string userIdentityName = ComputeManagementTestUtilities.GenerateName("userid");
                 VirtualMachine inputVM;
-                bool passed = false;
 
                 try
                 {
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    // Creating User Assigned Managed Identity
+                    Identity identityResponse = m_MsiClient.UserAssignedIdentities.CreateOrUpdate(rgName, userIdentityName, new Identity(location: ComputeManagementTestUtilities.DefaultLocation));
+                    string identity = identityResponse.Id;
 
                     Action<VirtualMachine> addUserIdentity = vm =>
                     {
@@ -48,7 +49,7 @@ namespace Compute.Tests
                         };
                     };
 
-                    var vmResult = CreateVM(rgName, asName, storageAccountOutput, imgageRef, out inputVM, addUserIdentity);
+                    var vmResult = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, addUserIdentity);
                     Assert.Equal(ResourceIdentityType.SystemAssignedUserAssigned, vmResult.Identity.Type);
                     Assert.NotNull(vmResult.Identity.PrincipalId);
                     Assert.NotNull(vmResult.Identity.TenantId);
@@ -63,21 +64,12 @@ namespace Compute.Tests
                     Assert.True(getVM.Identity.UserAssignedIdentities.Keys.Contains(identity));
                     Assert.NotNull(getVM.Identity.UserAssignedIdentities[identity].PrincipalId);
                     Assert.NotNull(getVM.Identity.UserAssignedIdentities[identity].ClientId);
-
-                    m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-
-                    passed = true;
-                }
-                catch (Exception e)
-                {
-                    throw e;
                 }
                 finally
                 {
-                    Assert.True(passed);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }
     }
 }
-

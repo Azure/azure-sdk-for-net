@@ -14,7 +14,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class ChangeFeedTestBase : StorageTestBase
     {
-
         public ChangeFeedTestBase(bool async) : this(async, null) { }
 
         public ChangeFeedTestBase(bool async, RecordedTestMode? mode = null)
@@ -43,8 +42,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 },
                 Transport = GetTransport()
             };
@@ -63,7 +62,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
-
             containerName ??= GetNewContainerName();
             service ??= GetServiceClient_SharedKey();
 

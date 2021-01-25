@@ -13,26 +13,20 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class DataFeedIngestionStatus
     {
         /// <summary> Initializes a new instance of DataFeedIngestionStatus. </summary>
-        internal DataFeedIngestionStatus()
-        {
-        }
-
-        /// <summary> Initializes a new instance of DataFeedIngestionStatus. </summary>
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest ingestion task status for this data slice. </param>
         /// <param name="message"> the trimmed message of last ingestion job. </param>
-        internal DataFeedIngestionStatus(DateTimeOffset? timestamp, IngestionStatusType? status, string message)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        internal DataFeedIngestionStatus(DateTimeOffset timestamp, IngestionStatusType status, string message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             Timestamp = timestamp;
             Status = status;
             Message = message;
         }
-
-        /// <summary> data slice timestamp. </summary>
-        public DateTimeOffset? Timestamp { get; }
-        /// <summary> latest ingestion task status for this data slice. </summary>
-        public IngestionStatusType? Status { get; }
-        /// <summary> the trimmed message of last ingestion job. </summary>
-        public string Message { get; }
     }
 }

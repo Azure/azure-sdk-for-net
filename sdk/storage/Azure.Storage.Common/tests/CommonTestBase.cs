@@ -14,7 +14,7 @@ namespace Azure.Storage.Test
     /// <summary>
     /// Base class for Common tests
     /// </summary>
-    public class CommonTestBase : StorageTestBase
+    public abstract class CommonTestBase : StorageTestBase
     {
         public CommonTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode /* RecordedTestMode.Record to re-record */)
@@ -35,8 +35,8 @@ namespace Azure.Storage.Test
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 }
             };
             if (Mode != RecordedTestMode.Live)

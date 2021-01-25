@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Identity;
+using Azure.Communication;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -29,18 +29,18 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of <see cref="ChatThreadClient"/>.</summary>
         /// <param name="threadId"></param>
         /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
-        /// <param name="communicationUserCredential">Instance of <see cref="CommunicationUserCredential"/>.</param>
+        /// <param name="communicationTokenCredential">Instance of <see cref="CommunicationTokenCredential"/>.</param>
         /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        internal ChatThreadClient(string threadId, Uri endpointUrl, CommunicationUserCredential communicationUserCredential, ChatClientOptions? options = default)
+        internal ChatThreadClient(string threadId, Uri endpointUrl, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions? options = default)
         {
             Argument.AssertNotNull(threadId, nameof(threadId));
-            Argument.AssertNotNull(communicationUserCredential, nameof(communicationUserCredential));
+            Argument.AssertNotNull(communicationTokenCredential, nameof(communicationTokenCredential));
             Argument.AssertNotNull(endpointUrl, nameof(endpointUrl));
             options ??= new ChatClientOptions();
             Id = threadId;
             _clientDiagnostics = new ClientDiagnostics(options);
-            HttpPipeline pipeline = CreatePipelineFromOptions(options, communicationUserCredential);
+            HttpPipeline pipeline = CreatePipelineFromOptions(options, communicationTokenCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, options.ApiVersion);
         }
 
@@ -347,7 +347,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatRestClient.AddChatThreadMembersAsync(Id, members.Select(x=>x.ToChatThreadMemberInternal()), cancellationToken).ConfigureAwait(false);
+                return await _chatRestClient.AddChatThreadMembersAsync(Id, members.Select(x => x.ToChatThreadMemberInternal()), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -382,7 +382,7 @@ namespace Azure.Communication.Chat
         {
             async Task<Page<ChatThreadMember>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetMessages)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetMembers)}");
                 scope.Start();
 
                 try
@@ -426,10 +426,10 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Remove a member from a thread asynchronously.</summary>
-        /// <param name="user"><see cref="CommunicationUser" /> to be removed from the chat thread members.</param>
+        /// <param name="user"><see cref="CommunicationUserIdentifier" /> to be removed from the chat thread members.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> RemoveMemberAsync(CommunicationUser user, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveMemberAsync(CommunicationUserIdentifier user, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(RemoveMember)}");
             scope.Start();
@@ -445,10 +445,10 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Remove a member from a thread .</summary>
-        /// <param name="user"><see cref="CommunicationUser" /> to be removed from the chat thread members.</param>
+        /// <param name="user"><see cref="CommunicationUserIdentifier" /> to be removed from the chat thread members.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response RemoveMember(CommunicationUser user, CancellationToken cancellationToken = default)
+        public virtual Response RemoveMember(CommunicationUserIdentifier user, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(RemoveMember)}");
             scope.Start();
@@ -586,11 +586,11 @@ namespace Azure.Communication.Chat
         }
         #endregion
 
-        private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential)
+        private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationTokenCredential communicationTokenCredential)
         {
-            var httpPipelinePolicy = new CommunicationUserAuthenticationPolicy(communicationUserCredential);
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-            return httpPipeline;
+            var bearerTokenCredential = new CommunicationBearerTokenCredential(communicationTokenCredential);
+            var authenticationPolicy = new BearerTokenAuthenticationPolicy(bearerTokenCredential, "");
+            return HttpPipelineBuilder.Build(options, authenticationPolicy);
         }
     }
 }

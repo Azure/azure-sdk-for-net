@@ -268,7 +268,7 @@ namespace Compute.Tests
                 m_CrpClient.Galleries.Delete(rgName, galleryName);
             }
         }
-
+        
         [Fact]
         public void GalleryApplicationVersion_CRUD_Tests()
         {
@@ -555,7 +555,7 @@ namespace Compute.Tests
                 Description = "This is the gallery application description.",
             };
         }
-
+        
         private GalleryApplicationVersion GetTestInputGalleryApplicationVersion(string applicationMediaLink)
         {
             return new GalleryApplicationVersion
@@ -565,8 +565,12 @@ namespace Compute.Tests
                 {
                     Source = new UserArtifactSource
                     {
-                        FileName = "test.zip",
                         MediaLink = applicationMediaLink
+                    },
+                    ManageActions = new UserArtifactManage
+                    {
+                        Install = "powershell -command \"Expand-Archive -Path test.zip -DestinationPath C:\\package\"",
+                        Remove = "del C:\\package "
                     },
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,

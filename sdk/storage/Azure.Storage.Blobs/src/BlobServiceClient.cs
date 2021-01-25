@@ -11,7 +11,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Linq;
 
 namespace Azure.Storage.Blobs
 {
@@ -125,6 +127,22 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateAccountSasUri => SharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobServiceClient"/>
@@ -180,6 +198,7 @@ namespace Azure.Storage.Blobs
             _customerProvidedKey = options.CustomerProvidedKey;
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -219,7 +238,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions())
+            : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions(), credential)
         {
         }
 
@@ -261,7 +280,14 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// Optional storage shared key credential used to sign requests and generate sas.
+        /// </param>
+        internal BlobServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            BlobClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential = default)
             : this(
                   serviceUri,
                   authentication,
@@ -270,9 +296,9 @@ namespace Azure.Storage.Blobs
                   options?.CustomerProvidedKey,
                   options?._clientSideEncryptionOptions?.Clone(),
                   options?.EncryptionScope,
-                  options.Build(authentication))
+                  options.Build(authentication),
+                  storageSharedKeyCredential)
         {
-
         }
 
         /// <summary>
@@ -299,6 +325,7 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">Storage Shared Key Credential</param>
         internal BlobServiceClient(
             Uri serviceUri,
             HttpPipelinePolicy authentication,
@@ -307,7 +334,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             ClientSideEncryptionOptions clientSideEncryption,
             string encryptionScope,
-            HttpPipeline pipeline)
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             _uri = serviceUri;
             _authenticationPolicy = authentication;
@@ -317,6 +345,7 @@ namespace Azure.Storage.Blobs
             _customerProvidedKey = customerProvidedKey;
             _clientSideEncryption = clientSideEncryption?.Clone();
             _encryptionScope = encryptionScope;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
@@ -360,7 +389,8 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: null,
                 clientSideEncryption: null,
                 encryptionScope: null,
-                pipeline);
+                pipeline,
+                storageSharedKeyCredential: null);
         }
         #endregion ctors
 
@@ -377,7 +407,15 @@ namespace Azure.Storage.Blobs
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
-            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
+            new BlobContainerClient(
+                Uri.AppendToPath(blobContainerName),
+                Pipeline,
+                _storageSharedKeyCredential,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
 
         #region protected static accessors for Azure.Storage.Blobs.Batch
         /// <summary>
@@ -651,6 +689,7 @@ namespace Azure.Storage.Blobs
                         maxresults: pageSizeHint,
                         include: BlobExtensions.AsIncludeItems(traits, states),
                         async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetBlobContainers)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
@@ -1654,10 +1693,11 @@ namespace Azure.Storage.Blobs
         /// Find Blobs by Tags</see>.
         /// </summary>
         /// <param name="tagFilterSqlExpression">
-        /// The where parameter enables the caller to query blobs whose tags match a given expression.
-        /// The given expression must evaluate to true for a blob to be returned in the results.
-        /// The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
-        /// however, only a subset of the OData filter syntax is supported in the Blob service.
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
+        /// The expression must evaluate to true for a blob to be returned in the result set.
+        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// Example expression: "tagKey"='tagValue'.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1685,10 +1725,11 @@ namespace Azure.Storage.Blobs
         /// Find Blobs by Tags</see>.
         /// </summary>
         /// <param name="tagFilterSqlExpression">
-        /// The where parameter enables the caller to query blobs whose tags match a given expression.
-        /// The given expression must evaluate to true for a blob to be returned in the results.
-        /// The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
-        /// however, only a subset of the OData filter syntax is supported in the Blob service.
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
+        /// The expression must evaluate to true for a blob to be returned in the result set.
+        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// Example expression: "tagKey"='tagValue'.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1732,6 +1773,7 @@ namespace Azure.Storage.Blobs
                         marker: marker,
                         maxresults: pageSizeHint,
                         async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(FindBlobsByTags)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1747,5 +1789,86 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion FilterBlobs
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>
+        /// returns a <see cref="Uri"/> that generates a Blob Account
+        /// Shared Access Signature (SAS) based on the Client properties
+        /// and parameters passed. The SAS is signed by the
+        /// shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateAccountSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="AccountSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. The time at which the shared access signature becomes invalid.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types associated with the shared access signature.
+        /// The user is restricted to operations on the specified resources.
+        /// See <see cref="AccountSasResourceTypes"/>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public Uri GenerateAccountSasUri(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasResourceTypes resourceTypes) =>
+            GenerateAccountSasUri(new AccountSasBuilder(
+                permissions,
+                expiresOn,
+                AccountSasServices.Blobs,
+                resourceTypes));
+
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/> returns a <see cref="Uri"/> that
+        /// generates a Blob Account Shared Access Signature (SAS) based on the
+        /// Client properties and builder passed. The SAS is signed by the
+        /// shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateAccountSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public Uri GenerateAccountSasUri(AccountSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.Services.HasFlag(AccountSasServices.Blobs))
+            {
+                throw Errors.SasServiceNotMatching(
+                    nameof(builder.Services),
+                    nameof(builder),
+                    nameof(AccountSasServices.Blobs));
+            }
+            UriBuilder sasUri = new UriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
+            return sasUri.Uri;
+        }
+        #endregion
     }
 }

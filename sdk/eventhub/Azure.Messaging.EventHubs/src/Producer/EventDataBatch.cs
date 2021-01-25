@@ -11,7 +11,9 @@ namespace Azure.Messaging.EventHubs.Producer
 {
     /// <summary>
     ///   A set of <see cref="EventData" /> with size constraints known up-front,
-    ///   intended to be sent to the Event Hubs service as a single batch.
+    ///   intended to be sent to the Event Hubs service in a single operation.
+    ///   When published, the result is atomic; either all events that belong to the batch
+    ///   were successful or all have failed.  Partial success is not possible.
     /// </summary>
     ///
     /// <remarks>
@@ -25,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private readonly object SyncGuard = new object();
 
         /// <summary>A flag indicating that the batch is locked, such as when in use during a publish operation.</summary>
-        private bool _locked = false;
+        private bool _locked;
 
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as

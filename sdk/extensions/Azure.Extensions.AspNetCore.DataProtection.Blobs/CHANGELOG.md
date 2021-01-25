@@ -1,7 +1,19 @@
 # Release History
 
-## 1.1.0-preview.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
+
+## 1.2.0 (2020-12-16)
+
+### Changes
+
+#### Key Bug Fixes
+
+- The `Azure.Storage.Blobs` dependency updated to 12.6.0 to avoid a breaking change in an early package version.
+
+## 1.1.0 (2020-08-06)
+
+- No major changes.
 
 ## 1.0.1 (2020-08-06)
 

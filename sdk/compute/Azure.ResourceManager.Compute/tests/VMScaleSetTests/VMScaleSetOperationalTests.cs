@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Storage.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task TestVMScaleSetOperationsInternal(bool hasManagedDisks = false)
         {
-
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
             // Create resource group

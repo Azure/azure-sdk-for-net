@@ -18,7 +18,6 @@ namespace Azure.Identity.Tests
         {
         }
 
-
         [Test]
         public async Task InteractiveBrowserAcquireTokenInteractiveException()
         {

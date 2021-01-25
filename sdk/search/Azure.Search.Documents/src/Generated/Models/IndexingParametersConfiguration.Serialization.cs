@@ -128,6 +128,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("parsingMode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     parsingMode = new BlobIndexerParsingMode(property.Value.GetString());
                     continue;
                 }
@@ -143,16 +148,31 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("failOnUnsupportedContentType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     failOnUnsupportedContentType = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("failOnUnprocessableDocument"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     failOnUnprocessableDocument = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("indexStorageMetadataOnlyForOversizedDocuments"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     indexStorageMetadataOnlyForOversizedDocuments = property.Value.GetBoolean();
                     continue;
                 }
@@ -168,6 +188,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("firstLineContainsHeaders"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     firstLineContainsHeaders = property.Value.GetBoolean();
                     continue;
                 }
@@ -178,26 +203,51 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("dataToExtract"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dataToExtract = new BlobIndexerDataToExtract(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("imageAction"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     imageAction = new BlobIndexerImageAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allowSkillsetToReadFileData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     allowSkillsetToReadFileData = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("pdfTextRotationAlgorithm"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     pdfTextRotationAlgorithm = new BlobIndexerPdfTextRotationAlgorithm(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("executionEnvironment"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     executionEnvironment = new IndexerExecutionEnvironment(property.Value.GetString());
                     continue;
                 }
