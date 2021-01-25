@@ -12,6 +12,8 @@ repo: https://github.com/Azure/azure-rest-api-specs/blob/aa19725fe79aea2a9dc580f
 ``` yaml
 public-clients: true
 input-file:
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2020-02-01-preview/roleAssignments.json
+    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2020-08-01-preview/roleAssignments.json
     - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2020-02-01-preview/roles.json
+    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2020-02-01-preview/roleDefinitions.json
+    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2020-02-01-preview/checkAccessSynapseRbac.json
 ```
