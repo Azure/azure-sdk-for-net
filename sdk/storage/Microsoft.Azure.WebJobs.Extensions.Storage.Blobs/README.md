@@ -212,6 +212,65 @@ public static class BlobFunction_BlobClient
 }
 ```
 
+### Accessing Blob container
+
+```C# Snippet:BlobFunction_AccessContainer
+public static class BlobFunction_AccessContainer
+{
+    [FunctionName("BlobFunction")]
+    public static async Task Run(
+        [BlobTrigger("sample-container/sample-blob")] Stream blobStream,
+        [Blob("sample-container")] BlobContainerClient blobContainerClient,
+        ILogger logger)
+    {
+        logger.LogInformation("Blobs within container:");
+        await foreach (BlobItem blobItem in blobContainerClient.GetBlobsAsync())
+        {
+            logger.LogInformation(blobItem.Name);
+        }
+    }
+}
+```
+
+### Enumerating blobs in container
+
+```C# Snippet:BlobFunction_EnumerateBlobs_Stream
+public static class BlobFunction_EnumerateBlobs_Stream
+{
+    [FunctionName("BlobFunction")]
+    public static async Task Run(
+        [BlobTrigger("sample-container/sample-blob")] Stream blobStream,
+        [Blob("sample-container")] IEnumerable<Stream> blobs,
+        ILogger logger)
+    {
+        logger.LogInformation("Blobs contents within container:");
+        foreach (Stream content in blobs)
+        {
+            using var blobStreamReader = new StreamReader(content);
+            logger.LogInformation(await blobStreamReader.ReadToEndAsync());
+        }
+    }
+}
+```
+
+```C# Snippet:BlobFunction_EnumerateBlobs_BlobClient
+public static class BlobFunction_EnumerateBlobs_BlobClient
+{
+    [FunctionName("BlobFunction")]
+    public static void Run(
+        [BlobTrigger("sample-container/sample-blob")] Stream blobStream,
+        [Blob("sample-container")] IEnumerable<BlobClient> blobs,
+        ILogger logger)
+    {
+        logger.LogInformation("Blobs within container:");
+        foreach (BlobClient blob in blobs)
+        {
+            logger.LogInformation(blob.Name);
+        }
+    }
+}
+```
+
 ## Troubleshooting
 
 Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.

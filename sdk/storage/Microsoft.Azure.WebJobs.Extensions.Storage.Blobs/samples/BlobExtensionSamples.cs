@@ -28,6 +28,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
         [TestCase(typeof(BlobFunction_WriteStream))]
         [TestCase(typeof(BlobFunction_BlobClient))]
         [TestCase(typeof(BlobFunction_TextReader_TextWriter))]
+        [TestCase(typeof(BlobFunction_AccessContainer))]
+        [TestCase(typeof(BlobFunction_EnumerateBlobs_Stream))]
+        [TestCase(typeof(BlobFunction_EnumerateBlobs_BlobClient))]
         public async Task Run_BlobFunction(Type programType)
         {
             var containerClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient().GetBlobContainerClient("sample-container");
@@ -193,6 +196,61 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
             logger.LogInformation("Blob sample-container/sample-blob-1 has been updated on: {datetime}", blobProperties1.LastModified);
             BlobProperties blobProperties2 = await blobClient2.GetPropertiesAsync();
             logger.LogInformation("Blob sample-container/sample-blob-2 has been updated on: {datetime}", blobProperties2.LastModified);
+        }
+    }
+    #endregion
+
+    #region Snippet:BlobFunction_AccessContainer
+    public static class BlobFunction_AccessContainer
+    {
+        [FunctionName("BlobFunction")]
+        public static async Task Run(
+            [BlobTrigger("sample-container/sample-blob")] Stream blobStream,
+            [Blob("sample-container")] BlobContainerClient blobContainerClient,
+            ILogger logger)
+        {
+            logger.LogInformation("Blobs within container:");
+            await foreach (BlobItem blobItem in blobContainerClient.GetBlobsAsync())
+            {
+                logger.LogInformation(blobItem.Name);
+            }
+        }
+    }
+    #endregion
+
+    #region Snippet:BlobFunction_EnumerateBlobs_Stream
+    public static class BlobFunction_EnumerateBlobs_Stream
+    {
+        [FunctionName("BlobFunction")]
+        public static async Task Run(
+            [BlobTrigger("sample-container/sample-blob")] Stream blobStream,
+            [Blob("sample-container")] IEnumerable<Stream> blobs,
+            ILogger logger)
+        {
+            logger.LogInformation("Blobs contents within container:");
+            foreach (Stream content in blobs)
+            {
+                using var blobStreamReader = new StreamReader(content);
+                logger.LogInformation(await blobStreamReader.ReadToEndAsync());
+            }
+        }
+    }
+    #endregion
+
+    #region Snippet:BlobFunction_EnumerateBlobs_BlobClient
+    public static class BlobFunction_EnumerateBlobs_BlobClient
+    {
+        [FunctionName("BlobFunction")]
+        public static void Run(
+            [BlobTrigger("sample-container/sample-blob")] Stream blobStream,
+            [Blob("sample-container")] IEnumerable<BlobClient> blobs,
+            ILogger logger)
+        {
+            logger.LogInformation("Blobs within container:");
+            foreach (BlobClient blob in blobs)
+            {
+                logger.LogInformation(blob.Name);
+            }
         }
     }
     #endregion
