@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Ext
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests", "tests\Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests.csproj", "{564B3907-57C9-456A-9C7B-C6D876B24479}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus", "..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj", "{AA482040-02B6-4F6A-B0EB-5E688991BBC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{564B3907-57C9-456A-9C7B-C6D876B24479}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{564B3907-57C9-456A-9C7B-C6D876B24479}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{564B3907-57C9-456A-9C7B-C6D876B24479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA482040-02B6-4F6A-B0EB-5E688991BBC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA482040-02B6-4F6A-B0EB-5E688991BBC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA482040-02B6-4F6A-B0EB-5E688991BBC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA482040-02B6-4F6A-B0EB-5E688991BBC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

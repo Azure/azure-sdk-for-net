@@ -14,7 +14,7 @@ using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Xunit;
+using NUnit.Framework;
 using static Microsoft.Azure.ServiceBus.Message;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                                 _mockMessagingProvider.Object, _loggerFactory, false);
         }
 
-        [Fact]
+        [Test]
         public async Task ProcessMessageAsync_Success()
         {
             var message = new CustomMessage();
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _mockMessageProcessor.VerifyAll();
         }
 
-        [Fact]
+        [Test]
         public async Task ProcessMessageAsync_BeginProcessingReturnsFalse_MessageNotProcessed()
         {
             var message = new CustomMessage();
@@ -102,17 +102,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _mockMessageProcessor.VerifyAll();
         }
 
-        [Fact]
+        [Test]
         public void GetMonitor_ReturnsExpectedValue()
         {
             IScaleMonitor scaleMonitor = _listener.GetMonitor();
 
-            Assert.Equal(typeof(ServiceBusScaleMonitor), scaleMonitor.GetType());
-            Assert.Equal(scaleMonitor.Descriptor.Id, $"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower());
+            Assert.AreEqual(typeof(ServiceBusScaleMonitor), scaleMonitor.GetType());
+            Assert.AreEqual(scaleMonitor.Descriptor.Id, $"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower());
 
             var scaleMonitor2 = _listener.GetMonitor();
 
-            Assert.Same(scaleMonitor, scaleMonitor2);
+            Assert.AreSame(scaleMonitor, scaleMonitor2);
         }
 
         private Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)
