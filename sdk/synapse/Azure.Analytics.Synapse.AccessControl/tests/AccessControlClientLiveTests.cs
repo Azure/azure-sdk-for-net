@@ -38,14 +38,20 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             public static async ValueTask<RoleAssignmentDetails> CreateResource (RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, TestRecording recording)
             {
-                string scope = (await definitionsClient.ListScopesAsync()).Value.First();
-                Guid? roleID = (await definitionsClient.ListRoleDefinitionsAsync()).Value.First (x => x.Name == "Workspace Admin").Id;
+                string scope = "workspaces/workspacechhamosynapse";
+
+                Guid? roleID = (await definitionsClient.ListRoleDefinitionsAsync()).Value.First (x => x.Name == "Synapse Administrator").Id;
                 string roleAssignmentId = recording.Random.NewGuid().ToString();
                 Guid principalId = recording.Random.NewGuid();
+                Console.WriteLine ($"{roleAssignmentId} {roleID.Value} {principalId}");
                 return await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, roleID.Value, principalId, scope);
             }
 
-            public async ValueTask DisposeAsync() => await _client.DeleteRoleAssignmentByIdAsync(Assignment.Id);
+            public async ValueTask DisposeAsync()
+            {
+                Console.WriteLine ($"Deleting {Assignment.Id}");
+                await _client.DeleteRoleAssignmentByIdAsync(Assignment.Id);
+            }
         }
 
         public AccessControlClientLiveTests(bool isAsync) : base(isAsync)
@@ -68,6 +74,33 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new RoleDefinitionsClientOptions())
             ));
+        }
+
+        [Test]
+        public async Task ReuseTest()
+        {
+            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
+            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
+
+            Guid? roleID = (await definitionsClient.ListRoleDefinitionsAsync()).Value.First (x => x.Name == "Synapse Administrator").Id;
+            string roleAssignmentId = "FCEC8F68-E6ED-4C00-9F7C-0C6732AB2276";
+            Guid principalId = Guid.Parse("C9AD94B2-541B-4041-92DC-AEC90EF0A74D");
+            string scope = "workspaces/workspacechhamosynapse";
+
+            Console.WriteLine ("Before first create");
+            Response<RoleAssignmentDetails> response = await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, roleID.Value, principalId, scope);
+            Console.WriteLine (response.GetRawResponse().Status);
+            Console.WriteLine (response.Value.Id);
+            Console.WriteLine();
+
+            Console.WriteLine ("Before first delete");
+            Response response2 = await assignmentsClient.DeleteRoleAssignmentByIdAsync(roleAssignmentId);
+            Console.WriteLine (response2.Status);
+            Console.WriteLine();
+
+            Console.WriteLine ("Before second create");
+            Response<RoleAssignmentDetails> response3 = await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, roleID.Value, principalId, scope);
+            Console.WriteLine (response3.GetRawResponse().Status);
         }
 
         [Test]
