@@ -145,6 +145,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns><c>true</c> if the event was added; otherwise, <c>false</c>.</returns>
         ///
+        /// <exception cref="InvalidOperationException">
+        ///   When a batch is published, it will be locked for the duration of that operation.  During this time,
+        ///   no events may be added to the batch.  Calling <c>TryAdd</c> while the batch is being published will
+        ///   result in an <see cref="InvalidOperationException" /> until publishing has completed.
+        /// </exception>
+        ///
         public bool TryAdd(EventData eventData)
         {
             lock (SyncGuard)
