@@ -12,7 +12,7 @@ public virtual Pageable<TimeSeriesInstance> GetInstances(string clientSessionId 
 ### POST /timeseries/instances/suggest
 
 ```csharp
-public virtual Response<InstancesSearchStringSuggestion[]> GetSearchSuggestions(string searchString, int take = null, string clientSessionId = null, CancellationToken cancellationToken = default);
+public virtual Response<InstancesSearchStringSuggestion[]> GetSearchSuggestions(InstancesSuggestRequest suggestRequest, string clientSessionId = null, CancellationToken cancellationToken = default);
 
 // Thoughts on renaming IstancesSearchStringSuggestion to InstanceSuggestion
 ```
@@ -22,19 +22,19 @@ public virtual Response<InstancesSearchStringSuggestion[]> GetSearchSuggestions(
 ```csharp
 public virtual Response<InstanceOrError[]> GetInstancesByTimeSeriesIds(TimeSeriesId[] timeSeriesIds, clientSessionId = null, CancellationToken cancellationToken = default);
 
-public virtual Response<InstanceOrError[]> GetInstancesByNames(string[] timeSeriesNames, clientSessionId = null, CancellationToken cancellationToken = default);
-
 // Thoughts on renaming InstanceOrError to GetInstanceOperationResponse
+
+public virtual Response<InstanceOrError[]> GetInstancesByNames(string[] timeSeriesNames, clientSessionId = null, CancellationToken cancellationToken = default);
 
 public virtual Response<InstanceOrError[]> CreateOrReplaceTimeSeriesInstances(TimeSeriesInstance[] timeSeriesInstances, clientSessionId = null, CancellationToken cancellationToken = default);
 
 public virtual Response<InstanceOrError[]> UpdateTimeSeriesInstances(TimeSeriesInstance[] timeSeriesInstances, clientSessionId = null, CancellationToken cancellationToken = default);
 
-public virtual Response<> DeleteInstancesByTimeSeriesId(TimeSeriesId[] timeSeriesIds, clientSessionId = null, CancellationToken cancellationToken = default);
+public virtual Response<TsiErrorBody[]> DeleteInstancesByTimeSeriesId(TimeSeriesId[] timeSeriesIds, clientSessionId = null, CancellationToken cancellationToken = default);
 
-public virtual Response<> DeleteInstancesByNames(string[] timeSeriesNames, clientSessionId = null, CancellationToken cancellationToken = default);
+// Thoughts on renaming TsiErrorBody to DeleteInstanceOperationResponse
 
-// Thoughts on the above operations but for single instance
+public virtual Response<TsiErrorBody[]> DeleteInstancesByNames(string[] timeSeriesNames, clientSessionId = null, CancellationToken cancellationToken = default);
 
 ```
 
