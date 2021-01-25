@@ -32,6 +32,7 @@ foreach ($packageProp in $allPackageProps) {
         $key = "${packageName}:${releaseVersion}"
 
         $releaseHighlights[$key] = @{}
+        $releaseHighlights[$key]["PackageProperties"] = $packageProp
         $releaseHighlights[$key]["ChangelogUrl"] = "https://github.com/Azure/azure-sdk-for-${LanguageShort}/blob/${releaseTag}/sdk/${serviceDirectory}/${packageName}/CHANGELOG.md#${githubAnchor}"
         $releaseHighlights[$key]["Content"] = @()
 
