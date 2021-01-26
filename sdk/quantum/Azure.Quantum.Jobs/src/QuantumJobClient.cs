@@ -17,7 +17,7 @@ namespace Azure.Quantum.Jobs
     public class QuantumJobClient
     {
         private static Page<JobDetails> ToPage(Response<JobDetailsList> list) =>
-    Page.FromValues(list.Value.Value, list.Value.NextLink, list.GetRawResponse());
+    Page.FromValues(list.Value.Values, list.Value.NextLink, list.GetRawResponse());
 
         /// <summary> Return list of jobs. </summary>
         public virtual Pageable<JobDetails> GetJobs(CancellationToken cancellationToken = default)

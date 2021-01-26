@@ -14,6 +14,7 @@ namespace Azure.Quantum.Jobs.Models
     internal partial class JobDetailsList
     {
         /// <summary> Job details object. </summary>
-        public IReadOnlyList<JobDetails> Value { get; }
+        [CodeGenMember("Value")]
+        public IReadOnlyList<JobDetails> Values { get; }
     }
 }
