@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -14,13 +13,13 @@ using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 {
     public class ServiceBusHostBuilderExtensionsTests
     {
-        [Fact]
+        [Test]
         public void ConfigureOptions_AppliesValuesCorrectly()
         {
             string extensionPath = "AzureWebJobs:Extensions:ServiceBus";
@@ -38,14 +37,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 b.AddServiceBus();
             }, values);
 
-            Assert.Equal(123, options.PrefetchCount);
-            Assert.Equal("TestConnectionString", options.ConnectionString);
-            Assert.Equal(123, options.MessageHandlerOptions.MaxConcurrentCalls);
+            Assert.AreEqual(123, options.PrefetchCount);
+            Assert.AreEqual("TestConnectionString", options.ConnectionString);
+            Assert.AreEqual(123, options.MessageHandlerOptions.MaxConcurrentCalls);
             Assert.False(options.MessageHandlerOptions.AutoComplete);
-            Assert.Equal(TimeSpan.FromSeconds(15), options.MessageHandlerOptions.MaxAutoRenewDuration);
+            Assert.AreEqual(TimeSpan.FromSeconds(15), options.MessageHandlerOptions.MaxAutoRenewDuration);
         }
 
-        [Fact]
+        [Test]
         public void AddServiceBus_ThrowsArgumentNull_WhenServiceBusOptionsIsNull()
         {
             IHost host = new HostBuilder()
@@ -58,10 +57,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
             var exception = Assert.Throws<ArgumentNullException>(() => host.Services.GetServices<IExtensionConfigProvider>());
 
-            Assert.Equal("serviceBusOptions", exception.ParamName);
+            Assert.AreEqual("serviceBusOptions", exception.ParamName);
         }
 
-        [Fact]
+        [Test]
         public void AddServiceBus_NoServiceBusOptions_PerformsExpectedRegistration()
         {
             IHost host = new HostBuilder()
@@ -78,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             var serviceBusExtensionConfig = configProviders.OfType<ServiceBusExtensionConfigProvider>().Single();
         }
 
-        [Fact]
+        [Test]
         public void AddServiceBus_ServiceBusOptionsProvided_PerformsExpectedRegistration()
         {
             string fakeConnStr = "test service bus connection";
@@ -104,13 +103,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             // verify that the service bus config provider was registered
             var serviceBusExtensionConfig = configProviders.OfType<ServiceBusExtensionConfigProvider>().Single();
 
-            Assert.Equal(fakeConnStr, serviceBusExtensionConfig.Options.ConnectionString);
+            Assert.AreEqual(fakeConnStr, serviceBusExtensionConfig.Options.ConnectionString);
         }
-        [Theory]
-        [InlineData("DefaultConnectionString", "DefaultConectionSettingString", "DefaultConnectionString")]
-        [InlineData("DefaultConnectionString", null, "DefaultConnectionString")]
-        [InlineData(null, "DefaultConectionSettingString", "DefaultConectionSettingString")]
-        [InlineData(null, null, null)]
+
+        [Test]
+        [TestCase("DefaultConnectionString", "DefaultConectionSettingString", "DefaultConnectionString")]
+        [TestCase("DefaultConnectionString", null, "DefaultConnectionString")]
+        [TestCase(null, "DefaultConectionSettingString", "DefaultConectionSettingString")]
+        [TestCase(null, null, null)]
         public void ReadDeafultConnectionString(string defaultConnectionString, string sefaultConectionSettingString, string expectedValue)
         {
             ServiceBusOptions options = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(b =>
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 b.AddServiceBus();
             }, new Dictionary<string, string>());
 
-            Assert.Equal(options.ConnectionString, expectedValue);
+            Assert.AreEqual(options.ConnectionString, expectedValue);
         }
     }
 }

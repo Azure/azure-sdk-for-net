@@ -29,6 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
         private const string ItValue = "it";
         private const string NlValue = "nl";
         private const string PtValue = "pt";
+        private const string JaValue = "ja";
         private const string ZhHansValue = "zh-Hans";
 
         /// <summary> en. </summary>
@@ -45,6 +46,8 @@ namespace Azure.AI.FormRecognizer.Models
         public static Language Nl { get; } = new Language(NlValue);
         /// <summary> pt. </summary>
         public static Language Pt { get; } = new Language(PtValue);
+        /// <summary> ja. </summary>
+        public static Language Ja { get; } = new Language(JaValue);
         /// <summary> zh-Hans. </summary>
         public static Language ZhHans { get; } = new Language(ZhHansValue);
         /// <summary> Determines if two <see cref="Language"/> values are the same. </summary>

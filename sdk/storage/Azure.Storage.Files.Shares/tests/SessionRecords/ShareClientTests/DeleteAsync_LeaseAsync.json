@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-30283768-0a22-9eee-1f4d-5fbda363b223?restype=share",
@@ -13,14 +13,15 @@
         "x-ms-client-request-id": "b02e321f-de7f-d7b2-76e6-be15f71d6d59",
         "x-ms-date": "Tue, 13 Oct 2020 15:22:47 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Tue, 13 Oct 2020 15:22:49 GMT",
-        "ETag": "\u00220x8D86F8BD8BED89E\u0022",
+        "ETag": "\"0x8D86F8BD8BED89E\"",
         "Last-Modified": "Tue, 13 Oct 2020 15:22:50 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -33,7 +34,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-30283768-0a22-9eee-1f4d-5fbda363b223?comp=lease\u0026restype=share",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-30283768-0a22-9eee-1f4d-5fbda363b223?comp=lease&restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -48,14 +49,15 @@
         "x-ms-lease-duration": "-1",
         "x-ms-proposed-lease-id": "2b866ffe-04fe-67a3-6ffb-3b1f56743296",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Tue, 13 Oct 2020 15:22:49 GMT",
-        "ETag": "\u00220x8D86F8BD8BED89E\u0022",
+        "ETag": "\"0x8D86F8BD8BED89E\"",
         "Last-Modified": "Tue, 13 Oct 2020 15:22:50 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -83,7 +85,8 @@
         "x-ms-delete-snapshots": "include",
         "x-ms-lease-id": "2b866ffe-04fe-67a3-6ffb-3b1f56743296",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 202,

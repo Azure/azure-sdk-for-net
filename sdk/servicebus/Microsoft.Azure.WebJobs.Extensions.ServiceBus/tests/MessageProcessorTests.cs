@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs.Host.Executors;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
@@ -23,23 +23,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             _processor = new MessageProcessor(receiver, _options);
         }
 
-        [Fact]
-        public async Task CompleteProcessingMessageAsync_Failure_PropagatesException()
+        [Test]
+        public void CompleteProcessingMessageAsync_Failure_PropagatesException()
         {
             _options.AutoComplete = false;
 
             Message message = new Message();
             var functionException = new InvalidOperationException("Kaboom!");
             FunctionResult result = new FunctionResult(functionException);
-            var ex = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () =>
             {
                 await _processor.CompleteProcessingMessageAsync(message, result, CancellationToken.None);
             });
 
-            Assert.Same(functionException, ex);
+            Assert.AreSame(functionException, ex);
         }
 
-        [Fact]
+        [Test]
         public async Task CompleteProcessingMessageAsync_DefaultOnMessageOptions()
         {
             Message message = new Message();
@@ -47,10 +47,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             await _processor.CompleteProcessingMessageAsync(message, result, CancellationToken.None);
         }
 
-        [Fact]
+        [Test]
         public void MessageOptions_ReturnsOptions()
         {
-            Assert.Same(_options, _processor.MessageOptions);
+            Assert.AreSame(_options, _processor.MessageOptions);
         }
 
         private Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)

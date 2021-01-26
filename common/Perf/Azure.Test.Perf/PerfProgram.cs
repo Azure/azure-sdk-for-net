@@ -24,6 +24,9 @@ namespace Azure.Test.Perf
         private static List<TimeSpan>[] _correctedLatencies;
         private static Channel<(TimeSpan, Stopwatch)> _pendingOperations;
 
+        private static int CompletedOperations => _completedOperations.Sum();
+        private static double OperationsPerSecond => _completedOperations.Zip(_lastCompletionTimes, (operations, time) => (operations / time.TotalSeconds)).Sum();
+
         public static async Task Main(Assembly assembly, string[] args)
         {
             var testTypes = assembly.ExportedTypes
@@ -215,13 +218,15 @@ namespace Azure.Test.Perf
             using var progressStatusCts = new CancellationTokenSource();
             var progressStatusThread = PerfStressUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
-                "Current\t\tTotal",
+                "Current\t\tTotal\t\tAverage",
                 () =>
                 {
-                    var totalCompleted = _completedOperations.Sum();
+                    var totalCompleted = CompletedOperations;
                     var currentCompleted = totalCompleted - lastCompleted;
+                    var averageCompleted = OperationsPerSecond;
+
                     lastCompleted = totalCompleted;
-                    return currentCompleted + "\t\t" + totalCompleted;
+                    return $"{currentCompleted}\t\t{totalCompleted}\t\t{averageCompleted:F2}";
                 },
                 newLine: true,
                 progressStatusCts.Token,
@@ -273,12 +278,12 @@ namespace Azure.Test.Perf
 
             Console.WriteLine("=== Results ===");
 
-            var totalOperations = _completedOperations.Sum();
-            var operationsPerSecond = _completedOperations.Zip(_lastCompletionTimes, (operations, time) => (operations / time.TotalSeconds)).Sum();
+            var totalOperations = CompletedOperations;
+            var operationsPerSecond = OperationsPerSecond;
             var secondsPerOperation = 1 / operationsPerSecond;
             var weightedAverageSeconds = totalOperations / operationsPerSecond;
 
-            Console.WriteLine($"Completed {totalOperations} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
+            Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
                 $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op)");
             Console.WriteLine();
 

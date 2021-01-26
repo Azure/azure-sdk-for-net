@@ -60,6 +60,7 @@ jobs:
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
     pool:
+      name: $(Pool)
       vmImage: $(OSVmImage)
 
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
@@ -68,7 +69,7 @@ jobs:
     steps:
       - ${{ parameters.PreSteps }}
 
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+#      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
 
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:

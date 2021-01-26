@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-dec3ad02-e06c-c468-ec0f-86e135dd2f95?restype=share",
@@ -17,14 +17,15 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Thu, 05 Mar 2020 21:48:43 GMT",
-        "ETag": "\u00220x8D7C14EFA4CCCB1\u0022",
+        "ETag": "\"0x8D7C14EFA4CCCB1\"",
         "Last-Modified": "Thu, 05 Mar 2020 21:48:44 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -49,7 +50,8 @@
         "x-ms-client-request-id": "8be696bf-e4b4-407e-bc11-605e4a6f5ae0",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -58,7 +60,7 @@
         "Access-Control-Expose-Headers": "x-ms-meta-foo,x-ms-meta-meta,x-ms-meta-Capital,x-ms-meta-UPPER",
         "Content-Length": "0",
         "Date": "Thu, 05 Mar 2020 21:48:43 GMT",
-        "ETag": "\u00220x8D7C14EFA4CCCB1\u0022",
+        "ETag": "\"0x8D7C14EFA4CCCB1\"",
         "Last-Modified": "Thu, 05 Mar 2020 21:48:44 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -90,7 +92,8 @@
         "x-ms-client-request-id": "33ca3f8f-cb21-34ea-052b-7d0309bc2f44",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 202,

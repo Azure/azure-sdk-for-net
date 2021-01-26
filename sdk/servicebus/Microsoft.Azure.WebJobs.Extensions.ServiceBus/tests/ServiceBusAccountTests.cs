@@ -3,7 +3,7 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 .Build();
         }
 
-        [Fact]
+        [Test]
         public void GetConnectionString_ReturnsExpectedConnectionString()
         {
             string defaultConnection = "Endpoint=sb://default.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.True(defaultConnection == account.ConnectionString);
         }
 
-        [Fact]
+        [Test]
         public void GetConnectionString_ThrowsIfConnectionStringNullOrEmpty()
         {
             var config = new ServiceBusOptions();
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 var account = new ServiceBusAccount(config, _configuration, attribute);
                 var cs = account.ConnectionString;
             });
-            Assert.Equal("Microsoft Azure WebJobs SDK ServiceBus connection string 'MissingConnection' is missing or empty.", ex.Message);
+            Assert.AreEqual("Microsoft Azure WebJobs SDK ServiceBus connection string 'MissingConnection' is missing or empty.", ex.Message);
 
             attribute.Connection = null;
             config.ConnectionString = null;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 var account = new ServiceBusAccount(config, _configuration, attribute);
                 var cs = account.ConnectionString;
             });
-            Assert.Equal("Microsoft Azure WebJobs SDK ServiceBus connection string 'AzureWebJobsServiceBus' is missing or empty.", ex.Message);
+            Assert.AreEqual("Microsoft Azure WebJobs SDK ServiceBus connection string 'AzureWebJobsServiceBus' is missing or empty.", ex.Message);
         }
     }
 }

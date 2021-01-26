@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> This activity evaluates an expression and executes activities under the cases property that correspond to the expression evaluation expected in the equals property. </summary>
-    public partial class SwitchActivity : Activity
+    public partial class SwitchActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of SwitchActivity. </summary>
         /// <param name="name"> Activity name. </param>

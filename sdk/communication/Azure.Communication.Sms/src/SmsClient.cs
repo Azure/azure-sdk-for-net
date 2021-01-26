@@ -40,6 +40,17 @@ namespace Azure.Communication.Sms
                   ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))))
         { }
 
+        /// <summary> Initializes a new instance of <see cref="SmsClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="tokenCredential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public SmsClient(Uri endpoint, TokenCredential tokenCredential, SmsClientOptions? options = default)
+            : this(
+                  endpoint,
+                  options ?? new SmsClientOptions(),
+                  tokenCredential)
+        { }
+
         /// <summary>Initializes a new instance of <see cref="SmsClient"/> for mocking.</summary>
         protected SmsClient()
         {
@@ -59,6 +70,18 @@ namespace Azure.Communication.Sms
                   pipeline: options.BuildHttpPipeline(connectionString),
                   endpointUrl: connectionString.GetRequired("endpoint"))
         { }
+
+        private SmsClient(Uri endpoint, SmsClientOptions options, TokenCredential tokenCredential)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
+            _clientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new SmsRestClient(
+                _clientDiagnostics,
+                options.BuildHttpPipeline(tokenCredential),
+                endpoint.AbsoluteUri);
+        }
 
         private SmsClient(Uri endpoint, SmsClientOptions options, AzureKeyCredential credential)
         {
@@ -83,8 +106,8 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
         public virtual async Task<Response<SendSmsResponse>> SendAsync(PhoneNumberIdentifier from, PhoneNumberIdentifier to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(from.Value, nameof(from));
-            Argument.AssertNotNullOrEmpty(to.Value, nameof(to));
+            Argument.AssertNotNullOrEmpty(from.PhoneNumber, nameof(from));
+            Argument.AssertNotNullOrEmpty(to.PhoneNumber, nameof(to));
             return await SendAsync(from, new[] { to }, message, sendSmsOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -102,8 +125,8 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
         public virtual Response<SendSmsResponse> Send(PhoneNumberIdentifier from, PhoneNumberIdentifier to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(from.Value, nameof(from));
-            Argument.AssertNotNullOrEmpty(to.Value, nameof(to));
+            Argument.AssertNotNullOrEmpty(from.PhoneNumber, nameof(from));
+            Argument.AssertNotNullOrEmpty(to.PhoneNumber, nameof(to));
             return Send(from, new[] { to }, message, sendSmsOptions, cancellationToken);
         }
 
@@ -123,8 +146,8 @@ namespace Azure.Communication.Sms
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(from.Value, nameof(from));
-                return await RestClient.SendAsync(from.Value, to.Select(x => AssertNotNullOrEmpty(x.Value, nameof(to))), message, sendSmsOptions, cancellationToken).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(from.PhoneNumber, nameof(from));
+                return await RestClient.SendAsync(from.PhoneNumber, to.Select(x => AssertNotNullOrEmpty(x.PhoneNumber, nameof(to))), message, sendSmsOptions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -149,8 +172,8 @@ namespace Azure.Communication.Sms
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(from.Value, nameof(from));
-                return RestClient.Send(from.Value, to.Select(x => AssertNotNullOrEmpty(x.Value, nameof(to))), message, sendSmsOptions, cancellationToken);
+                Argument.AssertNotNullOrEmpty(from.PhoneNumber, nameof(from));
+                return RestClient.Send(from.PhoneNumber, to.Select(x => AssertNotNullOrEmpty(x.PhoneNumber, nameof(to))), message, sendSmsOptions, cancellationToken);
             }
             catch (Exception ex)
             {

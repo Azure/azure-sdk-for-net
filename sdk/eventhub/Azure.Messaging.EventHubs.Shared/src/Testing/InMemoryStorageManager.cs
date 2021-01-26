@@ -67,6 +67,18 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   The value to set the ownership LastModifiedTime to.
+        /// </summary>
+        ///
+        public DateTimeOffset LastModifiedTime { get; set; } = DateTimeOffset.Now;
+
+        /// <summary>
+        ///   The total lease renewals.
+        /// </summary>
+        ///
+        public int TotalRenewals { get; set; }
+
+        /// <summary>
         ///   Retrieves a complete ownership list from the in-memory storage service.
         /// </summary>
         ///
@@ -130,7 +142,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     if (isClaimable)
                     {
                         ownership.Version = Guid.NewGuid().ToString();
-
+                        ownership.LastModifiedTime = LastModifiedTime;
+                        TotalRenewals++;
                         Ownership[key] = ownership;
                         claimedOwnership.Add(ownership);
 
@@ -210,6 +223,16 @@ namespace Azure.Messaging.EventHubs.Tests
             return Task.CompletedTask;
         }
 
+        public EventProcessorPartitionOwnership TryGetLatestOwnership(EventProcessorPartitionOwnership ownership)
+        {
+            var key = (ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
+            if (Ownership.TryGetValue(key, out ownership))
+            {
+                return ownership;
+            }
+
+            return null;
+        }
         /// <summary>
         ///   Sends a log message to the current logger, if provided by the user.
         /// </summary>

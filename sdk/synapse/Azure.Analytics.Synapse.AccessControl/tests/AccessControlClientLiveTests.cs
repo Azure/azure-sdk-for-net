@@ -1,16 +1,17 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Analytics.Synapse.AccessControl;
 using Azure.Analytics.Synapse.AccessControl.Models;
 using Azure.Core.TestFramework;
-using Newtonsoft.Json.Linq;
+using Azure.Analytics.Synapse.Tests;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Tests.AccessControl
+namespace Azure.Analytics.Synapse.AccessControl.Tests
 {
     /// <summary>
     /// The suite of tests for the <see cref="AccessControlClient"/> class.
@@ -19,71 +20,101 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class AccessControlClientLiveTests : AccessControlClientTestBase
+    public class AccessControlClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AccessControlClientLiveTests"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
+        internal class DisposableClientRole : IAsyncDisposable
+        {
+            private readonly AccessControlClient _client;
+            public RoleAssignmentDetails Assignment;
+
+            private DisposableClientRole (AccessControlClient client, RoleAssignmentDetails assignment)
+            {
+                _client = client;
+                Assignment = assignment;
+            }
+
+            public static async ValueTask<DisposableClientRole> Create (AccessControlClient client, TestRecording recording) =>
+                new DisposableClientRole (client, await CreateResource (client, recording));
+
+            public static async ValueTask<RoleAssignmentDetails> CreateResource (AccessControlClient client, TestRecording recording)
+            {
+                string roleID = (await client.GetRoleDefinitionsAsync().ToListAsync()).First (x => x.Name == "Workspace Admin").Id;
+                string principalId = recording.Random.NewGuid().ToString();
+                return await client.CreateRoleAssignmentAsync(new RoleAssignmentOptions(roleID, principalId));
+            }
+
+            public async ValueTask DisposeAsync() => await _client.DeleteRoleAssignmentByIdAsync(Assignment.Id);
+        }
+
         public AccessControlClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [Test]
-        public async Task TestGetRoleDefinition()
+        private AccessControlClient CreateClient()
         {
-            List<SynapseRole> roles = await AccessControlClient.GetRoleDefinitionsAsync().ToEnumerableAsync();
-            CollectionAssert.IsNotEmpty(roles);
-            foreach (SynapseRole expectedRole in roles)
+            return InstrumentClient(new AccessControlClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new AccessControlClientOptions())
+            ));
+        }
+
+        [Test]
+        public async Task CreateRoleAssignment()
+        {
+            AccessControlClient client = CreateClient();
+            await using DisposableClientRole role = await DisposableClientRole.Create (client, this.Recording);
+
+            Assert.NotNull(role.Assignment.Id);
+            Assert.NotNull(role.Assignment.RoleId);
+            Assert.NotNull(role.Assignment.PrincipalId);
+        }
+
+        [Test]
+        public async Task GetRoleAssignment()
+        {
+            AccessControlClient client = CreateClient();
+            await using DisposableClientRole role = await DisposableClientRole.Create (client, this.Recording);
+
+            RoleAssignmentDetails roleAssignment = await client.GetRoleAssignmentByIdAsync(role.Assignment.Id);
+
+            Assert.AreEqual(role.Assignment.RoleId, roleAssignment.RoleId);
+            Assert.AreEqual(role.Assignment.PrincipalId, roleAssignment.PrincipalId);
+        }
+
+        [Test]
+        public async Task ListRoleAssignments()
+        {
+            AccessControlClient client = CreateClient();
+            await using DisposableClientRole role = await DisposableClientRole.Create (client, this.Recording);
+
+            Response<IReadOnlyList<RoleAssignmentDetails>> roleAssignments = await client.GetRoleAssignmentsAsync();
+            foreach (RoleAssignmentDetails expected in roleAssignments.Value)
             {
-                SynapseRole actualRole = await AccessControlClient.GetRoleDefinitionByIdAsync(expectedRole.Id.ToString());
-                Assert.AreEqual(expectedRole.Name, actualRole.Name);
-                Assert.AreEqual(expectedRole.Id, actualRole.Id);
-                Assert.AreEqual(expectedRole.IsBuiltIn, actualRole.IsBuiltIn);
+                RoleAssignmentDetails actual = await client.GetRoleAssignmentByIdAsync(expected.Id);
+                Assert.AreEqual(expected.Id, actual.Id);
+                Assert.AreEqual(expected.PrincipalId, actual.PrincipalId);
+                Assert.AreEqual(expected.RoleId, actual.RoleId);
             }
+            Assert.GreaterOrEqual(roleAssignments.Value.Count, 1);
         }
 
         [Test]
-        public async Task TestGetRoleAssignment()
+        public async Task DeleteRoleAssignments()
         {
-            IReadOnlyList<RoleAssignmentDetails> roleAssignments = (await AccessControlClient.GetRoleAssignmentsAsync()).Value;
-            CollectionAssert.IsNotEmpty(roleAssignments);
-            foreach (RoleAssignmentDetails expectedRoleAssignment in roleAssignments)
-            {
-                RoleAssignmentDetails actualRoleAssignment = await AccessControlClient.GetRoleAssignmentByIdAsync(expectedRoleAssignment.Id);
-                Assert.AreEqual(expectedRoleAssignment.Id, actualRoleAssignment.Id);
-                Assert.AreEqual(expectedRoleAssignment.PrincipalId, actualRoleAssignment.PrincipalId);
-                Assert.AreEqual(expectedRoleAssignment.RoleId, actualRoleAssignment.RoleId);
-            }
+            AccessControlClient client = CreateClient();
+            RoleAssignmentDetails assignment = await DisposableClientRole.CreateResource (client, this.Recording);
+
+            Response response = await client.DeleteRoleAssignmentByIdAsync (assignment.Id);
+            response.AssertSuccess();
         }
 
         [Test]
-        public async Task TestCreateAndDeleteRoleAssignment()
+        public async Task GetCallerRoleAssignment()
         {
-            string sqlAdminRoleId = "7af0c69a-a548-47d6-aea3-d00e69bd83aa";
-            string principalId = Recording.Random.NewGuid().ToString();
-
-            // Create role assignment.
-            RoleAssignmentDetails actualRoleAssignment = await AccessControlClient.CreateRoleAssignmentAsync(new RoleAssignmentOptions(roleId:sqlAdminRoleId, principalId: principalId));
-
-            // Verify the role assignment exists.
-            Assert.NotNull(actualRoleAssignment);
-            Assert.AreEqual(sqlAdminRoleId, actualRoleAssignment.RoleId);
-            Assert.AreEqual(principalId, actualRoleAssignment.PrincipalId);
-
-            // Remove the role assignment.
-            await AccessControlClient.DeleteRoleAssignmentByIdAsync(actualRoleAssignment.Id);
-
-            // Verify the role assignment doesn't exist.
-            actualRoleAssignment = (await AccessControlClient.GetRoleAssignmentsAsync()).Value.FirstOrDefault(ra => ra.PrincipalId == principalId);
-            Assert.IsNull(actualRoleAssignment);
-        }
-
-        [Test]
-        public async Task TestGetCallerRoleAssignments()
-        {
-            Response<IReadOnlyList<string>> actualRoleIds = await AccessControlClient.GetCallerRoleAssignmentsAsync();
-            CollectionAssert.IsNotEmpty(actualRoleIds.Value);
+            AccessControlClient client = CreateClient();
+            Response<IReadOnlyList<string>> assignments = await client.GetCallerRoleAssignmentsAsync ();
+            Assert.GreaterOrEqual(assignments.Value.Count, 1);
         }
     }
 }

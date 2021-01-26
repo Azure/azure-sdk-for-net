@@ -18,10 +18,10 @@ namespace SecurityInsights.Tests
     {
         #region Test setup
 
-        private static string ResourceGroup = "CXP-Nicholas";
-        private static string WorkspaceName = "SecureScoreData-t4ah4xsttcevs";
-        private static string ActionLAResourceID = "/subscriptions/6b1ceacd-5731-4780-8f96-2078dd96fd96/resourceGroups/CXP-Nicholas/providers/Microsoft.Logic/workflows/Test";
-        private static string ActionLATriggerUri = "https://prod-41.eastus.logic.azure.com:443/workflows/349d86e6a02242ea8f6e5d23b24db20e/triggers/When_a_response_to_an_Azure_Sentinel_alert_is_triggered/paths/invoke?api-version=2018-07-01-preview&sp=%2Ftriggers%2FWhen_a_response_to_an_Azure_Sentinel_alert_is_triggered%2Frun&sv=1.0&sig=EEBNwnVvkXlFTeaQ8KaKc1sTd8py0Yas_Dx2ipBg0_4";
+        private static string ResourceGroup = "ndicola-azsposh";
+        private static string WorkspaceName = "azsposh";
+        private static string ActionLAResourceID = "/subscriptions/1c61ccbf-70b3-45a3-a1fb-848ce46d70a6/resourceGroups/ndicola-azsposh/providers/Microsoft.Logic/workflows/Block-AADUser";
+        private static string ActionLATriggerUri = "https://prod-13.westus.logic.azure.com:443/workflows/826a95b1b84c4ffbaf3af3dd88fe96b5/triggers/When_a_response_to_an_Azure_Sentinel_alert_is_triggered/paths/invoke?api-version=2018-07-01-preview&sp=%2Ftriggers%2FWhen_a_response_to_an_Azure_Sentinel_alert_is_triggered%2Frun&sv=1.0&sig=pK23xWl4uJT4RWs7zopxiP0Z7CpIfCDZEanL-mEyy1E";
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
@@ -85,7 +85,7 @@ namespace SecurityInsights.Tests
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
 
-                var alertRule = SecurityInsightsClient.AlertRules.Get(ResourceGroup, WorkspaceName, "BuiltInFusion");
+                var alertRule = SecurityInsightsClient.AlertRules.Get(ResourceGroup, WorkspaceName, "2830422a-6217-4a1e-8626-6b97ca8bba12");
                 ValidateAlertRule(alertRule);
 
             }
@@ -132,7 +132,7 @@ namespace SecurityInsights.Tests
                     TriggerUri = ActionLATriggerUri
                 };
 
-                var alertRuleAction = SecurityInsightsClient.AlertRules.CreateOrUpdateAction(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
+                var alertRuleAction = SecurityInsightsClient.Actions.CreateOrUpdate(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
                 ValidateAlertRuleAction(alertRuleAction);
                 SecurityInsightsClient.AlertRules.Delete(ResourceGroup, WorkspaceName, RuleId);
             }
@@ -160,8 +160,8 @@ namespace SecurityInsights.Tests
                     TriggerUri = ActionLATriggerUri
                 };
 
-                SecurityInsightsClient.AlertRules.CreateOrUpdateAction(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
-                var alertRuleAction = SecurityInsightsClient.AlertRules.GetAction(ResourceGroup, WorkspaceName, RuleId, ActionId);
+                SecurityInsightsClient.Actions.CreateOrUpdate(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
+                var alertRuleAction = SecurityInsightsClient.Actions.Get(ResourceGroup, WorkspaceName, RuleId, ActionId);
                 ValidateAlertRuleAction(alertRuleAction);
                 SecurityInsightsClient.AlertRules.Delete(ResourceGroup, WorkspaceName, RuleId);
             }
@@ -189,8 +189,8 @@ namespace SecurityInsights.Tests
                     TriggerUri = ActionLATriggerUri
                 };
 
-                SecurityInsightsClient.AlertRules.CreateOrUpdateAction(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
-                SecurityInsightsClient.AlertRules.DeleteAction(ResourceGroup, WorkspaceName, RuleId, ActionId);
+                SecurityInsightsClient.Actions.CreateOrUpdate(ResourceGroup, WorkspaceName, RuleId, ActionId, Action);
+                SecurityInsightsClient.Actions.Delete(ResourceGroup, WorkspaceName, RuleId, ActionId);
                 SecurityInsightsClient.AlertRules.Delete(ResourceGroup, WorkspaceName, RuleId);
             }
         }

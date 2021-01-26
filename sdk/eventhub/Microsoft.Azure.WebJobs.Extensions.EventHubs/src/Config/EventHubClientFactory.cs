@@ -51,10 +51,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     if (info.FullyQualifiedEndpoint != null &&
                         info.TokenCredential != null)
                     {
-                        return new EventHubProducerClient(info.FullyQualifiedEndpoint, eventHubName, info.TokenCredential);
+                        return new EventHubProducerClient(
+                            info.FullyQualifiedEndpoint,
+                            eventHubName,
+                            info.TokenCredential,
+                            new EventHubProducerClientOptions
+                            {
+                                RetryOptions = _options.RetryOptions,
+                                ConnectionOptions = _options.ConnectionOptions
+                            });
                     }
 
-                    return new EventHubProducerClient(NormalizeConnectionString(info.ConnectionString, eventHubName));
+                    return new EventHubProducerClient(
+                        NormalizeConnectionString(info.ConnectionString, eventHubName),
+                        new EventHubProducerClientOptions
+                        {
+                            RetryOptions = _options.RetryOptions,
+                            ConnectionOptions = _options.ConnectionOptions
+                        });
                 }
 
                 throw new InvalidOperationException("No event hub sender named " + eventHubName);
@@ -73,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     eventHubName: eventHubName,
                     options: _options.EventProcessorOptions,
                     eventBatchMaximumCount: _options.MaxBatchSize,
-                    invokeProcessorAfterReceiveTimeout: _options.InvokeProcessorAfterReceiveTimeout,
+                    invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                     exceptionHandler: _options.ExceptionHandler);
             }
             else if (!string.IsNullOrEmpty(connection))
@@ -89,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         credential: info.TokenCredential,
                         options: _options.EventProcessorOptions,
                         eventBatchMaximumCount: _options.MaxBatchSize,
-                        invokeProcessorAfterReceiveTimeout: _options.InvokeProcessorAfterReceiveTimeout,
+                        invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                         exceptionHandler: _options.ExceptionHandler);
                 }
 
@@ -98,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     eventHubName: eventHubName,
                     options: _options.EventProcessorOptions,
                     eventBatchMaximumCount: _options.MaxBatchSize,
-                    invokeProcessorAfterReceiveTimeout: _options.InvokeProcessorAfterReceiveTimeout,
+                    invokeProcessorAfterReceiveTimeout: _options.InvokeFunctionAfterReceiveTimeout,
                     exceptionHandler: _options.ExceptionHandler);
             }
 

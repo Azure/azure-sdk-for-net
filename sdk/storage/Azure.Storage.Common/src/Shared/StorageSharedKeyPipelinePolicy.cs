@@ -61,7 +61,6 @@ namespace Azure.Storage
 
             message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out var contentEncoding);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out var contentLanguage);
-            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out var contentLength);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out var contentMD5);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentType, out var contentType);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.IfModifiedSince, out var ifModifiedSince);
@@ -70,11 +69,18 @@ namespace Azure.Storage
             message.Request.Headers.TryGetValue(Constants.HeaderNames.IfUnmodifiedSince, out var ifUnmodifiedSince);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.Range, out var range);
 
-            var stringToSign = string.Join("\n",
+            string contentLengthString = string.Empty;
+
+            if (message.Request.Content != null && message.Request.Content.TryComputeLength(out long contentLength))
+            {
+                contentLengthString = contentLength.ToString(CultureInfo.InvariantCulture);
+            }
+
+            string stringToSign = string.Join("\n",
                 message.Request.Method.ToString().ToUpperInvariant(),
                 contentEncoding ?? "",
                 contentLanguage ?? "",
-                contentLength == "0" ? "" : contentLength ?? "",
+                contentLengthString == "0" ? "" : contentLengthString ?? "",
                 contentMD5 ?? "", // todo: fix base 64 VALUE
                 contentType ?? "",
                 "", // Empty date because x-ms-date is expected (as per web page above)

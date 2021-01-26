@@ -1,19 +1,15 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 {
     public class BoundServiceBusTests
     {
-        [Fact]
+        [Test]
         public void Bind_IfNotNullBindingData_ReturnsResolvedQueueName()
         {
             const string queueOrTopicNamePattern = "queue-name-with-no-parameters";
@@ -22,10 +18,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             string result = path.Bind(bindingData);
 
-            Assert.Equal(queueOrTopicNamePattern, result);
+            Assert.AreEqual(queueOrTopicNamePattern, result);
         }
 
-        [Fact]
+        [Test]
         public void Bind_IfNullBindingData_ReturnsResolvedQueueName()
         {
             const string queueOrTopicNamePattern = "queue-name-with-no-parameters";
@@ -33,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             string result = path.Bind(null);
 
-            Assert.Equal(queueOrTopicNamePattern, result);
+            Assert.AreEqual(queueOrTopicNamePattern, result);
         }
     }
 }
