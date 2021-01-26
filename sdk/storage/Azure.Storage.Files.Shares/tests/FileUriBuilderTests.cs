@@ -188,24 +188,36 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        public void FileUriBuilder_AccountNamePeriod()
+        {
+            var fileUriBuilder = new ShareUriBuilder(new Uri("https://account.z.file.core.windows.net/share/dir"));
+
+            Assert.AreEqual("account", fileUriBuilder.AccountName);
+        }
+
+        [Test]
+        public void FileUriBuilder_AccountNameError()
+        {
+            var fileUriBuilder = new ShareUriBuilder(new Uri("http://notaurl"));
+
+            Assert.IsEmpty(fileUriBuilder.AccountName);
+        }
+
+        [Test]
         public void FileUriBuilder_MalformedSubdomain()
         {
-            // core and file swapped
-            var shareUriBuilder1 = new ShareUriBuilder(new Uri("https://account.core.file.windows.net/share/dir"));
-
             // account and file swapped
-            var shareUriBuilder2 = new ShareUriBuilder(new Uri("https://file.account.core.windows.net/share/dir"));
+            var shareUriBuilder1 = new ShareUriBuilder(new Uri("https://file.account.core.windows.net/share/dir"));
 
             // wrong service
-            var shareUriBuilder3 = new ShareUriBuilder(new Uri("https://account.blob.core.windows.net/share/dir"));
+            var shareUriBuilder2 = new ShareUriBuilder(new Uri("https://account.blob.core.windows.net/share/dir"));
 
             // empty service
-            var shareUriBuilder4 = new ShareUriBuilder(new Uri("https://account./share/dir"));
+            var shareUriBuilder3 = new ShareUriBuilder(new Uri("https://account./share/dir"));
 
             Assert.AreEqual(string.Empty, shareUriBuilder1.AccountName);
             Assert.AreEqual(string.Empty, shareUriBuilder2.AccountName);
             Assert.AreEqual(string.Empty, shareUriBuilder3.AccountName);
-            Assert.AreEqual(string.Empty, shareUriBuilder4.AccountName);
         }
 
         [Test]

@@ -42,7 +42,17 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 (new SecretClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new SecretClientOptions(_serviceVersion))));
+                    InstrumentClientOptions(
+                        new SecretClientOptions(_serviceVersion)
+                        {
+                            Diagnostics =
+                            {
+                                LoggedHeaderNames =
+                                {
+                                    "x-ms-request-id",
+                                }
+                            },
+                        })));
         }
 
         public override void StartTestRecording()

@@ -852,7 +852,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var credential = EventHubsTestEnvironment.Instance.Credential;
-                var sourceEvents = EventGenerator.CreateEvents(100).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
@@ -1585,13 +1585,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName))
                 {
                     var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
-                    var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(250) };
+                    var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(100) };
                     var desiredEmptyEvents = 10;
                     var minimumEmptyEvents = 5;
 
                     var readTime = TimeSpan
-                        .FromSeconds(options.MaximumWaitTime.Value.TotalSeconds * desiredEmptyEvents)
-                        .Add(TimeSpan.FromSeconds(3));
+                        .FromMilliseconds(options.MaximumWaitTime.Value.TotalMilliseconds * desiredEmptyEvents)
+                        .Add(TimeSpan.FromSeconds(10));
 
                     // Attempt to read from the empty partition and verify that no events are observed.  Because no events are expected, the
                     // read operation will not naturally complete; limit the read to only a couple of seconds and trigger cancellation.

@@ -39,6 +39,9 @@ parameters:
 - name: LinuxPool
   type: string
   default: azsdk-pool-mms-ubuntu-1804-general
+- name: TestTimeoutInMinutes
+  type: number
+  default: 60
 
 stages:
   - stage: Build
@@ -49,11 +52,13 @@ stages:
         ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         Artifacts: ${{ parameters.Artifacts }}
-        TestPipeline: ${{ parameters.TestPipeline }}
+        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+          TestPipeline: true
         ArtifactName: packages
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         WindowsPool: ${{ parameters.WindowsPool }}
         LinuxPool: ${{ parameters.LinuxPool }}
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
@@ -63,7 +68,8 @@ stages:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         DependsOn: Build
         Artifacts: ${{ parameters.Artifacts }}
-        TestPipeline: ${{ parameters.TestPipeline }}
+        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+          TestPipeline: true
         ArtifactName: packages
         TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
         TargetDocRepoName: ${{ parameters.TargetDocRepoName }}

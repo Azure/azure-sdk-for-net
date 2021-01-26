@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="status"> . </param>
         /// <param name="resultsInternal"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultsInternal"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, JobStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, status)
         {
             if (resultsInternal == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <param name="resultsInternal"> . </param>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, name, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, name, status)
         {
             ResultsInternal = resultsInternal;
         }

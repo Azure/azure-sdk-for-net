@@ -395,5 +395,70 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                 WriteEvent(35, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
             }
         }
+
+        /// <summary>
+        ///   Indicates that an attempt to retrieve a checkpoint has started.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        ///
+        [Event(36, Level = EventLevel.Informational, Message = "Starting to retrieve checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'.")]
+        public virtual void GetCheckpointStart(string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        string consumerGroup,
+                                        string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(36, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an attempt to retrieve a checkpoint has completed.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        ///
+        [Event(37, Level = EventLevel.Informational, Message = "Completed retrieving checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'. PartitionId: '{3}'.")]
+        public virtual void GetCheckpointComplete(string fullyQualifiedNamespace,
+                                                    string eventHubName,
+                                                    string consumerGroup,
+                                                    string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(37, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(38, Level = EventLevel.Error, Message = "An exception occurred when retrieving checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'; ErrorMessage: '{4}'.")]
+        public virtual void GetCheckpointError(string fullyQualifiedNamespace,
+                                                 string eventHubName,
+                                                 string consumerGroup,
+                                                 string partitionId,
+                                                 string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(38, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
     }
 }

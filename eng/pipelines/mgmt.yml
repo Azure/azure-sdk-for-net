@@ -83,6 +83,7 @@ pr:
     - sdk/logic/Microsoft.Azure.Management.Logic
     - sdk/machinelearning/Microsoft.Azure.Management.MachineLearning
     - sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute
+    - sdk/machinelearningservices/Azure.ResourceManager.MachineLearningServices
     - sdk/maintenance/Microsoft.Azure.Management.Maintenance
     - sdk/managednetwork/Microsoft.Azure.Management.ManagedNetwork
     - sdk/managedserviceidentity/Microsoft.Azure.Management.ManagedServiceIdentity
@@ -113,6 +114,7 @@ pr:
     - sdk/postgresql/Microsoft.Azure.Management.PostgreSQL
     - sdk/powerbidedicated/Microsoft.Azure.Management.PowerBIDedicated
     - sdk/privatedns/Microsoft.Azure.Management.PrivateDns
+    - sdk/quantum/Microsoft.Azure.Management.Quantum 
     - sdk/recoveryservices/Microsoft.Azure.Management.RecoveryServices
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery

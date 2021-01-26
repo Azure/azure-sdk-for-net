@@ -45,48 +45,46 @@ namespace Azure.Storage.Queues
         protected virtual Uri MessagesUri => _messagesUri;
 
         /// <summary>
-        /// The HttpPipeline used to send REST requests.
+        /// QueueClientConfiguration.
         /// </summary>
-        private readonly HttpPipeline _pipeline;
+        private readonly QueueClientConfiguration _clientConfiguration;
 
         /// <summary>
-        /// Gets the HttpPipeline used to send REST requests.
+        /// QueueClientConfiguration.
         /// </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual QueueClientConfiguration ClientConfiguration => _clientConfiguration;
 
         /// <summary>
-        /// The version of the service to use when sending requests.
+        /// QueueRestClient.
         /// </summary>
-        private readonly QueueClientOptions.ServiceVersion _version;
+        private readonly QueueRestClient _queueRestClient;
 
         /// <summary>
-        /// The version of the service to use when sending requests.
+        /// Gets the QueueRestClient.
         /// </summary>
-        internal virtual QueueClientOptions.ServiceVersion Version => _version;
+        internal virtual QueueRestClient QueueRestClient => _queueRestClient;
 
         /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
+        /// MessagesRestClient.
         /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly MessagesRestClient _messagesRestClient;
 
         /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
+        /// Gets the MessagesRestClient.
         /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual MessagesRestClient MessagesRestClient => _messagesRestClient;
 
         /// <summary>
-        /// The <see cref="QueueClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// MessageIdRestClient.
         /// </summary>
-        private readonly QueueClientSideEncryptionOptions _clientSideEncryption;
+        private readonly MessageIdRestClient _messageIdRestClient;
 
         /// <summary>
-        /// The <see cref="QueueClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// Gets the MessageIdRestClient.
         /// </summary>
-        internal virtual QueueClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
+        internal virtual MessageIdRestClient MessageIdRestClient => _messageIdRestClient;
 
-        internal bool UsingClientSideEncryption => ClientSideEncryption != default;
+        internal bool UsingClientSideEncryption => ClientConfiguration.ClientSideEncryption != default;
 
         /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
@@ -120,10 +118,6 @@ namespace Azure.Storage.Queues
         /// The name of the queue.
         /// </summary>
         private string _name;
-
-        private QueueMessageEncoding _messageEncoding;
-
-        internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
 
         /// <summary>
         /// Optional. Performs the tasks needed when an invalid message is received or peaked from the queue.
@@ -161,20 +155,10 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
-        /// </summary>
-        private StorageSharedKeyCredential _storageSharedKeyCredential;
-
-        /// <summary>
-        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
-        /// </summary>
-        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
-
-        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => SharedKeyCredential != null;
+        public bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -229,20 +213,29 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueClient(string connectionString, string queueName, QueueClientOptions options)
         {
-            var conn = StorageConnectionString.Parse(connectionString);
-            var builder = new QueueUriBuilder(conn.QueueEndpoint)
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(conn.QueueEndpoint)
             {
                 QueueName = queueName
             };
-            _uri = builder.ToUri();
+
+            _uri = uriBuilder.ToUri();
             _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
-            _pipeline = options.Build(conn.Credentials);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
-            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
-            _messageEncoding = options.MessageEncoding;
+
+            _clientConfiguration = new QueueClientConfiguration(
+                pipeline: options.Build(conn.Credentials),
+                sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
+                messageEncoding: options.MessageEncoding);
+
+            (QueueRestClient queueRestClient, MessagesRestClient messagesRestClient, MessageIdRestClient messageIdRestClient) = BuildRestClients();
+            _queueRestClient = queueRestClient;
+            _messagesRestClient = messagesRestClient;
+            _messageIdRestClient = messageIdRestClient;
+
             AssertEncodingForEncryption();
         }
 
@@ -295,6 +288,32 @@ namespace Azure.Storage.Queues
         /// A <see cref="Uri"/> referencing the queue that includes the
         /// name of the account, and the name of the queue.
         /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}".
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public QueueClient(Uri queueUri, AzureSasCredential credential, QueueClientOptions options = default)
+            : this(queueUri, credential.AsPolicy<QueueUriBuilder>(queueUri), options, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="queueUri">
+        /// A <see cref="Uri"/> referencing the queue that includes the
+        /// name of the account, and the name of the queue.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -336,15 +355,23 @@ namespace Azure.Storage.Queues
             QueueClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(queueUri, nameof(queueUri));
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
-            _pipeline = options.Build(authentication);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
-            _storageSharedKeyCredential = storageSharedKeyCredential;
-            _messageEncoding = options.MessageEncoding;
+            _clientConfiguration = new QueueClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
+                messageEncoding: options.MessageEncoding);
+
+            (QueueRestClient queueRestClient, MessagesRestClient messagesRestClient, MessageIdRestClient messageIdRestClient) = BuildRestClients();
+            _queueRestClient = queueRestClient;
+            _messagesRestClient = messagesRestClient;
+            _messageIdRestClient = messageIdRestClient;
+
             AssertEncodingForEncryption();
         }
 
@@ -357,44 +384,57 @@ namespace Azure.Storage.Queues
         /// name of the account, and the name of the queue.
         /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}".
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
-        /// </param>
-        /// <param name="clientDiagnostics">
-        /// The <see cref="ClientDiagnostics"/> instance used to create
-        /// diagnostic scopes every request.
-        /// </param>
-        /// <param name="encryptionOptions">
-        /// Options for client-side encryption.
-        /// </param>
-        /// <param name="messageEncoding">
-        /// The encoding of the message sent over the wire.
+        /// <param name="clientConfiguration">
+        /// <see cref="QueueClientConfiguration"/>.
         /// </param>
         internal QueueClient(
             Uri queueUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            QueueClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics,
-            ClientSideEncryptionOptions encryptionOptions,
-            QueueMessageEncoding messageEncoding)
+            QueueClientConfiguration clientConfiguration)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
-            _pipeline = pipeline;
-            _storageSharedKeyCredential = storageSharedKeyCredential;
-            _version = version;
-            _clientDiagnostics = clientDiagnostics;
-            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(encryptionOptions);
-            _messageEncoding = messageEncoding;
+            _clientConfiguration = clientConfiguration;
+
+            (QueueRestClient, MessagesRestClient, MessageIdRestClient) clients = BuildRestClients();
+            _queueRestClient = clients.Item1;
+            _messagesRestClient = clients.Item2;
+            _messageIdRestClient = clients.Item3;
+
             AssertEncodingForEncryption();
         }
+
+        private (QueueRestClient, MessagesRestClient, MessageIdRestClient) BuildRestClients()
+        {
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(_uri);
+            string queueName = uriBuilder.QueueName;
+            uriBuilder.QueueName = null;
+
+            string uriString = uriBuilder.ToUri().ToString();
+
+            QueueRestClient queueRestClient = new QueueRestClient(
+                ClientConfiguration.ClientDiagnostics,
+                ClientConfiguration.Pipeline,
+                uriString,
+                queueName,
+                ClientConfiguration.Version.ToVersionString());
+
+            MessagesRestClient messagesRestClient = new MessagesRestClient(
+                ClientConfiguration.ClientDiagnostics,
+                ClientConfiguration.Pipeline,
+                uriString,
+                queueName,
+                ClientConfiguration.Version.ToVersionString());
+
+            MessageIdRestClient messageIdRestClient = new MessageIdRestClient(
+                ClientConfiguration.ClientDiagnostics,
+                ClientConfiguration.Pipeline,
+                uriString,
+                queueName,
+                ClientConfiguration.Version.ToVersionString());
+
+            return (queueRestClient, messagesRestClient, messageIdRestClient);
+        }
+
         #endregion ctors
 
         /// <summary>
@@ -420,12 +460,7 @@ namespace Azure.Storage.Queues
         {
             return new QueueClient(
                 Uri,
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                clientSideEncryptionOptions,
-                MessageEncoding);
+                ClientConfiguration);
         }
 
         #region Create
@@ -507,32 +542,44 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(Create)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
-                    return await QueueRestClient.Queue.CreateAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        async: async,
-                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(Create)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<QueueCreateHeaders> reponse;
+                    if (async)
+                    {
+                        reponse = await _queueRestClient.CreateAsync(
+                            metadata: metadata,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        reponse = _queueRestClient.Create(
+                            metadata: metadata,
+                            cancellationToken: cancellationToken);
+                    }
+                    return reponse.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -635,9 +682,9 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -664,12 +711,12 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
                 return response;
             }
@@ -744,9 +791,9 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
@@ -768,12 +815,12 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
@@ -859,9 +906,9 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
@@ -881,12 +928,12 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
@@ -957,31 +1004,42 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(Delete)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
                 try
                 {
-                    return await QueueRestClient.Queue.DeleteAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(Delete)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<QueueDeleteHeaders> response;
+                    if (async)
+                    {
+                        response = await _queueRestClient.DeleteAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _queueRestClient.Delete(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1055,31 +1113,50 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(GetProperties)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
                 try
                 {
-                    return await QueueRestClient.Queue.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(GetProperties)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<QueueGetPropertiesHeaders> response;
+                    if (async)
+                    {
+                        response = await _queueRestClient.GetPropertiesAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _queueRestClient.GetProperties(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    QueueProperties queueProperties = new QueueProperties
+                    {
+                        ApproximateMessagesCount = response.Headers.ApproximateMessagesCount.GetValueOrDefault(),
+                        Metadata = response.Headers.Metadata
+                    };
+
+                    return Response.FromValue(
+                        queueProperties,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1160,31 +1237,46 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(SetMetadata)}");
+
                 try
                 {
-                    return await QueueRestClient.Queue.SetMetadataAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<QueueSetMetadataHeaders> response;
+
+                    scope.Start();
+
+                    if (async)
+                    {
+                        response = await _queueRestClient.SetMetadataAsync(
+                            metadata: metadata,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _queueRestClient.SetMetadata(
+                            metadata: metadata,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1254,30 +1346,47 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(GetAccessPolicy)}");
+
                 try
                 {
-                    return await QueueRestClient.Queue.GetAccessPolicyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders> response;
+                    scope.Start();
+
+                    if (async)
+                    {
+                        response = await _queueRestClient.GetAccessPolicyAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _queueRestClient.GetAccessPolicy(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    IEnumerable<QueueSignedIdentifier> signedIdentifiers = response.Value.ToList();
+
+                    return Response.FromValue(
+                        signedIdentifiers,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1358,31 +1467,45 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(SetAccessPolicy)}");
+
                 try
                 {
-                    return await QueueRestClient.Queue.SetAccessPolicyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        permissions: permissions,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<QueueSetAccessPolicyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _queueRestClient.SetAccessPolicyAsync(
+                            queueAcl: permissions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _queueRestClient.SetAccessPolicy(
+                            queueAcl: permissions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1449,31 +1572,43 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"Uri: {MessagesUri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(ClearMessages)}");
+
                 try
                 {
-                    return await QueueRestClient.Messages.ClearAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        MessagesUri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(QueueClient)}.{nameof(ClearMessages)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<MessagesClearHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _messagesRestClient.ClearAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _messagesRestClient.Clear(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1808,6 +1943,9 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response{SendMessageResult}"/>
         /// </returns>
@@ -1821,49 +1959,67 @@ namespace Azure.Storage.Queues
             TimeSpan? visibilityTimeout,
             TimeSpan? timeToLive,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
                     $"Uri: {MessagesUri}\n" +
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}\n" +
                     $"{nameof(timeToLive)}: {timeToLive}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(SendMessage)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
+
                     if (UsingClientSideEncryption)
                     {
-                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientConfiguration.ClientSideEncryption))
                             .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
                     }
 
-                    Response<IEnumerable<SendReceipt>> messages =
-                        await QueueRestClient.Messages.EnqueueAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            MessagesUri,
-                            message: new QueueSendMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, _messageEncoding) },
-                            version: Version.ToVersionString(),
+                    ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _messagesRestClient.EnqueueAsync(
+                            queueMessage: new QueueMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, ClientConfiguration.MessageEncoding) },
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
-                            async: async,
-                            operationName: $"{nameof(QueueClient)}.{nameof(SendMessage)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _messagesRestClient.Enqueue(
+                            queueMessage: new QueueMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, ClientConfiguration.MessageEncoding) },
+                            visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                            messageTimeToLive: (int?)timeToLive?.TotalSeconds,
+                            cancellationToken: cancellationToken);
+                    }
+
                     // The service returns a sequence of messages, but the
                     // sequence only ever has one value so we'll unwrap it
-                    return Response.FromValue(messages.Value.FirstOrDefault(), messages.GetRawResponse());
+#pragma warning disable CA1826 // Do not use Enumerable methods on indexable collections
+                    return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
+#pragma warning restore CA1826 // Do not use Enumerable methods on indexable collections
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2010,15 +2166,15 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="visibilityTimeout">
         /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
-        /// </param>
+        /// </param>s
         /// <param name="operationName">
-        /// Operation name for diagnostic logging.
+        /// The name of the calling operation.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>
+        /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
@@ -2030,30 +2186,37 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
                     $"Uri: {MessagesUri}\n" +
                     $"{nameof(maxMessages)}: {maxMessages}\n" +
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
                 try
                 {
                     scope.Start();
+                    ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders> response;
 
-                    var response = await QueueRestClient.Messages.DequeueAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        MessagesUri,
-                        version: Version.ToVersionString(),
-                        numberOfMessages: maxMessages,
-                        visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                        async: async,
-                        operationName: operationName,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    if (async)
+                    {
+                        response = await _messagesRestClient.DequeueAsync(
+                            numberOfMessages: maxMessages,
+                            visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _messagesRestClient.Dequeue(
+                            numberOfMessages: maxMessages,
+                            visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                            cancellationToken: cancellationToken);
+                    }
 
                     // Return an exploding Response on 304
                     if (response.IsUnavailable())
@@ -2067,13 +2230,13 @@ namespace Azure.Storage.Queues
                             queueMessages = ToQueueMessagesWithInvalidMessageHandling(response.Value, cancellationToken);
                         } else
                         {
-                            queueMessages = response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray();
+                            queueMessages = response.Value.Select(x => QueueMessage.ToQueueMessage(x, ClientConfiguration.MessageEncoding)).ToArray();
                         }
 
                         if (UsingClientSideEncryption)
                         {
                             return Response.FromValue(
-                                await new QueueClientSideDecryptor(ClientSideEncryption)
+                                await new QueueClientSideDecryptor(ClientConfiguration.ClientSideEncryption)
                                     .ClientSideDecryptMessagesInternal(queueMessages, async, cancellationToken).ConfigureAwait(false),
                                 response.GetRawResponse());
                         }
@@ -2085,14 +2248,14 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
-                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
                     scope.Dispose();
-                    Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
@@ -2107,7 +2270,7 @@ namespace Azure.Storage.Queues
             {
                 try
                 {
-                    queueMessages.Add(QueueMessage.ToQueueMessage(dequeuedMessageItem, _messageEncoding));
+                    queueMessages.Add(QueueMessage.ToQueueMessage(dequeuedMessageItem, ClientConfiguration.MessageEncoding));
                 }
                 catch (FormatException)
                 {
@@ -2200,15 +2363,30 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            var response = await ReceiveMessagesInternal(
-                1,
-                visibilityTimeout,
-                $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
-                async,
-                cancellationToken).ConfigureAwait(false);
-            var queueMessage = response.Value.FirstOrDefault();
-            var rawResponse = response.GetRawResponse();
-            return Response.FromValue(queueMessage, rawResponse);
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(ReceiveMessage)}");
+
+            try
+            {
+                scope.Start();
+                Response<QueueMessage[]> response = await ReceiveMessagesInternal(
+                    maxMessages: 1,
+                    visibilityTimeout: visibilityTimeout,
+                    operationName: $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion ReceiveMessage
 
@@ -2273,7 +2451,7 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            var response = await PeekMessagesInternal(1, $"{nameof(QueueClient)}.{nameof(PeekMessage)}", async, cancellationToken).ConfigureAwait(false);
+            var response = await PeekMessagesInternal(1, async, cancellationToken, $"{nameof(QueueClient)}.{nameof(PeekMessage)}").ConfigureAwait(false);
             var message = response.Value.FirstOrDefault();
             var rawResonse = response.GetRawResponse();
             return Response.FromValue(message, rawResonse);
@@ -2303,7 +2481,6 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken = default) =>
             PeekMessagesInternal(
                 maxMessages,
-                $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2330,7 +2507,6 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken = default) =>
             await PeekMessagesInternal(
                 maxMessages,
-                $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2346,46 +2522,52 @@ namespace Azure.Storage.Queues
         /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
         /// By default, a single message is peeked from the queue with this operation.
         /// </param>
-        /// <param name="operationName">
-        /// Operation name for diagnostic logging.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
         /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="PeekedMessage"/>
         /// </returns>
         private async Task<Response<PeekedMessage[]>> PeekMessagesInternal(
             int? maxMessages,
-            string operationName,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = null)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
                     $"Uri: {MessagesUri}\n" +
                     $"{nameof(maxMessages)}: {maxMessages}");
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(PeekMessages)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
                 try
                 {
                     scope.Start();
+                    ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders> response;
 
-                    Response<IEnumerable<PeekedMessageItem>> response = await QueueRestClient.Messages.PeekAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        MessagesUri,
-                        version: Version.ToVersionString(),
-                        numberOfMessages: maxMessages,
-                        async: async,
-                        operationName: operationName,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    if (async)
+                    {
+                        response = await _messagesRestClient.PeekAsync(
+                            numberOfMessages: maxMessages,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _messagesRestClient.Peek(
+                            numberOfMessages: maxMessages,
+                            cancellationToken: cancellationToken);
+                    }
 
                     // Return an exploding Response on 304
                     if (response.IsUnavailable())
@@ -2401,13 +2583,13 @@ namespace Azure.Storage.Queues
                         }
                         else
                         {
-                            peekedMessages = response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray();
+                            peekedMessages = response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, ClientConfiguration.MessageEncoding)).ToArray();
                         }
 
                         if (UsingClientSideEncryption)
                         {
                             return Response.FromValue(
-                                await new QueueClientSideDecryptor(ClientSideEncryption)
+                                await new QueueClientSideDecryptor(ClientConfiguration.ClientSideEncryption)
                                     .ClientSideDecryptMessagesInternal(peekedMessages, async, cancellationToken).ConfigureAwait(false),
                                 response.GetRawResponse());
                         }
@@ -2419,14 +2601,14 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
-                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
                     scope.Dispose();
-                    Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
@@ -2441,7 +2623,7 @@ namespace Azure.Storage.Queues
             {
                 try
                 {
-                    peekedMessages.Add(PeekedMessage.ToPeekedMessage(peekedMessageItem, _messageEncoding));
+                    peekedMessages.Add(PeekedMessage.ToPeekedMessage(peekedMessageItem, ClientConfiguration.MessageEncoding));
                 }
                 catch (FormatException)
                 {
@@ -2550,34 +2732,49 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken)
         {
             Uri uri = GetMessageUri(messageId);
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
                     $"Uri: {uri}\n" +
                     $"{nameof(popReceipt)}: {popReceipt}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(QueueClient)}.{nameof(DeleteMessage)}");
+
                 try
                 {
-                    return await QueueRestClient.MessageId.DeleteAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        uri,
-                        popReceipt: popReceipt,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(QueueClient)}.{nameof(DeleteMessage)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<MessageIdDeleteHeaders> response;
+                    scope.Start();
+
+                    if (async)
+                    {
+                        response = await _messageIdRestClient.DeleteAsync(
+                            messageid: messageId,
+                            popReceipt: popReceipt,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _messageIdRestClient.Delete(
+                            messageid: messageId,
+                            popReceipt: popReceipt,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2809,6 +3006,9 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operatation.
+        /// </param>
         /// <returns>
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
@@ -2823,51 +3023,78 @@ namespace Azure.Storage.Queues
             string popReceipt,
             TimeSpan visibilityTimeout,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = null)
         {
             Uri uri = GetMessageUri(messageId);
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
                     $"Uri: {uri}\n" +
                     $"{nameof(popReceipt)}: {popReceipt}" +
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
+
+                operationName ??= $"{nameof(QueueClient)}.{nameof(UpdateMessage)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     if (UsingClientSideEncryption)
                     {
-                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientConfiguration.ClientSideEncryption))
                             .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
                     }
-                    QueueSendMessage queueSendMessage = null;
+                    QueueMessage queueSendMessage = null;
                     if (message != null)
                     {
-                        queueSendMessage = new QueueSendMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, _messageEncoding) };
+                        queueSendMessage = new QueueMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, ClientConfiguration.MessageEncoding) };
                     }
 
-                    return await QueueRestClient.MessageId.UpdateAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        uri,
-                        message: queueSendMessage,
-                        popReceipt: popReceipt,
-                        visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(QueueClient)}.{nameof(UpdateMessage)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<MessageIdUpdateHeaders> response;
+
+                    if (async)
+                    {
+                        response = await _messageIdRestClient.UpdateAsync(
+                            messageid: messageId,
+                            popReceipt: popReceipt,
+                            visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
+                            queueMessage: queueSendMessage,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = _messageIdRestClient.Update(
+                            messageid: messageId,
+                            popReceipt: popReceipt,
+                            visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
+                            queueMessage: queueSendMessage,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    UpdateReceipt updateReceipt = new UpdateReceipt
+                    {
+                        NextVisibleOn = response.Headers.TimeNextVisible.GetValueOrDefault(),
+                        PopReceipt = response.Headers.PopReceipt
+                    };
+
+                    return Response.FromValue(
+                        updateReceipt,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2935,7 +3162,7 @@ namespace Azure.Storage.Queues
                     nameof(Name));
             }
             QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString();
             return sasUri.ToUri();
         }
         #endregion
@@ -2954,7 +3181,7 @@ namespace Azure.Storage.Queues
 
         private void AssertEncodingForEncryption()
         {
-            if (UsingClientSideEncryption && _messageEncoding != QueueMessageEncoding.None)
+            if (UsingClientSideEncryption && ClientConfiguration.MessageEncoding != QueueMessageEncoding.None)
             {
                 throw new ArgumentException($"{nameof(SpecializedQueueClientOptions)} requires {nameof(QueueMessageEncoding)}.{nameof(QueueMessageEncoding.None)}" +
                     $" if {nameof(SpecializedQueueClientOptions.ClientSideEncryption)} is enabled as encrypted payload is already Base64 encoded.");

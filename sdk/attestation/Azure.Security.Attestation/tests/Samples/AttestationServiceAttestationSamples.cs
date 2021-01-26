@@ -105,7 +105,7 @@ namespace Azure.Security.Attestation.Tests.Samples
     "dOd2FRR1RjZHBhMEVDCklRQ1V0OFNHdnhLbWpwY00vejBXUDlEdm84aDJrNWR1MWlXRGRCa0FuKzBpaUE9" +
     "PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCgA";
 
-        [RecordedTest]
+        [Test]
         public async Task AttestingAnSgxEnclave()
         {
             var endpoint = TestEnvironment.SharedEusTest;
@@ -140,10 +140,10 @@ namespace Azure.Security.Attestation.Tests.Samples
             var result = policyResult.Value.AttestationPolicy;
         }
 
-        [RecordedTest]
+        [Test]
         public async Task SettingAttestationPolicy()
         {
-            var endpoint = TestEnvironment.SharedEusTest;
+            var endpoint = TestEnvironment.AadAttestationUrl;
 #region Snippet:GetPolicy
             var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
             var attestClient = new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(),
@@ -153,12 +153,13 @@ namespace Azure.Security.Attestation.Tests.Samples
             #endregion
 
 #region Snippet:SetPolicy
-            string attestationPolicy = "version=1.0; authorizationrules{=> allow();}; issuancerules{};";
+            string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
 
             var policyTokenSigner = TestEnvironment.PolicyCertificate0;
 
             AttestationToken policySetToken = new SecuredAttestationToken(
                 new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(attestationPolicy), },
+                TestEnvironment.PolicySigningKey0,
                 policyTokenSigner);
 
             var setResult = client.SetPolicy(AttestationType.SgxEnclave, policySetToken);
@@ -168,7 +169,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             // When the attestation instance is in Isolated mode, the ResetPolicy API requires using a signing key/certificate to authorize the user.
             var resetResult2 = client.ResetPolicy(
                 AttestationType.SgxEnclave,
-                new SecuredAttestationToken(policyTokenSigner));
+                new SecuredAttestationToken(TestEnvironment.PolicySigningKey0, policyTokenSigner));
             return;
         }
         private AttestationClient GetAttestationClient()

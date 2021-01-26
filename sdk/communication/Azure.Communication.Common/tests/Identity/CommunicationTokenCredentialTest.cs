@@ -25,10 +25,7 @@ namespace Azure.Communication.Identity
             string? initialToken = null)
         {
             return new AutoRefreshTokenCredential(
-                tokenRefresher,
-                asyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefresher(cancellationToken))),
-                initialToken,
-                refreshProactively,
+                new CommunicationTokenRefreshOptions(refreshProactively, tokenRefresher, asyncTokenRefresher, initialToken),
                 testClock.Schedule,
                 () => testClock.UtcNow);
         }

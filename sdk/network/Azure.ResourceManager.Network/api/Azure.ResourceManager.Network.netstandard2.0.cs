@@ -5210,11 +5210,11 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class BastionShareableLink
     {
-        public BastionShareableLink(Azure.ResourceManager.Network.Models.Resource vm) { }
+        public BastionShareableLink(Azure.ResourceManager.Network.Models.VM vm) { }
         public string Bsl { get { throw null; } }
         public string CreatedAt { get { throw null; } }
         public string Message { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.Resource Vm { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.VM Vm { get { throw null; } set { } }
     }
     public partial class BastionShareableLinkListRequest
     {
@@ -5677,7 +5677,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ContainerNetworkInterface : Azure.ResourceManager.Network.Models.SubResource
     {
         public ContainerNetworkInterface() { }
-        public Azure.ResourceManager.Network.Models.SubResource Container { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.Container Container { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get { throw null; } }
         public string Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceIpConfiguration> IpConfigurations { get { throw null; } }
@@ -8421,7 +8421,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public PrivateLinkService() { }
         public string Alias { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ResourceSet AutoApproval { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.PrivateLinkServicePropertiesAutoApproval AutoApproval { get { throw null; } set { } }
         public bool? EnableProxyProtocol { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public System.Collections.Generic.IList<string> Fqdns { get { throw null; } }
@@ -8430,7 +8430,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.NetworkInterface> NetworkInterfaces { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.PrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ResourceSet Visibility { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.PrivateLinkServicePropertiesVisibility Visibility { get { throw null; } set { } }
     }
     public partial class PrivateLinkServiceConnection : Azure.ResourceManager.Network.Models.SubResource
     {

@@ -71,6 +71,39 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+            var client = test.Share.GetDirectoryClient(GetNewDirectoryName());
+            await client.CreateAsync();
+            Uri uri = client.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new ShareDirectoryClient(uri, new AzureSasCredential(sas), GetOptions()));
+            ShareDirectoryProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+            Uri uri = test.Share.GetDirectoryClient(GetNewDirectoryName()).Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new ShareDirectoryClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
         public void DirectoryPathsParsing()
         {
             // nested directories
@@ -367,6 +400,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task Exists_Error()
         {
             // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
             // Make Read Only SAS for the Share
             AccountSasBuilder sas = new AccountSasBuilder
             {
@@ -376,9 +410,12 @@ namespace Azure.Storage.Files.Shares.Tests
             };
             sas.SetPermissions(AccountSasPermissions.Read);
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-            UriBuilder sasUri = new UriBuilder(TestConfigDefault.FileServiceEndpoint);
+            var sasUri = new ShareUriBuilder(new Uri(TestConfigDefault.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name
+            };
             sasUri.Query = sas.ToSasQueryParameters(credential).ToString();
-            ShareClient share = InstrumentClient(new ShareClient(sasUri.Uri, GetOptions()));
+            ShareClient share = InstrumentClient(new ShareClient(sasUri.ToUri(), GetOptions()));
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act

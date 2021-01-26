@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string snapshotPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get volumes associated with snapshot policy
+        /// Get volumes for snapshot policy
         /// </summary>
         /// <remarks>
         /// Get volumes associated with snapshot policy

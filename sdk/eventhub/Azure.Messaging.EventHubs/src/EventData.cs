@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs
         ///   of the producer are enabled.  For example, it is used by idempotent publishing.
         /// </remarks>
         ///
-        public int? PublishedSequenceNumber { get; private set; }
+        internal int? PublishedSequenceNumber { get; private set; }
 
         /// <summary>
         ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
