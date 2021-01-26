@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs
     /// </item>
     /// </list>
     /// In addition to single blob bindings,  parameters can be bound to multiple blobs.
-    /// The parameter type can be CloudBlobContainer, CloudBlobDirectory or <see cref="IEnumerable{T}"/>
+    /// The parameter type can be <see cref="BlobContainerClient"/> or <see cref="IEnumerable{T}"/>
     /// of one of the following element types:
     /// <list type = "bullet" >
     /// <item><description><see cref="BlobClient"/></description></item>

@@ -41,7 +41,8 @@ namespace Microsoft.Azure.WebJobs.Host
         public Azure.Storage.Queues.QueueMessageEncoding MessageEncoding { get { throw null; } set { } }
         public int NewBatchThreshold { get { throw null; } set { } }
         public System.TimeSpan VisibilityTimeout { get { throw null; } set { } }
-        public string Format() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
 }
 namespace Microsoft.Azure.WebJobs.Host.Queues

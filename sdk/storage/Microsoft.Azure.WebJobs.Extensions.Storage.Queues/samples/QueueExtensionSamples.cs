@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Hosting;
@@ -16,11 +18,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests
     public class BlobExtensionSamples
     {
         [TestCase(typeof(QueueTriggerFunction_String), "sample message")]
+        [TestCase(typeof(QueueTriggerFunction_BinaryData), "sample message")]
+        [TestCase(typeof(QueueTriggerFunction_QueueMessage), "sample message")]
         [TestCase(typeof(QueueTriggerFunction_CustomObject), "{ \"content\": \"sample message\"}")]
         [TestCase(typeof(QueueTriggerFunction_JObject), "{ \"content\": \"sample message\"}")]
         [TestCase(typeof(QueueSenderFunction_String_Return), "sample message")]
+        [TestCase(typeof(QueueSenderFunction_BinaryData_Return), "sample message")]
+        [TestCase(typeof(QueueSenderFunction_QueueMessage_Return), "sample message")]
         [TestCase(typeof(QueueSenderFunction_CustomObject_OutParamter), "{ \"content\": \"sample message\"}")]
         [TestCase(typeof(QueueSenderFunction_CustomObject_Collector), "{ \"content\": \"sample message\"}")]
+        [TestCase(typeof(Function_BindingToQueueClient), "sample message")]
         public async Task Run_QueueFunction(Type programType, string message)
         {
             var queueServiceClient = AzuriteNUnitFixture.Instance.GetQueueServiceClient();
@@ -63,6 +70,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests
     }
     #endregion
 
+    #region Snippet:QueueTriggerFunction_BinaryData
+    public static class QueueTriggerFunction_BinaryData
+    {
+        [FunctionName("QueueTriggerFunction")]
+        public static void Run(
+            [QueueTrigger("sample-queue")] BinaryData message,
+            ILogger logger)
+        {
+            logger.LogInformation("Received message from sample-queue, content={content}", message.ToString());
+        }
+    }
+    #endregion
+
     #region Snippet:QueueTriggerFunction_CustomObject
     public static class QueueTriggerFunction_CustomObject
     {
@@ -94,6 +114,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests
     }
     #endregion
 
+    #region Snippet:QueueTriggerFunction_QueueMessage
+    public static class QueueTriggerFunction_QueueMessage
+    {
+        [FunctionName("QueueTriggerFunction")]
+        public static void Run(
+            [QueueTrigger("sample-queue")] QueueMessage message,
+            ILogger logger)
+        {
+            logger.LogInformation("Received message from sample-queue, content={content}", message.Body.ToString());
+        }
+    }
+    #endregion
+
     #region Snippet:QueueSenderFunction_String_Return
     public static class QueueSenderFunction_String_Return
     {
@@ -104,6 +137,38 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests
             ILogger logger)
         {
             logger.LogInformation("Received message from sample-queue-1, content={content}", message);
+            logger.LogInformation("Dispatching message to sample-queue-2");
+            return message;
+        }
+    }
+    #endregion
+
+    #region Snippet:QueueSenderFunction_BinaryData_Return
+    public static class QueueSenderFunction_BinaryData_Return
+    {
+        [FunctionName("QueueFunction")]
+        [return: Queue("sample-queue-2")]
+        public static BinaryData Run(
+            [QueueTrigger("sample-queue-1")] BinaryData message,
+            ILogger logger)
+        {
+            logger.LogInformation("Received message from sample-queue-1, content={content}", message.ToString());
+            logger.LogInformation("Dispatching message to sample-queue-2");
+            return message;
+        }
+    }
+    #endregion
+
+    #region Snippet:QueueSenderFunction_QueueMessage_Return
+    public static class QueueSenderFunction_QueueMessage_Return
+    {
+        [FunctionName("QueueFunction")]
+        [return: Queue("sample-queue-2")]
+        public static QueueMessage Run(
+            [QueueTrigger("sample-queue-1")] QueueMessage message,
+            ILogger logger)
+        {
+            logger.LogInformation("Received message from sample-queue-1, content={content}", message.Body.ToString());
             logger.LogInformation("Dispatching message to sample-queue-2");
             return message;
         }
@@ -148,6 +213,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests
             logger.LogInformation("Received message from sample-queue-1, content={content}", incomingMessage.Content);
             logger.LogInformation("Dispatching message to sample-queue-2");
             collector.Add(incomingMessage);
+        }
+    }
+    #endregion
+
+    #region Snippet:Function_BindingToQueueClient
+    public static class Function_BindingToQueueClient
+    {
+        [FunctionName("QueueFunction")]
+        public static async Task Run(
+            [QueueTrigger("sample-queue")] string message,
+            [Queue("sample-queue")] QueueClient queueClient,
+            ILogger logger)
+        {
+            logger.LogInformation("Received message from sample-queue, content={content}", message);
+            QueueProperties queueProperties = await queueClient.GetPropertiesAsync();
+            logger.LogInformation("There are approximatelly {count} messages", queueProperties.ApproximateMessagesCount);
         }
     }
     #endregion

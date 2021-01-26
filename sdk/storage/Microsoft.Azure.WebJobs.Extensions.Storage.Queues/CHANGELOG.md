@@ -2,6 +2,9 @@
 
 ## 5.0.0-beta.2 (Unreleased)
 
+### Major changes and features 
+- This version Base64-encodes queue messages by default. This behavior can be changed by setting `QueuesOptions.MessageEncoding`.
+
 
 ## 5.0.0-beta.1 (2020-11-10)
 
