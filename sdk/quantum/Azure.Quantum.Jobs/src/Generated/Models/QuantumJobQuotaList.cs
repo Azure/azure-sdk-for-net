@@ -16,15 +16,15 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
         internal QuantumJobQuotaList()
         {
-            Value = new ChangeTrackingList<QuantumJobQuota>();
+            Values = new ChangeTrackingList<QuantumJobQuota>();
         }
 
         /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="values"> . </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal QuantumJobQuotaList(IReadOnlyList<QuantumJobQuota> value, string nextLink)
+        internal QuantumJobQuotaList(IReadOnlyList<QuantumJobQuota> values, string nextLink)
         {
-            Value = value;
+            Values = values;
             NextLink = nextLink;
         }
         /// <summary> Link to the next page of results. </summary>

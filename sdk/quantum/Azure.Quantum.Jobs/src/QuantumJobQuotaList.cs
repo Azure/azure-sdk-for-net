@@ -14,6 +14,7 @@ namespace Azure.Quantum.Jobs.Models
     public partial class QuantumJobQuotaList
     {
         /// <summary> Quota object. </summary>
-        public IReadOnlyList<QuantumJobQuota> Value { get; }
+        [CodeGenMember("Value")]
+        public IReadOnlyList<QuantumJobQuota> Values { get; }
     }
 }

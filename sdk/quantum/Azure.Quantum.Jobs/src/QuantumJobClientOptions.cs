@@ -22,33 +22,22 @@ namespace Azure.Quantum
         /// <summary>
         /// Initializes a new instance of the <see cref="QuantumJobClientOptions"/>.
         /// </summary>
-        public QuantumJobClientOptions(ServiceVersion version = LatestVersion, RetryOptions retryOptions = default, HttpPipelineTransport transport = default)
+        public QuantumJobClientOptions(ServiceVersion version = LatestVersion)
         {
             ApiVersion = version switch
             {
                 ServiceVersion.V1 => "v1.0",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
-
-            if (transport != default)
-                Transport = transport;
-
-            if (retryOptions != null)
-            {
-                Retry.Mode = retryOptions.Mode;
-                Retry.MaxRetries = retryOptions.MaxRetries;
-                Retry.Delay = retryOptions.Delay;
-                Retry.MaxDelay = retryOptions.MaxDelay;
-            }
         }
 
         /// <summary>
-        /// The Sms service version.
+        /// The Quantum Jobs service version.
         /// </summary>
         public enum ServiceVersion
         {
             /// <summary>
-            /// The V1 of the Sms service.
+            /// The V1 of the Quantum Jobs service.
             /// </summary>
             V1 = 1
         }

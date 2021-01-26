@@ -41,11 +41,45 @@ namespace Azure.Quantum.Jobs.Tests
         {
             var client = CreateClient();
 
+            int index = 0;
             await foreach (JobDetails job in client.GetJobsAsync(CancellationToken.None))
             {
-                // TODO what do we want to verify here?
-                // Assert.AreEqual(list);
+                if (index == 0)
+                {
+                    Assert.AreEqual(null, job.CancellationTime);
+                    Assert.AreEqual("Sanitized", job.ContainerUri);
+                    Assert.AreEqual(null, job.ErrorData);
+                    Assert.AreEqual("1be7199c-5d16-11eb-8f86-3e22fb0c562e", job.Id);
+                    Assert.AreEqual("microsoft.qio.v2", job.InputDataFormat);
+                    Assert.AreEqual("Sanitized", job.InputDataUri);
+                    Assert.AreEqual("first-demo", job.Name);
+                    Assert.AreEqual("microsoft.qio-results.v2", job.OutputDataFormat);
+                    Assert.AreEqual("Sanitized", job.OutputDataUri);
+                    Assert.AreEqual("microsoft", job.ProviderId);
+                    Assert.AreEqual(JobStatus.Succeeded, job.Status);
+                    Assert.AreEqual("microsoft.paralleltempering-parameterfree.cpu", job.Target);
+                }
+                else if (index == 1)
+                {
+                    Assert.AreEqual(null, job.CancellationTime);
+                    Assert.AreEqual("Sanitized", job.ContainerUri);
+                    Assert.AreEqual(null, job.ErrorData);
+                    Assert.AreEqual("a962c244-5d16-11eb-9803-3e22fb0c562e", job.Id);
+                    Assert.AreEqual("microsoft.qio.v2", job.InputDataFormat);
+                    Assert.AreEqual("Sanitized", job.InputDataUri);
+                    Assert.AreEqual("first-demo", job.Name);
+                    Assert.AreEqual("microsoft.qio-results.v2", job.OutputDataFormat);
+                    Assert.AreEqual("Sanitized", job.OutputDataUri);
+                    Assert.AreEqual("microsoft", job.ProviderId);
+                    Assert.AreEqual(JobStatus.Succeeded, job.Status);
+                    Assert.AreEqual("microsoft.paralleltempering-parameterfree.cpu", job.Target);
+                }
+
+                ++index;
             }
+
+            // Should have at least a couple jobs in the list.
+            Assert.GreaterOrEqual(index, 2);
         }
     }
 }
