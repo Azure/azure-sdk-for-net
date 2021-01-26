@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Supported permissions for data actions. </summary>
-    public readonly partial struct DataActionPermission : IEquatable<DataActionPermission>
+    public readonly partial struct DataAction : IEquatable<DataAction>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DataActionPermission"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DataAction"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataActionPermission(string value)
+        public DataAction(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         private const string ReadDeletedHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/deletedKeys/read/action";
         private const string RecoverDeletedHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/deletedKeys/recover/action";
         private const string BackupHsmKeysValue = "Microsoft.KeyVault/managedHsm/keys/backup/action";
-        private const string RestoreHsmKeyValue = "Microsoft.KeyVault/managedHsm/keys/restore/action";
+        private const string RestoreHsmKeysValue = "Microsoft.KeyVault/managedHsm/keys/restore/action";
         private const string DeleteRoleAssignmentValue = "Microsoft.KeyVault/managedHsm/roleAssignments/delete/action";
         private const string GetRoleAssignmentValue = "Microsoft.KeyVault/managedHsm/roleAssignments/read/action";
         private const string WriteRoleAssignmentValue = "Microsoft.KeyVault/managedHsm/roleAssignments/write/action";
@@ -53,75 +53,75 @@ namespace Azure.Security.KeyVault.Administration.Models
         private const string ReadHsmRestoreStatusValue = "Microsoft.KeyVault/managedHsm/restore/status/action";
 
         /// <summary> Read HSM key metadata. </summary>
-        public static DataActionPermission ReadHsmKey { get; } = new DataActionPermission(ReadHsmKeyValue);
+        public static DataAction ReadHsmKey { get; } = new DataAction(ReadHsmKeyValue);
         /// <summary> Update an HSM key. </summary>
-        public static DataActionPermission WriteHsmKey { get; } = new DataActionPermission(WriteHsmKeyValue);
+        public static DataAction WriteHsmKey { get; } = new DataAction(WriteHsmKeyValue);
         /// <summary> Read deleted HSM key. </summary>
-        public static DataActionPermission ReadDeletedHsmKey { get; } = new DataActionPermission(ReadDeletedHsmKeyValue);
+        public static DataAction ReadDeletedHsmKey { get; } = new DataAction(ReadDeletedHsmKeyValue);
         /// <summary> Recover deleted HSM key. </summary>
-        public static DataActionPermission RecoverDeletedHsmKey { get; } = new DataActionPermission(RecoverDeletedHsmKeyValue);
+        public static DataAction RecoverDeletedHsmKey { get; } = new DataAction(RecoverDeletedHsmKeyValue);
         /// <summary> Backup HSM keys. </summary>
-        public static DataActionPermission BackupHsmKeys { get; } = new DataActionPermission(BackupHsmKeysValue);
+        public static DataAction BackupHsmKeys { get; } = new DataAction(BackupHsmKeysValue);
         /// <summary> Restore HSM keys. </summary>
-        public static DataActionPermission RestoreHsmKey { get; } = new DataActionPermission(RestoreHsmKeyValue);
+        public static DataAction RestoreHsmKeys { get; } = new DataAction(RestoreHsmKeysValue);
         /// <summary> Delete role assignment. </summary>
-        public static DataActionPermission DeleteRoleAssignment { get; } = new DataActionPermission(DeleteRoleAssignmentValue);
+        public static DataAction DeleteRoleAssignment { get; } = new DataAction(DeleteRoleAssignmentValue);
         /// <summary> Get role assignment. </summary>
-        public static DataActionPermission GetRoleAssignment { get; } = new DataActionPermission(GetRoleAssignmentValue);
+        public static DataAction GetRoleAssignment { get; } = new DataAction(GetRoleAssignmentValue);
         /// <summary> Create or update role assignment. </summary>
-        public static DataActionPermission WriteRoleAssignment { get; } = new DataActionPermission(WriteRoleAssignmentValue);
+        public static DataAction WriteRoleAssignment { get; } = new DataAction(WriteRoleAssignmentValue);
         /// <summary> Get role definition. </summary>
-        public static DataActionPermission ReadRoleDefinition { get; } = new DataActionPermission(ReadRoleDefinitionValue);
+        public static DataAction ReadRoleDefinition { get; } = new DataAction(ReadRoleDefinitionValue);
         /// <summary> Encrypt using an HSM key. </summary>
-        public static DataActionPermission EncryptHsmKey { get; } = new DataActionPermission(EncryptHsmKeyValue);
+        public static DataAction EncryptHsmKey { get; } = new DataAction(EncryptHsmKeyValue);
         /// <summary> Decrypt using an HSM key. </summary>
-        public static DataActionPermission DecryptHsmKey { get; } = new DataActionPermission(DecryptHsmKeyValue);
+        public static DataAction DecryptHsmKey { get; } = new DataAction(DecryptHsmKeyValue);
         /// <summary> Wrap using an HSM key. </summary>
-        public static DataActionPermission WrapHsmKey { get; } = new DataActionPermission(WrapHsmKeyValue);
+        public static DataAction WrapHsmKey { get; } = new DataAction(WrapHsmKeyValue);
         /// <summary> Unwrap using an HSM key. </summary>
-        public static DataActionPermission UnwrapHsmKey { get; } = new DataActionPermission(UnwrapHsmKeyValue);
+        public static DataAction UnwrapHsmKey { get; } = new DataAction(UnwrapHsmKeyValue);
         /// <summary> Sign using an HSM key. </summary>
-        public static DataActionPermission SignHsmKey { get; } = new DataActionPermission(SignHsmKeyValue);
+        public static DataAction SignHsmKey { get; } = new DataAction(SignHsmKeyValue);
         /// <summary> Verify using an HSM key. </summary>
-        public static DataActionPermission VerifyHsmKey { get; } = new DataActionPermission(VerifyHsmKeyValue);
+        public static DataAction VerifyHsmKey { get; } = new DataAction(VerifyHsmKeyValue);
         /// <summary> Create an HSM key. </summary>
-        public static DataActionPermission CreateHsmKey { get; } = new DataActionPermission(CreateHsmKeyValue);
+        public static DataAction CreateHsmKey { get; } = new DataAction(CreateHsmKeyValue);
         /// <summary> Delete an HSM key. </summary>
-        public static DataActionPermission DeleteHsmKey { get; } = new DataActionPermission(DeleteHsmKeyValue);
+        public static DataAction DeleteHsmKey { get; } = new DataAction(DeleteHsmKeyValue);
         /// <summary> Export an HSM key. </summary>
-        public static DataActionPermission ExportHsmKey { get; } = new DataActionPermission(ExportHsmKeyValue);
+        public static DataAction ExportHsmKey { get; } = new DataAction(ExportHsmKeyValue);
         /// <summary> Import an HSM key. </summary>
-        public static DataActionPermission ImportHsmKey { get; } = new DataActionPermission(ImportHsmKeyValue);
+        public static DataAction ImportHsmKey { get; } = new DataAction(ImportHsmKeyValue);
         /// <summary> Purge a deleted HSM key. </summary>
-        public static DataActionPermission PurgeDeletedHsmKey { get; } = new DataActionPermission(PurgeDeletedHsmKeyValue);
+        public static DataAction PurgeDeletedHsmKey { get; } = new DataAction(PurgeDeletedHsmKeyValue);
         /// <summary> Download an HSM security domain. </summary>
-        public static DataActionPermission DownloadHsmSecurityDomain { get; } = new DataActionPermission(DownloadHsmSecurityDomainValue);
+        public static DataAction DownloadHsmSecurityDomain { get; } = new DataAction(DownloadHsmSecurityDomainValue);
         /// <summary> Upload an HSM security domain. </summary>
-        public static DataActionPermission UploadHsmSecurityDomain { get; } = new DataActionPermission(UploadHsmSecurityDomainValue);
+        public static DataAction UploadHsmSecurityDomain { get; } = new DataAction(UploadHsmSecurityDomainValue);
         /// <summary> Check the status of the HSM security domain exchange file. </summary>
-        public static DataActionPermission ReadHsmSecurityDomainStatus { get; } = new DataActionPermission(ReadHsmSecurityDomainStatusValue);
+        public static DataAction ReadHsmSecurityDomainStatus { get; } = new DataAction(ReadHsmSecurityDomainStatusValue);
         /// <summary> Download an HSM security domain transfer key. </summary>
-        public static DataActionPermission ReadHsmSecurityDomainTransferKey { get; } = new DataActionPermission(ReadHsmSecurityDomainTransferKeyValue);
+        public static DataAction ReadHsmSecurityDomainTransferKey { get; } = new DataAction(ReadHsmSecurityDomainTransferKeyValue);
         /// <summary> Start an HSM backup. </summary>
-        public static DataActionPermission StartHsmBackup { get; } = new DataActionPermission(StartHsmBackupValue);
+        public static DataAction StartHsmBackup { get; } = new DataAction(StartHsmBackupValue);
         /// <summary> Start an HSM restore. </summary>
-        public static DataActionPermission StartHsmRestore { get; } = new DataActionPermission(StartHsmRestoreValue);
+        public static DataAction StartHsmRestore { get; } = new DataAction(StartHsmRestoreValue);
         /// <summary> Read an HSM backup status. </summary>
-        public static DataActionPermission ReadHsmBackupStatus { get; } = new DataActionPermission(ReadHsmBackupStatusValue);
+        public static DataAction ReadHsmBackupStatus { get; } = new DataAction(ReadHsmBackupStatusValue);
         /// <summary> Read an HSM restore status. </summary>
-        public static DataActionPermission ReadHsmRestoreStatus { get; } = new DataActionPermission(ReadHsmRestoreStatusValue);
-        /// <summary> Determines if two <see cref="DataActionPermission"/> values are the same. </summary>
-        public static bool operator ==(DataActionPermission left, DataActionPermission right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="DataActionPermission"/> values are not the same. </summary>
-        public static bool operator !=(DataActionPermission left, DataActionPermission right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataActionPermission"/>. </summary>
-        public static implicit operator DataActionPermission(string value) => new DataActionPermission(value);
+        public static DataAction ReadHsmRestoreStatus { get; } = new DataAction(ReadHsmRestoreStatusValue);
+        /// <summary> Determines if two <see cref="DataAction"/> values are the same. </summary>
+        public static bool operator ==(DataAction left, DataAction right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="DataAction"/> values are not the same. </summary>
+        public static bool operator !=(DataAction left, DataAction right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="DataAction"/>. </summary>
+        public static implicit operator DataAction(string value) => new DataAction(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DataActionPermission other && Equals(other);
+        public override bool Equals(object obj) => obj is DataAction other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(DataActionPermission other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DataAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

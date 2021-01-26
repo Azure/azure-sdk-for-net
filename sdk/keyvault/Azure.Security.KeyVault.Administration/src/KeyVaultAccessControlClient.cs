@@ -184,22 +184,34 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Creates or updates a role definition.
         /// </summary>
-        /// <param name="options">The options for creating or updating a role definition.</param>
+        /// <param name="roleDefinitionDescription">The description for the role definition.</param>
+        /// <param name="permissions">The permissions granted by the role definition when assigned to a principal.</param>
         /// <param name="roleScope">The scope of the <see cref="KeyVaultRoleDefinition"/> to create. The default value is <see cref="KeyVaultRoleScope.Global"/>.</param>
+        /// <param name="roleDefinitionName">Optional name used to create the role definition. A new <see cref="Guid"/> will be generated if not specified.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        public virtual Response<KeyVaultRoleDefinition> UpsertRoleDefinition(UpsertRoleDefinitionOptions options, KeyVaultRoleScope roleScope = default, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultRoleDefinition> UpsertRoleDefinition(string roleDefinitionDescription, KeyVaultPermission permissions, KeyVaultRoleScope roleScope = default, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(UpsertRoleDefinition)}");
             scope.Start();
             try
             {
-                var parameters = new RoleDefinitionCreateParameters(options);
+                var name = (roleDefinitionName ?? Guid.NewGuid()).ToString();
+                var properties = new UpsertRoleDefinitionOptions()
+                {
+                    Description = roleDefinitionDescription,
+                    RoleName = name,
+                    RoleType = RoleType.CustomRole
+                };
+                properties.AssignableScopes.Add(roleScope);
+                properties.Permissions.Add(permissions);
+
+                var parameters = new RoleDefinitionCreateParameters(properties);
 
                 return _definitionsRestClient.CreateOrUpdate(
                     vaultBaseUrl: VaultUri.AbsoluteUri,
                     scope: roleScope == default ? roleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
-                    roleDefinitionName: options.RoleName,
+                    roleDefinitionName: name,
                     parameters: parameters,
                     cancellationToken: cancellationToken);
             }
