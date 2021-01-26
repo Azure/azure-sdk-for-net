@@ -11,7 +11,7 @@ namespace Azure.Storage.Queues.Models
     public class QueueProperties
     {
         /// <summary>
-        /// x-ms-meta
+        /// Metadata.
         /// </summary>
         public IDictionary<string, string> Metadata { get; internal set; }
 

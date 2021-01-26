@@ -209,10 +209,11 @@ namespace Azure.Storage.Queues
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding);
 
-            (QueueRestClient, MessagesRestClient, MessageIdRestClient) clients = BuildRestClients();
-            _queueRestClient = clients.Item1;
-            _messagesRestClient = clients.Item2;
-            _messageIdRestClient = clients.Item3;
+            (QueueRestClient queueRestClient, MessagesRestClient messagesRestClient, MessageIdRestClient messageIdRestClient) = BuildRestClients();
+            _queueRestClient = queueRestClient;
+            _messagesRestClient = messagesRestClient;
+            _messageIdRestClient = messageIdRestClient;
+
             AssertEncodingForEncryption();
         }
 
@@ -344,10 +345,11 @@ namespace Azure.Storage.Queues
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding);
 
-            (QueueRestClient, MessagesRestClient, MessageIdRestClient) clients = BuildRestClients();
-            _queueRestClient = clients.Item1;
-            _messagesRestClient = clients.Item2;
-            _messageIdRestClient = clients.Item3;
+            (QueueRestClient queueRestClient, MessagesRestClient messagesRestClient, MessageIdRestClient messageIdRestClient) = BuildRestClients();
+            _queueRestClient = queueRestClient;
+            _messagesRestClient = messagesRestClient;
+            _messageIdRestClient = messageIdRestClient;
+
             AssertEncodingForEncryption();
         }
 
