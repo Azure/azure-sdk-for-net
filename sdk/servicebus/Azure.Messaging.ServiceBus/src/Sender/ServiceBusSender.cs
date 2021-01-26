@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
+        public virtual string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
         ///   The path of the entity that the sender is connected to, specific to the
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the sender is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed
+        public virtual bool IsClosed
         {
             get => _closed;
             private set => _closed = value;
