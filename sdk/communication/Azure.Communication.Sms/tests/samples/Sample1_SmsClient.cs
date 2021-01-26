@@ -16,33 +16,20 @@ namespace Azure.Communication.Sms.Tests.samples
     public partial class Sample1_SmsClient
     {
         [Test]
-        [AsyncOnly]
-        public async Task SendSingleAndGroupSmsAsync()
+        [SyncOnly]
+        public void SendSms()
         {
             SmsClient smsClient = CreateSmsClient();
 
-            // SendSmsOptions is an optional field. It can be used
-            // to enable a delivery report to the Azure Event Grid
-            // and to add custom tags in the request
-            SendSmsOptions sendSmsOptions = new SendSmsOptions();
-            sendSmsOptions.EnableDeliveryReport = true;
-            sendSmsOptions.Tag = "<custom-tags>";
-
             #region Snippet:SendSms
-            /// send an sms to a single recipient asynchronously
-            SendSmsResult sendSmsResult = await smsClient.SendAsync("<leased-phone-number>", "<to-phone-number>", "<message-to-send>", sendSmsOptions);
-            Console.WriteLine($" MessageId: {sendSmsResult.MessageId} Sent to: {sendSmsResult.To}");
+            /// Send an sms
+            SendSmsResult sendSmsResult = smsClient.Send(
+                from: "<leased-phone-number>",
+                to: "<to-phone-number>",
+                message: "<message-to-send>");
+
+            Console.WriteLine("MessageId: " + sendSmsResult.MessageId);
             #endregion Snippet:SendSms
-
-            #region Snippet:SendGroupSms
-            /// send an sms to a multiple recipients
-            AsyncPageable<SendSmsResult> allSendSmsResults = smsClient.SendAsync("<leased-phone-number>", new string[] { "<to-phone-number-1>", "<to-phone-number-2>", "<to-phone-number-3>" }, "<group-message-to-send>", sendSmsOptions);
-            await foreach (SendSmsResult sendSmsResult1 in allSendSmsResults)
-            {
-                Console.WriteLine($" MessageId: {sendSmsResult1.MessageId} Sent to: {sendSmsResult1.To}");
-            }
-            #endregion Snippet:SendGroupSms
-
         }
 
         [Test]
@@ -51,25 +38,74 @@ namespace Azure.Communication.Sms.Tests.samples
         {
             SmsClient smsClient = CreateSmsClient();
 
-            // SendSmsOptions is an optional field. It can be used
-            // to enable a delivery report to the Azure Event Grid
-            // and to add custom tags in the sms request body
-            SendSmsOptions sendSmsOptions = new SendSmsOptions();
-            sendSmsOptions.EnableDeliveryReport = true;
-            sendSmsOptions.Tag = "<custom-tags>";
-
             #region Snippet:SendSms
             /// Send an sms to a single recipient
-            SendSmsResult sendSmsResult = smsClient.Send("<leased-phone-number>", "<to-phone-number>", "<message-to-send>", sendSmsOptions);
+            SendSmsResult sendSmsResult = smsClient.Send(
+                from: "<leased-phone-number>",
+                to: "<to-phone-number>",
+                message: "<message-to-send>",
+                sendSmsOptions: new SendSmsOptions // OPTIONAL
+                    {
+                    EnableDeliveryReport = true,
+                    Tag = "<custom-tags>",
+                });
+
             Console.WriteLine("MessageId: " + sendSmsResult.MessageId);
             #endregion Snippet:SendSms
 
             #region Snippet:SendGroupSms
             /// send an sms to multiple recipients
-            Pageable<SendSmsResult> allSendSmsResults = smsClient.Send("<leased-phone-number>", new string[] { "<to-phone-number-1>", "<to-phone-number-2>", "<to-phone-number-3>" }, "<group-message-to-send>", sendSmsOptions);
-            foreach (SendSmsResult sendSmsResult1 in allSendSmsResults)
+            Pageable<SendSmsResult> results = smsClient.Send(
+                from: "<leased-phone-number>",
+                to: new[] { "<to-phone-number-1>", "<to-phone-number-2>", "<to-phone-number-3>" },
+                message: "<group-message-to-send>",
+                sendSmsOptions: new SendSmsOptions // OPTIONAL
+                    {
+                    EnableDeliveryReport = true,
+                    Tag = "<custom-tags>",
+                });
+            foreach (SendSmsResult result in results)
             {
-                Console.WriteLine($" MessageId: {sendSmsResult1.MessageId} Sent to: {sendSmsResult1.To}");
+                Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
+            }
+            #endregion Snippet:SendGroupSms
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task SendSingleAndGroupSmsAsync()
+        {
+            SmsClient smsClient = CreateSmsClient();
+
+            // SendSmsOptions is an optional field. It can be used
+            // to enable a delivery report to the Azure Event Grid
+            // and to add custom tags in the request
+            SendSmsOptions sendSmsOptions = new SendSmsOptions
+            {
+                EnableDeliveryReport = true,
+                Tag = "<custom-tags>",
+            };
+
+            #region Snippet:SendSms
+            /// send an sms to a single recipient asynchronously
+            SendSmsResult sendSmsResult = await smsClient.SendAsync(
+                from: "<leased-phone-number>",
+                to: "<to-phone-number>",
+                message: "<message-to-send>",
+                sendSmsOptions); //OPTIONAL
+            Console.WriteLine($" MessageId: {sendSmsResult.MessageId} Sent to: {sendSmsResult.To}");
+            #endregion Snippet:SendSms
+
+            #region Snippet:SendGroupSms
+            /// send an sms to a multiple recipients asynchronously
+            AsyncPageable<SendSmsResult> results = smsClient.SendAsync(
+                from: "<leased-phone-number>",
+                to: new[] { "<to-phone-number-1>", "<to-phone-number-2>", "<to-phone-number-3>" },
+                message: "<group-message-to-send>",
+                sendSmsOptions); // OPTIONAL
+            await foreach (SendSmsResult result in results)
+            {
+                Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
             }
             #endregion Snippet:SendGroupSms
         }
