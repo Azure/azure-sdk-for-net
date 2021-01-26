@@ -813,12 +813,18 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             await using DisposingQueue test = await GetTestQueueAsync();
             object badMessage = null;
+            object badMessage2 = null;
             var encodingClient = GetEncodingClient(
                 test.Queue.Name,
                 QueueMessageEncoding.Base64,
                 arg =>
                 {
                     badMessage = arg.Message;
+                    return Task.CompletedTask;
+                },
+                arg =>
+                {
+                    badMessage2 = arg.Message;
                     return Task.CompletedTask;
                 });
             var nonEncodedContent = "test_content";
@@ -833,6 +839,40 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(1, peekedMessages.Count());
             Assert.NotNull(badMessage);
             Assert.AreEqual(nonEncodedContent, ((PeekedMessage)badMessage).Body.ToString());
+            Assert.NotNull(badMessage2);
+            Assert.AreEqual(nonEncodedContent, ((PeekedMessage)badMessage2).Body.ToString());
+        }
+
+        [Test]
+        public async Task PropagatesExceptionIfInvalidPeekedMessageAndHandlerThrows()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM1");
+                },
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM2");
+                });
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<AggregateException>(
+                encodingClient.PeekMessagesAsync(10),
+                e =>
+                {
+                    Assert.AreEqual(2, e.InnerExceptions.Count);
+                    Assert.AreEqual("KABOOM1", e.InnerExceptions[0].Message);
+                    Assert.AreEqual("KABOOM2", e.InnerExceptions[1].Message);
+                });
         }
 
         [Test]
@@ -881,12 +921,18 @@ namespace Azure.Storage.Queues.Test
             // Arrange
             await using DisposingQueue test = await GetTestQueueAsync();
             object badMessage = null;
+            object badMessage2 = null;
             var encodingClient = GetEncodingClient(
                 test.Queue.Name,
                 QueueMessageEncoding.Base64,
                 arg =>
                 {
                     badMessage = arg.Message;
+                    return Task.CompletedTask;
+                },
+                arg =>
+                {
+                    badMessage2 = arg.Message;
                     return Task.CompletedTask;
                 });
             var nonEncodedContent = "test_content";
@@ -901,6 +947,40 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(1, queueMessages.Count());
             Assert.NotNull(badMessage);
             Assert.AreEqual(nonEncodedContent, ((QueueMessage)badMessage).Body.ToString());
+            Assert.NotNull(badMessage2);
+            Assert.AreEqual(nonEncodedContent, ((QueueMessage)badMessage2).Body.ToString());
+        }
+
+        [Test]
+        public async Task PropagatesExceptionIfInvalidQueueMessageAndHandlerThrows()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM1");
+                },
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM2");
+                });
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<AggregateException>(
+                encodingClient.ReceiveMessagesAsync(10),
+                e =>
+                {
+                    Assert.AreEqual(2, e.InnerExceptions.Count);
+                    Assert.AreEqual("KABOOM1", e.InnerExceptions[0].Message);
+                    Assert.AreEqual("KABOOM2", e.InnerExceptions[1].Message);
+                });
         }
 
         [Test]
