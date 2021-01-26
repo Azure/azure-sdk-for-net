@@ -76,7 +76,7 @@ namespace Azure.Storage
                 contentLengthString = contentLength.ToString(CultureInfo.InvariantCulture);
             }
 
-            var stringToSign = string.Join("\n",
+            string stringToSign = string.Join("\n",
                 message.Request.Method.ToString().ToUpperInvariant(),
                 contentEncoding ?? "",
                 contentLanguage ?? "",

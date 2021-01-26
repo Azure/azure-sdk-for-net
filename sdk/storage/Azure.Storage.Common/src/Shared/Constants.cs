@@ -350,6 +350,8 @@ namespace Azure.Storage
             public const string MessagesUri = "messages";
 
             public const string UriSubDomain = "queue";
+
+            public const string QueueTraitsMetadata = "metadata";
         }
 
         /// <summary>
