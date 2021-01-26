@@ -831,7 +831,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Assert.AreEqual(1, peekedMessages.Count());
-            await WaitForCondition(() => badMessage != null);
+            Assert.NotNull(badMessage);
             Assert.AreEqual(nonEncodedContent, ((PeekedMessage)badMessage).Body.ToString());
         }
 
@@ -899,7 +899,7 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Assert.AreEqual(1, queueMessages.Count());
-            await WaitForCondition(() => badMessage != null);
+            Assert.NotNull(badMessage);
             Assert.AreEqual(nonEncodedContent, ((QueueMessage)badMessage).Body.ToString());
         }
 
