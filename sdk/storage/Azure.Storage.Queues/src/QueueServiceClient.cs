@@ -30,53 +30,25 @@ namespace Azure.Storage.Queues
         /// </summary>
         public virtual Uri Uri => _uri;
 
+        /// <summary>
+        /// QueueClientConfiguration.
+        /// </summary>
+        private readonly QueueClientConfiguration _clientConfiguration;
+
+        /// <summary>
+        /// QueueClientConfiguration.
+        /// </summary>
+        internal virtual QueueClientConfiguration ClientConfiguration => _clientConfiguration;
+
+        /// <summary>
+        /// ServiceRestClient.
+        /// </summary>
         private readonly ServiceRestClient _serviceRestClient;
 
         /// <summary>
-        /// The HttpPipeline used to send REST requests.
+        /// ServiceRestClient.
         /// </summary>
-        private readonly HttpPipeline _pipeline;
-
-        /// <summary>
-        /// Gets the HttpPipeline used to send REST requests.
-        /// </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        private readonly QueueClientOptions.ServiceVersion _version;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        internal virtual QueueClientOptions.ServiceVersion Version => _version;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
-        /// </summary>
-        private readonly ClientSideEncryptionOptions _clientSideEncryption;
-
-        /// <summary>
-        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
-        /// </summary>
-        internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
-
-        private readonly QueueMessageEncoding _messageEncoding;
-
-        internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
+        internal virtual ServiceRestClient ServiceRestClient => _serviceRestClient;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -99,20 +71,10 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
-        /// </summary>
-        private StorageSharedKeyCredential _storageSharedKeyCredential;
-
-        /// <summary>
-        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
-        /// </summary>
-        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
-
-        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateAccountSasUri => SharedKeyCredential != null;
+        public bool CanGenerateAccountSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -164,17 +126,15 @@ namespace Azure.Storage.Queues
             var conn = StorageConnectionString.Parse(connectionString);
             _uri = conn.QueueEndpoint;
             options ??= new QueueClientOptions();
-            _pipeline = options.Build(conn.Credentials);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
-            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
-            _messageEncoding = options.MessageEncoding;
-            _serviceRestClient = new ServiceRestClient(
-                _clientDiagnostics,
-                _pipeline,
-                _uri.ToString(),
-                _version.ToVersionString());
+            _clientConfiguration = new QueueClientConfiguration(
+                pipeline: options.Build(conn.Credentials),
+                sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
+                messageEncoding: options.MessageEncoding);
+
+            _serviceRestClient = BuildServiceRestClient();
         }
 
         /// <summary>
@@ -291,18 +251,24 @@ namespace Azure.Storage.Queues
             Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             _uri = serviceUri;
             options ??= new QueueClientOptions();
-            _pipeline = options.Build(authentication);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
-            _storageSharedKeyCredential = storageSharedKeyCredential;
-            _messageEncoding = options.MessageEncoding;
-            _serviceRestClient = new ServiceRestClient(
-                _clientDiagnostics,
-                _pipeline,
-                _uri.ToString(),
-                _version.ToVersionString());
+
+            _clientConfiguration = new QueueClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
+                messageEncoding: options.MessageEncoding);
+
+            _serviceRestClient = BuildServiceRestClient();
         }
+
+        private ServiceRestClient BuildServiceRestClient()
+            => new ServiceRestClient(
+                ClientConfiguration.ClientDiagnostics,
+                ClientConfiguration.Pipeline,
+                Uri.ToString(),
+                ClientConfiguration.Version.ToVersionString());
         #endregion ctors
 
         /// <summary>
@@ -318,7 +284,9 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, SharedKeyCredential, Version, ClientDiagnostics, ClientSideEncryption, MessageEncoding);
+            => new QueueClient(
+                Uri.AppendToPath(queueName),
+                ClientConfiguration);
 
         #region GetQueues
         /// <summary>
@@ -424,9 +392,9 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueServiceClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -434,7 +402,7 @@ namespace Azure.Storage.Queues
                     $"{nameof(traits)}: {traits}\n" +
                     $"{nameof(prefix)}: {prefix}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueServiceClient)}.{nameof(GetQueues)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(QueueServiceClient)}.{nameof(GetQueues)}");
 
                 try
                 {
@@ -476,13 +444,13 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueServiceClient));
                     scope.Dispose();
                 }
             }
@@ -550,13 +518,13 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueServiceClient),
                     message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueServiceClient)}.{nameof(GetProperties)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(QueueServiceClient)}.{nameof(GetProperties)}");
 
                 try
                 {
@@ -566,14 +534,14 @@ namespace Azure.Storage.Queues
 
                     if (async)
                     {
-                        response = await _serviceRestClient.GetPropertiesAsync(
+                        response = await ServiceRestClient.GetPropertiesAsync(
                             timeout: null,
                             cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = _serviceRestClient.GetProperties(
+                        response = ServiceRestClient.GetProperties(
                             timeout: null,
                             cancellationToken);
                     }
@@ -584,13 +552,13 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueServiceClient));
                     scope.Dispose();
                 }
             }
@@ -671,15 +639,15 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueServiceClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(properties)}: {properties}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(QueueServiceClient)}.{nameof(SetProperties)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(QueueServiceClient)}.{nameof(SetProperties)}");
 
                 try
                 {
@@ -707,13 +675,13 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueServiceClient));
                     scope.Dispose();
                 }
             }
@@ -787,9 +755,9 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(QueueServiceClient),
                     message: $"{nameof(Uri)}: {Uri}\n");
                 try
@@ -816,12 +784,12 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(QueueServiceClient));
                 }
             }
         }
@@ -1007,7 +975,7 @@ namespace Azure.Storage.Queues
                     nameof(AccountSasServices.Queues));
             }
             QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString();
             return sasUri.ToUri();
         }
         #endregion
