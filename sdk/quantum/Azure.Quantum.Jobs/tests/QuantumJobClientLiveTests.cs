@@ -5,13 +5,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Quantum.Jobs.Models;
 using NUnit.Framework;
 
 namespace Azure.Quantum.Jobs.Tests
 {
     public class QuantumJobClientLiveTests: RecordedTestBase<QuantumJobClientTestEnvironment>
     {
-        public QuantumJobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public QuantumJobClientLiveTests(bool isAsync) : base(isAsync)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;
@@ -37,10 +38,12 @@ namespace Azure.Quantum.Jobs.Tests
         public async Task CanGetList()
         {
             var client = CreateClient();
-            var jobs = client.GetJobsClient().ListAsync(CancellationToken.None).Result;
-            var list = await client.ListAsync();
 
-            //Assert.AreEqual(list);
+            await foreach (JobDetails job in client.GetJobsAsync(CancellationToken.None))
+            {
+                // TODO what do we want to verify here?
+                // Assert.AreEqual(list);
+            }
         }
     }
 }

@@ -26,6 +26,10 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
+  </ItemGroup>
+  
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
 </Project>

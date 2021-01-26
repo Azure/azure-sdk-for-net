@@ -16,10 +16,19 @@ namespace Azure.Quantum.Jobs
     /// </summary>
     public class QuantumJobClient
     {
-        /// <summary> Returns the client to handle the collection of jobs. </summary>
-        internal virtual JobsRestClient GetJobsClient()
+        private static Page<JobDetails> ToPage(Response<JobDetailsList> list) =>
+    Page.FromValues(list.Value.Value, list.Value.NextLink, list.GetRawResponse());
+
+        /// <summary> Return list of jobs. </summary>
+        public virtual Pageable<JobDetails> GetJobs(CancellationToken cancellationToken = default)
         {
-            return _jobs;
+            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(cont == null ? _jobs.List() : _jobs.ListNextPage(cont)));
+        }
+
+        /// <summary> Return list of jobs. </summary>
+        public virtual AsyncPageable<JobDetails> GetJobsAsync(CancellationToken cancellationToken = default)
+        {
+            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(cont == null ? await _jobs.ListAsync().ConfigureAwait(false) : await _jobs.ListNextPageAsync(cont).ConfigureAwait(false)));
         }
 
         private JobsRestClient _jobs;

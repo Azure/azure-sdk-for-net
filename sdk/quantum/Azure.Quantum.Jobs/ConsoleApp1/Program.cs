@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Quantum.Jobs;
+using Azure.Quantum.Jobs.Models;
 using Newtonsoft.Json;
 
 namespace ConsoleApp1
@@ -9,10 +11,17 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            QuantumJobClient client = new QuantumJobClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus");
-            var jobs = client.GetJobsClient().ListAsync(CancellationToken.None).Result;
+            _ = MainAsync();
+        }
 
-            Console.WriteLine(JsonConvert.SerializeObject(jobs));
+        private static async Task MainAsync()
+        {
+            QuantumJobClient client = new QuantumJobClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus");
+
+            await foreach (JobDetails job in client.GetJobsAsync(CancellationToken.None))
+            {
+                Console.WriteLine(JsonConvert.SerializeObject(job));
+            }
         }
     }
 }
