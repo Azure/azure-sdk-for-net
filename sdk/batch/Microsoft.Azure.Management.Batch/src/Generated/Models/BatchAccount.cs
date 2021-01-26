@@ -58,15 +58,15 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account.</param>
         /// <param name="dedicatedCoreQuota">The dedicated core quota for the
         /// Batch account.</param>
-        /// <param name="lowPriorityCoreQuota">The low-priority core quota for
+        /// <param name="lowPriorityCoreQuota">The low priority core quota for
         /// the Batch account.</param>
         /// <param name="dedicatedCoreQuotaPerVMFamily">A list of the dedicated
         /// core quota per Virtual Machine family for the Batch account. For
         /// accounts with PoolAllocationMode set to UserSubscription, quota is
         /// managed on the subscription so this value is not returned.</param>
         /// <param name="dedicatedCoreQuotaPerVMFamilyEnforced">A value
-        /// indicating whether the core quota for the Batch Account is enforced
-        /// per Virtual Machine family or not.</param>
+        /// indicating whether core quotas per Virtual Machine family are
+        /// enforced for this account</param>
         /// <param name="poolQuota">The pool quota for the Batch
         /// account.</param>
         /// <param name="activeJobAndJobScheduleQuota">The active job and job
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public int? DedicatedCoreQuota { get; private set; }
 
         /// <summary>
-        /// Gets the low-priority core quota for the Batch account.
+        /// Gets the low priority core quota for the Batch account.
         /// </summary>
         /// <remarks>
         /// For accounts with PoolAllocationMode set to UserSubscription, quota
@@ -195,8 +195,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         public IList<VirtualMachineFamilyCoreQuota> DedicatedCoreQuotaPerVMFamily { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether the core quota for the Batch
-        /// Account is enforced per Virtual Machine family or not.
+        /// Gets a value indicating whether core quotas per Virtual Machine
+        /// family are enforced for this account
         /// </summary>
         /// <remarks>
         /// Batch is transitioning its core quota system for dedicated cores to
