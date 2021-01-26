@@ -50,11 +50,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// supported per database max performance levels.</param>
         /// <param name="zoneRedundant">Whether or not zone redundancy is
         /// supported for the performance level.</param>
+        /// <param name="supportedMaintenanceConfigurations">List of supported
+        /// maintenance configurations</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel = default(PerformanceLevelCapability), Sku sku = default(Sku), IList<LicenseTypeCapability> supportedLicenseTypes = default(IList<LicenseTypeCapability>), int? maxDatabaseCount = default(int?), MaxSizeCapability includedMaxSize = default(MaxSizeCapability), IList<MaxSizeRangeCapability> supportedMaxSizes = default(IList<MaxSizeRangeCapability>), IList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes = default(IList<MaxSizeRangeCapability>), IList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels = default(IList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>), bool? zoneRedundant = default(bool?), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel = default(PerformanceLevelCapability), Sku sku = default(Sku), IList<LicenseTypeCapability> supportedLicenseTypes = default(IList<LicenseTypeCapability>), int? maxDatabaseCount = default(int?), MaxSizeCapability includedMaxSize = default(MaxSizeCapability), IList<MaxSizeRangeCapability> supportedMaxSizes = default(IList<MaxSizeRangeCapability>), IList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes = default(IList<MaxSizeRangeCapability>), IList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels = default(IList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>), bool? zoneRedundant = default(bool?), IList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default(IList<MaintenanceConfigurationCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             PerformanceLevel = performanceLevel;
             Sku = sku;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             SupportedPerDatabaseMaxSizes = supportedPerDatabaseMaxSizes;
             SupportedPerDatabaseMaxPerformanceLevels = supportedPerDatabaseMaxPerformanceLevels;
             ZoneRedundant = zoneRedundant;
+            SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
             Status = status;
             Reason = reason;
             CustomInit();
@@ -129,6 +132,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "zoneRedundant")]
         public bool? ZoneRedundant { get; private set; }
+
+        /// <summary>
+        /// Gets list of supported maintenance configurations
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedMaintenanceConfigurations")]
+        public IList<MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:

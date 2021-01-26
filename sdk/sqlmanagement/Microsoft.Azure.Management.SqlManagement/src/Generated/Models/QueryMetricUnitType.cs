@@ -12,12 +12,13 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for IdentityType.
+    /// Defines values for QueryMetricUnitType.
     /// </summary>
-    public static class IdentityType
+    public static class QueryMetricUnitType
     {
-        public const string None = "None";
-        public const string SystemAssigned = "SystemAssigned";
-        public const string UserAssigned = "UserAssigned";
+        public const string Percentage = "percentage";
+        public const string KB = "KB";
+        public const string Microseconds = "microseconds";
+        public const string Count = "count";
     }
 }

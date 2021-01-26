@@ -41,11 +41,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// is supported for managed instances in an instance pool.</param>
         /// <param name="standaloneSupported">True if this service objective is
         /// supported for standalone managed instances.</param>
+        /// <param name="supportedMaintenanceConfigurations">List of supported
+        /// maintenance configurations</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ManagedInstanceVcoresCapability(string name = default(string), int? value = default(int?), MaxSizeCapability includedMaxSize = default(MaxSizeCapability), IList<MaxSizeRangeCapability> supportedStorageSizes = default(IList<MaxSizeRangeCapability>), bool? instancePoolSupported = default(bool?), bool? standaloneSupported = default(bool?), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public ManagedInstanceVcoresCapability(string name = default(string), int? value = default(int?), MaxSizeCapability includedMaxSize = default(MaxSizeCapability), IList<MaxSizeRangeCapability> supportedStorageSizes = default(IList<MaxSizeRangeCapability>), bool? instancePoolSupported = default(bool?), bool? standaloneSupported = default(bool?), IList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default(IList<ManagedInstanceMaintenanceConfigurationCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Name = name;
             Value = value;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             SupportedStorageSizes = supportedStorageSizes;
             InstancePoolSupported = instancePoolSupported;
             StandaloneSupported = standaloneSupported;
+            SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
             Status = status;
             Reason = reason;
             CustomInit();
@@ -100,6 +103,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "standaloneSupported")]
         public bool? StandaloneSupported { get; private set; }
+
+        /// <summary>
+        /// Gets list of supported maintenance configurations
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedMaintenanceConfigurations")]
+        public IList<ManagedInstanceMaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:

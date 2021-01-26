@@ -12,12 +12,14 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for IdentityType.
+    /// Defines values for MetricType.
     /// </summary>
-    public static class IdentityType
+    public static class MetricType
     {
-        public const string None = "None";
-        public const string SystemAssigned = "SystemAssigned";
-        public const string UserAssigned = "UserAssigned";
+        public const string Cpu = "cpu";
+        public const string Io = "io";
+        public const string LogIo = "logIo";
+        public const string Duration = "duration";
+        public const string Dtu = "dtu";
     }
 }

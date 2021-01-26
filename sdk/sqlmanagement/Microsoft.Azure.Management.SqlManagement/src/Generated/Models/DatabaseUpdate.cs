@@ -154,9 +154,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// is automatically paused. A value of -1 means that automatic pause
         /// is disabled</param>
         /// <param name="storageAccountType">The storage account type used to
-        /// store backups for this database. Currently the only supported
-        /// option is GRS (GeoRedundantStorage). Possible values include:
-        /// 'GRS', 'LRS', 'ZRS'</param>
+        /// store backups for this database. Possible values include: 'GRS',
+        /// 'LRS', 'ZRS'</param>
         /// <param name="minCapacity">Minimal capacity that database will
         /// always have allocated, if not paused</param>
         /// <param name="pausedDate">The date when database was paused by user
@@ -167,7 +166,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// database is paused.</param>
         /// <param name="maintenanceConfigurationId">Maintenance configuration
         /// id assigned to the database. This configuration defines the period
-        /// when the maintenance updates will be rolled out.</param>
+        /// when the maintenance updates will occur.</param>
         /// <param name="tags">Resource tags.</param>
         public DatabaseUpdate(Sku sku = default(Sku), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string storageAccountType = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
@@ -466,8 +465,7 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets the storage account type used to store backups for
-        /// this database. Currently the only supported option is GRS
-        /// (GeoRedundantStorage). Possible values include: 'GRS', 'LRS', 'ZRS'
+        /// this database. Possible values include: 'GRS', 'LRS', 'ZRS'
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountType")]
         public string StorageAccountType { get; set; }
@@ -496,7 +494,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets maintenance configuration id assigned to the database.
         /// This configuration defines the period when the maintenance updates
-        /// will be rolled out.
+        /// will occur.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceConfigurationId")]
         public string MaintenanceConfigurationId { get; set; }

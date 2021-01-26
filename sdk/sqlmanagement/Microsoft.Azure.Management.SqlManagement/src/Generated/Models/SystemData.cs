@@ -10,15 +10,13 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// ARM System Data.
+    /// Metadata pertaining to creation and last modification of the resource.
     /// </summary>
-    public partial class SystemData : IResource
+    public partial class SystemData
     {
         /// <summary>
         /// Initializes a new instance of the SystemData class.

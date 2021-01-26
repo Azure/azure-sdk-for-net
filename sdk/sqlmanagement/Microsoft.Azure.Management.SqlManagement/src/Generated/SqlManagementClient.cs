@@ -423,6 +423,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRecoverableManagedDatabasesOperations RecoverableManagedDatabases { get; private set; }
 
         /// <summary>
+        /// Gets the IBackupShortTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IManagedInstanceVulnerabilityAssessmentsOperations.
         /// </summary>
         public virtual IManagedInstanceVulnerabilityAssessmentsOperations ManagedInstanceVulnerabilityAssessments { get; private set; }
@@ -508,19 +513,9 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ISyncMembersOperations SyncMembers { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedInstancesOperations.
+        /// Gets the IImportExportOperations.
         /// </summary>
-        public virtual IManagedInstancesOperations ManagedInstances { get; private set; }
-
-        /// <summary>
-        /// Gets the IBackupShortTermRetentionPoliciesOperations.
-        /// </summary>
-        public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IManagedDatabaseRestoreDetailsOperations.
-        /// </summary>
-        public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
+        public virtual IImportExportOperations ImportExport { get; private set; }
 
         /// <summary>
         /// Gets the IManagedDatabasesOperations.
@@ -528,14 +523,19 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
+
+        /// <summary>
         /// Gets the IServerAzureADOnlyAuthenticationsOperations.
         /// </summary>
         public virtual IServerAzureADOnlyAuthenticationsOperations ServerAzureADOnlyAuthentications { get; private set; }
 
         /// <summary>
-        /// Gets the IImportExportOperations.
+        /// Gets the IManagedInstancesOperations.
         /// </summary>
-        public virtual IImportExportOperations ImportExport { get; private set; }
+        public virtual IManagedInstancesOperations ManagedInstances { get; private set; }
 
         /// <summary>
         /// Gets the IManagedInstanceAzureADOnlyAuthenticationsOperations.
@@ -551,19 +551,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerDevOpsAuditSettingsOperations.
         /// </summary>
         public virtual IServerDevOpsAuditSettingsOperations ServerDevOpsAuditSettings { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the SqlManagementClient class.
-        /// </summary>
-        /// <param name='httpClient'>
-        /// HttpClient to be used
-        /// </param>
-        /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling SqlManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected SqlManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
-        {
-            Initialize();
-        }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -648,33 +635,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Thrown when a required parameter is null
         /// </exception>
         public SqlManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the SqlManagementClient class.
-        /// </summary>
-        /// <param name='credentials'>
-        /// Required. Credentials needed for the client to connect to Azure.
-        /// </param>
-        /// <param name='httpClient'>
-        /// HttpClient to be used
-        /// </param>
-        /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling SqlManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public SqlManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -863,6 +823,7 @@ namespace Microsoft.Azure.Management.Sql
             ManagedInstanceKeys = new ManagedInstanceKeysOperations(this);
             ManagedInstanceEncryptionProtectors = new ManagedInstanceEncryptionProtectorsOperations(this);
             RecoverableManagedDatabases = new RecoverableManagedDatabasesOperations(this);
+            BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             ManagedInstanceVulnerabilityAssessments = new ManagedInstanceVulnerabilityAssessmentsOperations(this);
             ServerVulnerabilityAssessments = new ServerVulnerabilityAssessmentsOperations(this);
             ManagedDatabaseSensitivityLabels = new ManagedDatabaseSensitivityLabelsOperations(this);
@@ -880,12 +841,11 @@ namespace Microsoft.Azure.Management.Sql
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             SyncGroups = new SyncGroupsOperations(this);
             SyncMembers = new SyncMembersOperations(this);
-            ManagedInstances = new ManagedInstancesOperations(this);
-            BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
-            ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
-            ManagedDatabases = new ManagedDatabasesOperations(this);
-            ServerAzureADOnlyAuthentications = new ServerAzureADOnlyAuthenticationsOperations(this);
             ImportExport = new ImportExportOperations(this);
+            ManagedDatabases = new ManagedDatabasesOperations(this);
+            ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
+            ServerAzureADOnlyAuthentications = new ServerAzureADOnlyAuthenticationsOperations(this);
+            ManagedInstances = new ManagedInstancesOperations(this);
             ManagedInstanceAzureADOnlyAuthentications = new ManagedInstanceAzureADOnlyAuthenticationsOperations(this);
             ServerTrustGroups = new ServerTrustGroupsOperations(this);
             ServerDevOpsAuditSettings = new ServerDevOpsAuditSettingsOperations(this);

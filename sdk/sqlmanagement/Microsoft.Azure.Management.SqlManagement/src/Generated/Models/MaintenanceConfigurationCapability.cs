@@ -11,43 +11,36 @@
 namespace Microsoft.Azure.Management.Sql.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The managed server capability
+    /// The maintenance configuration capability
     /// </summary>
-    public partial class ManagedInstanceEditionCapability
+    public partial class MaintenanceConfigurationCapability
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedInstanceEditionCapability
-        /// class.
+        /// Initializes a new instance of the
+        /// MaintenanceConfigurationCapability class.
         /// </summary>
-        public ManagedInstanceEditionCapability()
+        public MaintenanceConfigurationCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagedInstanceEditionCapability
-        /// class.
+        /// Initializes a new instance of the
+        /// MaintenanceConfigurationCapability class.
         /// </summary>
-        /// <param name="name">The managed server version name.</param>
-        /// <param name="supportedFamilies">The supported families.</param>
-        /// <param name="supportedStorageCapabilities">The list of supported
-        /// storage capabilities for this edition</param>
+        /// <param name="name">Maintenance configuration name</param>
         /// <param name="zoneRedundant">Whether or not zone redundancy is
-        /// supported for the edition.</param>
+        /// supported for the maintenance configuration.</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ManagedInstanceEditionCapability(string name = default(string), IList<ManagedInstanceFamilyCapability> supportedFamilies = default(IList<ManagedInstanceFamilyCapability>), IList<StorageCapability> supportedStorageCapabilities = default(IList<StorageCapability>), bool? zoneRedundant = default(bool?), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public MaintenanceConfigurationCapability(string name = default(string), bool? zoneRedundant = default(bool?), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Name = name;
-            SupportedFamilies = supportedFamilies;
-            SupportedStorageCapabilities = supportedStorageCapabilities;
             ZoneRedundant = zoneRedundant;
             Status = status;
             Reason = reason;
@@ -60,25 +53,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the managed server version name.
+        /// Gets maintenance configuration name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the supported families.
-        /// </summary>
-        [JsonProperty(PropertyName = "supportedFamilies")]
-        public IList<ManagedInstanceFamilyCapability> SupportedFamilies { get; private set; }
-
-        /// <summary>
-        /// Gets the list of supported storage capabilities for this edition
-        /// </summary>
-        [JsonProperty(PropertyName = "supportedStorageCapabilities")]
-        public IList<StorageCapability> SupportedStorageCapabilities { get; private set; }
-
-        /// <summary>
-        /// Gets whether or not zone redundancy is supported for the edition.
+        /// Gets whether or not zone redundancy is supported for the
+        /// maintenance configuration.
         /// </summary>
         [JsonProperty(PropertyName = "zoneRedundant")]
         public bool? ZoneRedundant { get; private set; }

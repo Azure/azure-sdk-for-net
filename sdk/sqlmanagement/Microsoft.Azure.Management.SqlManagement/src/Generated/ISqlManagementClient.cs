@@ -418,6 +418,11 @@ namespace Microsoft.Azure.Management.Sql
         IRecoverableManagedDatabasesOperations RecoverableManagedDatabases { get; }
 
         /// <summary>
+        /// Gets the IBackupShortTermRetentionPoliciesOperations.
+        /// </summary>
+        IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
+
+        /// <summary>
         /// Gets the IManagedInstanceVulnerabilityAssessmentsOperations.
         /// </summary>
         IManagedInstanceVulnerabilityAssessmentsOperations ManagedInstanceVulnerabilityAssessments { get; }
@@ -503,19 +508,9 @@ namespace Microsoft.Azure.Management.Sql
         ISyncMembersOperations SyncMembers { get; }
 
         /// <summary>
-        /// Gets the IManagedInstancesOperations.
+        /// Gets the IImportExportOperations.
         /// </summary>
-        IManagedInstancesOperations ManagedInstances { get; }
-
-        /// <summary>
-        /// Gets the IBackupShortTermRetentionPoliciesOperations.
-        /// </summary>
-        IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
-
-        /// <summary>
-        /// Gets the IManagedDatabaseRestoreDetailsOperations.
-        /// </summary>
-        IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; }
+        IImportExportOperations ImportExport { get; }
 
         /// <summary>
         /// Gets the IManagedDatabasesOperations.
@@ -523,14 +518,19 @@ namespace Microsoft.Azure.Management.Sql
         IManagedDatabasesOperations ManagedDatabases { get; }
 
         /// <summary>
+        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// </summary>
+        IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; }
+
+        /// <summary>
         /// Gets the IServerAzureADOnlyAuthenticationsOperations.
         /// </summary>
         IServerAzureADOnlyAuthenticationsOperations ServerAzureADOnlyAuthentications { get; }
 
         /// <summary>
-        /// Gets the IImportExportOperations.
+        /// Gets the IManagedInstancesOperations.
         /// </summary>
-        IImportExportOperations ImportExport { get; }
+        IManagedInstancesOperations ManagedInstances { get; }
 
         /// <summary>
         /// Gets the IManagedInstanceAzureADOnlyAuthenticationsOperations.

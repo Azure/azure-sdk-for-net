@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for IdentityType.
+    /// Defines values for QueryTimeGrainType.
     /// </summary>
-    public static class IdentityType
+    public static class QueryTimeGrainType
     {
-        public const string None = "None";
-        public const string SystemAssigned = "SystemAssigned";
-        public const string UserAssigned = "UserAssigned";
+        public const string PT1H = "PT1H";
+        public const string P1D = "P1D";
     }
 }
