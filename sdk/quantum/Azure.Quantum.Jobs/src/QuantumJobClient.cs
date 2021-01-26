@@ -17,18 +17,18 @@ namespace Azure.Quantum.Jobs
     public class QuantumJobClient
     {
         private static Page<JobDetails> ToPage(Response<JobDetailsList> list) =>
-    Page.FromValues(list.Value.Values, list.Value.NextLink, list.GetRawResponse());
+            Page.FromValues(list.Value.Values, list.Value.NextLink, list.GetRawResponse());
 
         /// <summary> Return list of jobs. </summary>
         public virtual Pageable<JobDetails> GetJobs(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(cont == null ? _jobs.List() : _jobs.ListNextPage(cont)));
+            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(string.IsNullOrEmpty(cont) ? _jobs.List() : _jobs.ListNextPage(cont)));
         }
 
         /// <summary> Return list of jobs. </summary>
         public virtual AsyncPageable<JobDetails> GetJobsAsync(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(cont == null ? await _jobs.ListAsync().ConfigureAwait(false) : await _jobs.ListNextPageAsync(cont).ConfigureAwait(false)));
+            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _jobs.ListAsync().ConfigureAwait(false) : await _jobs.ListNextPageAsync(cont).ConfigureAwait(false)));
         }
 
         private JobsRestClient _jobs;
@@ -45,14 +45,14 @@ namespace Azure.Quantum.Jobs
         /// <param name="resourceGroupName">Name of the resource group.</param>
         /// <param name="workspaceName">Name of the workspace.</param>
         /// <param name="location">The location.</param>
-        /// <param name="tokenCredential">The token credential.</param>
+        /// <param name="credential">The token credential.</param>
         /// <param name="options">The options.</param>
         public QuantumJobClient(
             string subscriptionId,
             string resourceGroupName,
             string workspaceName,
             string location,
-            TokenCredential tokenCredential = default,
+            TokenCredential credential = default,
             QuantumJobClientOptions options = default)
         {
             if (options == null)
@@ -60,12 +60,12 @@ namespace Azure.Quantum.Jobs
                 options = new QuantumJobClientOptions();
             }
 
-            if (tokenCredential == null)
+            if (credential == null)
             {
-                tokenCredential = new DefaultAzureCredential(new DefaultAzureCredentialOptions());
+                credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions());
             }
 
-            var authPolicy = new BearerTokenAuthenticationPolicy(tokenCredential, "https://quantum.microsoft.com");
+            var authPolicy = new BearerTokenAuthenticationPolicy(credential, "https://quantum.microsoft.com");
 
             _jobs = new JobsRestClient(
                 new ClientDiagnostics(options),

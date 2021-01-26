@@ -14,6 +14,7 @@ namespace Azure.Quantum.Jobs.Models
     public partial class ProviderStatusList
     {
         /// <summary> Provider status. </summary>
-        public IReadOnlyList<ProviderStatus> Value { get; }
+        [CodeGenMember("Value")]
+        public IReadOnlyList<ProviderStatus> Values { get; }
     }
 }

@@ -16,15 +16,15 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> Initializes a new instance of ProviderStatusList. </summary>
         internal ProviderStatusList()
         {
-            Value = new ChangeTrackingList<ProviderStatus>();
+            Values = new ChangeTrackingList<ProviderStatus>();
         }
 
         /// <summary> Initializes a new instance of ProviderStatusList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="values"> . </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal ProviderStatusList(IReadOnlyList<ProviderStatus> value, string nextLink)
+        internal ProviderStatusList(IReadOnlyList<ProviderStatus> values, string nextLink)
         {
-            Value = value;
+            Values = values;
             NextLink = nextLink;
         }
         /// <summary> Link to the next page of results. </summary>
