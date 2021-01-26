@@ -8,11 +8,12 @@ parameters:
   Urls: '(Get-ChildItem -Path ./ -Recurse -Include *.md)'
   BranchReplaceRegex: "^(${env:SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI}.*/(?:blob|tree)/)master(/.*)$"
   BranchReplacementName: "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}"
-  Condition: succeeded()
+  RunOnFailure: $false
 
 steps:
   - task: PowerShell@2
     displayName: Link verification check
+    condition: or(and(succeededOrFailed(), '${{ parameters.RunOnFailure }}'), and(succeeded(), eq('${{ parameters.RunOnFailure }}', false)))
     inputs:
       pwsh: true
       workingDirectory: '${{ parameters.WorkingDirectory }}/${{ parameters.Directory }}'
@@ -26,4 +27,3 @@ steps:
         -branchReplacementName ${{ parameters.BranchReplacementName }}
         -devOpsLogging: $true
         -checkLinkGuidance: ${{ parameters.CheckLinkGuidance }}
-    condition: ${{ parameters.Condition }}
