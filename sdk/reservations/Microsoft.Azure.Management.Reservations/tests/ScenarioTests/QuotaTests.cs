@@ -26,7 +26,7 @@ namespace Reservations.Tests.ScenarioTests
         // :Record
         // set TEST_CONNECTION_STRING=ManagementCertificate=1D13973C7D99A2E6AD10561BB72E6C2661A96D9F;QuotaSubscriptionId=9f6cce51-6baf-4de5-a3c4-6f58b85315b9;BaseUri=http://localhost:443
 
-        // Note: Make sure whatever cert thumprint you used above is installed in you Cert *User* Store
+        // Note: Make sure whatever cert thumbprint you used above is installed in you Cert *User* Store
 
         #region Test consts
         public static readonly string QuotaSubscriptionId = "9f6cce51-6baf-4de5-a3c4-6f58b85315b9";
@@ -272,7 +272,7 @@ namespace Reservations.Tests.ScenarioTests
             catch (CloudException ex)
             {
                 System.Diagnostics.Trace.TraceInformation($"Exception: {ex}");
-                Assert.Contains("Quota reduction is not supported", ex.ToString());
+                Assert.Contains("QuotaReductionNotSupported", ex.ToString());
             }
         }
 

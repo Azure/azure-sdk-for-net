@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"limit\": 2,\r\n    \"name\": {\r\n      \"value\": \"standardFSv2Family\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9a6d4594-e301-45ab-9614-6b1bb3a7f74a"
+          "cad91882-f320-43a7-be38-3c2dd9c2978c"
         ],
         "accept-language": [
           "en-US"
@@ -30,10 +30,10 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Mon, 25 Jan 2021 22:13:10 GMT"
+          "Tue, 26 Jan 2021 00:20:30 GMT"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/e86168a4-aa50-4a03-93d0-0e063bfc98f6?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25"
         ],
         "Retry-After": [
           "30"
@@ -51,25 +51,25 @@
           "nosniff"
         ],
         "MS-RequestId": [
-          "BSiexZZ5a0-u5JWqpwuI2A.0"
+          "JA7Lofcxu0uvXNxSG9J-RA.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/e86168a4-aa50-4a03-93d0-0e063bfc98f6?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25"
         ],
         "Operation-Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/e86168a4-aa50-4a03-93d0-0e063bfc98f6?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-request-id": [
-          "e4f4bf15-8255-42d2-8342-3809bdf849c2"
+          "6f6d5736-ce61-4729-8bf1-c4f23e1e7cd5"
         ],
         "x-ms-correlation-request-id": [
-          "e4f4bf15-8255-42d2-8342-3809bdf849c2"
+          "6f6d5736-ce61-4729-8bf1-c4f23e1e7cd5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210125T221311Z:e4f4bf15-8255-42d2-8342-3809bdf849c2"
+          "WESTUS2:20210126T002031Z:6f6d5736-ce61-4729-8bf1-c4f23e1e7cd5"
         ],
         "Content-Length": [
           "513"
@@ -78,12 +78,12 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/e86168a4-aa50-4a03-93d0-0e063bfc98f6\",\r\n  \"name\": \"e86168a4-aa50-4a03-93d0-0e063bfc98f6\",\r\n  \"properties\": {\r\n    \"message\": \"Request processing.\",\r\n    \"provisioningState\": \"InProgress\",\r\n    \"properties\": {\r\n      \"properties\": {\r\n        \"currentValue\": 0,\r\n        \"limit\": 2,\r\n        \"name\": {\r\n          \"value\": \"standardFSv2Family\"\r\n        },\r\n        \"properties\": {},\r\n        \"provisioningState\": \"InProgress\"\r\n      }\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.Capacity/ServiceLimits\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/8b8b8775-dd44-4f28-a3ed-25dd96149751\",\r\n  \"name\": \"8b8b8775-dd44-4f28-a3ed-25dd96149751\",\r\n  \"properties\": {\r\n    \"message\": \"Request processing.\",\r\n    \"provisioningState\": \"InProgress\",\r\n    \"properties\": {\r\n      \"properties\": {\r\n        \"currentValue\": 0,\r\n        \"limit\": 2,\r\n        \"name\": {\r\n          \"value\": \"standardFSv2Family\"\r\n        },\r\n        \"properties\": {},\r\n        \"provisioningState\": \"InProgress\"\r\n      }\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.Capacity/ServiceLimits\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/e86168a4-aa50-4a03-93d0-0e063bfc98f6?api-version=2020-10-25",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9vcGVyYXRpb25zU3RhdHVzL2U4NjE2OGE0LWFhNTAtNGEwMy05M2QwLTBlMDYzYmZjOThmNj9hcGktdmVyc2lvbj0yMDIwLTEwLTI1",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9vcGVyYXRpb25zU3RhdHVzLzhiOGI4Nzc1LWRkNDQtNGYyOC1hM2VkLTI1ZGQ5NjE0OTc1MT9hcGktdmVyc2lvbj0yMDIwLTEwLTI1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -99,10 +99,10 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Mon, 25 Jan 2021 22:13:41 GMT"
+          "Tue, 26 Jan 2021 00:21:01 GMT"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/e86168a4-aa50-4a03-93d0-0e063bfc98f6?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25"
         ],
         "Retry-After": [
           "30"
@@ -120,25 +120,25 @@
           "nosniff"
         ],
         "MS-RequestId": [
-          "nZczRLbzBkKPbO9JhvX16g.0"
+          "XXHm7ewUi0SZ-TLCCacNVg.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/e86168a4-aa50-4a03-93d0-0e063bfc98f6?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25"
         ],
         "Operation-Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/e86168a4-aa50-4a03-93d0-0e063bfc98f6?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-request-id": [
-          "0521da65-1cbc-493c-9e98-a20031f1a495"
+          "b7a76c71-131f-4cdd-ac1a-fdcb1cd8f431"
         ],
         "x-ms-correlation-request-id": [
-          "0521da65-1cbc-493c-9e98-a20031f1a495"
+          "b7a76c71-131f-4cdd-ac1a-fdcb1cd8f431"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210125T221341Z:0521da65-1cbc-493c-9e98-a20031f1a495"
+          "WESTUS2:20210126T002101Z:b7a76c71-131f-4cdd-ac1a-fdcb1cd8f431"
         ],
         "Content-Length": [
           "299"
@@ -147,12 +147,12 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/e86168a4-aa50-4a03-93d0-0e063bfc98f6\",\r\n  \"name\": \"e86168a4-aa50-4a03-93d0-0e063bfc98f6\",\r\n  \"startTime\": \"2021-01-25T22:13:11Z\",\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751\",\r\n  \"name\": \"8b8b8775-dd44-4f28-a3ed-25dd96149751\",\r\n  \"startTime\": \"2021-01-26T00:20:31Z\",\r\n  \"status\": \"InProgress\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/e86168a4-aa50-4a03-93d0-0e063bfc98f6?api-version=2020-10-25",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9vcGVyYXRpb25zU3RhdHVzL2U4NjE2OGE0LWFhNTAtNGEwMy05M2QwLTBlMDYzYmZjOThmNj9hcGktdmVyc2lvbj0yMDIwLTEwLTI1",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9vcGVyYXRpb25zU3RhdHVzLzhiOGI4Nzc1LWRkNDQtNGYyOC1hM2VkLTI1ZGQ5NjE0OTc1MT9hcGktdmVyc2lvbj0yMDIwLTEwLTI1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -168,10 +168,13 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Mon, 25 Jan 2021 22:14:11 GMT"
+          "Tue, 26 Jan 2021 00:21:30 GMT"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/e86168a4-aa50-4a03-93d0-0e063bfc98f6?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25"
+        ],
+        "Retry-After": [
+          "30"
         ],
         "Server": [
           "Kestrel"
@@ -186,19 +189,85 @@
           "nosniff"
         ],
         "MS-RequestId": [
-          "oXAMn0xmDE253Ao2YTgl_A.0"
+          "gU6Clpe_F0G8abh6eNATYQ.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25"
+        ],
+        "Operation-Location": [
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11998"
         ],
         "x-ms-request-id": [
-          "04ab4737-4dc2-4800-9320-406d27bbb2b1"
+          "b8137d17-861a-4a58-9bd3-d9c94b75864b"
         ],
         "x-ms-correlation-request-id": [
-          "04ab4737-4dc2-4800-9320-406d27bbb2b1"
+          "b8137d17-861a-4a58-9bd3-d9c94b75864b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210125T221411Z:04ab4737-4dc2-4800-9320-406d27bbb2b1"
+          "WESTUS2:20210126T002131Z:b8137d17-861a-4a58-9bd3-d9c94b75864b"
+        ],
+        "Content-Length": [
+          "299"
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751\",\r\n  \"name\": \"8b8b8775-dd44-4f28-a3ed-25dd96149751\",\r\n  \"startTime\": \"2021-01-26T00:20:31Z\",\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9vcGVyYXRpb25zU3RhdHVzLzhiOGI4Nzc1LWRkNDQtNGYyOC1hM2VkLTI1ZGQ5NjE0OTc1MT9hcGktdmVyc2lvbj0yMDIwLTEwLTI1",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.15.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Jan 2021 00:22:00 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimitsRequests/8b8b8775-dd44-4f28-a3ed-25dd96149751?api-version=2020-10-25"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "MS-RequestId": [
+          "h2g2-oeXRU2mNM9Mlyylaw.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "b1dab829-d0a7-46dc-95e3-960469930afd"
+        ],
+        "x-ms-correlation-request-id": [
+          "b1dab829-d0a7-46dc-95e3-960469930afd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210126T002201Z:b1dab829-d0a7-46dc-95e3-960469930afd"
         ],
         "Content-Length": [
           "369"
@@ -207,7 +276,7 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"QuotaReductionNotSupported\",\r\n    \"message\": \"Request failed.\"\r\n  },\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/e86168a4-aa50-4a03-93d0-0e063bfc98f6\",\r\n  \"name\": \"e86168a4-aa50-4a03-93d0-0e063bfc98f6\",\r\n  \"startTime\": \"2021-01-25T22:13:11Z\",\r\n  \"status\": \"Failed\"\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"QuotaReductionNotSupported\",\r\n    \"message\": \"Request failed.\"\r\n  },\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/operationsStatus/8b8b8775-dd44-4f28-a3ed-25dd96149751\",\r\n  \"name\": \"8b8b8775-dd44-4f28-a3ed-25dd96149751\",\r\n  \"startTime\": \"2021-01-26T00:20:31Z\",\r\n  \"status\": \"Failed\"\r\n}",
       "StatusCode": 200
     }
   ],

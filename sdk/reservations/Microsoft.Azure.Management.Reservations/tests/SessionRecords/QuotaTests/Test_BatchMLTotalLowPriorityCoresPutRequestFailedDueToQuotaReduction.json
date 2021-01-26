@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"limit\": 2,\r\n    \"name\": {\r\n      \"value\": \"TotalLowPriorityCores\"\r\n    },\r\n    \"resourceType\": \"lowPriority\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e8a5deba-0a13-480f-b7e2-06e7f6def481"
+          "bac8ac49-028e-4525-8806-d75923b8be0e"
         ],
         "accept-language": [
           "en-US"
@@ -30,10 +30,10 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Mon, 25 Jan 2021 22:32:28 GMT"
+          "Tue, 26 Jan 2021 00:19:27 GMT"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/2eb30419-7ae9-4d5b-9037-b88cef094691?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/711f390b-4ae6-4ef2-b722-6ad55289056d?api-version=2020-10-25"
         ],
         "Retry-After": [
           "30"
@@ -51,25 +51,25 @@
           "nosniff"
         ],
         "MS-RequestId": [
-          "CSxiMoY3aUO3QOuAeLEarA.0"
+          "zrogb-ScFkad-ZoptBMakQ.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/2eb30419-7ae9-4d5b-9037-b88cef094691?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/711f390b-4ae6-4ef2-b722-6ad55289056d?api-version=2020-10-25"
         ],
         "Operation-Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/2eb30419-7ae9-4d5b-9037-b88cef094691?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/711f390b-4ae6-4ef2-b722-6ad55289056d?api-version=2020-10-25"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-request-id": [
-          "6c4814d1-5562-45b4-b745-9917926b8734"
+          "a4e2f765-0ef5-47a9-9f0e-0dcf4fdac1c4"
         ],
         "x-ms-correlation-request-id": [
-          "6c4814d1-5562-45b4-b745-9917926b8734"
+          "a4e2f765-0ef5-47a9-9f0e-0dcf4fdac1c4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210125T223229Z:6c4814d1-5562-45b4-b745-9917926b8734"
+          "WESTUS2:20210126T001928Z:a4e2f765-0ef5-47a9-9f0e-0dcf4fdac1c4"
         ],
         "Content-Length": [
           "532"
@@ -78,12 +78,12 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/2eb30419-7ae9-4d5b-9037-b88cef094691\",\r\n  \"name\": \"2eb30419-7ae9-4d5b-9037-b88cef094691\",\r\n  \"properties\": {\r\n    \"message\": \"Request processing.\",\r\n    \"provisioningState\": \"InProgress\",\r\n    \"properties\": {\r\n      \"properties\": {\r\n        \"currentValue\": 0,\r\n        \"limit\": 2,\r\n        \"name\": {\r\n          \"value\": \"TotalLowPriorityCores\"\r\n        },\r\n        \"properties\": {},\r\n        \"provisioningState\": \"InProgress\"\r\n      }\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.Capacity/ServiceLimits\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/711f390b-4ae6-4ef2-b722-6ad55289056d\",\r\n  \"name\": \"711f390b-4ae6-4ef2-b722-6ad55289056d\",\r\n  \"properties\": {\r\n    \"message\": \"Request processing.\",\r\n    \"provisioningState\": \"InProgress\",\r\n    \"properties\": {\r\n      \"properties\": {\r\n        \"currentValue\": 0,\r\n        \"limit\": 2,\r\n        \"name\": {\r\n          \"value\": \"TotalLowPriorityCores\"\r\n        },\r\n        \"properties\": {},\r\n        \"provisioningState\": \"InProgress\"\r\n      }\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.Capacity/ServiceLimits\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/2eb30419-7ae9-4d5b-9037-b88cef094691?api-version=2020-10-25",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvb3BlcmF0aW9uc1N0YXR1cy8yZWIzMDQxOS03YWU5LTRkNWItOTAzNy1iODhjZWYwOTQ2OTE/YXBpLXZlcnNpb249MjAyMC0xMC0yNQ==",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/711f390b-4ae6-4ef2-b722-6ad55289056d?api-version=2020-10-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvb3BlcmF0aW9uc1N0YXR1cy83MTFmMzkwYi00YWU2LTRlZjItYjcyMi02YWQ1NTI4OTA1NmQ/YXBpLXZlcnNpb249MjAyMC0xMC0yNQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -99,10 +99,10 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Mon, 25 Jan 2021 22:32:59 GMT"
+          "Tue, 26 Jan 2021 00:19:57 GMT"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/2eb30419-7ae9-4d5b-9037-b88cef094691?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/711f390b-4ae6-4ef2-b722-6ad55289056d?api-version=2020-10-25"
         ],
         "Retry-After": [
           "30"
@@ -120,25 +120,25 @@
           "nosniff"
         ],
         "MS-RequestId": [
-          "_7K2l6LRek6lahvpDZxF1Q.0"
+          "8oYsYyThEEWe-K5hmLZNmQ.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/2eb30419-7ae9-4d5b-9037-b88cef094691?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/711f390b-4ae6-4ef2-b722-6ad55289056d?api-version=2020-10-25"
         ],
         "Operation-Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/2eb30419-7ae9-4d5b-9037-b88cef094691?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/711f390b-4ae6-4ef2-b722-6ad55289056d?api-version=2020-10-25"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11999"
         ],
         "x-ms-request-id": [
-          "e405f25a-d266-4006-b77c-b51b95e36c1b"
+          "8d42b948-f56b-410d-95cf-8518c276c7ea"
         ],
         "x-ms-correlation-request-id": [
-          "e405f25a-d266-4006-b77c-b51b95e36c1b"
+          "8d42b948-f56b-410d-95cf-8518c276c7ea"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210125T223259Z:e405f25a-d266-4006-b77c-b51b95e36c1b"
+          "WESTUS2:20210126T001958Z:8d42b948-f56b-410d-95cf-8518c276c7ea"
         ],
         "Content-Length": [
           "315"
@@ -147,12 +147,12 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/2eb30419-7ae9-4d5b-9037-b88cef094691\",\r\n  \"name\": \"2eb30419-7ae9-4d5b-9037-b88cef094691\",\r\n  \"startTime\": \"2021-01-25T22:32:29Z\",\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/711f390b-4ae6-4ef2-b722-6ad55289056d\",\r\n  \"name\": \"711f390b-4ae6-4ef2-b722-6ad55289056d\",\r\n  \"startTime\": \"2021-01-26T00:19:27Z\",\r\n  \"status\": \"InProgress\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/2eb30419-7ae9-4d5b-9037-b88cef094691?api-version=2020-10-25",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvb3BlcmF0aW9uc1N0YXR1cy8yZWIzMDQxOS03YWU5LTRkNWItOTAzNy1iODhjZWYwOTQ2OTE/YXBpLXZlcnNpb249MjAyMC0xMC0yNQ==",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/711f390b-4ae6-4ef2-b722-6ad55289056d?api-version=2020-10-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvb3BlcmF0aW9uc1N0YXR1cy83MTFmMzkwYi00YWU2LTRlZjItYjcyMi02YWQ1NTI4OTA1NmQ/YXBpLXZlcnNpb249MjAyMC0xMC0yNQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -168,10 +168,10 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Mon, 25 Jan 2021 22:33:29 GMT"
+          "Tue, 26 Jan 2021 00:20:27 GMT"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/2eb30419-7ae9-4d5b-9037-b88cef094691?api-version=2020-10-25"
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/711f390b-4ae6-4ef2-b722-6ad55289056d?api-version=2020-10-25"
         ],
         "Server": [
           "Kestrel"
@@ -186,19 +186,19 @@
           "nosniff"
         ],
         "MS-RequestId": [
-          "UVqOM-h6iE-qHKuY33eZlw.0"
+          "TxzTAeC-fUKQZU5_AzntnQ.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "11998"
         ],
         "x-ms-request-id": [
-          "0b8743e4-870c-43e5-b1b6-bce9ce3bac26"
+          "24755dff-5afb-438e-b59c-d19e340ff66e"
         ],
         "x-ms-correlation-request-id": [
-          "0b8743e4-870c-43e5-b1b6-bce9ce3bac26"
+          "24755dff-5afb-438e-b59c-d19e340ff66e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210125T223329Z:0b8743e4-870c-43e5-b1b6-bce9ce3bac26"
+          "WESTUS2:20210126T002028Z:24755dff-5afb-438e-b59c-d19e340ff66e"
         ],
         "Content-Length": [
           "314"
@@ -207,7 +207,7 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/2eb30419-7ae9-4d5b-9037-b88cef094691\",\r\n  \"name\": \"2eb30419-7ae9-4d5b-9037-b88cef094691\",\r\n  \"startTime\": \"2021-01-25T22:32:29Z\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/711f390b-4ae6-4ef2-b722-6ad55289056d\",\r\n  \"name\": \"711f390b-4ae6-4ef2-b722-6ad55289056d\",\r\n  \"startTime\": \"2021-01-26T00:19:27Z\",\r\n  \"status\": \"Succeeded\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -228,7 +228,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Mon, 25 Jan 2021 22:33:29 GMT"
+          "Tue, 26 Jan 2021 00:20:27 GMT"
         ],
         "Server": [
           "Kestrel"
@@ -243,19 +243,19 @@
           "nosniff"
         ],
         "MS-RequestId": [
-          "uGsbx7VAUUaFf6FGb62wjg.0"
+          "IZtDjqYUw0-7tOFQa5EFmw.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11997"
         ],
         "x-ms-request-id": [
-          "bf822b73-c48c-4a5d-8bea-56f57c9cd0b6"
+          "8d6f2ce5-b717-4f23-98f1-8f390142cb98"
         ],
         "x-ms-correlation-request-id": [
-          "bf822b73-c48c-4a5d-8bea-56f57c9cd0b6"
+          "8d6f2ce5-b717-4f23-98f1-8f390142cb98"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210125T223330Z:bf822b73-c48c-4a5d-8bea-56f57c9cd0b6"
+          "WESTUS2:20210126T002028Z:8d6f2ce5-b717-4f23-98f1-8f390142cb98"
         ],
         "Content-Length": [
           "471"
