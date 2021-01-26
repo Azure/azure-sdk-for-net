@@ -38,7 +38,7 @@ Console.WriteLine($"User id: {user.Id}");
 
 You will need to store the `identity` that is returned by Azure Communication Services. This is necessary for creating tokens or refreshing them in the future and to map your user identities with Azure Communication Services identities. The `identity` value should be treated as a secret.
 
-## Generate a user token## Generate a user token
+## Generate a user token
 
  <!---: TODO: Update the website address for explaining the scopes -->
 
