@@ -8,12 +8,12 @@ parameters:
   Urls: '(Get-ChildItem -Path ./ -Recurse -Include *.md)'
   BranchReplaceRegex: "^(${env:SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI}.*/(?:blob|tree)/)master(/.*)$"
   BranchReplacementName: "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}"
-  RunOnFailure: $false
+  Condition: succeeded() # If you want to run on failure for the link checker, set it to `Condition: succeededOrFailed()`.
 
 steps:
   - task: PowerShell@2
     displayName: Link verification check
-    condition: or(and(succeededOrFailed(), '${{ parameters.RunOnFailure }}'), and(succeeded(), eq('${{ parameters.RunOnFailure }}', false)))
+    condition: ${{ parameters.Condition }}
     inputs:
       pwsh: true
       workingDirectory: '${{ parameters.WorkingDirectory }}/${{ parameters.Directory }}'
