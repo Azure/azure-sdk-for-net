@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
 		<Description>Microsoft.Azure.Management.Reservations Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
-		<Version>1.15.0</Version>
+		<Version>1.15.0-preview</Version>
     <PackageTags>Reservations;Capacity_2020-10-01-preview;Capacity_2020-10-25;</PackageTags>
 		<PackageReleaseNotes>
       Adding Quota GA 2020-10-25 APIs and Reservation 2020-10-01-preview APIs to sdk.
