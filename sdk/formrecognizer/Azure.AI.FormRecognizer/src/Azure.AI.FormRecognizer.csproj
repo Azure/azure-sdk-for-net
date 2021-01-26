@@ -6,6 +6,7 @@
     <ApiCompatVersion>3.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Form Recognizer</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>CS1591; CA1065</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

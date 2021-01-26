@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.AI.FormRecognizer.Models;
 
 namespace CustomSerializationSample
 {
     public class ReceiptItem
     {
-        public string Name { get; }
-        public float TotalPrice { get; }
+        public FormField<string> Name { get; }
+        public FormField<float> TotalPrice { get; }
     }
 }

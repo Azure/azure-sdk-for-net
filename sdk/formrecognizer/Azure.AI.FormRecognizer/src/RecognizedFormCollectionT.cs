@@ -11,7 +11,11 @@ namespace Azure.AI.FormRecognizer.Models
     /// A read-only collection of <see cref="RecognizedForm"/> objects.
     /// </summary>
 #pragma warning disable SA1649 // File name should match first type name
-    public class RecognizedFormCollection<T> : ReadOnlyCollection<T> // TODO: Question: Should this be RecognizedForm<T> instead?
+    public class RecognizedFormCollection<T> : ReadOnlyCollection<T>
+        // TODO: Question: Should this be RecognizedForm<T> instead?  ... I don't think so,
+        // b/c we're really only interested in deserializing the content of FormFields, not the whole form
+        // If the user needs information beyond what's in Fields, they can call RecognizeForm and get back the full
+        // form type
 #pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>

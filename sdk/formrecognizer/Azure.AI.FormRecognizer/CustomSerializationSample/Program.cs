@@ -16,10 +16,11 @@ namespace CustomSerializationSample
             FormRecognizerClient client = new FormRecognizerClient(new Uri("formrecognizer.azure.com"), new AzureKeyCredential("MyCredential"));
 
             using var receiptForm = new FileStream("MyReceipt.pdf", FileMode.Open);
+
+            // Deserialize Strongly Typed
             RecognizeFormsOperation<Receipt> operation = client.StartRecognizeForms<Receipt>(PrebuiltFormModel.BasicUSReceipts, receiptForm);
             Response<RecognizedFormCollection<Receipt>> response = await operation.WaitForCompletionAsync();
             RecognizedFormCollection<Receipt> receipts = response.Value;
-
 
             // Insert forms as records into a DB
             using ReceiptContext db = new ReceiptContext();
@@ -32,6 +33,16 @@ namespace CustomSerializationSample
             }
 
             db.SaveChanges();
+
+            // Deserialize as Dictionary
+            RecognizeFormsOperation<FormFieldDictionary> receiptFieldsOperation = client.StartRecognizeForms<FormFieldDictionary>(PrebuiltFormModel.BasicUSReceipts, receiptForm);
+            Response<RecognizedFormCollection<FormFieldDictionary>> receiptFieldsResponse = await receiptFieldsOperation.WaitForCompletionAsync();
+            RecognizedFormCollection<FormFieldDictionary> receiptFields = receiptFieldsResponse.Value;
+
+            foreach (FormFieldDictionary receipt in receiptFields)
+            {
+                Console.WriteLine($"Merchant Name: '{receipt["MerchantName"]}', with confidence {receipt["MerchantName"].Confidence}");
+            }
         }
     }
 }
