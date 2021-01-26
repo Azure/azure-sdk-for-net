@@ -64,20 +64,6 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Executed before initially sending the request to authenticate the request.
-        /// </summary>
-        /// <param name="message">The HttpMessage to be authenticated.</param>
-        /// <param name="pipeline"></param>
-        /// <param name="async">Specifies if the method is being called in an asynchronous context</param>
-        protected virtual async Task OnBeforeRequestAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
-        {
-            if (async)
-            {
-                await Task.CompletedTask.ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
         /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
         /// </summary>
         /// <remarks>This implementation handles common authentication challenges such as claims challenges. Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
@@ -106,11 +92,9 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            await OnBeforeRequestAsync(message, pipeline, async).ConfigureAwait(false);
-
             // Only attempt to authenticate the request and send it along if we have valid scopes.
-            // We'll have no scopes when the request has not yet been issued with a received challenged.
-            // An example of this is when Key Vault issues its first unauthenticated request to receive a challenge.
+            // We'll have no scopes when the request has not yet been sent to receive a challenge.
+            // An example of this is when Key Vault issues its first unauthenticated request to receive the initial challenge.
             if (_scopes.Length > 0)
             {
                 await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
