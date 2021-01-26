@@ -27,37 +27,28 @@ namespace Azure.Core.Pipeline
 
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            if (!_isDistributedTracingEnabled ||
+                !s_diagnosticSource.IsEnabled())
+            {
+                return ProcessNextAsync(message, pipeline, true);
+            }
+
             return ProcessAsync(message, pipeline, true);
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            if (!_isDistributedTracingEnabled ||
+                !s_diagnosticSource.IsEnabled())
+            {
+                ProcessNextAsync(message, pipeline, false).EnsureCompleted();
+            }
+
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
-            if (!_isDistributedTracingEnabled)
-            {
-                if (isAsync)
-                {
-                    await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
-                }
-                else
-                {
-                    ProcessNextAsync(message, pipeline, false).EnsureCompleted();
-                }
-
-                return;
-            }
-
-            if (!s_diagnosticSource.IsEnabled())
-            {
-                await ProcessNextAsync(message, pipeline, isAsync).ConfigureAwait(false);
-
-                return;
-            }
-
             var activity = new Activity("Azure.Core.Http.Request");
             activity.AddTag("http.method", message.Request.Method.Method);
             activity.AddTag("http.url", message.Request.Uri.ToString());
@@ -112,7 +103,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static async ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
             Activity? currentActivity = Activity.Current;
 
@@ -142,11 +133,12 @@ namespace Azure.Core.Pipeline
 
             if (isAsync)
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                return ProcessNextAsync(message, pipeline);
             }
             else
             {
                 ProcessNext(message, pipeline);
+                return default;
             }
         }
     }

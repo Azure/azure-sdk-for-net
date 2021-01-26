@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -11,6 +13,22 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public abstract class HttpPipelineSynchronousPolicy : HttpPipelinePolicy
     {
+        private static Type[] _onReceivedResponseParameters = new[] { typeof(HttpMessage) };
+
+        private readonly bool _hasOnReceivedResponse = true;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="HttpPipelineSynchronousPolicy"/>
+        /// </summary>
+        protected HttpPipelineSynchronousPolicy()
+        {
+            var onReceivedResponseMethod = GetType().GetMethod(nameof(OnReceivedResponse), BindingFlags.Instance | BindingFlags.Public, null, _onReceivedResponseParameters, null);
+            if (onReceivedResponseMethod != null)
+            {
+                _hasOnReceivedResponse = onReceivedResponseMethod.GetBaseDefinition().DeclaringType != onReceivedResponseMethod.DeclaringType;
+            }
+        }
+
         /// <inheritdoc />
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -20,11 +38,23 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            OnSendingRequest(message);
-            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-            OnReceivedResponse(message);
+            async ValueTask ProcessAsyncInner(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                OnSendingRequest(message);
+                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                OnReceivedResponse(message);
+            }
+
+            if (!_hasOnReceivedResponse)
+            {
+                // If OnReceivedResponse was not overriden we can avoid creating a state machine and return the task directly
+                OnSendingRequest(message);
+                return ProcessNextAsync(message, pipeline);
+            }
+
+            return ProcessAsyncInner(message, pipeline);
         }
 
         /// <summary>
