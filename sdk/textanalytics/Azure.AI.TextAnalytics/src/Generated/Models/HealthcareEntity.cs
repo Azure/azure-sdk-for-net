@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics
             }
 
             IsNegated = isNegated;
-            Links = new ChangeTrackingList<HealthcareEntityLink>();
+            Links = new ChangeTrackingList<EntityDataSource>();
         }
 
         /// <summary> Initializes a new instance of HealthcareEntity. </summary>
@@ -46,12 +46,12 @@ namespace Azure.AI.TextAnalytics
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <param name="isNegated"> . </param>
         /// <param name="links"> Entity references in known data sources. </param>
-        internal HealthcareEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, bool isNegated, IReadOnlyList<HealthcareEntityLink> links) : base(text, category, subcategory, offset, length, confidenceScore)
+        internal HealthcareEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, bool isNegated, IReadOnlyList<EntityDataSource> links) : base(text, category, subcategory, offset, length, confidenceScore)
         {
             IsNegated = isNegated;
             Links = links;
         }
         /// <summary> Entity references in known data sources. </summary>
-        public IReadOnlyList<HealthcareEntityLink> Links { get; }
+        public IReadOnlyList<EntityDataSource> Links { get; }
     }
 }

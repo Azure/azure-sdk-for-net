@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class HealthcareEntityLink
+    public partial class EntityDataSource
     {
-        internal static HealthcareEntityLink DeserializeHealthcareEntityLink(JsonElement element)
+        internal static EntityDataSource DeserializeEntityDataSource(JsonElement element)
         {
             string dataSource = default;
             string id = default;
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new HealthcareEntityLink(dataSource, id);
+            return new EntityDataSource(dataSource, id);
         }
     }
 }

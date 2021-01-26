@@ -37,12 +37,12 @@ namespace Azure.AI.TextAnalytics.Samples
 
             await healthOperation.WaitForCompletionAsync();
 
-            RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+            AnalyzeHealthcareEntitiesResultCollection results = healthOperation.Value;
 
             Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
             Console.WriteLine("");
 
-            foreach (DocumentHealthcareResult result in results)
+            foreach (AnalyzeHealthcareEntitiesResult result in results)
             {
                 Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
@@ -55,10 +55,10 @@ namespace Azure.AI.TextAnalytics.Samples
                     Console.WriteLine($"    IsNegated: {entity.IsNegated}");
                     Console.WriteLine($"    Links:");
 
-                    foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+                    foreach (EntityDataSource entityDataSource in entity.Links)
                     {
-                        Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-                        Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+                        Console.WriteLine($"        ID: {entityDataSource.EntityId}");
+                        Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                     }
                 }
                 Console.WriteLine("");

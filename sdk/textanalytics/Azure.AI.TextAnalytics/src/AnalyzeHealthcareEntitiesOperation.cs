@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The AnalyzeHealthcareEntitiesOperation class for LRO. </summary>
-    public class AnalyzeHealthcareEntitiesOperation : Operation<RecognizeHealthcareEntitiesResultCollection>
+    public class AnalyzeHealthcareEntitiesOperation : Operation<AnalyzeHealthcareEntitiesResultCollection>
     {
         /// <summary>Provides communication with the Text Analytics Azure Cognitive Service through its REST API.</summary>
         private readonly TextAnalyticsRestClient _serviceClient;
@@ -36,6 +36,21 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get; }
 
         /// <summary>
+        /// CreatedOn
+        /// </summary>
+        public DateTimeOffset CreatedOn { get; }
+
+        /// <summary>
+        /// ExpiresOn
+        /// </summary>
+        public DateTimeOffset ExpiresOn { get; }
+
+        /// <summary>
+        /// LastModified
+        /// </summary>
+        public DateTimeOffset LastModified { get; }
+
+        /// <summary>
         /// Gets the status of the operation.
         /// </summary>
         public TextAnalyticsOperationStatus Status => _status;
@@ -51,7 +66,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public override RecognizeHealthcareEntitiesResultCollection Value
+        public override AnalyzeHealthcareEntitiesResultCollection Value
         {
             get
             {
@@ -80,7 +95,7 @@ namespace Azure.AI.TextAnalytics
         private Response _response;
 
         /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
-        private RecognizeHealthcareEntitiesResultCollection _value;
+        private AnalyzeHealthcareEntitiesResultCollection _value;
 
         private int? _top { get; }
         private int? _skip { get; }
@@ -169,7 +184,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<RecognizeHealthcareEntitiesResultCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<AnalyzeHealthcareEntitiesResultCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <summary>
@@ -185,7 +200,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<RecognizeHealthcareEntitiesResultCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<AnalyzeHealthcareEntitiesResultCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>

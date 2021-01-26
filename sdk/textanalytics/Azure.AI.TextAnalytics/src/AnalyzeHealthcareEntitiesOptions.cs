@@ -7,13 +7,13 @@ namespace Azure.AI.TextAnalytics
     /// Options that allow callers to specify details about how the operation
     /// is run and what information is returned from it by the service.
     /// </summary>
-    public class HealthcareOptions : TextAnalyticsRequestOptions
+    public class AnalyzeHealthcareEntitiesOptions : TextAnalyticsRequestOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HealthcareOptions"/>
+        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOptions"/>
         /// class.
         /// </summary>
-        public HealthcareOptions()
+        public AnalyzeHealthcareEntitiesOptions()
         {
         }
 

@@ -245,25 +245,25 @@ namespace Azure.AI.TextAnalytics
 
         #region Healthcare
 
-        internal static RecognizeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
+        internal static AnalyzeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
         {
-            var healthcareEntititesResults = new List<DocumentHealthcareResult>();
+            var healthcareEntititesResults = new List<AnalyzeHealthcareEntitiesResult>();
 
             //Read errors
             foreach (DocumentError error in results.Errors)
             {
-                healthcareEntititesResults.Add(new DocumentHealthcareResult(error.Id, ConvertToError(error.Error)));
+                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read entities
             foreach (DocumentHealthcareEntitiesInternal documentHealthcareEntities in results.Documents)
             {
-                healthcareEntititesResults.Add(new DocumentHealthcareResult(documentHealthcareEntities));
+                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(documentHealthcareEntities.Id, documentHealthcareEntities.Statistics ?? default, documentHealthcareEntities.Entities, documentHealthcareEntities.Warnings));
             }
 
             healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
 
-            return new RecognizeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
+            return new AnalyzeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
         }
 
         #endregion

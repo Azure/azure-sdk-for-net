@@ -2081,15 +2081,15 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable <see cref="HealthcareOptions"/> </param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareAsync(string document, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareAsync(string document, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
-            options ??= new HealthcareOptions();
+            options ??= new AnalyzeHealthcareEntitiesOptions();
 
             var documents = new List<string>() { document };
 
@@ -2130,15 +2130,15 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable <see cref="HealthcareOptions"/> </param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcare(string document, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcare(string document, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
-            options ??= new HealthcareOptions();
+            options ??= new AnalyzeHealthcareEntitiesOptions();
 
             var documents = new List<string>() { document };
 
@@ -2179,15 +2179,15 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable <see cref="HealthcareOptions"/> </param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new HealthcareOptions();
+            options ??= new AnalyzeHealthcareEntitiesOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return await StartHealthcareBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -2213,7 +2213,7 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
         /// where the language is explicitly set to "None".</param>
-        /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -2221,10 +2221,10 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new HealthcareOptions();
+            options ??= new AnalyzeHealthcareEntitiesOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return StartHealthcareBatch(documentInputs, options, cancellationToken);
@@ -2245,15 +2245,15 @@ namespace Azure.AI.TextAnalytics
         /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(IEnumerable<TextDocumentInput> documents, HealthcareOptions options, CancellationToken cancellationToken = default)
+        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
-            options ??= new HealthcareOptions();
+            options ??= new AnalyzeHealthcareEntitiesOptions();
 
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
@@ -2275,24 +2275,24 @@ namespace Azure.AI.TextAnalytics
         /// </para></remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(IEnumerable<TextDocumentInput> documents, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
-            options ??= new HealthcareOptions();
+            options ??= new AnalyzeHealthcareEntitiesOptions();
 
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await StartHealthcareBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
-        private AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(MultiLanguageBatchInput batchInput, HealthcareOptions options, CancellationToken cancellationToken = default)
+        private AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(MultiLanguageBatchInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new HealthcareOptions();
+            options ??= new AnalyzeHealthcareEntitiesOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcareBatch)}");
             scope.Start();
@@ -2313,9 +2313,9 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(MultiLanguageBatchInput batchInput, HealthcareOptions options, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(MultiLanguageBatchInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new HealthcareOptions();
+            options ??= new AnalyzeHealthcareEntitiesOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcareBatch)}");
             scope.Start();
@@ -2341,19 +2341,19 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="AnalyzeHealthcareEntitiesOperation"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="DocumentHealthcareResult"/> items.</returns>
-        public virtual AsyncPageable<DocumentHealthcareResult> GetHealthcareEntities(AnalyzeHealthcareEntitiesOperation operation, CancellationToken cancellationToken = default)
+        /// <returns>A collection of <see cref="AnalyzeHealthcareEntitiesResult"/> items.</returns>
+        public virtual AsyncPageable<AnalyzeHealthcareEntitiesResult> GetHealthcareEntities(AnalyzeHealthcareEntitiesOperation operation, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DocumentHealthcareResult>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AnalyzeHealthcareEntitiesResult>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(GetHealthcareEntities)}");
                 scope.Start();
 
                 try
                 {
-                    Response<RecognizeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    Response<AnalyzeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
-                    RecognizeHealthcareEntitiesResultCollection result = operation.Value;
+                    AnalyzeHealthcareEntitiesResultCollection result = operation.Value;
                     return Page.FromValues(result.AsEnumerable(), operation.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2362,7 +2362,7 @@ namespace Azure.AI.TextAnalytics
                     throw;
                 }
             }
-            async Task<Page<DocumentHealthcareResult>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AnalyzeHealthcareEntitiesResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(GetHealthcareEntities)}");
                 scope.Start();
@@ -2417,7 +2417,7 @@ namespace Azure.AI.TextAnalytics
 
                     Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, showStats, cancellationToken).ConfigureAwait(false);
 
-                    RecognizeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, operation._idToIndexMap);
+                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, operation._idToIndexMap);
                     return Page.FromValues(result.AsEnumerable(), jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception e)

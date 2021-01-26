@@ -16,5 +16,15 @@ namespace Azure.AI.TextAnalytics
         /// IsNegated
         /// </summary>
         public bool IsNegated { get; }
+
+        /// <summary>
+        /// DataSources
+        /// </summary>
+        public IReadOnlyCollection<EntityDataSource> DataSources { get; }
+
+        /// <summary>
+        /// RelatedEntities
+        /// </summary>
+        public IReadOnlyDictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; }
     }
 }

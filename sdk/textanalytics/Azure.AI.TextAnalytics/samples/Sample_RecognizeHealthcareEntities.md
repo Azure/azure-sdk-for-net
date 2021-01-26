@@ -32,12 +32,12 @@ To recognize healthcare entities in a document, use the `StarthealthcareAsyc` me
 
     await healthOperation.WaitForCompletionAsync();
 
-    RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+    AnalyzeHealthcareEntitiesResultCollection results = healthOperation.Value;
 
     Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{results.ModelVersion}\"");
     Console.WriteLine("");
 
-    foreach (DocumentHealthcareResult result in results)
+    foreach (AnalyzeHealthcareEntitiesResult result in results)
     {
            Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
@@ -50,10 +50,10 @@ To recognize healthcare entities in a document, use the `StarthealthcareAsyc` me
                 Console.WriteLine($"    IsNegated: {entity.IsNegated}");
                 Console.WriteLine($"    Links:");
 
-                foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+                foreach (EntityDataSource entityDataSource in entity.Links)
                 {
-                    Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-                    Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+                    Console.WriteLine($"        ID: {entityDataSource.EntityId}");
+                    Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                 }
             }
             Console.WriteLine("");
@@ -85,12 +85,12 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
 
     await healthOperation.WaitForCompletionAsync();
 
-    RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+    AnalyzeHealthcareEntitiesResultCollection results = healthOperation.Value;
 
     Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
     Console.WriteLine("");
 
-    foreach (DocumentHealthcareResult result in results)
+    foreach (AnalyzeHealthcareEntitiesResult result in results)
     {
         Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
@@ -103,10 +103,10 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
             Console.WriteLine($"    IsNegated: {entity.IsNegated}");
             Console.WriteLine($"    Links:");
 
-            foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+            foreach (EntityDataSource entityDataSource in entity.Links)
             {
-                Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-                Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+                Console.WriteLine($"        ID: {entityDataSource.EntityId}");
+                Console.WriteLine($"        DataSource: {entityDataSource.Name}");
             }
         }
         Console.WriteLine("");

@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics
         internal static HealthcareEntity DeserializeHealthcareEntity(JsonElement element)
         {
             bool isNegated = default;
-            Optional<IReadOnlyList<HealthcareEntityLink>> links = default;
+            Optional<IReadOnlyList<EntityDataSource>> links = default;
             string text = default;
             string category = default;
             Optional<string> subcategory = default;
@@ -37,10 +37,10 @@ namespace Azure.AI.TextAnalytics
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HealthcareEntityLink> array = new List<HealthcareEntityLink>();
+                    List<EntityDataSource> array = new List<EntityDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareEntityLink.DeserializeHealthcareEntityLink(item));
+                        array.Add(EntityDataSource.DeserializeEntityDataSource(item));
                     }
                     links = array;
                     continue;

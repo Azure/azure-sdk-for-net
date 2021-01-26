@@ -3,22 +3,21 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="DocumentHealthcareResult"/> objects corresponding
+    /// Collection of <see cref="AnalyzeHealthcareEntitiesResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
-    public class RecognizeHealthcareEntitiesResultCollection : ReadOnlyCollection<DocumentHealthcareResult>
+    public class AnalyzeHealthcareEntitiesResultCollection : ReadOnlyCollection<AnalyzeHealthcareEntitiesResult>
     {
         /// <summary>
         /// </summary>
         /// <param name="list"></param>
         /// <param name="statistics"></param>
         /// <param name="modelVersion"></param>
-        internal RecognizeHealthcareEntitiesResultCollection(IList<DocumentHealthcareResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
+        internal AnalyzeHealthcareEntitiesResultCollection(IList<AnalyzeHealthcareEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
             Statistics = statistics;
             ModelVersion = modelVersion;
