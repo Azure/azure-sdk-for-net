@@ -47,33 +47,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="clusterId">A service generated unique identifier for
         /// the cluster resource.</param>
         /// <param name="clusterState">The current state of the cluster.
-        ///
-        /// - WaitingForNodes - Indicates that the cluster resource is created
-        /// and the resource provider is waiting for Service Fabric VM
-        /// extension to boot up and report to it.
-        /// - Deploying - Indicates that the Service Fabric runtime is being
-        /// installed on the VMs. Cluster resource will be in this state until
-        /// the cluster boots up and system services are up.
-        /// - BaselineUpgrade - Indicates that the cluster is upgrading to
-        /// establishes the cluster version. This upgrade is automatically
-        /// initiated when the cluster boots up for the first time.
-        /// - UpdatingUserConfiguration - Indicates that the cluster is being
-        /// upgraded with the user provided configuration.
-        /// - UpdatingUserCertificate - Indicates that the cluster is being
-        /// upgraded with the user provided certificate.
-        /// - UpdatingInfrastructure - Indicates that the cluster is being
-        /// upgraded with the latest Service Fabric runtime version. This
-        /// happens only when the **upgradeMode** is set to 'Automatic'.
-        /// - EnforcingClusterVersion - Indicates that cluster is on a
-        /// different version than expected and the cluster is being upgraded
-        /// to the expected version.
-        /// - UpgradeServiceUnreachable - Indicates that the system service in
-        /// the cluster is no longer polling the Resource Provider. Clusters in
-        /// this state cannot be managed by the Resource Provider.
-        /// - AutoScale - Indicates that the ReliabilityLevel of the cluster is
-        /// being adjusted.
-        /// - Ready - Indicates that the cluster is in a stable state.
-        /// . Possible values include: 'WaitingForNodes', 'Deploying',
+        /// Possible values include: 'WaitingForNodes', 'Deploying',
         /// 'BaselineUpgrade', 'UpdatingUserConfiguration',
         /// 'UpdatingUserCertificate', 'UpdatingInfrastructure',
         /// 'EnforcingClusterVersion', 'UpgradeServiceUnreachable',
@@ -91,8 +65,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="azureActiveDirectory">Azure active directory.</param>
         /// <param name="fabricSettings">The list of custom fabric settings to
         /// configure the cluster.</param>
-        /// <param name="useTestExtension">Use service fabric test vm
-        /// extension, by default it's false.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// managed cluster resource. Possible values include: 'None',
         /// 'Creating', 'Created', 'Updating', 'Succeeded', 'Failed',
@@ -103,22 +75,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Service Fabric versions for new clusters use [ClusterVersion
         /// API](./ClusterVersion.md). To get the list of available version for
         /// existing clusters use **availableClusterVersions**.</param>
-        /// <param name="clusterUpgradeMode">The upgrade mode of the cluster
-        /// when new Service Fabric runtime version is available.
-        ///
-        /// - Automatic - The cluster will be automatically upgraded to the
-        /// latest Service Fabric runtime version as soon as it is available.
-        /// - Manual - The cluster will not be automatically upgraded to the
-        /// latest Service Fabric runtime version. The cluster is upgraded by
-        /// setting the **clusterCodeVersion** property in the cluster
-        /// resource.
-        /// . Possible values include: 'Automatic', 'Manual'</param>
-        /// <param name="clusterUpgradeDescription">Describes the policy used
-        /// when upgrading the cluster.</param>
-        /// <param name="reverseProxyEndpointPort">The endpoint used by reverse
-        /// proxy.</param>
+        /// <param name="addonFeatures">client certificates for the
+        /// cluster.</param>
         /// <param name="sku">The sku of the managed cluster</param>
-        public ManagedCluster(string location, string dnsName, string adminUserName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string fqdn = default(string), string clusterId = default(string), string clusterState = default(string), string clusterCertificateThumbprint = default(string), int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), string adminPassword = default(string), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), bool? useTestExtension = default(bool?), string provisioningState = default(string), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), ClusterUpgradePolicy clusterUpgradeDescription = default(ClusterUpgradePolicy), int? reverseProxyEndpointPort = default(int?), Sku sku = default(Sku))
+        public ManagedCluster(string location, string dnsName, string adminUserName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string fqdn = default(string), string clusterId = default(string), string clusterState = default(string), string clusterCertificateThumbprint = default(string), int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), string adminPassword = default(string), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string provisioningState = default(string), string clusterCodeVersion = default(string), IList<string> addonFeatures = default(IList<string>), Sku sku = default(Sku))
             : base(location, id, name, type, tags, etag)
         {
             DnsName = dnsName;
@@ -134,12 +94,9 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             Clients = clients;
             AzureActiveDirectory = azureActiveDirectory;
             FabricSettings = fabricSettings;
-            UseTestExtension = useTestExtension;
             ProvisioningState = provisioningState;
             ClusterCodeVersion = clusterCodeVersion;
-            ClusterUpgradeMode = clusterUpgradeMode;
-            ClusterUpgradeDescription = clusterUpgradeDescription;
-            ReverseProxyEndpointPort = reverseProxyEndpointPort;
+            AddonFeatures = addonFeatures;
             Sku = sku;
             CustomInit();
         }
@@ -169,38 +126,11 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string ClusterId { get; private set; }
 
         /// <summary>
-        /// Gets the current state of the cluster.
-        ///
-        /// - WaitingForNodes - Indicates that the cluster resource is created
-        /// and the resource provider is waiting for Service Fabric VM
-        /// extension to boot up and report to it.
-        /// - Deploying - Indicates that the Service Fabric runtime is being
-        /// installed on the VMs. Cluster resource will be in this state until
-        /// the cluster boots up and system services are up.
-        /// - BaselineUpgrade - Indicates that the cluster is upgrading to
-        /// establishes the cluster version. This upgrade is automatically
-        /// initiated when the cluster boots up for the first time.
-        /// - UpdatingUserConfiguration - Indicates that the cluster is being
-        /// upgraded with the user provided configuration.
-        /// - UpdatingUserCertificate - Indicates that the cluster is being
-        /// upgraded with the user provided certificate.
-        /// - UpdatingInfrastructure - Indicates that the cluster is being
-        /// upgraded with the latest Service Fabric runtime version. This
-        /// happens only when the **upgradeMode** is set to 'Automatic'.
-        /// - EnforcingClusterVersion - Indicates that cluster is on a
-        /// different version than expected and the cluster is being upgraded
-        /// to the expected version.
-        /// - UpgradeServiceUnreachable - Indicates that the system service in
-        /// the cluster is no longer polling the Resource Provider. Clusters in
-        /// this state cannot be managed by the Resource Provider.
-        /// - AutoScale - Indicates that the ReliabilityLevel of the cluster is
-        /// being adjusted.
-        /// - Ready - Indicates that the cluster is in a stable state.
-        /// . Possible values include: 'WaitingForNodes', 'Deploying',
-        /// 'BaselineUpgrade', 'UpdatingUserConfiguration',
-        /// 'UpdatingUserCertificate', 'UpdatingInfrastructure',
-        /// 'EnforcingClusterVersion', 'UpgradeServiceUnreachable',
-        /// 'AutoScale', 'Ready'
+        /// Gets the current state of the cluster. Possible values include:
+        /// 'WaitingForNodes', 'Deploying', 'BaselineUpgrade',
+        /// 'UpdatingUserConfiguration', 'UpdatingUserCertificate',
+        /// 'UpdatingInfrastructure', 'EnforcingClusterVersion',
+        /// 'UpgradeServiceUnreachable', 'AutoScale', 'Ready'
         /// </summary>
         [JsonProperty(PropertyName = "properties.clusterState")]
         public string ClusterState { get; private set; }
@@ -262,13 +192,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public IList<SettingsSectionDescription> FabricSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets use service fabric test vm extension, by default it's
-        /// false.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.useTestExtension")]
-        public bool? UseTestExtension { get; set; }
-
-        /// <summary>
         /// Gets the provisioning state of the managed cluster resource.
         /// Possible values include: 'None', 'Creating', 'Created', 'Updating',
         /// 'Succeeded', 'Failed', 'Canceled', 'Deleting', 'Deleted', 'Other'
@@ -288,31 +211,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string ClusterCodeVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the upgrade mode of the cluster when new Service
-        /// Fabric runtime version is available.
-        ///
-        /// - Automatic - The cluster will be automatically upgraded to the
-        /// latest Service Fabric runtime version as soon as it is available.
-        /// - Manual - The cluster will not be automatically upgraded to the
-        /// latest Service Fabric runtime version. The cluster is upgraded by
-        /// setting the **clusterCodeVersion** property in the cluster
-        /// resource.
-        /// . Possible values include: 'Automatic', 'Manual'
+        /// Gets or sets client certificates for the cluster.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clusterUpgradeMode")]
-        public string ClusterUpgradeMode { get; set; }
-
-        /// <summary>
-        /// Gets or sets describes the policy used when upgrading the cluster.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.clusterUpgradeDescription")]
-        public ClusterUpgradePolicy ClusterUpgradeDescription { get; set; }
-
-        /// <summary>
-        /// Gets or sets the endpoint used by reverse proxy.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.reverseProxyEndpointPort")]
-        public int? ReverseProxyEndpointPort { get; set; }
+        [JsonProperty(PropertyName = "properties.addonFeatures")]
+        public IList<string> AddonFeatures { get; set; }
 
         /// <summary>
         /// Gets or sets the sku of the managed cluster
@@ -366,10 +268,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
                         element2.Validate();
                     }
                 }
-            }
-            if (ClusterUpgradeDescription != null)
-            {
-                ClusterUpgradeDescription.Validate();
             }
             if (Sku != null)
             {

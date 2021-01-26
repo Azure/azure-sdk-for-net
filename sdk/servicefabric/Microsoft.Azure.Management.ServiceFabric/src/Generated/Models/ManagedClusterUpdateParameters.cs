@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// connections to the cluster.</param>
         /// <param name="httpGatewayConnectionPort">The port used for http
         /// connections to the cluster.</param>
-        /// <param name="loadBalancingRules">Describes a load balancing
-        /// rule.</param>
+        /// <param name="loadBalancingRules">Describes load balancing
+        /// rules.</param>
         /// <param name="clients">client certificates for the cluster.</param>
         /// <param name="azureActiveDirectory">Azure active directory.</param>
         /// <param name="fabricSettings">The list of custom fabric settings to
@@ -52,22 +52,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Service Fabric versions for new clusters use [ClusterVersion
         /// API](./ClusterVersion.md). To get the list of available version for
         /// existing clusters use **availableClusterVersions**.</param>
-        /// <param name="clusterUpgradeMode">The upgrade mode of the cluster
-        /// when new Service Fabric runtime version is available.
-        ///
-        /// - Automatic - The cluster will be automatically upgraded to the
-        /// latest Service Fabric runtime version as soon as it is available.
-        /// - Manual - The cluster will not be automatically upgraded to the
-        /// latest Service Fabric runtime version. The cluster is upgraded by
-        /// setting the **clusterCodeVersion** property in the cluster
-        /// resource.
-        /// . Possible values include: 'Automatic', 'Manual'</param>
-        /// <param name="clusterUpgradeDescription">Describes the policy used
-        /// when upgrading the cluster.</param>
-        /// <param name="reverseProxyEndpointPort">The endpoint used by reverse
-        /// proxy.</param>
+        /// <param name="addonFeatures">client certificates for the
+        /// cluster.</param>
         /// <param name="tags">Managed cluster update parameters</param>
-        public ManagedClusterUpdateParameters(int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), ClusterUpgradePolicy clusterUpgradeDescription = default(ClusterUpgradePolicy), int? reverseProxyEndpointPort = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedClusterUpdateParameters(int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string clusterCodeVersion = default(string), IList<string> addonFeatures = default(IList<string>), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             ClientConnectionPort = clientConnectionPort;
             HttpGatewayConnectionPort = httpGatewayConnectionPort;
@@ -76,9 +64,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             AzureActiveDirectory = azureActiveDirectory;
             FabricSettings = fabricSettings;
             ClusterCodeVersion = clusterCodeVersion;
-            ClusterUpgradeMode = clusterUpgradeMode;
-            ClusterUpgradeDescription = clusterUpgradeDescription;
-            ReverseProxyEndpointPort = reverseProxyEndpointPort;
+            AddonFeatures = addonFeatures;
             Tags = tags;
             CustomInit();
         }
@@ -101,7 +87,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public int? HttpGatewayConnectionPort { get; set; }
 
         /// <summary>
-        /// Gets or sets describes a load balancing rule.
+        /// Gets or sets describes load balancing rules.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
         public IList<LoadBalancingRule> LoadBalancingRules { get; set; }
@@ -137,31 +123,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string ClusterCodeVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the upgrade mode of the cluster when new Service
-        /// Fabric runtime version is available.
-        ///
-        /// - Automatic - The cluster will be automatically upgraded to the
-        /// latest Service Fabric runtime version as soon as it is available.
-        /// - Manual - The cluster will not be automatically upgraded to the
-        /// latest Service Fabric runtime version. The cluster is upgraded by
-        /// setting the **clusterCodeVersion** property in the cluster
-        /// resource.
-        /// . Possible values include: 'Automatic', 'Manual'
+        /// Gets or sets client certificates for the cluster.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clusterUpgradeMode")]
-        public string ClusterUpgradeMode { get; set; }
-
-        /// <summary>
-        /// Gets or sets describes the policy used when upgrading the cluster.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.clusterUpgradeDescription")]
-        public ClusterUpgradePolicy ClusterUpgradeDescription { get; set; }
-
-        /// <summary>
-        /// Gets or sets the endpoint used by reverse proxy.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.reverseProxyEndpointPort")]
-        public int? ReverseProxyEndpointPort { get; set; }
+        [JsonProperty(PropertyName = "properties.addonFeatures")]
+        public IList<string> AddonFeatures { get; set; }
 
         /// <summary>
         /// Gets or sets managed cluster update parameters
@@ -169,48 +134,5 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (LoadBalancingRules != null)
-            {
-                foreach (var element in LoadBalancingRules)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (Clients != null)
-            {
-                foreach (var element1 in Clients)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (FabricSettings != null)
-            {
-                foreach (var element2 in FabricSettings)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
-            }
-            if (ClusterUpgradeDescription != null)
-            {
-                ClusterUpgradeDescription.Validate();
-            }
-        }
     }
 }

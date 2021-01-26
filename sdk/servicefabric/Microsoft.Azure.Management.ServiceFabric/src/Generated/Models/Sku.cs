@@ -30,9 +30,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">Sku Name. Basic will hav a minimum of 3 seed
-        /// nodes and Standard a minimum of 5. Basic only allows 1 node type.
-        /// Possible values include: 'Basic', 'Standard'</param>
+        /// <param name="name">Sku Name. Possible values include: 'Basic',
+        /// 'Standard'</param>
         public Sku(string name)
         {
             Name = name;
@@ -45,9 +44,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sku Name. Basic will hav a minimum of 3 seed nodes and
-        /// Standard a minimum of 5. Basic only allows 1 node type. Possible
-        /// values include: 'Basic', 'Standard'
+        /// Gets or sets sku Name. Possible values include: 'Basic', 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

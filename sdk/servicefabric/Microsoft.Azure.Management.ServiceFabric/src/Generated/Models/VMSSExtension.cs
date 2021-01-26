@@ -42,10 +42,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// is "CustomScriptExtension".</param>
         /// <param name="typeHandlerVersion">Specifies the version of the
         /// script handler.</param>
-        /// <param name="forceUpdateTag">If a value is provided and is
-        /// different from the previous value, the extension handler will be
-        /// forced to update even if the extension configuration has not
-        /// changed.</param>
         /// <param name="autoUpgradeMinorVersion">Indicates whether the
         /// extension should use a newer minor version if one is available at
         /// deployment time. Once deployed, however, the extension will not
@@ -56,22 +52,26 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="protectedSettings">The extension can contain either
         /// protectedSettings or protectedSettingsFromKeyVault or no protected
         /// settings at all.</param>
-        /// <param name="provisioningState">The provisioning state, which only
-        /// appears in the response.</param>
+        /// <param name="forceUpdateTag">If a value is provided and is
+        /// different from the previous value, the extension handler will be
+        /// forced to update even if the extension configuration has not
+        /// changed.</param>
         /// <param name="provisionAfterExtensions">Collection of extension
         /// names after which this extension needs to be provisioned.</param>
-        public VMSSExtension(string name, string publisher, string type, string typeHandlerVersion, string forceUpdateTag = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), IList<string> provisionAfterExtensions = default(IList<string>))
+        /// <param name="provisioningState">The provisioning state, which only
+        /// appears in the response.</param>
+        public VMSSExtension(string name, string publisher, string type, string typeHandlerVersion, bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string forceUpdateTag = default(string), IList<string> provisionAfterExtensions = default(IList<string>), string provisioningState = default(string))
         {
             Name = name;
-            ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
             Type = type;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             Settings = settings;
             ProtectedSettings = protectedSettings;
-            ProvisioningState = provisioningState;
+            ForceUpdateTag = forceUpdateTag;
             ProvisionAfterExtensions = provisionAfterExtensions;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -85,14 +85,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets if a value is provided and is different from the
-        /// previous value, the extension handler will be forced to update even
-        /// if the extension configuration has not changed.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.forceUpdateTag")]
-        public string ForceUpdateTag { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the extension handler publisher.
@@ -136,10 +128,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public object ProtectedSettings { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state, which only appears in the response.
+        /// Gets or sets if a value is provided and is different from the
+        /// previous value, the extension handler will be forced to update even
+        /// if the extension configuration has not changed.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
+        [JsonProperty(PropertyName = "properties.forceUpdateTag")]
+        public string ForceUpdateTag { get; set; }
 
         /// <summary>
         /// Gets or sets collection of extension names after which this
@@ -147,6 +141,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisionAfterExtensions")]
         public IList<string> ProvisionAfterExtensions { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning state, which only appears in the response.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

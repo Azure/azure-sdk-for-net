@@ -34,9 +34,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the NodeTypeUpdateParameters class.
         /// </summary>
-        /// <param name="vmInstanceCount">The number of nodes in the node type.
-        /// This count should match the capacity property in the corresponding
-        /// VirtualMachineScaleSet resource.</param>
+        /// <param name="vmInstanceCount">The number of nodes in the node
+        /// type.</param>
         /// <param name="placementProperties">The placement tags applied to
         /// nodes in the node type, which can be used to indicate where certain
         /// services (workload) should run.</param>
@@ -69,9 +68,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the number of nodes in the node type. This count
-        /// should match the capacity property in the corresponding
-        /// VirtualMachineScaleSet resource.
+        /// Gets or sets the number of nodes in the node type.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmInstanceCount")]
         public int? VmInstanceCount { get; set; }
