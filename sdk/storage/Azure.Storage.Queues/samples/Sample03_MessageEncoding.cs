@@ -42,7 +42,8 @@ namespace Azure.Storage.Queues.Samples.Tests
                 if (args.Message is PeekedMessage peekedMessage)
                 {
                     Console.WriteLine($"Invalid message has been peeked, message id={peekedMessage.MessageId} body={peekedMessage.Body}");
-                } else if (args.Message is QueueMessage queueMessage)
+                }
+                else if (args.Message is QueueMessage queueMessage)
                 {
                     Console.WriteLine($"Invalid message has been received, message id={queueMessage.MessageId} body={queueMessage.Body}");
 
