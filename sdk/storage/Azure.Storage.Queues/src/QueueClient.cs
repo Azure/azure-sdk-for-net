@@ -2309,30 +2309,16 @@ namespace Azure.Storage.Queues
 
             try
             {
-                ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders> response;
                 scope.Start();
+                Response<QueueMessage[]> response = await ReceiveMessagesInternal(
+                    maxMessages: 1,
+                    visibilityTimeout: visibilityTimeout,
+                    operationName: $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
-                if (async)
-                {
-                    response = await _messagesRestClient.DequeueAsync(
-                        numberOfMessages: 1,
-                        visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                else
-                {
-                    response = _messagesRestClient.Dequeue(
-                        numberOfMessages: 1,
-                        visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                        cancellationToken: cancellationToken);
-                }
-
-#pragma warning disable CA1826 // Do not use Enumerable methods on indexable collections
-                DequeuedMessageItem dequeuedMessageItem = response.Value.FirstOrDefault();
-                QueueMessage queueMessage = QueueMessage.ToQueueMessage(dequeuedMessageItem, ClientConfiguration.MessageEncoding);
-#pragma warning restore CA1826 // Do not use Enumerable methods on indexable collections
-                return Response.FromValue(queueMessage, response.GetRawResponse());
+                return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
             }
             catch (Exception ex)
             {
