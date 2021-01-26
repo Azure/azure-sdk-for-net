@@ -413,23 +413,21 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _serviceRestClient.ListQueuesSegmentAsync(
-                            prefix,
-                            marker,
-                            pageSizeHint,
+                            prefix: prefix,
+                            marker: marker,
+                            maxresults: pageSizeHint,
                             include: includeTypes.Any() ? includeTypes : null,
-                            timeout: null,
-                            cancellationToken)
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _serviceRestClient.ListQueuesSegment(
-                            prefix,
-                            marker,
-                            pageSizeHint,
+                            prefix: prefix,
+                            marker: marker,
+                            maxresults: pageSizeHint,
                             include: includeTypes.Any() ? includeTypes : null,
-                            timeout: null,
-                            cancellationToken);
+                            cancellationToken: cancellationToken);
                     }
 
                     if ((traits & QueueTraits.Metadata) != QueueTraits.Metadata)
@@ -535,15 +533,13 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await ServiceRestClient.GetPropertiesAsync(
-                            timeout: null,
-                            cancellationToken)
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ServiceRestClient.GetProperties(
-                            timeout: null,
-                            cancellationToken);
+                            cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
@@ -658,17 +654,15 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _serviceRestClient.SetPropertiesAsync(
-                            properties,
-                            timeout: null,
-                            cancellationToken)
+                            storageServiceProperties: properties,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _serviceRestClient.SetProperties(
-                            properties,
-                            timeout: null,
-                            cancellationToken);
+                            storageServiceProperties: properties,
+                            cancellationToken: cancellationToken);
                     }
 
                     return response.GetRawResponse();
@@ -767,15 +761,13 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _serviceRestClient.GetStatisticsAsync(
-                            timeout: null,
-                            cancellationToken)
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _serviceRestClient.GetStatistics(
-                            timeout: null,
-                            cancellationToken);
+                            cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(

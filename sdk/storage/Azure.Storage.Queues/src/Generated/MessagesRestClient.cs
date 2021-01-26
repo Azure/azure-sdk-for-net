@@ -19,6 +19,7 @@ namespace Azure.Storage.Queues
     internal partial class MessagesRestClient
     {
         private string url;
+        private string queueName;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -27,13 +28,18 @@ namespace Azure.Storage.Queues
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, queue or message that is the targe of the desired operation. </param>
+        /// <param name="queueName"> The queue name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public MessagesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-03-28")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="queueName"/>, or <paramref name="version"/> is null. </exception>
+        public MessagesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string queueName, string version = "2018-03-28")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
+            }
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
             }
             if (version == null)
             {
@@ -41,12 +47,13 @@ namespace Azure.Storage.Queues
             }
 
             this.url = url;
+            this.queueName = queueName;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateDequeueRequest(string queueName, int? numberOfMessages, int? visibilitytimeout, int? timeout)
+        internal HttpMessage CreateDequeueRequest(int? numberOfMessages, int? visibilitytimeout, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,20 +82,13 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Dequeue operation retrieves one or more messages from the front of the queue. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="numberOfMessages"> Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation. </param>
         /// <param name="visibilitytimeout"> Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders>> DequeueAsync(string queueName, int? numberOfMessages = null, int? visibilitytimeout = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders>> DequeueAsync(int? numberOfMessages = null, int? visibilitytimeout = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-
-            using var message = CreateDequeueRequest(queueName, numberOfMessages, visibilitytimeout, timeout);
+            using var message = CreateDequeueRequest(numberOfMessages, visibilitytimeout, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new MessagesDequeueHeaders(message.Response);
             switch (message.Response.Status)
@@ -114,20 +114,13 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Dequeue operation retrieves one or more messages from the front of the queue. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="numberOfMessages"> Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation. </param>
         /// <param name="visibilitytimeout"> Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders> Dequeue(string queueName, int? numberOfMessages = null, int? visibilitytimeout = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders> Dequeue(int? numberOfMessages = null, int? visibilitytimeout = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-
-            using var message = CreateDequeueRequest(queueName, numberOfMessages, visibilitytimeout, timeout);
+            using var message = CreateDequeueRequest(numberOfMessages, visibilitytimeout, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new MessagesDequeueHeaders(message.Response);
             switch (message.Response.Status)
@@ -152,7 +145,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateClearRequest(string queueName, int? timeout)
+        internal HttpMessage CreateClearRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -173,18 +166,11 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Clear operation deletes all messages from the specified queue. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<MessagesClearHeaders>> ClearAsync(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MessagesClearHeaders>> ClearAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-
-            using var message = CreateClearRequest(queueName, timeout);
+            using var message = CreateClearRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new MessagesClearHeaders(message.Response);
             switch (message.Response.Status)
@@ -197,18 +183,11 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Clear operation deletes all messages from the specified queue. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public ResponseWithHeaders<MessagesClearHeaders> Clear(string queueName, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MessagesClearHeaders> Clear(int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-
-            using var message = CreateClearRequest(queueName, timeout);
+            using var message = CreateClearRequest(timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new MessagesClearHeaders(message.Response);
             switch (message.Response.Status)
@@ -220,7 +199,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateEnqueueRequest(string queueName, QueueMessage queueMessage, int? visibilitytimeout, int? messageTimeToLive, int? timeout)
+        internal HttpMessage CreateEnqueueRequest(QueueMessage queueMessage, int? visibilitytimeout, int? messageTimeToLive, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -253,25 +232,20 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Enqueue operation adds a new message to the back of the message queue. A visibility timeout can also be specified to make the message invisible until the visibility timeout expires. A message must be in a format that can be included in an XML request with UTF-8 encoding. The encoded message can be up to 64 KB in size for versions 2011-08-18 and newer, or 8 KB in size for previous versions. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="queueMessage"> A Message object which can be stored in a Queue. </param>
         /// <param name="visibilitytimeout"> Optional. If specified, the request must be made using an x-ms-version of 2011-08-18 or later. If not specified, the default value is 0. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the expiry time. visibilitytimeout should be set to a value smaller than the time-to-live value. </param>
         /// <param name="messageTimeToLive"> Optional. Specifies the time-to-live interval for the message, in seconds. Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For version 2017-07-29 or later, the maximum time-to-live can be any positive number, as well as -1 indicating that the message does not expire. If this parameter is omitted, the default time-to-live is 7 days. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queueMessage"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders>> EnqueueAsync(string queueName, QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueMessage"/> is null. </exception>
+        public async Task<ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders>> EnqueueAsync(QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
             if (queueMessage == null)
             {
                 throw new ArgumentNullException(nameof(queueMessage));
             }
 
-            using var message = CreateEnqueueRequest(queueName, queueMessage, visibilitytimeout, messageTimeToLive, timeout);
+            using var message = CreateEnqueueRequest(queueMessage, visibilitytimeout, messageTimeToLive, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new MessagesEnqueueHeaders(message.Response);
             switch (message.Response.Status)
@@ -297,25 +271,20 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Enqueue operation adds a new message to the back of the message queue. A visibility timeout can also be specified to make the message invisible until the visibility timeout expires. A message must be in a format that can be included in an XML request with UTF-8 encoding. The encoded message can be up to 64 KB in size for versions 2011-08-18 and newer, or 8 KB in size for previous versions. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="queueMessage"> A Message object which can be stored in a Queue. </param>
         /// <param name="visibilitytimeout"> Optional. If specified, the request must be made using an x-ms-version of 2011-08-18 or later. If not specified, the default value is 0. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the expiry time. visibilitytimeout should be set to a value smaller than the time-to-live value. </param>
         /// <param name="messageTimeToLive"> Optional. Specifies the time-to-live interval for the message, in seconds. Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For version 2017-07-29 or later, the maximum time-to-live can be any positive number, as well as -1 indicating that the message does not expire. If this parameter is omitted, the default time-to-live is 7 days. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queueMessage"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders> Enqueue(string queueName, QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueMessage"/> is null. </exception>
+        public ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders> Enqueue(QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
             if (queueMessage == null)
             {
                 throw new ArgumentNullException(nameof(queueMessage));
             }
 
-            using var message = CreateEnqueueRequest(queueName, queueMessage, visibilitytimeout, messageTimeToLive, timeout);
+            using var message = CreateEnqueueRequest(queueMessage, visibilitytimeout, messageTimeToLive, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new MessagesEnqueueHeaders(message.Response);
             switch (message.Response.Status)
@@ -340,7 +309,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreatePeekRequest(string queueName, int? numberOfMessages, int? timeout)
+        internal HttpMessage CreatePeekRequest(int? numberOfMessages, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -366,19 +335,12 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Peek operation retrieves one or more messages from the front of the queue, but does not alter the visibility of the message. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="numberOfMessages"> Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders>> PeekAsync(string queueName, int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders>> PeekAsync(int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-
-            using var message = CreatePeekRequest(queueName, numberOfMessages, timeout);
+            using var message = CreatePeekRequest(numberOfMessages, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new MessagesPeekHeaders(message.Response);
             switch (message.Response.Status)
@@ -404,19 +366,12 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> The Peek operation retrieves one or more messages from the front of the queue, but does not alter the visibility of the message. </summary>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="numberOfMessages"> Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders> Peek(string queueName, int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders> Peek(int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-
-            using var message = CreatePeekRequest(queueName, numberOfMessages, timeout);
+            using var message = CreatePeekRequest(numberOfMessages, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new MessagesPeekHeaders(message.Response);
             switch (message.Response.Status)

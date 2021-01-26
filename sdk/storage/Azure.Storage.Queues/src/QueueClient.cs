@@ -382,25 +382,30 @@ namespace Azure.Storage.Queues
         private (QueueRestClient, MessagesRestClient, MessageIdRestClient) BuildRestClients()
         {
             QueueUriBuilder uriBuilder = new QueueUriBuilder(_uri);
+            string queueName = uriBuilder.QueueName;
             uriBuilder.QueueName = null;
+
             string uriString = uriBuilder.ToUri().ToString();
 
             QueueRestClient queueRestClient = new QueueRestClient(
                 ClientConfiguration.ClientDiagnostics,
                 ClientConfiguration.Pipeline,
-                url: uriString,
+                uriString,
+                queueName,
                 ClientConfiguration.Version.ToVersionString());
 
             MessagesRestClient messagesRestClient = new MessagesRestClient(
                 ClientConfiguration.ClientDiagnostics,
                 ClientConfiguration.Pipeline,
                 uriString,
+                queueName,
                 ClientConfiguration.Version.ToVersionString());
 
             MessageIdRestClient messageIdRestClient = new MessageIdRestClient(
                 ClientConfiguration.ClientDiagnostics,
                 ClientConfiguration.Pipeline,
                 uriString,
+                queueName,
                 ClientConfiguration.Version.ToVersionString());
 
             return (queueRestClient, messagesRestClient, messageIdRestClient);
@@ -529,19 +534,15 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         reponse = await _queueRestClient.CreateAsync(
-                            Name,
-                            timeout: null,
-                            metadata,
-                            cancellationToken)
+                            metadata: metadata,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         reponse = _queueRestClient.Create(
-                            Name,
-                            timeout: null,
-                            metadata,
-                            cancellationToken);
+                            metadata: metadata,
+                            cancellationToken: cancellationToken);
                     }
                     return reponse.GetRawResponse();
                 }
@@ -977,9 +978,7 @@ namespace Azure.Storage.Queues
         private async Task<Response> DeleteInternal(
             bool async,
             CancellationToken cancellationToken,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName = default)
-#pragma warning restore CA1801 // Review unused parameters
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -996,17 +995,13 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _queueRestClient.DeleteAsync(
-                            Name,
-                            timeout: null,
-                            cancellationToken)
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _queueRestClient.Delete(
-                            Name,
-                            timeout: null,
-                            cancellationToken);
+                            cancellationToken: cancellationToken);
                     }
 
                     return response.GetRawResponse();
@@ -1109,16 +1104,12 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _queueRestClient.GetPropertiesAsync(
-                            Name,
-                            timeout: null,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _queueRestClient.GetProperties(
-                            Name,
-                            timeout: null,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1239,19 +1230,15 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _queueRestClient.SetMetadataAsync(
-                            Name,
-                            timeout: default,
-                            metadata,
-                            cancellationToken)
+                            metadata: metadata,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _queueRestClient.SetMetadata(
-                            Name,
-                            timeout: default,
-                            metadata,
-                            cancellationToken);
+                            metadata: metadata,
+                            cancellationToken: cancellationToken);
                     }
 
                     return response.GetRawResponse();
@@ -1351,17 +1338,13 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _queueRestClient.GetAccessPolicyAsync(
-                            Name,
-                            timeout: null,
-                            cancellationToken)
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _queueRestClient.GetAccessPolicy(
-                            Name,
-                            timeout: null,
-                            cancellationToken);
+                            cancellationToken: cancellationToken);
                     }
 
                     IEnumerable<QueueSignedIdentifier> signedIdentifiers = response.Value.ToList();
@@ -1476,19 +1459,15 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _queueRestClient.SetAccessPolicyAsync(
-                            Name,
-                            timeout: null,
-                            permissions,
-                            cancellationToken)
+                            queueAcl: permissions,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _queueRestClient.SetAccessPolicy(
-                            Name,
-                            timeout: null,
-                            permissions,
-                            cancellationToken);
+                            queueAcl: permissions,
+                            cancellationToken: cancellationToken);
                     }
 
                     return response.GetRawResponse();
@@ -1585,17 +1564,13 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messagesRestClient.ClearAsync(
-                            Name,
-                            timeout: null,
-                            cancellationToken)
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _messagesRestClient.Clear(
-                            Name,
-                            timeout: null,
-                            cancellationToken);
+                            cancellationToken: cancellationToken);
                     }
 
                     return response.GetRawResponse();
@@ -1990,23 +1965,19 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messagesRestClient.EnqueueAsync(
-                            Name,
-                            new QueueMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, ClientConfiguration.MessageEncoding) },
-                            (int?)visibilityTimeout?.TotalSeconds,
-                            (int?)timeToLive?.TotalSeconds,
-                            timeout: null,
-                            cancellationToken)
+                            queueMessage: new QueueMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, ClientConfiguration.MessageEncoding) },
+                            visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                            messageTimeToLive: (int?)timeToLive?.TotalSeconds,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _messagesRestClient.Enqueue(
-                            Name,
-                            new QueueMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, ClientConfiguration.MessageEncoding) },
-                            (int?)visibilityTimeout?.TotalSeconds,
-                            (int?)timeToLive?.TotalSeconds,
-                            timeout: null,
-                            cancellationToken);
+                            queueMessage: new QueueMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, ClientConfiguration.MessageEncoding) },
+                            visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                            messageTimeToLive: (int?)timeToLive?.TotalSeconds,
+                            cancellationToken: cancellationToken);
                     }
 
                     // The service returns a sequence of messages, but the
@@ -2210,21 +2181,17 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messagesRestClient.DequeueAsync(
-                            Name,
-                            maxMessages,
-                            (int?)visibilityTimeout?.TotalSeconds,
-                            timeout: null,
-                            cancellationToken)
+                            numberOfMessages: maxMessages,
+                            visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _messagesRestClient.Dequeue(
-                            Name,
-                            maxMessages,
-                            (int?)visibilityTimeout?.TotalSeconds,
-                            timeout: null,
-                            cancellationToken);
+                            numberOfMessages: maxMessages,
+                            visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                            cancellationToken: cancellationToken);
                     }
 
                     // Return an exploding Response on 304
@@ -2346,21 +2313,17 @@ namespace Azure.Storage.Queues
                 if (async)
                 {
                     response = await _messagesRestClient.DequeueAsync(
-                        Name,
                         numberOfMessages: 1,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                        timeout: null,
-                        cancellationToken)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 else
                 {
                     response = _messagesRestClient.Dequeue(
-                        Name,
                         numberOfMessages: 1,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                        timeout: null,
-                        cancellationToken);
+                        cancellationToken: cancellationToken);
                 }
 
 #pragma warning disable CA1826 // Do not use Enumerable methods on indexable collections
@@ -2472,7 +2435,6 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken = default) =>
             PeekMessagesInternal(
                 maxMessages,
-                //$"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2499,7 +2461,6 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken = default) =>
             await PeekMessagesInternal(
                 maxMessages,
-                //$"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2551,19 +2512,15 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messagesRestClient.PeekAsync(
-                            Name,
-                            maxMessages,
-                            timeout: null,
-                            cancellationToken)
+                            numberOfMessages: maxMessages,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _messagesRestClient.Peek(
-                            Name,
-                            maxMessages,
-                            timeout: null,
-                            cancellationToken);
+                            numberOfMessages: maxMessages,
+                            cancellationToken: cancellationToken);
                     }
 
                     // Return an exploding Response on 304
@@ -2708,21 +2665,17 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messageIdRestClient.DeleteAsync(
-                            Name,
-                            messageId,
-                            popReceipt,
-                            timeout: null,
-                            cancellationToken)
+                            messageid: messageId,
+                            popReceipt: popReceipt,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _messageIdRestClient.Delete(
-                            Name,
-                            messageId,
-                            popReceipt,
-                            timeout: null,
-                            cancellationToken);
+                            messageid: messageId,
+                            popReceipt: popReceipt,
+                            cancellationToken: cancellationToken);
                     }
 
                     return response.GetRawResponse();
@@ -3020,25 +2973,21 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _messageIdRestClient.UpdateAsync(
-                            Name,
-                            messageId,
-                            popReceipt,
-                            (int)visibilityTimeout.TotalSeconds,
-                            timeout: null,
-                            queueSendMessage,
-                            cancellationToken)
+                            messageid: messageId,
+                            popReceipt: popReceipt,
+                            visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
+                            queueMessage: queueSendMessage,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _messageIdRestClient.Update(
-                            Name,
-                            messageId,
-                            popReceipt,
-                            (int)visibilityTimeout.TotalSeconds,
-                            timeout: null,
-                            queueSendMessage,
-                            cancellationToken);
+                            messageid: messageId,
+                            popReceipt: popReceipt,
+                            visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
+                            queueMessage: queueSendMessage,
+                            cancellationToken: cancellationToken);
                     }
 
                     UpdateReceipt updateReceipt = new UpdateReceipt

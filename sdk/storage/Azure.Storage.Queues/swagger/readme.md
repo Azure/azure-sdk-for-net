@@ -23,6 +23,15 @@ directive:
     $.GeoReplication.properties.Status["x-ms-enum"].modelAsString = false;
 ```
 
+### Make QueueName a constructor parameter
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.QueueName["x-ms-parameter-location"];
+```
+
 ### Add queueName as a parameter
 ``` yaml
 directive:
