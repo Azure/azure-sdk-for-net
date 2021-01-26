@@ -14,6 +14,8 @@ namespace Azure.Quantum.Jobs.Tests
     {
         public QuantumJobClientLiveTests(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new QuantumJobClientRecordedTestSanitizer();
+
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;
         }
