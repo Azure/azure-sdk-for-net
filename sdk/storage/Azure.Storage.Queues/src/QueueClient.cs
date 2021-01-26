@@ -1840,7 +1840,7 @@ namespace Azure.Storage.Queues
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
             await SendMessageInternal(
-                ToBinaryData(messageText ?? string.Empty),
+                ToBinaryData(messageText),
                 visibilityTimeout,
                 timeToLive,
                 true, // async
