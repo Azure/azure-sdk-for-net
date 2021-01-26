@@ -9,10 +9,27 @@ using NUnit.Framework;
 namespace Azure.Communication.Sms.Tests.samples
 {
     /// <summary>
-    /// Samples to send sms
+    /// Samples to send sms.
     /// </summary>
     public partial class Sample1_SmsClient
     {
+        [Test]
+        [SyncOnly]
+        public void SendSms()
+        {
+            SmsClient smsClient = CreateSmsClient();
+
+            #region Snippet:SendSms
+            /// Send an sms
+            SendSmsResult sendSmsResult = smsClient.Send(
+                from: "<leased-phone-number>",
+                to: "<to-phone-number>",
+                message: "<message-to-send>");
+
+            Console.WriteLine("MessageId: " + sendSmsResult.MessageId);
+            #endregion Snippet:SendSms
+        }
+
         [Test]
         [SyncOnly]
         public void SendSingleAndGroupSms()
@@ -24,7 +41,12 @@ namespace Azure.Communication.Sms.Tests.samples
             SendSmsResult sendSmsResult = smsClient.Send(
                 from: "<leased-phone-number>",
                 to: "<to-phone-number>",
-                message: "<message-to-send>");
+                message: "<message-to-send>",
+                sendSmsOptions: new SendSmsOptions // OPTIONAL
+                {
+                    EnableDeliveryReport = true,
+                    Tag = "<custom-tags>",
+                });
 
             Console.WriteLine("MessageId: " + sendSmsResult.MessageId);
             #endregion Snippet:SendSms
@@ -35,11 +57,11 @@ namespace Azure.Communication.Sms.Tests.samples
                 from: "<leased-phone-number>",
                 to: new[] { "<to-phone-number-1>", "<to-phone-number-2>", "<to-phone-number-3>" },
                 message: "<group-message-to-send>",
-                 sendSmsOptions: new SendSmsOptions // OPTIONAL
-                 {
-                     EnableDeliveryReport = true,
-                     Tag = "<custom-tags>",
-                 });
+                sendSmsOptions: new SendSmsOptions // OPTIONAL
+                {
+                    EnableDeliveryReport = true,
+                    Tag = "<custom-tags>",
+                });
             foreach (SendSmsResult result in results)
             {
                 Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
