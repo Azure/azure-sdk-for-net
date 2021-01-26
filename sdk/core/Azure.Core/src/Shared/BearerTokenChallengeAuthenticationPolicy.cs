@@ -67,8 +67,9 @@ namespace Azure.Core.Pipeline
         /// Executed before initially sending the request to authenticate the request.
         /// </summary>
         /// <param name="message">The HttpMessage to be authenticated.</param>
+        /// <param name="pipeline"></param>
         /// <param name="async">Specifies if the method is being called in an asynchronous context</param>
-        protected virtual async Task OnBeforeRequestAsync(HttpMessage message, bool async)
+        protected virtual async Task OnBeforeRequestAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (async)
             {
@@ -105,27 +106,36 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            await OnBeforeRequestAsync(message, async).ConfigureAwait(false);
+            await OnBeforeRequestAsync(message, pipeline, async).ConfigureAwait(false);
 
-            await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
-
-            if (async)
+            // Only attempt to authenticate the request and send it along if we have valid scopes.
+            // We'll have no scopes when the request has not yet been issued with a received challenged.
+            // An example of this is when Key Vault issues its first unauthenticated request to receive a challenge.
+            if (_scopes.Length > 0)
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-            }
-            else
-            {
-                ProcessNext(message, pipeline);
+                await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
+
+                if (async)
+                {
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNext(message, pipeline);
+                }
             }
 
-            // Check if we have received a challenge.
-            if (message.Response.Status == 401 && message.Response.Headers.Contains("WWW-Authenticate"))
+            // Check if we have received a challenge or we have not yet issued the first request.
+            if (!message.HasResponse || (message.Response.Status == 401 && message.Response.Headers.Contains("WWW-Authenticate")))
             {
                 // Attempt to get the TokenRequestContext based on the challenge.
                 // If we fail to get the context, the challenge was not present or invalid.
                 // If we succeed in getting the context, authenticate the request and pass it up the policy chain.
                 if (TryGetTokenRequestContextFromChallenge(message, out TokenRequestContext context))
                 {
+                    // Ensure the scopes are consistent with what was set by <see cref="TryGetTokenRequestContextFromChallenge" />.
+                    _scopes = context.Scopes;
+
                     await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
 
                     if (async)
