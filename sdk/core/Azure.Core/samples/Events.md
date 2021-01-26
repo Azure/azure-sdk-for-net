@@ -4,13 +4,14 @@
 [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 The names of these packages usually start with `Azure`.
 
-Most Azure client libraries offer both synchronous and asynchronous methods for
-calling Azure services.  You can distinguish the asynchronous methods by their
-`Async` suffix.  For example, `BlobClient.Download` and `BlobClient.DownloadAsync`
-make the same underlying REST call and only differ in whether they block.  We
-recommend using our async methods for new applications, but there are perfectly
-valid cases for using sync methods as well.  These dual method invocation
-semantics work great, but require a little extra care when writing event handlers.
+Most Azure client libraries for .NET offer both synchronous and asynchronous
+methods for calling Azure services.  You can distinguish the asynchronous
+methods by their `Async` suffix.  For example, `BlobClient.Download` and
+`BlobClient.DownloadAsync` make the same underlying REST call and only differ in
+whether they block.  We recommend using our async methods for new applications,
+but there are perfectly valid cases for using sync methods as well.  These dual
+method invocation semantics address the needs of our customers, but require a
+little extra care when writing event handlers.
 
 The `SyncAsyncEventHandler` is a delegate used by events in Azure client
 libraries to represent an event handler that can be invoked from either sync or
@@ -50,10 +51,10 @@ event handlers will finish before returning control to the code path raising the
 event.  This means blocking for events raised synchronously and waiting for the
 returned `Task` to complete for events raised asynchronously.  Any exceptions
 thrown from a handler will be wrapped in a single `AggregateException`.  Finally,
-we wrap a [distributed tracing span](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
-around your handlers using the event name so you can see how long your handlers
-took to run, whether they made other calls to Azure services, and details about
-any exceptions that were thrown.
+a [distributed tracing span](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
+is wrapped around your handlers using the event name so you can see how long
+your handlers took to run, whether they made other calls to Azure services, and
+details about any exceptions that were thrown.
 
 The rest of the code samples are using a fictitious `AlarmClient` to demonstrate
 how to handle `SyncAsyncEventHandler` events.  There are `Snooze` and
@@ -145,7 +146,7 @@ Any exceptions thrown by an event handler will be wrapped in a single
 [`AggregateException.InnerExceptions`](https://docs.microsoft.com/dotnet/api/system.aggregateexception.innerexceptions)
 property to see the original exceptions thrown by your event handlers.
 `AggregateException` also provides
-[a number of helpful methods](https://docs.microsoft.com/en-us/archive/msdn-magazine/2009/brownfield/aggregating-exceptions)
+[a number of helpful methods](https://docs.microsoft.com/archive/msdn-magazine/2009/brownfield/aggregating-exceptions)
 like `Flatten` and `Handle` to make complex failures easier to work with.
 
 ```C# Snippet:Azure_Core_Samples_EventSamples_Exceptions

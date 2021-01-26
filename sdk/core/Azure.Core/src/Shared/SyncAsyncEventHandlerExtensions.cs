@@ -45,6 +45,15 @@ namespace Azure.Core
         /// An exception was thrown during the execution of at least one of the
         /// event's handlers.
         /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="e"/>, <paramref name="declaringTypeName"/>,
+        /// <paramref name="eventName"/>, or <paramref name="clientDiagnostics"/>
+        /// are null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <paramref name="declaringTypeName"/> or
+        /// <paramref name="eventName"/> are empty.
+        /// </exception>
         public static async Task RaiseAsync<T>(
             this SyncAsyncEventHandler<T> eventHandler,
             T e,
@@ -65,7 +74,8 @@ namespace Azure.Core
 
             // Wrap handler invocation in a distributed tracing span so it's
             // easy for customers to track and measure
-            using DiagnosticScope scope = clientDiagnostics.CreateScope(declaringTypeName + "." + eventName);
+            string eventFullName = declaringTypeName + "." + eventName;
+            using DiagnosticScope scope = clientDiagnostics.CreateScope(eventFullName);
             scope.Start();
             try
             {
@@ -99,7 +109,7 @@ namespace Azure.Core
                 {
                     // Include the event name in the exception for easier debugging
                     throw new AggregateException(
-                        "Unhandled exception(s) thrown when raising the " + declaringTypeName + "." + eventName + " event.",
+                        "Unhandled exception(s) thrown when raising the " + eventFullName + " event.",
                         failures);
                 }
             }

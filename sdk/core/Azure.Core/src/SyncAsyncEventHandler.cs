@@ -128,15 +128,15 @@ namespace Azure.Core
     /// </exception>
     /// <remarks>
     /// <para>
-    /// Most Azure client libraries offer both synchronous and asynchronous
-    /// methods for calling Azure services.  You can distinguish the
-    /// asynchronous methods by their Async suffix.  For example,
+    /// Most Azure client libraries for .NET offer both synchronous and
+    /// asynchronous methods for calling Azure services.  You can distinguish
+    /// the asynchronous methods by their Async suffix.  For example,
     /// BlobClient.Download and BlobClient.DownloadAsync make the same
     /// underlying REST call and only differ in whether they block.  We
     /// recommend using our async methods for new applications, but there are
     /// perfectly valid cases for using sync methods as well.  These dual
-    /// method invocation semantics work great, but require a little extra care
-    /// when writing event handlers.
+    /// method invocation semantics address the needs of our customers, but
+    /// require a little extra care when writing event handlers.
     /// </para>
     /// <para>
     /// The SyncAsyncEventHandler is a delegate used by events in Azure client
@@ -189,12 +189,12 @@ namespace Azure.Core
     /// raised synchronously and waiting for the returned <see cref="Task"/> to
     /// complete for events raised asynchronously.  Any exceptions thrown from
     /// a handler will be wrapped in a single <see cref="AggregateException"/>.
-    /// Finally, we wrap a
+    /// Finally, a
     /// <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing">
-    /// distributed tracing span</see> around your handlers using the event
-    /// name so you can see how long your handlers took to run, whether they
-    /// made other calls to Azure services, and details about any exceptions
-    /// that were thrown.
+    /// distributed tracing span</see> is wrapped around your handlers using
+    /// the event name so you can see how long your handlers took to run,
+    /// whether they made other calls to Azure services, and details about any
+    /// exceptions that were thrown.
     /// </para>
     /// <para>
     /// Executing asynchronous code from a sync code path is commonly referred
