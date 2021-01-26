@@ -42,6 +42,7 @@ namespace Azure.Core.Pipeline
                 !s_diagnosticSource.IsEnabled())
             {
                 ProcessNextAsync(message, pipeline, false).EnsureCompleted();
+                return;
             }
 
             ProcessAsync(message, pipeline, false).EnsureCompleted();
