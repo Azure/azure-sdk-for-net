@@ -43,6 +43,25 @@ The Blob storage trigger starts a function when a new or updated blob is detecte
 
 Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=csharp) to learn about triggering an Azure Function when a blob is modified.
 
+#### Listening strategies
+
+Blob trigger offers handful of strategies when it comes to listening to blob creation and modification. The strategy can be customized by specifying `Source` property of the `BlobTrigger` (see examples below).
+
+#### Default strategy
+
+By default blob trigger uses [polling](https://docs.microsoft.com/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=csharp#polling) which works as a hybrid between inspecting [Azure Storage analytics logging](https://docs.microsoft.com/azure/storage/common/storage-analytics-logging?tabs=dotnet) and running periodic container scans.
+Blobs are scanned in groups of 10,000 at a time with a continuation token used between intervals.
+
+[Azure Storage analytics logging](https://docs.microsoft.com/azure/storage/common/storage-analytics-logging?tabs=dotnet) is not enabled by default, see [Azure Storage analytics logging](https://docs.microsoft.com/azure/storage/common/storage-analytics-logging?tabs=dotnet) for how to enable it.
+
+This strategy is not recommended for high-scale applications or scenarios that require low latency.
+
+#### Event grid
+
+[Blob storage events](https://docs.microsoft.com/azure/storage/blobs/storage-blob-event-overview) can be used to listen for changes. This strategy requires [additional setup](https://docs.microsoft.com/azure/event-grid/blob-event-quickstart-portal?toc=/azure/storage/blobs/toc.json).
+
+This strategy is recommended for high-scale applications.
+
 ### Using Blob binding
 
 The input binding allows you to read blob storage data as input to an Azure Function. The output binding allows you to modify and delete blob storage data in an Azure Function.
@@ -53,12 +72,30 @@ Please follow the [input binding tutorial](https://docs.microsoft.com/azure/azur
 
 ### Reacting to blob change
 
+#### Default strategy
+
 ```C# Snippet:BlobFunction_ReactToBlobChange
 public static class BlobFunction_ReactToBlobChange
 {
     [FunctionName("BlobFunction")]
     public static void Run(
         [BlobTrigger("sample-container/sample-blob")] Stream blobStream,
+        ILogger logger)
+    {
+        using var blobStreamReader = new StreamReader(blobStream);
+        logger.LogInformation("Blob sample-container/sample-blob has been updated with content: {content}", blobStreamReader.ReadToEnd());
+    }
+}
+```
+
+#### Event Grid strategy
+
+```C# Snippet:BlobFunction_ReactToBlobChange_EventGrid
+public static class BlobFunction_ReactToBlobChange_EventGrid
+{
+    [FunctionName("BlobFunction")]
+    public static void Run(
+        [BlobTrigger("sample-container/sample-blob", Source = BlobTriggerSource.EventGrid)] Stream blobStream,
         ILogger logger)
     {
         using var blobStreamReader = new StreamReader(blobStream);

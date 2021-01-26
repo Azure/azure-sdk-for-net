@@ -71,6 +71,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
     }
     #endregion
 
+    // This doesn't work with Azurite so it's not run, just for compilation here.
+    #region Snippet:BlobFunction_ReactToBlobChange_EventGrid
+    public static class BlobFunction_ReactToBlobChange_EventGrid
+    {
+        [FunctionName("BlobFunction")]
+        public static void Run(
+            [BlobTrigger("sample-container/sample-blob", Source = BlobTriggerSource.EventGrid)] Stream blobStream,
+            ILogger logger)
+        {
+            using var blobStreamReader = new StreamReader(blobStream);
+            logger.LogInformation("Blob sample-container/sample-blob has been updated with content: {content}", blobStreamReader.ReadToEnd());
+        }
+    }
+    #endregion
+
     #region Snippet:BlobFunction_String
     public static class BlobFunction_String
     {
