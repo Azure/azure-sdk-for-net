@@ -94,7 +94,7 @@ try {
     $folderName = @()
     $changeList | ForEach-Object {
         $fileName = $_.filename
-        if (($fileName -match 'eng/mgmt/mgmtmetadata') -and ($fileName -notmatch 'sdk')) {
+        if ($fileName -match '(?<!sdk)/eng/mgmt/mgmtmetadata') {
             $mataPath += $fileName
         }
     }
