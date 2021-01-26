@@ -17,7 +17,7 @@ namespace Azure.Quantum.Jobs
     public class QuantumJobClient
     {
         /// <summary> Returns the client to handle the collection of jobs. </summary>
-        public virtual JobsRestClient GetJobsClient()
+        internal virtual JobsRestClient GetJobsClient()
         {
             return _jobs;
         }

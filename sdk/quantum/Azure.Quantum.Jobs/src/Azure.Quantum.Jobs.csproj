@@ -6,8 +6,6 @@
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001</NoWarn> <!-- TODO Namespace not approved yet for public types -->
-    <NoWarn>$(NoWarn);AZC0012</NoWarn> <!-- TODO Quota too short -->
-    <NoWarn>$(NoWarn);AZC0001;AZC0012;AZC0007;CS1591;AZC0005;AZC0003</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

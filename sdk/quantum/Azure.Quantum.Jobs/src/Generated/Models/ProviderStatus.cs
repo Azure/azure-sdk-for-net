@@ -29,11 +29,7 @@ namespace Azure.Quantum.Jobs.Models
             CurrentAvailability = currentAvailability;
             Targets = targets;
         }
-
-        /// <summary> Provider id. </summary>
-        public string Id { get; }
         /// <summary> Provider availability. </summary>
         public ProviderAvailability? CurrentAvailability { get; }
-        public IReadOnlyList<TargetStatus> Targets { get; }
     }
 }

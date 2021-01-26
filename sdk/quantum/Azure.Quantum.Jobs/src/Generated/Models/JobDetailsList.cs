@@ -29,8 +29,6 @@ namespace Azure.Quantum.Jobs.Models
             Count = count;
             NextLink = nextLink;
         }
-
-        public IReadOnlyList<JobDetails> Value { get; }
         /// <summary> Total records count number. </summary>
         public long? Count { get; }
         /// <summary> Link to the next page of results. </summary>
