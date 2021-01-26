@@ -52,8 +52,7 @@ namespace Azure.Core.TestFramework
                 {
                     foreach (MethodInfo methodInfo in clientType.GetMethods(BindingFlags.Instance | BindingFlags.Public))
                     {
-                        if (!methodInfo.Name.StartsWith("add_") && !methodInfo.Name.StartsWith("remove_") // exclude events
-                            && methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
+                        if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
                         {
                             validationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
 
