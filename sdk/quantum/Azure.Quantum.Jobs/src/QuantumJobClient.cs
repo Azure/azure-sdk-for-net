@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Quantum.Jobs.Models;
-using Azure.Identity;
 
 namespace Azure.Quantum.Jobs
 {
@@ -36,11 +35,6 @@ namespace Azure.Quantum.Jobs
             if (options == null)
             {
                 options = new QuantumJobClientOptions();
-            }
-
-            if (credential == null)
-            {
-                credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions());
             }
 
             var authPolicy = new BearerTokenAuthenticationPolicy(credential, "https://quantum.microsoft.com");

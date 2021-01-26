@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Azure.Quantum.Jobs;
 using Azure.Quantum.Jobs.Models;
 using Newtonsoft.Json;
+using Azure.Identity;
 
 namespace ConsoleApp1
 {
@@ -16,7 +17,7 @@ namespace ConsoleApp1
 
         private static async Task MainAsync()
         {
-            QuantumJobClient client = new QuantumJobClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus");
+            QuantumJobClient client = new QuantumJobClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus", new DefaultAzureCredential(new DefaultAzureCredentialOptions()));
 
             await foreach (JobDetails job in client.GetJobsAsync(CancellationToken.None))
             {
