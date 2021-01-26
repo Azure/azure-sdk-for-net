@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A managed instance key. </summary>
-    public partial class ManagedInstanceKey : Resource
+    public partial class ManagedInstanceKey : ProxyResource
     {
         /// <summary> Initializes a new instance of ManagedInstanceKey. </summary>
         public ManagedInstanceKey()

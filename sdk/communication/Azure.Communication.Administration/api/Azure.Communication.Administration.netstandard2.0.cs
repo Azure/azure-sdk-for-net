@@ -4,6 +4,7 @@ namespace Azure.Communication.Administration
     {
         protected CommunicationIdentityClient() { }
         public CommunicationIdentityClient(string connectionString, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
+        public CommunicationIdentityClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
         public CommunicationIdentityClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
         public virtual Azure.Response<Azure.Communication.CommunicationUserIdentifier> CreateUser(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CommunicationUserIdentifier>> CreateUserAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -30,7 +31,6 @@ namespace Azure.Communication.Administration
         private readonly int _dummyPrimitive;
         public CommunicationTokenScope(string value) { throw null; }
         public static Azure.Communication.Administration.CommunicationTokenScope Chat { get { throw null; } }
-        public static Azure.Communication.Administration.CommunicationTokenScope Pstn { get { throw null; } }
         public static Azure.Communication.Administration.CommunicationTokenScope VoIP { get { throw null; } }
         public bool Equals(Azure.Communication.Administration.CommunicationTokenScope other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -45,8 +45,9 @@ namespace Azure.Communication.Administration
     public partial class PhoneNumberAdministrationClient
     {
         protected PhoneNumberAdministrationClient() { }
-        public PhoneNumberAdministrationClient(string connectionString) { }
         public PhoneNumberAdministrationClient(string connectionString, Azure.Communication.Administration.PhoneNumberAdministrationClientOptions? options = null) { }
+        public PhoneNumberAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.Administration.CommunicationIdentityClientOptions? options = null) { }
+        public PhoneNumberAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.Administration.PhoneNumberAdministrationClientOptions? options = null) { }
         public virtual Azure.Response CancelReservation(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelReservationAsync(string reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ConfigureNumber(Azure.Communication.Administration.Models.PstnConfiguration pstnConfiguration, Azure.Communication.PhoneNumberIdentifier phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -76,6 +76,39 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+            var client = test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName());
+            await client.CreateAsync(1024);
+            Uri uri = client.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new ShareFileClient(uri, new AzureSasCredential(sas), GetOptions()));
+            ShareFileProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+            Uri uri = test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()).Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new ShareFileClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
         public void FilePathsParsing()
         {
             // nested directories
@@ -2069,7 +2102,10 @@ namespace Azure.Storage.Files.Shares.Tests
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream);
 
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.AreNotEqual(new ETag(""), response.Value.ETag);
+                Assert.AreNotEqual(DateTimeOffset.MinValue, response.Value.LastModified);
+                Assert.IsNotNull(response.Value.ContentHash);
+                Assert.IsTrue(response.Value.IsServerEncrypted);
             }
         }
 
@@ -2949,9 +2985,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await InstrumentClient(file.GetShareLeaseClient(leaseId)).AcquireAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
+            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
             Assert.IsNotNull(response.Value.LeaseId);
+            Assert.IsNull(response.Value.LeaseTime);
         }
 
         [Test]
@@ -3029,8 +3066,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.ChangeAsync(newLeaseId);
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
+            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.IsNotNull(response.Value.LeaseId);
+            Assert.IsNull(response.Value.LeaseTime);
         }
 
         [Test]
@@ -3069,8 +3108,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.BreakAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.ETag);
-            Assert.IsNotNull(response.Value.LastModified);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
+            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.IsNull(response.Value.LeaseId);
+            Assert.AreEqual(0, response.Value.LeaseTime);
         }
 
         [Test]

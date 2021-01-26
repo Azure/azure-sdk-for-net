@@ -3,14 +3,15 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Analytics.Synapse.Samples;
+using Azure.Core.TestFramework;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Identity;
 using NUnit.Framework;
 using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class Sample6_HelloWorldLinkedService : SampleFixture
+    public partial class Sample6_HelloWorldLinkedService : SamplesBase<SynapseTestEnvironment>
     {
         [Test]
         public async Task LinkedServiceSample()
@@ -22,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             // Replace the string below with your actual datalake endpoint url.
             string dataLakeEndpoint = "<my-datalake-url>";
-            /*@@*/endpoint = "adl://test.azuredatalakestore.net/";
+            /*@@*/dataLakeEndpoint = "adl://test.azuredatalakestore.net/";
 
             string serviceName = "Test-LinkedService";
             #endregion

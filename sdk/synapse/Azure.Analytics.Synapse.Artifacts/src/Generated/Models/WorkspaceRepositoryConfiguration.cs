@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Git integration settings. </summary>
@@ -23,7 +25,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
         /// <param name="rootFolder"> Root folder to use in the repository. </param>
-        internal WorkspaceRepositoryConfiguration(string type, string hostName, string accountName, string projectName, string repositoryName, string collaborationBranch, string rootFolder)
+        /// <param name="lastCommitId"> The last commit ID. </param>
+        /// <param name="tenantId"> The VSTS tenant ID. </param>
+        internal WorkspaceRepositoryConfiguration(string type, string hostName, string accountName, string projectName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, Guid? tenantId)
         {
             Type = type;
             HostName = hostName;
@@ -32,6 +36,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             RepositoryName = repositoryName;
             CollaborationBranch = collaborationBranch;
             RootFolder = rootFolder;
+            LastCommitId = lastCommitId;
+            TenantId = tenantId;
         }
 
         /// <summary> Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration. </summary>
@@ -48,5 +54,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string CollaborationBranch { get; set; }
         /// <summary> Root folder to use in the repository. </summary>
         public string RootFolder { get; set; }
+        /// <summary> The last commit ID. </summary>
+        public string LastCommitId { get; set; }
+        /// <summary> The VSTS tenant ID. </summary>
+        public Guid? TenantId { get; set; }
     }
 }

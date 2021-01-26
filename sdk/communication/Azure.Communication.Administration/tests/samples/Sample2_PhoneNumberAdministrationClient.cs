@@ -10,7 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
 using Azure.Communication.Administration.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.Administration.Samples
@@ -22,6 +24,32 @@ namespace Azure.Communication.Administration.Samples
     {
         public Sample2_PhoneNumberAdministrationClient(bool isAsync) : base(isAsync)
         {
+        }
+
+        [Test]
+        public async Task CreatePhoneNumberWithTokenCredential()
+        {
+            var endpoint = ConnectionString.Parse(TestEnvironment.ConnectionString, allowEmptyValues: true).GetRequired("endpoint");
+            #region Snippet:CreatePhoneNumberWithTokenCredential
+            //@@var endpoint = "<endpoint_url>";
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            var client = new PhoneNumberAdministrationClient(new Uri(endpoint), tokenCredential);
+            #endregion Snippet:CreatePhoneNumberWithTokenCredential
+
+            tokenCredential = (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential();
+            client = CreateClientWithTokenCredential(tokenCredential);
+            try
+            {
+                // Smoke test to ensure that client generated from token is able to work as expected.
+                var numbersPagable = client.GetAllPhoneNumbersAsync();
+                var numbers = await numbersPagable.ToEnumerableAsync();
+
+                Assert.IsNotNull(numbers);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
         }
 
         [Test]
@@ -68,7 +96,8 @@ namespace Azure.Communication.Administration.Samples
             reservationOptions.Quantity = 1;
 
             var reserveOperation = await client.StartReservationAsync(reservationOptions);
-            await reserveOperation.WaitForCompletionAsync();
+            //@@ await reserveOperation.WaitForCompletionAsync();
+            /*@@*/ await WaitForCompletionAsync(reserveOperation);
             #endregion Snippet:ReservePhoneNumbersAsync
 
             reserveOperation = new PhoneNumberReservationOperation(client, reserveOperation.Id);
@@ -79,12 +108,15 @@ namespace Azure.Communication.Administration.Samples
             // persist reservationId and then continue with a new operation
 
             //@@var reserveOperation = new PhoneNumberReservationOperation(client, reservationId);
-            await reserveOperation.WaitForCompletionAsync();
+            //@@ await reserveOperation.WaitForCompletionAsync();
+            /*@@*/ await WaitForCompletionAsync(reserveOperation);
+
             #endregion Snippet:PersistReservePhoneNumbersOperationAsync
 
             #region Snippet:StartPurchaseReservationAsync
             var purchaseOperation = await client.StartPurchaseReservationAsync(reservationId);
-            await purchaseOperation.WaitForCompletionAsync();
+            //@@ await purchaseOperation.WaitForCompletionAsync();
+            /*@@*/ await WaitForCompletionAsync(purchaseOperation);
             #endregion Snippet:StartPurchaseReservationAsync
 
             #region Snippet:ListAcquiredPhoneNumbersAsync
@@ -103,13 +135,17 @@ namespace Azure.Communication.Administration.Samples
             #region Snippet:ReleasePhoneNumbersAsync
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
             var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumberIdentifier(acquiredPhoneNumber));
-            await releaseOperation.WaitForCompletionAsync();
+            //@@ await releaseOperation.WaitForCompletionAsync();
+            /*@@*/ await WaitForCompletionAsync(releaseOperation);
             #endregion Snippet:ReleasePhoneNumbersAsync
 
             acquiredPhoneNumbers = client.GetAllPhoneNumbersAsync(locale);
             var afterReleaseNumberCount = (await acquiredPhoneNumbers.ToEnumerableAsync()).Count;
             Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
         }
+
+        private ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation) where T : notnull
+            => operation.WaitForCompletionAsync(TestEnvironment.Mode == RecordedTestMode.Playback ? TimeSpan.Zero: TimeSpan.FromSeconds(2), default);
 
         [Test]
         [SyncOnly]
@@ -165,7 +201,8 @@ namespace Azure.Communication.Administration.Samples
 
             while (!reserveOperation.HasCompleted)
             {
-                Thread.Sleep(2000);
+                //@@ Thread.Sleep(2000);
+                /*@@*/ SleepIfNotInPlaybackMode();
 
                 reserveOperation.UpdateStatus();
             }
@@ -183,7 +220,8 @@ namespace Azure.Communication.Administration.Samples
 
             while (!reserveOperation.HasCompleted)
             {
-                Thread.Sleep(2000);
+                //@@ Thread.Sleep(2000);
+                /*@@*/ SleepIfNotInPlaybackMode();
 
                 reserveOperation.UpdateStatus();
             }
@@ -194,7 +232,8 @@ namespace Azure.Communication.Administration.Samples
 
             while (!purchaseOperation.HasCompleted)
             {
-                Thread.Sleep(2000);
+                //@@ Thread.Sleep(2000);
+                /*@@*/ SleepIfNotInPlaybackMode();
 
                 purchaseOperation.UpdateStatus();
             }
@@ -219,7 +258,8 @@ namespace Azure.Communication.Administration.Samples
 
             while (!releaseOperation.HasCompleted)
             {
-                Thread.Sleep(2000);
+                //@@ Thread.Sleep(2000);
+                /*@@*/ SleepIfNotInPlaybackMode();
 
                 releaseOperation.UpdateStatus();
             }
@@ -228,6 +268,12 @@ namespace Azure.Communication.Administration.Samples
             acquiredPhoneNumbers = client.GetAllPhoneNumbers(locale);
             var afterReleaseNumberCount = acquiredPhoneNumbers.Count();
             Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
+        }
+
+        private void SleepIfNotInPlaybackMode()
+        {
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                Thread.Sleep(2000);
         }
 
         [Test]

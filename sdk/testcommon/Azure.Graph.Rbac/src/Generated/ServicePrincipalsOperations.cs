@@ -78,7 +78,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the service principal to delete. </param>
         /// <param name="parameters"> Parameters to update a service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateAsync(string objectId, ServicePrincipalBase parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateAsync(string objectId, ServicePrincipalUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.Update");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the service principal to delete. </param>
         /// <param name="parameters"> Parameters to update a service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Update(string objectId, ServicePrincipalBase parameters, CancellationToken cancellationToken = default)
+        public virtual Response Update(string objectId, ServicePrincipalUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.Update");
             scope.Start();

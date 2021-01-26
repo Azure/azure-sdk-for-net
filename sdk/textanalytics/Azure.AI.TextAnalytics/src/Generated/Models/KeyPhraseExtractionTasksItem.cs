@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="status"> . </param>
         /// <param name="resultsInternal"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultsInternal"/> is null. </exception>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, JobStatus status, KeyPhraseResult resultsInternal) : base(lastUpdateDateTime, status)
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, KeyPhraseResult resultsInternal) : base(lastUpdateDateTime, status)
         {
             if (resultsInternal == null)
             {
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <param name="resultsInternal"> . </param>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, KeyPhraseResult resultsInternal) : base(lastUpdateDateTime, name, status)
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, KeyPhraseResult resultsInternal) : base(lastUpdateDateTime, name, status)
         {
             ResultsInternal = resultsInternal;
         }

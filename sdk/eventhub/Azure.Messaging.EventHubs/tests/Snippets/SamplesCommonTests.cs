@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using Azure.Messaging.EventHubs.Consumer;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests.Snippets
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of tests defining the snippets used across the Event Hubs

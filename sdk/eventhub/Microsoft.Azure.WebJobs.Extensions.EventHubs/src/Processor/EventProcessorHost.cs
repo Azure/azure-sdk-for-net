@@ -67,6 +67,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             return await _checkpointStore.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
         }
 
+        protected override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, CancellationToken cancellationToken)
+        {
+            return await _checkpointStore.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, cancellationToken).ConfigureAwait(false);
+        }
+
         internal virtual async Task CheckpointAsync(string partitionId, EventData checkpointEvent, CancellationToken cancellationToken = default)
         {
             await _checkpointStore.UpdateCheckpointAsync(new EventProcessorCheckpoint()

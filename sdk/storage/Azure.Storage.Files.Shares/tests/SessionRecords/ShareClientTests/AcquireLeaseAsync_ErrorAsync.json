@@ -4,14 +4,15 @@
       "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-d9c5b671-edaf-29c3-3899-93f4e155b2b2?comp=lease\u0026restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-990f64c937b3ba45a0c8099f05e85a43-70cd6313215ffb42-00",
+        "traceparent": "00-2ea45693df0f4645a0fd4fbb2efc47e1-2dd6731faeb58947-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200805.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210121.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "925d3ed6-6757-5e85-3b29-49faaff2aa08",
-        "x-ms-date": "Wed, 05 Aug 2020 22:26:45 GMT",
+        "x-ms-date": "Thu, 21 Jan 2021 20:45:24 GMT",
         "x-ms-lease-action": "acquire",
         "x-ms-lease-duration": "-1",
         "x-ms-proposed-lease-id": "333eec4e-1263-9c7b-90b4-3ed17f2f1237",
@@ -23,20 +24,20 @@
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
-        "Date": "Wed, 05 Aug 2020 22:26:43 GMT",
+        "Date": "Thu, 21 Jan 2021 20:45:23 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "925d3ed6-6757-5e85-3b29-49faaff2aa08",
         "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "1897d092-401a-0047-5177-6bb199000000",
+        "x-ms-request-id": "0061ea6b-901a-0036-0136-f057b2000000",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
-        "RequestId:1897d092-401a-0047-5177-6bb199000000\n",
-        "Time:2020-08-05T22:26:44.8617559Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:0061ea6b-901a-0036-0136-f057b2000000\n",
+        "Time:2021-01-21T20:45:23.9659142Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],

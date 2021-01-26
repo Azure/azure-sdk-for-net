@@ -91,6 +91,9 @@ namespace Azure.Storage
         public const string ErrorCode = "Code";
         public const string ErrorMessage = "Message";
 
+        public const string CommaString = ",";
+        public const char CommaChar = ',';
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>
@@ -155,6 +158,7 @@ namespace Azure.Storage
             public const string Range = "Range";
             public const string ContentRange = "Content-Range";
             public const string VersionId = "x-ms-version-id";
+            public const string LeaseTime = "x-ms-lease-time";
         }
 
         internal static class ErrorCodes
@@ -596,6 +600,7 @@ namespace Azure.Storage
         internal static class HttpStatusCode
         {
             internal const int NotFound = 404;
+            internal const int NotModified = 304;
         }
     }
 }
