@@ -282,7 +282,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/QuotaList"
+              "$ref": "#/definitions/QuantumJobQuotaList"
             }
           },
           "default": {
@@ -540,14 +540,14 @@
         }
       }
     },
-    "QuotaList": {
+    "QuantumJobQuotaList": {
       "description": "List of quotas.",
       "properties": {
         "value": {
           "readOnly": true,
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Quota"
+            "$ref": "#/definitions/QuantumJobQuota"
           }
         },
         "nextLink": {
@@ -557,7 +557,7 @@
         }
       }
     },
-    "Quota": {
+    "QuantumJobQuota": {
       "description": "Quota information.",
       "type": "object",
       "properties": {

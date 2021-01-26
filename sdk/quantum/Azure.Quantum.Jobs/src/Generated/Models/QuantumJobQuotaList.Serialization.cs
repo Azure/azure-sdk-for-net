@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
-    public partial class QuotaList
+    public partial class QuantumJobQuotaList
     {
-        internal static QuotaList DeserializeQuotaList(JsonElement element)
+        internal static QuantumJobQuotaList DeserializeQuantumJobQuotaList(JsonElement element)
         {
-            Optional<IReadOnlyList<Quota>> value = default;
+            Optional<IReadOnlyList<QuantumJobQuota>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.Quantum.Jobs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Quota> array = new List<Quota>();
+                    List<QuantumJobQuota> array = new List<QuantumJobQuota>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Quota.DeserializeQuota(item));
+                        array.Add(QuantumJobQuota.DeserializeQuantumJobQuota(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new QuotaList(Optional.ToList(value), nextLink.Value);
+            return new QuantumJobQuotaList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

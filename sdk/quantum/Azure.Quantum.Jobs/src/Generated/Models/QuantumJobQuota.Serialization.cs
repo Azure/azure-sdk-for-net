@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
-    public partial class Quota
+    public partial class QuantumJobQuota
     {
-        internal static Quota DeserializeQuota(JsonElement element)
+        internal static QuantumJobQuota DeserializeQuantumJobQuota(JsonElement element)
         {
             Optional<string> dimension = default;
             Optional<DimensionScope> scope = default;
@@ -84,7 +84,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new Quota(dimension.Value, Optional.ToNullable(scope), providerId.Value, Optional.ToNullable(utilization), Optional.ToNullable(holds), Optional.ToNullable(limit), Optional.ToNullable(period));
+            return new QuantumJobQuota(dimension.Value, Optional.ToNullable(scope), providerId.Value, Optional.ToNullable(utilization), Optional.ToNullable(holds), Optional.ToNullable(limit), Optional.ToNullable(period));
         }
     }
 }

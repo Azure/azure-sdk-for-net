@@ -78,7 +78,7 @@ namespace Azure.Quantum.Jobs
 
         /// <summary> List quotas for the given workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<QuotaList>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<QuantumJobQuotaList>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -86,9 +86,9 @@ namespace Azure.Quantum.Jobs
             {
                 case 200:
                     {
-                        QuotaList value = default;
+                        QuantumJobQuotaList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QuotaList.DeserializeQuotaList(document.RootElement);
+                        value = QuantumJobQuotaList.DeserializeQuantumJobQuotaList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,7 +98,7 @@ namespace Azure.Quantum.Jobs
 
         /// <summary> List quotas for the given workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<QuotaList> List(CancellationToken cancellationToken = default)
+        public Response<QuantumJobQuotaList> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -106,9 +106,9 @@ namespace Azure.Quantum.Jobs
             {
                 case 200:
                     {
-                        QuotaList value = default;
+                        QuantumJobQuotaList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QuotaList.DeserializeQuotaList(document.RootElement);
+                        value = QuantumJobQuotaList.DeserializeQuantumJobQuotaList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -133,7 +133,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<QuotaList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<QuantumJobQuotaList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -146,9 +146,9 @@ namespace Azure.Quantum.Jobs
             {
                 case 200:
                     {
-                        QuotaList value = default;
+                        QuantumJobQuotaList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QuotaList.DeserializeQuotaList(document.RootElement);
+                        value = QuantumJobQuotaList.DeserializeQuantumJobQuotaList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,7 +160,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<QuotaList> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<QuantumJobQuotaList> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -173,9 +173,9 @@ namespace Azure.Quantum.Jobs
             {
                 case 200:
                     {
-                        QuotaList value = default;
+                        QuantumJobQuotaList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QuotaList.DeserializeQuotaList(document.RootElement);
+                        value = QuantumJobQuotaList.DeserializeQuantumJobQuotaList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

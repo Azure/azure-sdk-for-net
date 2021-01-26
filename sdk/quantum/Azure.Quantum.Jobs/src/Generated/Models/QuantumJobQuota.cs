@@ -8,14 +8,14 @@
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> Quota information. </summary>
-    public partial class Quota
+    public partial class QuantumJobQuota
     {
-        /// <summary> Initializes a new instance of Quota. </summary>
-        internal Quota()
+        /// <summary> Initializes a new instance of QuantumJobQuota. </summary>
+        internal QuantumJobQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of Quota. </summary>
+        /// <summary> Initializes a new instance of QuantumJobQuota. </summary>
         /// <param name="dimension"> The name of the dimension associated with the quota. </param>
         /// <param name="scope"> The scope at which the quota is applied. </param>
         /// <param name="providerId"> The unique identifier for the provider. </param>
@@ -23,7 +23,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="holds"> The amount of the usage that has been reserved but not applied for the current period. </param>
         /// <param name="limit"> The maximum amount of usage allowed for the current period. </param>
         /// <param name="period"> The time period in which the quota&apos;s underlying meter is accumulated. Based on calendar year. &apos;None&apos; is used for concurrent quotas. </param>
-        internal Quota(string dimension, DimensionScope? scope, string providerId, float? utilization, float? holds, float? limit, MeterPeriod? period)
+        internal QuantumJobQuota(string dimension, DimensionScope? scope, string providerId, float? utilization, float? holds, float? limit, MeterPeriod? period)
         {
             Dimension = dimension;
             Scope = scope;

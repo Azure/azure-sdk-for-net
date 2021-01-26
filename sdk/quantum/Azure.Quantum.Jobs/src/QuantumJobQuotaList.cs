@@ -11,9 +11,9 @@ using Azure.Core;
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> List of quotas. </summary>
-    public partial class QuotaList
+    public partial class QuantumJobQuotaList
     {
         /// <summary> Quota object. </summary>
-        public IReadOnlyList<Quota> Value { get; }
+        public IReadOnlyList<QuantumJobQuota> Value { get; }
     }
 }
