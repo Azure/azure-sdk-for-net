@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -18,7 +18,8 @@
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!-- TODO (kasobol-msft) undo before merge when core ships. -->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
