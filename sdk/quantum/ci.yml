@@ -7,7 +7,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/template/
+    - sdk/quantum/
 
 pr:
   branches:
@@ -21,13 +21,13 @@ pr:
     - common/Perf/
     - common/PerfStressShared/
     - common/Stress/
-    - sdk/template/
+    - sdk/quantum/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  quantum: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: template
+    ServiceDirectory: quantum
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Template
-      safeName: AzureTemplate
+    - name: Azure.Quantum.Jobs
+      safeName: AzureQuantumJobs
