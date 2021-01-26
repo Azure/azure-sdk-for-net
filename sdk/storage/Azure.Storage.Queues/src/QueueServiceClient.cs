@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Sas;
@@ -132,7 +131,8 @@ namespace Azure.Storage.Queues
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
-                messageEncoding: options.MessageEncoding);
+                messageEncoding: options.MessageEncoding,
+                invalidMessageHandler: options.GetInvalidMessageHandlers());
 
             _serviceRestClient = BuildServiceRestClient();
         }
@@ -258,7 +258,8 @@ namespace Azure.Storage.Queues
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
-                messageEncoding: options.MessageEncoding);
+                messageEncoding: options.MessageEncoding,
+                invalidMessageHandler: options.GetInvalidMessageHandlers());
 
             _serviceRestClient = BuildServiceRestClient();
         }

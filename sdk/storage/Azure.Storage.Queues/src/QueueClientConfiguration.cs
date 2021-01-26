@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Shared;
@@ -15,18 +16,22 @@ namespace Azure.Storage.Queues
 
         public QueueMessageEncoding MessageEncoding { get; internal set; }
 
+        public SyncAsyncEventHandler<InvalidMessageEventArgs> InvalidMessageHandler { get; internal set; }
+
         public QueueClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
             QueueClientOptions.ServiceVersion version,
             QueueClientSideEncryptionOptions clientSideEncryption,
-            QueueMessageEncoding messageEncoding)
+            QueueMessageEncoding messageEncoding,
+            SyncAsyncEventHandler<InvalidMessageEventArgs> invalidMessageHandler)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
             ClientSideEncryption = clientSideEncryption;
             MessageEncoding = messageEncoding;
+            InvalidMessageHandler = invalidMessageHandler;
         }
     }
 }

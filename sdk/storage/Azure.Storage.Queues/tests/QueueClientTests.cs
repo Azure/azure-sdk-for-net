@@ -835,11 +835,6 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(nonEncodedContent, ((PeekedMessage)badMessage).Body.ToString());
         }
 
-        private Task EncodingClient_InvalidQueueMessageAsync(InvalidQueueMessageEventArgs arg)
-        {
-            throw new NotImplementedException();
-        }
-
         [Test]
         public async Task CanSendAndReceiveNonUTFBytes()
         {

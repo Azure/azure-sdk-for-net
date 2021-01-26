@@ -120,29 +120,6 @@ namespace Azure.Storage.Queues
         private string _name;
 
         /// <summary>
-        /// Optional. Performs the tasks needed when an invalid message is received or peaked from the queue.
-        ///
-        /// <para>Invalid message can be received or peaked when <see cref="QueueClient"/> is expecting certain <see cref="QueueMessageEncoding"/>
-        /// but there's another producer that is not encoding messages in expected way. I.e. the queue contains messages with different encoding.</para>
-        ///
-        /// <para><see cref="InvalidQueueMessageEventArgs"/> contains <see cref="QueueClient"/> that has received invalid message as well as the message
-        /// which can be either <see cref="QueueMessage"/> or <see cref="PeekedMessage"/> with raw body, i.e. no decoding will be attempted so that
-        /// body can be inspected as has been received from the queue.</para>
-        ///
-        /// <para>The <see cref="QueueClient"/> won't attempt to remove invalid message from the queue. Therefore such handling should be included into
-        /// the event handler itself.</para>
-        /// </summary>
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-#pragma warning disable AZC0003 // DO make service methods virtual.
-#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public event Func<InvalidQueueMessageEventArgs, Task> InvalidQueueMessageAsync;
-#pragma warning restore AZC0015 // Unexpected client method return type.
-#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
-#pragma warning restore AZC0003 // DO make service methods virtual.
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-
-        /// <summary>
         /// Gets the name of the queue.
         /// </summary>
         public virtual string Name
@@ -229,7 +206,8 @@ namespace Azure.Storage.Queues
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
-                messageEncoding: options.MessageEncoding);
+                messageEncoding: options.MessageEncoding,
+                invalidMessageHandler: options.GetInvalidMessageHandlers());
 
             (QueueRestClient queueRestClient, MessagesRestClient messagesRestClient, MessageIdRestClient messageIdRestClient) = BuildRestClients();
             _queueRestClient = queueRestClient;
@@ -365,7 +343,8 @@ namespace Azure.Storage.Queues
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
-                messageEncoding: options.MessageEncoding);
+                messageEncoding: options.MessageEncoding,
+                invalidMessageHandler: options.GetInvalidMessageHandlers());
 
             (QueueRestClient queueRestClient, MessagesRestClient messagesRestClient, MessageIdRestClient messageIdRestClient) = BuildRestClients();
             _queueRestClient = queueRestClient;
@@ -2225,9 +2204,9 @@ namespace Azure.Storage.Queues
                     } else
                     {
                         QueueMessage[] queueMessages;
-                        if (InvalidQueueMessageAsync != null)
+                        if (ClientConfiguration.InvalidMessageHandler != null)
                         {
-                            queueMessages = ToQueueMessagesWithInvalidMessageHandling(response.Value, cancellationToken);
+                            queueMessages = await ToQueueMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
                         } else
                         {
                             queueMessages = response.Value.Select(x => QueueMessage.ToQueueMessage(x, ClientConfiguration.MessageEncoding)).ToArray();
@@ -2260,8 +2239,9 @@ namespace Azure.Storage.Queues
             }
         }
 
-        private QueueMessage[] ToQueueMessagesWithInvalidMessageHandling(
+        private async Task<QueueMessage[]> ToQueueMessagesWithInvalidMessageHandling(
             IEnumerable<DequeuedMessageItem> dequeuedMessageItems,
+            bool async,
             CancellationToken cancellationToken)
         {
             List<QueueMessage> queueMessages = new List<QueueMessage>();
@@ -2274,11 +2254,17 @@ namespace Azure.Storage.Queues
                 }
                 catch (FormatException)
                 {
-                    _ = Task.Run(() => InvalidQueueMessageAsync.Invoke(
-                        new InvalidQueueMessageEventArgs(
-                            this,
-                            QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
-                            cancellationToken)), cancellationToken);
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    await ClientConfiguration.InvalidMessageHandler.RaiseAsync(
+                        new InvalidMessageEventArgs(
+                            queue: this,
+                            message: QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
+                            runSynchronously: !async,
+                            cancellationToken: cancellationToken),
+                        nameof(QueueClientOptions),
+                        nameof(QueueClientOptions.OnInvalidMessage),
+                        ClientConfiguration.ClientDiagnostics).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 }
             }
 
@@ -2577,9 +2563,9 @@ namespace Azure.Storage.Queues
                     else
                     {
                         PeekedMessage[] peekedMessages;
-                        if (InvalidQueueMessageAsync != null)
+                        if (ClientConfiguration.InvalidMessageHandler != null)
                         {
-                            peekedMessages = ToPeekedMessagesWithInvalidMessageHandling(response.Value, cancellationToken);
+                            peekedMessages = await ToPeekedMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
@@ -2613,8 +2599,9 @@ namespace Azure.Storage.Queues
             }
         }
 
-        private PeekedMessage[] ToPeekedMessagesWithInvalidMessageHandling(
+        private async Task<PeekedMessage[]> ToPeekedMessagesWithInvalidMessageHandling(
             IEnumerable<PeekedMessageItem> peekedMessageItems,
+            bool async,
             CancellationToken cancellationToken)
         {
             List<PeekedMessage> peekedMessages = new List<PeekedMessage>();
@@ -2627,11 +2614,17 @@ namespace Azure.Storage.Queues
                 }
                 catch (FormatException)
                 {
-                    _ = Task.Run(() => InvalidQueueMessageAsync.Invoke(
-                        new InvalidQueueMessageEventArgs(
-                            this,
-                            PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
-                            cancellationToken)), cancellationToken);
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    await ClientConfiguration.InvalidMessageHandler.RaiseAsync(
+                        new InvalidMessageEventArgs(
+                            queue: this,
+                            message: PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
+                            runSynchronously: !async,
+                            cancellationToken: cancellationToken),
+                        nameof(QueueClientOptions),
+                        nameof(QueueClientOptions.OnInvalidMessage),
+                        ClientConfiguration.ClientDiagnostics).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 }
             }
 
