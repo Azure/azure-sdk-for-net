@@ -15,7 +15,7 @@ namespace Azure.Quantum
         /// <summary>
         /// The latest version of the service.
         /// </summary>
-        public const ServiceVersion LatestVersion = ServiceVersion.V1;
+        public const ServiceVersion LatestVersion = ServiceVersion.V1Preview;
 
         internal string ApiVersion { get; }
 
@@ -26,7 +26,7 @@ namespace Azure.Quantum
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V1 => "v1.0",
+                ServiceVersion.V1Preview => "v1.0",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -37,9 +37,9 @@ namespace Azure.Quantum
         public enum ServiceVersion
         {
             /// <summary>
-            /// The V1 of the Quantum Jobs service.
+            /// The V1_Preview of the Quantum Jobs service.
             /// </summary>
-            V1 = 1
+            V1Preview = 1
         }
     }
 }
