@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.FrontDoor
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/frontdoor/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\AzureSDKFork\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "b9fb929f7823d54b94f85f39b0e79f38747828b1";
+      public static readonly String GithubCommidId = "20ab40f8aecd70864044f00f2ed013fd9e35afa9";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
