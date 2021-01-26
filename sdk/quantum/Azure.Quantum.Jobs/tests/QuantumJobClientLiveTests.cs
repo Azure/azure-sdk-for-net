@@ -22,19 +22,10 @@ namespace Azure.Quantum.Jobs.Tests
 
         private QuantumJobClient CreateClient()
         {
-            var rawClient = new QuantumJobClient(SubscriptionId.value, "sdk-review-rg", "workspace-ms", "westus", default, InstrumentClientOptions(new QuantumJobClientOptions()));
+            var rawClient = new QuantumJobClient(TestEnvironment.SubscriptionId, "sdk-review-rg", "workspace-ms", "westus", default, InstrumentClientOptions(new QuantumJobClientOptions()));
 
             return InstrumentClient(rawClient);
         }
-
-        // Create SubscriptionId.cs like so and put in your id:
-        // namespace Azure.Quantum.Jobs.Tests
-        // {
-        //     internal class SubscriptionId
-        //     {
-        //         public string value = "<yourid>";
-        //     }
-        // }
 
         [RecordedTest]
         public async Task CanGetList()
