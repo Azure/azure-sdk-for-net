@@ -86,20 +86,6 @@ namespace Azure.Quantum.Jobs
             return _jobs.Create(jobId, job, cancellationToken);
         }
 
-        /// <summary> List jobs. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JobDetailsList> List(CancellationToken cancellationToken = default)
-        {
-            return _jobs.List(cancellationToken);
-        }
-
-        /// <summary> List jobs. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<JobDetailsList>> ListAsync(CancellationToken cancellationToken = default)
-        {
-            return await _jobs.ListAsync(cancellationToken).ConfigureAwait(false);
-        }
-
         /// <summary> Get job by id. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

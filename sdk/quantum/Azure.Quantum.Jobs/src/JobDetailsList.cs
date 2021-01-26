@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> List of job details. </summary>
-    public partial class JobDetailsList
+    internal partial class JobDetailsList
     {
         /// <summary> Job details object. </summary>
         public IReadOnlyList<JobDetails> Value { get; }
