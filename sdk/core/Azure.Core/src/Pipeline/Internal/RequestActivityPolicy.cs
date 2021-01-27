@@ -48,7 +48,7 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             var activity = new Activity("Azure.Core.Http.Request");
             activity.AddTag("http.method", message.Request.Method.Method);
@@ -79,7 +79,7 @@ namespace Azure.Core.Pipeline
 
             try
             {
-                if (isAsync)
+                if (async)
                 {
                     await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
                 }
@@ -104,7 +104,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             Activity? currentActivity = Activity.Current;
 
@@ -132,7 +132,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            if (isAsync)
+            if (async)
             {
                 return ProcessNextAsync(message, pipeline);
             }

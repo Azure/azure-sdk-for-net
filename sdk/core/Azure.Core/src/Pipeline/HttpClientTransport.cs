@@ -62,7 +62,9 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, false).EnsureCompleted();
 #else
             // Intentionally blocking here
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             ProcessAsync(message).AsTask().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 #endif
         }
 
@@ -86,7 +88,9 @@ namespace Azure.Core.Pipeline
                 else
 #endif
                 {
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                         .ConfigureAwait(false);
                 }
 
@@ -102,7 +106,9 @@ namespace Azure.Core.Pipeline
                         contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
                     }
 #else
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 #endif
                 }
             }
