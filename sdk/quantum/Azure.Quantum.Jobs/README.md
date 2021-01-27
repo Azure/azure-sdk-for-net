@@ -52,33 +52,6 @@ If possible, use the same example snippets that your in-code documentation uses.
 
 Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
 
-* [Create the thing](#create-the-thing)
-* [Get the thing](#get-the-thing)
-* [List the things](#list-the-things)
-
-### Create the thing
-
-Use the `create_thing` method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call `Thing.save`.
-
-```Python
-thing = client.create_thing(id, name)
-thing.save()
-```
-
-### Get the thing
-
-The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
-
-```C# Snippet:GetSecret
-var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
-
-SecretBundle secret = client.GetSecret("TestSecret");
-
-Console.WriteLine(secret.Value);
-```Python
-things = client.list_things()
-```
-
 ## Troubleshooting
 
 Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
