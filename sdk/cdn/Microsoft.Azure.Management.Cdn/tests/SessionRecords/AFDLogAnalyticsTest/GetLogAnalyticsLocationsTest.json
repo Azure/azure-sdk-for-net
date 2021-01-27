@@ -1,0 +1,544 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourcegroups/cdnResourceGroup8048?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDdjZmRiOTgtYzExOC00NThkLThiZGYtMjQ2YmU2NmIxZjVlL3Jlc291cmNlZ3JvdXBzL2NkblJlc291cmNlR3JvdXA4MDQ4P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "082685f2-9f0d-49ab-b286-8c13ffee664d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "2241de80-075a-4cc3-8af2-56d5c2d6ea21"
+        ],
+        "x-ms-correlation-request-id": [
+          "2241de80-075a-4cc3-8af2-56d5c2d6ea21"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210127T045829Z:2241de80-075a-4cc3-8af2-56d5c2d6ea21"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 04:58:29 GMT"
+        ],
+        "Content-Length": [
+          "193"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdnResourceGroup8048\",\r\n  \"name\": \"cdnResourceGroup8048\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdnResourceGroup8048/providers/Microsoft.Cdn/profiles/profile2246?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDdjZmRiOTgtYzExOC00NThkLThiZGYtMjQ2YmU2NmIxZjVlL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXA4MDQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3Byb2ZpbGVzL3Byb2ZpbGUyMjQ2P2FwaS12ZXJzaW9uPTIwMjAtMDktMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_AzureFrontDoor\"\r\n  },\r\n  \"location\": \"WestUs\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "697d778d-c99b-48b5-af3a-406846acf111"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "149"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8e7333e6-f841-4b67-813b-21de379ce723"
+        ],
+        "x-ms-client-request-id": [
+          "697d778d-c99b-48b5-af3a-406846acf111"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourcegroups/cdnResourceGroup8048/providers/Microsoft.Cdn/operationresults/8c3c46cb-0d77-4eb2-bc09-aed3b0bc7e8d?api-version=2020-09-01"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "24"
+        ],
+        "x-ms-correlation-request-id": [
+          "889e376a-ac3c-457b-a112-f09f073d0090"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210127T045838Z:889e376a-ac3c-457b-a112-f09f073d0090"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 04:58:38 GMT"
+        ],
+        "Content-Length": [
+          "441"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourcegroups/cdnResourceGroup8048/providers/Microsoft.Cdn/profiles/profile2246\",\r\n  \"type\": \"Microsoft.Cdn/profiles\",\r\n  \"name\": \"profile2246\",\r\n  \"location\": \"WestUs\",\r\n  \"kind\": \"frontdoor\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_AzureFrontDoor\"\r\n  },\r\n  \"properties\": {\r\n    \"frontDoorId\": \"3ab03430-71a8-484d-bc28-ab6c927648f2\",\r\n    \"resourceState\": \"Creating\",\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourcegroups/cdnResourceGroup8048/providers/Microsoft.Cdn/operationresults/8c3c46cb-0d77-4eb2-bc09-aed3b0bc7e8d?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDdjZmRiOTgtYzExOC00NThkLThiZGYtMjQ2YmU2NmIxZjVlL3Jlc291cmNlZ3JvdXBzL2NkblJlc291cmNlR3JvdXA4MDQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL29wZXJhdGlvbnJlc3VsdHMvOGMzYzQ2Y2ItMGQ3Ny00ZWIyLWJjMDktYWVkM2IwYmM3ZThkP2FwaS12ZXJzaW9uPTIwMjAtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "bf2f88ee-3cd6-49d3-ab5f-d04c728bc6f8"
+        ],
+        "x-ms-client-request-id": [
+          "80654375-d2a8-48a8-884a-baae325cee49"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "faac1e88-db1d-4f86-80b2-c5cf6b6851ad"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210127T045849Z:faac1e88-db1d-4f86-80b2-c5cf6b6851ad"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 04:58:48 GMT"
+        ],
+        "Content-Length": [
+          "61"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"error\": {\r\n    \"code\": \"None\",\r\n    \"message\": null\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdnResourceGroup8048/providers/Microsoft.Cdn/profiles/profile2246?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDdjZmRiOTgtYzExOC00NThkLThiZGYtMjQ2YmU2NmIxZjVlL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXA4MDQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3Byb2ZpbGVzL3Byb2ZpbGUyMjQ2P2FwaS12ZXJzaW9uPTIwMjAtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a216b86a-a41c-446e-aa42-c680c988202b"
+        ],
+        "x-ms-client-request-id": [
+          "f71a94ed-d19c-46c4-9f74-71e90cf2e351"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "49"
+        ],
+        "x-ms-correlation-request-id": [
+          "f231a026-5bb7-4810-b798-d46dd6f1309a"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210127T045849Z:f231a026-5bb7-4810-b798-d46dd6f1309a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 04:58:49 GMT"
+        ],
+        "Content-Length": [
+          "440"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourcegroups/cdnResourceGroup8048/providers/Microsoft.Cdn/profiles/profile2246\",\r\n  \"type\": \"Microsoft.Cdn/profiles\",\r\n  \"name\": \"profile2246\",\r\n  \"location\": \"WestUs\",\r\n  \"kind\": \"frontdoor\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_AzureFrontDoor\"\r\n  },\r\n  \"properties\": {\r\n    \"frontDoorId\": \"3ab03430-71a8-484d-bc28-ab6c927648f2\",\r\n    \"resourceState\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdnResourceGroup8048/providers/Microsoft.Cdn/profiles/profile2246/afdEndpoints/endpointName8566?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDdjZmRiOTgtYzExOC00NThkLThiZGYtMjQ2YmU2NmIxZjVlL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXA4MDQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3Byb2ZpbGVzL3Byb2ZpbGUyMjQ2L2FmZEVuZHBvaW50cy9lbmRwb2ludE5hbWU4NTY2P2FwaS12ZXJzaW9uPTIwMjAtMDktMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"originResponseTimeoutSeconds\": 60,\r\n    \"enabledState\": \"Enabled\"\r\n  },\r\n  \"location\": \"WestUs\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "859637e8-5cb6-40ae-9110-e4166db09bcc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "189"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "9d1414b8-bcab-4804-997c-298e52ce6a3f"
+        ],
+        "x-ms-client-request-id": [
+          "859637e8-5cb6-40ae-9110-e4166db09bcc"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourcegroups/cdnResourceGroup8048/providers/Microsoft.Cdn/operationresults/122c2e25-b029-42ee-8160-1b9bbaab4441?api-version=2020-09-01"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "99"
+        ],
+        "x-ms-correlation-request-id": [
+          "6fcd4d03-8a88-4a19-80df-0637787b6afb"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210127T045854Z:6fcd4d03-8a88-4a19-80df-0637787b6afb"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 04:58:53 GMT"
+        ],
+        "Content-Length": [
+          "486"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourcegroups/cdnResourceGroup8048/providers/Microsoft.Cdn/profiles/profile2246/afdEndpoints/endpointName8566\",\r\n  \"type\": \"Microsoft.Cdn/profiles/afdendpoints\",\r\n  \"name\": \"endpointName8566\",\r\n  \"location\": \"WestUs\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"hostName\": \"endpointName8566.z01.azurefd.net\",\r\n    \"originResponseTimeoutSeconds\": 60,\r\n    \"enabledState\": \"Enabled\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"deploymentStatus\": \"NotStarted\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourcegroups/cdnResourceGroup8048/providers/Microsoft.Cdn/operationresults/122c2e25-b029-42ee-8160-1b9bbaab4441?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDdjZmRiOTgtYzExOC00NThkLThiZGYtMjQ2YmU2NmIxZjVlL3Jlc291cmNlZ3JvdXBzL2NkblJlc291cmNlR3JvdXA4MDQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL29wZXJhdGlvbnJlc3VsdHMvMTIyYzJlMjUtYjAyOS00MmVlLTgxNjAtMWI5YmJhYWI0NDQxP2FwaS12ZXJzaW9uPTIwMjAtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "01828bcc-6fb7-4782-9df2-ad9bcea578a9"
+        ],
+        "x-ms-client-request-id": [
+          "b02b5ce7-b6e8-4751-9f30-901428ee7379"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "3d73b7b0-28d9-4c51-89ee-9f1b8ec76539"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210127T045904Z:3d73b7b0-28d9-4c51-89ee-9f1b8ec76539"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 04:59:04 GMT"
+        ],
+        "Content-Length": [
+          "61"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"error\": {\r\n    \"code\": \"None\",\r\n    \"message\": null\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdnResourceGroup8048/providers/Microsoft.Cdn/profiles/profile2246/afdEndpoints/endpointName8566?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDdjZmRiOTgtYzExOC00NThkLThiZGYtMjQ2YmU2NmIxZjVlL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXA4MDQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3Byb2ZpbGVzL3Byb2ZpbGUyMjQ2L2FmZEVuZHBvaW50cy9lbmRwb2ludE5hbWU4NTY2P2FwaS12ZXJzaW9uPTIwMjAtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "5d348482-06de-43e8-b8ad-9634f71c34b8"
+        ],
+        "x-ms-client-request-id": [
+          "6be44630-7db9-475f-8151-bce62fd09f5c"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "49"
+        ],
+        "x-ms-correlation-request-id": [
+          "71d8d216-dbf4-40e9-a3dd-ece331d6f22a"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210127T045905Z:71d8d216-dbf4-40e9-a3dd-ece331d6f22a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 04:59:04 GMT"
+        ],
+        "Content-Length": [
+          "487"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourcegroups/cdnResourceGroup8048/providers/Microsoft.Cdn/profiles/profile2246/afdEndpoints/endpointName8566\",\r\n  \"type\": \"Microsoft.Cdn/profiles/afdendpoints\",\r\n  \"name\": \"endpointName8566\",\r\n  \"location\": \"WestUs\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"hostName\": \"endpointName8566.z01.azurefd.net\",\r\n    \"originResponseTimeoutSeconds\": 60,\r\n    \"enabledState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"deploymentStatus\": \"NotStarted\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d7cfdb98-c118-458d-8bdf-246be66b1f5e/resourceGroups/cdnResourceGroup8048/providers/Microsoft.Cdn/profiles/profile2246/getLogAnalyticsLocations?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDdjZmRiOTgtYzExOC00NThkLThiZGYtMjQ2YmU2NmIxZjVlL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXA4MDQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3Byb2ZpbGVzL3Byb2ZpbGUyMjQ2L2dldExvZ0FuYWx5dGljc0xvY2F0aW9ucz9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2b6d5bc4-4001-4c88-a00c-a8abc7d62e4d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "2f4d3e8e-6f99-4134-89f2-81f317d66b80"
+        ],
+        "x-ms-client-request-id": [
+          "2b6d5bc4-4001-4c88-a00c-a8abc7d62e4d"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "29534466-d229-463c-9776-a119acf56618"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20210127T045905Z:29534466-d229-463c-9776-a119acf56618"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 04:59:05 GMT"
+        ],
+        "Content-Length": [
+          "9334"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"continents\": [\r\n    {\r\n      \"id\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"antarctica\"\r\n    },\r\n    {\r\n      \"id\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"southAmerica\"\r\n    }\r\n  ],\r\n  \"countryOrRegions\": [\r\n    {\r\n      \"id\": \"dz\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ao\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"bw\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"bi\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"cm\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"cv\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"cf\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"td\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"km\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"yt\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"cg\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"cd\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"bj\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"gq\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"et\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"er\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"dj\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ga\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"gm\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"gh\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"gn\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ci\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ke\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ls\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"lr\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ly\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"mg\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"mw\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ml\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"mr\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"mu\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ma\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"mz\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"na\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ne\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ng\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"gw\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"re\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"rw\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"sh\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"st\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"sn\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"sc\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"sl\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"so\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"za\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"zw\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ss\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"eh\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"sd\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"sz\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"tg\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"tn\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"ug\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"eg\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"tz\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"bf\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"zm\",\r\n      \"continentId\": \"africa\"\r\n    },\r\n    {\r\n      \"id\": \"aq\",\r\n      \"continentId\": \"antarctica\"\r\n    },\r\n    {\r\n      \"id\": \"bv\",\r\n      \"continentId\": \"antarctica\"\r\n    },\r\n    {\r\n      \"id\": \"gs\",\r\n      \"continentId\": \"antarctica\"\r\n    },\r\n    {\r\n      \"id\": \"tf\",\r\n      \"continentId\": \"antarctica\"\r\n    },\r\n    {\r\n      \"id\": \"hm\",\r\n      \"continentId\": \"antarctica\"\r\n    },\r\n    {\r\n      \"id\": \"af\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"bh\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"bd\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"bt\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"io\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"bn\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"mm\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"kh\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"lk\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"cn\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"tw\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"cx\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"cc\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"cy\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"ps\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"hk\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"in\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"id\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"ir\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"iq\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"il\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"jp\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"kz\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"jo\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"kp\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"kr\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"kw\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"kg\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"la\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"lb\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"mo\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"my\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"mv\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"mn\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"om\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"np\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"pk\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"ph\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"tl\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"qa\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"sa\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"sg\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"vn\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"sy\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"tj\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"th\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"ae\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"tr\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"tm\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"uz\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"ye\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"xe\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"xd\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"xs\",\r\n      \"continentId\": \"asia\"\r\n    },\r\n    {\r\n      \"id\": \"al\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ad\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"az\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"at\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"am\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"be\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ba\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"bg\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"by\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"hr\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"cz\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"dk\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ee\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"fo\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"fi\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ax\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"fr\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ge\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"de\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"gi\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"gr\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"va\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"hu\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"is\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ie\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"it\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"lv\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"li\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"lt\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"lu\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"mt\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"mc\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"md\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"me\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"nl\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"no\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"pl\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"pt\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ro\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ru\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"sm\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"rs\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"sk\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"si\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"es\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"sj\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"se\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ch\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ua\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"mk\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"gb\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"gg\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"je\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"im\",\r\n      \"continentId\": \"europe\"\r\n    },\r\n    {\r\n      \"id\": \"ag\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"bs\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"bb\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"bm\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"bz\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"vg\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"ca\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"ky\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"cr\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"cu\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"dm\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"do\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"sv\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"gl\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"gd\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"gp\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"gt\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"ht\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"hn\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"jm\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"mq\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"mx\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"ms\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"an\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"cw\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"aw\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"sx\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"bq\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"ni\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"um\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"pa\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"pr\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"bl\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"kn\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"ai\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"lc\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"mf\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"pm\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"vc\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"tt\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"tc\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"us\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"vi\",\r\n      \"continentId\": \"northAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"as\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"au\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"sb\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"ck\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"fj\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"pf\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"ki\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"gu\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"nr\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"nc\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"vu\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"nz\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"nu\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"nf\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"mp\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"fm\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"mh\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"pw\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"pg\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"pn\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"tk\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"to\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"tv\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"wf\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"ws\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"xx\",\r\n      \"continentId\": \"oceania\"\r\n    },\r\n    {\r\n      \"id\": \"ar\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"bo\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"br\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"cl\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"co\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"ec\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"fk\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"gf\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"gy\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"py\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"pe\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"sr\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"uy\",\r\n      \"continentId\": \"southAmerica\"\r\n    },\r\n    {\r\n      \"id\": \"ve\",\r\n      \"continentId\": \"southAmerica\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "cdnResourceGroup8048"
+    ],
+    "GetLogAnalyticsLocationsTest": [
+      "profile2246",
+      "endpointName8566"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "d7cfdb98-c118-458d-8bdf-246be66b1f5e"
+  }
+}
