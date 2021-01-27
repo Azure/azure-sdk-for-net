@@ -2,11 +2,11 @@ namespace Azure.Quantum
 {
     public partial class QuantumJobClientOptions : Azure.Core.ClientOptions
     {
-        public const Azure.Quantum.QuantumJobClientOptions.ServiceVersion LatestVersion = Azure.Quantum.QuantumJobClientOptions.ServiceVersion.V1;
-        public QuantumJobClientOptions(Azure.Quantum.QuantumJobClientOptions.ServiceVersion version = Azure.Quantum.QuantumJobClientOptions.ServiceVersion.V1) { }
+        public const Azure.Quantum.QuantumJobClientOptions.ServiceVersion LatestVersion = Azure.Quantum.QuantumJobClientOptions.ServiceVersion.V1Preview;
+        public QuantumJobClientOptions(Azure.Quantum.QuantumJobClientOptions.ServiceVersion version = Azure.Quantum.QuantumJobClientOptions.ServiceVersion.V1Preview) { }
         public enum ServiceVersion
         {
-            V1 = 1,
+            V1Preview = 1,
         }
     }
 }
