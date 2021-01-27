@@ -2,10 +2,10 @@ namespace Azure.Storage.Queues
 {
     public partial class InvalidMessageEventArgs : Azure.SyncAsyncEventArgs
     {
-        public InvalidMessageEventArgs(Azure.Storage.Queues.QueueClient queue, Azure.Storage.Queues.Models.PeekedMessage message, bool runSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
-        public InvalidMessageEventArgs(Azure.Storage.Queues.QueueClient queue, Azure.Storage.Queues.Models.QueueMessage message, bool runSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public InvalidMessageEventArgs(Azure.Storage.Queues.QueueClient queueClient, Azure.Storage.Queues.Models.PeekedMessage message, bool runSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public InvalidMessageEventArgs(Azure.Storage.Queues.QueueClient queueClient, Azure.Storage.Queues.Models.QueueMessage message, bool runSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public object Message { get { throw null; } }
-        public Azure.Storage.Queues.QueueClient Queue { get { throw null; } }
+        public Azure.Storage.Queues.QueueClient QueueClient { get { throw null; } }
     }
     public partial class QueueClient
     {

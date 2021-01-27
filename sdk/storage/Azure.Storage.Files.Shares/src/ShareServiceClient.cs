@@ -233,10 +233,10 @@ namespace Azure.Storage.Files.Shares
 
         private ServiceRestClient BuildServiceRestClient()
             => new ServiceRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
-                Uri.ToString(),
-                ClientConfiguration.Version.ToVersionString());
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
+                _uri.ToString(),
+                _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 
         /// <summary>

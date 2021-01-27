@@ -3,8 +3,6 @@
 ## 1.0.0-beta.4 (Unreleased)
 
 ### Added
-- Added support to create CommunicationIdentityClient with TokenCredential.
-- Added support to create CommunicationIdentityClient with AzureKeyCredential.
 - Added support to create PhoneNumberAdministrationClient with AzureKeyCredential.
 - Added support to create PhoneNumberAdministrationClient with TokenCredential
 
@@ -12,7 +10,7 @@
 - Issue with paging results not pulling next pages
 
 ### Breaking
-- CommunicationTokenScope.Pstn is removed.
+- CommunicationIdentityClient is moved to a new NuGet package, `Azure.Communication.Identity`.
 
 
 ## 1.0.0-beta.3 (2020-11-16)
