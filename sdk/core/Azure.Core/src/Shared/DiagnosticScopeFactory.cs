@@ -25,14 +25,14 @@ namespace Azure.Core.Pipeline
             IsActivityEnabled = isActivityEnabled;
             if (IsActivityEnabled)
             {
-                LazyInitializer.EnsureInitialized(ref _listeners);
+                var listeners = LazyInitializer.EnsureInitialized(ref _listeners);
 
-                lock (_listeners!)
+                lock (listeners!)
                 {
-                    if (!_listeners.TryGetValue(clientNamespace, out _source))
+                    if (!listeners.TryGetValue(clientNamespace, out _source))
                     {
                         _source = new DiagnosticListener(clientNamespace);
-                        _listeners[clientNamespace] = _source;
+                        listeners[clientNamespace] = _source;
                     }
                 }
             }
