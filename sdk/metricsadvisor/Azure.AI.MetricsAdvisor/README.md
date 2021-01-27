@@ -109,10 +109,14 @@ You will also need to [register a new AAD application][register_aad_app] and [gr
 
 Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
+Once you have the environment variables set, you can create a [`MetricsAdvisorClient`][metrics_advisor_client_class]:
+
 ```C# Snippet:CreateMetricsAdvisorClientWithAad
 string endpoint = "<endpoint>";
 var client = new MetricsAdvisorClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
+
+Alternately, you can also create a [`MetricsAdvisorAdministrationClient`][metrics_advisor_admin_client_class] to perform administration operations:
 
 ```C# Snippet:CreateMetricsAdvisorAdministrationClientWithAad
 string endpoint = "<endpoint>";
