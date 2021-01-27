@@ -3,8 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Communication.Administration;
-using Azure.Communication.Administration.Models;
+using Azure.Communication.Identity;
 using Azure.Communication;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -22,7 +21,7 @@ namespace Azure.Communication.Chat.Tests.samples
             CommunicationUserToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
             string endpoint = TestEnvironment.ChatApiUrl();
-            string theadCreatorMemberId = communicationUserToken.User.Id;
+            string theadCreatorMemberId = threadMember.Value.Id;
 
             ChatClient chatClient = new ChatClient(
                 new Uri(endpoint),

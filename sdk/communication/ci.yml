@@ -32,6 +32,8 @@ extends:
       safeName: AzureCommunicationChat
     - name: Azure.Communication.Common
       safeName: AzureCommunicationCommon
+    - name: Azure.Communication.Identity
+      safeName: AzureCommunicationIdentity
     - name: Azure.Communication.Administration
       safeName: AzureCommunicationAdministration
     - name: Azure.ResourceManager.Communication

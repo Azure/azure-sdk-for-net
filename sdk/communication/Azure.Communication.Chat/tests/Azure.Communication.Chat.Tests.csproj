@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\Azure.Communication.Administration\src\Azure.Communication.Administration.csproj" />
+    <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj" />
     <ProjectReference Include="..\src\Azure.Communication.Chat.csproj" />
   </ItemGroup>
 
