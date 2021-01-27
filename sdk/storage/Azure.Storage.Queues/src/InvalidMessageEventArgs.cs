@@ -16,7 +16,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Gets the <see cref="QueueClient"/> that has received invalid message.
         /// </summary>
-        public QueueClient Queue { get; }
+        public QueueClient QueueClient { get; }
 
         /// <summary>
         /// Gets the invalid message which can be either <see cref="QueueMessage"/> or <see cref="PeekedMessage"/>.
@@ -27,7 +27,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidMessageEventArgs"/>.
         /// </summary>
-        /// <param name="queue">The <see cref="QueueClient"/> that has received invalid message.</param>
+        /// <param name="queueClient">The <see cref="QueueClient"/> that has received invalid message.</param>
         /// <param name="message">The invalid message.</param>
         /// <param name="runSynchronously">
         /// A value indicating whether the event handler was invoked
@@ -42,26 +42,26 @@ namespace Azure.Storage.Queues
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
-        /// Thrown if <paramref name="queue"/> or <paramref name="message"/>
+        /// Thrown if <paramref name="queueClient"/> or <paramref name="message"/>
         /// are null.
         /// </exception>
         public InvalidMessageEventArgs(
-            QueueClient queue,
+            QueueClient queueClient,
             QueueMessage message,
             bool runSynchronously,
             CancellationToken cancellationToken)
             : base(runSynchronously, cancellationToken)
         {
-            Argument.AssertNotNull(queue, nameof(queue));
+            Argument.AssertNotNull(queueClient, nameof(queueClient));
             Argument.AssertNotNull(message, nameof(message));
-            Queue = queue;
+            QueueClient = queueClient;
             Message = message;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidMessageEventArgs"/>.
         /// </summary>
-        /// <param name="queue">The <see cref="QueueClient"/> that has received invalid message.</param>
+        /// <param name="queueClient">The <see cref="QueueClient"/> that has received invalid message.</param>
         /// <param name="message">The invalid message.</param>
         /// <param name="runSynchronously">
         /// A value indicating whether the event handler was invoked
@@ -76,19 +76,19 @@ namespace Azure.Storage.Queues
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
-        /// Thrown if <paramref name="queue"/> or <paramref name="message"/>
+        /// Thrown if <paramref name="queueClient"/> or <paramref name="message"/>
         /// are null.
         /// </exception>
         public InvalidMessageEventArgs(
-            QueueClient queue,
+            QueueClient queueClient,
             PeekedMessage message,
             bool runSynchronously,
             CancellationToken cancellationToken)
             : base(runSynchronously, cancellationToken)
         {
-            Argument.AssertNotNull(queue, nameof(queue));
+            Argument.AssertNotNull(queueClient, nameof(queueClient));
             Argument.AssertNotNull(message, nameof(message));
-            Queue = queue;
+            QueueClient = queueClient;
             Message = message;
         }
     }

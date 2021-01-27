@@ -2203,14 +2203,7 @@ namespace Azure.Storage.Queues
                         return response.GetRawResponse().AsNoBodyResponse<QueueMessage[]>();
                     } else
                     {
-                        QueueMessage[] queueMessages;
-                        if (ClientConfiguration.InvalidMessageHandler != null)
-                        {
-                            queueMessages = await ToQueueMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
-                        } else
-                        {
-                            queueMessages = response.Value.Select(x => QueueMessage.ToQueueMessage(x, ClientConfiguration.MessageEncoding)).ToArray();
-                        }
+                        QueueMessage[] queueMessages = await ToQueueMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
 
                         if (UsingClientSideEncryption)
                         {
@@ -2252,12 +2245,12 @@ namespace Azure.Storage.Queues
                 {
                     queueMessages.Add(QueueMessage.ToQueueMessage(dequeuedMessageItem, ClientConfiguration.MessageEncoding));
                 }
-                catch (FormatException)
+                catch (FormatException) when (ClientConfiguration.InvalidMessageHandler != null)
                 {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     await ClientConfiguration.InvalidMessageHandler.RaiseAsync(
                         new InvalidMessageEventArgs(
-                            queue: this,
+                            queueClient: this,
                             message: QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
                             runSynchronously: !async,
                             cancellationToken: cancellationToken),
@@ -2562,15 +2555,7 @@ namespace Azure.Storage.Queues
                     }
                     else
                     {
-                        PeekedMessage[] peekedMessages;
-                        if (ClientConfiguration.InvalidMessageHandler != null)
-                        {
-                            peekedMessages = await ToPeekedMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            peekedMessages = response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, ClientConfiguration.MessageEncoding)).ToArray();
-                        }
+                        PeekedMessage[] peekedMessages = await ToPeekedMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
 
                         if (UsingClientSideEncryption)
                         {
@@ -2612,12 +2597,12 @@ namespace Azure.Storage.Queues
                 {
                     peekedMessages.Add(PeekedMessage.ToPeekedMessage(peekedMessageItem, ClientConfiguration.MessageEncoding));
                 }
-                catch (FormatException)
+                catch (FormatException) when (ClientConfiguration.InvalidMessageHandler != null)
                 {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     await ClientConfiguration.InvalidMessageHandler.RaiseAsync(
                         new InvalidMessageEventArgs(
-                            queue: this,
+                            queueClient: this,
                             message: PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
                             runSynchronously: !async,
                             cancellationToken: cancellationToken),
