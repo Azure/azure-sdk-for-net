@@ -18,13 +18,10 @@ pr:
     - release/*
   paths:
     include:
-    - common/Perf/
-    - common/PerfStressShared/
-    - common/Stress/
     - sdk/quantum/
 
 extends:
-  quantum: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: quantum
     ArtifactName: packages
