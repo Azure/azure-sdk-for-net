@@ -16,7 +16,7 @@ namespace Azure.Communication.Identity.Models
         internal static CommunicationIdentityAccessTokenResult DeserializeCommunicationIdentityAccessTokenResult(JsonElement element)
         {
             CommunicationIdentity identity = default;
-            Optional<CommunicationUserToken> accessToken = default;
+            Optional<CommunicationIdentityAccessToken> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -31,7 +31,7 @@ namespace Azure.Communication.Identity.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    accessToken = CommunicationUserToken.DeserializeCommunicationUserToken(property.Value);
+                    accessToken = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(property.Value);
                     continue;
                 }
             }

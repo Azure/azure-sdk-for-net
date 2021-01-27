@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.Identity
 {
     [CodeGenModel("CommunicationIdentityAccessToken")]
-    public partial class CommunicationUserToken
+    internal partial class CommunicationIdentityAccessToken
     {
     }
 }

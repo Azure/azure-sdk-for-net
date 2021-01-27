@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 #region Snippet:Azure_Communication_Chat_Tests_E2E_UsingStatements
+using Azure.Core;
 using Azure.Communication;
 using Azure.Communication.Identity;
 //@@ using Azure.Communication.Chat;
@@ -471,7 +472,7 @@ namespace Azure.Communication.Chat.Tests
         {
             Response<CommunicationUserIdentifier> threadMember = communicationIdentityClient.CreateUser();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
-            Response<CommunicationUserToken> tokenResponseThreadMember = communicationIdentityClient.IssueToken(threadMember.Value, scopes);
+            Response<AccessToken> tokenResponseThreadMember = communicationIdentityClient.IssueToken(threadMember.Value, scopes);
 
             return (threadMember.Value, tokenResponseThreadMember.Value.Token);
         }
@@ -480,7 +481,7 @@ namespace Azure.Communication.Chat.Tests
         {
             Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
-            Response<CommunicationUserToken> tokenResponseThreadMember = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, scopes);
+            Response<AccessToken> tokenResponseThreadMember = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, scopes);
 
             return (threadMember.Value, tokenResponseThreadMember.Value.Token);
         }

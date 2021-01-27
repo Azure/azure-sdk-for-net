@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity
 {
-    public partial class CommunicationUserToken
+    internal partial class CommunicationIdentityAccessToken
     {
-        internal static CommunicationUserToken DeserializeCommunicationUserToken(JsonElement element)
+        internal static CommunicationIdentityAccessToken DeserializeCommunicationIdentityAccessToken(JsonElement element)
         {
             string token = default;
             DateTimeOffset expiresOn = default;
@@ -30,7 +30,7 @@ namespace Azure.Communication.Identity
                     continue;
                 }
             }
-            return new CommunicationUserToken(token, expiresOn);
+            return new CommunicationIdentityAccessToken(token, expiresOn);
         }
     }
 }
