@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for operation result info.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("OperationResultInfoBase")]
     public partial class OperationResultInfoBase
     {
         /// <summary>

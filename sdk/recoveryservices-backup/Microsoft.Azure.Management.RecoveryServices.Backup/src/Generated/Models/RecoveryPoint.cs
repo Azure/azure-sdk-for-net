@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for backup copies. Workload-specific backup copies are
     /// derived from this class.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RecoveryPoint")]
     public partial class RecoveryPoint
     {
         /// <summary>

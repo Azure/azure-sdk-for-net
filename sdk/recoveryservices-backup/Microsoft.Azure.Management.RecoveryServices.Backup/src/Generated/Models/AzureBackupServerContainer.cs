@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// AzureBackupServer (DPMVenus) workload-specific protection container.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureBackupServerContainer")]
     public partial class AzureBackupServerContainer : DpmContainer
     {
         /// <summary>

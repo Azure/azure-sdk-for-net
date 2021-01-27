@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Base class for generic container of backup items
     /// </summary>
+    [Newtonsoft.Json.JsonObject("GenericContainer")]
     public partial class GenericContainer : ProtectionContainer
     {
         /// <summary>
