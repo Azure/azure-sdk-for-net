@@ -82,7 +82,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="job"> The complete metadata of the job to submit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="job"/> is null. </exception>
-        public virtual Response<JobDetails> Create(string jobId, JobDetails job, CancellationToken cancellationToken = default)
+        public virtual Response<JobDetails> CreateJob(string jobId, JobDetails job, CancellationToken cancellationToken = default)
         {
             return _jobs.Create(jobId, job, cancellationToken);
         }
@@ -92,7 +92,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="job"> The complete metadata of the job to submit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="job"/> is null. </exception>
-        public virtual async Task<Response<JobDetails>> CreateAsync(string jobId, JobDetails job, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobDetails>> CreateJobAsync(string jobId, JobDetails job, CancellationToken cancellationToken = default)
         {
             return await _jobs.CreateAsync(jobId, job, cancellationToken).ConfigureAwait(false);
         }
@@ -101,7 +101,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response Cancel(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response CancelJob(string jobId, CancellationToken cancellationToken = default)
         {
             return _jobs.Cancel(jobId, cancellationToken);
         }
@@ -110,7 +110,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response> CancelAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
             return await _jobs.CancelAsync(jobId, cancellationToken).ConfigureAwait(false);
         }
@@ -131,14 +131,14 @@ namespace Azure.Quantum.Jobs
 
         /// <summary> Get quota status. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<QuantumJobQuota> GetQuantumJobQuotas(CancellationToken cancellationToken = default)
+        public virtual Pageable<QuantumJobQuota> GetQuotas(CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateEnumerable(cont => ToPage(string.IsNullOrEmpty(cont) ? _quotas.List() : _quotas.ListNextPage(cont)));
         }
 
         /// <summary> Get quota status. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<QuantumJobQuota> GetQuantumJobQuotasAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QuantumJobQuota> GetQuotasAsync(CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _quotas.ListAsync().ConfigureAwait(false) : await _quotas.ListNextPageAsync(cont).ConfigureAwait(false)));
         }
