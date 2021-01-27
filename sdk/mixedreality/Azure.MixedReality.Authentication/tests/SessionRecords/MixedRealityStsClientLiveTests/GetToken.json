@@ -31,9 +31,9 @@
     }
   ],
   "Variables": {
-    "ACCOUNT_DOMAIN": "mixedreality.azure.com",
-    "ACCOUNT_ID": "68321d5a-7978-4ceb-b880-0f49751daae9",
-    "ACCOUNT_KEY": "NjgzMjFkNWEtNzk3OC00Y2ViLWI4ODAtMGY0OTc1MWRhYWU5",
+    "ASA_ACCOUNT_DOMAIN": "mixedreality.azure.com",
+    "ASA_ACCOUNT_ID": "68321d5a-7978-4ceb-b880-0f49751daae9",
+    "ASA_ACCOUNT_KEY": "NjgzMjFkNWEtNzk3OC00Y2ViLWI4ODAtMGY0OTc1MWRhYWU5",
     "RandomSeed": "101086706"
   }
 }
