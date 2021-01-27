@@ -76,7 +76,7 @@ namespace Azure.Quantum.Jobs.Tests
         [Ignore("Only verifying that the sample builds")]
         public void GetJobsSample()
         {
-            #region Snippet:Azure_Quantum_GetJobs
+            #region Snippet:Azure_Quantum_Jobs_GetJobs
             var client = new QuantumJobClient("subscriptionId", "resourceGroupName", "workspaceName", "location");
             var jobs = client.GetJobs();
             #endregion

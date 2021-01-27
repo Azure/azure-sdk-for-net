@@ -56,7 +56,7 @@ Each example in the *Examples* section starts with an H3 that describes the exam
 
 The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
 
-```C# Snippet:Azure_Quantum_GetJobs
+```C# Snippet:Azure_Quantum_Jobs_GetJobs
 var client = new QuantumJobClient("subscriptionId", "resourceGroupName", "workspaceName", "location");
 var jobs = client.GetJobs();
 ```
