@@ -434,10 +434,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleAssignmentName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="roleAssignmentName"/> is empty.</exception>
         /// <returns>A <see cref="Response{TResult}"/> containing the result of the operation.</returns>
         public virtual Response<KeyVaultRoleAssignment> GetRoleAssignment(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignment)}");
             scope.Start();
             try
@@ -458,10 +461,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleAssignmentName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="roleAssignmentName"/> is empty.</exception>
         /// <returns>A <see cref="Task{TResult}"/> containing the result of the asynchronous operation.</returns>
         public virtual async Task<Response<KeyVaultRoleAssignment>> GetRoleAssignmentAsync(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignment)}");
             scope.Start();
             try
@@ -483,10 +489,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleAssignmentName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="roleAssignmentName"/> is empty.</exception>
         /// <returns>A <see cref="Response{TResult}"/> containing the result of the operation.</returns>
         public virtual Response<KeyVaultRoleAssignment> DeleteRoleAssignment(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
             scope.Start();
             try
@@ -507,10 +516,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleAssignmentName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="roleAssignmentName"/> is empty.</exception>
         /// <returns>A <see cref="Task{TResult}"/> containing the result of the asynchronous operation.</returns>
         public virtual async Task<Response<KeyVaultRoleAssignment>> DeleteRoleAssignmentAsync(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
             scope.Start();
             try
