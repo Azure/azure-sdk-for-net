@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Represents a line of text recognized from the input document.
+    /// Represents a line of text  and its appearance.
     /// </summary>
     public class FormLine : FormElement
     {
