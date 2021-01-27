@@ -23,6 +23,7 @@ namespace Azure.AI.TextAnalytics
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
+        private readonly QARuntimeOptions _qaOptions;
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
@@ -114,6 +115,106 @@ namespace Azure.AI.TextAnalytics
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureKeyCredential"/>
+        /// class for the specified service instance.
+        /// </summary>
+        /// <param name="endpoint">A <see cref="Uri"/> to the service the client
+        /// sends requests to.  Endpoint can be found in the Azure portal.</param>
+        /// <param name="credential">The API key used to access
+        /// the service. This will allow you to update the API key
+        /// without creating a new client.</param>
+        /// <param name="options"><see cref="QARuntimeOptions"/> that allow
+        /// callers to configure how requests are sent to the service.</param>
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        public TextAnalyticsClient(Uri endpoint, AzureKeyCredential credential, QARuntimeOptions options = null)
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
+            _baseUri = endpoint;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _qaOptions = options;
+
+            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
+            _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+        }
+
+        #region QA
+        /// <summary>
+        /// GenerateAnswerAsync
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<QnASearchResultList>> GenerateAnswerAsync(QueryDTO query, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(query.Question, nameof(query.Question));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(GenerateAnswer)}");
+            scope.AddAttribute("query", query);
+            scope.Start();
+
+            try
+            {
+                Response<QnASearchResultList> result = await _serviceRestClient.GenerateAnswerAsync(query, _qaOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response response = result.GetRawResponse();
+
+                //if (result.Value.Errors.Count > 0)
+                //{
+                //    // only one document, so we can ignore the id and grab the first error message.
+                //    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+                //    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                //}
+
+                return Response.FromValue((result.Value), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// GenerateAnswer
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<QnASearchResultList> GenerateAnswer(QueryDTO query, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(query.Question, nameof(query.Question));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(GenerateAnswer)}");
+            scope.AddAttribute("scope", query);
+            scope.Start();
+
+            try
+            {
+                Response<QnASearchResultList> result = _serviceRestClient.GenerateAnswer(query, _qaOptions);
+                Response response = result.GetRawResponse();
+
+                //if (result.Value.Errors.Count > 0)
+                //{
+                //    // only one document, so we can ignore the id and grab the first error message.
+                //    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+                //    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                //}
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
 
         #region Detect Language
 
@@ -1782,6 +1883,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         #endregion
+
+
 
         #region Linked Entities
 

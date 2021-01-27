@@ -25,5 +25,19 @@ namespace Azure.AI.TextAnalytics.Tests
                     InstrumentClientOptions(options))
             );
         }
+
+        public TextAnalyticsClient GetQAClient(AzureKeyCredential credential = default, QARuntimeOptions options = default)
+        {
+            string apiKey = "c0b16804b5224efda0e3d62dc892c62b";//TestEnvironment.ApiKey;
+            credential ??= new AzureKeyCredential(apiKey);
+            options ??= new QARuntimeOptions("test", "ef31dd53-6d00-4769-b353-63335503a8b3");
+            return InstrumentClient(
+                new TextAnalyticsClient(
+                    new Uri("https://qnamakerteambugbash-aue.cognitiveservices.azure.com"),
+                        //TestEnvironment.Endpoint),
+                    credential,
+                    InstrumentClientOptions(options))
+            );
+        }
     }
 }
