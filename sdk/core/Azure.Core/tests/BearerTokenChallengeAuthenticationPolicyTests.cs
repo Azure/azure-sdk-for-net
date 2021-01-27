@@ -621,13 +621,13 @@ namespace Azure.Core.Tests
 
             List<Challenge> parsedChallenges = new List<Challenge>();
 
-            foreach (var challengeTuple in BearerTokenChallengeAuthenticationPolicy.ParseChallenges(challenge))
+            foreach (var (ChallengeKey, ChallengeParameters) in BearerTokenChallengeAuthenticationPolicy.ParseChallenges(challenge))
             {
                 Challenge parsedChallenge = new Challenge();
 
-                parsedChallenge.Scheme = challengeTuple.Item1;
+                parsedChallenge.Scheme = ChallengeKey;
 
-                foreach (var paramTuple in BearerTokenChallengeAuthenticationPolicy.ParseChallengeParameters(challengeTuple.Item2))
+                foreach (var paramTuple in BearerTokenChallengeAuthenticationPolicy.ParseChallengeParameters(ChallengeParameters))
                 {
                     parsedChallenge.Parameters.Add(paramTuple);
                 }

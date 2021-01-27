@@ -154,18 +154,18 @@ namespace Azure.Core.Pipeline
         {
             if (response.Status == 401 && response.Headers.TryGetValue("WWW-Authenticate", out string? headerValue))
             {
-                foreach (var challenge in ParseChallenges(headerValue))
+                foreach (var (ChallengeKey, ChallengeParameters) in ParseChallenges(headerValue))
                 {
-                    if (string.Equals(challenge.Item1, "Bearer", StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(ChallengeKey, "Bearer", StringComparison.OrdinalIgnoreCase))
                     {
-                        foreach (var parameter in ParseChallengeParameters(challenge.Item2))
+                        foreach (var (ChallengeParameterKey, ChallengeParameterValue) in ParseChallengeParameters(ChallengeParameters))
                         {
-                            if (string.Equals(parameter.Item1, "claims", StringComparison.OrdinalIgnoreCase))
+                            if (string.Equals(ChallengeParameterKey, "claims", StringComparison.OrdinalIgnoreCase))
                             {
                                 // currently we are only handling ARM claims challenges which are always b64url encoded, and must be decoded.
                                 // some handling will have to be added if we intend to handle claims challenges from Graph as well since they
                                 // are not encoded.
-                                return Base64Url.DecodeString(parameter.Item2);
+                                return Base64Url.DecodeString(ChallengeParameterValue);
                             }
                         }
                     }
@@ -388,7 +388,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        internal static IEnumerable<(string, string)> ParseChallenges(string headerValue)
+        internal static IEnumerable<(string ChallengeKey, string ChallengeParameters)> ParseChallenges(string headerValue)
         {
             var challengeMatches = s_AuthenticationChallengeRegex.Matches(headerValue);
 
@@ -398,9 +398,9 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        internal static IEnumerable<(string, string)> ParseChallengeParameters(string challengeValue)
+        internal static IEnumerable<(string ChallengeParameterKey, string ChallengeParameterValue)> ParseChallengeParameters(string ChallengeParameters)
         {
-            var paramMatches = s_ChallengeParameterRegex.Matches(challengeValue);
+            var paramMatches = s_ChallengeParameterRegex.Matches(ChallengeParameters);
 
             for (int i = 0; i < paramMatches.Count; i++)
             {
