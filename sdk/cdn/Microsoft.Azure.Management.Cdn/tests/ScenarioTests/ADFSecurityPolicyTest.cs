@@ -91,8 +91,7 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
-        /**
-        [Fact]
+        [Fact(Skip = "Not Ready")]
         public void AFDOriginUpdateTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -211,7 +210,7 @@ namespace Cdn.Tests.ScenarioTests
                 }
             }
         }
-        */
+       
 
         [Fact]
         public void AFDOriginDeleteTest()

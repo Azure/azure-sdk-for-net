@@ -16,8 +16,7 @@ namespace Cdn.Tests.ScenarioTests
     {
         private const long usageLimit = 25L;
 
-        /**
-        [Fact]
+        [Fact(Skip = "Not Ready")]
         public void AFDProfileDeleteTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -58,7 +57,7 @@ namespace Cdn.Tests.ScenarioTests
                 }
             }
         }
-        */
+        
 
         [Fact]
         public void AFDProfileUsageTest()
@@ -108,8 +107,7 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
-        /**
-        [Fact]
+        [Fact(Skip = "Not Ready")]
         public void AFDProfileCheckHostNameAvailabilityTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -171,6 +169,6 @@ namespace Cdn.Tests.ScenarioTests
                 }
             }
         }
-        */
+        
     }
 }

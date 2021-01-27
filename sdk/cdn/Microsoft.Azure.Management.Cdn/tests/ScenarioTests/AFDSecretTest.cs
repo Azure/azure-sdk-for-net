@@ -67,14 +67,13 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
-        /** 
-         * Not supported patch now 01/20/2020
-        [Fact]
+     
+        [Fact(Skip = "Not supported patch now 01/20/2020")]
         public void AFDSecretUpdateTest()
         {
             
         }
-        */
+        
 
         [Fact]
         public void AFDSecretDeleteTest()

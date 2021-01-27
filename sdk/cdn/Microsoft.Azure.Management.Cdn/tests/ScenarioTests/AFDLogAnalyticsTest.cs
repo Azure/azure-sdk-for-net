@@ -16,8 +16,7 @@ namespace Cdn.Tests.ScenarioTests
 {
     public class AFDLogAnalyticsTest
     {
-        /**
-        [Fact]
+        [Fact(Skip = "Not Ready")]
         public void GetLogAnalyticsMetricsTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -64,8 +63,8 @@ namespace Cdn.Tests.ScenarioTests
 
 
                     IList<string> metrics = new List<string>();
-                    DateTime dateTimeBegin = DateTime.UtcNow;
-                    DateTime dateTimeEnd = DateTime.UtcNow;
+                    DateTime dateTimeBegin = new DateTime(2021, 1, 27, 0, 0, 0);
+                    DateTime dateTimeEnd = new DateTime(2021, 1, 27, 0, 0, 1);
                     string granularity = "PT5M";
                     MetricsResponse response = cdnMgmtClient.LogAnalytics.GetLogAnalyticsMetrics(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity);
                     Assert.NotNull(response);
@@ -80,7 +79,7 @@ namespace Cdn.Tests.ScenarioTests
                 }
             }
         }
-        */
+
 
         [Fact]
         public void GetLogAnalyticsRankingsTest()
@@ -135,8 +134,8 @@ namespace Cdn.Tests.ScenarioTests
                         "clientRequestCount"
                     };
                     int maxRanking = 50;
-                    DateTime dateTimeBegin = DateTime.UtcNow;
-                    DateTime dateTimeEnd = DateTime.UtcNow;
+                    DateTime dateTimeBegin = new DateTime(2021, 1, 27, 0, 0, 0);
+                    DateTime dateTimeEnd = new DateTime(2021, 1, 27, 0, 0, 1);
                     RankingsResponse response = cdnMgmtClient.LogAnalytics.GetLogAnalyticsRankings(resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd);
                     Assert.NotNull(response);
                 }
@@ -266,8 +265,7 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
-        /**
-        [Fact]
+        [Fact(Skip = "Not Ready")]
         public void GetWafLogAnalyticsMetricsTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -314,8 +312,8 @@ namespace Cdn.Tests.ScenarioTests
 
 
                     IList<string> metrics = new List<string>();
-                    DateTime dateTimeBegin = DateTime.UtcNow;
-                    DateTime dateTimeEnd = DateTime.UtcNow;
+                    DateTime dateTimeBegin = new DateTime(2021, 1, 27, 0, 0, 0);
+                    DateTime dateTimeEnd = new DateTime(2021, 1, 27, 0, 0, 1);
                     string granularity = "PT5M";
 
                     WafMetricsResponse response = cdnMgmtClient.LogAnalytics.GetWafLogAnalyticsMetrics(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity);
@@ -332,7 +330,7 @@ namespace Cdn.Tests.ScenarioTests
                 }
             }
         }
-        */
+
 
         [Fact]
         public void GetWafLogAnalyticsRankingsTest()
@@ -386,8 +384,8 @@ namespace Cdn.Tests.ScenarioTests
                         "clientRequestCount"
                     };
                     int maxRanking = 50;
-                    DateTime dateTimeBegin = DateTime.UtcNow;
-                    DateTime dateTimeEnd = DateTime.UtcNow;
+                    DateTime dateTimeBegin = new DateTime(2021, 1, 27, 0, 0, 0);
+                    DateTime dateTimeEnd = new DateTime(2021, 1, 27, 0, 0, 1);
                     WafRankingsResponse response = cdnMgmtClient.LogAnalytics.GetWafLogAnalyticsRankings(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings);
                     Assert.NotNull(response);
                 }
@@ -397,8 +395,6 @@ namespace Cdn.Tests.ScenarioTests
                     _ = CdnTestUtilities.DeleteResourceGroupAsync(resourcesClient, resourceGroupName);
                 }
             }
-
-
         }
     }
 }
