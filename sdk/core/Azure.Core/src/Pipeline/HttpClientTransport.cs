@@ -67,13 +67,10 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        public sealed override async ValueTask ProcessAsync(HttpMessage message)
-        {
-            await ProcessAsync(message, true).ConfigureAwait(false);
-        }
+        public sealed override ValueTask ProcessAsync(HttpMessage message) => ProcessAsync(message, true);
 
 #pragma warning disable CA1801 // async parameter unused on netstandard
-        private async Task ProcessAsync(HttpMessage message, bool async)
+        private async ValueTask ProcessAsync(HttpMessage message, bool async)
 #pragma warning restore CA1801
         {
             using HttpRequestMessage httpRequest = BuildRequestMessage(message);
