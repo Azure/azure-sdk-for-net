@@ -52,6 +52,16 @@ If possible, use the same example snippets that your in-code documentation uses.
 
 Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
 
+### Get the thing
+
+The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+
+```C# Snippet:GetSecret
+var client = new QuantumJobClient(subscriptionId, resourceGroupName, workspaceName, location);
+var jobs = client.GetJobs();
+
+```
+
 ## Troubleshooting
 
 Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
