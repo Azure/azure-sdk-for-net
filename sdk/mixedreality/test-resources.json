@@ -38,15 +38,15 @@
         }
     ],
     "outputs": {
-        "MIXEDREALITY_ACCOUNT_ID": {
+        "MIXEDREALITY_ASA_ACCOUNT_ID": {
             "type": "string",
             "value": "[reference(variables('asaAccountName')).accountId]"
         },
-        "MIXEDREALITY_ACCOUNT_DOMAIN": {
+        "MIXEDREALITY_ASA_ACCOUNT_DOMAIN": {
             "type": "string",
             "value": "[reference(variables('asaAccountName')).accountDomain]"
         },
-        "MIXEDREALITY_ACCOUNT_KEY": {
+        "MIXEDREALITY_ASA_ACCOUNT_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.MixedReality/spatialAnchorsAccounts', variables('asaAccountName')), variables('apiVersion')).primaryKey]"
         }

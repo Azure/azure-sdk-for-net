@@ -11,24 +11,24 @@ namespace Azure.MixedReality.Authentication.Tests
         /// Gets the account domain.
         /// </summary>
         /// <remarks>
-        /// Set the MIXEDREALITY_ACCOUNT_DOMAIN environment variable.
+        /// Set the MIXEDREALITY_ASA_ACCOUNT_DOMAIN environment variable.
         /// </remarks>
-        public string AccountDomain => GetRecordedVariable("ACCOUNT_DOMAIN");
+        public string AccountDomain => GetRecordedVariable("ASA_ACCOUNT_DOMAIN");
 
         /// <summary>
         /// Gets the account identifier.
         /// </summary>
         /// <remarks>
-        /// Set the MIXEDREALITY_ACCOUNT_ID environment variable.
+        /// Set the MIXEDREALITY_ASA_ACCOUNT_ID environment variable.
         /// </remarks>
-        public string AccountId => GetRecordedVariable("ACCOUNT_ID");
+        public string AccountId => GetRecordedVariable("ASA_ACCOUNT_ID");
 
         /// <summary>
         /// Gets the account key.
         /// </summary>
         /// <remarks>
-        /// Set the MIXEDREALITY_ACCOUNT_KEY environment variable.
+        /// Set the MIXEDREALITY_ASA_ACCOUNT_KEY environment variable.
         /// </remarks>
-        public string AccountKey => GetRecordedVariable("ACCOUNT_KEY");
+        public string AccountKey => GetRecordedVariable("ASA_ACCOUNT_KEY");
     }
 }
