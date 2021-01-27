@@ -102,7 +102,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBatchClient(BlobContainerClient client)
         {
             Uri = client.Uri;
-            var blobServiceClient = client.GetParentBlobServiceClient();
+            BlobServiceClient blobServiceClient = client.GetParentBlobServiceClient();
             Pipeline = BlobServiceClientInternals.GetHttpPipeline(blobServiceClient);
             BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(blobServiceClient);
             Version = options.Version;
