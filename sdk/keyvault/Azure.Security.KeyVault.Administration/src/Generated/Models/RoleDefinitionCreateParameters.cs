@@ -10,12 +10,12 @@ using System;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Role definition create parameters. </summary>
-    public partial class RoleDefinitionCreateParameters
+    internal partial class RoleDefinitionCreateParameters
     {
         /// <summary> Initializes a new instance of RoleDefinitionCreateParameters. </summary>
         /// <param name="properties"> Role definition properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public RoleDefinitionCreateParameters(UpsertRoleDefinitionOptions properties)
+        public RoleDefinitionCreateParameters(RoleDefinitionProperties properties)
         {
             if (properties == null)
             {
@@ -26,6 +26,6 @@ namespace Azure.Security.KeyVault.Administration.Models
         }
 
         /// <summary> Role definition properties. </summary>
-        public UpsertRoleDefinitionOptions Properties { get; }
+        public RoleDefinitionProperties Properties { get; }
     }
 }

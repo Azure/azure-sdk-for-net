@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Administration.Models;
@@ -13,6 +14,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
     public abstract class AccessControlTestBase : AdministrationTestBase
     {
         private readonly ConcurrentQueue<(string Name, KeyVaultRoleScope? Scope)> _roleAssignmentsToDelete = new ConcurrentQueue<(string Name, KeyVaultRoleScope? Scope)>();
+        private readonly ConcurrentQueue<(string Name, KeyVaultRoleScope? Scope)> _roleDefinitionsToDelete = new ConcurrentQueue<(string Name, KeyVaultRoleScope? Scope)>();
 
         public KeyVaultAccessControlClient Client { get; private set; }
 
@@ -63,6 +65,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 await DeleteRoleAssignment(assignment);
             }
 
+            while (_roleAssignmentsToDelete.TryDequeue(out var definition))
+            {
+                await DeleteRoleDefinition(definition);
+            }
+
             await base.Cleanup();
         }
 
@@ -85,9 +92,32 @@ namespace Azure.Security.KeyVault.Administration.Tests
             }
         }
 
+        protected async Task DeleteRoleDefinition((string Name, KeyVaultRoleScope? Scope) assignment)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
+            try
+            {
+                using (Recording.DisableRecording())
+                {
+                    await Client.DeleteRoleDefinitionAsync(new Guid(assignment.Name), assignment.Scope.Value).ConfigureAwait(false);
+                }
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+        }
         protected void RegisterForCleanup(KeyVaultRoleAssignment assignment)
         {
             _roleAssignmentsToDelete.Enqueue((assignment.Name, assignment.Properties.Scope));
+        }
+
+        protected void RegisterForCleanup(KeyVaultRoleDefinition definition)
+        {
+            _roleDefinitionsToDelete.Enqueue((definition.Name, definition.AssignableScopes.First()));
         }
     }
 }

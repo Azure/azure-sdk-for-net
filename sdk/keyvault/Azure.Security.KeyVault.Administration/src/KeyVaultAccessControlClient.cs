@@ -73,7 +73,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Get all role definitions that are applicable at scope and above.
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignments. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> is null.</exception>
         public virtual Pageable<KeyVaultRoleDefinition> GetRoleDefinitions(KeyVaultRoleScope roleScope, CancellationToken cancellationToken = default)
@@ -113,7 +113,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Get all role definitions that are applicable at scope and above.
         /// </summary>
         /// <param name="roleScope"> The scope of the role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> is null.</exception>
         public virtual AsyncPageable<KeyVaultRoleDefinition> GetRoleDefinitionsAsync(KeyVaultRoleScope roleScope, CancellationToken cancellationToken = default)
@@ -154,22 +154,34 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Creates or updates a role definition.
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="roleDefinitionDescription">The description for the role definition.</param>
+        /// <param name="permissions">The permissions granted by the role definition when assigned to a principal.</param>
         /// <param name="roleScope">The scope of the <see cref="KeyVaultRoleDefinition"/> to create. The default value is <see cref="KeyVaultRoleScope.Global"/>.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<KeyVaultRoleDefinition>> UpsertRoleDefinitionAsync(UpsertRoleDefinitionOptions options, KeyVaultRoleScope roleScope = default, CancellationToken cancellationToken = default)
+        /// <param name="roleDefinitionName">Optional name used to create the role definition. A new <see cref="Guid"/> will be generated if not specified.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<Response<KeyVaultRoleDefinition>> UpsertRoleDefinitionAsync(string roleDefinitionDescription, KeyVaultPermission permissions, KeyVaultRoleScope roleScope = default, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(UpsertRoleDefinition)}");
             scope.Start();
             try
             {
-                var parameters = new RoleDefinitionCreateParameters(options);
+                var name = (roleDefinitionName ?? Guid.NewGuid()).ToString();
+                var properties = new RoleDefinitionProperties()
+                {
+                    Description = roleDefinitionDescription,
+                    RoleName = name,
+                    RoleType = KeyVaultRoleType.CustomRole
+                };
+                properties.AssignableScopes.Add(roleScope);
+                properties.Permissions.Add(permissions);
+
+                var parameters = new RoleDefinitionCreateParameters(properties);
 
                 return await _definitionsRestClient.CreateOrUpdateAsync(
                     vaultBaseUrl: VaultUri.AbsoluteUri,
                     scope: roleScope == default ? roleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
-                    roleDefinitionName: options.RoleName,
+                    roleDefinitionName: name,
                     parameters: parameters,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -188,8 +200,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="permissions">The permissions granted by the role definition when assigned to a principal.</param>
         /// <param name="roleScope">The scope of the <see cref="KeyVaultRoleDefinition"/> to create. The default value is <see cref="KeyVaultRoleScope.Global"/>.</param>
         /// <param name="roleDefinitionName">Optional name used to create the role definition. A new <see cref="Guid"/> will be generated if not specified.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Response{TResult}"/> containing the result of the operation.</returns>
         public virtual Response<KeyVaultRoleDefinition> UpsertRoleDefinition(string roleDefinitionDescription, KeyVaultPermission permissions, KeyVaultRoleScope roleScope = default, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(UpsertRoleDefinition)}");
@@ -197,11 +209,11 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var name = (roleDefinitionName ?? Guid.NewGuid()).ToString();
-                var properties = new UpsertRoleDefinitionOptions()
+                var properties = new RoleDefinitionProperties()
                 {
                     Description = roleDefinitionDescription,
                     RoleName = name,
-                    RoleType = RoleType.CustomRole
+                    RoleType = KeyVaultRoleType.CustomRole
                 };
                 properties.AssignableScopes.Add(roleScope);
                 properties.Permissions.Add(permissions);
@@ -225,17 +237,17 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Deletes a role definition.
         /// </summary>
-        /// <param name="roleScope"></param>
-        /// <param name="roleDefinitionName"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="roleDefinitionName">The name used of the role definition to delete.</param>
+        /// <param name="roleScope">The scope of the role to delete.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<KeyVaultRoleDefinition>> DeleteRoleDefinitionAsync(KeyVaultRoleScope roleScope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultRoleDefinition>> DeleteRoleDefinitionAsync(Guid roleDefinitionName, KeyVaultRoleScope roleScope, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleDefinition)}");
             scope.Start();
             try
             {
-                return await _definitionsRestClient.DeleteAsync(vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName, cancellationToken).ConfigureAwait(false);
+                return await _definitionsRestClient.DeleteAsync(vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName.ToString(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -247,17 +259,17 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Deletes a role definition.
         /// </summary>
-        /// <param name="roleScope"></param>
         /// <param name="roleDefinitionName"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual Response<KeyVaultRoleDefinition> DeleteRoleDefinition(KeyVaultRoleScope roleScope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        /// <param name="roleScope"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Response{TResult}"/> containing the result of the operation.</returns>
+        public virtual Response<KeyVaultRoleDefinition> DeleteRoleDefinition(Guid roleDefinitionName, KeyVaultRoleScope roleScope, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleDefinition)}");
             scope.Start();
             try
             {
-                return _definitionsRestClient.Delete(vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName, cancellationToken);
+                return _definitionsRestClient.Delete(vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), roleDefinitionName: roleDefinitionName.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -270,7 +282,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Gets the <see cref="KeyVaultRoleAssignment"/>s for a scope.
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignments. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> is null.</exception>
         public virtual Pageable<KeyVaultRoleAssignment> GetRoleAssignments(KeyVaultRoleScope roleScope, CancellationToken cancellationToken = default)
@@ -310,7 +322,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Gets the <see cref="KeyVaultRoleAssignment"/>s for a scope.
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignments. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> is null.</exception>
         public virtual AsyncPageable<KeyVaultRoleAssignment> GetRoleAssignmentsAsync(KeyVaultRoleScope roleScope, CancellationToken cancellationToken = default)
@@ -355,10 +367,11 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionId">The role definition ID used in the role assignment.</param>
         /// <param name="principalId">The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group.</param>
         /// <param name="roleAssignmentName">Optional name used to create the role assignment. A new <see cref="Guid"/> will be generated if not specified.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is empty.</exception>
+        /// <returns>A <see cref="Response{TResult}"/> containing the result of the operation.</returns>
         public virtual Response<KeyVaultRoleAssignment> CreateRoleAssignment(KeyVaultRoleScope roleScope, string roleDefinitionId, string principalId, Guid? roleAssignmentName = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
@@ -387,10 +400,11 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionId">The role definition ID used in the role assignment.</param>
         /// <param name="principalId">The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group.</param>
         /// <param name="roleAssignmentName">Optional name used to create the role assignment. A new <see cref="Guid"/> will be generated if not specified.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is empty.</exception>
+        /// <returns>A <see cref="Task{TResult}"/> containing the result of the asynchronous operation.</returns>
         public virtual async Task<Response<KeyVaultRoleAssignment>> CreateRoleAssignmentAsync(KeyVaultRoleScope roleScope, string roleDefinitionId, string principalId, Guid? roleAssignmentName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
@@ -418,9 +432,10 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
+        /// <returns>A <see cref="Response{TResult}"/> containing the result of the operation.</returns>
         public virtual Response<KeyVaultRoleAssignment> GetRoleAssignment(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignment)}");
@@ -441,9 +456,10 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
+        /// <returns>A <see cref="Task{TResult}"/> containing the result of the asynchronous operation.</returns>
         public virtual async Task<Response<KeyVaultRoleAssignment>> GetRoleAssignmentAsync(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignment)}");
@@ -465,9 +481,10 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
+        /// <returns>A <see cref="Response{TResult}"/> containing the result of the operation.</returns>
         public virtual Response<KeyVaultRoleAssignment> DeleteRoleAssignment(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
@@ -488,9 +505,10 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
+        /// <returns>A <see cref="Task{TResult}"/> containing the result of the asynchronous operation.</returns>
         public virtual async Task<Response<KeyVaultRoleAssignment>> DeleteRoleAssignmentAsync(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
