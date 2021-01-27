@@ -234,13 +234,17 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
-    public partial class HealthcareEntity : Azure.AI.TextAnalytics.Entity
+    public partial class HealthcareEntity
     {
         internal HealthcareEntity() { }
+        public string Category { get { throw null; } }
+        public double ConfidenceScore { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.EntityDataSource> DataSources { get { throw null; } }
-        public bool IsNegated { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.EntityDataSource> Links { get { throw null; } }
+        public int Length { get { throw null; } }
+        public int Offset { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<Azure.AI.TextAnalytics.HealthcareEntity, Azure.AI.TextAnalytics.HealthcareEntityRelationType> RelatedEntities { get { throw null; } }
+        public string SubCategory { get { throw null; } }
+        public string Text { get { throw null; } }
     }
     public partial class HealthcareEntityRelationType : System.IEquatable<Azure.AI.TextAnalytics.HealthcareEntityRelationType>
     {
@@ -259,14 +263,6 @@ namespace Azure.AI.TextAnalytics
         public static implicit operator Azure.AI.TextAnalytics.HealthcareEntityRelationType (string category) { throw null; }
         public static bool operator !=(Azure.AI.TextAnalytics.HealthcareEntityRelationType left, Azure.AI.TextAnalytics.HealthcareEntityRelationType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class HealthcareRelation
-    {
-        internal HealthcareRelation() { }
-        public bool Bidirectional { get { throw null; } }
-        public string RelationType { get { throw null; } }
-        public Azure.AI.TextAnalytics.HealthcareEntity Source { get { throw null; } }
-        public Azure.AI.TextAnalytics.HealthcareEntity Target { get { throw null; } }
     }
     public partial class JobManifestTasks
     {

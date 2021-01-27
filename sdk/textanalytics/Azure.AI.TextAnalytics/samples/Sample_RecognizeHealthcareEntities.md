@@ -47,10 +47,9 @@ To recognize healthcare entities in a document, use the `StarthealthcareAsyc` me
                 Console.WriteLine($"    Category: {entity.Category}");
                 Console.WriteLine($"    Offset: {entity.Offset}");
                 Console.WriteLine($"    Length: {entity.Length}");
-                Console.WriteLine($"    IsNegated: {entity.IsNegated}");
                 Console.WriteLine($"    Links:");
 
-                foreach (EntityDataSource entityDataSource in entity.Links)
+                foreach (EntityDataSource entityDataSource in entity.DataSources)
                 {
                     Console.WriteLine($"        ID: {entityDataSource.EntityId}");
                     Console.WriteLine($"        DataSource: {entityDataSource.Name}");
@@ -100,10 +99,9 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
             Console.WriteLine($"    Category: {entity.Category}");
             Console.WriteLine($"    Offset: {entity.Offset}");
             Console.WriteLine($"    Length: {entity.Length}");
-            Console.WriteLine($"    IsNegated: {entity.IsNegated}");
             Console.WriteLine($"    Links:");
 
-            foreach (EntityDataSource entityDataSource in entity.Links)
+            foreach (EntityDataSource entityDataSource in entity.DataSources)
             {
                 Console.WriteLine($"        ID: {entityDataSource.EntityId}");
                 Console.WriteLine($"        DataSource: {entityDataSource.Name}");
