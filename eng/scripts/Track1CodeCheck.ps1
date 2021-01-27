@@ -133,8 +133,12 @@ try {
         & npm install -g autorest
     }
 
+    # Running autorest first time to avoid C# version conflict
+    & autorest https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/common-types/resource-management/v2/types.json --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=../temp
+
     # Invoke AutoRest
     Write-Output "Start code-gen"
+    $commandList = @()
     foreach ($metaData in $mataPath) {
         $metaDataContent = ''
         try {
@@ -164,9 +168,11 @@ try {
                 LogError "MetaData $metaData content not correct, you may need to re-run sdk\<RP_Name>\generate.ps1"
             }
             else {
-                Write-Output "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90"
+                $command = "Ready to execute: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path"
+                Write-Output $command
+                $commandList += $command
                 Invoke-Block {
-                    & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path --use:@microsoft.azure/autorest.csharp@2.3.90 
+                    & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path
                 }
             }
         }
@@ -194,8 +200,10 @@ try {
         Write-Host "============================"
         LogError "Discrepancy detected between generated code in PR and reference generation. Please note, the files in the Generated folder should not be modified OR adding/excluding files. You may need to re-run sdk<RP_Name>\generate.ps1."
         Write-Host "============================"
-        Write-Host "For reference, we are using this command for the code check: " -ForegroundColor red -BackgroundColor white
-        Write-Host "  autorest https://github.com/<Repo_Name>/azure-rest-api-specs/blob/<Commit_Id>/specification/<RP_Name>/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=<SDK_Repo_Path>/sdk --use:@microsoft.azure/autorest.csharp@2.3.90" -ForegroundColor red -BackgroundColor white
+        Write-Host "For reference, we are using following commands for the code check: " -ForegroundColor red -BackgroundColor white
+        $commandList | ForEach-Object {
+            Write-Host $_ -ForegroundColor red -BackgroundColor white
+        }
     }
 }
 finally {
