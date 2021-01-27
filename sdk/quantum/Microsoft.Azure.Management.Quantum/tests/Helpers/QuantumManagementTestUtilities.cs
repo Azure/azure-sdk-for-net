@@ -75,9 +75,6 @@ namespace Quantum.Tests.Helpers
             {
                 Location = DefaultLocation,
                 Tags = DefaultTags,
-                Sku = new Microsoft.Azure.Management.Quantum.Models.Sku { Name = DefaultSkuName },
-                Kind = DefaultKind,
-                Properties = new QuantumWorkspaceProperties(),
             };
 
             return account;
@@ -101,64 +98,50 @@ namespace Quantum.Tests.Helpers
             return rgname;
         }
 
-        public static string CreateQuantumWorkspace(QuantumManagementClient QuantumMgmtClient, string rgname, string kind = null)
+        public static string CreateQuantumWorkspace(QuantumManagementClient quantumMgmtClient, string rgname, string kind = null)
         {
-            string accountName = TestUtilities.GenerateName("csa");
+            string workspaceName = TestUtilities.GenerateName("csa");
             var parameters = GetDefaultQuantumWorkspaceParameters();
-            if (!string.IsNullOrEmpty(kind)) parameters.Kind = kind;
-            var createRequest2 = QuantumMgmtClient.Workspaces.Create(rgname, accountName, parameters);
+            var createRequest2 = quantumMgmtClient.Workspaces.CreateOrUpdate(rgname, workspaceName, parameters);
 
-            return accountName;
+            return workspaceName;
         }
 
-        public static QuantumWorkspace CreateAndValidateWorkspaceWithOnlyRequiredParameters(QuantumManagementClient QuantumMgmtClient, string rgName, string skuName, string accountType = "TextAnalytics", string location = null)
+        public static QuantumWorkspace CreateAndValidateWorkspaceWithOnlyRequiredParameters(QuantumManagementClient quantumMgmtClient, string rgName, string skuName, string accountType = "TextAnalytics", string location = null)
         {
             // Create account with only required params
-            var accountName = TestUtilities.GenerateName("csa");
+            var workspaceName = TestUtilities.GenerateName("csa");
             var parameters = new QuantumWorkspace
             {
-                Sku = new Microsoft.Azure.Management.Quantum.Models.Sku { Name = skuName },
-                Kind = accountType,
                 Location = location ?? DefaultLocation,
-                Properties = new QuantumWorkspaceProperties(),
             };
-            var account = QuantumMgmtClient.Workspaces.Create(rgName, accountName, parameters);
-            VerifyWorkspaceProperties(account, false, accountType, skuName, location ?? DefaultLocation);
+            var workspace = quantumMgmtClient.Workspaces.CreateOrUpdate(rgName, workspaceName, parameters);
+            VerifyWorkspaceProperties(workspace, false, accountType, skuName, location ?? DefaultLocation);
 
-            return account;
+            return workspace;
         }
 
-        public static void VerifyWorkspaceProperties(QuantumWorkspace account, bool useDefaults, string kind = DefaultKind, string skuName = DefaultSkuName, string location = "westus")
+        public static void VerifyWorkspaceProperties(QuantumWorkspace workspace, bool useDefaults, string kind = DefaultKind, string skuName = DefaultSkuName, string location = "westus")
         {
-            Assert.NotNull(account); // verifies that the account is actually created
-            Assert.NotNull(account.Id);
-            Assert.NotNull(account.Location);
-            Assert.NotNull(account.Name);
-            Assert.NotNull(account.Etag);
-            Assert.NotNull(account.Kind);
-
-            Assert.NotNull(account.Sku);
-            Assert.NotNull(account.Sku.Name);
-
-            Assert.NotNull(account.Properties.Endpoint);
-            Assert.Equal(ProvisioningState.Succeeded, account.Properties.ProvisioningState);
+            Assert.NotNull(workspace); // verifies that the account is actually created
+            Assert.NotNull(workspace.Id);
+            Assert.NotNull(workspace.Location);
+            Assert.NotNull(workspace.Name);
+            Assert.NotNull(workspace.EndpointUri);
+            Assert.Equal("Succeeded", workspace.ProvisioningState);
 
             if (useDefaults)
             {
-                Assert.Equal(QuantumManagementTestUtilities.DefaultLocation, account.Location);
-                Assert.Equal(QuantumManagementTestUtilities.DefaultSkuName, account.Sku.Name);
-                Assert.Equal(QuantumManagementTestUtilities.DefaultKind.ToString(), account.Kind);
+                Assert.Equal(QuantumManagementTestUtilities.DefaultLocation, workspace.Location);
 
-                Assert.NotNull(account.Tags);
-                Assert.Equal(2, account.Tags.Count);
-                Assert.Equal("value1", account.Tags["key1"]);
-                Assert.Equal("value2", account.Tags["key2"]);
+                Assert.NotNull(workspace.Tags);
+                Assert.Equal(2, workspace.Tags.Count);
+                Assert.Equal("value1", workspace.Tags["key1"]);
+                Assert.Equal("value2", workspace.Tags["key2"]);
             }
             else
             {
-                Assert.Equal(skuName, account.Sku.Name);
-                Assert.Equal(kind, account.Kind);
-                Assert.Equal(location, account.Location);
+                Assert.Equal(location, workspace.Location);
             }
         }
 
@@ -169,9 +152,9 @@ namespace Quantum.Tests.Helpers
                 action();
                 Assert.True(false, "Expected an Exception");
             }
-            catch (ErrorException e)
+            catch (ErrorResponseException e)
             {
-                Assert.Equal(expectedErrorCode, e.Body.ErrorProperty.Code);
+                Assert.Equal(expectedErrorCode, e.Body.Error.Code);
             }
         }
     }
