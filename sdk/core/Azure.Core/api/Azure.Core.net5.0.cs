@@ -416,7 +416,7 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TokenRequestContext(string[] scopes, string? parentRequestId = null) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId) { throw null; }
         public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null) { throw null; }
         public string? Claims { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }

@@ -13,7 +13,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="scopes">The scopes required for the token.</param>
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId = default)
+        public TokenRequestContext(string[] scopes, string? parentRequestId)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
