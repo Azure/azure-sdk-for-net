@@ -206,11 +206,6 @@ namespace Azure.Messaging.EventHubs.Processor
                             // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
 
                             OwnershipNotClaimable(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex.Message);
-                            return null;
-                        }
-
-                        if (contentInfoResponse == null)
-                        {
                             continue;
                         }
 
