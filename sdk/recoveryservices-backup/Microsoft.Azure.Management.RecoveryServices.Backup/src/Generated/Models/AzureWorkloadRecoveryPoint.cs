@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// Workload specific recovery point, specifically encapsulates full/diff
     /// recovery point
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureWorkloadRecoveryPoint")]
     public partial class AzureWorkloadRecoveryPoint : RecoveryPoint
     {
         /// <summary>

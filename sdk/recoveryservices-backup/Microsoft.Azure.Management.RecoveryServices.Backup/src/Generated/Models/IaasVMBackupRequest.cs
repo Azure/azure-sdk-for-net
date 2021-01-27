@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// IaaS VM workload-specific backup request.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("IaasVMBackupRequest")]
     public partial class IaasVMBackupRequest : BackupRequest
     {
         /// <summary>

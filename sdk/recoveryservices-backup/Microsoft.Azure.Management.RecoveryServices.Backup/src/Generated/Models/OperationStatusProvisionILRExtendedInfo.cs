@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Operation status extended info for ILR provision action.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("OperationStatusProvisionILRExtendedInfo")]
     public partial class OperationStatusProvisionILRExtendedInfo : OperationStatusExtendedInfo
     {
         /// <summary>

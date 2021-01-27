@@ -15,7 +15,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    [Newtonsoft.Json.JsonObject("CrrAccessToken")]
     public partial class CrrAccessToken
     {
         /// <summary>

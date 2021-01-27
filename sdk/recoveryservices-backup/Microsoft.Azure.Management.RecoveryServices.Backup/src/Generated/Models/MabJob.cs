@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// MAB workload-specific job.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("MabJob")]
     public partial class MabJob : Job
     {
         /// <summary>

@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// AzureWorkload SAP Hana -specific restore. Specifically for
     /// PointInTime/Log restore
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureWorkloadSAPHanaPointInTimeRestoreRequest")]
     public partial class AzureWorkloadSAPHanaPointInTimeRestoreRequest : AzureWorkloadSAPHanaRestoreRequest
     {
         /// <summary>

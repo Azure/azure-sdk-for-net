@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Azure File Share workload specific backup copy.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureFileShareRecoveryPoint")]
     public partial class AzureFileShareRecoveryPoint : RecoveryPoint
     {
         /// <summary>

@@ -10,14 +10,12 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Backup engine type when Azure Backup Server is used to manage the
     /// backups.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureBackupServerEngine")]
     public partial class AzureBackupServerEngine : BackupEngineBase
     {
         /// <summary>

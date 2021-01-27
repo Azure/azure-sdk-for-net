@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// Container for the workloads running inside Azure Compute or Classic
     /// Compute.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureWorkloadContainer")]
     public partial class AzureWorkloadContainer : ProtectionContainer
     {
         /// <summary>

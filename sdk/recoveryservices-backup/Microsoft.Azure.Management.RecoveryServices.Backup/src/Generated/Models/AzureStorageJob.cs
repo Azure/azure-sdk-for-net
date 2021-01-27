@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Azure storage specific job.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureStorageJob")]
     public partial class AzureStorageJob : Job
     {
         /// <summary>

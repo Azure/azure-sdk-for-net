@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Vault level Job
     /// </summary>
-    [Newtonsoft.Json.JsonObject("VaultJob")]
     public partial class VaultJob : Job
     {
         /// <summary>

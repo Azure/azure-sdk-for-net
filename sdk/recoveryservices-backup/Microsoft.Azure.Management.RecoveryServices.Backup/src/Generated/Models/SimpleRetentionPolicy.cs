@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Simple policy retention.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("SimpleRetentionPolicy")]
     public partial class SimpleRetentionPolicy : RetentionPolicy
     {
         /// <summary>

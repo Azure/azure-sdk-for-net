@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// AzureFileShare workload-specific backup request.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureFileShareBackupRequest")]
     public partial class AzureFileShareBackupRequest : BackupRequest
     {
         /// <summary>
