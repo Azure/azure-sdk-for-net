@@ -66,7 +66,7 @@ Console.WriteLine($"User id: {user.Id}");
 ### Issuing or Refreshing a token for an existing identity
 
 ```C# Snippet:CreateCommunicationTokenAsync
-Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
+Response<AccessToken> tokenResponse = await client.IssueTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
 string token = tokenResponse.Value.Token;
 DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
 Console.WriteLine($"Token: {token}");
