@@ -1682,5 +1682,17 @@ namespace Azure.Storage.Queues.Test
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<QueueClient>(TestConfigDefault.ConnectionString, "queuename", new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(TestConfigDefault.ConnectionString, "queuename").Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new QueueClientOptions()).Object;
+        }
     }
 }

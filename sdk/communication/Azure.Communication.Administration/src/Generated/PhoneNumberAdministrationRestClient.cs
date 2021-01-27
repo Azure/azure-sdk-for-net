@@ -20,6 +20,7 @@ namespace Azure.Communication.Administration
     internal partial class PhoneNumberAdministrationRestClient
     {
         private string endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -27,15 +28,21 @@ namespace Azure.Communication.Administration
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public PhoneNumberAdministrationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public PhoneNumberAdministrationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2020-07-20-preview1")
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             this.endpoint = endpoint;
+            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -60,7 +67,7 @@ namespace Azure.Communication.Administration
             {
                 uri.AppendQuery("take", take.Value, true);
             }
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -124,7 +131,7 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/areacodes", false);
             uri.AppendQuery("locationType", locationType, true);
             uri.AppendQuery("phonePlanId", phonePlanId, true);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -225,7 +232,7 @@ namespace Azure.Communication.Administration
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/administration/phonenumbers/capabilities/", false);
             uri.AppendPath(capabilitiesUpdateId, true);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -293,7 +300,7 @@ namespace Azure.Communication.Administration
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/administration/phonenumbers/capabilities", false);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -378,7 +385,7 @@ namespace Azure.Communication.Administration
             {
                 uri.AppendQuery("take", take.Value, true);
             }
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -438,7 +445,7 @@ namespace Azure.Communication.Administration
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/administration/phonenumbers/numberconfiguration", false);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -511,7 +518,7 @@ namespace Azure.Communication.Administration
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/administration/phonenumbers/numberconfiguration/configure", false);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -584,7 +591,7 @@ namespace Azure.Communication.Administration
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/administration/phonenumbers/numberconfiguration/unconfigure", false);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -665,7 +672,7 @@ namespace Azure.Communication.Administration
             {
                 uri.AppendQuery("take", take.Value, true);
             }
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -757,7 +764,7 @@ namespace Azure.Communication.Administration
             {
                 uri.AppendQuery("take", take.Value, true);
             }
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -851,7 +858,7 @@ namespace Azure.Communication.Administration
             {
                 uri.AppendQuery("locale", locale, true);
             }
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -942,7 +949,7 @@ namespace Azure.Communication.Administration
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/administration/phonenumbers/releases/", false);
             uri.AppendPath(releaseId, true);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1010,7 +1017,7 @@ namespace Azure.Communication.Administration
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/administration/phonenumbers/releases", false);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1091,7 +1098,7 @@ namespace Azure.Communication.Administration
             {
                 uri.AppendQuery("take", take.Value, true);
             }
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1150,7 +1157,7 @@ namespace Azure.Communication.Administration
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/administration/phonenumbers/searches/", false);
             uri.AppendPath(searchId, true);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1218,7 +1225,7 @@ namespace Azure.Communication.Administration
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/administration/phonenumbers/searches", false);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (body != null)
@@ -1289,7 +1296,7 @@ namespace Azure.Communication.Administration
             {
                 uri.AppendQuery("take", take.Value, true);
             }
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1349,7 +1356,7 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/administration/phonenumbers/searches/", false);
             uri.AppendPath(searchId, true);
             uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1409,7 +1416,7 @@ namespace Azure.Communication.Administration
             uri.AppendPath("/administration/phonenumbers/searches/", false);
             uri.AppendPath(searchId, true);
             uri.AppendPath("/purchase", false);
-            uri.AppendQuery("api-version", "2020-07-20-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
