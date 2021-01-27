@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class HealthcareEntity
+    internal partial class HealthcareEntityInternal
     {
-        internal static HealthcareEntity DeserializeHealthcareEntity(JsonElement element)
+        internal static HealthcareEntityInternal DeserializeHealthcareEntityInternal(JsonElement element)
         {
             bool isNegated = default;
             Optional<IReadOnlyList<EntityDataSource>> links = default;
@@ -76,7 +76,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new HealthcareEntity(text, category, subcategory.Value, offset, length, confidenceScore, isNegated, Optional.ToList(links));
+            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, isNegated, Optional.ToList(links));
         }
     }
 }

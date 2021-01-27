@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
+using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -14,10 +11,13 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public partial class AnalyzeHealthcareEntitiesResult : TextAnalyticsResult
     {
-        internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics, IReadOnlyCollection<HealthcareEntity> entities, IReadOnlyList<Models.TextAnalyticsWarningInternal> warnings)
+        internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics,
+            IReadOnlyList<HealthcareEntityInternal> healthcareEntities,
+            IReadOnlyList<HealthcareRelationInternal> healthcareRelations,
+            IReadOnlyList<TextAnalyticsWarningInternal> warnings)
             : base(id, statistics)
         {
-            Entities = entities;
+            Entities = Transforms.ConvertToHealthcareEntityCollection(healthcareEntities, healthcareRelations);
             Warnings = Transforms.ConvertToWarnings(warnings);
         }
 

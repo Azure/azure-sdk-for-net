@@ -63,28 +63,25 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     var linksList = new List<string> { "UMLS", "AOD", "ATC", "CCPSS", "CHV", "CSP", "DRUGBANK", "GS", "LCH_NW", "LNC", "MEDCIN", "MMSL", "MSH", "MTHSPL", "NCI", "NCI_CTRP", "NCI_DCP", "NCI_DTP", "NCI_FDA", "NCI_NCI-GLOSS", "NDDF", "PDQ", "RCD", "RXNORM", "SNM", "SNMI", "SNOMEDCT_US", "USP", "USPMG", "VANDF" };
 
-                    foreach (EntityDataSource entityDataSource in entity.Links)
+                    foreach (EntityDataSource entityDataSource in entity.DataSources)
                         Assert.IsTrue(linksList.Contains(entityDataSource.Name));
                 }
+
+                if (entity.Text == "100mg")
+                {
+                    HealthcareEntity relatedEntity= new HealthcareEntity(new HealthcareEntityInternal("ibuprofen", "MedicationName", 27, 0, 1.0, false));
+
+                    Assert.IsTrue(entity.RelatedEntities.Count == 1);
+                    Assert.AreEqual(relatedEntity.Text, entity.RelatedEntities.ElementAt(0).Key.Text);
+                    Assert.AreEqual(relatedEntity.Category, entity.RelatedEntities.ElementAt(0).Key.Category);
+                    Assert.AreEqual(relatedEntity.Length, entity.RelatedEntities.ElementAt(0).Key.Length);
+                    Assert.AreEqual(relatedEntity.Offset, entity.RelatedEntities.ElementAt(0).Key.Offset);
+                    Assert.AreEqual(relatedEntity.ConfidenceScore, entity.RelatedEntities.ElementAt(0).Key.ConfidenceScore);
+
+                    // TODO - DosageOfMedication is not in relation types and is returned from the service. Need to add to swagger.
+                    //Assert.AreEqual(HealthcareEntityRelationType.DosageOfMedication, entity.RelatedEntities.ElementAt(0).Value);
+                }
             }
-
-            //foreach (HealthcareRelation relation in result.Relations)
-            //{
-            //    if (relation.RelationType == "DosageOfMedication")
-            //    {
-            //        Assert.AreEqual(relation.Source.Text, "100mg");
-            //        Assert.AreEqual(relation.Source.Category, "Dosage");
-            //        Assert.AreEqual(relation.Source.ConfidenceScore, 1);
-            //        Assert.AreEqual(relation.Source.Length, 5);
-            //        Assert.AreEqual(relation.Source.Offset, 18);
-
-            //        Assert.AreEqual(relation.Target.Text, "ibuprofen");
-            //        Assert.AreEqual(relation.Target.Category, "MedicationName");
-            //        Assert.AreEqual(relation.Target.ConfidenceScore, 1);
-            //        Assert.AreEqual(relation.Target.Length, 9);
-            //        Assert.AreEqual(relation.Target.Offset, 27);
-            //    }
-            //}
         }
 
         [Test]

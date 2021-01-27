@@ -245,6 +245,11 @@ namespace Azure.AI.TextAnalytics
 
         #region Healthcare
 
+        internal static IReadOnlyCollection<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities, IEnumerable<HealthcareRelationInternal> healthcareRelations)
+        {
+            return healthcareEntities.Select((entity) => new HealthcareEntity(entity, healthcareEntities, healthcareRelations)).ToList();
+        }
+
         internal static AnalyzeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
         {
             var healthcareEntititesResults = new List<AnalyzeHealthcareEntitiesResult>();
@@ -258,7 +263,12 @@ namespace Azure.AI.TextAnalytics
             //Read entities
             foreach (DocumentHealthcareEntitiesInternal documentHealthcareEntities in results.Documents)
             {
-                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(documentHealthcareEntities.Id, documentHealthcareEntities.Statistics ?? default, documentHealthcareEntities.Entities, documentHealthcareEntities.Warnings));
+                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(
+                    documentHealthcareEntities.Id,
+                    documentHealthcareEntities.Statistics ?? default,
+                    documentHealthcareEntities.Entities,
+                    documentHealthcareEntities.Relations,
+                    documentHealthcareEntities.Warnings));
             }
 
             healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
