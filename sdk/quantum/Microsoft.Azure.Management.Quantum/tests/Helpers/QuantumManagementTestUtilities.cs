@@ -1,161 +1,223 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+// Licensed under the MIT License.
 
-using Microsoft.Azure.Management.Quantum;
-using Microsoft.Azure.Management.Quantum.Models;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Rest;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using ResourceGroups.Tests;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using Xunit;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.Quantum.Models;
+using Microsoft.Rest.Azure;
 
-namespace Quantum.Tests.Helpers
+namespace Microsoft.Azure.Management.Quantum.Tests
 {
+    /// <summary>
+    /// Test utilities 
+    /// </summary>
     public static class QuantumManagementTestUtilities
     {
-        public static bool IsTestTenant = false;
-        private static HttpClientHandler Handler = null;
-
-        private const string testSubscription = null;
-        private static Uri testUri = null;
-
-        // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "westus";
-        public const string DefaultSkuName = "S1";
-        public const string DefaultKind = "TextAnalytics";
-        public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
-            {
-                {"key1","value1"},
-                {"key2","value2"}
-            };
-
-        public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        /// <summary>
+        /// Determine whether the current test mode is record mode
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsRecordMode()
         {
-            if (IsTestTenant)
-            {
-                return null;
-            }
-            else
-            {
-                handler.IsPassThrough = true;
-                ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
-                return resourcesClient;
-            }
+            return HttpMockServer.Mode == HttpRecorderMode.Record;
         }
 
-        public static QuantumManagementClient GetQuantumManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        /// <summary>
+        /// Determine whether the current test mode is playback mode
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsPlaybackMode()
         {
-            QuantumManagementClient QuantumClient;
-            if (IsTestTenant)
+            return HttpMockServer.Mode == HttpRecorderMode.Playback;
+        }
+
+        /// <summary>
+        /// Get current subscription Id from test configurations(Environment variables).
+        /// </summary>
+        /// <returns></returns>
+        public static string GetSubscriptionId()
+        {
+            string subscriptionId = null;
+            if (IsRecordMode())
             {
-                QuantumClient = new QuantumManagementClient(new TokenCredentials("xyz"), GetHandler());
-                QuantumClient.SubscriptionId = testSubscription;
-                QuantumClient.BaseUri = testUri;
+                var environment = TestEnvironmentFactory.GetTestEnvironment();
+                HttpMockServer.Variables[ConnectionStringKeys.SubscriptionIdKey] = environment.SubscriptionId;
+                subscriptionId = environment.SubscriptionId;
             }
-            else
+            else if (IsPlaybackMode())
             {
-                handler.IsPassThrough = true;
-                QuantumClient = context.GetServiceClient<QuantumManagementClient>(handlers: handler);
+                subscriptionId = HttpMockServer.Variables[ConnectionStringKeys.SubscriptionIdKey];
             }
-            return QuantumClient;
+
+            return subscriptionId;
         }
 
-        private static HttpClientHandler GetHandler()
+        /// <summary>
+        /// Get current tenant Id from test configurations(Environment variables).
+        /// </summary>
+        /// <returns></returns>
+        public static string GetTenantId()
         {
-            return Handler;
-        }
-
-        public static QuantumWorkspace GetDefaultQuantumWorkspaceParameters()
-        {
-            QuantumWorkspace account = new QuantumWorkspace
+            string tenantId = null;
+            if (IsRecordMode())
             {
-                Location = DefaultLocation,
-                Tags = DefaultTags,
-            };
-
-            return account;
+                var environment = TestEnvironmentFactory.GetTestEnvironment();
+                HttpMockServer.Variables[ConnectionStringKeys.AADTenantKey] = environment.Tenant;
+                tenantId = environment.Tenant;
+            }
+            else if (IsPlaybackMode())
+            {
+                tenantId = HttpMockServer.Variables[ConnectionStringKeys.AADTenantKey];
+            }
+            return tenantId;
         }
 
-        public static string CreateResourceGroup(ResourceManagementClient resourcesClient)
+        /// <summary>
+        /// Get service principal Id from test configurations(Environment variables).
+        /// </summary>
+        /// <returns></returns>
+        public static string GetServicePrincipalId()
         {
-            const string testPrefix = "res";
-            var rgname = TestUtilities.GenerateName(testPrefix);
-
-            if (!IsTestTenant)
+            string servicePrincipalId = null;
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                var resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
-                    rgname,
-                    new ResourceGroup
+                var environment = TestEnvironmentFactory.GetTestEnvironment();
+                HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey] = environment.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.ServicePrincipalKey);
+                servicePrincipalId = HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey];
+            }
+            else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                servicePrincipalId = HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey];
+            }
+            return servicePrincipalId;
+        }
+
+        /// <summary>
+        /// Get service principal secret from test configurations(Environment variables).
+        /// </summary>
+        /// <returns></returns>
+        public static string GetServicePrincipalSecret()
+        {
+            string servicePrincipalSecret = null;
+            if (IsRecordMode())
+            {
+                var environment = TestEnvironmentFactory.GetTestEnvironment();
+                servicePrincipalSecret = environment.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.ServicePrincipalSecretKey);
+            }
+            else if (IsPlaybackMode())
+            {
+                servicePrincipalSecret = "xyz";
+            }
+            return servicePrincipalSecret;
+        }
+
+        /// <summary>
+        /// Get service principal object id from test configurations(Environment variables).
+        /// </summary>
+        /// <returns></returns>
+        public static string GetServicePrincipalObjectId()
+        {
+            string servicePrincipalObjectId = null;
+            if (IsRecordMode())
+            {
+                var environment = TestEnvironmentFactory.GetTestEnvironment();
+                HttpMockServer.Variables[ConnectionStringKeys.AADClientIdKey] = environment.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.AADClientIdKey);
+                servicePrincipalObjectId = HttpMockServer.Variables[ConnectionStringKeys.AADClientIdKey];
+            }
+            else if (IsPlaybackMode())
+            {
+                servicePrincipalObjectId = HttpMockServer.Variables[ConnectionStringKeys.AADClientIdKey];
+            }
+            return servicePrincipalObjectId;
+        }
+
+        /// <summary>
+        /// Get access token
+        /// </summary>
+        /// <param name="authority"></param>
+        /// <param name="resource"></param>
+        /// <param name="scope"></param>
+        /// <returns></returns>
+        public static async Task<string> GetAccessToken(string authority, string resource, string scope)
+        {
+            string accessToken = null;
+            if (IsRecordMode())
+            {
+                var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
+                string authClientId = GetServicePrincipalId();
+                string authSecret = GetServicePrincipalSecret();
+                var clientCredential = new ClientCredential(authClientId, authSecret);
+                var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
+                accessToken = result.AccessToken;
+            }
+            else if (IsPlaybackMode())
+            {
+                accessToken = "fake-token";
+            }
+
+            return accessToken;
+        }
+
+        /// <summary>
+        /// Get delegating handlers
+        /// </summary>
+        /// <returns></returns>
+        public static DelegatingHandler[] GetHandlers()
+        {
+            HttpMockServer server = HttpMockServer.CreateInstance();
+            return new DelegatingHandler[] { server };
+        }
+
+        /// <summary>
+        /// Create workspace create parameters.
+        /// </summary>
+        /// <param name="commonData"></param>
+        /// <returns></returns>
+        public static QuantumWorkspace PrepareWorkspaceCreateParams(this CommonTestFixture commonData)
+        {
+            return new QuantumWorkspace
+            {
+                Location = commonData.Location,
+                Identity = new QuantumWorkspaceIdentity
+                {
+                    Type = ResourceIdentityType.SystemAssigned
+                },
+                Providers = new List<Provider>()
+                {
+                    new Provider()
                     {
-                        Location = DefaultLocation
-                    });
-            }
-
-            return rgname;
-        }
-
-        public static string CreateQuantumWorkspace(QuantumManagementClient quantumMgmtClient, string rgname, string kind = null)
-        {
-            string workspaceName = TestUtilities.GenerateName("csa");
-            var parameters = GetDefaultQuantumWorkspaceParameters();
-            var createRequest2 = quantumMgmtClient.Workspaces.CreateOrUpdate(rgname, workspaceName, parameters);
-
-            return workspaceName;
-        }
-
-        public static QuantumWorkspace CreateAndValidateWorkspaceWithOnlyRequiredParameters(QuantumManagementClient quantumMgmtClient, string rgName, string skuName, string accountType = "TextAnalytics", string location = null)
-        {
-            // Create account with only required params
-            var workspaceName = TestUtilities.GenerateName("csa");
-            var parameters = new QuantumWorkspace
-            {
-                Location = location ?? DefaultLocation,
+                        ProviderId = "Microsoft",
+                        ProviderSku = "Basic"
+                    }
+                },
+                StorageAccount = commonData.StorageAccountId,
             };
-            var workspace = quantumMgmtClient.Workspaces.CreateOrUpdate(rgName, workspaceName, parameters);
-            VerifyWorkspaceProperties(workspace, false, accountType, skuName, location ?? DefaultLocation);
-
-            return workspace;
         }
 
-        public static void VerifyWorkspaceProperties(QuantumWorkspace workspace, bool useDefaults, string kind = DefaultKind, string skuName = DefaultSkuName, string location = "westus")
+        /// <summary>
+        /// List resources from IPage to List.
+        /// </summary>
+        /// <param name="firstPage"></param>
+        /// <param name="listNext"></param>
+        /// <returns></returns>
+        public static List<T> ListResources<T>(IPage<T> firstPage, Func<string, IPage<T>> listNext)
         {
-            Assert.NotNull(workspace); // verifies that the account is actually created
-            Assert.NotNull(workspace.Id);
-            Assert.NotNull(workspace.Location);
-            Assert.NotNull(workspace.Name);
-            Assert.NotNull(workspace.EndpointUri);
-            Assert.Equal("Succeeded", workspace.ProvisioningState);
+            var resourceList = new List<T>();
+            var response = firstPage;
+            resourceList.AddRange(response);
 
-            if (useDefaults)
+            while (!string.IsNullOrEmpty(response.NextPageLink))
             {
-                Assert.Equal(QuantumManagementTestUtilities.DefaultLocation, workspace.Location);
+                response = listNext(response.NextPageLink);
+                resourceList.AddRange(response);
+            }
 
-                Assert.NotNull(workspace.Tags);
-                Assert.Equal(2, workspace.Tags.Count);
-                Assert.Equal("value1", workspace.Tags["key1"]);
-                Assert.Equal("value2", workspace.Tags["key2"]);
-            }
-            else
-            {
-                Assert.Equal(location, workspace.Location);
-            }
-        }
-
-        public static void ValidateExpectedException(Action action, string expectedErrorCode)
-        {
-            try
-            {
-                action();
-                Assert.True(false, "Expected an Exception");
-            }
-            catch (ErrorResponseException e)
-            {
-                Assert.Equal(expectedErrorCode, e.Body.Error.Code);
-            }
+            return resourceList;
         }
     }
 }
