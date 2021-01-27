@@ -146,6 +146,7 @@ pr:
     - sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - sdk/workloadmonitor/Microsoft.Azure.Management.WorkloadMonitor
+    - sdk/purview/Microsoft.Azure.Management.Purview
 variables:
   skipComponentGovernanceDetection: true
   msBuildLogDir: msbuildlogs
