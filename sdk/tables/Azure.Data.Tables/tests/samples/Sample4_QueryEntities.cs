@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Azure.Data.Tables.Tests;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Azure.Data.Tables.Samples
 {
