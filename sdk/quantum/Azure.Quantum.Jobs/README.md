@@ -1,6 +1,6 @@
 # Azure Quantum Jobs client library for .NET
 
-Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See [Azure.Quantum.Jobs/README.md](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Quantum.Jobs/README.md) for an example following this template.
+Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See [Azure.Quantum.Jobs/README.md](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/README.md) for an example following this template.
 
 **Title**: The H1 of your README should be in the format: `# [Product Name] client library for [Language]`
 
