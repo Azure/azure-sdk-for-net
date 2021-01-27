@@ -72,7 +72,7 @@ namespace Azure.Quantum.Jobs.Tests
             // Should have at least a couple jobs in the list.
             Assert.GreaterOrEqual(index, 2);
         }
-        
+
         [Ignore("Only verifying that the sample builds")]
         public void GetJobsSample()
         {
@@ -80,6 +80,6 @@ namespace Azure.Quantum.Jobs.Tests
             var client = new QuantumJobClient("subscriptionId", "resourceGroupName", "workspaceName", "location");
             var jobs = client.GetJobs();
             #endregion
-        }           
+        }
     }
 }
