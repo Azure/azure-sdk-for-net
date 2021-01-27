@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Compute.Tests
 {
-    public class VMImagesEdgeZoneTests : VMTestBase
+    public class VMImageEdgeZoneTests : VMTestBase
     {
         private const string Edgezone = "MicrosoftRRDCLab1";
         private const string Location = "eastus2euap";
@@ -40,7 +40,9 @@ namespace Compute.Tests
                     availableWindowsServerImageVersions[0]);
 
                 Assert.Equal(availableWindowsServerImageVersions[0], vmimage.Name);
-                Assert.Equal(ComputeManagementTestUtilities.DefaultLocation, vmimage.Location, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(Location, vmimage.Location, StringComparer.OrdinalIgnoreCase);
+                
+                Assert.Equal(Edgezone, vmimage.ExtendedLocation.Name, StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -59,6 +61,8 @@ namespace Compute.Tests
                     Sku);
 
                 Assert.True(vmimages.Count > 0);
+
+                Assert.Contains(vmimages, vmimage => vmimage.ExtendedLocation.Name == Edgezone);
             }
         }
 
@@ -89,16 +93,6 @@ namespace Compute.Tests
                     top: 1);
                 Assert.True(vmimages.Count == 1);
 
-                // Filter: top - Positive Test
-                vmimages = ListVMImagesInEdgeZone(
-                    Location,
-                    Edgezone,
-                    Publisher,
-                    Offer,
-                    Sku,
-                    top: 2);
-                Assert.True(vmimages.Count == 2);
-
                 // Filter: orderby - Positive Test
                 vmimages = ListVMImagesInEdgeZone(
                     Location,
@@ -107,17 +101,6 @@ namespace Compute.Tests
                     Offer,
                     Sku,
                     orderby: "name desc");
-
-                // Filter: orderby - Positive Test
-                vmimages = ListVMImagesInEdgeZone(
-                    Location,
-                    Edgezone,
-                    Publisher,
-                    Offer,
-                    Sku,
-                    top: 2,
-                    orderby: "name asc");
-                Assert.True(vmimages.Count == 2);
 
                 // Filter: top orderby - Positive Test
                 vmimages = ListVMImagesInEdgeZone(
@@ -133,13 +116,15 @@ namespace Compute.Tests
                 // Filter: top orderby - Positive Test
                 vmimages = ListVMImagesInEdgeZone(
                     Location,
-                    ComputeManagementTestUtilities.DefaultLocation,
+                    Edgezone,
                     Publisher,
                     Offer,
                     Sku,
                     top: 1,
                     orderby: "name asc");
                 Assert.True(vmimages.Count == 1);
+
+                Assert.Contains(vmimages, vmimage => vmimage.ExtendedLocation.Name == Edgezone);
             }
         }
 
@@ -156,6 +141,8 @@ namespace Compute.Tests
 
                 Assert.True(publishers.Count > 0);
                 Assert.True(publishers.Count(pub => pub.Name == "MicrosoftWindowsServer") != 0);
+
+                Assert.Contains(publishers, pub => pub.ExtendedLocation.Name == Edgezone);
             }
         }
 
@@ -173,6 +160,8 @@ namespace Compute.Tests
 
                 Assert.True(offers.Count > 0);
                 Assert.True(offers.Count(offer => offer.Name == "WindowsServer") != 0);
+
+                Assert.Contains(offers, offer => offer.ExtendedLocation.Name == Edgezone);
             }
         }
 
@@ -191,6 +180,8 @@ namespace Compute.Tests
 
                 Assert.True(skus.Count > 0);
                 Assert.True(skus.Count(sku => sku.Name == Sku) != 0);
+
+                Assert.Contains(skus, sku => sku.ExtendedLocation.Name == Edgezone);
             }
         }        
     }

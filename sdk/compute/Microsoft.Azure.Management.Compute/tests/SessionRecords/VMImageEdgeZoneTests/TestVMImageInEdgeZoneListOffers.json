@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/providers/Microsoft.Compute/locations/eastus2euap/edgeZones/MicrosoftRRDCLab1/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTM5M2Y5MTktYTY4YS00M2QwLTkwNjMtNGIyYmRhNmJmZmRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvZWRnZVpvbmVzL01pY3Jvc29mdFJSRENMYWIxL3B1Ymxpc2hlcnMvTWljcm9zb2Z0V2luZG93c1NlcnZlci9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzP2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "eadafccd-e75b-4882-926e-00f6724d3d2d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "3707be56-376d-4281-af6f-306af28cbf16_132543204214490536"
+        ],
+        "x-ms-request-id": [
+          "bece8f82-f394-4a46-a337-c6e6888d84f3"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "4ce505fa-80f6-4e21-b272-982a4fd2352a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210127T084523Z:4ce505fa-80f6-4e21-b272-982a4fd2352a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 08:45:23 GMT"
+        ],
+        "Content-Length": [
+          "8735"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"19h1gen2servertest\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/19h1gen2servertest\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"microsoftserveroperatingsystems-previews\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/microsoftserveroperatingsystems-previews\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"servertesting\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/servertesting\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-10-1607-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-10-1607-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-10-1607-vhd-sf-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-10-1607-vhd-sf-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-10-1803-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-10-1803-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-10-1809-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-10-1809-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-10-1809-vhd-sf-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-10-1809-vhd-sf-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-10-1903-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-10-1903-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-10-1909-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-10-1909-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-10-2004-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-10-2004-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-10-20h2-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-10-20h2-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-7-0-sp1-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-7-0-sp1-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-8-0-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-8-0-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-8-1-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-8-1-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"Windows-HUB\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/Windows-HUB\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windows-server-2012-vhd-server-prod-stage\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windows-server-2012-vhd-server-prod-stage\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"WindowsServer\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windowsserver-gen2preview\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windowsserver-gen2preview\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windowsserver-previewtest\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windowsserver-previewtest\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"windowsserverdotnet\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windowsserverdotnet\"\r\n  },\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"WindowsServerSemiAnnual\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServerSemiAnnual\"\r\n  }\r\n]",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "5393f919-a68a-43d0-9063-4b2bda6bffdf"
+  }
+}
