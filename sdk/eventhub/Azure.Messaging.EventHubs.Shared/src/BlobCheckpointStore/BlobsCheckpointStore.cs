@@ -117,13 +117,11 @@ namespace Azure.Messaging.EventHubs.Processor
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ListOwnershipStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
-            List<EventProcessorPartitionOwnership> result = null;
+            List<EventProcessorPartitionOwnership> result = new List<EventProcessorPartitionOwnership>();
 
             try
             {
                 var prefix = string.Format(CultureInfo.InvariantCulture, OwnershipPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
-
-                var ownershipList = new List<EventProcessorPartitionOwnership>();
 
                 await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
@@ -132,7 +130,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     blob.Metadata.TryGetValue(BlobMetadataKey.OwnerIdentifier, out var ownerIdentifier);
 
-                    ownershipList.Add(new EventProcessorPartitionOwnership
+                    result.Add(new EventProcessorPartitionOwnership
                     {
                         FullyQualifiedNamespace = fullyQualifiedNamespace,
                         EventHubName = eventHubName,
@@ -144,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     });
                 }
 
-                return ownershipList;
+                return result;
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
@@ -283,7 +281,7 @@ namespace Azure.Messaging.EventHubs.Processor
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ListCheckpointsStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
-            List<EventProcessorCheckpoint> checkpoints = null;
+            List<EventProcessorCheckpoint> checkpoints = new List<EventProcessorCheckpoint>();
             try
             {
                 var prefix = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
