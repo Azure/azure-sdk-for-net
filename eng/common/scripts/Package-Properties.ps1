@@ -9,8 +9,8 @@ class PackageProps
     [string]$ServiceDirectory
     [string]$ReadMePath
     [string]$ChangeLogPath
-    [string]$Group
     [string]$SdkType
+    [string]$Group
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory, [string]$sdkType)
     {
