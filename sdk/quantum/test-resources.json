@@ -71,9 +71,21 @@
         }
     ],
     "outputs": {
+        "SUBSCRIPTION_ID": {
+            "type": "string",
+            "value": "[subscription().subscriptionId]"
+        },
+        "RESOURCE_GROUP": {
+            "type": "string",
+            "value": "[resourceGroup().name]"
+        },
         "WORKSPACE_NAME": {
             "type": "string",
             "value": "[parameters('baseName')]"
+        },
+        "LOCATION": {
+            "type": "string",
+            "value": "[parameters('location')]"
         }
     }
 }
