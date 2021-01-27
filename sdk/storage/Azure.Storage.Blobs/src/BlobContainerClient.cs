@@ -446,42 +446,6 @@ namespace Azure.Storage.Blobs
         }
         #endregion ctor
 
-        #region protected static accessors for Azure.Storage.Blobs.Batch
-        /// <summary>
-        /// Get a <see cref="BlobContainerClient"/>'s <see cref="HttpPipeline"/>
-        /// for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-        protected static HttpPipeline GetHttpPipeline(BlobContainerClient client) =>
-            client.Pipeline;
-
-        /// <summary>
-        /// Get a <see cref="BlobContainerClient"/>'s authentication
-        /// <see cref="HttpPipelinePolicy"/> for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's authentication policy.</returns>
-        protected static HttpPipelinePolicy GetAuthenticationPolicy(BlobContainerClient client) =>
-            client.AuthenticationPolicy;
-
-        /// <summary>
-        /// Get a <see cref="BlobContainerClient"/>'s <see cref="BlobClientOptions"/>
-        /// for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-        protected static BlobClientOptions GetClientOptions(BlobContainerClient client) =>
-            new BlobClientOptions(client.Version)
-            {
-                // We only use this for communicating diagnostics, at the moment
-                Diagnostics =
-                {
-                    IsDistributedTracingEnabled = client.ClientDiagnostics.IsActivityEnabled
-                }
-            };
-        #endregion protected static accessors for Azure.Storage.Blobs.Batch
-
         /// <summary>
         /// Create a new <see cref="BlobBaseClient"/> object by appending
         /// <paramref name="blobName"/> to the end of <see cref="Uri"/>.  The
@@ -3114,7 +3078,7 @@ namespace Azure.Storage.Blobs
 
                 _parentBlobServiceClient = new BlobServiceClient(
                     blobUriBuilder.ToUri(),
-                    null,
+                    AuthenticationPolicy,
                     Version,
                     ClientDiagnostics,
                     CustomerProvidedKey,

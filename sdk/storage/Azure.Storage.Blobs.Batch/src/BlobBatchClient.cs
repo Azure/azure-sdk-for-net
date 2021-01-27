@@ -102,8 +102,9 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBatchClient(BlobContainerClient client)
         {
             Uri = client.Uri;
-            Pipeline = BlobContainerClientInternals.GetHttpPipeline(client);
-            BlobClientOptions options = BlobContainerClientInternals.GetClientOptions(client);
+            var blobServiceClient = client.GetParentBlobServiceClient();
+            Pipeline = BlobServiceClientInternals.GetHttpPipeline(blobServiceClient);
+            BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(blobServiceClient);
             Version = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options);
 
@@ -111,7 +112,7 @@ namespace Azure.Storage.Blobs.Specialized
             // if we don't have one cached on the service
             BatchOperationPipeline = CreateBatchPipeline(
                 Pipeline,
-                BlobContainerClientInternals.GetAuthenticationPolicy(client),
+                BlobServiceClientInternals.GetAuthenticationPolicy(blobServiceClient),
                 Version);
 
             _isContainerScoped = true;
@@ -191,45 +192,6 @@ namespace Azure.Storage.Blobs.Specialized
             /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
             public static new BlobClientOptions GetClientOptions(BlobServiceClient client) =>
                 BlobServiceClient.GetClientOptions(client);
-        }
-
-        /// <summary>
-        /// Helper to access protected static members of BlobContainerClient
-        /// that should not be exposed directly to customers.
-        /// </summary>
-        private class BlobContainerClientInternals : BlobContainerClient
-        {
-            /// <summary>
-            /// Prevent instantiation.
-            /// </summary>
-            private BlobContainerClientInternals() { }
-
-            /// <summary>
-            /// Get a <see cref="BlobServiceClient"/>'s <see cref="HttpPipeline"/>
-            /// for creating child clients.
-            /// </summary>
-            /// <param name="client">The BlobServiceClient.</param>
-            /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-            public static new HttpPipeline GetHttpPipeline(BlobContainerClient client) =>
-                BlobContainerClient.GetHttpPipeline(client);
-
-            /// <summary>
-            /// Get a <see cref="BlobServiceClient"/>'s authentication
-            /// <see cref="HttpPipelinePolicy"/> for creating child clients.
-            /// </summary>
-            /// <param name="client">The BlobServiceClient.</param>
-            /// <returns>The BlobServiceClient's authentication policy.</returns>
-            public static new HttpPipelinePolicy GetAuthenticationPolicy(BlobContainerClient client) =>
-                BlobContainerClient.GetAuthenticationPolicy(client);
-
-            /// <summary>
-            /// Get a <see cref="BlobServiceClient"/>'s <see cref="BlobClientOptions"/>
-            /// for creating child clients.
-            /// </summary>
-            /// <param name="client">The BlobServiceClient.</param>
-            /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-            public static new BlobClientOptions GetClientOptions(BlobContainerClient client) =>
-                BlobContainerClient.GetClientOptions(client);
         }
         #endregion ctors
 
