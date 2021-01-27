@@ -18,6 +18,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -3483,6 +3484,18 @@ namespace Azure.Storage.Blobs.Test
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(expectedData.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<PageBlobClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         private PageBlobRequestConditions BuildAccessConditions(

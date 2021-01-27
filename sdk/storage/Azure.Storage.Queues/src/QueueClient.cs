@@ -85,7 +85,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         internal virtual MessageIdRestClient MessageIdRestClient => _messageIdRestClient;
 
-        internal bool UsingClientSideEncryption => ClientConfiguration.ClientSideEncryption != default;
+        internal bool UsingClientSideEncryption => _clientConfiguration.ClientSideEncryption != default;
 
         /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
@@ -390,25 +390,25 @@ namespace Azure.Storage.Queues
             string uriString = uriBuilder.ToUri().ToString();
 
             QueueRestClient queueRestClient = new QueueRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
                 uriString,
                 queueName,
-                ClientConfiguration.Version.ToVersionString());
+                _clientConfiguration.Version.ToVersionString());
 
             MessagesRestClient messagesRestClient = new MessagesRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
                 uriString,
                 queueName,
-                ClientConfiguration.Version.ToVersionString());
+                _clientConfiguration.Version.ToVersionString());
 
             MessageIdRestClient messageIdRestClient = new MessageIdRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
                 uriString,
                 queueName,
-                ClientConfiguration.Version.ToVersionString());
+                _clientConfiguration.Version.ToVersionString());
 
             return (queueRestClient, messagesRestClient, messageIdRestClient);
         }

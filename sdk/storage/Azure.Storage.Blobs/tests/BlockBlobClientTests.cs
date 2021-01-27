@@ -14,6 +14,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -3368,6 +3369,18 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, overwrite: false),
                 e => Assert.AreEqual(BlobErrorCode.BlobAlreadyExists.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<BlockBlobClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
+            mock = new Mock<BlockBlobClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
+            mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
+            mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)
