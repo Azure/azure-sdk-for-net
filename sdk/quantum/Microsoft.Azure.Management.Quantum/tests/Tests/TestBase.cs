@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Quantum.Tests
         private static void UseAccessTokenIfNeeded()
         {
             var testConnectionString = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
-            if (!testConnectionString.Contains("ServicePrincipal=") && IsRecordMode)
+            if (!string.IsNullOrEmpty(testConnectionString) && !testConnectionString.Contains("ServicePrincipal=") && IsRecordMode)
             {
                 var azProcess = new Process()
                 {
