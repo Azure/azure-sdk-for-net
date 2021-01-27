@@ -10,18 +10,16 @@ resources:
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
-    AdditionalPlatforms:
-      Linux_NetCore_Keyring:
-        Pool: azsdk-pool-mms-ubuntu-1804-general
-        OSVmImage: MMSUbuntu18.04
-        TestTargetFramework: 'netcoreapp2.1'
-        Container: 'ubuntu_netcore_keyring'
-        SupportedClouds: 'Public,Canary,Preview'
+    AdditionalMatrixConfigs:
+      - Name: identity_container
+        Path: sdk/identity/platform-matrix.json
+        Selection: sparse
+        GenerateContainerJobs: true
     ServiceDirectory: identity
     PreSteps:
       - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
         displayName: Install Azure PowerShell module
-        condition: and(succeededOrFailed(), eq(variables['Agent.JobName'], 'Linux_NetCore_Keyring'))
+        condition: and(succeededOrFailed(), startsWith(variables['Agent.JobName'], 'ubuntu_keyring_container'))
       - script: |
           set -x
           export $(dbus-launch)
@@ -29,7 +27,7 @@ extends:
           echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_ADDRESS]$DBUS_SESSION_BUS_ADDRESS"
           echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_PID]$DBUS_SESSION_BUS_PID"
           echo "##vso[task.setvariable variable=GNOME_KEYRING_CONTROL]$GNOME_KEYRING_CONTROL"
-        condition: and(succeededOrFailed(), eq(variables['Agent.JobName'], 'Linux_NetCore_Keyring'))
+        condition: and(succeededOrFailed(), startsWith(variables['Agent.JobName'], 'ubuntu_keyring_container'))
       - pwsh: |
           [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
           Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS

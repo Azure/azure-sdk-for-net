@@ -17,8 +17,11 @@ namespace Azure.Communication
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.CommunicationUser), // Missing Id
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.CallingApplication), // Missing Id
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber) { Id = "some id" }, // Missing PhoneNumber
-                new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { Id = "some id", MicrosoftTeamsUserId = "some id" }, // Missing IsAnonymous
-                new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { Id = "some id", IsAnonymous = true }, // Missing MicrosoftTeamsUserId
+                new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber) { PhoneNumber = "+12223334444" }, // Missing Id
+                new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { Id = "some id", MicrosoftTeamsUserId = "some id", Cloud = CommunicationCloudEnvironmentModel.Public }, // Missing IsAnonymous
+                new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { Id = "some id", IsAnonymous = true, Cloud = CommunicationCloudEnvironmentModel.Public }, // Missing MicrosoftTeamsUserId
+                new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { MicrosoftTeamsUserId = "some id", IsAnonymous = true, Cloud = CommunicationCloudEnvironmentModel.Public }, // Missing Id
+                new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser) { Id = "some id", MicrosoftTeamsUserId = "some id", IsAnonymous = true, }, // Missing Cloud
             };
 
             foreach (CommunicationIdentifierModel item in modelsWithMissingMandatoryProperty)
@@ -37,7 +40,7 @@ namespace Azure.Communication
         [Test]
         public void DeserializeCommunicationUser()
         {
-            CommunicationIdentifier identifier = CommunicationIdentifierSerializer.Deserialize(
+            CommunicationUserIdentifier identifier = (CommunicationUserIdentifier)CommunicationIdentifierSerializer.Deserialize(
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.CommunicationUser)
                 {
                     Id = "some id",
@@ -45,8 +48,7 @@ namespace Azure.Communication
 
             CommunicationUserIdentifier expectedIdentifier = new CommunicationUserIdentifier("some id");
 
-            Assert.True(identifier is CommunicationUserIdentifier);
-            Assert.AreEqual(expectedIdentifier.Id, ((CommunicationUserIdentifier)identifier).Id);
+            Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
             Assert.AreEqual(expectedIdentifier, identifier);
         }
 
@@ -64,7 +66,7 @@ namespace Azure.Communication
         {
             AssertCorrectness(
                 new UnknownIdentifier("some id"),
-                CommunicationIdentifierSerializer.Deserialize(
+                (UnknownIdentifier)CommunicationIdentifierSerializer.Deserialize(
                     new CommunicationIdentifierModel(CommunicationIdentifierKind.Unknown)
                     {
                         Id = "some id",
@@ -72,16 +74,15 @@ namespace Azure.Communication
 
             AssertCorrectness(
                 new UnknownIdentifier("some id"),
-                CommunicationIdentifierSerializer.Deserialize(
+                (UnknownIdentifier)CommunicationIdentifierSerializer.Deserialize(
                     new CommunicationIdentifierModel(new CommunicationIdentifierKind("Some Future Type"))
                     {
                         Id = "some id",
                     }));
 
-            static void AssertCorrectness(UnknownIdentifier expectedIdentifier, CommunicationIdentifier identifier)
+            static void AssertCorrectness(UnknownIdentifier expectedIdentifier, UnknownIdentifier identifier)
             {
-                Assert.True(identifier is UnknownIdentifier);
-                Assert.AreEqual(expectedIdentifier.Id, ((UnknownIdentifier)identifier).Id);
+                Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
                 Assert.AreEqual(expectedIdentifier, identifier);
             }
         }
@@ -98,7 +99,7 @@ namespace Azure.Communication
         [Test]
         public void DeserializeCallingApplication()
         {
-            CommunicationIdentifier identifier = CommunicationIdentifierSerializer.Deserialize(
+            CallingApplicationIdentifier identifier = (CallingApplicationIdentifier)CommunicationIdentifierSerializer.Deserialize(
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.CallingApplication)
                 {
                     Id = "some id",
@@ -106,65 +107,75 @@ namespace Azure.Communication
 
             CallingApplicationIdentifier expectedIdentifier = new CallingApplicationIdentifier("some id");
 
-            Assert.True(identifier is CallingApplicationIdentifier);
-            Assert.AreEqual(expectedIdentifier.Id, ((CallingApplicationIdentifier)identifier).Id);
+            Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
             Assert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
-        public void SerializePhoneNumber()
+        [TestCase(null)]
+        [TestCase("some id")]
+        public void SerializePhoneNumber(string? expectedId)
         {
-            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new PhoneNumberIdentifier("+12223334444"));
+            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new PhoneNumberIdentifier("+12223334444", expectedId));
 
             Assert.AreEqual(CommunicationIdentifierKind.PhoneNumber, model.Kind);
             Assert.AreEqual("+12223334444", model.PhoneNumber);
+            Assert.AreEqual(expectedId, model.Id);
         }
 
         [Test]
         public void DeserializePhoneNumber()
         {
-            CommunicationIdentifier identifier = CommunicationIdentifierSerializer.Deserialize(
+            PhoneNumberIdentifier identifier = (PhoneNumberIdentifier)CommunicationIdentifierSerializer.Deserialize(
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.PhoneNumber)
                 {
                     PhoneNumber = "+12223334444",
+                    Id = "some id"
                 });
 
-            PhoneNumberIdentifier expectedIdentifier = new PhoneNumberIdentifier("+12223334444");
+            PhoneNumberIdentifier expectedIdentifier = new PhoneNumberIdentifier("+12223334444", "some id");
 
-            Assert.True(identifier is PhoneNumberIdentifier);
-            Assert.AreEqual(expectedIdentifier.PhoneNumber, ((PhoneNumberIdentifier)identifier).PhoneNumber);
+            Assert.AreEqual(expectedIdentifier.PhoneNumber, identifier.PhoneNumber);
+            Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
             Assert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
-        [TestCase(false)]
-        [TestCase(true)]
-        public void SerializeMicrosoftTeamsUser(bool isAnonymous)
+        [TestCase(false, null)]
+        [TestCase(true, null)]
+        [TestCase(false, "some id")]
+        [TestCase(true, "some id")]
+        public void SerializeMicrosoftTeamsUser(bool isAnonymous, string? expectedId)
         {
-            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new MicrosoftTeamsUserIdentifier("some id", isAnonymous));
+            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new MicrosoftTeamsUserIdentifier("user id", isAnonymous, expectedId, CommunicationCloudEnvironment.Dod));
 
             Assert.AreEqual(CommunicationIdentifierKind.MicrosoftTeamsUser, model.Kind);
-            Assert.AreEqual("some id", model.MicrosoftTeamsUserId);
+            Assert.AreEqual("user id", model.MicrosoftTeamsUserId);
+            Assert.AreEqual(CommunicationCloudEnvironmentModel.Dod, model.Cloud);
             Assert.AreEqual(isAnonymous, model.IsAnonymous);
+            Assert.AreEqual(expectedId, model.Id);
         }
 
         [Test]
         [TestCase(false)]
         [TestCase(true)]
-        public void DeserializerMicrosoftTeamsUser(bool isAnonymous)
+        public void DeserializeMicrosoftTeamsUser(bool isAnonymous)
         {
-            CommunicationIdentifier identifier = CommunicationIdentifierSerializer.Deserialize(
+            MicrosoftTeamsUserIdentifier identifier = (MicrosoftTeamsUserIdentifier)CommunicationIdentifierSerializer.Deserialize(
                 new CommunicationIdentifierModel(CommunicationIdentifierKind.MicrosoftTeamsUser)
                 {
-                    MicrosoftTeamsUserId = "some id",
+                    MicrosoftTeamsUserId = "user id",
                     IsAnonymous = isAnonymous,
+                    Id = "some id",
+                    Cloud = "gcch"
                 });
 
-            MicrosoftTeamsUserIdentifier expectedIdentifier = new MicrosoftTeamsUserIdentifier("some id", isAnonymous);
+            MicrosoftTeamsUserIdentifier expectedIdentifier = new MicrosoftTeamsUserIdentifier("user id", isAnonymous, "some id", CommunicationCloudEnvironment.Gcch);
 
-            Assert.True(identifier is MicrosoftTeamsUserIdentifier);
-            Assert.AreEqual(expectedIdentifier.UserId, ((MicrosoftTeamsUserIdentifier)identifier).UserId);
-            Assert.AreEqual(expectedIdentifier.IsAnonymous, ((MicrosoftTeamsUserIdentifier)identifier).IsAnonymous);
+            Assert.AreEqual(expectedIdentifier.UserId, identifier.UserId);
+            Assert.AreEqual(expectedIdentifier.IsAnonymous, identifier.IsAnonymous);
+            Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
+            Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
             Assert.AreEqual(expectedIdentifier, identifier);
         }
     }

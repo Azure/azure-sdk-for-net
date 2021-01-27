@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Status
         /// </summary>
-        public JobStatus Status { get; }
+        public TextAnalyticsOperationStatus Status { get; }
 
         /// <summary>
         /// Errors for AnalyzeOperationResult

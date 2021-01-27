@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                         TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
                         Console.WriteLine(testPayload.Name);
                         break;
-                    case "Microsoft.Storage.BlobDeleted":
+                    case SystemEventMappings.StorageBlobDeletedEventName:
                         // Example for deserializing system events using GetData<T>
                         StorageBlobDeletedEventData blobDeleted = cloudEvent.GetData<StorageBlobDeletedEventData>();
                         Console.WriteLine(blobDeleted.BlobType);

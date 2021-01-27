@@ -1,5 +1,4 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
-
 trigger:
   branches:
     include:
@@ -27,4 +26,5 @@ extends:
     ServiceDirectory: quantum
     ArtifactName: packages
     Artifacts:
-
+    - name: Azure.Quantum.Jobs
+      safeName: AzureQuantumJobs

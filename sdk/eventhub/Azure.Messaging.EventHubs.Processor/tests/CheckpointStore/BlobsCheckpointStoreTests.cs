@@ -1732,6 +1732,383 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the appropriate events are emitted on success.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointLogsStartAndComplete()
+        {
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.Offset, "0"}
+                                           })
+            };
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient() { Blobs = blobList },
+                                                  new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var mockLog = new Mock<BlobEventStoreEventSource>();
+            target.Logger = mockLog.Object;
+
+            await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken());
+
+            mockLog.Verify(m => m.GetCheckpointStart(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0"));
+            mockLog.Verify(m => m.GetCheckpointComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup,  "0"));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointUsesOffsetAsTheStartingPositionWhenPresent()
+        {
+            var expectedOffset = 13;
+            var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
+
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.Offset, expectedOffset.ToString()},
+                                               {BlobMetadataKey.SequenceNumber, "7777"}
+                                           })
+            };
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient() { Blobs = blobList }, new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken());
+
+            Assert.That(checkpoint, Is.Not.Null, "A set of checkpoint should have been returned.");
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointUsesSequenceNumberAsTheStartingPositionWhenNoOffsetIsPresent()
+        {
+            var expectedSequence = 133;
+            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequence, false);
+
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()}
+                                           })
+            };
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient() { Blobs = blobList }, new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken());
+
+            Assert.That(checkpoint, Is.Not.Null, "A set of checkpoints should have been returned.");
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointConsidersDataInvalidWithNoOffsetOrSequenceNumber()
+        {
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()}
+                                           })
+            };
+
+            var mockLogger = new Mock<BlobEventStoreEventSource>();
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient() { Blobs = blobList }, new BasicRetryPolicy(new EventHubsRetryOptions()));
+
+            target.Logger = mockLogger.Object;
+
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken());
+
+            Assert.That(checkpoint, Is.Null, "No valid checkpoints should exist.");
+
+            mockLogger.Verify(log => log.InvalidCheckpointFound("0", FullyQualifiedNamespace, EventHubName, ConsumerGroup));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointPreferredNewCheckpointOverLegacy()
+        {
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/0",
+                                            false,
+                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag), contentLength: 0),
+                                            "snapshot",
+                                            new Dictionary<string, string>
+                                            {
+                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                                {BlobMetadataKey.SequenceNumber, "960182"},
+                                                {BlobMetadataKey.Offset, "14"}
+                                            }),
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot")
+            };
+
+            var containerClient = new MockBlobContainerClient() { Blobs = blobList };
+            containerClient.AddBlobClient($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/0", client =>
+            {
+                client.Content = Encoding.UTF8.GetBytes("{" +
+                                                            "\"PartitionId\":\"0\"," +
+                                                            "\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\"," +
+                                                            "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
+                                                            "\"Epoch\":386," +
+                                                            "\"Offset\":\"13\"," +
+                                                            "\"SequenceNumber\":960180" +
+                                                            "}");
+            });
+
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken());
+
+            Assert.That(checkpoint, Is.Not.Null, "A single checkpoint should have been returned.");
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(14, false)));
+            Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointsUsesOffsetAsTheStartingPositionWhenPresentInLegacyCheckpoint()
+        {
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot")
+            };
+
+            var containerClient = new MockBlobContainerClient() { Blobs = blobList };
+            containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0", client =>
+            {
+                client.Content = Encoding.UTF8.GetBytes("{" +
+                                                            "\"PartitionId\":\"0\"," +
+                                                            "\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\"," +
+                                                            "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
+                                                            "\"Epoch\":386," +
+                                                            "\"Offset\":\"13\"," +
+                                                            "\"SequenceNumber\":960180" +
+                                                            "}");
+            });
+
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken());
+
+            Assert.That(checkpoint, Is.Not.Null, "A set of checkpoints should have been returned.");
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(13, false)));
+            Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [TestCase("null", "0")]
+        [TestCase("null", "78")]
+        [TestCase("\"\"", "0")]
+        [TestCase("\"\"", "78")]
+        public async Task GetCheckpointSkipsCheckpointsWhenOffsetIsNullOrEmptyInLegacyCheckpoint(string offset, string sequenceNumber)
+        {
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot")
+            };
+
+            var containerClient = new MockBlobContainerClient() { Blobs = blobList };
+            containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0", client =>
+            {
+                client.Content = Encoding.UTF8.GetBytes("{" +
+                                                        "\"Offset\":" + offset + "," +
+                                                        "\"SequenceNumber\":" + sequenceNumber + "," +
+                                                        "\"PartitionId\":\"8\"," +
+                                                        "\"Owner\":\"cc397fe0-6771-4eaa-a8df-1997efeb3c87\"," +
+                                                        "\"Token\":\"ab00a395-4c39-4939-89d5-10c04b4553af\"," +
+                                                        "\"Epoch\":3" +
+                                                        "}");
+            });
+
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken());
+
+            Assert.That(checkpoint, Is.Null, "No valid checkpoints should exist.");
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointConsidersDataInvalidWithNoOffsetOrSequenceNumberLegacyCheckpoint()
+        {
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot")
+            };
+
+            var containerClient = new MockBlobContainerClient() { Blobs = blobList };
+            containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0", client =>
+            {
+                client.Content = Encoding.UTF8.GetBytes("{" +
+                                                            "\"PartitionId\":\"0\"," +
+                                                            "\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\"," +
+                                                            "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
+                                                            "\"Epoch\":386}");
+            });
+
+            var mockLogger = new Mock<BlobEventStoreEventSource>();
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
+
+            target.Logger = mockLogger.Object;
+
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken());
+
+            Assert.That(checkpoint, Is.Null, "No valid checkpoints should exist.");
+
+            mockLogger.Verify(log => log.InvalidCheckpointFound("0", FullyQualifiedNamespace, EventHubName, ConsumerGroup));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [TestCase("")]
+        [TestCase("{\"PartitionId\":\"0\",\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\",")]
+        [TestCase("\0\0\0")]
+        public async Task GetCheckpointConsidersDataInvalidWithLegacyCheckpointBlobContainingInvalidJson(string json)
+        {
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot")
+            };
+
+            var containerClient = new MockBlobContainerClient() { Blobs = blobList };
+
+            containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0", client =>
+            {
+                client.Content = Encoding.UTF8.GetBytes(json);
+            });
+
+            var mockLogger = new Mock<BlobEventStoreEventSource>();
+            var target = new BlobsCheckpointStore(containerClient, new BasicRetryPolicy(new EventHubsRetryOptions()), initializeWithLegacyCheckpoints: true);
+
+            target.Logger = mockLogger.Object;
+
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken());
+
+            Assert.That(checkpoint, Is.Null, "No valid checkpoints should exist.");
+
+            mockLogger.Verify(log => log.InvalidCheckpointFound("0", FullyQualifiedNamespace, EventHubName, ConsumerGroup));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the appropriate events are emitted when errors occur.
+        /// </summary>
+        ///
+        [Test]
+        public void GetCheckpointLogsErrors()
+        {
+            var expectedException = new DllNotFoundException("BOOM!");
+            var mockLog = new Mock<BlobEventStoreEventSource>();
+            var mockContainerClient = new MockBlobContainerClient() { GetBlobsAsyncException = expectedException };
+            var target = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+
+            target.Logger = mockLog.Object;
+
+            mockContainerClient.AddBlobClient($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/0", client =>
+            {
+                client.GetPropertiesException = expectedException;
+            });
+
+            Assert.That(async () => await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken()), Throws.Exception.EqualTo(expectedException));
+            mockLog.Verify(m => m.GetCheckpointError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", expectedException.Message));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the appropriate events are emitted on success.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointLogsInvalidCheckpoint()
+        {
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string> {{BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()}})
+            };
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient() { Blobs = blobList },
+                                                  new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var mockLog = new Mock<BlobEventStoreEventSource>();
+            target.Logger = mockLog.Object;
+
+            await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
+            mockLog.Verify(m => m.InvalidCheckpointFound("0", FullyQualifiedNamespace, EventHubName, ConsumerGroup));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the appropriate events are emitted on failure.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointForMissingPartitionReturnsNull()
+        {
+            var ex = new RequestFailedException(0, "foo", BlobErrorCode.ContainerNotFound.ToString(), null);
+
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient(getBlobsAsyncException: ex),
+                                                  new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var mockLog = new Mock<BlobEventStoreEventSource>();
+            target.Logger = mockLog.Object;
+
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", new CancellationToken());
+            Assert.That(checkpoint, Is.Null);
+        }
+
         private class MockBlobContainerClient : BlobContainerClient
         {
             public override Uri Uri { get; }
@@ -1766,7 +2143,21 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             public override BlobClient GetBlobClient(string blobName)
             {
-                return BlobClients[blobName];
+                if (BlobClients.TryGetValue(blobName, out var client))
+                {
+                    return client;
+                }
+
+                var blob = Blobs.SingleOrDefault(c => c.Name == blobName);
+                if (blob != null)
+                {
+                    return new MockBlobClient(blobName)
+                    {
+                        Properties = BlobsModelFactory.BlobProperties(metadata: blob.Metadata)
+                    };
+                }
+
+                return new MockBlobClient(blobName);
             }
 
             internal MockBlobContainerClient AddBlobClient(string name, Action<MockBlobClient> configure)
@@ -1783,8 +2174,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             public override string Name { get; }
 
             internal BlobInfo BlobInfo;
+            internal BlobProperties Properties;
             internal Exception UploadBlobException;
             internal Exception BlobClientSetMetadataException;
+            internal DllNotFoundException GetPropertiesException;
             internal byte[] Content;
             internal Action<Stream, BlobHttpHeaders, IDictionary<string, string>, BlobRequestConditions, IProgress<long>, AccessTier?, StorageTransferOptions, CancellationToken> UploadAsyncCallback;
             internal Action<IDictionary<string, string>, BlobRequestConditions, CancellationToken> SetMetadataAsyncCallback;
@@ -1840,6 +2233,21 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             {
                 await destination.WriteAsync(Content, 0, Content.Length, cancellationToken);
                 return Mock.Of<Response>();
+            }
+
+            public override Task<Response<BlobProperties>> GetPropertiesAsync(BlobRequestConditions conditions = null, CancellationToken cancellationToken = new CancellationToken())
+            {
+                if (GetPropertiesException != null)
+                {
+                    throw GetPropertiesException;
+                }
+
+                if (Properties == null)
+                {
+                    throw new RequestFailedException(404, BlobErrorCode.BlobNotFound.ToString(), BlobErrorCode.BlobNotFound.ToString(), default);
+                }
+
+                return Task.FromResult(Response.FromValue(Properties, Mock.Of<Response>()));
             }
         }
 
