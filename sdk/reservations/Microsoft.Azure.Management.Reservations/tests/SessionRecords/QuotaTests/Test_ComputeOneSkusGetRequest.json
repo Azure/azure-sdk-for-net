@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimits/standardFSv2Family?api-version=2020-10-25",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9zZXJ2aWNlTGltaXRzL3N0YW5kYXJkRlN2MkZhbWlseT9hcGktdmVyc2lvbj0yMDIwLTEwLTI1",
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimits/standardDv2Family?api-version=2020-10-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvbG9jYXRpb25zL3dlc3R1cy9zZXJ2aWNlTGltaXRzL3N0YW5kYXJkRHYyRmFtaWx5P2FwaS12ZXJzaW9uPTIwMjAtMTAtMjU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "36b0b405-4802-4384-adbe-8b2007a0df25"
+          "e504188b-65af-4c69-b2e0-8aa7f9774dc0"
         ],
         "accept-language": [
           "en-US"
@@ -24,7 +24,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Tue, 26 Jan 2021 00:20:28 GMT"
+          "Wed, 27 Jan 2021 01:06:44 GMT"
         ],
         "Server": [
           "Kestrel"
@@ -39,28 +39,28 @@
           "nosniff"
         ],
         "MS-RequestId": [
-          "hxp9MDNFNkSIEYBAkYlhFw.0"
+          "sl48p-nfeEuZ5iOfzEF1XA.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "11999"
         ],
         "x-ms-request-id": [
-          "363f9752-afe2-4697-aaef-a6b2054e1271"
+          "00fe944e-1c4d-4dd2-88b5-b4118b35db43"
         ],
         "x-ms-correlation-request-id": [
-          "363f9752-afe2-4697-aaef-a6b2054e1271"
+          "00fe944e-1c4d-4dd2-88b5-b4118b35db43"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210126T002029Z:363f9752-afe2-4697-aaef-a6b2054e1271"
+          "WESTUS2:20210127T010645Z:00fe944e-1c4d-4dd2-88b5-b4118b35db43"
         ],
         "Content-Length": [
-          "404"
+          "401"
         ],
         "Content-Type": [
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimits/standardFSv2Family\",\r\n  \"name\": \"standardFSv2Family\",\r\n  \"properties\": {\r\n    \"currentValue\": 0,\r\n    \"limit\": 202,\r\n    \"name\": {\r\n      \"value\": \"standardFSv2Family\",\r\n      \"localizedValue\": \"Standard FSv2 Family vCPUs\"\r\n    },\r\n    \"properties\": {},\r\n    \"unit\": \"Count\"\r\n  },\r\n  \"type\": \"Microsoft.Capacity/ServiceLimits\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.Compute/locations/westus/serviceLimits/standardDv2Family\",\r\n  \"name\": \"standardDv2Family\",\r\n  \"properties\": {\r\n    \"currentValue\": 68,\r\n    \"limit\": 604,\r\n    \"name\": {\r\n      \"value\": \"standardDv2Family\",\r\n      \"localizedValue\": \"Standard Dv2 Family vCPUs\"\r\n    },\r\n    \"properties\": {},\r\n    \"unit\": \"Count\"\r\n  },\r\n  \"type\": \"Microsoft.Capacity/ServiceLimits\"\r\n}",
       "StatusCode": 200
     }
   ],

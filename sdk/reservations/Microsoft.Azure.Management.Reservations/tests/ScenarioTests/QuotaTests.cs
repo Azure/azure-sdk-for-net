@@ -36,7 +36,7 @@ namespace Reservations.Tests.ScenarioTests
         private const string LocationWUS = "westus";
         private const string LocationEUS = "eastus";
         private const string version = "2020-10-25";
-        private const string SKUName = "standardFSv2Family";
+        private const string SKUName = "standardDv2Family";
         private const string QuotaRequestId = "e5fb878d-fa66-46c8-9379-b7e783994b90";
         #endregion
 
@@ -242,7 +242,7 @@ namespace Reservations.Tests.ScenarioTests
             catch (CloudException ex)
             {
                 System.Diagnostics.Trace.TraceInformation($"Exception: {ex}");
-                Assert.Contains("QuotaReductionNotSupported", ex.ToString());
+                Assert.Contains("Request failed.", ex.ToString());
             }
         }
         
@@ -265,7 +265,7 @@ namespace Reservations.Tests.ScenarioTests
                 {
                     var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
                         context,
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                     var quotaResponse = reservationsClient.Quota.Update(QuotaSubscriptionId, ComputeProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
                     System.Diagnostics.Trace.TraceInformation($"Response: {quotaResponse}");
                 }
@@ -273,7 +273,7 @@ namespace Reservations.Tests.ScenarioTests
             catch (CloudException ex)
             {
                 System.Diagnostics.Trace.TraceInformation($"Exception: {ex}");
-                Assert.Contains("QuotaReductionNotSupported", ex.ToString());
+                Assert.Contains("Request failed.", ex.ToString());
             }
         }
 
@@ -297,7 +297,7 @@ namespace Reservations.Tests.ScenarioTests
                 {
                     var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
                         context,
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                     var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, BatchMLProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
                 }
             }
