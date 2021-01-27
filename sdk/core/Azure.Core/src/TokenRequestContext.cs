@@ -17,6 +17,20 @@ namespace Azure.Core
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
+            Claims = default;
+        }
+
+        /// <summary>
+        /// Creates a new TokenRequest with the specified scopes.
+        /// </summary>
+        /// <param name="scopes">The scopes required for the token.</param>
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        /// <param name="claims">Additional claims to be included in the token.</param>
+        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default)
+        {
+            Scopes = scopes;
+            ParentRequestId = parentRequestId;
+            Claims = claims;
         }
 
         /// <summary>
@@ -28,5 +42,10 @@ namespace Azure.Core
         /// The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.
         /// </summary>
         public string? ParentRequestId { get; }
+
+        /// <summary>
+        /// Additional claims to be included in the token.
+        /// </summary>
+        public string? Claims { get; }
     }
 }
