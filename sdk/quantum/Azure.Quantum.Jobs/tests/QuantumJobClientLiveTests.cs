@@ -22,7 +22,7 @@ namespace Azure.Quantum.Jobs.Tests
 
         private QuantumJobClient CreateClient()
         {
-            var rawClient = new QuantumJobClient(TestEnvironment.SubscriptionId, "sdk-review-rg", "workspace-ms", "westus", TestEnvironment.Credential, InstrumentClientOptions(new QuantumJobClientOptions()));
+            var rawClient = new QuantumJobClient(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroup, TestEnvironment.WorkspaceName, TestEnvironment.Location, TestEnvironment.Credential, InstrumentClientOptions(new QuantumJobClientOptions()));
 
             return InstrumentClient(rawClient);
         }

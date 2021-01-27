@@ -71,9 +71,9 @@
         }
     ],
     "outputs": {
-        "WORKSPACE_LOCATION": {
+        "WORKSPACE_NAME": {
             "type": "string",
-            "value": "[parameters('location')]"
+            "value": "[parameters('baseName')]"
         }
     }
 }

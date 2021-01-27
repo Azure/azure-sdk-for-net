@@ -7,6 +7,6 @@ namespace Azure.Quantum.Jobs.Tests
 {
     public class QuantumJobClientTestEnvironment : TestEnvironment
     {
-        public string WorkspaceLocation => GetRecordedVariable("WORKSPACE_LOCATION");
+        public string WorkspaceName => GetRecordedVariable("WORKSPACE_NAME");
     }
 }

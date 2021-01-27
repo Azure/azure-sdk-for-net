@@ -3244,8 +3244,8 @@
   "Variables": {
     "RandomSeed": "461311064",
     "SUBSCRIPTION_ID": "677fc922-91d0-4bf6-9b06-4274d319a0fa",
-    "RESOURCE_GROUP_NAME": "sdk-review-rg",
+    "RESOURCE_GROUP": "sdk-review-rg",
     "WORKSPACE_NAME": "workspace-ms",
-    "WORKSPACE_LOCATION": "westus"
+    "LOCATION": "westus"
   }
 }
