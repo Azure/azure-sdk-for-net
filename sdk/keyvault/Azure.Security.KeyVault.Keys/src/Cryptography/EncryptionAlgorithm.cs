@@ -152,19 +152,5 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _ => null,
         };
-
-        internal bool IsAesGcm()
-        {
-            switch (_value)
-            {
-                case A128GcmValue:
-                case A192GcmValue:
-                case A256GcmValue:
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
     }
 }

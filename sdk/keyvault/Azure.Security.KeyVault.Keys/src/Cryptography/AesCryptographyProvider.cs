@@ -48,23 +48,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     Plaintext = plaintext,
                 };
             }
-            else if (algorithm.IsAesGcm() && AesGcmProxy.TryCreate(KeyMaterial.K, out AesGcmProxy aesGcm))
-            {
-                using (aesGcm)
-                {
-                    byte[] ciphertext = options.Ciphertext;
-                    byte[] plaintext = new byte[ciphertext.Length];
-
-                    aesGcm.Decrypt(options.Iv, ciphertext, options.AuthenticationTag, plaintext, options.AdditionalAuthenticatedData);
-
-                    return new DecryptResult
-                    {
-                        Algorithm = algorithm,
-                        KeyId = KeyMaterial.Id,
-                        Plaintext = plaintext,
-                    };
-                }
-            }
             else
             {
                 KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Decrypt), algorithm);
@@ -96,30 +79,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     Ciphertext = ciphertext,
                     Iv = options.Iv,
                 };
-            }
-            else if (algorithm.IsAesGcm() && AesGcmProxy.TryCreate(KeyMaterial.K, out AesGcmProxy aesGcm))
-            {
-                using (aesGcm)
-                {
-                    byte[] plaintext = options.Plaintext;
-                    byte[] ciphertext = new byte[plaintext.Length];
-                    byte[] tag = new byte[AesGcmProxy.NonceByteSize];
-
-                    // Generate an nonce only for local AES-GCM; Managed HSM will do it service-side and err if serialized.
-                    byte[] iv = Crypto.GenerateIv(AesGcmProxy.NonceByteSize);
-
-                    aesGcm.Encrypt(iv, plaintext, ciphertext, tag, options.AdditionalAuthenticatedData);
-
-                    return new EncryptResult
-                    {
-                        Algorithm = algorithm,
-                        KeyId = KeyMaterial.Id,
-                        Ciphertext = ciphertext,
-                        Iv = iv,
-                        AuthenticationTag = tag,
-                        AdditionalAuthenticatedData = options.AdditionalAuthenticatedData,
-                    };
-                }
             }
             else
             {
