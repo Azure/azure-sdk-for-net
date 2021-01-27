@@ -824,8 +824,8 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class LengthTokenFilter : Azure.Search.Documents.Indexes.Models.TokenFilter
     {
         public LengthTokenFilter(string name) { }
-        public int? MaxLength { get { throw null; } }
-        public int? MinLength { get { throw null; } }
+        public int? MaxLength { get { throw null; } set { } }
+        public int? MinLength { get { throw null; } set { } }
     }
     public partial class LexicalAnalyzer
     {

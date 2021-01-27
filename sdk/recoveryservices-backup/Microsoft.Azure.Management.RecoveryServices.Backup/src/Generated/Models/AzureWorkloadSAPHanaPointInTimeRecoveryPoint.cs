@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recoveryPointTimeInUTC">UTC time at which recovery
         /// point was created</param>
         /// <param name="type">Type of restore point. Possible values include:
-        /// 'Invalid', 'Full', 'Log', 'Differential'</param>
+        /// 'Invalid', 'Full', 'Log', 'Differential', 'Incremental'</param>
         /// <param name="timeRanges">List of log ranges</param>
         public AzureWorkloadSAPHanaPointInTimeRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string), IList<PointInTimeRange> timeRanges = default(IList<PointInTimeRange>))
             : base(recoveryPointTimeInUTC, type, timeRanges)

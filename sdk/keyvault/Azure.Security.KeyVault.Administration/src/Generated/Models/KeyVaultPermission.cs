@@ -16,23 +16,23 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
         public KeyVaultPermission()
         {
-            AllowActions = new ChangeTrackingList<string>();
-            DenyActions = new ChangeTrackingList<string>();
-            AllowDataActions = new ChangeTrackingList<string>();
-            DenyDataActions = new ChangeTrackingList<string>();
+            AllowedActions = new ChangeTrackingList<string>();
+            DeniedActions = new ChangeTrackingList<string>();
+            AllowedDataActions = new ChangeTrackingList<string>();
+            DeniedDataActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
-        /// <param name="allowActions"> Allowed actions. </param>
-        /// <param name="denyActions"> Denied actions. </param>
-        /// <param name="allowDataActions"> Allowed Data actions. </param>
-        /// <param name="denyDataActions"> Denied Data actions. </param>
-        internal KeyVaultPermission(IList<string> allowActions, IList<string> denyActions, IList<string> allowDataActions, IList<string> denyDataActions)
+        /// <param name="allowedActions"> Allowed actions. </param>
+        /// <param name="deniedActions"> Denied actions. </param>
+        /// <param name="allowedDataActions"> Allowed Data actions. </param>
+        /// <param name="deniedDataActions"> Denied Data actions. </param>
+        internal KeyVaultPermission(IList<string> allowedActions, IList<string> deniedActions, IList<string> allowedDataActions, IList<string> deniedDataActions)
         {
-            AllowActions = allowActions;
-            DenyActions = denyActions;
-            AllowDataActions = allowDataActions;
-            DenyDataActions = denyDataActions;
+            AllowedActions = allowedActions;
+            DeniedActions = deniedActions;
+            AllowedDataActions = allowedDataActions;
+            DeniedDataActions = deniedDataActions;
         }
     }
 }

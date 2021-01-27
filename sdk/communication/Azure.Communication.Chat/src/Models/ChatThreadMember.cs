@@ -11,8 +11,8 @@ namespace Azure.Communication.Chat
         /// <summary>
         ///  A member of the chat thread.
         /// </summary>
-        /// <param name="communicationUser">Instance of <see cref="CommunicationUser"/>.</param>
-        public ChatThreadMember(CommunicationUser communicationUser)
+        /// <param name="communicationUser">Instance of <see cref="CommunicationUserIdentifier"/>.</param>
+        public ChatThreadMember(CommunicationUserIdentifier communicationUser)
         {
             if (communicationUser == null || communicationUser.Id == null)
             {
@@ -22,13 +22,13 @@ namespace Azure.Communication.Chat
         }
         internal ChatThreadMember(ChatThreadMemberInternal chatThreadMemberInternal)
         {
-            User = new CommunicationUser(chatThreadMemberInternal.Id);
+            User = new CommunicationUserIdentifier(chatThreadMemberInternal.Id);
             DisplayName = chatThreadMemberInternal.DisplayName;
             ShareHistoryTime = chatThreadMemberInternal.ShareHistoryTime;
         }
 
-        ///<summary>Instance of <see cref="CommunicationUser"/>. </summary>
-        public CommunicationUser User { get; set; }
+        ///<summary>Instance of <see cref="CommunicationUserIdentifier"/>. </summary>
+        public CommunicationUserIdentifier User { get; set; }
         /// <summary> Display name for the chat thread member. </summary>
         public string? DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

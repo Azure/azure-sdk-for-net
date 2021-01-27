@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.AI.TextAnalytics.Models;
-
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The PiiTaskParameters. </summary>

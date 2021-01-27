@@ -56,8 +56,8 @@ namespace Azure.Security.Attestation
             uri.AppendPath("/attest/OpenEnclave", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
-            request0.Headers.Add("Content-Type", "application/json");
             request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -128,8 +128,8 @@ namespace Azure.Security.Attestation
             uri.AppendPath("/attest/SgxEnclave", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
-            request0.Headers.Add("Content-Type", "application/json");
             request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -200,8 +200,8 @@ namespace Azure.Security.Attestation
             uri.AppendPath("/attest/Tpm", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
-            request0.Headers.Add("Content-Type", "application/json");
             request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;

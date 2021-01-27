@@ -1,11 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
+
   <PropertyGroup>
     <PackageId>DigitalTwins.Tests</PackageId>
     <Description>DigitalTwins.Tests Class Library</Description>
     <AssemblyName>DigitalTwins.Tests</AssemblyName>
-    <VersionPrefix>2020-10-31</VersionPrefix>    
+    <VersionPrefix>2020-12-01</VersionPrefix>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
+  
   <PropertyGroup>
     <ExcludeFromBuild>false</ExcludeFromBuild>
     <ExcludeFromTest>false</ExcludeFromTest>
@@ -26,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="3.7.0-preview" />
   </ItemGroup>
 </Project>

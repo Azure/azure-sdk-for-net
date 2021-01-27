@@ -1056,17 +1056,17 @@ namespace Azure.Storage.Queues
 
                         // Get response headers
                         string _header;
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("x-ms-approximate-messages-count", out _header))
                         {
                             _value.ApproximateMessagesCount = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response

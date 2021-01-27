@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<DateTimeOffset?> submittedAt = default;
             Optional<DateTimeOffset?> scheduledAt = default;
             Optional<DateTimeOffset?> endedAt = default;
-            Optional<DateTimeOffset> cancellationRequestedAt = default;
+            Optional<DateTimeOffset?> cancellationRequestedAt = default;
             Optional<SchedulerCurrentState> currentState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        cancellationRequestedAt = null;
                         continue;
                     }
                     cancellationRequestedAt = property.Value.GetDateTimeOffset("O");

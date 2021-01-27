@@ -25,7 +25,6 @@ extends:
   parameters:
     ServiceDirectory: schemaregistry
     ArtifactName: packages
-    TestPipeline: true
     Artifacts:
     - name: Azure.Data.SchemaRegistry
       safeName: AzureDataSchemaRegistry

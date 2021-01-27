@@ -4,8 +4,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="5.0.0-rc.2.20475.5" />
-    <PackageReference Include="Azure.Identity" />
+    <!--
+      Test framework should depend on lowest version of Azure.Identity for maximum compatibility, allowing test
+      projects to choose a higher version if desired.
+    -->
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="5.0.0" />
+    <PackageReference Include="Azure.Identity" VersionOverride="1.0.0" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />

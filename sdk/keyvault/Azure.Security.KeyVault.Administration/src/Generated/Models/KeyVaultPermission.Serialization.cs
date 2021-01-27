@@ -16,41 +16,41 @@ namespace Azure.Security.KeyVault.Administration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowActions))
+            if (Optional.IsCollectionDefined(AllowedActions))
             {
                 writer.WritePropertyName("actions");
                 writer.WriteStartArray();
-                foreach (var item in AllowActions)
+                foreach (var item in AllowedActions)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DenyActions))
+            if (Optional.IsCollectionDefined(DeniedActions))
             {
                 writer.WritePropertyName("notActions");
                 writer.WriteStartArray();
-                foreach (var item in DenyActions)
+                foreach (var item in DeniedActions)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowDataActions))
+            if (Optional.IsCollectionDefined(AllowedDataActions))
             {
                 writer.WritePropertyName("dataActions");
                 writer.WriteStartArray();
-                foreach (var item in AllowDataActions)
+                foreach (var item in AllowedDataActions)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DenyDataActions))
+            if (Optional.IsCollectionDefined(DeniedDataActions))
             {
                 writer.WritePropertyName("notDataActions");
                 writer.WriteStartArray();
-                foreach (var item in DenyDataActions)
+                foreach (var item in DeniedDataActions)
                 {
                     writer.WriteStringValue(item);
                 }

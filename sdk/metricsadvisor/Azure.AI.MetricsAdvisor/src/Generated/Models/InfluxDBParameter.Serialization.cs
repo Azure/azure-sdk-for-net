@@ -15,16 +15,51 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString");
-            writer.WriteStringValue(ConnectionString);
-            writer.WritePropertyName("database");
-            writer.WriteStringValue(Database);
-            writer.WritePropertyName("userName");
-            writer.WriteStringValue(UserName);
-            writer.WritePropertyName("password");
-            writer.WriteStringValue(Password);
-            writer.WritePropertyName("query");
-            writer.WriteStringValue(Query);
+            if (ConnectionString != null)
+            {
+                writer.WritePropertyName("connectionString");
+                writer.WriteStringValue(ConnectionString);
+            }
+            else
+            {
+                writer.WriteNull("connectionString");
+            }
+            if (Database != null)
+            {
+                writer.WritePropertyName("database");
+                writer.WriteStringValue(Database);
+            }
+            else
+            {
+                writer.WriteNull("database");
+            }
+            if (UserName != null)
+            {
+                writer.WritePropertyName("userName");
+                writer.WriteStringValue(UserName);
+            }
+            else
+            {
+                writer.WriteNull("userName");
+            }
+            if (Password != null)
+            {
+                writer.WritePropertyName("password");
+                writer.WriteStringValue(Password);
+            }
+            else
+            {
+                writer.WriteNull("password");
+            }
+            if (Query != null)
+            {
+                writer.WritePropertyName("query");
+                writer.WriteStringValue(Query);
+            }
+            else
+            {
+                writer.WriteNull("query");
+            }
             writer.WriteEndObject();
         }
 
@@ -39,26 +74,51 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("connectionString"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        connectionString = null;
+                        continue;
+                    }
                     connectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("database"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        database = null;
+                        continue;
+                    }
                     database = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        userName = null;
+                        continue;
+                    }
                     userName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("password"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        password = null;
+                        continue;
+                    }
                     password = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("query"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        query = null;
+                        continue;
+                    }
                     query = property.Value.GetString();
                     continue;
                 }

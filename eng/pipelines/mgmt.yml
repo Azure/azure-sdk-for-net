@@ -14,8 +14,8 @@ pr:
     - sdk/appplatform/Microsoft.Azure.Management.AppPlatform
     - sdk/attestation/Microsoft.Azure.Management.Attestation
     - sdk/authorization/Microsoft.Azure.Management.Authorization
-    - sdk/automation/Microsoft.Azure.Management.Automation
     - sdk/automanage/Microsoft.Azure.Management.Automanage
+    - sdk/automation/Microsoft.Azure.Management.Automation
     - sdk/avs/Microsoft.Azure.Management.Avs
     - sdk/azurestack/Microsoft.AzureStack.Management.AzureBridge.Admin
     - sdk/azurestack/Microsoft.AzureStack.Management.Backup.Admin
@@ -131,6 +131,7 @@ pr:
     - sdk/servicebus/Microsoft.Azure.Management.ServiceBus
     - sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric
     - sdk/signalr/Microsoft.Azure.Management.SignalR
+    - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlmanagement/Microsoft.Azure.Management.SqlManagement
     - sdk/sqlvirtualmachine/Microsoft.Azure.Management.SqlVirtualMachine
     - sdk/storage/Microsoft.Azure.Management.Storage
@@ -145,14 +146,11 @@ pr:
     - sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - sdk/workloadmonitor/Microsoft.Azure.Management.WorkloadMonitor
-    - eng/pipelines/mgmt.yml
-    - eng/pipelines/templates/jobs/archetype-sdk-mgmt.yml
-
 variables:
   skipComponentGovernanceDetection: true
   msBuildLogDir: msbuildlogs
-  loggingArgs: '/clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log'
-  RPScopeArgs: '/p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)'
+  loggingArgs: /clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log
+  RPScopeArgs: /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)
   timeoutInMinutes: 120
 jobs:
 - template: templates/jobs/archetype-sdk-mgmt.yml

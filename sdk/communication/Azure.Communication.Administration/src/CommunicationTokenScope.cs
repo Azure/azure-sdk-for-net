@@ -13,7 +13,6 @@ namespace Azure.Communication.Administration
     {
         internal const string VoIPValue = "voip";
         internal const string ChatValue = "chat";
-        internal const string PstnValue = "pstn";
 
         private readonly string _value;
 
@@ -33,11 +32,6 @@ namespace Azure.Communication.Administration
         /// Chat.
         /// </summary>
         public static CommunicationTokenScope Chat { get; } = new CommunicationTokenScope(ChatValue);
-
-        /// <summary>
-        /// Public switched telephone network.
-        /// </summary>
-        public static CommunicationTokenScope Pstn { get; } = new CommunicationTokenScope(PstnValue);
 
         /// <summary>
         /// Determines if two <see cref="CommunicationTokenScope"/> values are the same.

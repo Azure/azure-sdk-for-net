@@ -128,8 +128,8 @@ namespace Azure.Communication.Chat
             uri.AppendPath("/readreceipts", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new SendReadReceiptRequest(chatMessageId);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -203,8 +203,8 @@ namespace Azure.Communication.Chat
             uri.AppendPath("/messages", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new SendChatMessageRequest(content)
             {
                 Priority = priority,
@@ -460,8 +460,8 @@ namespace Azure.Communication.Chat
             uri.AppendPath(chatMessageId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new UpdateChatMessageRequest()
             {
                 Content = content,
@@ -744,8 +744,8 @@ namespace Azure.Communication.Chat
             uri.AppendPath("/members", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new AddChatThreadMembersRequest(members);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -888,8 +888,8 @@ namespace Azure.Communication.Chat
             uri.AppendPath("/chat/threads", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new CreateChatThreadRequest(topic, members);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -1038,8 +1038,8 @@ namespace Azure.Communication.Chat
             uri.AppendPath(chatThreadId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new UpdateChatThreadRequest()
             {
                 Topic = topic

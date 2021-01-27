@@ -44,52 +44,5 @@ namespace Azure.Security.KeyVault.Keys.Tests
             int publicExponent = rsaParams.Exponent.ToInt32();
             Assert.AreEqual(3, publicExponent);
         }
-
-        [Test]
-        [Ignore("Not implemented: https://github.com/Azure/azure-sdk-for-net/issues/16792")]
-        public async Task ExportCreatedKey()
-        {
-            SaveDebugRecordingsOnFailure = true;
-
-            string jsonPolicy = @"{
-  ""anyOf"": [
-    {
-      ""allOf"": [
-        {
-          ""claim"": ""MyClaim"",
-          ""condition"": ""equals"",
-          ""value"": ""abc123""
-        }
-      ],
-      ""authority"": ""my.attestation.com""
-    }
-  ],
-  ""version"": ""0.2""
-}";
-            byte[] encodedPolicy = Encoding.UTF8.GetBytes(jsonPolicy);
-
-            CreateRsaKeyOptions options = new CreateRsaKeyOptions(Recording.GenerateId())
-            {
-                Exportable = true,
-                KeyOperations =
-                {
-                    KeyOperation.UnwrapKey,
-                    KeyOperation.WrapKey,
-                },
-                KeySize = 2048,
-                ReleasePolicy = new KeyReleasePolicy(encodedPolicy),
-            };
-
-            // Not currently implemented:
-            KeyVaultKey createdKey = await Client.CreateRsaKeyAsync(options);
-
-            // This requires provisioning of an application in the enclave, which is coming soon:
-            KeyVaultKey exportedKey = await Client.ExportKeyAsync(createdKey.Name, "test");
-            CollectionAssert.AreEqual(createdKey.Key.N, exportedKey.Key.N);
-        }
-
-        [Test]
-        [Ignore("Not implemented: https://github.com/Azure/azure-sdk-for-net/issues/16792")]
-        public Task ExportImportedKey() => Task.CompletedTask;
     }
 }

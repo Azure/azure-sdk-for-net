@@ -20,6 +20,9 @@ parameters:
 - name: Location
   type: string
   default: ''
+- name: SDKType
+  type: string
+  default: client
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -57,6 +60,7 @@ jobs:
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
     pool:
+      name: $(Pool)
       vmImage: $(OSVmImage)
 
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
@@ -65,7 +69,7 @@ jobs:
     steps:
       - ${{ parameters.PreSteps }}
 
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+#      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
 
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
@@ -92,6 +96,7 @@ jobs:
           --filter "TestCategory!=Manually"
           --logger "trx"
           --logger:"console;verbosity=normal"
+          /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}

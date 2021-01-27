@@ -797,29 +797,39 @@ namespace Azure.Data.Tables
         {
             string selectArg = select == null ? null : string.Join(",", select);
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return PageableHelpers.CreateAsyncEnumerable(
-                    async pageSizeHint =>
+            return PageableHelpers.CreateAsyncEnumerable(
+                async pageSizeHint =>
+                {
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                    scope.Start();
+                    try
                     {
                         var response = await _tableOperations.QueryEntitiesAsync(
                             _table,
-                            queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                            queryOptions: new QueryOptions() {Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg},
                             cancellationToken: cancellationToken).ConfigureAwait(false);
 
                         return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
-                    },
-                    async (continuationToken, pageSizeHint) =>
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                async (continuationToken, pageSizeHint) =>
+                {
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                    scope.Start();
+                    try
                     {
                         var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
                         var response = await _tableOperations.QueryEntitiesAsync(
                             _table,
-                            queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                            queryOptions: new QueryOptions() {Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg},
                             nextPartitionKey: NextPartitionKey,
                             nextRowKey: NextRowKey,
                             cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -827,14 +837,14 @@ namespace Azure.Data.Tables
                         return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
-                    },
-                    maxPerPage);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                maxPerPage);
         }
 
         /// <summary>
@@ -1074,10 +1084,10 @@ namespace Azure.Data.Tables
         /// Create a <see cref="TableTransactionalBatch" /> for the given <paramref name="partitionKey"/> value.
         /// </summary>
         /// <param name="partitionKey">The partitionKey context for the batch.</param>
-        /// <returns></returns>
+        /// <returns>An instance of <see cref="TableTransactionalBatch"/>.</returns>
         public virtual TableTransactionalBatch CreateTransactionalBatch(string partitionKey)
         {
-            return new TableTransactionalBatch(_table, _tableOperations, _defaultQueryOptions.Format.Value);
+            return new TableTransactionalBatch(_table, partitionKey, _tableOperations, _defaultQueryOptions.Format.Value);
         }
 
         internal static string Bind(Expression expression)

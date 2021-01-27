@@ -34,7 +34,13 @@ namespace Azure.Iot.Hub.Service.Models
                 foreach (var item in ModulesContent)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteStartObject();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        writer.WriteObjectValue(item0.Value);
+                    }
+                    writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
@@ -55,7 +61,7 @@ namespace Azure.Iot.Hub.Service.Models
         internal static ConfigurationContent DeserializeConfigurationContent(JsonElement element)
         {
             Optional<IDictionary<string, object>> deviceContent = default;
-            Optional<IDictionary<string, object>> modulesContent = default;
+            Optional<IDictionary<string, IDictionary<string, object>>> modulesContent = default;
             Optional<IDictionary<string, object>> moduleContent = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -81,10 +87,15 @@ namespace Azure.Iot.Hub.Service.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, IDictionary<string, object>> dictionary = new Dictionary<string, IDictionary<string, object>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        Dictionary<string, object> dictionary0 = new Dictionary<string, object>();
+                        foreach (var property1 in property0.Value.EnumerateObject())
+                        {
+                            dictionary0.Add(property1.Name, property1.Value.GetObject());
+                        }
+                        dictionary.Add(property0.Name, dictionary0);
                     }
                     modulesContent = dictionary;
                     continue;

@@ -2,6 +2,11 @@
 
 ## 4.2.0-beta.4 (Unreleased)
 
+### Removed
+
+- Removed `Export` and `ExportAsync` methods from `KeyClient`.
+- Removed `Exportable` property from `KeyProperties`'.
+- Removed `KeyReleasePolicy` class and associated properties.
 
 ## 4.2.0-beta.3 (2020-11-12)
 

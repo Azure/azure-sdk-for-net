@@ -1,7 +1,7 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--This file and it's contents are updated at build time moving or editing might result in build failure. Take due deligence while editing this file-->
   <PropertyGroup>
-    <AzureApiTag>Sql_2017-03-01-preview;Sql_2017-10-01-preview;Sql_2014-04-01;Sql_2015-05-01-preview;Sql_2018-06-01-preview;Sql_2019-06-01-preview;Sql_2020-02-02-preview;Sql_2020-08-01-preview;</AzureApiTag>
+    <AzureApiTag>Sql_2017-03-01-preview;Sql_2017-10-01-preview;Sql_2018-06-01-preview;Sql_2014-04-01;Sql_2015-05-01-preview;Sql_2020-08-01-preview;Sql_2020-02-02-preview;Sql_2019-06-01-preview;</AzureApiTag>
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
   </PropertyGroup>
 </Project>

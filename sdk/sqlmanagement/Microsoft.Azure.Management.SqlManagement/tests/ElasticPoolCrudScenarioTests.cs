@@ -244,6 +244,17 @@ namespace Sql.Tests
             Assert.Equal(4, epa.Count());
             Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
             Assert.Equal(3, epa.Where(a => a.Operation == "UPDATE").Count());
+
+            // Update elasticPool Maintenance Configuration Id
+            dynamic epInput5 = createModelFunc();
+            epInput5.MaintenanceConfigurationId = SqlManagementTestUtilities.GetTestMaintenanceConfigurationId(sqlClient.SubscriptionId);
+            returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput5);
+            SqlManagementTestUtilities.ValidateElasticPool(epInput5, returnedEp, epName);
+            epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
+            Assert.NotNull(epa);
+            Assert.Equal(5, epa.Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+            Assert.Equal(4, epa.Where(a => a.Operation == "UPDATE").Count());
         }
 
         [Fact]

@@ -4,5 +4,9 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: textanalytics
-    Clouds: 'Preview'
-    UnsupportedClouds: 'China'
+    CloudConfig:
+      Public:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      Canary:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: 'centraluseuap'

@@ -249,6 +249,31 @@ namespace Azure.Storage.Blobs
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public BlobServiceClient(Uri serviceUri, AzureSasCredential credential, BlobClientOptions options = default)
+            : this(serviceUri, credential.AsPolicy<BlobUriBuilder>(serviceUri), options ?? new BlobClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -337,6 +362,7 @@ namespace Azure.Storage.Blobs
             HttpPipeline pipeline,
             StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             _uri = serviceUri;
             _authenticationPolicy = authentication;
             _pipeline = pipeline;
@@ -689,6 +715,7 @@ namespace Azure.Storage.Blobs
                         maxresults: pageSizeHint,
                         include: BlobExtensions.AsIncludeItems(traits, states),
                         async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetBlobContainers)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
@@ -1772,6 +1799,7 @@ namespace Azure.Storage.Blobs
                         marker: marker,
                         maxresults: pageSizeHint,
                         async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(FindBlobsByTags)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

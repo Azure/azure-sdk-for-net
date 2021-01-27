@@ -42,6 +42,35 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All, permissions: AccountSasPermissions.All).ToString();
+            Uri uri = GetServiceClient_SharedKey().Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new ShareServiceClient(uri, new AzureSasCredential(sas), GetOptions()));
+            ShareServiceProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public void Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All, permissions: AccountSasPermissions.All).ToString();
+            Uri uri = GetServiceClient_SharedKey().Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new ShareClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
         public async Task GetPropertiesAsync()
         {
             // Arrange

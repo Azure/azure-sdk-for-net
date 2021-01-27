@@ -21,13 +21,13 @@ namespace Azure.Communication.Chat
             SenderId = senderId;
             DeletedOn = deletedOn;
             EditedOn = editedOn;
-            Sender = new CommunicationUser(senderId);
+            Sender = new CommunicationUserIdentifier(senderId);
         }
 
         /// <summary>
-        /// The <see cref="CommunicationUser" /> for the message.
+        /// The <see cref="CommunicationUserIdentifier" /> for the message.
         /// </summary>
-        public CommunicationUser Sender { get; }
+        public CommunicationUserIdentifier Sender { get; }
         internal string SenderId { get; }
     }
 }

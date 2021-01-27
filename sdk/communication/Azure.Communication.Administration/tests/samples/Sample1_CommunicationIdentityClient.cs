@@ -5,7 +5,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
 using Azure.Communication.Administration.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
@@ -17,8 +19,8 @@ namespace Azure.Communication.Administration.Samples
     /// </summary>
     public partial class Sample1_CommunicationIdentityClient : CommunicationIdentityClientLiveTestBase
     {
-        public Sample1_CommunicationIdentityClient(bool isAsync): base(isAsync)
-            => Matcher.ExcludeHeaders.Add("x-ms-content-sha256");
+        public Sample1_CommunicationIdentityClient(bool isAsync) : base(isAsync)
+            => Matcher.IgnoredHeaders.Add("x-ms-content-sha256");
 
         [Test]
         [AsyncOnly]
@@ -31,11 +33,11 @@ namespace Azure.Communication.Administration.Samples
             var client = new CommunicationIdentityClient(connectionString);
             #endregion Snippet:CreateCommunicationIdentityClientAsync
 
-            client = CreateInstrumentedCommunicationIdentityClient();
+            client = CreateClientWithConnectionString();
 
             #region  Snippet:CreateCommunicationUserAsync
-            Response<CommunicationUser> userResponse = await client.CreateUserAsync();
-            CommunicationUser user = userResponse.Value;
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
             #endregion Snippet:CreateCommunicationTokenAsync
 
@@ -69,11 +71,11 @@ namespace Azure.Communication.Administration.Samples
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationIdentityClient(connectionString);
             #endregion Snippet:CreateCommunicationIdentityClient
-            client = CreateInstrumentedCommunicationIdentityClient();
+            client = CreateClientWithConnectionString();
 
             #region  Snippet:CreateCommunicationUser
-            Response<CommunicationUser> userResponse = client.CreateUser();
-            CommunicationUser user = userResponse.Value;
+            Response<CommunicationUserIdentifier> userResponse = client.CreateUser();
+            CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
             #endregion Snippet:CreateCommunicationToken
 
@@ -98,6 +100,27 @@ namespace Azure.Communication.Administration.Samples
         }
 
         [Test]
+        public async Task CreateIdentityWithToken()
+        {
+            #region Snippet:CreateCommunicationIdentityFromToken
+            var endpoint = new Uri("https://my-resource.communication.azure.com");
+            /*@@*/ endpoint = TestEnvironment.Endpoint;
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            var client = new CommunicationIdentityClient(endpoint, tokenCredential);
+            #endregion Snippet:CreateCommunicationIdentityFromToken
+
+            client = CreateClientWithTokenCredential();
+            try
+            {
+                Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
+
+        [Test]
         public async Task Troubleshooting()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -105,11 +128,11 @@ namespace Azure.Communication.Administration.Samples
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationIdentityClient(connectionString);
-            /*@@*/ client = CreateInstrumentedCommunicationIdentityClient();
+            /*@@*/ client = CreateClientWithConnectionString();
 
             try
             {
-                Response<CommunicationUser> response = await client.CreateUserAsync();
+                Response<CommunicationUserIdentifier> response = await client.CreateUserAsync();
             }
             catch (RequestFailedException ex)
             {

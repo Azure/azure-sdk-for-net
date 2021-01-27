@@ -12,15 +12,15 @@ namespace Azure.Communication.Administration.Models
         internal CommunicationUserToken(string id, string token, DateTimeOffset expiresOn)
         {
             Id = id;
-            User = new CommunicationUser(id);
+            User = new CommunicationUserIdentifier(id);
             Token = token;
             ExpiresOn = expiresOn;
         }
 
         /// <summary>
-        /// The <see cref="CommunicationUser" /> for which the token is being issued.
+        /// The <see cref="CommunicationUserIdentifier" /> for which the token is being issued.
         /// </summary>
-        public CommunicationUser User { get; }
+        public CommunicationUserIdentifier User { get; }
         internal string Id { get; }
     }
 }

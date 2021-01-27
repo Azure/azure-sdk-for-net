@@ -29,6 +29,9 @@ parameters:
 - name: Location
   type: string
   default: ''
+- name: SDKType
+  type: string
+  default: client
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -52,28 +55,43 @@ parameters:
 - name: Platforms
   type: object
   default:
-    Linux_NetCore:
-      OSVmImage: "ubuntu-18.04"
+    Linux:
+      Pool: azsdk-pool-mms-ubuntu-1804-general
+      OSVmImage: MMSUbuntu18.04
       TestTargetFramework: netcoreapp2.1
-    Windows_NetCore:
-      OSVmImage: "windows-2019"
+    Windows_NetCoreApp:
+      Pool: azsdk-pool-mms-win-2019-general
+      OSVmImage: MMS2019
       TestTargetFramework: netcoreapp2.1
       SupportsRecording: true
-    Windows_NetCore_ProjectRefAzureClients:
-      OSVmImage: "windows-2019"
+    Windows_NetCoreApp_ProjectReferences:
+      Pool: azsdk-pool-mms-win-2019-general
+      OSVmImage: MMS2019
       TestTargetFramework: netcoreapp2.1
       AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
     Windows_NetFramework:
-      OSVmImage: "windows-2019"
+      Pool: azsdk-pool-mms-win-2019-general
+      OSVmImage: MMS2019
       TestTargetFramework: net461
-    Windows_NetFramework_ProjectRefAzureClients:
-      OSVmImage: "windows-2019"
+    Windows_NetFramework_ProjectReferences:
+      Pool: azsdk-pool-mms-win-2019-general
+      OSVmImage: MMS2019
       TestTargetFramework: net461
       AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
     MacOS:
+      Pool: Azure Pipelines
       OSVmImage: "macOS-10.15"
       TestTargetFramework: netcoreapp2.1
       SupportedClouds: 'Public'
+    Windows_Net50:
+      Pool: azsdk-pool-mms-win-2019-general
+      OSVmImage: MMS2019
+      TestTargetFramework: net5.0
+    Windows_Net50_ProjectReferences:
+      Pool: azsdk-pool-mms-win-2019-general
+      OSVmImage: MMS2019
+      TestTargetFramework: net5.0
+      AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
 - name: PlatformPreSteps
   type: object
   default:
@@ -127,6 +145,7 @@ stages:
               BuildInParallel: ${{ parameters.BuildInParallel }}
               TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
               Location: ${{ parameters.Location }}
+              SDKType: ${{ parameters.SDKType }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
             Platforms:

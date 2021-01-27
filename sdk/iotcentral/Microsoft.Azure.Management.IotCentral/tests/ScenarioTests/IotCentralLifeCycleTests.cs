@@ -204,6 +204,21 @@ namespace IotCentral.Tests.ScenarioTests
             Assert.True(exceptionThrown);
         }
 
+        [Fact]
+        public void TestAppTemplateNameField()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Initialize(context);
+                
+                var iotAppsTemplates = this.iotCentralClient.Apps.ListTemplates().ToList();
+                
+                Assert.True(iotAppsTemplates.Count > 0);
+                Assert.NotNull(iotAppsTemplates[0].Name);
+                Assert.Equal("Store Analytics – Condition Monitoring", iotAppsTemplates[0].Name);
+            }
+        }
+
         private void CheckAppNameAndSubdomainTaken(string resourceName, string subdomain)
         {
             OperationInputs resourceNameInputs = new OperationInputs(resourceName, "IoTApps");

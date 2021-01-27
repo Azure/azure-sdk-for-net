@@ -5,6 +5,7 @@ namespace Azure.Storage.Queues
         protected QueueClient() { }
         public QueueClient(string connectionString, string queueName) { }
         public QueueClient(string connectionString, string queueName, Azure.Storage.Queues.QueueClientOptions options) { }
+        public QueueClient(System.Uri queueUri, Azure.AzureSasCredential credential, Azure.Storage.Queues.QueueClientOptions options = null) { }
         public QueueClient(System.Uri queueUri, Azure.Core.TokenCredential credential, Azure.Storage.Queues.QueueClientOptions options = null) { }
         public QueueClient(System.Uri queueUri, Azure.Storage.Queues.QueueClientOptions options = null) { }
         public QueueClient(System.Uri queueUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Queues.QueueClientOptions options = null) { }
@@ -90,6 +91,7 @@ namespace Azure.Storage.Queues
         protected QueueServiceClient() { }
         public QueueServiceClient(string connectionString) { }
         public QueueServiceClient(string connectionString, Azure.Storage.Queues.QueueClientOptions options) { }
+        public QueueServiceClient(System.Uri serviceUri, Azure.AzureSasCredential credential, Azure.Storage.Queues.QueueClientOptions options = null) { }
         public QueueServiceClient(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Queues.QueueClientOptions options = null) { }
         public QueueServiceClient(System.Uri serviceUri, Azure.Storage.Queues.QueueClientOptions options = null) { }
         public QueueServiceClient(System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Queues.QueueClientOptions options = null) { }

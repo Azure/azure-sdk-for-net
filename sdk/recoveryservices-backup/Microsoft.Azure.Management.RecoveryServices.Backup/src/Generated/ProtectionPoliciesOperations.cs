@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
-            string apiVersion = "2019-06-15";
+            string apiVersion = "2020-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -318,7 +318,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2019-06-15";
+            string apiVersion = "2020-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -480,7 +480,35 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <summary>
         /// Deletes specified backup policy from your Recovery Services Vault. This is
         /// an asynchronous operation. Status of the
-        /// operation can be fetched using GetPolicyOperationResult API.
+        /// operation can be fetched using GetProtectionPolicyOperationResult API.
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='policyName'>
+        /// Backup policy to be deleted.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string vaultName, string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(vaultName, resourceGroupName, policyName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes specified backup policy from your Recovery Services Vault. This is
+        /// an asynchronous operation. Status of the
+        /// operation can be fetched using GetProtectionPolicyOperationResult API.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -510,7 +538,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string vaultName, string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string vaultName, string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultName == null)
             {
@@ -528,7 +556,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
             }
-            string apiVersion = "2016-12-01";
+            string apiVersion = "2020-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -541,7 +569,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;

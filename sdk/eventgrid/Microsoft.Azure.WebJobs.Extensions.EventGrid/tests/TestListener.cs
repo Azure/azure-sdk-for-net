@@ -12,6 +12,7 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 {
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [Test]
         public async Task TestUnsubscribe()
         {
-            var ext = new EventGridExtensionConfigProvider(NullLoggerFactory.Instance);
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
             var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [Test]
         public async Task TestDispatch()
         {
-            var ext = new EventGridExtensionConfigProvider(NullLoggerFactory.Instance);
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
             var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         public async Task TestCloudEvent()
         {
             // individual elements
-            var ext = new EventGridExtensionConfigProvider(NullLoggerFactory.Instance);
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
             var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
@@ -87,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [Test]
         public async Task WrongFunctionNameTest()
         {
-            var ext = new EventGridExtensionConfigProvider(NullLoggerFactory.Instance);
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
             var host = TestHelpers.NewHost<MyProg2>(ext);
             await host.StartAsync(); // add listener
 
@@ -103,7 +104,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [Test]
         public async Task ExecutionFailureTest()
         {
-            var ext = new EventGridExtensionConfigProvider(NullLoggerFactory.Instance);
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
             var host = TestHelpers.NewHost<MyProg2>(ext);
             await host.StartAsync(); // add listener
 

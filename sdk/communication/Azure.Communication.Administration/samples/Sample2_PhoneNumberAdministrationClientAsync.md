@@ -171,6 +171,6 @@ If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbersAsync
 var acquiredPhoneNumber = "<acquired_phone_number>";
-var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumber(acquiredPhoneNumber));
+var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumberIdentifier(acquiredPhoneNumber));
 await releaseOperation.WaitForCompletionAsync();
 ```

@@ -43,6 +43,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="managedBy">Unused. Always Null.</param>
+        /// <param name="extendedLocation">The extended location where the
+        /// snapshot will be created. Extended location cannot be
+        /// changed.</param>
         /// <param name="timeCreated">The time when the snapshot was
         /// created.</param>
         /// <param name="osType">The Operating System type. Possible values
@@ -50,6 +53,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="hyperVGeneration">The hypervisor generation of the
         /// Virtual Machine. Applicable to OS disks only. Possible values
         /// include: 'V1', 'V2'</param>
+        /// <param name="purchasePlan">Purchase plan information for the image
+        /// from which the source disk for the snapshot was originally
+        /// created.</param>
         /// <param name="diskSizeGB">If creationData.createOption is Empty,
         /// this field is mandatory and it indicates the size of the disk to
         /// create. If this field is present for updates or creation with other
@@ -78,14 +84,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
-        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string diskState = default(string), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string))
+        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string diskState = default(string), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
             Sku = sku;
+            ExtendedLocation = extendedLocation;
             TimeCreated = timeCreated;
             OsType = osType;
             HyperVGeneration = hyperVGeneration;
+            PurchasePlan = purchasePlan;
             CreationData = creationData;
             DiskSizeGB = diskSizeGB;
             DiskSizeBytes = diskSizeBytes;
@@ -117,6 +125,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public SnapshotSku Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets the extended location where the snapshot will be
+        /// created. Extended location cannot be changed.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary>
         /// Gets the time when the snapshot was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
@@ -135,6 +150,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hyperVGeneration")]
         public string HyperVGeneration { get; set; }
+
+        /// <summary>
+        /// Gets or sets purchase plan information for the image from which the
+        /// source disk for the snapshot was originally created.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.purchasePlan")]
+        public PurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
         /// Gets or sets disk source information. CreationData information
@@ -228,6 +250,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (CreationData == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CreationData");
+            }
+            if (PurchasePlan != null)
+            {
+                PurchasePlan.Validate();
             }
             if (CreationData != null)
             {

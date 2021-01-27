@@ -301,7 +301,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         ++failedAttemptCount;
                         retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
-                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!_closed) && (!cancellationToken.IsCancellationRequested))
                         {
                             EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, operationId, activeEx.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);

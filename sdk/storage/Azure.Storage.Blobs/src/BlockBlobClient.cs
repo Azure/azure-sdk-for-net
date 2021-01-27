@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// The maximum size of a block blob is therefore approximately 190.73 TiB
     /// (4,000 MB X 50,000 blocks).  If you are writing a block blob that is
     /// no more than 5,000 MB in size, you can upload it in its entirety with a
-    /// single write operation; see <see cref="BlockBlobClient.UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>.
+    /// single write operation; see <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>.
     ///
     /// When you upload a block to a blob in your storage account, it is
     /// associated with the specified block blob, but it does not become part
@@ -230,6 +230,33 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlockBlobClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            : base(blobUri, credential, options)
+        {
+            AssertNoClientSideEncryption(options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public BlockBlobClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
             AssertNoClientSideEncryption(options);

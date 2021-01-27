@@ -17,7 +17,7 @@ dotnet add package Azure.Communication.Sms --version 1.0.0-beta.3
 ### Prerequisites
 You need an [Azure subscription][azure_sub] and a [Communication Service Resource][communication_resource_docs] to use this package.
 
-To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal] or the [.NET management client library][communication_resource_create_net].
+To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 ### Key concepts
 `SmsClient` provides the functionality to send messages between phone numbers.
@@ -34,6 +34,15 @@ SMS clients can be authenticated using the connection string acquired from an Az
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
 string connectionString = "YOUR_CONNECTION_STRING"; // Find your Communication Services resource in the Azure portal
 SmsClient client = new SmsClient(connectionString);
+```
+
+Alternatively, SMS clients can also be authenticated using a valid token credential. With this option,
+`AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication. 
+
+```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
+string endpoint = "<endpoint_url>";
+TokenCredential tokenCredential = new DefaultAzureCredential();
+SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
 ## Examples
@@ -82,6 +91,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc_contact]: mailto:opencode@microsoft.com
 [communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
 [package]: https://www.nuget.org/packages/Azure.Communication.Sms
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview

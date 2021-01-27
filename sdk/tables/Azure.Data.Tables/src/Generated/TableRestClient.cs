@@ -78,7 +78,7 @@ namespace Azure.Data.Tables
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("DataServiceVersion", "3.0");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
@@ -147,7 +147,7 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(tableProperties);
@@ -322,7 +322,7 @@ namespace Azure.Data.Tables
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("DataServiceVersion", "3.0");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
@@ -423,7 +423,7 @@ namespace Azure.Data.Tables
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("DataServiceVersion", "3.0");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
@@ -547,9 +547,9 @@ namespace Azure.Data.Tables
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
             if (tableEntityProperties != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
@@ -666,10 +666,10 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (tableEntityProperties != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
@@ -891,10 +891,10 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json;odata=nometadata");
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             if (tableEntityProperties != null)
             {
+                request.Headers.Add("Content-Type", "application/json;odata=nometadata");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
@@ -1097,9 +1097,9 @@ namespace Azure.Data.Tables
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/xml");
-            request.Headers.Add("Content-Type", "application/xml");
             if (tableAcl != null)
             {
+                request.Headers.Add("Content-Type", "application/xml");
                 var content = new XmlWriterContent();
                 content.XmlWriter.WriteStartElement("SignedIdentifiers");
                 foreach (var item in tableAcl)

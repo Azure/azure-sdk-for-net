@@ -58,6 +58,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFr
             var data = (MessageData)telemetryItem.Data.BaseData;
             Assert.Equal(expectedVars.Message, data.Message);
             Assert.Equal(expectedVars.SeverityLevel, data.SeverityLevel);
+            Assert.Equal(expectedVars.SpanId, telemetryItem.Tags["ai.operation.parentId"]);
+            Assert.Equal(expectedVars.TraceId, telemetryItem.Tags["ai.operation.id"]);
         }
     }
 }

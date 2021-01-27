@@ -295,6 +295,37 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetAccountSasCredentials().SasToken;
+            Uri uri = test.Container.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new BlobContainerClient(uri, new AzureSasCredential(sas), GetOptions()));
+            BlobContainerProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string sas = GetAccountSasCredentials().SasToken;
+            Uri uri = test.Container.Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new BlobContainerClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange

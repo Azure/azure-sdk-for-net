@@ -23,6 +23,7 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
   - [Downloading Blobs from a Container](#downloading-blobs-from-a-container)
   - [Listing Blobs in a Container](#listing-blobs-in-a-container)
   - [Generate a SAS](#generate-a-sas)
+  - [Content Hashes](#content-hashes)
 - [Additional information](#additional-information)
 
 ## Migration benefits
@@ -66,7 +67,7 @@ v12
 A `TokenCredential` abstract class (different API surface than v11) exists in the Azure.Core package that all libraries of the new Azure SDK family depend on, and can be used to construct Storage clients. Implementations of this class can be found separately in the [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) package. [`DefaultAzureCredential`](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential) is a good starting point, with code as simple as the following:
 
 ```C# Snippet:SampleSnippetsBlobMigration_TokenCredential
-BlobServiceClient client = new BlobServiceClient(new Uri(accountUri), new DefaultAzureCredential());
+BlobServiceClient client = new BlobServiceClient(new Uri(serviceUri), new DefaultAzureCredential());
 ```
 
 You can view more [Identity samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#examples) for how to authenticate with the Identity package.
@@ -196,7 +197,7 @@ The legacy SDK used a stateful model. There were container and blob objects that
 
 The modern SDK has taken a client-based approach. There are no objects designed to be representations of storage resources, but instead clients that act as your mechanism to interact with your storage resources in the cloud. Clients hold no state of your resources.
 
-The hierarchical structure of Azure Blob Storage can be understood by the following diagram:
+The hierarchical structure of Azure Blob Storage can be understood by the following diagram:  
 ![Blob Storage Hierarchy](https://docs.microsoft.com/en-us/azure/storage/blobs/media/storage-blobs-introduction/blob1.png)
 
 In the interest of simplifying the API surface, v12 uses three top level clients to match this structure that can be used to interact with a majority of your resources: `BlobServiceClient`, `BlobContainerClient`, and `BlobClient`. Note that blob-type-specific operations can still be accessed by their specific clients, as in v11.
@@ -209,7 +210,7 @@ We recommend `BlobClient` as a starting place when migrating code that used v11'
 
 #### Migrating from CloudBlobDirectory
 
-Note the absence of a v12 equivalent for v11's `CloudBlobDirectory`. Directories were an SDK-only concept that did not exist in Azure Blob Storage, and which were not brought forwards into the modern Storage SDK. As shown by the diagram in [Client Structure](#client-structure)], containers only contain a flat list of blobs, but those blobs can be named and listed in ways that imply a folder-like structure. See our [Listing Blobs in a Container](#listing-blobs-in-a-container) migration samples later in this guide for more information.
+Note the absence of a v12 equivalent for v11's `CloudBlobDirectory`. Directories were an SDK-only concept that did not exist in Azure Blob Storage, and which were not brought forwards into the modern Storage SDK. As shown by the diagram in [Client Structure](#client-structure), containers only contain a flat list of blobs, but those blobs can be named and listed in ways that imply a folder-like structure. See our [Listing Blobs in a Container](#listing-blobs-in-a-container) migration samples later in this guide for more information.
 
 For those whose workloads revolve around manipulating directories and heavily relied on the leagacy SDKs abstraction of this structure, consider the [pros and cons of enabling hierarchical namespace](https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-namespace) on your storage account, which would allow switching to the [Data Lake gen 2 SDK](https://docs.microsoft.com/dotnet/api/overview/azure/storage.files.datalake-readme), whose migration is not covered in this document.
 
@@ -468,6 +469,93 @@ BlobSasBuilder sasBuilder = new BlobSasBuilder()
 {
     Identifier = "mysignedidentifier"
 };
+```
+
+### Content Hashes
+
+#### Blob Content MD5
+
+V11 calculated blob content MD5 for validation on download by default, assuming there was a stored MD5 in the blob properties. Calculation and storage on upload was opt-in. Note that this value is not generated or validated by the service, and is only retained for the client to validate against.
+
+v11
+
+```csharp
+BlobRequestOptions options = new BlobRequestOptions
+{
+    ChecksumOptions = new ChecksumOptions()
+    {
+        DisableContentMD5Validation = false, // true to disable download content validation
+        StoreContentMD5 = false // true to calculate content MD5 on upload and store property
+    }
+};
+```
+
+V12 does not have an automated mechanism for blob content validation. It must be done per-request by the user.
+
+v12
+
+```C# Snippet:SampleSnippetsBlobMigration_BlobContentMD5
+// upload with blob content hash
+await blobClient.UploadAsync(
+    contentStream,
+    new BlobUploadOptions()
+    {
+        HttpHeaders = new BlobHttpHeaders()
+        {
+            ContentHash = precalculatedContentHash
+        }
+    });
+
+// download whole blob and validate against stored blob content hash
+Response<BlobDownloadInfo> response = await blobClient.DownloadAsync();
+
+Stream downloadStream = response.Value.Content;
+byte[] blobContentMD5 = response.Value.Details.BlobContentHash ?? response.Value.ContentHash;
+// validate stream against hash in your workflow
+```
+
+#### Transactional MD5 and CRC64
+
+Transactional hashes are not stored and have a lifespan of the request they are calculated for. Transactional hashes are verified by the service on upload.
+
+V11 provided transactional hashing on uploads and downloads through opt-in request options. MD5 and Storage's custom CRC64 were supported. The SDK calculated and validated these hashes automatically when enabled. The calculation worked on any upload or download method.
+
+v11
+
+```csharp
+BlobRequestOptions options = new BlobRequestOptions
+{
+    ChecksumOptions = new ChecksumOptions()
+    {
+        // request fails if both are true
+        UseTransactionalMD5 = false, // true to use MD5 on all blob content transactions
+        UseTransactionalCRC64 = false // true to use CRC64 on all blob content transactions
+    }
+};
+```
+
+V12 does not currently provide this functionality. Users who manage their own individual upload and download HTTP requests can provide a precalculated MD5 on upload and access the MD5 in the response object. V12 currently offers no API to request a transactional CRC64.
+
+```C# Snippet:SampleSnippetsBlobMigration_TransactionalMD5
+// upload a block with transactional hash calculated by user
+await blockBlobClient.StageBlockAsync(
+    blockId,
+    blockContentStream,
+    transactionalContentHash: precalculatedBlockHash);
+
+// upload more blocks as needed
+
+// commit block list
+await blockBlobClient.CommitBlockListAsync(blockList);
+
+// download any range of blob with transactional MD5 requested (maximum 4 MB for downloads)
+Response<BlobDownloadInfo> response = await blockBlobClient.DownloadAsync(
+    range: new HttpRange(length: 4 * Constants.MB), // a range must be provided; here we use transactional download max size
+    rangeGetContentHash: true);
+
+Stream downloadStream = response.Value.Content;
+byte[] transactionalMD5 = response.Value.ContentHash;
+// validate stream against hash in your workflow
 ```
 
 ## Additional information
