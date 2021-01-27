@@ -102,11 +102,7 @@ foreach ($pkgName in $responses.Keys)
             {
                 Write-Host "Package version is not GA. Ignoring API view approval status"
             }
-            elseif ($pkgInfo.SdkType -eq "management")
-            {
-                Write-Host "API review is not approved for package $($PackageName). But management package can be released without API review approval."
-            }
-            else
+            elseif ($pkgInfo.SdkType -eq "client" -and $pkgInfo.IsNewSdk)
             {
                 $FoundFailure = $True
                 if ($respCode -eq '201')
@@ -116,7 +112,11 @@ foreach ($pkgName in $responses.Keys)
                 else
                 {
                     Write-Host "Failed to create API Review for package $($PackageName)"
-                }
+                }                
+            }
+            else
+            {
+                Write-Host "API review is not approved for package $($PackageName). Management and track1 package can be released without API review approval."
             }      
         }
     }
