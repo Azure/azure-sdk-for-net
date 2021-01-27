@@ -606,7 +606,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var lastEvent = default(EventData);
                 var failedAttemptCount = 0;
                 var failedConsumerCount = 0;
-                var operationDescription = Resources.OperationClaimOwnership;
                 var startingPosition = Options.DefaultStartingPosition;
 
                 // Create the connection to be used for spawning consumers; if the creation
@@ -622,12 +621,10 @@ namespace Azure.Messaging.EventHubs.Primitives
                     // Query the available checkpoints for the partition.
 
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    operationDescription = Resources.OperationListCheckpoints;
 
                     // Determine the starting position for processing the partition.
 
-                    var checkpoint = await GetCheckpointAsync(partition.PartitionId, cancellationToken).ConfigureAwait(false);
-                    operationDescription = Resources.OperationClaimOwnership;
+                    EventProcessorCheckpoint checkpoint = await GetCheckpointAsync(partition.PartitionId, cancellationToken).ConfigureAwait(false);
                     if (checkpoint != null)
                     {
                         startingPosition = checkpoint.StartingPosition;
@@ -643,7 +640,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     // The error handler is invoked as a fire-and-forget task; the processor does not assume responsibility
                     // for observing or surfacing exceptions that may occur in the handler.
 
-                    _ = InvokeOnProcessingErrorAsync(ex, partition, operationDescription, CancellationToken.None);
+                    _ = InvokeOnProcessingErrorAsync(ex, partition, Resources.OperationListCheckpoints, CancellationToken.None);
                     Logger.EventProcessorPartitionProcessingStartError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
 
                     throw;
