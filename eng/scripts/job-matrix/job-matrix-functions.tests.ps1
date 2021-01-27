@@ -309,6 +309,9 @@ Describe "Platform Matrix Generation" -Tag "generate" {
 
     It "Should get matrix dimensions from Nd parameters" {
         GetMatrixDimensions $generateConfig.orderedMatrix | Should -Be 3, 2, 2
+
+        $generateConfig.orderedMatrix.Add("testStringParameter", "test")
+        GetMatrixDimensions $generateConfig.orderedMatrix | Should -Be 3, 2, 2, 1
     }
 
     It "Should use name overrides from displayNames" {

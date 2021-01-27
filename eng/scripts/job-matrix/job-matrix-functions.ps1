@@ -73,7 +73,7 @@ function MatchesFilters([hashtable]$entry, [array]$filters) {
         # Default all regex checks to go against empty string when keys are missing.
         # This simplifies the filter syntax/interface to be regex only.
         $value = ""
-        if ($entry.parameters.Contains($key)) {
+        if ($null -ne $entry -and $entry.parameters.Contains($key)) {
             $value = $entry.parameters[$key]
         }
         if ($value -notmatch $regex) {
@@ -337,8 +337,10 @@ function GetMatrixDimensions([System.Collections.Specialized.OrderedDictionary]$
     foreach ($val in $parameters.Values) {
         if ($val -is [PSCustomObject]) {
             $dimensions += ($val.PSObject.Properties | Measure-Object).Count
-        } else {
+        } elseif ($val -is [Array]) {
             $dimensions += $val.Length
+        } else {
+            $dimensions += 1
         }
     }
 
