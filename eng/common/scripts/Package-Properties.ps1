@@ -9,32 +9,31 @@ class PackageProps
     [string]$ServiceDirectory
     [string]$ReadMePath
     [string]$ChangeLogPath
-    [string]$SdkType
     [string]$Group
+    [string]$SdkType
+    [boolean]$IsNewSdk
 
-    PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory, [string]$sdkType)
+    PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
-        $this.Initialize($name, $version, $directoryPath, $serviceDirectory, $sdkType)
+        $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
     }
 
-    PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory, [string]$sdkType, [string]$group = "")
+    PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory, [string]$group = "")
     {
-        $this.Initialize($name, $version, $directoryPath, $serviceDirectory, $sdkType, $group)
+        $this.Initialize($name, $version, $directoryPath, $serviceDirectory, $group)
     }
 
     hidden [void]Initialize(
         [string]$name,
         [string]$version,
         [string]$directoryPath,
-        [string]$serviceDirectory,
-        [string]$sdkType
+        [string]$serviceDirectory
     )
     {
         $this.Name = $name
         $this.Version = $version
         $this.DirectoryPath = $directoryPath
         $this.ServiceDirectory = $serviceDirectory
-        $this.SdkType = $sdkType
 
         if (Test-Path (Join-Path $directoryPath "README.md"))
         {
@@ -60,11 +59,10 @@ class PackageProps
         [string]$version,
         [string]$directoryPath,
         [string]$serviceDirectory,
-        [string]$sdkType,
         [string]$group
     )
     {
-        $this.Initialize($name, $version, $directoryPath, $serviceDirectory, $sdkType)
+        $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
         $this.Group = $group
     }
 }

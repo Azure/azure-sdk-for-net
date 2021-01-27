@@ -7,16 +7,7 @@ Param (
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
-$allPackageProperties = @{}
-if (Test-Path "Function:Get-AllPkgProperties")
-{
-    $allPackageProperties = Get-AllPkgProperties $serviceName
-}
-else
-{
-    Write-Host "The function Get-AllPkgProperties was not found."
-}
-
+$allPackageProperties = Get-AllPkgProperties $serviceName
 if ($allPackageProperties)
 {
     New-Item -ItemType Directory -Force -Path $OutDirectory
@@ -26,7 +17,7 @@ if ($allPackageProperties)
         Write-Host "Package Version: $($pkg.Version)"
         Write-Host "Package SDK Type: $($pkg.SdkType)"
         $outputPath = Join-Path -Path $OutDirectory ($pkg.Name + ".json")
-        $outputObject = @{name = $pkg.Name; version = $pkg.Version; SdkType = $pkg.SdkType } | ConvertTo-Json
+        $outputObject = $pkg | ConvertTo-Json
         Set-Content -Path $outputPath -Value $outputObject
     }
 
