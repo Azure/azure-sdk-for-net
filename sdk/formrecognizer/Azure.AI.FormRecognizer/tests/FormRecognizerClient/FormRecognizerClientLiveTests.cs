@@ -461,7 +461,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = new List<string> { pages } });
+                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages =  { pages } });
             }
 
             FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
@@ -480,7 +480,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = new List<string> { page1, page2 } });
+                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = { page1, page2 } });
             }
 
             FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
