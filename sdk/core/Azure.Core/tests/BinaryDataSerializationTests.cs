@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
@@ -11,8 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class AzureCoreExtensionsTests
-
+    public class BinaryDataSerializationTests
     {
         [Test]
         public async Task CanCreateBinaryDataFromCustomType()
