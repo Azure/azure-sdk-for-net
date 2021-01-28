@@ -33,11 +33,23 @@ namespace Azure.Quantum.Jobs.Tests
 
         public QuantumJobClientTestEnvironment()
         {
-            if (Mode == RecordedTestMode.Record)
+        }
+
+        public void Initialize()
+        {
+            if (!_initialized && Mode == RecordedTestMode.Record)
             {
                 if (Environment.GetEnvironmentVariable("SUBSCRIPTION_ID") == null)
                 {
                     Environment.SetEnvironmentVariable("SUBSCRIPTION_ID", _azLoginAccessTokenInfo.Value.SubscriptionId);
+                }
+                if (Environment.GetEnvironmentVariable("WORKSPACE_NAME") == null)
+                {
+                    Environment.SetEnvironmentVariable("WORKSPACE_NAME", "workspace-ms");
+                }
+                if (Environment.GetEnvironmentVariable("RESOURCE_GROUP") == null)
+                {
+                    Environment.SetEnvironmentVariable("RESOURCE_GROUP", "sdk-review-rg");
                 }
                 if (Environment.GetEnvironmentVariable("TENANT_ID") == null)
                 {
@@ -51,6 +63,8 @@ namespace Azure.Quantum.Jobs.Tests
                 {
                     Environment.SetEnvironmentVariable("ENVIRONMENT", "Prod");
                 }
+
+                _initialized = true;
             }
         }
 
@@ -103,5 +117,7 @@ namespace Azure.Quantum.Jobs.Tests
             var accessTokenInfo = JsonConvert.DeserializeObject<AzLoginAccessTokenInfo>(azProcessOutput);
             return accessTokenInfo;
         }
+
+        private bool _initialized = false;
     }
 }

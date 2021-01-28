@@ -15,7 +15,7 @@ namespace Azure.Quantum.Jobs.Tests
 {
     public class QuantumJobClientLiveTests: RecordedTestBase<QuantumJobClientTestEnvironment>
     {
-        public QuantumJobClientLiveTests(bool isAsync) : base(isAsync)
+        public QuantumJobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             Sanitizer = new QuantumJobClientRecordedTestSanitizer();
 
@@ -25,6 +25,8 @@ namespace Azure.Quantum.Jobs.Tests
 
         private QuantumJobClient CreateClient()
         {
+            TestEnvironment.Initialize();
+
             var rawClient = new QuantumJobClient(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroup, TestEnvironment.WorkspaceName, TestEnvironment.Location, TestEnvironment.Credential, InstrumentClientOptions(new QuantumJobClientOptions()));
 
             return InstrumentClient(rawClient);
@@ -117,6 +119,10 @@ namespace Azure.Quantum.Jobs.Tests
                 Assert.IsNotEmpty(job.ProviderId);
                 Assert.IsNotNull(job.Status);
                 Assert.IsNotEmpty(job.Target);
+
+                JobDetails singleJob = await client.GetJobAsync(job.Id);
+                Assert.AreEqual(job.Id, singleJob.Id);
+
                 ++index;
             }
 
