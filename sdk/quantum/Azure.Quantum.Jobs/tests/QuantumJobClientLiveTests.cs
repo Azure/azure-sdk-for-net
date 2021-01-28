@@ -28,44 +28,35 @@ namespace Azure.Quantum.Jobs.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetList()
+        public async Task GetJobsTest()
         {
             var client = CreateClient();
 
             int index = 0;
             await foreach (JobDetails job in client.GetJobsAsync(CancellationToken.None))
             {
-                if (index == 0)
+                if (Mode == RecordedTestMode.Playback)
                 {
-                    Assert.AreEqual(null, job.CancellationTime);
                     Assert.AreEqual("Sanitized", job.ContainerUri);
-                    Assert.AreEqual(null, job.ErrorData);
-                    Assert.AreEqual("1be7199c-5d16-11eb-8f86-3e22fb0c562e", job.Id);
-                    Assert.AreEqual("microsoft.qio.v2", job.InputDataFormat);
                     Assert.AreEqual("Sanitized", job.InputDataUri);
-                    Assert.AreEqual("first-demo", job.Name);
-                    Assert.AreEqual("microsoft.qio-results.v2", job.OutputDataFormat);
                     Assert.AreEqual("Sanitized", job.OutputDataUri);
-                    Assert.AreEqual("microsoft", job.ProviderId);
-                    Assert.AreEqual(JobStatus.Succeeded, job.Status);
-                    Assert.AreEqual("microsoft.paralleltempering-parameterfree.cpu", job.Target);
                 }
-                else if (index == 1)
+                else
                 {
-                    Assert.AreEqual(null, job.CancellationTime);
-                    Assert.AreEqual("Sanitized", job.ContainerUri);
-                    Assert.AreEqual(null, job.ErrorData);
-                    Assert.AreEqual("a962c244-5d16-11eb-9803-3e22fb0c562e", job.Id);
-                    Assert.AreEqual("microsoft.qio.v2", job.InputDataFormat);
-                    Assert.AreEqual("Sanitized", job.InputDataUri);
-                    Assert.AreEqual("first-demo", job.Name);
-                    Assert.AreEqual("microsoft.qio-results.v2", job.OutputDataFormat);
-                    Assert.AreEqual("Sanitized", job.OutputDataUri);
-                    Assert.AreEqual("microsoft", job.ProviderId);
-                    Assert.AreEqual(JobStatus.Succeeded, job.Status);
-                    Assert.AreEqual("microsoft.paralleltempering-parameterfree.cpu", job.Target);
+                    Assert.IsNotEmpty(job.ContainerUri);
+                    Assert.IsNotEmpty(job.InputDataUri);
+                    Assert.IsNotEmpty(job.OutputDataUri);
                 }
 
+                Assert.AreEqual(null, job.CancellationTime);
+                Assert.AreEqual(null, job.ErrorData);
+                Assert.IsNotEmpty(job.Id);
+                Assert.IsNotEmpty(job.InputDataFormat);
+                Assert.IsNotEmpty(job.Name);
+                Assert.IsNotEmpty(job.OutputDataFormat);
+                Assert.IsNotEmpty(job.ProviderId);
+                Assert.IsNotNull(job.Status);
+                Assert.IsNotEmpty(job.Target);
                 ++index;
             }
 
