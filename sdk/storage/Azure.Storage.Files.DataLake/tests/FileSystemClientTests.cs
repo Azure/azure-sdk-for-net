@@ -2055,6 +2055,132 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
+        //[Test]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        //public async Task Rename()
+        //{
+        //    // Arrange
+        //    DataLakeServiceClient service = GetServiceClient_SharedKey();
+        //    string oldFileSystemName = GetNewFileName();
+        //    string newFileSystemName = GetNewFileName();
+        //    DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+        //    await fileSystem.CreateAsync();
+
+        //    // Act
+        //    DataLakeFileSystemClient newFileSystem = await fileSystem.RenameAsync(
+        //        destinationFileSystemName: newFileSystemName);
+
+        //    // Assert
+        //    await newFileSystem.GetPropertiesAsync();
+
+        //    // Cleanup
+        //    await newFileSystem.DeleteAsync();
+        //}
+
+        //[Test]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        //public async Task RenameAsync_AccountSas()
+        //{
+        //    // Arrange
+        //    DataLakeServiceClient service = GetServiceClient_SharedKey();
+        //    string oldFileSystemName = GetNewFileName();
+        //    string newFileSystemName = GetNewFileName();
+        //    DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+        //    await fileSystem.CreateAsync();
+        //    SasQueryParameters sasQueryParameters = GetNewAccountSas();
+        //    service = InstrumentClient(new DataLakeServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions()));
+        //    DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+
+        //    // Act
+        //    DataLakeFileSystemClient newFileSystem = await sasFileSystemClient.RenameAsync(
+        //        destinationFileSystemName: newFileSystemName);
+
+        //    // Assert
+        //    await newFileSystem.GetPropertiesAsync();
+
+        //    // Cleanup
+        //    await newFileSystem.DeleteAsync();
+        //}
+
+        //[Test]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        //public async Task RenameAsync_Error()
+        //{
+        //    // Arrange
+        //    DataLakeServiceClient service = GetServiceClient_SharedKey();
+        //    DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+
+        //    // Act
+        //    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+        //        fileSystemClient.RenameAsync(GetNewFileSystemName()),
+        //        e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        //}
+
+        //[Test]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        //public async Task RenameAsync_SourceLease()
+        //{
+        //    // Arrange
+        //    DataLakeServiceClient service = GetServiceClient_SharedKey();
+        //    string oldFileSystemName = GetNewFileSystemName();
+        //    string newFileSystemName = GetNewFileSystemName();
+        //    DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+        //    await fileSystem.CreateAsync();
+        //    string leaseId = Recording.Random.NewGuid().ToString();
+
+        //    DataLakeLeaseClient leaseClient = InstrumentClient(fileSystem.GetDataLakeLeaseClient(leaseId));
+        //    await leaseClient.AcquireAsync(duration: TimeSpan.FromSeconds(30));
+
+        //    DataLakeRequestConditions sourceConditions = new DataLakeRequestConditions
+        //    {
+        //        LeaseId = leaseId
+        //    };
+
+        //    // Act
+        //    DataLakeFileSystemClient newFileSystem = await fileSystem.RenameAsync(
+        //        destinationFileSystemName: newFileSystemName,
+        //        sourceConditions: sourceConditions);
+
+        //    // Assert
+        //    await newFileSystem.GetPropertiesAsync();
+
+        //    // Cleanup
+        //    await newFileSystem.DeleteAsync();
+        //}
+
+        //[Test]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        //public async Task RenameAsync_SourceLeaseFailed()
+        //{
+        //    // Arrange
+        //    DataLakeServiceClient service = GetServiceClient_SharedKey();
+        //    string oldFileSystemName = GetNewFileSystemName();
+        //    string newFileSystemName = GetNewFileSystemName();
+        //    DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+        //    await fileSystem.CreateAsync();
+        //    string leaseId = Recording.Random.NewGuid().ToString();
+
+        //    DataLakeRequestConditions sourceConditions = new DataLakeRequestConditions
+        //    {
+        //        LeaseId = leaseId
+        //    };
+
+        //    // Act
+        //    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+        //        fileSystem.RenameAsync(
+        //            destinationFileSystemName: newFileSystemName,
+        //            sourceConditions: sourceConditions),
+        //        e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+
+        //    // Cleanup
+        //    await fileSystem.DeleteAsync();
+        //}
+
         #region GenerateSasTests
         [Test]
         public void CanGenerateSas_ClientConstructors()

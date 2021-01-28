@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "267fcbcc-6a32-f9c9-2387-f8c99f0772ee",
         "x-ms-date": "Tue, 01 Dec 2020 23:09:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "267fcbcc-6a32-f9c9-2387-f8c99f0772ee",
         "x-ms-request-id": "8afb1713-d01e-006a-1436-c802ea000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "3815ca4c-3551-29ec-ae39-3561bc720170",
         "x-ms-date": "Tue, 01 Dec 2020 23:09:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": "XVYri4bbRqePAOdvuK4VigJYv7IHNrPopsvBJ/iiPRr\u002B6r2MbvkZL6ZXrDq/MzezTKGX6WQSviajQuW7GR\u002Bv7MPMcM7xiRsIP48LsIp4KXOUDtpXC1O26yuX6CsUXhaHqL938sNpwsOFjqrUBg6bKhlxJgtFV\u002BBvFoSiWaDw9OB4hAfKATavK0sW0X2p4eUc\u002B74RojcLQVHfCNw\u002BxmgilJrJW4EH0Cjiwvu/LoVjxTSfhV7i3lGpbUO26/hacWTj9D3i4IVjFSuVL\u002BA8SxPLe0Onn0EKQLZIIO4\u002BUeUwiFGW2zlIgOWuPG8zTK9xbCIv6nC1s9Ei2bSGmr\u002BXJMRGZaePpm/Zgvpd\u002BWPR1/MH1rPMDmZ0etR/cwKFweYlFher7OYI4sayVmh1V7luUQHAf8MMyxVe0erSEDJtU8AUOOJLJuoM/vTtGbj9/yIbECIAxUIiGUoCTBv8NtGTRQKnYR/XIyoXs4DPH7FcYNHIt/8QbI5\u002B8R\u002BXSNrOEMgiWdS2Vp4CQ\u002Bz46RLBU/qYpexJNH7Sg9hzKG8AQNpQSKK4rMXdpgkzxXMTGIJ8vJ4k/qPuhdxJUNX7Qi0vAgMSp6BvCac0u//iFW8Lv2tW92vQ20E3YsPFblvw4WPcBMJwAHDhDLP38EKkC29tPpFppUrBXibC2kXdqZpLRNqbBRGsm777dOu42ev\u002Bk1ZUWDDKhjwYGqWcriYqBGIYq6xoCAZdwaPTbjBfCYU7w0fviFFqgL2egutrEO2X0W\u002BIoC0\u002BlYpQ9paN9xgLuRAgYOreOnwQrSruyoYa8rG1O5zB12lX/C29n5G63Ymlk8naSq8CuZbzd/ICUMsDNQTl17t7SeGnyGS9IZrqVtChSDe9P6cCs4IFzV92VaxhuWmN1QbNKknnM4JKRZj7CSEiYQeURvZc4yM5dXuCMHO4W2cxXIHJ0x7u1gwlt23qCcQ9VPSkzXNzMPHilLTNZAIOkuowyqygWI3ppnDqNyy1T2u3RNx/FI3zvSyP5z9pIHEJFiSDuT8YnftmuicDiPnFLERJFSAlj35cPQyAEHFOf4X\u002B4CAHMpYsnqfgGFlm8DUzyrr7IApQ5IelJnwymIyKGDqiBKjYvfqtHHd5RXYl9kzXTUa2U196rvyZYQsa\u002BgYaVgAew\u002BuMWg3ATQOT158QgC8vWkpG08TbJ1asPlvukyFwX\u002B52BjJhS/I49gZb5tddieHb6qC704I7Q5yV4Byy0bnhI3iwmnn9zg5YDdy\u002Bf0B/TrR5EqmBtItsOsOWy2vVhiRMecNerO9n3hyRY8alfcNbFpFoOL4QYG/tRF\u002B2ZgKjg4e3cQV9IKHEEjSM71DExrz/OrXZbU5mPBlTcWiPsXga7uA/7g==",
       "StatusCode": 201,
@@ -66,7 +66,7 @@
         "x-ms-content-crc64": "kbGqlfLcPuQ=",
         "x-ms-request-id": "8afb175c-d01e-006a-5136-c802ea000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-04-08",
+        "x-ms-version": "2020-06-12",
         "x-ms-version-id": "2020-12-01T23:09:16.7980876Z"
       },
       "ResponseBody": []
@@ -89,7 +89,7 @@
         "x-ms-date": "Tue, 01 Dec 2020 23:09:16 GMT",
         "x-ms-encryption-scope": "testscope1",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -107,7 +107,7 @@
         "x-ms-encryption-scope": "testscope1",
         "x-ms-request-id": "8afb1765-d01e-006a-5936-c802ea000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-04-08",
+        "x-ms-version": "2020-06-12",
         "x-ms-version-id": "2020-12-01T23:09:18.1430436Z"
       },
       "ResponseBody": []
@@ -125,7 +125,7 @@
         "x-ms-client-request-id": "6f67484e-dca5-7fa6-3bdb-70a878335b64",
         "x-ms-date": "Tue, 01 Dec 2020 23:09:18 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -138,7 +138,7 @@
         ],
         "x-ms-client-request-id": "6f67484e-dca5-7fa6-3bdb-70a878335b64",
         "x-ms-request-id": "8afb1841-d01e-006a-0236-c802ea000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     }
