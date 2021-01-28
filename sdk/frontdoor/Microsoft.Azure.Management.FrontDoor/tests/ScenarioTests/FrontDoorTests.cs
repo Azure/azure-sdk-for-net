@@ -653,7 +653,6 @@ namespace FrontDoor.Tests.ScenarioTests
             Assert.Equal(policy.PolicySettings.CustomBlockResponseBody, parameters.PolicySettings.CustomBlockResponseBody);
             Assert.Equal(policy.PolicySettings.CustomBlockResponseStatusCode, parameters.PolicySettings.CustomBlockResponseStatusCode);
             Assert.Equal(policy.PolicySettings.RedirectUrl, parameters.PolicySettings.RedirectUrl);
-            Assert.Equal(policy.PolicySettings.RequestBodyCheck, parameters.PolicySettings.RequestBodyCheck ?? "Disabled");
             Assert.Equal(policy.CustomRules.Rules.Count, parameters.CustomRules.Rules.Count);
             Assert.Equal(policy.ManagedRules.ManagedRuleSets.Count, parameters.ManagedRules.ManagedRuleSets.Count);
             Assert.Equal(policy.ManagedRules.ManagedRuleSets[0].Exclusions.Count, parameters.ManagedRules.ManagedRuleSets[0].Exclusions.Count);
