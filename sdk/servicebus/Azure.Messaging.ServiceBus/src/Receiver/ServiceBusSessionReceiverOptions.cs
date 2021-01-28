@@ -37,6 +37,11 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
         /// <summary>
+        ///
+        /// </summary>
+        public string TransactionGroup { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -68,7 +73,8 @@ namespace Azure.Messaging.ServiceBus
             new ServiceBusReceiverOptions()
             {
                 ReceiveMode = ReceiveMode,
-                PrefetchCount = PrefetchCount
+                PrefetchCount = PrefetchCount,
+                TransactionGroup = TransactionGroup
             };
     }
 }

@@ -168,6 +168,7 @@ namespace Azure.Messaging.ServiceBus
         public string Subject { get { throw null; } set { } }
         public System.TimeSpan TimeToLive { get { throw null; } set { } }
         public string To { get { throw null; } set { } }
+        public string TransactionPartitionKey { get { throw null; } set { } }
         public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         public override string ToString() { throw null; }
     }
@@ -255,6 +256,7 @@ namespace Azure.Messaging.ServiceBus
         public string Subject { get { throw null; } }
         public System.TimeSpan TimeToLive { get { throw null; } }
         public string To { get { throw null; } }
+        public string TransactionPartitionKey { get { throw null; } }
         public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         public override string ToString() { throw null; }
     }
@@ -299,6 +301,7 @@ namespace Azure.Messaging.ServiceBus
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.SubQueue SubQueue { get { throw null; } set { } }
+        public string TransactionGroup { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -354,6 +357,17 @@ namespace Azure.Messaging.ServiceBus
         public virtual System.Threading.Tasks.Task SendMessageAsync(Azure.Messaging.ServiceBus.ServiceBusMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendMessagesAsync(Azure.Messaging.ServiceBus.ServiceBusMessageBatch messageBatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendMessagesAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.ServiceBus.ServiceBusMessage> messages, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+    }
+    public partial class ServiceBusSenderOptions
+    {
+        public ServiceBusSenderOptions() { }
+        public string TransactionGroup { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
@@ -418,6 +432,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusSessionReceiverOptions() { }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
+        public string TransactionGroup { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

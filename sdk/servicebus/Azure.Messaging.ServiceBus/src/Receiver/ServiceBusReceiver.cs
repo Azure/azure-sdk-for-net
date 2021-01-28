@@ -169,7 +169,8 @@ namespace Azure.Messaging.ServiceBus
                     prefetchCount: (uint)PrefetchCount,
                     identifier: Identifier,
                     sessionId: sessionId,
-                    isSessionReceiver: IsSessionReceiver);
+                    isSessionReceiver: IsSessionReceiver,
+                    transactionGroup: options.TransactionGroup);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;
                 if (!isSessionEntity)

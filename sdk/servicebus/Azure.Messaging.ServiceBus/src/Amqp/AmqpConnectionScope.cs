@@ -115,9 +115,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private FaultTolerantAmqpObject<AmqpConnection> ActiveConnection { get; }
 
         /// <summary>
-        ///  The controller responsible for managing transactions.
+        ///  The controller responsible for managing transactions. This is not used
+        ///  for entities where TransactionGroup is set.
         /// </summary>
-        public FaultTolerantAmqpObject<Controller> TransactionController { get; }
+        internal FaultTolerantAmqpObject<Controller> TransactionController { get; }
+
+        /// <summary>
+        /// A dictionary of transaction key to transaction group. This is populated when the TransactionGroup option is used.
+        /// </summary>
+        internal ConcurrentDictionary<string, AmqpTransactionGroup> TransactionGroups = new ConcurrentDictionary<string, AmqpTransactionGroup>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
@@ -152,24 +158,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 connectionFactory,
                 CloseConnection);
             TransactionController = new FaultTolerantAmqpObject<Controller>(
-                CreateControllerAsync,
-                CloseController);
+                async (timeout) =>
+                {
+                    var stopWatch = ValueStopwatch.StartNew();
+                    AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                    AmqpSession amqpSession = await CreateAndOpenSessionAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                    return await CreateControllerAsync(amqpSession, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                },
+                controller => controller.Close());
         }
 
-        private async Task<Controller> CreateControllerAsync(TimeSpan timeout)
+        private async Task<Controller> CreateControllerAsync(AmqpSession amqpSession, TimeSpan timeout)
         {
             var stopWatch = ValueStopwatch.StartNew();
-            AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-
-            var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
-            AmqpSession amqpSession = null;
             Controller controller;
 
             try
             {
-                amqpSession = connection.CreateSession(sessionSettings);
-                await amqpSession.OpenAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-
                 controller = new Controller(amqpSession, timeout.CalculateRemaining(stopWatch.GetElapsedTime()));
                 await controller.OpenAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
             }
@@ -186,9 +191,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             return controller;
         }
-
-        private void CloseController(Controller controller) =>
-            controller.Close();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
@@ -257,6 +259,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to connect to.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
+        /// <param name="transactionGroup"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with consumer operations.</returns>
@@ -269,6 +272,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
+            string transactionGroup,
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -289,6 +293,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 receiveMode: receiveMode,
                 sessionId: sessionId,
                 isSessionReceiver: isSessionReceiver,
+                transactionGroup: transactionGroup,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
 
@@ -305,6 +310,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath"></param>
         /// <param name="identifier">The identifier for the sender that is opening a send link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="transactionGroup"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with producer operations.</returns>
@@ -313,10 +319,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath,
             string identifier,
             TimeSpan timeout,
+            string transactionGroup,
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
             var stopWatch = ValueStopwatch.StartNew();
 
             AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
@@ -327,6 +333,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 identifier: identifier,
                 connection: connection,
                 timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                transactionGroup: transactionGroup,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -532,6 +539,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to receive from.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
+        /// <param name="transactionGroup"></param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -546,6 +554,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
              ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
+            string transactionGroup,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
@@ -572,16 +581,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Create and open the AMQP session associated with the link.
 
-                var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
+                session = await CreateSessionIfNeededAsync(connection, timeout, transactionGroup).ConfigureAwait(false);
 
-                // This is the maximum number of unsettled transfers across all receive links on this session.
-                // This will allow the session to accept unlimited number of transfers, even if the receiver(s)
-                // are not settling any of the deliveries.
-                sessionSettings.IncomingWindow = uint.MaxValue;
-
-                session = connection.CreateSession(sessionSettings);
-
-                await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var filters = new FilterSet();
@@ -648,6 +649,72 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
+        private async Task<AmqpSession> CreateSessionIfNeededAsync(AmqpConnection connection, TimeSpan timeout, string transactionGroupKey)
+        {
+            AmqpSession session;
+            FaultTolerantAmqpObject<Controller> faultTolerantController = null;
+            if (transactionGroupKey != null)
+            {
+                if (TransactionGroups.ContainsKey(transactionGroupKey))
+                {
+                    return await TransactionGroups[transactionGroupKey].Session.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                }
+                else
+                {
+                    // each transaction group will have its own session and controller
+                    var faultTolerantSession = new FaultTolerantAmqpObject<AmqpSession>(
+                        async (timeout) =>
+                        {
+                            var stopWatch = ValueStopwatch.StartNew();
+                            AmqpSession session = await CreateAndOpenSessionAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                            await CreateControllerAsync(session, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                            return session;
+                        },
+                        async (session) => await session.CloseAsync(timeout).ConfigureAwait(false));
+
+                    faultTolerantController = new FaultTolerantAmqpObject<Controller>(
+                        async timeout =>
+                        {
+                            var stopWatch = ValueStopwatch.StartNew();
+                            AmqpSession session = await faultTolerantSession.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                            return await CreateControllerAsync(session, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                        },
+                        controller => controller.Close());
+
+                    var transactionGroup = new AmqpTransactionGroup(faultTolerantSession, faultTolerantController);
+                    TransactionGroups.AddOrUpdate(transactionGroupKey, transactionGroup, (key, old) => transactionGroup);
+
+                    session = await faultTolerantSession.GetOrCreateAsync(timeout).ConfigureAwait(false);
+
+                    // When using transaction groups, the controller needs to be opened before the link is established, i.e. we can't
+                    // wait until a transaction is declared to open the controller.
+                    await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
+
+                    return session;
+                }
+            }
+            else
+            {
+                return await CreateAndOpenSessionAsync(connection, timeout).ConfigureAwait(false);
+            }
+        }
+
+        private async Task<AmqpSession> CreateAndOpenSessionAsync(AmqpConnection connection, TimeSpan timeout)
+        {
+            AmqpSession session;
+            var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
+
+            // This is the maximum number of unsettled transfers across all receive links on this session.
+            // This will allow the session to accept unlimited number of transfers, even if the receiver(s)
+            // are not settling any of the deliveries.
+            sessionSettings.IncomingWindow = uint.MaxValue;
+
+            session = connection.CreateSession(sessionSettings);
+
+            await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
+            return session;
+        }
+
         /// <summary>
         ///   Creates an AMQP link for use with publishing operations.
         /// </summary>
@@ -655,6 +722,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="identifier">The identifier of the sender that is creating a send link.</param>
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="transactionGroup"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use for operations related to receiving events.</returns>
@@ -663,6 +731,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string identifier,
             AmqpConnection connection,
             TimeSpan timeout,
+            string transactionGroup,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
@@ -697,10 +766,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Create and open the AMQP session associated with the link.
 
-                var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
-                session = connection.CreateSession(sessionSettings);
-
-                await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
+                session = await CreateSessionIfNeededAsync(connection, timeout, transactionGroup).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the link.

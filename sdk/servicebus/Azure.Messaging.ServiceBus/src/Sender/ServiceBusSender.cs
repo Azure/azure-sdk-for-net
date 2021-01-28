@@ -123,7 +123,8 @@ namespace Azure.Messaging.ServiceBus
                 _innerSender = _connection.CreateTransportSender(
                     entityPath,
                     _retryPolicy,
-                    Identifier);
+                    Identifier,
+                    options.TransactionGroup);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;
             }

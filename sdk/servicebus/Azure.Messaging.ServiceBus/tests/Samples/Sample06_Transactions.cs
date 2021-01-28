@@ -73,5 +73,54 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 Assert.AreEqual(state, bytes.ToArray());
             };
         }
+
+        [Test]
+        public async Task TransactionGroup()
+        {
+            var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
+
+            #region Snippet:ServiceBusTransactionGroup
+
+            // the first sender won't be part of our transaction group
+            ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
+
+            string transactionGroup = "myTxn";
+
+            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName, new ServiceBusReceiverOptions
+            {
+                TransactionGroup = transactionGroup
+            });
+            ServiceBusSender senderB = client.CreateSender(queueB.QueueName, new ServiceBusSenderOptions
+            {
+                TransactionGroup = transactionGroup
+            });
+            ServiceBusSender senderC = client.CreateSender(topicC.TopicName, new ServiceBusSenderOptions
+            {
+                TransactionGroup = transactionGroup
+            });
+
+            var message = new ServiceBusMessage();
+
+            await senderA.SendMessageAsync(message);
+
+            // since the first operation for any members of the transaction group occurs on QueueA, this becomes the implicit send-via
+            // entity
+            ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
+
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await receiverA.CompleteMessageAsync(receivedMessage);
+                await senderB.SendMessageAsync(message);
+                await senderC.SendMessageAsync(message);
+                ts.Complete();
+            }
+            #endregion
+
+            receivedMessage = await receiverA.ReceiveMessageAsync();
+            Assert.IsNull(receivedMessage);
+        }
     }
 }
