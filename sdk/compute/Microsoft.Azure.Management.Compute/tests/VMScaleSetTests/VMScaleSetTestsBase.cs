@@ -284,7 +284,7 @@ namespace Compute.Tests
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
             string dedicatedHostName = null,
-            string extendedLocation = null)
+            CM.ExtendedLocation extendedLocation = null)
         {
             try
             {
@@ -406,7 +406,7 @@ namespace Compute.Tests
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
             string dedicatedHostName = null,
-            string extendedLocation = null)
+            CM.ExtendedLocation extendedLocation = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -477,7 +477,7 @@ namespace Compute.Tests
 
             if (extendedLocation != null)
             {
-                inputVMScaleSet.ExtendedLocation = new CM.ExtendedLocation(extendedLocation);
+                inputVMScaleSet.ExtendedLocation = extendedLocation;
             }
 
             inputVMScaleSet.SinglePlacementGroup = singlePlacementGroup ? (bool?) null : false;
@@ -523,7 +523,7 @@ namespace Compute.Tests
         }
 
         protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false, string ppgId = null,
-            string dedicatedHostGroupReferenceId = null, string extendedLocation = null)
+            string dedicatedHostGroupReferenceId = null, CM.ExtendedLocation extendedLocation = null)
         {
             Assert.True(!string.IsNullOrEmpty(vmScaleSetOut.ProvisioningState));
 
@@ -753,7 +753,8 @@ namespace Compute.Tests
             if (extendedLocation != null)
             {
                 Assert.NotNull(vmScaleSetOut.ExtendedLocation);
-                Assert.Equal(extendedLocation, vmScaleSetOut.ExtendedLocation.Name, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(extendedLocation.Name, vmScaleSetOut.ExtendedLocation.Name, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(extendedLocation.Type, vmScaleSetOut.ExtendedLocation.Type, StringComparer.OrdinalIgnoreCase);
             }
             else
             {

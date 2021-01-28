@@ -11,17 +11,15 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using Xunit;
-using CM=Microsoft.Azure.Management.Compute.Models;
-using NM=Microsoft.Azure.Management.Network.Models;
+using CM = Microsoft.Azure.Management.Compute.Models;
+using NM = Microsoft.Azure.Management.Network.Models;
 
 namespace Compute.Tests
 {
@@ -235,7 +233,7 @@ namespace Compute.Tests
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
-            string extendedLocation = null)
+            CM.ExtendedLocation extendedLocation = null)
         {
             return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks, extendedLocation: extendedLocation);
         }
@@ -259,7 +257,7 @@ namespace Compute.Tests
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
             string dedicatedHostName = null,
-            string extendedLocation = null)
+            CM.ExtendedLocation extendedLocation = null)
         {
             try
             {
@@ -335,7 +333,7 @@ namespace Compute.Tests
                 if (extendedLocation != null)
                 {
                     inputVM.AvailabilitySet = null;
-                    inputVM.ExtendedLocation = new CM.ExtendedLocation(extendedLocation);
+                    inputVM.ExtendedLocation = extendedLocation;
                 }
 
                 if (vmCustomizer != null)
@@ -406,7 +404,7 @@ namespace Compute.Tests
             return getPublicIpPrefixResponse;
         }
 
-        protected PublicIPAddress CreatePublicIP(string rgName, string extendedLocation = null)
+        protected PublicIPAddress CreatePublicIP(string rgName, CM.ExtendedLocation extendedLocation = null)
         {
             // Create publicIP
             string publicIpName = ComputeManagementTestUtilities.GenerateName("pip");
@@ -428,7 +426,7 @@ namespace Compute.Tests
 
             if (extendedLocation != null)
             {
-                publicIp.ExtendedLocation = new NM.ExtendedLocation(extendedLocation);
+                publicIp.ExtendedLocation =  new NM.ExtendedLocation(extendedLocation.Name);
             }
 
             var putPublicIpAddressResponse = m_NrpClient.PublicIPAddresses.CreateOrUpdate(rgName, publicIpName, publicIp);
@@ -436,7 +434,7 @@ namespace Compute.Tests
             return getPublicIpAddressResponse;
         }
 
-        protected Subnet CreateVNET(string rgName, bool addDnsServer = true, bool disablePEPolicies = false, string extendedLocation = null)
+        protected Subnet CreateVNET(string rgName, bool addDnsServer = true, bool disablePEPolicies = false, CM.ExtendedLocation extendedLocation = null)
         {
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -474,7 +472,7 @@ namespace Compute.Tests
 
             if (extendedLocation != null)
             {
-                vnet.ExtendedLocation = new NM.ExtendedLocation(extendedLocation);
+                vnet.ExtendedLocation = new NM.ExtendedLocation(extendedLocation.Name);
             }
 
             var putVnetResponse = m_NrpClient.VirtualNetworks.CreateOrUpdate(rgName, vnetName, vnet);
@@ -538,7 +536,7 @@ namespace Compute.Tests
         }
 
         protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null, NetworkSecurityGroup nsg = null,
-            string extendedLocation = null)
+            CM.ExtendedLocation extendedLocation = null)
         {
             // Create Nic
             nicname = nicname ?? ComputeManagementTestUtilities.GenerateName("nic");
@@ -570,7 +568,7 @@ namespace Compute.Tests
 
             if (extendedLocation != null)
             {
-                nicParameters.ExtendedLocation = new NM.ExtendedLocation(extendedLocation);
+                nicParameters.ExtendedLocation = new NM.ExtendedLocation(extendedLocation.Name);
             }
 
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
@@ -1030,7 +1028,7 @@ namespace Compute.Tests
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
             bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null,
-            bool? encryptionAtHostEnabled = null, string expectedDedicatedHostGroupReferenceId = null, string extendedLocation = null)
+            bool? encryptionAtHostEnabled = null, string expectedDedicatedHostGroupReferenceId = null, CM.ExtendedLocation extendedLocation = null)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -1239,7 +1237,8 @@ namespace Compute.Tests
             if (extendedLocation != null)
             {
                 Assert.NotNull(vmOut.ExtendedLocation);
-                Assert.Equal(extendedLocation, vmOut.ExtendedLocation.Name, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(extendedLocation.Name, vmOut.ExtendedLocation.Name, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(extendedLocation.Type, vmOut.ExtendedLocation.Type, StringComparer.OrdinalIgnoreCase);
             }
             else
             {

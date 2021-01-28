@@ -78,7 +78,12 @@ namespace Compute.Tests
                         Sku = "2016-Datacenter",
                         Version = "14393.4048.2011170655"
                     };
-                    CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null, extendedLocation: "MicrosoftRRDCLab1", hasManagedDisks: true,
+                    ExtendedLocation extendedLocation = new ExtendedLocation
+                    {
+                        Name = "MicrosoftRRDCLab1",
+                        Type = ExtendedLocationTypes.EdgeZone
+                    };
+                    CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null, extendedLocation: extendedLocation, hasManagedDisks: true,
                         imageReference: imageReference, deleteAsPartOfTest: false);
                 }
             }
@@ -88,7 +93,7 @@ namespace Compute.Tests
             }
         }
 
-        private void CreateImageTestHelper(string originalTestLocation, string diskEncryptionSetId, string extendedLocation = null, 
+        private void CreateImageTestHelper(string originalTestLocation, string diskEncryptionSetId, ExtendedLocation extendedLocation = null, 
             bool hasManagedDisks = false, ImageReference imageReference = null, bool deleteAsPartOfTest = true)
         {
             VirtualMachine inputVM = null;
@@ -154,7 +159,7 @@ namespace Compute.Tests
                     vm.StorageProfile.DataDisks[0].ManagedDisk.StorageAccountType = StorageAccountTypes.PremiumLRS;
                 };
 
-                Action<VirtualMachine> vmAction = string.IsNullOrEmpty(extendedLocation) ? addDataDiskToVM : addVMToExtendedLocation;
+                Action<VirtualMachine> vmAction = extendedLocation == null ? addDataDiskToVM : addVMToExtendedLocation;
 
                 // Create the VM, whose OS disk will be used in creating the image
                 var createdVM = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, vmAction, hasManagedDisks: hasManagedDisks, extendedLocation: extendedLocation);
@@ -210,7 +215,7 @@ namespace Compute.Tests
                     {
                         Id = createdVM.StorageProfile.DataDisks[0].ManagedDisk.Id
                     };
-                    imageInput.ExtendedLocation = new ExtendedLocation(extendedLocation);
+                    imageInput.ExtendedLocation = extendedLocation;
                 }
 
                 var image = m_CrpClient.Images.CreateOrUpdate(rgName, imageName, imageInput);
@@ -313,6 +318,7 @@ namespace Compute.Tests
             {
                 Assert.NotNull(imageOut.ExtendedLocation);
                 Assert.Equal(imageIn.ExtendedLocation.Name, imageOut.ExtendedLocation.Name, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(imageIn.ExtendedLocation.Type, imageOut.ExtendedLocation.Type, StringComparer.OrdinalIgnoreCase);
             }
 
             Assert.Equal(imageIn.StorageProfile.ZoneResilient, imageOut.StorageProfile.ZoneResilient);

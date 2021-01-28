@@ -256,9 +256,14 @@ namespace Compute.Tests
                     Sku = "2016-Datacenter",
                     Version = "14393.4048.2011170655"
                 };
+                ExtendedLocation extendedLocation = new ExtendedLocation
+                {
+                    Name = "MicrosoftRRDCLab1",
+                    Type = ExtendedLocationTypes.EdgeZone
+                };
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_ExtendedLocationScenario", hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3,
                     osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, dataDiskStorageAccountType: StorageAccountTypes.PremiumLRS, 
-                    imageReference: imageReference, validateListAvailableSize: false, extendedLocation: "MicrosoftRRDCLab1");
+                    imageReference: imageReference, validateListAvailableSize: false, extendedLocation: extendedLocation);
             }
             finally
             {
@@ -269,7 +274,7 @@ namespace Compute.Tests
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A1_v2",
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null,
-            bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true, string extendedLocation = null)
+            bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true, ExtendedLocation extendedLocation = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
