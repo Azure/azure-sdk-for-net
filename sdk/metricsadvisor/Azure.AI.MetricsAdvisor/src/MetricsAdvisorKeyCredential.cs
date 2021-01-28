@@ -46,26 +46,26 @@ namespace Azure.AI.MetricsAdvisor
         /// Updates the service key. This is intended to be used when you've regenerated
         /// your service key and want to update long lived clients.
         /// </summary>
-        /// <param name="key">Key to authenticate the service against.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="key"/> is empty.</exception>
-        public void UpdateSubscriptionKey(string key)
+        /// <param name="subscriptionKey">Key to authenticate the service against.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="subscriptionKey"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="subscriptionKey"/> is empty.</exception>
+        public void UpdateSubscriptionKey(string subscriptionKey)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-            SubscriptionKey = key;
+            Argument.AssertNotNullOrEmpty(subscriptionKey, nameof(subscriptionKey));
+            SubscriptionKey = subscriptionKey;
         }
 
         /// <summary>
         /// Updates the API key. This is intended to be used when you've regenerated your
         /// API key and want to update long lived clients.
         /// </summary>
-        /// <param name="key">Key to use to authenticate the user with the Metrics Advisor service. Used to identify administrators.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="key"/> is empty.</exception>
-        public void UpdateApiKey(string key)
+        /// <param name="apiKey">Key to use to authenticate the user with the Metrics Advisor service. Used to identify administrators.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="apiKey"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="apiKey"/> is empty.</exception>
+        public void UpdateApiKey(string apiKey)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-            ApiKey = key;
+            Argument.AssertNotNullOrEmpty(apiKey, nameof(apiKey));
+            ApiKey = apiKey;
         }
     }
 }
