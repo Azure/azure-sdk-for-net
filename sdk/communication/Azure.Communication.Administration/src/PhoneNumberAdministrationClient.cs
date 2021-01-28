@@ -25,10 +25,10 @@ namespace Azure.Communication.Administration
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public PhoneNumberAdministrationClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationIdentityClientOptions? options = default)
+        public PhoneNumberAdministrationClient(Uri endpoint, AzureKeyCredential keyCredential, PhoneNumberAdministrationClientOptions? options = default)
             : this(
                 AssertNotNull(endpoint, nameof(endpoint)),
-                options ?? new CommunicationIdentityClientOptions(),
+                options ?? new PhoneNumberAdministrationClientOptions(),
                 AssertNotNull(keyCredential, nameof(keyCredential)))
         { }
 
@@ -64,7 +64,7 @@ namespace Azure.Communication.Administration
             ClientDiagnostics = clientDiagnostics;
         }
 
-        internal PhoneNumberAdministrationClient(Uri endpoint, CommunicationIdentityClientOptions options, AzureKeyCredential credential)
+        internal PhoneNumberAdministrationClient(Uri endpoint, PhoneNumberAdministrationClientOptions options, AzureKeyCredential credential)
         {
             ClientDiagnostics = new ClientDiagnostics(options);
             RestClient = new PhoneNumberAdministrationRestClient(

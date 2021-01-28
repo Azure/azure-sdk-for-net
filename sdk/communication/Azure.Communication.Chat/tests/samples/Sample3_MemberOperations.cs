@@ -3,11 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Communication.Administration;
-using Azure.Communication.Administration.Models;
+using Azure.Communication.Identity;
 using Azure.Communication;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
@@ -22,12 +22,12 @@ namespace Azure.Communication.Chat.Tests.samples
             Response<CommunicationUserIdentifier> threadMember2 = await communicationIdentityClient.CreateUserAsync();
             Response<CommunicationUserIdentifier> threadMember3 = await communicationIdentityClient.CreateUserAsync();
 
-            CommunicationUserToken communicationUserToken1 = await communicationIdentityClient.IssueTokenAsync(threadMember1.Value, new[] { CommunicationTokenScope.Chat });
-            CommunicationUserToken communicationUserToken2 = await communicationIdentityClient.IssueTokenAsync(threadMember2.Value, new[] { CommunicationTokenScope.Chat });
-            CommunicationUserToken communicationUserToken3 = await communicationIdentityClient.IssueTokenAsync(threadMember3.Value, new[] { CommunicationTokenScope.Chat });
+            AccessToken communicationUserToken1 = await communicationIdentityClient.IssueTokenAsync(threadMember1.Value, new[] { CommunicationTokenScope.Chat });
+            AccessToken communicationUserToken2 = await communicationIdentityClient.IssueTokenAsync(threadMember2.Value, new[] { CommunicationTokenScope.Chat });
+            AccessToken communicationUserToken3 = await communicationIdentityClient.IssueTokenAsync(threadMember3.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken1.Token;
             string endpoint = TestEnvironment.ChatApiUrl();
-            string theadCreatorMemberId = communicationUserToken1.User.Id;
+            string theadCreatorMemberId = threadMember1.Value.Id;
 
             ChatClient chatClient = new ChatClient(
                 new Uri(endpoint),
@@ -50,8 +50,8 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_GetMembers
 
             var memberId1 = theadCreatorMemberId;
-            var memberId2 = communicationUserToken2.User.Id;
-            var memberId3 = communicationUserToken3.User.Id;
+            var memberId2 = threadMember2.Value.Id;
+            var memberId3 = threadMember3.Value.Id;
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_AddMembers
             var members = new[]

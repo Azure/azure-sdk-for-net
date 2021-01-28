@@ -2086,7 +2086,7 @@ namespace Azure.AI.TextAnalytics
         /// controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<HealthcareOperation> StartHealthcareAsync(string document, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareAsync(string document, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
             options ??= new HealthcareOptions();
@@ -2105,7 +2105,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
 
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2135,7 +2135,7 @@ namespace Azure.AI.TextAnalytics
         /// controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual HealthcareOperation StartHealthcare(string document, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcare(string document, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
             options ??= new HealthcareOptions();
@@ -2154,7 +2154,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
 
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2184,7 +2184,7 @@ namespace Azure.AI.TextAnalytics
         /// controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<HealthcareOperation> StartHealthcareBatchAsync(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new HealthcareOptions();
@@ -2221,7 +2221,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual HealthcareOperation StartHealthcareBatch(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new HealthcareOptions();
@@ -2247,9 +2247,9 @@ namespace Azure.AI.TextAnalytics
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="HealthcareOperation"/> to wait on this long-running operation.  Its <see cref="HealthcareOperation.Value"/> upon successful
+        /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual HealthcareOperation StartHealthcareBatch(IEnumerable<TextDocumentInput> documents, HealthcareOptions options, CancellationToken cancellationToken = default)
+        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(IEnumerable<TextDocumentInput> documents, HealthcareOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
@@ -2277,9 +2277,9 @@ namespace Azure.AI.TextAnalytics
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="HealthcareOperation"/> to wait on this long-running operation.  Its <see cref="HealthcareOperation.Value"/> upon successful
+        /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual async Task<HealthcareOperation> StartHealthcareBatchAsync(IEnumerable<TextDocumentInput> documents, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(IEnumerable<TextDocumentInput> documents, HealthcareOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
@@ -2290,7 +2290,7 @@ namespace Azure.AI.TextAnalytics
             return await StartHealthcareBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
-        private HealthcareOperation StartHealthcareBatch(MultiLanguageBatchInput batchInput, HealthcareOptions options, CancellationToken cancellationToken = default)
+        private AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(MultiLanguageBatchInput batchInput, HealthcareOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new HealthcareOptions();
 
@@ -2304,7 +2304,7 @@ namespace Azure.AI.TextAnalytics
 
                 var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2313,7 +2313,7 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private async Task<HealthcareOperation> StartHealthcareBatchAsync(MultiLanguageBatchInput batchInput, HealthcareOptions options, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(MultiLanguageBatchInput batchInput, HealthcareOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new HealthcareOptions();
 
@@ -2327,55 +2327,7 @@ namespace Azure.AI.TextAnalytics
 
                 var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Runs the cancel job for healthcare operation which was initialzed using <see cref="StartHealthcareBatchAsync(IEnumerable{string}, string, HealthcareOptions, CancellationToken)"/> or <see cref="StartHealthcareAsync"/> </summary>
-        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A long running operation id once the operation is in calcelled state upon successful.</returns>
-        #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<string> StartCancelHealthJobAsync(HealthcareOperation operation, CancellationToken cancellationToken = default)
-        #pragma warning restore AZC0015 // Unexpected client method return type.
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartCancelHealthJobAsync)}");
-            scope.Start();
-
-            try
-            {
-                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = await _serviceRestClient.CancelHealthJobAsync(new Guid(operation.Id), cancellationToken).ConfigureAwait(false);
-
-                return response.Headers.OperationLocation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Runs the cancel job for healthcare operation which was initialized using <see cref="StartHealthcareBatch(IEnumerable{string}, string, HealthcareOptions, CancellationToken)"/> or <see cref="StartHealthcare"/> </summary>
-        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A long running operation id once the operation is in calcelled state upon successful.</returns>
-        #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual string StartCancelHealthJob(HealthcareOperation operation, CancellationToken cancellationToken = default)
-        #pragma warning restore AZC0015 // Unexpected client method return type.
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartCancelHealthJobAsync)}");
-            scope.Start();
-
-            try
-            {
-                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = _serviceRestClient.CancelHealthJob(new Guid(operation.Id), cancellationToken);
-
-                return response.Headers.OperationLocation;
+                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2387,10 +2339,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets collection of healthcare entities from the HealthOperation using async pageable.
         /// </summary>
-        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
+        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="AnalyzeHealthcareEntitiesOperation"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DocumentHealthcareResult"/> items.</returns>
-        public virtual AsyncPageable<DocumentHealthcareResult> GetHealthcareEntities(HealthcareOperation operation, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DocumentHealthcareResult> GetHealthcareEntities(AnalyzeHealthcareEntitiesOperation operation, CancellationToken cancellationToken = default)
         {
             async Task<Page<DocumentHealthcareResult>> FirstPageFunc(int? pageSizeHint)
             {
