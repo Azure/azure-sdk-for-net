@@ -1,31 +1,34 @@
 [CmdletBinding()]
 Param (
   [Parameter(Mandatory=$True)]
-  [string] $serviceName,
+  [string] $serviceDirectory,
   [Parameter(Mandatory=$True)]
-  [string] $OutDirectory
+  [string] $outDirectory
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
-$allPackageProperties = Get-AllPkgProperties $serviceName
+$allPackageProperties = Get-AllPkgProperties $serviceDirectory
 if ($allPackageProperties)
 {
-    New-Item -ItemType Directory -Force -Path $OutDirectory
+    New-Item -ItemType Directory -Force -Path $outDirectory
     foreach($pkg in $allPackageProperties)
     {
-        Write-Host "Package Name: $($pkg.Name)"
-        Write-Host "Package Version: $($pkg.Version)"
-        Write-Host "Package SDK Type: $($pkg.SdkType)"
-        $outputPath = Join-Path -Path $OutDirectory ($pkg.Name + ".json")
-        $outputObject = $pkg | ConvertTo-Json
-        Set-Content -Path $outputPath -Value $outputObject
+        if ($pkg.IsNewSDK)
+        {
+            Write-Host "Package Name: $($pkg.Name)"
+            Write-Host "Package Version: $($pkg.Version)"
+            Write-Host "Package SDK Type: $($pkg.SdkType)"
+            $outputPath = Join-Path -Path $outDirectory ($pkg.Name + ".json")
+            $outputObject = $pkg | ConvertTo-Json
+            Set-Content -Path $outputPath -Value $outputObject
+        }        
     }
 
-    Get-ChildItem -Path $OutDirectory
+    Get-ChildItem -Path $outDirectory
 }
 else
 {
-    Write-Host "Package properties are not available for service directory $($serviceName)"
-    exit(1)
+    Write-Error "Package properties are not available for service directory $($serviceDirectory)"
+    exit 1
 }
 

@@ -107,11 +107,11 @@ foreach ($pkgName in $responses.Keys)
                 $FoundFailure = $True
                 if ($respCode -eq '201')
                 {
-                    Write-Host "API Review is pending for package $($PackageName)"
+                    Write-Error "Automatic API Review approval is pending for package $($PackageName)"
                 }
                 else
                 {
-                    Write-Host "Failed to create API Review for package $($PackageName)"
+                    Write-Error "Failed to create API Review for package $($PackageName)"
                 }                
             }
             else
@@ -123,6 +123,6 @@ foreach ($pkgName in $responses.Keys)
 }
 if ($FoundFailure)
 {
-    Write-Host "Automatic API review is not yet approved for package $($PackageName)"
-    exit(1)
+    Write-Error "Automatic API review is not yet approved for package $($PackageName)"
+    exit 1
 }
