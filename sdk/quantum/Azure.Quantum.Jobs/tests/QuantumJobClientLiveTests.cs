@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -55,7 +56,8 @@ namespace Azure.Quantum.Jobs.Tests
 
             // Upload input data to blob
             var blobClient = new BlobClient(new Uri(inputDataUri));
-            await blobClient.UploadAsync("problem.json");
+            var problemFilename = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "problem.json");
+            await blobClient.UploadAsync(problemFilename);
 
             // Submit job
             var jobId = $"job-{Guid.NewGuid():N}";
@@ -101,7 +103,7 @@ namespace Azure.Quantum.Jobs.Tests
             Assert.AreEqual(jobDetails.Id, gotJob.Id);
             Assert.AreEqual(jobDetails.Name, gotJob.Name);
 
-            await client.CancelJobAsync(jobId);
+            // await client.CancelJobAsync(jobId);
         }
 
         [RecordedTest]

@@ -106,6 +106,7 @@ namespace Azure.Quantum.Jobs.Tests
                 StartInfo = new ProcessStartInfo("cmd.exe", "/c az account get-access-token")
                 {
                     CreateNoWindow = true,
+                    UseShellExecute = false,
                     RedirectStandardError = true,
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true
