@@ -2973,6 +2973,157 @@ namespace Azure.Storage.Blobs
 
         #endregion DeleteBlob
 
+        #region Rename
+        /// <summary>
+        /// Renames an existing Blob Container.
+        /// </summary>
+        /// <param name="destinationContainerName">
+        /// The name of the destination container.
+        /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="BlobRequestConditions"/> that
+        /// source container has to meet to proceed with rename.
+        /// Note that LeaseId is the only request condition enforced by
+        /// this API.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal virtual Response<BlobContainerClient> Rename(
+            string destinationContainerName,
+            BlobRequestConditions sourceConditions = default,
+            CancellationToken cancellationToken = default)
+            => RenameInternal(
+                destinationContainerName,
+                sourceConditions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Renames an existing Blob Container.
+        /// </summary>
+        /// <param name="destinationContainerName">
+        /// The name of the destination container.
+        /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="BlobRequestConditions"/> that
+        /// source container has to meet to proceed with rename.
+        /// Note that LeaseId is the only request condition enforced by
+        /// this API.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal virtual async Task<Response<BlobContainerClient>> RenameAsync(
+            string destinationContainerName,
+            BlobRequestConditions sourceConditions = default,
+            CancellationToken cancellationToken = default)
+            => await RenameInternal(
+                destinationContainerName,
+                sourceConditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Renames an existing Blob Container.
+        /// </summary>
+        /// <param name="destinationContainerName">
+        /// The new name of the Blob Container.
+        /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on the renaming of this container.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<BlobContainerClient>> RenameInternal(
+            string destinationContainerName,
+            BlobRequestConditions sourceConditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    BlobUriBuilder uriBuilder = new BlobUriBuilder(Uri)
+                    {
+                        BlobContainerName = destinationContainerName
+                    };
+                    BlobContainerClient destContainerClient = new BlobContainerClient(
+                        uriBuilder.ToUri(),
+                        Pipeline,
+                        SharedKeyCredential,
+                        Version,
+                        ClientDiagnostics,
+                        CustomerProvidedKey,
+                        ClientSideEncryption,
+                        EncryptionScope);
+
+                    Response response = await BlobRestClient.Container.RenameAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: destContainerClient.Uri,
+                        version: Version.ToVersionString(),
+                        sourceContainerName: Name,
+                        sourceLeaseId: sourceConditions?.LeaseId,
+                        async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(Rename)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        destContainerClient,
+                        response);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+            }
+        }
+        #endregion Rename
+
         #region GenerateSas
         /// <summary>
         /// The <see cref="GenerateSasUri(BlobContainerSasPermissions, DateTimeOffset)"/>
