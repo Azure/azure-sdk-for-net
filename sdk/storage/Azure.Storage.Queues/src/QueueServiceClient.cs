@@ -264,6 +264,28 @@ namespace Azure.Storage.Queues
             _serviceRestClient = BuildServiceRestClient();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the queue service.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
+        /// </param>
+        /// <param name="clientConfiguration">
+        /// <see cref="QueueClientConfiguration"/>.
+        /// </param>
+        internal QueueServiceClient(
+            Uri serviceUri,
+            QueueClientConfiguration clientConfiguration)
+        {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+            Argument.AssertNotNull(clientConfiguration, nameof(clientConfiguration));
+            _uri = serviceUri;
+            _clientConfiguration = clientConfiguration;
+            _serviceRestClient = BuildServiceRestClient();
+        }
+
         private ServiceRestClient BuildServiceRestClient()
             => new ServiceRestClient(
                 _clientConfiguration.ClientDiagnostics,
