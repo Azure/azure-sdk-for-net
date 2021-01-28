@@ -149,23 +149,17 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
                     throw new ValidationException(ValidationRules.MaxLength, "Name", 128);
                 }
             }
-            if (RateLimitDurationInMinutes != null)
+            if (RateLimitDurationInMinutes > 5)
             {
-                if (RateLimitDurationInMinutes > 5)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "RateLimitDurationInMinutes", 5);
-                }
-                if (RateLimitDurationInMinutes < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "RateLimitDurationInMinutes", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RateLimitDurationInMinutes", 5);
             }
-            if (RateLimitThreshold != null)
+            if (RateLimitDurationInMinutes < 0)
             {
-                if (RateLimitThreshold < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "RateLimitThreshold", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RateLimitDurationInMinutes", 0);
+            }
+            if (RateLimitThreshold < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RateLimitThreshold", 0);
             }
             if (MatchConditions != null)
             {

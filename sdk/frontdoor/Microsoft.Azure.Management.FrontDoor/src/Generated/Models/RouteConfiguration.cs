@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.FrontDoor.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for all types of Route.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("RouteConfiguration")]
     public partial class RouteConfiguration
     {
         /// <summary>

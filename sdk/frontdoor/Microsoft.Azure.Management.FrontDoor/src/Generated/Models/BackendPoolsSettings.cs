@@ -72,12 +72,9 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (SendRecvTimeoutSeconds != null)
+            if (SendRecvTimeoutSeconds < 16)
             {
-                if (SendRecvTimeoutSeconds < 16)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "SendRecvTimeoutSeconds", 16);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "SendRecvTimeoutSeconds", 16);
             }
         }
     }
