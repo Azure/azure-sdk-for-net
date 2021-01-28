@@ -46,8 +46,7 @@ namespace Azure.Identity
 
             try
             {
-                // TODO: add to EnvironmentVariables
-                var connectionString = Environment.GetEnvironmentVariable("AzureServicesAuthConnectionString");
+                var connectionString = EnvironmentVariables.AzureServicesAuthConnectionString;
                 if (string.IsNullOrEmpty(connectionString))
                 {
                     throw new CredentialUnavailableException(UnavailableErrorMessage);
