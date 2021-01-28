@@ -224,3 +224,8 @@ function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseD
   & "$EngDir/scripts/Update-PkgVersion.ps1" -ServiceDirectory $ServiceDirectory -PackageName $PackageName `
   -NewVersionString $Version -ReleaseDate $ReleaseDate
 }
+
+# Turn the package name start with `Azure.Identity` to "Identity".
+function Normalize-dotnet-Package-name ($PackageName) {
+  return $PackageName -replace "Azure." , ""
+}
