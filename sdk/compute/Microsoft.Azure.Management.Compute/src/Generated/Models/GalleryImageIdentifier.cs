@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// This is the gallery image definition identifier.
+    /// This is the gallery Image Definition identifier.
     /// </summary>
     public partial class GalleryImageIdentifier
     {
@@ -30,11 +30,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the GalleryImageIdentifier class.
         /// </summary>
-        /// <param name="publisher">The name of the gallery image definition
+        /// <param name="publisher">The name of the gallery Image Definition
         /// publisher.</param>
-        /// <param name="offer">The name of the gallery image definition
+        /// <param name="offer">The name of the gallery Image Definition
         /// offer.</param>
-        /// <param name="sku">The name of the gallery image definition
+        /// <param name="sku">The name of the gallery Image Definition
         /// SKU.</param>
         public GalleryImageIdentifier(string publisher, string offer, string sku)
         {
@@ -50,19 +50,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the gallery image definition publisher.
+        /// Gets or sets the name of the gallery Image Definition publisher.
         /// </summary>
         [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the gallery image definition offer.
+        /// Gets or sets the name of the gallery Image Definition offer.
         /// </summary>
         [JsonProperty(PropertyName = "offer")]
         public string Offer { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the gallery image definition SKU.
+        /// Gets or sets the name of the gallery Image Definition SKU.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public string Sku { get; set; }

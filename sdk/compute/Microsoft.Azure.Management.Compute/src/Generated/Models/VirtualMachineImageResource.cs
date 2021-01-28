@@ -102,10 +102,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
-            if (ExtendedLocation != null)
-            {
-                ExtendedLocation.Validate();
-            }
         }
     }
 }
