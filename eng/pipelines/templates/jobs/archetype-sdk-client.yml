@@ -26,6 +26,8 @@ parameters:
 - name: LinuxPool
   type: string
   default: azsdk-pool-mms-ubuntu-1804-general
+- name: TestTimeoutInMinutes
+  type: number
 
 jobs:
   - job: Build
@@ -147,6 +149,7 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
 
   - job: "Test"
+    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     variables:
       - template: ../variables/globals.yml

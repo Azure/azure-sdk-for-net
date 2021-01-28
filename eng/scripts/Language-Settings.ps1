@@ -225,6 +225,18 @@ function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseD
   -NewVersionString $Version -ReleaseDate $ReleaseDate
 }
 
+function GetExistingPackageVersions ($PackageName, $GroupId=$null)
+{
+  try {
+    $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
+    return $existingVersion.versions
+  }
+  catch {
+    LogError "Failed to retrieve package versions. `n$_"
+    return $null
+  }
+}
+
 # Turn the package name start with `Azure.Identity` to "Identity".
 function Normalize-dotnet-Package-name ($PackageName) {
   return $PackageName -replace "Azure." , ""

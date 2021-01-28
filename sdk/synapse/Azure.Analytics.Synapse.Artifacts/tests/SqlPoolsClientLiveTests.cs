@@ -33,5 +33,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
         }
+
+        [Test]
+        public async Task TestGet()
+        {
+            SqlPoolsClient client = CreateClient();
+            SqlPoolInfoListResult pools = await client.ListAsync ();
+            foreach (SqlPool pool in pools.Value)
+            {
+                SqlPool actualPool = await client.GetAsync (pool.Name);
+                Assert.AreEqual (pool.Id, actualPool.Id);
+                Assert.AreEqual (pool.Name, actualPool.Name);
+                Assert.AreEqual (pool.Status, actualPool.Status);
+            }
+        }
     }
 }

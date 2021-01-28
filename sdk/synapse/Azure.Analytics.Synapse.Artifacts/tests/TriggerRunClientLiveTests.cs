@@ -25,13 +25,56 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
         }
 
-        private TriggerRunClient CreateClient()
+        private TriggerClient CreateTriggerClient()
+        {
+            return InstrumentClient(new TriggerClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ArtifactsClientOptions())
+            ));
+        }
+
+        private TriggerRunClient CreateRunClient()
         {
             return InstrumentClient(new TriggerRunClient(
                 new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
+        }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - Missing or invalid pipeline references for trigger but no obvious place to put pipeline?")]
+        [Test]
+        public async Task TestQueryRuns()
+        {
+            TriggerClient triggerClient = CreateTriggerClient();
+            TriggerRunClient runClient = CreateRunClient ();
+
+            TriggerResource resource = await DisposableTrigger.CreateResource (triggerClient, Recording);
+
+            TriggerStartTriggerOperation startOperation = await triggerClient.StartStartTriggerAsync (resource.Name);
+            await startOperation.WaitAndAssertSuccessfulCompletion();
+
+            TriggerRunsQueryResponse response = await runClient.QueryTriggerRunsByWorkspaceAsync (new RunFilterParameters (DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
+            Assert.GreaterOrEqual (response.Value.Count, 1);
+        }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - Missing or invalid pipeline references for trigger but no obvious place to put pipeline?")]
+        [Test]
+        public async Task TestCancelRerun()
+        {
+            TriggerClient triggerClient = CreateTriggerClient();
+            TriggerRunClient runClient = CreateRunClient ();
+
+            TriggerResource resource = await DisposableTrigger.CreateResource (triggerClient, Recording);
+
+            TriggerStartTriggerOperation startOperation = await triggerClient.StartStartTriggerAsync (resource.Name);
+            await startOperation.WaitAndAssertSuccessfulCompletion();
+
+            TriggerRunsQueryResponse response = await runClient.QueryTriggerRunsByWorkspaceAsync (new RunFilterParameters (DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
+            // Find the active run and cancel (CancelTriggerInstanceAsync)
+
+            // Rerun canceled run (RerunTriggerInstanceAsync)
         }
     }
 }

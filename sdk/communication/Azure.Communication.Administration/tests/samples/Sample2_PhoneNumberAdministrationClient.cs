@@ -10,7 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
 using Azure.Communication.Administration.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.Administration.Samples
@@ -22,6 +24,32 @@ namespace Azure.Communication.Administration.Samples
     {
         public Sample2_PhoneNumberAdministrationClient(bool isAsync) : base(isAsync)
         {
+        }
+
+        [Test]
+        public async Task CreatePhoneNumberWithTokenCredential()
+        {
+            var endpoint = ConnectionString.Parse(TestEnvironment.ConnectionString, allowEmptyValues: true).GetRequired("endpoint");
+            #region Snippet:CreatePhoneNumberWithTokenCredential
+            //@@var endpoint = "<endpoint_url>";
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            var client = new PhoneNumberAdministrationClient(new Uri(endpoint), tokenCredential);
+            #endregion Snippet:CreatePhoneNumberWithTokenCredential
+
+            tokenCredential = (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential();
+            client = CreateClientWithTokenCredential(tokenCredential);
+            try
+            {
+                // Smoke test to ensure that client generated from token is able to work as expected.
+                var numbersPagable = client.GetAllPhoneNumbersAsync();
+                var numbers = await numbersPagable.ToEnumerableAsync();
+
+                Assert.IsNotNull(numbers);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
         }
 
         [Test]

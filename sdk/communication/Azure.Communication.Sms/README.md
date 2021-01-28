@@ -36,6 +36,15 @@ string connectionString = "YOUR_CONNECTION_STRING"; // Find your Communication S
 SmsClient client = new SmsClient(connectionString);
 ```
 
+Alternatively, SMS clients can also be authenticated using a valid token credential. With this option,
+`AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication. 
+
+```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
+string endpoint = "<endpoint_url>";
+TokenCredential tokenCredential = new DefaultAzureCredential();
+SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
+```
+
 ## Examples
 ### Send a SMS Message
 To send a SMS message, call the `Send` or `SendAsync` function from the `SmsClient`.

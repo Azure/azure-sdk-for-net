@@ -2,13 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests
 {
     public class PublicSurfaceTests
     {
-        [Fact]
+        [Test]
         public void WebJobs_Extensions_ServiceBus_VerifyPublicSurfaceArea()
         {
             var assembly = typeof(ServiceBusAttribute).Assembly;

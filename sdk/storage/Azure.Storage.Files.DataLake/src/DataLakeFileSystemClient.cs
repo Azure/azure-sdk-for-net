@@ -238,7 +238,7 @@ namespace Azure.Storage.Files.DataLake
             _storageSharedKeyCredential = sharedKeyCredential;
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, _version.AsBlobsVersion(), _clientDiagnostics);
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Azure.Storage.Files.DataLake
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
-            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, _version.AsBlobsVersion(), _clientDiagnostics);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.Storage.Files.DataLake
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
-            _containerClient = BlobContainerClientInternals.Create(_blobUri, pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+            _containerClient = BlobContainerClientInternals.Create(_blobUri, pipeline, _version.AsBlobsVersion(), _clientDiagnostics);
         }
 
         /// <summary>
