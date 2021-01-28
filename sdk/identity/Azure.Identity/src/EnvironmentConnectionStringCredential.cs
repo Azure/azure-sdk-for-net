@@ -12,7 +12,21 @@ using Azure.Identity;
 
 namespace Azure.Identity
 {
-    public sealed class EnvironmentConnectionStringCredential : TokenCredential
+    /// <summary>
+    /// Enables authentication to Azure Active Directory using a client certificate,
+    /// details configured in the environment variable <c>AzureServicesAuthConnectionString</c>
+    /// that is a semicolon-separated list of the following key-vault pairs:
+    /// <list type="table">
+    /// <listheader><term>Key</term><description>Description</description></listheader>
+    /// <item><term>TenantId</term><description>Azure Active Directory tenant (directory) Id of the service principal.</description></item>
+    /// <item><term>AppId</term><description>The client (application) ID of the service principal.</description></item>
+    /// <item><term>CertificateThumbprint</term><description>The client certificate thumbprint.</description></item>
+    /// <item><term>CertificateStoreLocation</term><description>The client certificate store location.</description></item>
+    /// </list>
+    /// This credential ultimately uses a <see cref="ClientCertificateCredential"/> to perform the authentication using these details.
+    /// Please consult the documentation of that class for more details.
+    /// </summary>
+    public class EnvironmentConnectionStringCredential : TokenCredential
     {
         private const string UnavailableErrorMessage = "EnvironmentConnectionStringCredential authentication unavailable. Environment variable 'AzureServicesAuthConnectionString' is null or empty.";
         private const string MissingPartErrorMessage = "Environment variable 'AzureServicesAuthConnectionString' doesn't contain part '{0}'.";
@@ -21,7 +35,7 @@ namespace Azure.Identity
         private readonly bool _validOnly;
 
         public EnvironmentConnectionStringCredential()
-            : this(true)
+            : this(validOnly: true)
         {
         }
 
@@ -37,7 +51,7 @@ namespace Azure.Identity
 
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            return GetTokenImplAsync(false, requestContext, cancellationToken).GetAwaiter().GetResult(); // TODO: use EnsureCompleted();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
