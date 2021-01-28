@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -32,8 +33,8 @@ namespace Azure.Identity
         private const string MissingPartErrorMessage = "Environment variable 'AzureServicesAuthConnectionString' doesn't contain part '{0}'.";
         private const string CertificateNotFoundErrorMessage = "Certificate specified om environment variable 'AzureServicesAuthConnectionString' was not found.";
 
-        private static char[] _semicolonSeparators = new[] { ';' };
-        private static char[] _equalsSeparators = new[] { '=' };
+        private static readonly char[] _semicolonSeparators = new[] { ';' };
+        private static readonly char[] _equalsSeparators = new[] { '=' };
 
         private readonly bool _validOnly;
         private readonly CredentialPipeline _pipeline;
@@ -55,7 +56,6 @@ namespace Azure.Identity
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public EnvironmentConnectionStringCredential(bool validOnly, TokenCredentialOptions options)
             : this(validOnly, CredentialPipeline.GetInstance(options))
-
         {
         }
 
@@ -127,7 +127,7 @@ namespace Azure.Identity
         {
             if (!dict.TryGetValue(name, out string value))
             {
-                throw new CredentialUnavailableException(string.Format(MissingPartErrorMessage, name));
+                throw new CredentialUnavailableException(string.Format(CultureInfo.InvariantCulture, MissingPartErrorMessage, name));
             }
             return value;
         }
