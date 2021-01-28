@@ -39,10 +39,9 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// <para>
-        /// Custom page numbers for multi-page documents(PDF/TIFF). Input the number of the
-        /// pages you want to get OCR result. For a range of pages, use a hyphen.
-        /// Separate each page or range with a comma.
-        /// For sample "1-3", {"1", "3", "5-7"}.
+        /// Custom page numbers for multi-page documents(PDF/TIFF). Input the page numbers
+        /// and/or ranges of pages you want to get in the result.For a range of pages, use a hyphen, like
+        /// `Pages = {"1-3", "5-6" }`. Separate each page number or range with a comma.
         /// </para>
         /// <para>
         /// Although this collection cannot be set, it can be modified.
