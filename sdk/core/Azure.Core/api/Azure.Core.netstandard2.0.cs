@@ -15,6 +15,11 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
     }
+    public static partial class AzureCoreExtensions
+    {
+        public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class AzureKeyCredential
     {
         public AzureKeyCredential(string key) { }
@@ -550,6 +555,8 @@ namespace Azure.Core.Serialization
         public abstract object? Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask<object?> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken);
         public abstract void Serialize(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
+        public virtual System.BinaryData Serialize(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
+        public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }

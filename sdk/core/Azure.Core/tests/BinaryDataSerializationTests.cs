@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
@@ -11,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class SerializationExtensionsTests
+    public class BinaryDataSerializationTests
     {
         [Test]
         public async Task CanCreateBinaryDataFromCustomType()
@@ -19,12 +17,12 @@ namespace Azure.Core.Tests
             var payload = new Model { A = "value", B = 5, C = 3 };
             var serializer = new JsonObjectSerializer();
 
-            await AssertData(await serializer.SerializeToBinaryDataAsync(payload));
-            await AssertData(serializer.SerializeToBinaryData(payload));
-            await AssertData(await serializer.SerializeToBinaryDataAsync(payload, typeof(Model)));
-            await AssertData(serializer.SerializeToBinaryData(payload, typeof(Model)));
-            await AssertData(await serializer.SerializeToBinaryDataAsync(payload, null));
-            await AssertData(serializer.SerializeToBinaryData(payload, null));
+            await AssertData(await serializer.SerializeAsync(payload));
+            await AssertData(serializer.Serialize(payload));
+            await AssertData(await serializer.SerializeAsync(payload, typeof(Model)));
+            await AssertData(serializer.Serialize(payload, typeof(Model)));
+            await AssertData(await serializer.SerializeAsync(payload, null));
+            await AssertData(serializer.Serialize(payload, null));
 
             async Task AssertData(BinaryData data)
             {
@@ -43,8 +41,8 @@ namespace Azure.Core.Tests
             var payload = new ExtendedModel() { A = "value", B = 5, C = 3, F = 5 };
             var serializer = new JsonObjectSerializer();
 
-            await AssertData(await serializer.SerializeToBinaryDataAsync(payload, typeof(Model)));
-            await AssertData(serializer.SerializeToBinaryData(payload, typeof(Model)));
+            await AssertData(await serializer.SerializeAsync(payload, typeof(Model)));
+            await AssertData(serializer.Serialize(payload, typeof(Model)));
 
             async Task AssertData(BinaryData data)
             {
@@ -64,12 +62,12 @@ namespace Azure.Core.Tests
             Model model = null;
             var serializer = new JsonObjectSerializer();
 
-            await AssertData(await serializer.SerializeToBinaryDataAsync(model));
-            await AssertData(serializer.SerializeToBinaryData(model));
-            await AssertData(await serializer.SerializeToBinaryDataAsync(model, typeof(Model)));
-            await AssertData(serializer.SerializeToBinaryData(model, typeof(Model)));
-            await AssertData(await serializer.SerializeToBinaryDataAsync(model, null));
-            await AssertData(serializer.SerializeToBinaryData(model, null));
+            await AssertData(await serializer.SerializeAsync(model));
+            await AssertData(serializer.Serialize(model));
+            await AssertData(await serializer.SerializeAsync(model, typeof(Model)));
+            await AssertData(serializer.Serialize(model, typeof(Model)));
+            await AssertData(await serializer.SerializeAsync(model, null));
+            await AssertData(serializer.Serialize(model, null));
 
             async Task AssertData(BinaryData data)
             {
