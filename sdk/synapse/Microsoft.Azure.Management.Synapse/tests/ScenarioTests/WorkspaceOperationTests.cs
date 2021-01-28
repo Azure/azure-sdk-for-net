@@ -5,6 +5,8 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using Xunit;
 using System.Threading;
+using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Rest.Azure;
 
 namespace Microsoft.Azure.Management.Synapse.Tests
 {
@@ -83,7 +85,16 @@ namespace Microsoft.Azure.Management.Synapse.Tests
             Assert.True(isFound, string.Format("Workspace created earlier is not found when listing all in subscription {0}", CommonData.SubscriptionId));
 
             // delete workspace
-            SynapseClient.Workspaces.Delete(CommonData.ResourceGroupName, workspaceName);
+            try
+            {
+                SynapseClient.Workspaces.Delete(CommonData.ResourceGroupName, workspaceName);
+            }
+            catch (CloudException ex)
+            {
+                Assert.Equal(404, (int)ex.Response.StatusCode);
+                Assert.Contains($"Can not perform requested operation on nested resource. Parent resource '{workspaceName}' not found.", ex.Body.Message);
+            }
+
             firstPage = SynapseClient.Workspaces.ListByResourceGroup(CommonData.ResourceGroupName);
             var workspaceAfterDelete = SynapseManagementTestUtilities.ListResources(firstPage, SynapseClient.Workspaces.ListNext);
             Assert.True(workspaceCount-1 == workspaceAfterDelete.Count);
