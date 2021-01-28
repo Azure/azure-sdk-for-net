@@ -43,8 +43,13 @@ namespace Azure.Quantum.Jobs.Tests
             var containerUri = (await client.GetStorageSasUriAsync(
                 new BlobDetails(containerName))).Value.SasUri;
 
+            if (containerUri == "Sanitized")
+            {
+                containerUri = "https://sanitized";
+            }
+
             // Create container if not exists
-            var containerClient = new BlobContainerClient(new Uri(containerUri));
+            var containerClient = InstrumentClient(new BlobContainerClient(new Uri(containerUri)));
             await containerClient.CreateIfNotExistsAsync();
 
             // Get input data blob Uri with SAS key
@@ -95,15 +100,27 @@ namespace Azure.Quantum.Jobs.Tests
                 Assert.AreEqual(inputDataUri, jobDetails.InputDataUri);
             }
 
-            var gotJob = (await client.GetJobAsync(jobId)).Value;
-            Assert.AreEqual(jobDetails.InputDataFormat, gotJob.InputDataFormat);
-            Assert.AreEqual(jobDetails.OutputDataFormat, gotJob.OutputDataFormat);
-            Assert.AreEqual(jobDetails.ProviderId, gotJob.ProviderId);
-            Assert.AreEqual(jobDetails.Target, gotJob.Target);
-            Assert.AreEqual(jobDetails.Id, gotJob.Id);
-            Assert.AreEqual(jobDetails.Name, gotJob.Name);
+            for (; ; )
+            {
+                var gotJob = (await client.GetJobAsync(jobId)).Value;
+                Assert.AreEqual(jobDetails.InputDataFormat, gotJob.InputDataFormat);
+                Assert.AreEqual(jobDetails.OutputDataFormat, gotJob.OutputDataFormat);
+                Assert.AreEqual(jobDetails.ProviderId, gotJob.ProviderId);
+                Assert.AreEqual(jobDetails.Target, gotJob.Target);
+                Assert.AreEqual(jobDetails.Id, gotJob.Id);
+                Assert.AreEqual(jobDetails.Name, gotJob.Name);
 
-            // await client.CancelJobAsync(jobId);
+// TODO - We need to run this on a not-busy day, or otherwise we'll be waiting for a while for it to start executing.
+//                 if (gotJob.Status == JobStatus.Waiting)
+//                 {
+//                     // Job is not yet executing, so we cant cancel it.
+//                     Thread.Sleep(0);
+//                     continue;
+//                 }
+//
+//                 await client.CancelJobAsync(jobId);
+                break;
+            }
         }
 
         [RecordedTest]
@@ -144,6 +161,46 @@ namespace Azure.Quantum.Jobs.Tests
             }
 
             // Should have at least a couple jobs in the list.
+            Assert.GreaterOrEqual(index, 2);
+        }
+
+        [RecordedTest]
+        public async Task GetProviderStatusTest()
+        {
+            var client = CreateClient();
+
+            int index = 0;
+            await foreach (ProviderStatus status in client.GetProviderStatusAsync(CancellationToken.None))
+            {
+                Assert.IsNotEmpty(status.Id);
+                Assert.IsNotNull(status.Targets);
+                Assert.IsNotNull(status.CurrentAvailability);
+
+                ++index;
+            }
+
+            // Should have at least a couple in the list.
+            Assert.GreaterOrEqual(index, 2);
+        }
+
+        [RecordedTest]
+        public async Task GetQuotasTest()
+        {
+            var client = CreateClient();
+
+            int index = 0;
+            await foreach (QuantumJobQuota quota in client.GetQuotasAsync(CancellationToken.None))
+            {
+                Assert.IsNotEmpty(quota.Dimension);
+                Assert.IsNotNull(quota.Scope);
+                Assert.IsNotEmpty(quota.ProviderId);
+                Assert.IsNotNull(quota.Utilization);
+                Assert.IsNotNull(quota.Holds);
+                Assert.IsNotNull(quota.Period);
+               ++index;
+            }
+
+            // Should have at least a couple in the list.
             Assert.GreaterOrEqual(index, 2);
         }
 
