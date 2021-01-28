@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -15,90 +16,120 @@ namespace Azure.Core.Pipeline
 {
     internal readonly struct DiagnosticScope : IDisposable
     {
-        private static readonly ConcurrentDictionary<string, object?> ActivitySources = new ConcurrentDictionary<string, object?>();
+        private static readonly ConcurrentDictionary<string, object?> ActivitySources = new ();
 
-        private readonly DiagnosticActivity? _oldStyleActivity;
-
+        private readonly DiagnosticActivity? _legacyActivity;
         private readonly DiagnosticListener _source;
+        private readonly object? _diagnosticSourceArgs;
         private readonly ActivitySourceAdapter? _activitySourceAdapter;
 
-        internal DiagnosticScope(string ns, string name, DiagnosticListener source, ActivityKind kind)
+        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind)
         {
-            _activitySourceAdapter = null;
             _source = source;
-            _oldStyleActivity = _source.IsEnabled(name) ? new DiagnosticActivity(name) : null;
-            _oldStyleActivity?.SetW3CFormat();
+            _legacyActivity = InitializeLegacyActivity(source, null, scopeName, kind);
+            _diagnosticSourceArgs = _legacyActivity;
+            _activitySourceAdapter = InitializeActivitySource(ns, scopeName, kind);
+        }
+
+        internal DiagnosticScope(string scopeName, string methodName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind)
+        {
+            _source = source;
+            _diagnosticSourceArgs = diagnosticSourceArgs;
+            _legacyActivity = InitializeLegacyActivity(source, diagnosticSourceArgs, scopeName, kind);
+            _diagnosticSourceArgs = diagnosticSourceArgs ?? _legacyActivity;
+            if (activitySource != null)
+            {
+                _activitySourceAdapter = new ActivitySourceAdapter(activitySource, methodName, kind);
+            }
+            else
+            {
+                _activitySourceAdapter= null;
+            }
+        }
+
+        private static DiagnosticActivity? InitializeLegacyActivity(DiagnosticListener source, object? diagnosticSourceArgs, string scopeName, ActivityKind kind)
+        {
+            var legacyActivity = source.IsEnabled(scopeName, diagnosticSourceArgs) ? new DiagnosticActivity(scopeName) : null;
+            legacyActivity?.SetW3CFormat();
 
             switch (kind)
             {
                 case ActivityKind.Internal:
-                    _oldStyleActivity?.AddTag("kind", "internal");
+                    legacyActivity?.AddTag("kind", "internal");
                     break;
                 case ActivityKind.Server:
-                    _oldStyleActivity?.AddTag("kind", "server");
+                    legacyActivity?.AddTag("kind", "server");
                     break;
                 case ActivityKind.Client:
-                    _oldStyleActivity?.AddTag("kind", "client");
+                    legacyActivity?.AddTag("kind", "client");
                     break;
                 case ActivityKind.Producer:
-                    _oldStyleActivity?.AddTag("kind", "producer");
+                    legacyActivity?.AddTag("kind", "producer");
                     break;
                 case ActivityKind.Consumer:
-                    _oldStyleActivity?.AddTag("kind", "consumer");
+                    legacyActivity?.AddTag("kind", "consumer");
                     break;
             }
+            return legacyActivity;
+        }
 
+        private static ActivitySourceAdapter? InitializeActivitySource(string ns, string name, ActivityKind kind)
+        {
             if (!ActivityExtensions.SupportsActivitySource())
             {
-                return;
+                return null;
             }
 
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
             if (indexOfDot == -1)
             {
-                return;
+                return null;
             }
 
             string clientName = ns + "." + name.Substring(0, indexOfDot);
             string methodName = name.Substring(indexOfDot + 1);
 
             var currentSource = ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
-            if (currentSource != null)
+            if (currentSource == null)
             {
-                _activitySourceAdapter = new ActivitySourceAdapter(currentSource, methodName, kind);
+                return null;
             }
+
+            return new ActivitySourceAdapter(currentSource, methodName, kind);
         }
 
-        public bool IsEnabled => _oldStyleActivity != null || _activitySourceAdapter?.HasListeners() == true;
+        public bool IsEnabled => _legacyActivity != null || _activitySourceAdapter?.HasListeners() == true;
 
         public void AddAttribute(string name, string value)
         {
-            _oldStyleActivity?.AddTag(name, value);
+            _legacyActivity?.AddTag(name, value);
             _activitySourceAdapter?.AddTag(name, value);
         }
 
-        public void AddAttribute<T>(string name, T value)
+        public void AddAttribute<T>(string name,
+#if AZURE_NULLABLE
+            [AllowNull]
+#endif
+            T value)
         {
-            if (_oldStyleActivity != null && value != null)
-            {
-                AddAttribute(name, value.ToString() ?? string.Empty);
-            }
-
+            _legacyActivity?.AddTag(name, value?.ToString() ?? string.Empty);
             _activitySourceAdapter?.AddTag(name, value);
         }
 
         public void AddAttribute<T>(string name, T value, Func<T, string> format)
         {
-            if (_oldStyleActivity != null || _activitySourceAdapter != null)
+            if (_legacyActivity != null)
             {
                 var formattedValue = format(value);
-                AddAttribute(name, formattedValue);
+                _legacyActivity.AddTag(name, formattedValue);
             }
+
+            _activitySourceAdapter?.AddTag(name, value);
         }
 
         public void AddLink(string id, IDictionary<string, string>? attributes = null)
         {
-            if (_oldStyleActivity != null)
+            if (_legacyActivity != null)
             {
                 var linkedActivity = new Activity("LinkedActivity");
                 linkedActivity.SetW3CFormat();
@@ -112,7 +143,7 @@ namespace Azure.Core.Pipeline
                     }
                 }
 
-                _oldStyleActivity.AddLink(linkedActivity);
+                _legacyActivity.AddLink(linkedActivity);
             }
 
             _activitySourceAdapter?.AddLink(id, attributes);
@@ -120,9 +151,9 @@ namespace Azure.Core.Pipeline
 
         public void Start()
         {
-            if (_oldStyleActivity != null)
+            if (_legacyActivity != null)
             {
-                _source.StartActivity(_oldStyleActivity, _oldStyleActivity);
+                _source.StartActivity(_legacyActivity, _diagnosticSourceArgs);
             }
 
             _activitySourceAdapter?.Start();
@@ -130,25 +161,26 @@ namespace Azure.Core.Pipeline
 
         public void SetStartTime(DateTime dateTime)
         {
-            _oldStyleActivity?.SetStartTime(dateTime);
+            _legacyActivity?.SetStartTime(dateTime);
             _activitySourceAdapter?.SetStartTime(dateTime);
         }
 
         public void Dispose()
         {
-            if (_oldStyleActivity != null)
-            {
-                _source.StopActivity(_oldStyleActivity, null);
-            }
-
+            // Reverse the Start order
             _activitySourceAdapter?.Dispose();
+
+            if (_legacyActivity != null)
+            {
+                _source.StopActivity(_legacyActivity, _diagnosticSourceArgs);
+            }
         }
 
         public void Failed(Exception e)
         {
-            if (_oldStyleActivity != null)
+            if (_legacyActivity != null)
             {
-                _source?.Write(_oldStyleActivity.OperationName + ".Exception", e);
+                _source?.Write(_legacyActivity.OperationName + ".Exception", e);
             }
 
             _activitySourceAdapter?.MarkFailed(e);
@@ -224,8 +256,17 @@ namespace Azure.Core.Pipeline
 
             public void AddTag<T>(string name, T value)
             {
-                _tagCollection ??= ActivityExtensions.CreateTagsCollection();
-                _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
+                if (_currentActivity == null)
+                {
+                    // Activity is not started yet, add the value to the collection
+                    // that is going to be passed to StartActivity
+                    _tagCollection ??= ActivityExtensions.CreateTagsCollection();
+                    _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
+                }
+                else
+                {
+                    _currentActivity?.AddObjectTag(name, value!);
+                }
             }
 
             public void AddLink(string id, IDictionary<string, string>? attributes)

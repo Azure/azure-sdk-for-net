@@ -18,6 +18,7 @@ namespace Azure.Core.Pipeline
         private const string RequestIdHeaderName = "Request-Id";
 
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Core");
+        private static readonly object? s_activitySource = ActivityExtensions.CreateActivitySource("Azure.Core.Http");
 
         public RequestActivityPolicy(bool isDistributedTracingEnabled, string? resourceProviderNamespace)
         {
@@ -27,8 +28,7 @@ namespace Azure.Core.Pipeline
 
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            if (!_isDistributedTracingEnabled ||
-                !s_diagnosticSource.IsEnabled())
+            if (!ShouldCreateActivity)
             {
                 return ProcessNextAsync(message, pipeline, true);
             }
@@ -38,8 +38,7 @@ namespace Azure.Core.Pipeline
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            if (!_isDistributedTracingEnabled ||
-                !s_diagnosticSource.IsEnabled())
+            if (!ShouldCreateActivity)
             {
                 ProcessNextAsync(message, pipeline, false).EnsureCompleted();
                 return;
@@ -50,32 +49,22 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            var activity = new Activity("Azure.Core.Http.Request");
-            activity.AddTag("http.method", message.Request.Method.Method);
-            activity.AddTag("http.url", message.Request.Uri.ToString());
-            activity.AddTag("requestId", message.Request.ClientRequestId);
-            activity.AddTag("kind", "client");
+            using var scope = new DiagnosticScope("Azure.Core.Http.Request", "Request", s_diagnosticSource, message, s_activitySource, DiagnosticScope.ActivityKind.Client);
+            scope.AddAttribute("http.method", message.Request.Method.Method);
+            scope.AddAttribute("http.url", message.Request.Uri.ToString());
+            scope.AddAttribute("requestId", message.Request.ClientRequestId);
 
             if (_resourceProviderNamespace != null)
             {
-                activity.AddTag("az.namespace", _resourceProviderNamespace);
+                scope.AddAttribute("az.namespace", _resourceProviderNamespace);
             }
 
             if (message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {
-                activity.AddTag("http.user_agent", userAgent);
+                scope.AddAttribute("http.user_agent", userAgent);
             }
 
-            var diagnosticSourceActivityEnabled = s_diagnosticSource.IsEnabled(activity.OperationName, message);
-
-            if (diagnosticSourceActivityEnabled)
-            {
-                s_diagnosticSource.StartActivity(activity, message);
-            }
-            else
-            {
-                activity.Start();
-            }
+            scope.Start();
 
             try
             {
@@ -88,19 +77,15 @@ namespace Azure.Core.Pipeline
                     ProcessNextAsync(message, pipeline, false).EnsureCompleted();
                 }
 
-                activity.AddTag("http.status_code", message.Response.Status.ToString(CultureInfo.InvariantCulture));
-                activity.AddTag("serviceRequestId", message.Response.Headers.RequestId);
+                scope.AddAttribute("http.status_code", message.Response.Status, static i => i.ToString(CultureInfo.InvariantCulture));
+                if (message.Response.Headers.RequestId is string serviceRequestId)
+                {
+                    scope.AddAttribute("serviceRequestId", serviceRequestId);
+                }
             }
             finally
             {
-                if (diagnosticSourceActivityEnabled)
-                {
-                    s_diagnosticSource.StopActivity(activity, message);
-                }
-                else
-                {
-                    activity.Stop();
-                }
+                scope.Dispose();
             }
         }
 
@@ -142,5 +127,9 @@ namespace Azure.Core.Pipeline
                 return default;
             }
         }
+
+        private bool ShouldCreateActivity =>
+            _isDistributedTracingEnabled &&
+            (s_diagnosticSource.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(s_activitySource));
     }
 }
