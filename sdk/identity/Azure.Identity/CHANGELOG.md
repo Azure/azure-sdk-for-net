@@ -2,7 +2,7 @@
 ## 1.4.0-beta.2 (Unreleased)
 
 ### New Features
-- Added EnvironmentConnectionStringCredential to support AzureServicesAuthConnectionString
+- Added EnvironmentConnectionStringCredential to support AzureServicesAuthConnectionString ([#17652](https://github.com/Azure/azure-sdk-for-net/issues/17652))
 
 ### Fixes and improvements
 - Fixed issue in `HttpExtensions` causing the omission of content headers on requests ([#17448](https://github.com/Azure/azure-sdk-for-net/issues/17448))
