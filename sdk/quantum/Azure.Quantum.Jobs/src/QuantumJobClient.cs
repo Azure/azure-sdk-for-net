@@ -45,6 +45,7 @@ namespace Azure.Quantum.Jobs
             _jobs = new JobsRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
             _providers = new ProvidersRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
             _quotas = new QuotasRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
+            _storage = new StorageRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
         }
 
         /// <summary> Get job by id. </summary>
@@ -143,6 +144,24 @@ namespace Azure.Quantum.Jobs
             return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _quotas.ListAsync().ConfigureAwait(false) : await _quotas.ListNextPageAsync(cont).ConfigureAwait(false)));
         }
 
+        /// <summary> Gets a URL with SAS token for a container/blob in the storage account associated with the workspace. The SAS URL can be used to upload job input and/or download job output. </summary>
+        /// <param name="blobDetails"> The details (name and container) of the blob to store or download data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobDetails"/> is null. </exception>
+        public virtual Response<SasUriResponse> GetStorageSasUri(BlobDetails blobDetails, CancellationToken cancellationToken = default)
+        {
+            return _storage.SasUri(blobDetails, cancellationToken);
+        }
+
+        /// <summary> Gets a URL with SAS token for a container/blob in the storage account associated with the workspace. The SAS URL can be used to upload job input and/or download job output. </summary>
+        /// <param name="blobDetails"> The details (name and container) of the blob to store or download data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobDetails"/> is null. </exception>
+        public virtual async Task<Response<SasUriResponse>> GetStorageSasUriAsync(BlobDetails blobDetails, CancellationToken cancellationToken = default)
+        {
+            return await _storage.SasUriAsync(blobDetails, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Initializes a new instance of QuantumJobClient for mocking. </summary>
         protected QuantumJobClient()
         {
@@ -160,5 +179,6 @@ namespace Azure.Quantum.Jobs
         private JobsRestClient _jobs;
         private ProvidersRestClient _providers;
         private QuotasRestClient _quotas;
+        private StorageRestClient _storage;
     }
 }

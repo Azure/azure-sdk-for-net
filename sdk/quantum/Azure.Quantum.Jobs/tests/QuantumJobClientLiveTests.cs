@@ -6,6 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Quantum.Jobs.Models;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Quantum.Jobs.Tests
@@ -25,6 +28,63 @@ namespace Azure.Quantum.Jobs.Tests
             var rawClient = new QuantumJobClient(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroup, TestEnvironment.WorkspaceName, TestEnvironment.Location, TestEnvironment.Credential, InstrumentClientOptions(new QuantumJobClientOptions()));
 
             return InstrumentClient(rawClient);
+        }
+
+        [RecordedTest]
+        public async Task CreateJobTest()
+        {
+            var client = CreateClient();
+
+            // Get container Uri with SAS key
+            var containerName = "testcontainer";
+            var containerUri = (await client.GetStorageSasUriAsync(
+                new BlobDetails(containerName))).Value.SasUri;
+
+            // Create container if not exists
+            var containerClient = new BlobContainerClient(new Uri(containerUri));
+            await containerClient.CreateIfNotExistsAsync();
+
+            // Get input data blob Uri with SAS key
+            var inputDataUri = (await client.GetStorageSasUriAsync(
+                new BlobDetails("testcontainer")
+                {
+                    BlobName = $"input-{Guid.NewGuid():N}.json",
+                })).Value.SasUri;
+
+            // Upload input data to blob
+            var blobClient = new BlobClient(new Uri(inputDataUri));
+            await blobClient.UploadAsync("problem.json");
+
+            // Submit job
+            var jobId = $"job-{Guid.NewGuid():N}";
+            var jobName = $"jobName-{Guid.NewGuid():N}";
+            var inputDataFormat = "microsoft.qio.v2";
+            var outputDataFormat = "microsoft.qio-results.v2";
+            var providerId = "microsoft";
+            var target = "microsoft.paralleltempering-parameterfree.cpu";
+            var createJobDetails = new JobDetails(containerUri, inputDataFormat, providerId, target)
+            {
+                Id = jobId,
+                InputDataUri = inputDataUri,
+                Name = jobName,
+                OutputDataFormat = outputDataFormat
+            };
+            var jobDetails = (await client.CreateJobAsync(jobId, createJobDetails)).Value;
+
+            // Check if job was created correctly
+            Assert.AreEqual(inputDataFormat, jobDetails.InputDataFormat);
+            Assert.AreEqual(outputDataFormat, jobDetails.OutputDataFormat);
+            Assert.AreEqual(providerId, jobDetails.ProviderId);
+            Assert.AreEqual(target, jobDetails.Target);
+            Assert.IsNotEmpty(jobDetails.Id);
+            Assert.IsNotEmpty(jobDetails.Name);
+            Assert.IsNotEmpty(jobDetails.InputDataUri);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(jobId, jobDetails.Id);
+                Assert.AreEqual(jobName, jobDetails.Name);
+                Assert.AreEqual(inputDataUri, jobDetails.InputDataUri);
+            }
         }
 
         [RecordedTest]
