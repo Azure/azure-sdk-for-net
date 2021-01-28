@@ -2997,7 +2997,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobContainerClient> Rename(
+        internal virtual Response<BlobContainerClient> Rename(
             string destinationContainerName,
             BlobRequestConditions sourceConditions = default,
             CancellationToken cancellationToken = default)
@@ -3031,7 +3031,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerClient>> RenameAsync(
+        internal virtual async Task<Response<BlobContainerClient>> RenameAsync(
             string destinationContainerName,
             BlobRequestConditions sourceConditions = default,
             CancellationToken cancellationToken = default)
