@@ -1,0 +1,203 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://westus.quantum.azure.com/v1.0/subscriptions/677fc922-91d0-4bf6-9b06-4274d319a0fa/resourceGroups/sdk-review-rg/providers/Microsoft.Quantum/workspaces/workspace-ms/storage/sasUri",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "33",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210128.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "92840f586bcf329d82fcf10de9776712",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "containerName": "testcontainer"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "181",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 28 Jan 2021 18:54:18 GMT",
+        "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=a80c7c3a42bc29f88c9055a7e2789984b224746994993027ab866c65455cca24;Path=/;HttpOnly;Secure;Domain=westus.quantum.azure.com",
+          "ARRAffinitySameSite=a80c7c3a42bc29f88c9055a7e2789984b224746994993027ab866c65455cca24;Path=/;HttpOnly;SameSite=None;Secure;Domain=westus.quantum.azure.com"
+        ],
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "sasUri": "Sanitized"
+      }
+    },
+    {
+      "RequestUri": "https://westus.quantum.azure.com/v1.0/subscriptions/677fc922-91d0-4bf6-9b06-4274d319a0fa/resourceGroups/sdk-review-rg/providers/Microsoft.Quantum/workspaces/workspace-ms/storage/sasUri",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "90",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210128.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "70124190b1263d6aa734ac48ee5acdf9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "containerName": "testcontainer",
+        "blobName": "input-c0418e8b8af44fbc8873f0a32e317c9d.json"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "217",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 28 Jan 2021 18:54:18 GMT",
+        "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Powered-By": "ASP.NET"
+      },
+        "ResponseBody": {
+            "sasUri": "Sanitized"
+        }
+    },
+    {
+      "RequestUri": "https://westus.quantum.azure.com/v1.0/subscriptions/677fc922-91d0-4bf6-9b06-4274d319a0fa/resourceGroups/sdk-review-rg/providers/Microsoft.Quantum/workspaces/workspace-ms/jobs/job-4bb3da6fdc02408a88809ce4a0bd58c7",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "314",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210128.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "47375dc0bc001fc3909bc067c7632e6a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "job-4bb3da6fdc02408a88809ce4a0bd58c7",
+        "name": "jobName-27381c5459a34912a1c54ce7923ee8f1",
+        "containerUri": "Sanitized",
+        "inputDataUri": "Sanitized",
+        "inputDataFormat": "microsoft.qio.v2",
+        "providerId": "microsoft",
+        "target": "microsoft.paralleltempering-parameterfree.cpu",
+        "outputDataFormat": "microsoft.qio-results.v2"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "535",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 28 Jan 2021 18:54:18 GMT",
+        "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "containerUri": "Sanitized",
+        "inputDataUri": "Sanitized",
+        "inputDataFormat": "microsoft.qio.v2",
+        "inputParams": {},
+        "providerId": "microsoft",
+        "target": "microsoft.paralleltempering-parameterfree.cpu",
+        "metadata": null,
+        "name": "jobName-27381c5459a34912a1c54ce7923ee8f1",
+        "id": "job-4bb3da6fdc02408a88809ce4a0bd58c7",
+        "status": "Waiting",
+        "outputDataFormat": "microsoft.qio-results.v2",
+        "outputDataUri": "Sanitized",
+        "creationTime": "2021-01-28T18:54:18.647702\u002B00:00",
+        "beginExecutionTime": null,
+        "endExecutionTime": null,
+        "cancellationTime": null,
+        "errorData": null
+      }
+    },
+    {
+      "RequestUri": "https://westus.quantum.azure.com/v1.0/subscriptions/677fc922-91d0-4bf6-9b06-4274d319a0fa/resourceGroups/sdk-review-rg/providers/Microsoft.Quantum/workspaces/workspace-ms/jobs/job-4bb3da6fdc02408a88809ce4a0bd58c7",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210128.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "ae076b32e739a6eaa447ea9abf544327",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "535",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 28 Jan 2021 18:54:18 GMT",
+        "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "containerUri": "Sanitized",
+        "inputDataUri": "Sanitized",
+        "inputDataFormat": "microsoft.qio.v2",
+        "inputParams": {},
+        "providerId": "microsoft",
+        "target": "microsoft.paralleltempering-parameterfree.cpu",
+        "metadata": null,
+        "name": "jobName-27381c5459a34912a1c54ce7923ee8f1",
+        "id": "job-4bb3da6fdc02408a88809ce4a0bd58c7",
+        "status": "Waiting",
+        "outputDataFormat": "microsoft.qio-results.v2",
+        "outputDataUri": "Sanitized",
+        "creationTime": "2021-01-28T18:54:18.647702\u002B00:00",
+        "beginExecutionTime": null,
+        "endExecutionTime": null,
+        "cancellationTime": null,
+        "errorData": null
+      }
+    },
+    {
+      "RequestUri": "https://westus.quantum.azure.com/v1.0/subscriptions/677fc922-91d0-4bf6-9b06-4274d319a0fa/resourceGroups/sdk-review-rg/providers/Microsoft.Quantum/workspaces/workspace-ms/jobs/job-4bb3da6fdc02408a88809ce4a0bd58c7",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210128.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "8c4cf72f2040d4117df3df8af1027544",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 28 Jan 2021 18:54:18 GMT",
+        "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "LOCATION": "westus",
+    "RandomSeed": "1447254636",
+    "RESOURCE_GROUP": "sdk-review-rg",
+    "SUBSCRIPTION_ID": "677fc922-91d0-4bf6-9b06-4274d319a0fa",
+    "WORKSPACE_NAME": "workspace-ms"
+  }
+}

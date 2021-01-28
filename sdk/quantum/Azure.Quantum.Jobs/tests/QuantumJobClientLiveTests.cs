@@ -15,7 +15,7 @@ namespace Azure.Quantum.Jobs.Tests
 {
     public class QuantumJobClientLiveTests: RecordedTestBase<QuantumJobClientTestEnvironment>
     {
-        public QuantumJobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public QuantumJobClientLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new QuantumJobClientRecordedTestSanitizer();
 
@@ -33,7 +33,7 @@ namespace Azure.Quantum.Jobs.Tests
         }
 
         [RecordedTest]
-        public async Task CreateJobTest()
+        public async Task JobLifecycleTest()
         {
             var client = CreateClient();
 
@@ -81,12 +81,27 @@ namespace Azure.Quantum.Jobs.Tests
             Assert.IsNotEmpty(jobDetails.Id);
             Assert.IsNotEmpty(jobDetails.Name);
             Assert.IsNotEmpty(jobDetails.InputDataUri);
-            if (Mode != RecordedTestMode.Playback)
+            if (Mode == RecordedTestMode.Playback)
+            {
+                Assert.IsTrue(jobDetails.Id.StartsWith("job-"));
+                Assert.IsTrue(jobDetails.Name.StartsWith("jobName-"));
+            }
+            else
             {
                 Assert.AreEqual(jobId, jobDetails.Id);
                 Assert.AreEqual(jobName, jobDetails.Name);
                 Assert.AreEqual(inputDataUri, jobDetails.InputDataUri);
             }
+
+            var gotJob = (await client.GetJobAsync(jobId)).Value;
+            Assert.AreEqual(jobDetails.InputDataFormat, gotJob.InputDataFormat);
+            Assert.AreEqual(jobDetails.OutputDataFormat, gotJob.OutputDataFormat);
+            Assert.AreEqual(jobDetails.ProviderId, gotJob.ProviderId);
+            Assert.AreEqual(jobDetails.Target, gotJob.Target);
+            Assert.AreEqual(jobDetails.Id, gotJob.Id);
+            Assert.AreEqual(jobDetails.Name, gotJob.Name);
+
+            await client.CancelJobAsync(jobId);
         }
 
         [RecordedTest]
