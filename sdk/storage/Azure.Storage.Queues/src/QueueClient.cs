@@ -3166,6 +3166,36 @@ namespace Azure.Storage.Queues
             }
         }
         #endregion Encoding
+
+        #region GetParentQueueServiceClientCore
+
+        private QueueServiceClient _parentQueueServiceClient;
+
+        /// <summary>
+        /// Create a new <see cref="QueueServiceClient"/> that pointing to this <see cref="QueueClient"/>'s queue service.
+        /// The new <see cref="QueueServiceClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="QueueClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="QueueServiceClient"/> instance.</returns>
+        protected internal virtual QueueServiceClient GetParentQueueServiceClientCore()
+        {
+            if (_parentQueueServiceClient == null)
+            {
+                QueueUriBuilder queueUriBuilder = new QueueUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to service
+                    QueueName = null,
+                };
+
+                _parentQueueServiceClient = new QueueServiceClient(
+                    queueUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentQueueServiceClient;
+        }
+        #endregion
     }
 }
 
@@ -3185,5 +3215,17 @@ namespace Azure.Storage.Queues.Specialized
         /// <returns>New instance with provided options and same internals otherwise.</returns>
         public static QueueClient WithClientSideEncryptionOptions(this QueueClient client, ClientSideEncryptionOptions clientSideEncryptionOptions)
             => client.WithClientSideEncryptionOptionsCore(clientSideEncryptionOptions);
+
+        /// <summary>
+        /// Create a new <see cref="QueueServiceClient"/> that pointing to this <see cref="QueueClient"/>'s queue service.
+        /// The new <see cref="QueueServiceClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="QueueClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="QueueServiceClient"/> instance.</returns>
+        public static QueueServiceClient GetParentQueueServiceClient(this QueueClient client)
+        {
+            return client.GetParentQueueServiceClientCore();
+        }
     }
 }

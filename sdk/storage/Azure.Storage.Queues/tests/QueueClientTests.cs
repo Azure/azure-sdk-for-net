@@ -17,6 +17,8 @@ using System.Text;
 using Moq;
 using System.Threading;
 using System.Runtime.InteropServices;
+using Azure.Storage.Queues.Specialized;
+using Moq.Protected;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -1682,6 +1684,55 @@ namespace Azure.Storage.Queues.Test
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockQueueServiceClientRetrieval()
+        {
+            // Arrange
+            Mock<QueueClient> queueClientMock = new Mock<QueueClient>();
+            Mock<QueueServiceClient> queueServiceClientMock = new Mock<QueueServiceClient>();
+            queueClientMock.Protected().Setup<QueueServiceClient>("GetParentQueueServiceClientCore").Returns(queueServiceClientMock.Object);
+
+            // Act
+            var queueServiceClient = queueClientMock.Object.GetParentQueueServiceClient();
+
+            // Assert
+            Assert.IsNotNull(queueServiceClient);
+            Assert.AreSame(queueServiceClientMock.Object, queueServiceClient);
+        }
+
+        [Test]
+        public async Task CanGetParentQueueServiceClient()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            var queueServiceClient = test.Queue.GetParentQueueServiceClient();
+            // make sure that client is functional
+            QueueServiceProperties queueServiceProperties = await queueServiceClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(test.Queue.AccountName, queueServiceClient.AccountName);
+        }
+
+        [Test]
+        public async Task CanGetParentQueueServiceClient_WithAccountSAS()
+        {
+            // Arrange
+            QueueClient queueClient = InstrumentClient(
+                GetServiceClient_AccountSas(
+                    sasCredentials: GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All))
+                .GetQueueClient(GetNewQueueName()));
+
+            // Act
+            var queueServiceClient = queueClient.GetParentQueueServiceClient();
+            // make sure that client is functional
+            QueueServiceProperties queueServiceProperties = await queueServiceClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(queueClient.AccountName, queueServiceClient.AccountName);
+        }
 
         [Test]
         public void CanMockClientConstructors()
