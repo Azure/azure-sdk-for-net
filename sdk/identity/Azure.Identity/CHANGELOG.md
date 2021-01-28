@@ -3,6 +3,7 @@
 
 ### Fixes and improvements
 - Fixed issue in `HttpExtensions` causing the omission of content headers on requests ([#17448](https://github.com/Azure/azure-sdk-for-net/issues/17448))
+- Made `EnvironmentCredential` to account for both null and empty string when checking for the presense of the environment variables ([#18031](https://github.com/Azure/azure-sdk-for-net/issues/18031))
 
 ## 1.4.0-beta.1 (2020-10-15)
 

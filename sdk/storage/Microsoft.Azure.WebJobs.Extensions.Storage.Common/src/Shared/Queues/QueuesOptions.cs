@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
@@ -178,7 +179,8 @@ namespace Microsoft.Azure.WebJobs.Host
         }
 
         /// <inheritdoc/>
-        public string Format()
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        string IOptionsFormatter.Format()
         {
             JObject options = new JObject
             {

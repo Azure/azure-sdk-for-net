@@ -49,31 +49,16 @@ parameters:
       SubscriptionConfiguration: $(sub-config-gov-test-resources-test)
     China:
       SubscriptionConfiguration: $(sub-config-cn-test-resources-test)
-- name: Platforms
+- name: MatrixConfigs
   type: object
   default:
-    Linux_NetCore:
-      OSVmImage: "ubuntu-18.04"
-      TestTargetFramework: netcoreapp2.1
-    Windows_NetCore:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: netcoreapp2.1
-      SupportsRecording: true
-    Windows_NetCore_ProjectRefAzureClients:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: netcoreapp2.1
-      AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
-    Windows_NetFramework:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: net461
-    Windows_NetFramework_ProjectRefAzureClients:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: net461
-      AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
-    MacOS:
-      OSVmImage: "macOS-10.15"
-      TestTargetFramework: netcoreapp2.1
-      SupportedClouds: 'Public'
+    - Name: NET_live_test_base
+      Path: eng/pipelines/templates/stages/platform-matrix.json
+      Selection: sparse
+      GenerateVMJobs: true
+- name: AdditionalMatrixConfigs
+  type: object
+  default: []
 - name: PlatformPreSteps
   type: object
   default:
@@ -108,13 +93,8 @@ stages:
       - stage: ${{ cloud.key }}
         dependsOn: []
         jobs:
-        - template: ../jobs/archetype-sdk-tests-host.yml
+        - template: /eng/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
           parameters:
-            # Flag to include the job template with a container field
-            ${{ each platform in parameters.AdditionalPlatforms }}:
-              ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
-                ${{ if platform.value.Container }}:
-                  UsePlatformContainer: true
             AdditionalParameters:
               PreSteps:
                 - ${{ parameters.PlatformPreSteps }}
@@ -129,14 +109,13 @@ stages:
               Location: ${{ parameters.Location }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
-            Platforms:
+            MatrixConfigs:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
-              ${{ each platform in parameters.Platforms }}:
-                ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
-                  ${{ platform.key }}: ${{ platform.value }}
-              ${{ each platform in parameters.AdditionalPlatforms }}:
-                ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
-                  ${{ platform.key }}: ${{ platform.value }}
+              - ${{ each config in parameters.MatrixConfigs }}:
+                -  ${{ config }}
+              - ${{ each config in parameters.AdditionalMatrixConfigs }}:
+                -  ${{ config }}
             CloudConfig:
               SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
               Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
+              Cloud: ${{ cloud.key }}

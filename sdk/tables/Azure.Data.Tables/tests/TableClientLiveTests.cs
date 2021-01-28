@@ -120,6 +120,63 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [RecordedTest]
+        public async Task ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges()
+        {
+            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 2);
+
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+            var credential = new TableSharedKeyCredential(AccountName, AccountKey);
+
+            // Build a shared access signature with only All permissions.
+            TableSasBuilder sas = client.GetSasBuilder(TableSasPermissions.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+
+            // Add PartitionKey restrictions.
+            sas.PartitionKeyStart = PartitionKeyValue;
+            sas.PartitionKeyEnd = PartitionKeyValue;
+
+            // Add RowKey restrictions so that only the first entity is visible.
+            sas.RowKeyStart = entitiesToCreate[0].RowKey;
+            sas.RowKeyEnd = entitiesToCreate[0].RowKey;
+
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                sas.Version = "2017-07-29";
+            }
+
+            string token = sas.Sign(credential);
+
+            // Build a SAS URI
+            UriBuilder sasUri = new UriBuilder(ServiceUri)
+            {
+                Query = token
+            };
+
+            // Create the TableServiceClient using the SAS URI.
+            var sasAuthedService = InstrumentClient(new TableServiceClient(sasUri.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasTableclient = sasAuthedService.GetTableClient(tableName);
+
+            // Insert the entities
+            foreach (var entity in entitiesToCreate)
+            {
+                await client.AddEntityAsync(entity).ConfigureAwait(false);
+            }
+
+            // Validate that we are able to query the table from the service.
+            var entities = await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entities.Count, Is.EqualTo(1));
+
+            // Validate that we are not able to fetch the entity outside the range of the row key filter.
+            Assert.That(async () => await sasTableclient.GetEntityAsync<TableEntity>(PartitionKeyValue, entitiesToCreate[1].RowKey).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.NotFound));
+
+            // Validate that we are able to fetch the entity with the client with full access.
+            Assert.That(async () => await client.GetEntityAsync<TableEntity>(PartitionKeyValue, entitiesToCreate[1].RowKey).ConfigureAwait(false), Throws.Nothing);
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(5)]
         public async Task CreatedEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
@@ -1009,7 +1066,7 @@ namespace Azure.Data.Tables.Tests
 
             // Add a Delete operation.
             var entityToDelete = entitiesToCreate[1];
-            batch.DeleteEntity(entityToDelete.PartitionKey, entityToDelete.RowKey, ETag.All);
+            batch.DeleteEntity(entityToDelete.RowKey, ETag.All);
 
             // Add an Upsert operation to replace the entity with an updated value.
             entitiesToCreate[2].StringTypeProperty = updatedString;

@@ -21,11 +21,10 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<TextAnalyticsErrorInternal>> errors = default;
             Optional<string> nextLink = default;
             DateTimeOffset createdDateTime = default;
-            Optional<string> displayName = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
-            JobStatus status = default;
+            TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
@@ -63,11 +62,6 @@ namespace Azure.AI.TextAnalytics.Models
                     createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("displayName"))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("expirationDateTime"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -90,11 +84,11 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new JobStatus(property.Value.GetString());
+                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new HealthcareJobState(createdDateTime, displayName.Value, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, results.Value, Optional.ToList(errors), nextLink.Value);
+            return new HealthcareJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, results.Value, Optional.ToList(errors), nextLink.Value);
         }
     }
 }

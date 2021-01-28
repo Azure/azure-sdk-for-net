@@ -47,6 +47,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Diagnostics =
                 {
                     IsLoggingContentEnabled = Debugger.IsAttached,
+                    LoggedHeaderNames =
+                    {
+                        "x-ms-request-id",
+                    },
                 }
             };
 

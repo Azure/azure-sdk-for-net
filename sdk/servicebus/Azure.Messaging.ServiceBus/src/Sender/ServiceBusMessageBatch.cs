@@ -76,9 +76,15 @@ namespace Azure.Messaging.ServiceBus
         ///   of the batch does not exceed its maximum.
         /// </summary>
         ///
-        /// <param name="message">Message to attempt to add to the batch.</param>
+        /// <param name="message">The message to attempt to add to the batch.</param>
         ///
         /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
+        ///
+        /// <exception cref="InvalidOperationException">
+        ///   When a batch is sent, it will be locked for the duration of that operation.  During this time,
+        ///   no messages may be added to the batch.  Calling <c>TryAdd</c> while the batch is being sent will
+        ///   result in an <see cref="InvalidOperationException" /> until the send has completed.
+        /// </exception>
         ///
         public bool TryAddMessage(ServiceBusMessage message)
         {

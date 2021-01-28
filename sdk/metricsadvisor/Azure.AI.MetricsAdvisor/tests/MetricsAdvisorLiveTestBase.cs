@@ -35,20 +35,28 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2020-10-31T00:00:00Z");
 
-        public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient()
+        public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {
-            return InstrumentClient(new MetricsAdvisorAdministrationClient(
-                new Uri(TestEnvironment.MetricsAdvisorUri),
-                new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                InstrumentClientOptions(new MetricsAdvisorClientsOptions())));
+            var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
+            var instrumentedOptions = InstrumentClientOptions(new MetricsAdvisorClientsOptions());
+
+            MetricsAdvisorAdministrationClient client = useTokenCredential
+                ? new (endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new (endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+
+            return InstrumentClient(client);
         }
 
-        public MetricsAdvisorClient GetMetricsAdvisorClient()
+        public MetricsAdvisorClient GetMetricsAdvisorClient(bool useTokenCredential = false)
         {
-            return InstrumentClient(new MetricsAdvisorClient(
-                new Uri(TestEnvironment.MetricsAdvisorUri),
-                new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                InstrumentClientOptions(new MetricsAdvisorClientsOptions())));
+            var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
+            var instrumentedOptions = InstrumentClientOptions(new MetricsAdvisorClientsOptions());
+
+            MetricsAdvisorClient client = useTokenCredential
+                ? new (endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new (endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+
+            return InstrumentClient(client);
         }
 
         protected void ValidateSeriesKey(DimensionKey seriesKey)

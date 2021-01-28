@@ -96,6 +96,7 @@ Next, we can create a new table.
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
 
+string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTable(tableName);
 Console.WriteLine($"The created table's name is {table.TableName}.");
 ```
@@ -125,6 +126,7 @@ Individual tables can be deleted from the service.
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
 
+string tableName = "OfficeSupplies1p1";
 serviceClient.DeleteTable(tableName);
 ```
 

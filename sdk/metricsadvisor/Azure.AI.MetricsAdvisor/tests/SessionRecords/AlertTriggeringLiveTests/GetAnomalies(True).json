@@ -1,0 +1,1328 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/alert/anomaly/configurations/204a211a-c5f4-45f3-a30e-512fb25d1d2c/alerts/17571a77000/anomalies",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-13c8eed7ea8b7e4fa8cbe6dda6f8e564-4e9f589ff4baa64f-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "76790397e6013d3b492e3545d660323d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "52f87f69-0b07-4df5-a00a-49e91e215ff9",
+        "Content-Length": "31448",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 19 Jan 2021 17:42:22 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "611",
+        "x-request-id": "52f87f69-0b07-4df5-a00a-49e91e215ff9"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Shanghai",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Bangkok",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "__SUM__",
+              "category": "Personal Computers"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Hong Kong",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Madrid",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Sao Paulo",
+              "category": "Grocery \u0026 Gourmet Food"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Bengaluru",
+              "category": "Grocery \u0026 Gourmet Food"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Beijing",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Mumbai",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Beijing",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Mumbai",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Madrid",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Tianjin",
+              "category": "Electronics (Accessories)"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Los Angeles",
+              "category": "Camera \u0026 Photo"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "__SUM__",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Bogota",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Tehran",
+              "category": "Grocery \u0026 Gourmet Food"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Hong Kong",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Tokyo",
+              "category": "Electronics (Consumer)"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "__SUM__",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "High",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Santiago",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Tianjin",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Jakarta",
+              "category": "Electronics (Consumer)"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Miami",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Shanghai",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Osaka",
+              "category": "Industrial \u0026 Scientific"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Delhi",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Paris",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Beijing",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Bangkok",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Delhi",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Barcelona",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Istanbul",
+              "category": "Electronics (Accessories)"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "__SUM__",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "High",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Bangkok",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Bangkok",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Santiago",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Lima",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Toronto",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Miami",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Shanghai",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Paris",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Madrid",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Mexico City",
+              "category": "Automotive \u0026 Powersports"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Hong Kong",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Taipei",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Miami",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Chennai",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Mumbai",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Tianjin",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Miami",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Delhi",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Lima",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "__SUM__",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Delhi",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Santiago",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Osaka",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Tianjin",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Rio de Janeiro",
+              "category": "Device Accessories"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Dallas",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Hong Kong",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Delhi",
+              "category": "Grocery \u0026 Gourmet Food"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Karachi",
+              "category": "Personal Computers"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Mumbai",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Tianjin",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Osaka",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Houston",
+              "category": "Automotive \u0026 Powersports"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Mumbai",
+              "category": "Industrial \u0026 Scientific"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Pune",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Manila",
+              "category": "Electronics (Consumer)"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Mexico City",
+              "category": "Grocery \u0026 Gourmet Food"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Lima",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Osaka",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Karachi",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "High",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Lima",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Lahore",
+              "category": "Electronics (Accessories)"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Beijing",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Santiago",
+              "category": "Handmade"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Osaka",
+              "category": "Electronics (Accessories)"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Karachi",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "High",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Paris",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Dallas",
+              "category": "__SUM__"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Cairo",
+              "category": "Electronics (Consumer)"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Karachi",
+              "category": "Home \u0026 Garden"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Osaka",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            },
+            "property": {
+              "anomalySeverity": "Medium",
+              "anomalyStatus": "Active"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "timestamp": "2020-10-29T00:00:00Z",
+            "createdTime": "2020-10-30T00:06:12.66Z",
+            "modifiedTime": "2020-10-30T00:06:12.66Z",
+            "dimension": {
+              "city": "Miami",
+              "category": "Automotive \u0026 Powersports"
+            },
+            "property": {
+              "anomalySeverity": "Low",
+              "anomalyStatus": "Active"
+            }
+          }
+        ],
+        "@nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "RandomSeed": "352625975"
+  }
+}

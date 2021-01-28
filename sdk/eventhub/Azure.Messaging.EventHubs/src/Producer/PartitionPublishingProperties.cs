@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   A set of information for an Event Hub.
     /// </summary>
     ///
-    public class PartitionPublishingProperties
+    internal class PartitionPublishingProperties
     {
         /// <summary>An empty set of properties.</summary>
         private static PartitionPublishingProperties s_emptyInstance;
@@ -58,12 +58,14 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <value>
-        ///   The sequence number will be in the range of <c>0</c> - <see cref="int.MaxValue"/> (inclusive) and will
-        ///   increase as events are published.  When more than <see cref="int.MaxValue" /> events have been published,
-        ///   the sequence number will roll over to <c>0</c>.
+        ///   <para>The sequence number will be in the range of <c>-1</c> - <see cref="int.MaxValue"/> (inclusive) and will
+        ///   increase as events are published. When more than <see cref="int.MaxValue" /> events have been published,
+        ///   the sequence number will roll over to <c>0</c>.</para>
+        ///
+        ///   <para>A value of <c>-1</c> indicates that no events are known to have been published.</para>
         /// </value>
         ///
-        public int? LastPublishedSequenceNumber { get; }
+        public int? LastPublishedSequenceNumber { get; } = -1;
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

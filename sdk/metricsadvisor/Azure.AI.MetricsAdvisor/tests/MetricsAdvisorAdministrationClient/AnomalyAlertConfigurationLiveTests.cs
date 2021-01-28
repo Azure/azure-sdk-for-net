@@ -19,9 +19,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAndGetAlertConfigurationWithWholeSeriesScope()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CreateAndGetAlertConfigurationWithWholeSeriesScope(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
             var metricAlertConfig = new MetricAnomalyAlertConfiguration(DetectionConfigurationId, scope);
@@ -331,9 +333,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task UpdateAlertConfigurationWithMinimumSetupAndGetInstance()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task UpdateAlertConfigurationWithMinimumSetupAndGetInstance(bool useTokenCrendential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCrendential);
 
             // Configure the Metric Anomaly Alert Configurations to be used.
 
@@ -831,9 +835,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetAlertConfigurations()
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18004")]
+        public async Task GetAlertConfigurations(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             var configCount = 0;
 
@@ -881,9 +888,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task DeleteAlertConfiguration()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeleteAlertConfiguration(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string configName = Recording.GenerateAlphaNumericId("config");
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();

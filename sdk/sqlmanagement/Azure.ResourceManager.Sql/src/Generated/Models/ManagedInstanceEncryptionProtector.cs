@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The managed instance encryption protector. </summary>
-    public partial class ManagedInstanceEncryptionProtector : Resource
+    public partial class ManagedInstanceEncryptionProtector : ProxyResource
     {
         /// <summary> Initializes a new instance of ManagedInstanceEncryptionProtector. </summary>
         public ManagedInstanceEncryptionProtector()

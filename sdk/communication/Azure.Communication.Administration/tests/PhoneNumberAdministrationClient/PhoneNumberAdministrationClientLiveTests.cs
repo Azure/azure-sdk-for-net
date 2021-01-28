@@ -9,7 +9,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Communication.Administration.Models;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.Administration.Tests
@@ -29,6 +31,28 @@ namespace Azure.Communication.Administration.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public PhoneNumberAdministrationClientLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [Test]
+        [TestCase("en-US", TestName = "GeneratesPhoneNumberClientUsingTokenCredential")]
+        public async Task GeneratesPhoneNumberClientUsingTokenCredential(string? locale)
+        {
+            TokenCredential tokenCredential;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                tokenCredential = new MockCredential();
+            }
+            else
+            {
+                tokenCredential = new DefaultAzureCredential();
+            }
+            var client = CreateClientWithTokenCredential(tokenCredential);
+
+            // Smoke test to ensure that client generated from token is able to work as expected.
+            var numbersPagable = client.GetAllPhoneNumbersAsync();
+            var numbers = await numbersPagable.ToEnumerableAsync();
+
+            Assert.IsNotNull(numbers);
         }
 
         [Test]
