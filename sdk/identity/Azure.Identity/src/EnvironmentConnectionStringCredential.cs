@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Identity;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
@@ -32,23 +32,56 @@ namespace Azure.Identity
         private const string MissingPartErrorMessage = "Environment variable 'AzureServicesAuthConnectionString' doesn't contain part '{0}'.";
         private const string CertificateNotFoundErrorMessage = "Certificate specified om environment variable 'AzureServicesAuthConnectionString' was not found.";
 
-        private readonly bool _validOnly;
+        private static char[] _semicolonSeparators = new[] { ';' };
+        private static char[] _equalsSeparators = new[] { '=' };
 
+        private readonly bool _validOnly;
+        private readonly CredentialPipeline _pipeline;
+
+        /// <summary>
+        /// Creates an instance of the <seealso cref="EnvironmentConnectionStringCredential"/> class and reads client certificate details from the environment variable  <c>AzureServicesAuthConnectionString</c>.
+        /// If the expected environment variable is not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
+        /// </summary>
         public EnvironmentConnectionStringCredential()
-            : this(validOnly: true)
+            : this(validOnly: true, CredentialPipeline.GetInstance(null))
         {
         }
 
-        public EnvironmentConnectionStringCredential(bool validOnly)
+        /// <summary>
+        /// Creates an instance of the <seealso cref="EnvironmentConnectionStringCredential"/> class and reads client certificate details from the environment variable  <c>AzureServicesAuthConnectionString</c>.
+        /// If the expected environment variable is not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
+        /// </summary>
+        /// <param name="validOnly"><c>true</c> to allow only valid certificates to be returned from the search for client certificate; otherwise, <c>false</c>.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public EnvironmentConnectionStringCredential(bool validOnly, TokenCredentialOptions options)
+            : this(validOnly, CredentialPipeline.GetInstance(options))
+
+        {
+        }
+
+        internal EnvironmentConnectionStringCredential(bool validOnly, CredentialPipeline pipeline)
         {
             _validOnly = validOnly;
+            _pipeline = pipeline;
         }
 
+        /// <summary>
+        /// Obtains a token from the Azure Active Directory service, using the specified client certificate specified in the environment variable <c>AzureServicesAuthConnectionString</c>.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Obtains a token from the Azure Active Directory service, using the specified client certificate specified in the environment variable <c>AzureServicesAuthConnectionString</c>.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -66,17 +99,17 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(UnavailableErrorMessage);
                 }
 
-                var connectionStringDict = connectionString.Split(';', StringSplitOptions.RemoveEmptyEntries)
-                                                           .Select(part => part.Split('=', StringSplitOptions.RemoveEmptyEntries))
+                var connectionStringDict = connectionString.Split(_semicolonSeparators, StringSplitOptions.RemoveEmptyEntries)
+                                                           .Select(part => part.Split(_equalsSeparators, StringSplitOptions.RemoveEmptyEntries))
                                                            .ToDictionary(pair => pair[0], pair => pair[1], StringComparer.OrdinalIgnoreCase);
 
                 string tenantId = GetConnectionStringPart(connectionStringDict, "TenantId");
                 string clientId = GetConnectionStringPart(connectionStringDict, "AppId");
                 string certThumbprint = GetConnectionStringPart(connectionStringDict, "CertificateThumbprint");
-                StoreLocation certStoreLocation = Enum.Parse<StoreLocation>(GetConnectionStringPart(connectionStringDict, "CertificateStoreLocation"), ignoreCase: true);
+                StoreLocation certStoreLocation = (StoreLocation)Enum.Parse(typeof(StoreLocation), GetConnectionStringPart(connectionStringDict, "CertificateStoreLocation"), ignoreCase: true);
                 X509Certificate2 cert = LoadCertificate(certStoreLocation, certThumbprint) ?? throw new CredentialUnavailableException(CertificateNotFoundErrorMessage);
 
-                ClientCertificateCredential credential = new ClientCertificateCredential(tenantId, clientId, cert);
+                ClientCertificateCredential credential = new ClientCertificateCredential(tenantId, clientId, cert, null, _pipeline, null);
 
                 AccessToken token = async ?
                                         await credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) :
