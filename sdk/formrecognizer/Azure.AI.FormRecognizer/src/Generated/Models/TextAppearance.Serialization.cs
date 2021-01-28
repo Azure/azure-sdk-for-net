@@ -8,22 +8,22 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class Appearance
+    public partial class TextAppearance
     {
-        internal static Appearance DeserializeAppearance(JsonElement element)
+        internal static TextAppearance DeserializeTextAppearance(JsonElement element)
         {
-            Style style = default;
+            TextStyle style = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("style"))
                 {
-                    style = Style.DeserializeStyle(property.Value);
+                    style = TextStyle.DeserializeTextStyle(property.Value);
                     continue;
                 }
             }
-            return new Appearance(style);
+            return new TextAppearance(style);
         }
     }
 }
