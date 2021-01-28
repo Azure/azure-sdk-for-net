@@ -191,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     B = 5,
                     C = false
                 };
-                var body = serializer.SerializeToBinaryData(testBody);
+                var body = serializer.Serialize(testBody);
                 var msg = new ServiceBusMessage(body);
 
                 await sender.SendMessageAsync(msg);
