@@ -29,7 +29,7 @@ namespace Azure.Communication.Identity.Models
         /// <summary> Initializes a new instance of CommunicationIdentityAccessTokenResult. </summary>
         /// <param name="identity"> A communication identity. </param>
         /// <param name="accessToken"> An access token. </param>
-        internal CommunicationIdentityAccessTokenResult(CommunicationIdentity identity, CommunicationUserToken accessToken)
+        internal CommunicationIdentityAccessTokenResult(CommunicationIdentity identity, CommunicationIdentityAccessToken accessToken)
         {
             Identity = identity;
             AccessToken = accessToken;
@@ -38,6 +38,6 @@ namespace Azure.Communication.Identity.Models
         /// <summary> A communication identity. </summary>
         public CommunicationIdentity Identity { get; }
         /// <summary> An access token. </summary>
-        public CommunicationUserToken AccessToken { get; }
+        public CommunicationIdentityAccessToken AccessToken { get; }
     }
 }

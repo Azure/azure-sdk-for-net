@@ -7,6 +7,7 @@ using Azure.Communication.Identity;
 using Azure.Communication;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
@@ -21,9 +22,9 @@ namespace Azure.Communication.Chat.Tests.samples
             Response<CommunicationUserIdentifier> threadMember2 = await communicationIdentityClient.CreateUserAsync();
             Response<CommunicationUserIdentifier> threadMember3 = await communicationIdentityClient.CreateUserAsync();
 
-            CommunicationUserToken communicationUserToken1 = await communicationIdentityClient.IssueTokenAsync(threadMember1.Value, new[] { CommunicationTokenScope.Chat });
-            CommunicationUserToken communicationUserToken2 = await communicationIdentityClient.IssueTokenAsync(threadMember2.Value, new[] { CommunicationTokenScope.Chat });
-            CommunicationUserToken communicationUserToken3 = await communicationIdentityClient.IssueTokenAsync(threadMember3.Value, new[] { CommunicationTokenScope.Chat });
+            AccessToken communicationUserToken1 = await communicationIdentityClient.IssueTokenAsync(threadMember1.Value, new[] { CommunicationTokenScope.Chat });
+            AccessToken communicationUserToken2 = await communicationIdentityClient.IssueTokenAsync(threadMember2.Value, new[] { CommunicationTokenScope.Chat });
+            AccessToken communicationUserToken3 = await communicationIdentityClient.IssueTokenAsync(threadMember3.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken1.Token;
             string endpoint = TestEnvironment.ChatApiUrl();
             string theadCreatorMemberId = threadMember1.Value.Id;

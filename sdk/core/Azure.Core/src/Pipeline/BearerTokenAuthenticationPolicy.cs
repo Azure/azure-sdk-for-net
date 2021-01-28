@@ -58,7 +58,7 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            string headerValue = await _accessTokenCache.GetHeaderValueAsync(message, async);
+            string headerValue = await _accessTokenCache.GetHeaderValueAsync(message, async).ConfigureAwait(false);
             message.Request.SetHeader(HttpHeader.Names.Authorization, headerValue);
 
             if (async)
@@ -100,14 +100,16 @@ namespace Azure.Core.Pipeline
                 {
                     if (backgroundUpdateTcs != null)
                     {
+#pragma warning disable AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
                         HeaderValueInfo info = headerValueTcs.Task.EnsureCompleted();
+#pragma warning restore AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
                         _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, message, async));
                         return info.HeaderValue;
                     }
 
                     try
                     {
-                        HeaderValueInfo info = await GetHeaderValueFromCredentialAsync(message, async, message.CancellationToken);
+                        HeaderValueInfo info = await GetHeaderValueFromCredentialAsync(message, async, message.CancellationToken).ConfigureAwait(false);
                         headerValueTcs.SetResult(info);
                     }
                     catch (OperationCanceledException)
@@ -139,7 +141,9 @@ namespace Azure.Core.Pipeline
                     }
                 }
 
+#pragma warning disable AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
                 return headerValueTcs.Task.EnsureCompleted().HeaderValue;
+#pragma warning restore AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
             }
 
             private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources()
@@ -192,7 +196,7 @@ namespace Azure.Core.Pipeline
                 var cts = new CancellationTokenSource(_tokenRefreshRetryDelay);
                 try
                 {
-                    HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(httpMessage, async, cts.Token);
+                    HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(httpMessage, async, cts.Token).ConfigureAwait(false);
                     backgroundUpdateTcs.SetResult(newInfo);
                 }
                 catch (OperationCanceledException oce) when (cts.IsCancellationRequested)

@@ -737,7 +737,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
-            string apiVersion = "2020-10-01";
+            string apiVersion = "2020-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -898,58 +898,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Prepare data move request
         /// </param>
         /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse> BMSPrepareDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, PrepareDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginBMSPrepareDataMoveWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await this.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Triggers Data Move Operation on target vault
-        /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the recovery services vault.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
-        /// </param>
-        /// <param name='parameters'>
-        /// Trigger data move request
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse> BMSTriggerDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, TriggerDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginBMSTriggerDataMoveWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await this.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Prepares source vault for Data Move operation
-        /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the recovery services vault.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
-        /// </param>
-        /// <param name='parameters'>
-        /// Prepare data move request
-        /// </param>
-        /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
@@ -967,7 +915,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginBMSPrepareDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, PrepareDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BMSPrepareDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, PrepareDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultName == null)
             {
@@ -989,7 +937,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 parameters.Validate();
             }
-            string apiVersion = "2020-10-01";
+            string apiVersion = "2020-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1002,7 +950,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginBMSPrepareDataMove", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BMSPrepareDataMove", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
@@ -1137,6 +1085,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Trigger data move request
         /// </param>
         /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> BMSTriggerDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, TriggerDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginBMSTriggerDataMoveWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await this.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Triggers Data Move Operation on target vault
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='parameters'>
+        /// Trigger data move request
+        /// </param>
+        /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1176,7 +1150,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 parameters.Validate();
             }
-            string apiVersion = "2020-10-01";
+            string apiVersion = "2020-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

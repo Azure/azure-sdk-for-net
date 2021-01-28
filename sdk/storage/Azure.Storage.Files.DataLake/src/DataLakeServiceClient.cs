@@ -200,7 +200,7 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _pipeline,
                 authPolicy,
-                Version.AsBlobsVersion(),
+                _version.AsBlobsVersion(),
                 _clientDiagnostics);
         }
 
@@ -384,7 +384,7 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _pipeline,
                 authentication,
-                Version.AsBlobsVersion(),
+                _version.AsBlobsVersion(),
                 _clientDiagnostics);
         }
 

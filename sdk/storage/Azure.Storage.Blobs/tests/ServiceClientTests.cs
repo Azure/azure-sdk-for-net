@@ -12,6 +12,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -1060,5 +1061,17 @@ namespace Azure.Storage.Blobs.Test
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<BlobServiceClient>(TestConfigDefault.ConnectionString, new BlobClientOptions()).Object;
+            mock = new Mock<BlobServiceClient>(TestConfigDefault.ConnectionString).Object;
+            mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
+            mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
+            mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+        }
     }
 }

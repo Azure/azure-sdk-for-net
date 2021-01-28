@@ -158,51 +158,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
 
             /// <summary>
-            /// Prepares source vault for Data Move operation
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='vaultName'>
-            /// The name of the recovery services vault.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group where the recovery services vault is
-            /// present.
-            /// </param>
-            /// <param name='parameters'>
-            /// Prepare data move request
-            /// </param>
-            public static void BeginBMSPrepareDataMove(this IRecoveryServicesBackupClient operations, string vaultName, string resourceGroupName, PrepareDataMoveRequest parameters)
-            {
-                operations.BeginBMSPrepareDataMoveAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Prepares source vault for Data Move operation
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='vaultName'>
-            /// The name of the recovery services vault.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group where the recovery services vault is
-            /// present.
-            /// </param>
-            /// <param name='parameters'>
-            /// Prepare data move request
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginBMSPrepareDataMoveAsync(this IRecoveryServicesBackupClient operations, string vaultName, string resourceGroupName, PrepareDataMoveRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginBMSPrepareDataMoveWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Triggers Data Move Operation on target vault
             /// </summary>
             /// <param name='operations'>
