@@ -2959,6 +2959,28 @@ namespace Azure.Storage.Blobs.Test
             await container.DeleteIfExistsAsync();
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            string oldContainerName = GetNewContainerName();
+            string newContainerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
+            await container.CreateAsync();
+
+            // Act
+            BlobContainerClient newContainer = await container.RenameAsync(
+                destinationContainerName: newContainerName);
+
+            // Assert
+            await newContainer.GetPropertiesAsync();
+
+            // Cleanup
+            await newContainer.DeleteAsync();
+        }
+
         #region Secondary Storage
         [Test]
         public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
