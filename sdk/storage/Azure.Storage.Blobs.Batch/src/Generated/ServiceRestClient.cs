@@ -90,7 +90,7 @@ namespace Azure.Storage.Blobs.Batch
             var headers = new ServiceSubmitBatchHeaders(message.Response);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                     {
                         var value = message.ExtractResponseContent();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
@@ -123,7 +123,7 @@ namespace Azure.Storage.Blobs.Batch
             var headers = new ServiceSubmitBatchHeaders(message.Response);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                     {
                         var value = message.ExtractResponseContent();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Storage.Blobs.Batch.Models
 {
-    /// <summary> If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard. </summary>
+    /// <summary> The RehydratePriority. </summary>
     public readonly partial struct RehydratePriority : IEquatable<RehydratePriority>
     {
         private readonly string _value;

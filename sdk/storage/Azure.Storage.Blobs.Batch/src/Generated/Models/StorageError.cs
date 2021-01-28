@@ -17,11 +17,14 @@ namespace Azure.Storage.Blobs.Batch.Models
 
         /// <summary> Initializes a new instance of StorageError. </summary>
         /// <param name="message"> . </param>
-        internal StorageError(string message)
+        /// <param name="code"> . </param>
+        internal StorageError(string message, string code)
         {
             Message = message;
+            Code = code;
         }
 
         public string Message { get; }
+        public string Code { get; }
     }
 }

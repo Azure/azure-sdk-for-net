@@ -15,11 +15,16 @@ namespace Azure.Storage.Blobs.Batch.Models
         internal static StorageError DeserializeStorageError(XElement element)
         {
             string message = default;
+            string code = default;
             if (element.Element("Message") is XElement messageElement)
             {
                 message = (string)messageElement;
             }
-            return new StorageError(message);
+            if (element.Element("Code") is XElement codeElement)
+            {
+                code = (string)codeElement;
+            }
+            return new StorageError(message, code);
         }
     }
 }
