@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Storage.Blobs.Batch;
+using Azure.Storage.Blobs.Batch.Models;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.Specialized
@@ -56,6 +58,16 @@ namespace Azure.Storage.Blobs.Specialized
         internal bool Submitted { get; private set; }
 
         /// <summary>
+        /// <see cref="BlobRestClient"/>.
+        /// </summary>
+        private readonly BlobRestClient _blobRestClient;
+
+        /// <summary>
+        /// <see cref="BlobRestClient"/>.
+        /// </summary>
+        internal virtual BlobRestClient BlobRestClient => _blobRestClient;
+
+        /// <summary>
         /// Creates a new instance of the <see cref="BlobBatch"/> for mocking.
         /// </summary>
         protected BlobBatch()
@@ -72,6 +84,20 @@ namespace Azure.Storage.Blobs.Specialized
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _isContainerScoped = client.IsContainerScoped;
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
+            string containerName = uriBuilder.BlobContainerName;
+            string blobName = uriBuilder.BlobName;
+            uriBuilder.BlobContainerName = null;
+
+            // TODO blob name encoding could be wrong.
+            _blobRestClient = new BlobRestClient(
+                clientDiagnostics: _client.ClientDiagnostics,
+                pipeline: _client.Pipeline,
+                url: uriBuilder.ToUri().ToString(),
+                containerName: containerName,
+                blob: blobName,
+                version: _client.Version.ToVersionString());
         }
 
         /// <summary>
@@ -198,18 +224,32 @@ namespace Azure.Storage.Blobs.Specialized
         {
             SetBatchOperationType(BlobBatchOperationType.Delete);
 
-            HttpMessage message = BatchRestClient.Blob.DeleteAsync_CreateMessage(
-                pipeline: _client.BatchOperationPipeline,
-                resourceUri: blobUri,
-                version: _client.Version.ToVersionString(),
-                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
+            // TODO make timeout optional.
+            HttpMessage message = BlobRestClient.CreateDeleteRequest(
+                timeout: null,
                 leaseId: conditions?.LeaseId,
+                //TODO
+                //deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
+                deleteSnapshots: DeleteSnapshotsOptionType.Include,
                 ifModifiedSince: conditions?.IfModifiedSince,
                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                ifMatch: conditions?.IfMatch,
-                ifNoneMatch: conditions?.IfNoneMatch);
+                ifMatch: conditions?.IfMatch.ToString(),
+                ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                ifTags: conditions?.TagConditions);
+
             _messages.Add(message);
-            return new DelayedResponse(message, response => BatchRestClient.Blob.DeleteAsync_CreateResponse(_client.ClientDiagnostics, response));
+
+            // TODO no idea if this will work.
+            return new DelayedResponse(
+                message,
+                response =>
+                {
+                    BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(message.Response);
+                    return ResponseWithHeaders.FromValue(blobDeleteHeaders, message.Response);
+                });
+
+            // TODO remove this.
+            //return new DelayedResponse(message, response => BatchRestClient.Blob.DeleteAsync_CreateResponse(_client.ClientDiagnostics, response));
         }
         #endregion DeleteBlob
 

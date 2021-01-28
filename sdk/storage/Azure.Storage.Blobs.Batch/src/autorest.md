@@ -77,6 +77,41 @@ directive:
     };
 ```
 
+### Make move parameters to constructors.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.ContainerName["x-ms-parameter-location"];
+    delete $.Snapshot["x-ms-parameter-location"];
+    delete $.VersionId["x-ms-parameter-location"];
+```
+
+### Make Blob a constructor parameter
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.Blob["x-ms-parameter-location"];
+    $.Blob["x-ms-skip-url-encoding"] = true;
+```
+
+### Remove conditions parameter groupings
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.IfMatch["x-ms-parameter-grouping"];
+    delete $.IfModifiedSince["x-ms-parameter-grouping"];
+    delete $.IfNoneMatch["x-ms-parameter-grouping"];
+    delete $.IfUnmodifiedSince["x-ms-parameter-grouping"];
+    delete $.LeaseIdOptional["x-ms-parameter-grouping"];
+    delete $.IfTags["x-ms-parameter-grouping"];
+```
+
 ### Add containerName as a parameter
 ``` yaml
 directive:

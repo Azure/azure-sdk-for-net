@@ -186,11 +186,10 @@ namespace Azure.Storage.Blobs.Specialized
 
         private (ServiceRestClient, ContainerRestClient) BuildRestClients()
         {
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(Uri)
-            {
-                BlobContainerName = null,
-                BlobName = null
-            };
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(Uri);
+            string containerName = uriBuilder.BlobContainerName;
+            uriBuilder.BlobContainerName = null;
+            uriBuilder.BlobName = null;
 
             // TODO these need to reference private readonly properties, not virtul getters
             ServiceRestClient serviceRestClient = new ServiceRestClient(
@@ -204,6 +203,7 @@ namespace Azure.Storage.Blobs.Specialized
                 clientDiagnostics: ClientDiagnostics,
                 pipeline: Pipeline,
                 url: uriBuilder.ToUri().ToString(),
+                containerName: containerName,
                 version: Version.ToVersionString());
 
             return (serviceRestClient, containerRestClient);
@@ -390,27 +390,71 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken)
                         .ConfigureAwait(false);
 
-                if (async)
+                if (IsContainerScoped)
                 {
-                    if (IsContainerScoped)
-                    {
+                    ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders> response;
 
+                    if (async)
+                    {
+                        response = await _containerRestClient.SubmitBatchAsync(
+                            contentLength: content.Length,
+                            multipartContentType: contentType,
+                            body: content,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
                     }
                     else
                     {
-
+                        response = _containerRestClient.SubmitBatch(
+                            contentLength: content.Length,
+                            multipartContentType: contentType,
+                            body: content,
+                            cancellationToken: cancellationToken);
                     }
+
+                    await UpdateOperationResponses(
+                        messages,
+                        response.GetRawResponse(),
+                        response.Value,
+                        response.Headers.ContentType,
+                        throwOnAnyFailure,
+                        async)
+                        .ConfigureAwait(false);
+
+                    return response.GetRawResponse();
                 }
                 else
                 {
-                    if (IsContainerScoped)
-                    {
+                    ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders> response;
 
+                    if (async)
+                    {
+                        response = await _serviceRestClient.SubmitBatchAsync(
+                            contentLength: content.Length,
+                            multipartContentType: contentType,
+                            body: content,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
                     }
                     else
                     {
-
+                        response = _serviceRestClient.SubmitBatch(
+                            contentLength: content.Length,
+                            multipartContentType: contentType,
+                            body: content,
+                            cancellationToken: cancellationToken);
                     }
+
+                    await UpdateOperationResponses(
+                        messages,
+                        response.GetRawResponse(),
+                        response.Value,
+                        response.Headers.ContentType,
+                        throwOnAnyFailure,
+                        async)
+                        .ConfigureAwait(false);
+
+                    return response.GetRawResponse();
                 }
 
                 //// Send the batch request
