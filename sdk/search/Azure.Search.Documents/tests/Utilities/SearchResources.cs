@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// The storage endpoint suffix.
         /// </summary>
-        public string StorageEndpointSuffix => TestFixture.TestEnvironment.StorageEndpointSuffix;
+        public string StorageEndpointSuffix => TestFixture.TestEnvironment.StorageEndpointSuffix ?? "core.windows.net";
         /// <summary>
         /// The storage account connection string.
         /// </summary>
