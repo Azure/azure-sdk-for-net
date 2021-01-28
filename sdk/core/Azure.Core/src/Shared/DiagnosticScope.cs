@@ -14,6 +14,34 @@ using System.Reflection;
 
 namespace Azure.Core.Pipeline
 {
+    /// <summary>
+    /// This type abstracts Activity creation complexity from the client implementation
+    /// There are two kinds of Activities we create:
+    ///     1. DiagnosticSource-based activity - a legacy mechanist that primarily used by ApplicationInsights collector
+    ///     2. ActivitySource-based activity - the ActivitySource type is new in .NET 5 and the simpler way to
+    ///         publish and consume activities. Would be consumed by OpenTelemetry and other ActivityListener users.
+    ///
+    /// Both these methods operate on the same Activity type but have slight differences:
+    /// Feature                           | DiagnosticSource                        | ActivitySource
+    ///                                   |                                         |
+    /// Specifying activity kind          | Using the "kind" tag                    | Using the strongly typed kind parameter on
+    ///                                   |                                         |  ActivitySource.StartActivity method
+    ///                                   |                                         |
+    /// Links support                     | Simulated via the DiagnosticActivity    | Using the strongly typed Links property
+    ///                                   | Links property that consumers use       |
+    ///                                   | reflection to read                      |
+    ///                                   |                                         |
+    /// Non-string tags                   | Non supported, all values stringified   | Added using new AddTag(string, object) overload
+    ///                                   |                                         | consumed via TagObjects property
+    ///                                   |                                         |
+    /// Activity name                     | "ClientName.MethodName"                 | "MethodName"
+    ///                                   |                                         |
+    /// Source name                       | "ClientNamespace"                       | "ClientNamespace.ClientName"
+    ///                                   |                                         |
+    /// Failure notification              | via raising ".Exception" diagnostic     | via additional tags, possibly new
+    ///                                   | source event                            | status property in NET6
+    ///
+    /// </summary>
     internal readonly struct DiagnosticScope : IDisposable
     {
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new ();

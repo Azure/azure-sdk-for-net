@@ -7,18 +7,18 @@ using System.Diagnostics;
 
 namespace Azure.Core.Tests
 {
-    public class TestActivityListener: IDisposable
+    public class TestActivitySourceListener: IDisposable
     {
         private readonly ActivityListener _listener;
 
         public Queue<Activity> Activities { get; } =
             new Queue<Activity>();
 
-        public TestActivityListener(string name) : this(source => source.Name == name)
+        public TestActivitySourceListener(string name) : this(source => source.Name == name)
         {
         }
 
-        public TestActivityListener(Func<ActivitySource, bool> sourceSelector)
+        public TestActivitySourceListener(Func<ActivitySource, bool> sourceSelector)
         {
             _listener = new ActivityListener
             {
