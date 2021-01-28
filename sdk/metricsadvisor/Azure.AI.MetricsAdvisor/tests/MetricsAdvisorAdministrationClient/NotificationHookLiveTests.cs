@@ -18,9 +18,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAndGetEmailNotificationHookWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CreateAndGetEmailNotificationHookWithMinimumSetup(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var emailsToAlert = new List<string>() { "fake1@email.com", "fake2@email.com" };
@@ -155,11 +157,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task UpdateEmailNotificationHookWithMinimumSetupAndGetInstance()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task UpdateEmailNotificationHookWithMinimumSetupAndGetInstance(bool useTokenCredential)
         {
             // Create a hook.
 
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var emailsToAlert = new List<string>() { "fake1@email.com", "fake2@email.com" };
@@ -496,10 +500,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18004")]
-        public async Task GetHooksWithMinimumSetup()
+        public async Task GetHooksWithMinimumSetup(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var hookToCreate = new WebNotificationHook(hookName, "http://contoso.com");
@@ -602,9 +608,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task DeleteNotificationHook()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeleteNotificationHook(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var hookToCreate = new WebNotificationHook(hookName, "http://contoso.com");

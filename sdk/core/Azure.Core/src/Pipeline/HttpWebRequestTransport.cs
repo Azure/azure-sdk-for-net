@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -110,6 +111,11 @@ namespace Azure.Core.Pipeline
         private HttpWebRequest CreateRequest(Request messageRequest)
         {
             var request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
+
+            // Timeouts are handled by the pipeline
+            request.Timeout = Timeout.Infinite;
+            request.ReadWriteTimeout = Timeout.Infinite;
+
             // Don't disable the default proxy when there is no environment proxy configured
             if (_environmentProxy != null)
             {
@@ -160,6 +166,24 @@ namespace Azure.Core.Pipeline
                 if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.Referer, StringComparison.OrdinalIgnoreCase))
                 {
                     request.Referer = messageRequestHeader.Value;
+                    continue;
+                }
+
+                if (string.Equals(messageRequestHeader.Name, HttpHeader.Names.IfModifiedSince, StringComparison.OrdinalIgnoreCase))
+                {
+                    request.IfModifiedSince = DateTime.Parse(messageRequestHeader.Value, CultureInfo.InvariantCulture);
+                    continue;
+                }
+
+                if (string.Equals(messageRequestHeader.Name, "Expect", StringComparison.OrdinalIgnoreCase))
+                {
+                    request.Expect = messageRequestHeader.Value;
+                    continue;
+                }
+
+                if (string.Equals(messageRequestHeader.Name, "Transfer-Encoding", StringComparison.OrdinalIgnoreCase))
+                {
+                    request.TransferEncoding = messageRequestHeader.Value;
                     continue;
                 }
 

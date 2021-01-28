@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A job version. </summary>
-    public partial class JobVersion : Resource
+    public partial class JobVersion : ProxyResource
     {
         /// <summary> Initializes a new instance of JobVersion. </summary>
         public JobVersion()

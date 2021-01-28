@@ -52,7 +52,7 @@
 
   <!-- Add Client SDK Tools -->
   <ItemGroup>
-    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="AutoRest.CSharp" PrivateAssets="All" />
+    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
 
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 

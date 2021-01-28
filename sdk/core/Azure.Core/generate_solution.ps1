@@ -27,7 +27,11 @@ try
         if (($_.Name.StartsWith("Azure.")) -or ($assets -Match "Azure.Core"))
         {
             $assetsJson = ConvertFrom-Json $assets;
-            return $assetsJson.project.restore.projectPath;
+            $projectPath = $assetsJson.project.restore.projectPath
+            if (Test-Path $projectPath)
+            {
+                return $projectPath;
+            }
         }
     }
 

@@ -11,6 +11,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -773,5 +774,16 @@ namespace Azure.Storage.Blobs.Test
             }
         }
         #endregion Scenario helper
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            var blobServiceClientMock = new Mock<BlobServiceClient>(TestConfigDefault.ConnectionString)
+            {
+                CallBase = true
+            };
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<BlobBatchClient>(blobServiceClientMock.Object).Object;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class TableGetPropertiesOptions : OptionsResource
     {
         /// <summary> Initializes a new instance of TableGetPropertiesOptions. </summary>
-        internal TableGetPropertiesOptions()
+        public TableGetPropertiesOptions()
         {
         }
 

@@ -38,9 +38,11 @@ jobs:
       - Name: base_product_matrix
         Path: /eng/pipelines/matrix.json
         Selection: sparse
+		GenerateVMJobs: true
       - Name: sdk_specific_matrix
         Path: /sdk/foobar/matrix.json
         Selection: all
+		GenerateContainerJobs: true
 	steps:
 	  - pwsh:
           ...
@@ -48,10 +50,23 @@ jobs:
 
 ## Matrix config file syntax
 
+Matrix parameters can either be a list of strings, or a set of grouped strings (represented as a hash). The latter parameter
+type is useful for when 2 or more parameters need to be grouped together, but without generating more than one matrix permutation.
+
 ```
 "matrix": {
   "<parameter1 name>": [ <values...> ],
-  "<parameter2 name>": [ <values...> ]
+  "<parameter2 name>": [ <values...> ],
+  "<parameter set>": {
+	"<parameter set 1 name>": {
+		"<parameter set 1 value 1": "value",
+		"<parameter set 1 value 2": "<value>",
+	},
+	"<parameter set 2 name>": {
+		"<parameter set 2 value 1": "value",
+		"<parameter set 2 value 2": "<value>",
+	}
+  }
 }
 "include": [ <matrix>, <matrix>, ... ],
 "exclude": [ <matrix>, <matrix>, ... ],
@@ -202,19 +217,30 @@ The top level keys are used as job names, meaning they get displayed in the azur
 
 The logic for generating display names works like this:
 
-1. Sort the matrix by: parameter length, parameter name, and sort the parameter values arrays.
-2. In sorted order, join parameter values by "_"
+- Join parameter values by "_"
     a. If the parameter value exists as a key in `displayNames` in the matrix config, replace it with that value.
-    b. For each name value, strip all `.-_` characters from the string.
-
-The matrix is then sorted by display name, before being sent to azure pipelines. The underlying matrix may have a different
-sorted order than the display name output. The sorting needs to be separate so that sparse matrix generation can be deterministic.
+    b. For each name value, strip all non-alphanumeric characters (excluding "_").
+	c. If the name is greater than 100 characters, truncate it.
 
 #### Filters
 
-To be implemented. A basic example of a filter is "all" vs. "sparse" generation, but eventually will be a more programmable
-way of processing excludes, such as an expression that only includes entries with a container image specified. The intent
-is that these filters can be entered at runtime, as opposed to statically in yaml.
+Filters can be passed to the matrix as an array of strings, each matching the format of <key>=<regex>. When a matrix entry
+does not contain the specified key, it will default to a value of empty string for regex parsing. This can be used to specify
+filters for keys that don't exist or keys that optionally exist and match a regex, as seen in the below example.
+
+Display name filters can also be passed as a single regex string that runs against the [generated display name](#displaynames) of the matrix job.
+The intent of display name filters is to be defined primarily as a top level variable at template queue time in the azure pipelines UI.
+
+For example, the below command will filter for matrix entries with "windows" in the job display name, no matrix variable
+named "ExcludedKey", a framework variable containing either "461" or "5.0", and an optional key "SupportedClouds" that, if exists, must contain "Public":
+
+```
+./Create-JobMatrix.ps1 `
+  -ConfigPath samples/matrix.json `
+  -Selection all `
+  -DisplayNameFilter ".*windows.*" `
+  -Filters @("ExcludedKey=^$", "framework=(461|5\.0)", "SupportedClouds=^$|.*Public.*")
+```
 
 #### Under the hood
 

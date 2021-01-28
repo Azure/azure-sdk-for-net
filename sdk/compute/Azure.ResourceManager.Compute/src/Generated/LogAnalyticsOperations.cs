@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<LogAnalyticsExportThrottledRequestsOperation> StartExportThrottledRequestsAsync(string location, LogAnalyticsInputBase parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<LogAnalyticsExportThrottledRequestsOperation> StartExportThrottledRequestsAsync(string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual LogAnalyticsExportThrottledRequestsOperation StartExportThrottledRequests(string location, LogAnalyticsInputBase parameters, CancellationToken cancellationToken = default)
+        public virtual LogAnalyticsExportThrottledRequestsOperation StartExportThrottledRequests(string location, ThrottledRequestsInput parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
