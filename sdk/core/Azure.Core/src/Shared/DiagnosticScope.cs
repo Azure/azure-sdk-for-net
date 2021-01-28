@@ -294,9 +294,9 @@ namespace Azure.Core.Pipeline
         }
     }
 
+    #pragma warning disable SA1507 // File can not contain multiple types
     /// <summary>
-    /// WORKAROUND. Some runtime environments like Azure.Functions downgrade System.Diagnostic.DiagnosticSource package version causing method not found exceptions in customer apps
-    /// This type is a temporary workaround to avoid the issue.
+    /// Until we can reference the 5.0 of System.Diagnostics.DiagnosticSource
     /// </summary>
     internal static class ActivityExtensions
     {
@@ -446,7 +446,7 @@ namespace Azure.Core.Pipeline
             if (s_createActivityLinkMethod == null)
             {
                 var parseMethod = s_activityContextType?.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
-                var ctor = s_activityLinkType?.GetConstructor(new[] { s_activityContextType, s_activityTagsCollectionType });
+                var ctor = s_activityLinkType?.GetConstructor(new[] { s_activityContextType!, s_activityTagsCollectionType! });
 
                 if (parseMethod == null ||
                     ctor == null ||
@@ -507,44 +507,50 @@ namespace Azure.Core.Pipeline
 
             if (s_activitySourceStartActivityMethod == null)
             {
-                var method = s_activitySourceType?.GetMethod("StartActivity", BindingFlags.Instance | BindingFlags.Public, null, new[]
-                {
-                    typeof(string),
-                    s_activityKindType,
-                    s_activityContextType!,
-                    typeof(IEnumerable<KeyValuePair<string, object>>),
-                    typeof(IEnumerable<>).MakeGenericType(s_activityLinkType),
-                    typeof(DateTimeOffset)
-                }, null);
-
-                if (method == null ||
+                if (s_activityLinkType == null ||
                     s_activitySourceType == null ||
                     s_activityContextType == null ||
-                    s_activityKindType == null
-                    )
+                    s_activityKindType == null)
                 {
                     s_activitySourceStartActivityMethod = (_, _, _, _, _, _) => null;
                 }
                 else
                 {
-                    var sourceParameter = Expression.Parameter(typeof(object));
-                    var nameParameter = Expression.Parameter(typeof(string));
-                    var kindParameter = Expression.Parameter(typeof(int));
-                    var startTimeParameter = Expression.Parameter(typeof(DateTimeOffset));
-                    var tagsParameter = Expression.Parameter(typeof(ICollection<KeyValuePair<string, object>>));
-                    var linksParameter = Expression.Parameter(typeof(IList));
-                    var methodParameter = method.GetParameters();
-                    s_activitySourceStartActivityMethod = Expression.Lambda<Func<object, string, int, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>>(
-                        Expression.Call(
-                            Expression.Convert(sourceParameter, method.DeclaringType!),
-                            method,
-                            nameParameter,
-                            Expression.Convert(kindParameter,  methodParameter[1].ParameterType),
-                            Expression.Default(s_activityContextType),
-                            Expression.Convert(tagsParameter,  methodParameter[3].ParameterType),
-                            Expression.Convert(linksParameter,  methodParameter[4].ParameterType),
-                            Expression.Convert(startTimeParameter,  methodParameter[5].ParameterType)),
-                        sourceParameter, nameParameter, kindParameter, tagsParameter, linksParameter,  startTimeParameter).Compile();
+                    var method = s_activitySourceType?.GetMethod("StartActivity", BindingFlags.Instance | BindingFlags.Public, null, new[]
+                    {
+                        typeof(string),
+                        s_activityKindType,
+                        s_activityContextType,
+                        typeof(IEnumerable<KeyValuePair<string, object>>),
+                        typeof(IEnumerable<>).MakeGenericType(s_activityLinkType),
+                        typeof(DateTimeOffset)
+                    }, null);
+
+                    if (method == null)
+                    {
+                        s_activitySourceStartActivityMethod = (_, _, _, _, _, _) => null;
+                    }
+                    else
+                    {
+                        var sourceParameter = Expression.Parameter(typeof(object));
+                        var nameParameter = Expression.Parameter(typeof(string));
+                        var kindParameter = Expression.Parameter(typeof(int));
+                        var startTimeParameter = Expression.Parameter(typeof(DateTimeOffset));
+                        var tagsParameter = Expression.Parameter(typeof(ICollection<KeyValuePair<string, object>>));
+                        var linksParameter = Expression.Parameter(typeof(IList));
+                        var methodParameter = method.GetParameters();
+                        s_activitySourceStartActivityMethod = Expression.Lambda<Func<object, string, int, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>>(
+                            Expression.Call(
+                                Expression.Convert(sourceParameter, method.DeclaringType!),
+                                method,
+                                nameParameter,
+                                Expression.Convert(kindParameter,  methodParameter[1].ParameterType),
+                                Expression.Default(s_activityContextType),
+                                Expression.Convert(tagsParameter,  methodParameter[3].ParameterType),
+                                Expression.Convert(linksParameter,  methodParameter[4].ParameterType),
+                                Expression.Convert(startTimeParameter,  methodParameter[5].ParameterType)),
+                            sourceParameter, nameParameter, kindParameter, tagsParameter, linksParameter,  startTimeParameter).Compile();
+                    }
                 }
             }
 
@@ -565,6 +571,10 @@ namespace Azure.Core.Pipeline
 
         public static IList? CreateLinkCollection()
         {
+            if (s_activityLinkType == null)
+            {
+                return null;
+            }
             return Activator.CreateInstance(typeof(List<>).MakeGenericType(s_activityLinkType)) as IList;
         }
     }

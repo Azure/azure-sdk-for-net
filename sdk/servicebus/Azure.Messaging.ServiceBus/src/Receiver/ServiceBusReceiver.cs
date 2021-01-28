@@ -251,7 +251,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.ReceiveActivityName,
-                DiagnosticProperty.ConsumerKind);
+                DiagnosticScope.ActivityKind.Consumer);
 
             scope.Start();
 
@@ -430,7 +430,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.PeekActivityName,
-                DiagnosticProperty.ProducerKind);
+                DiagnosticScope.ActivityKind.Producer);
             scope.Start();
 
             IReadOnlyList<ServiceBusReceivedMessage> messages = new List<ServiceBusReceivedMessage>();
@@ -512,7 +512,7 @@ namespace Azure.Messaging.ServiceBus
                 lockToken);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.CompleteActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             try
@@ -587,7 +587,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.AbandonActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.Start();
 
@@ -751,7 +751,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.DeadLetterActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.Start();
 
@@ -834,7 +834,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.DeferActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
 
             scope.Start();
 
@@ -929,7 +929,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.ReceiveDeferredActivityName,
-                DiagnosticProperty.ConsumerKind);
+                DiagnosticScope.ActivityKind.Consumer);
 
             scope.Start();
 
@@ -1003,7 +1003,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.RenewMessageLockActivityName,
-                DiagnosticProperty.ClientKind);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             DateTimeOffset lockedUntil;

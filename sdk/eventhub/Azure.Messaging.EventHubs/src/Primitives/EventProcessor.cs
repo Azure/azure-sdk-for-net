@@ -512,8 +512,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
 
-            using var diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
-            diagnosticScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind);
+            using var diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, DiagnosticScope.ActivityKind.Consumer);
             diagnosticScope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
             diagnosticScope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
 

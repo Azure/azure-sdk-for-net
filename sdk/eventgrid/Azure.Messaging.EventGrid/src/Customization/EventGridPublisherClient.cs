@@ -252,7 +252,7 @@ namespace Azure.Messaging.EventGrid
                 if (currentActivity != null && currentActivity.IsW3CFormat())
                 {
                     activityId = currentActivity.Id;
-                    currentActivity.TryGetTraceState(out traceState);
+                    traceState = currentActivity.GetTraceState();
                 }
 
                 List<CloudEventInternal> eventsWithSerializedPayloads = new List<CloudEventInternal>();
