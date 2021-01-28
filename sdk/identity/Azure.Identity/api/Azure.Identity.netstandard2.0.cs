@@ -150,6 +150,13 @@ namespace Azure.Identity
         public string UserCode { get { throw null; } }
         public System.Uri VerificationUri { get { throw null; } }
     }
+    public partial class EnvironmentConnectionStringCredential : Azure.Core.TokenCredential
+    {
+        public EnvironmentConnectionStringCredential() { }
+        public EnvironmentConnectionStringCredential(bool validOnly, Azure.Identity.TokenCredentialOptions options) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public partial class EnvironmentCredential : Azure.Core.TokenCredential
     {
         public EnvironmentCredential() { }
