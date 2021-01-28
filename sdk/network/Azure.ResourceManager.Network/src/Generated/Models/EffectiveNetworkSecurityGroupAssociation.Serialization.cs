@@ -20,11 +20,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("subnet"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     subnet = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkInterface"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     networkInterface = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }

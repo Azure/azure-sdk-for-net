@@ -7,12 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>5.6.0</Version>
+		<Version>6.1.0</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-This release supports one feature:
-- Support to create cluster with encryption at host.
+This release contains the bellow change:
+- Add properties "Fqdn" and "EffectiveDiskEncryptionKeyUrl" in the response of List Hosts.
+- Add ComputeIsolationProperties in the ClusterCreateProperties and ClusterGetProperties
       ]]>
 		</PackageReleaseNotes>
     

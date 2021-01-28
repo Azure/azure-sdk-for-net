@@ -31,7 +31,7 @@ To update public API documentation after making changes to the public API, execu
 
 We use [NUnit 3][nunit] as our testing framework.
 
-[Azure.Core's testing framework][core_tests] is copied into our projects' `/TestFramework` folders by the build _(Please be sure to run all of the unit tests in `../../core/Azure.Core/Azure.Core.All.sln` if you make any changes here)_.
+[Azure.Core.TestFramework's testing framework][core_tests] provides a set of reusable primitives that simplify writing tests for new Azure SDK libraries.
 
 ### Sync/Async testing
 
@@ -57,12 +57,11 @@ Before running or recording live tests you need to create [live test resources][
 
 ```powershell
 eng\common\TestResources\New-TestResources.ps1 `
-  -BaseName 'myusername' `
   -ServiceDirectory 'keyvault' `
-  -TestApplicationId $sp.ApplicationId `
-  -TestApplicationSecret (ConvertFrom-SecureString $sp.Secret -AsPlainText) `
   -AdditionalParameters @{
-    enableSoftDelete = $false # Enable or disable soft delete. Default is $true (enabled).
+    # Enable Managed HSM provisioning and testing.
+    # Disabled by default due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
+    enableHsm = $true
   }
 ```
 
@@ -74,7 +73,7 @@ Our samples are structured as unit tests so we can easily verify they're up to d
 
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/tests/
+[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework
 [live_tests]: https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md
 [nunit]: https://github.com/nunit/docs/wiki
 [open_issues]: https://github.com/Azure/azure-sdk-for-net/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3AClient+label%3AKeyVault

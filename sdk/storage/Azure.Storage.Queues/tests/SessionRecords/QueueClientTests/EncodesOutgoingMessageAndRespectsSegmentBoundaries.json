@@ -1,0 +1,129 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://kasobolcanarytest.queue.core.windows.net/test-queue-d1a21bf0-ba31-9c22-6e1b-0b0608bc418a",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ec615c7727d095458538ff5e92bdfd01-764293cb2476e24d-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.5.0-alpha.20201109.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "ad462233-6d8d-a47a-8c21-7036eea5c7dc",
+        "x-ms-date": "Mon, 09 Nov 2020 23:35:26 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 09 Nov 2020 23:35:26 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "b2ed2339-2003-00b8-25f1-b6ade7000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://kasobolcanarytest.queue.core.windows.net/test-queue-d1a21bf0-ba31-9c22-6e1b-0b0608bc418a/messages",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "68",
+        "Content-Type": "application/xml",
+        "traceparent": "00-90cf59eb7e590e44a6ba54229ce8de94-30bda9e37fba2343-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.5.0-alpha.20201109.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "e5d3849e-9475-ebfd-2654-7968c5f1888c",
+        "x-ms-date": "Mon, 09 Nov 2020 23:35:27 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": "\u003CQueueMessage\u003E\u003CMessageText\u003EcGF5bG9hZA==\u003C/MessageText\u003E\u003C/QueueMessage\u003E",
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Mon, 09 Nov 2020 23:35:27 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "84684a52-1003-00c1-07f1-b651c3000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003Ea73654a5-3680-40ab-9f21-14b4fe47379e\u003C/MessageId\u003E\u003CInsertionTime\u003EMon, 09 Nov 2020 23:35:27 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003EMon, 16 Nov 2020 23:35:27 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAeQPsAPG21gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003EMon, 09 Nov 2020 23:35:27 GMT\u003C/TimeNextVisible\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+    },
+    {
+      "RequestUri": "http://kasobolcanarytest.queue.core.windows.net/test-queue-d1a21bf0-ba31-9c22-6e1b-0b0608bc418a/messages",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a1ae28616acbf40be80d7748402ed58-c48b9f2d24db414a-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.5.0-alpha.20201109.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "6a975cab-e2d1-0566-cf7c-fd33b980f401",
+        "x-ms-date": "Mon, 09 Nov 2020 23:35:27 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/xml",
+        "Date": "Mon, 09 Nov 2020 23:35:27 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "84684a5d-1003-00c1-10f1-b651c3000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003Ea73654a5-3680-40ab-9f21-14b4fe47379e\u003C/MessageId\u003E\u003CInsertionTime\u003EMon, 09 Nov 2020 23:35:27 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003EMon, 16 Nov 2020 23:35:27 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAIoXfEvG21gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003EMon, 09 Nov 2020 23:35:57 GMT\u003C/TimeNextVisible\u003E\u003CDequeueCount\u003E1\u003C/DequeueCount\u003E\u003CMessageText\u003EcGF5bG9hZA==\u003C/MessageText\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+    },
+    {
+      "RequestUri": "http://kasobolcanarytest.queue.core.windows.net/test-queue-d1a21bf0-ba31-9c22-6e1b-0b0608bc418a",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-69da7b5e32067145aeec65df818af7de-d85b4ea10a368246-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.5.0-alpha.20201109.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "68bdcbcc-1e5a-adba-5ca4-89755bca45b8",
+        "x-ms-date": "Mon, 09 Nov 2020 23:35:27 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 09 Nov 2020 23:35:26 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "b2ed233d-2003-00b8-26f1-b6ade7000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1002372991",
+    "Storage_TestConfigDefault": "ProductionTenant\nkasobolcanarytest\nU2FuaXRpemVk\nhttp://kasobolcanarytest.blob.core.windows.net\nhttp://kasobolcanarytest.file.core.windows.net\nhttp://kasobolcanarytest.queue.core.windows.net\nhttp://kasobolcanarytest.table.core.windows.net\n\n\n\n\nhttp://kasobolcanarytest-secondary.blob.core.windows.net\nhttp://kasobolcanarytest-secondary.file.core.windows.net\nhttp://kasobolcanarytest-secondary.queue.core.windows.net\nhttp://kasobolcanarytest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://kasobolcanarytest.blob.core.windows.net/;QueueEndpoint=http://kasobolcanarytest.queue.core.windows.net/;FileEndpoint=http://kasobolcanarytest.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolcanarytest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolcanarytest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolcanarytest-secondary.file.core.windows.net/;AccountName=kasobolcanarytest;AccountKey=Kg==;\nencryptionScope"
+  }
+}

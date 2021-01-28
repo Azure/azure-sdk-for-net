@@ -32,6 +32,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("sessions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SparkSession> array = new List<SparkSession>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

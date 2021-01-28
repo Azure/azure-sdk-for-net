@@ -57,7 +57,7 @@ namespace Azure
         /// A string representation of an <see cref="Page{T}"/>.
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string? ToString() => base.ToString();
 
         /// <summary>
         /// Check if two <see cref="Page{T}"/> instances are equal.

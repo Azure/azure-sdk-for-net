@@ -134,7 +134,6 @@ namespace Microsoft.Extensions.Azure
             return null;
         }
 
-
         internal static object CreateClientOptions(object version, Type optionsType)
         {
             ConstructorInfo parameterlessConstructor = null;
@@ -334,6 +333,5 @@ namespace Microsoft.Extensions.Azure
 
             throw new InvalidOperationException($"Unable to convert section '{configuration.Path}' to parameter type '{type}', unable to find matching constructor.");
         }
-
     }
 }

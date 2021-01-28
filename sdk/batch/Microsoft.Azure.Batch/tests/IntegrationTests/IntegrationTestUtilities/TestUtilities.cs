@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿
+
 namespace BatchClientIntegrationTests.IntegrationTestUtilities
 {
     using BatchTestCommon;
@@ -18,7 +18,6 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Auth;
     using Microsoft.Azure.Batch.Common;
-    using Newtonsoft.Json;
     using Xunit;
     using Xunit.Abstractions;
     using Xunit.Sdk;
@@ -85,14 +84,12 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
         public static T AssertThrows<T>(Action codeUnderTest) where T : Exception
         {
-            using (Task<T> t = AssertThrowsAsync<T>(() =>
+            using Task<T> t = AssertThrowsAsync<T>(() =>
                 {
                     codeUnderTest();
                     return Task.Delay(0);
-                }))
-            {
-                return t.Result;
-            }
+                });
+            return t.Result;
         }
 
         public static async Task<T> AssertThrowsAsync<T>(Func<Task> codeUnderTest) where T : Exception
@@ -170,15 +167,15 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                 theOneInner = ae.InnerExceptions[0];
             }
 
-            if (!(theOneInner is Microsoft.Azure.Batch.Common.BatchException))
+            if (!(theOneInner is BatchException))
             {
                  outputHelper.WriteLine(string.Format("AssertIsBatchExceptionAndHasCorrectAzureErrorCode: incorrect exception: {0}", ex.ToString()));
             }
 
             // it must have the correct type
-            Assert.IsAssignableFrom<Microsoft.Azure.Batch.Common.BatchException>(theOneInner);
+            Assert.IsAssignableFrom<BatchException>(theOneInner);
 
-            Microsoft.Azure.Batch.Common.BatchException be = (Microsoft.Azure.Batch.Common.BatchException)theOneInner;
+            BatchException be = (BatchException)theOneInner;
 
             // whew we got it!  check the message
             Assert.Equal(expected: correctCode, actual: be.RequestInformation.BatchError.Code);

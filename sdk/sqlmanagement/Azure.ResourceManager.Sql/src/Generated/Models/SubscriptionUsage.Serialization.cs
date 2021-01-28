@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("displayName"))
@@ -58,11 +63,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("currentValue"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             currentValue = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("limit"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             limit = property0.Value.GetDouble();
                             continue;
                         }

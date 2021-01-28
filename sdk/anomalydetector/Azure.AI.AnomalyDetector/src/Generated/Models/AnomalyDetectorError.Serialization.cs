@@ -20,6 +20,11 @@ namespace Azure.AI.AnomalyDetector.Models
             {
                 if (property.NameEquals("code"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     code = new AnomalyDetectorErrorCodes(property.Value.GetString());
                     continue;
                 }

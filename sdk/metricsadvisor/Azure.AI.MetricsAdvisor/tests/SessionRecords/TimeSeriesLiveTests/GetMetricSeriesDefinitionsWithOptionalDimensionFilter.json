@@ -1,0 +1,84 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/27e3015f-04fd-44ba-a20b-bc529a0aebae/series/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "159",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "64bbec4967055f01b6865c8041edd7f3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "{\u0022activeSince\u0022:\u00222020-10-01T00:00:00Z\u0022,\u0022dimensionFilter\u0022:{\u0022city\u0022:[\u0022Belo Horizonte\u0022,\u0022Los Angeles\u0022,\u0022Osaka\u0022],\u0022category\u0022:[\u0022__SUM__\u0022,\u0022Shoes Handbags \u0026 Sunglasses\u0022]}}",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2dc94331-f2f2-4a3d-a452-ccb79bf8c20b",
+        "Content-Length": "730",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 15 Dec 2020 01:35:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "148",
+        "x-request-id": "2dc94331-f2f2-4a3d-a452-ccb79bf8c20b"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Osaka",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Los Angeles",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Belo Horizonte",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Osaka",
+              "category": "__SUM__"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Belo Horizonte",
+              "category": "__SUM__"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Los Angeles",
+              "category": "__SUM__"
+            }
+          }
+        ],
+        "@nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "1041225969"
+  }
+}

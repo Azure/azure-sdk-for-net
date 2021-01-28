@@ -34,16 +34,31 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("isActive"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isActive = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("activatedTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     activatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("resolvedTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     resolvedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

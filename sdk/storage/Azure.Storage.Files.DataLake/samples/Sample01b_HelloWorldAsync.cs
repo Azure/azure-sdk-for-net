@@ -88,7 +88,6 @@ namespace Azure.Storage.Files.DataLake.Samples
             await filesystem.DeleteAsync();
         }
 
-
         /// <summary>
         /// Create a DataLake Directory.
         /// </summary>

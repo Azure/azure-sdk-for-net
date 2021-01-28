@@ -260,5 +260,65 @@ namespace Azure.Analytics.Synapse.Artifacts
                 throw;
             }
         }
+
+        /// <summary> Renames a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="request"/> is null. </exception>
+        public virtual async Task<DatasetRenameDatasetOperation> StartRenameDatasetAsync(string datasetName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartRenameDataset");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RenameDatasetAsync(datasetName, request, cancellationToken).ConfigureAwait(false);
+                return new DatasetRenameDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDatasetRequest(datasetName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="request"/> is null. </exception>
+        public virtual DatasetRenameDatasetOperation StartRenameDataset(string datasetName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartRenameDataset");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.RenameDataset(datasetName, request, cancellationToken);
+                return new DatasetRenameDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDatasetRequest(datasetName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

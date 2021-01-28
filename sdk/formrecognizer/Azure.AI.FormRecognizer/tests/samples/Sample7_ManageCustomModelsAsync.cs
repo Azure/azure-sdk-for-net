@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 Console.WriteLine($"Custom Model Info:");
                 Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-                Console.WriteLine($"    Model display name: {modelInfo.DisplayName}");
+                Console.WriteLine($"    Model name: {modelInfo.ModelName}");
                 Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
                 Console.WriteLine($"    Model Status: {modelInfo.Status}");
                 Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
@@ -43,12 +43,12 @@ namespace Azure.AI.FormRecognizer.Samples
             }
 
             // Create a new model to store in the account
-            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = "My new model" }).WaitForCompletionAsync();
+            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My new model").WaitForCompletionAsync();
 
             // Get the model that was just created
             CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
 
-            Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.DisplayName} recognizes the following form types:");
+            Console.WriteLine($"Custom Model with Id {modelCopy.ModelId}  and name {modelCopy.ModelName} recognizes the following form types:");
 
             foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
             {

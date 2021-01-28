@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     error = ErrorDefinition.DeserializeErrorDefinition(property.Value);
                     continue;
                 }

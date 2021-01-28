@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "6766b738-9651-2df6-20e4-0bcd8da0a3cd",
         "x-ms-date": "Thu, 05 Mar 2020 21:42:35 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "6766b738-9651-2df6-20e4-0bcd8da0a3cd",
         "x-ms-request-id": "c9ef5fc7-f01a-0012-2936-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -72,7 +72,7 @@
         "x-ms-file-permission-key": "7855875120676328179*422928105932735866",
         "x-ms-request-id": "c9ef5fc9-f01a-0012-2a36-f3e9eb000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -95,7 +95,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -118,7 +118,7 @@
         "x-ms-file-permission-key": "12501538048846835188*422928105932735866",
         "x-ms-request-id": "c9ef5fca-f01a-0012-2b36-f3e9eb000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -135,7 +135,7 @@
         "x-ms-client-request-id": "80f939af-a53f-9705-83ef-7a59cbdf2ca7",
         "x-ms-date": "Thu, 05 Mar 2020 21:42:35 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 409,
@@ -150,7 +150,7 @@
         "x-ms-client-request-id": "80f939af-a53f-9705-83ef-7a59cbdf2ca7",
         "x-ms-error-code": "DirectoryNotEmpty",
         "x-ms-request-id": "c9ef5fcb-f01a-0012-2c36-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EDirectoryNotEmpty\u003C/Code\u003E\u003CMessage\u003EThe specified directory is not empty.\n",
@@ -172,7 +172,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:42:35 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -185,7 +185,7 @@
         ],
         "x-ms-client-request-id": "8fff0b2b-70e4-1038-cb64-ac10e2fece1f",
         "x-ms-request-id": "c9ef5fcd-f01a-0012-2d36-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

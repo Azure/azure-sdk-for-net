@@ -26,6 +26,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DataFeedIngestionStatus> array = new List<DataFeedIngestionStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

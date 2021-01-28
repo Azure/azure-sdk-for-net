@@ -27,12 +27,25 @@ namespace Microsoft.Azure.Management.Media.Models
             UnderlyingValue=underlyingValue;
         }
 
+        /// <summary>
+        /// A contribution live encoder sends a multiple bitrate stream. The
+        /// ingested stream passes through the live event without any further
+        /// processing. It is also called the pass-through mode.
+        /// </summary>
         public static readonly LiveEventEncodingType None = "None";
 
-        public static readonly LiveEventEncodingType Basic = "Basic";
-
+        /// <summary>
+        /// A contribution live encoder sends a single bitrate stream to the
+        /// live event and Media Services creates multiple bitrate streams. The
+        /// output cannot exceed 720p in resolution.
+        /// </summary>
         public static readonly LiveEventEncodingType Standard = "Standard";
 
+        /// <summary>
+        /// A contribution live encoder sends a single bitrate stream to the
+        /// live event and Media Services creates multiple bitrate streams. The
+        /// output cannot exceed 1080p in resolution.
+        /// </summary>
         public static readonly LiveEventEncodingType Premium1080p = "Premium1080p";
 
 

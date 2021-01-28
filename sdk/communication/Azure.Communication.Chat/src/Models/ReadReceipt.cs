@@ -12,15 +12,15 @@ namespace Azure.Communication.Chat
         internal ReadReceipt(string senderId, string chatMessageId, DateTimeOffset? readOn)
         {
             SenderId = senderId;
-            Sender = new CommunicationUser(senderId);
+            Sender = new CommunicationUserIdentifier(senderId);
             ChatMessageId = chatMessageId;
             ReadOn = readOn;
         }
 
         /// <summary>
-        /// The <see cref="CommunicationUser" /> for the message.
+        /// The <see cref="CommunicationUserIdentifier" /> for the message.
         /// </summary>
-        public CommunicationUser Sender { get; }
+        public CommunicationUserIdentifier Sender { get; }
         internal string SenderId { get; }
     }
 }

@@ -103,7 +103,7 @@ namespace Azure.Identity
 
             GetFileNameAndArguments(resource, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(CliProcessTimeoutMs), cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(CliProcessTimeoutMs), cancellationToken);
 
             string output;
             try
@@ -171,7 +171,7 @@ namespace Azure.Identity
             string accessToken = root.GetProperty("accessToken").GetString();
             DateTimeOffset expiresOn = root.TryGetProperty("expiresIn", out JsonElement expiresIn)
                 ? DateTimeOffset.UtcNow + TimeSpan.FromSeconds(expiresIn.GetInt64())
-                : DateTimeOffset.ParseExact(root.GetProperty("expiresOn").GetString(), "yyyy-MM-dd HH:mm:ss.ffffff", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+                : DateTimeOffset.ParseExact(root.GetProperty("expiresOn").GetString(), "yyyy-MM-dd HH:mm:ss.ffffff", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
 
             return new AccessToken(accessToken, expiresOn);
         }

@@ -334,5 +334,65 @@ namespace Azure.Analytics.Synapse.Artifacts
                 throw;
             }
         }
+
+        /// <summary> Renames a notebook. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="request"/> is null. </exception>
+        public virtual async Task<NotebookRenameNotebookOperation> StartRenameNotebookAsync(string notebookName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (notebookName == null)
+            {
+                throw new ArgumentNullException(nameof(notebookName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartRenameNotebook");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RenameNotebookAsync(notebookName, request, cancellationToken).ConfigureAwait(false);
+                return new NotebookRenameNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameNotebookRequest(notebookName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a notebook. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="request"/> is null. </exception>
+        public virtual NotebookRenameNotebookOperation StartRenameNotebook(string notebookName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (notebookName == null)
+            {
+                throw new ArgumentNullException(nameof(notebookName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartRenameNotebook");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.RenameNotebook(notebookName, request, cancellationToken);
+                return new NotebookRenameNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameNotebookRequest(notebookName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

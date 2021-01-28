@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     internal static class OperationStatusExtensions
     {

@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public string KeyId => _jsonWebKey.Id;
 
         /// <summary>
-        /// Encrypts the specified plain text.
+        /// Encrypts the specified plaintext.
         /// </summary>
         /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
         /// <param name="plaintext">The data to encrypt.</param>
@@ -62,19 +62,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
-        {
-            EncryptResult result = null;
-            if (_provider.SupportsOperation(KeyOperation.Encrypt))
-            {
-                result = await _provider.EncryptAsync(algorithm, plaintext, cancellationToken).ConfigureAwait(false);
-            }
-
-            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Encrypt));
-        }
+        public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default) =>
+            await EncryptAsync(new EncryptOptions(algorithm, plaintext), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Encrypts the specified plain text.
+        /// Encrypts the specified plaintext.
         /// </summary>
         /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
         /// <param name="plaintext">The data to encrypt.</param>
@@ -87,19 +79,65 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
+        public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default) =>
+            Encrypt(new EncryptOptions(algorithm, plaintext), cancellationToken);
+
+        /// <summary>
+        /// Encrypts plaintext.
+        /// </summary>
+        /// <param name="options">An <see cref="EncryptOptions"/> containing the data to encrypt and other options for algorithm-dependent encryption.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the encrypt operation. The returned <see cref="EncryptResult"/> contains the encrypted data
+        /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified algorithm does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        public virtual async Task<EncryptResult> EncryptAsync(EncryptOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             EncryptResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Encrypt))
             {
-                result = _provider.Encrypt(algorithm, plaintext, cancellationToken);
+                result = await _provider.EncryptAsync(options, cancellationToken).ConfigureAwait(false);
             }
 
             return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Encrypt));
         }
 
         /// <summary>
-        /// Decrypts the specified cipher text.
+        /// Encrypts plaintext.
+        /// </summary>
+        /// <param name="options">An <see cref="EncryptOptions"/> containing the data to encrypt and other options for algorithm-dependent encryption.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the encrypt operation. The returned <see cref="EncryptResult"/> contains the encrypted data
+        /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified algorithm does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        public virtual EncryptResult Encrypt(EncryptOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            EncryptResult result = null;
+            if (_provider.SupportsOperation(KeyOperation.Encrypt))
+            {
+                result = _provider.Encrypt(options, cancellationToken);
+            }
+
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Encrypt));
+        }
+
+        /// <summary>
+        /// Decrypts the specified ciphertext.
         /// </summary>
         /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
         /// <param name="ciphertext">The encrypted data to decrypt.</param>
@@ -112,37 +150,75 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
+        public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default) =>
+            await DecryptAsync(new DecryptOptions(algorithm, ciphertext), cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Decrypts ciphertext.
+        /// </summary>
+        /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
+        /// <param name="ciphertext">The encrypted data to decrypt.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the decrypt operation. The returned <see cref="DecryptResult"/> contains the encrypted data
+        /// along with information regarding the algorithm and key used to decrypt it.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default) =>
+            Decrypt(new DecryptOptions(algorithm, ciphertext), cancellationToken);
+
+        /// <summary>
+        /// Decrypts ciphertext.
+        /// </summary>
+        /// <param name="options">A <see cref="DecryptOptions"/> containing the data to decrypt and other options for algorithm-dependent decryption.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the decrypt operation. The returned <see cref="DecryptResult"/> contains the encrypted data
+        /// along with information regarding the algorithm and key used to decrypt it.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified algorithm does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        public virtual async Task<DecryptResult> DecryptAsync(DecryptOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             DecryptResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Decrypt))
             {
-                result = await _provider.DecryptAsync(algorithm, ciphertext, cancellationToken).ConfigureAwait(false);
+                result = await _provider.DecryptAsync(options, cancellationToken).ConfigureAwait(false);
             }
 
             return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Decrypt));
         }
 
         /// <summary>
-        /// Decrypts the specified cipher text.
+        /// Decrypts the specified ciphertext.
         /// </summary>
-        /// <param name="algorithm">The <see cref="EncryptionAlgorithm"/> to use.</param>
-        /// <param name="ciphertext">The encrypted data to decrypt.</param>
+        /// <param name="options">A <see cref="DecryptOptions"/> containing the data to decrypt and other options for algorithm-dependent decryption.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
         /// <returns>
         /// The result of the decrypt operation. The returned <see cref="DecryptResult"/> contains the encrypted data
         /// along with information regarding the algorithm and key used to decrypt it.
         /// </returns>
-        /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="ArgumentException">The specified algorithm does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
-        public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
+        public virtual DecryptResult Decrypt(DecryptOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             DecryptResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Decrypt))
             {
-                result = _provider.Decrypt(algorithm, ciphertext, cancellationToken);
+                result = _provider.Decrypt(options, cancellationToken);
             }
 
             return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Decrypt));

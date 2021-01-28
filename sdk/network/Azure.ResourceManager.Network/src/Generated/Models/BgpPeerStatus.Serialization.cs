@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("asn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     asn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("state"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     state = new BgpPeerState(property.Value.GetString());
                     continue;
                 }
@@ -51,16 +61,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("routesReceived"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     routesReceived = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("messagesSent"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     messagesSent = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("messagesReceived"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     messagesReceived = property.Value.GetInt64();
                     continue;
                 }

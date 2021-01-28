@@ -12,7 +12,7 @@ Use the client library for Azure Service Bus to:
 
 - Implement complex workflows: message sessions support scenarios that require message ordering or message deferral.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/servicebus.html) | [Product documentation](https://docs.microsoft.com/azure/service-bus/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/azure/service-bus/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md)
 
 ## Getting started
 
@@ -37,7 +37,7 @@ To quickly create the needed Service Bus resources in Azure and to receive a con
 Install the Azure Service Bus client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.ServiceBus --version 7.0.0-preview.4
+dotnet add package Azure.Messaging.ServiceBus --version 7.0.0
 ```
 
 ### Authenticate the client
@@ -112,8 +112,8 @@ await using var client = new ServiceBusClient(connectionString);
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
-// create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+// create a message that we can send. UTF-8 encoding is used when providing a string.
+ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -131,25 +131,59 @@ Console.WriteLine(body);
 
 ### Send and receive a batch of messages
 
-There are two ways of sending several messages at once. The first way uses the `SendMessagesAsync` overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are too large to fit in a single batch, the operation will throw an exception.
+There are two ways of sending several messages at once. The first way of doing this uses safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
+
+```C# Snippet:ServiceBusSendAndReceiveSafeBatch
+// add the messages that we plan to send to a local queue
+Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
+messages.Enqueue(new ServiceBusMessage("First message"));
+messages.Enqueue(new ServiceBusMessage("Second message"));
+messages.Enqueue(new ServiceBusMessage("Third message"));
+
+// create a message batch that we can send
+// total number of messages to be sent to the Service Bus queue
+int messageCount = messages.Count;
+
+// while all messages are not sent to the Service Bus queue
+while (messages.Count > 0)
+{
+    // start a new batch
+    using ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+
+    // add the first message to the batch
+    if (messageBatch.TryAddMessage(messages.Peek()))
+    {
+        // dequeue the message from the .NET queue once the message is added to the batch
+        messages.Dequeue();
+    }
+    else
+    {
+        // if the first message can't fit, then it is too large for the batch
+        throw new Exception($"Message {messageCount - messages.Count} is too large and cannot be sent.");
+    }
+
+    // add as many messages as possible to the current batch
+    while (messages.Count > 0 && messageBatch.TryAddMessage(messages.Peek()))
+    {
+        // dequeue the message from the .NET queue as it has been added to the batch
+        messages.Dequeue();
+    }
+
+    // now, send the batch
+    await sender.SendMessagesAsync(messageBatch);
+
+    // if there are any remaining messages in the .NET queue, the while loop repeats
+}
+```
+
+The second way uses the `SendMessagesAsync` overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are too large to fit in a single batch, the operation will throw an exception.
 
 ```C# Snippet:ServiceBusSendAndReceiveBatch
 IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
-messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+messages.Add(new ServiceBusMessage("First"));
+messages.Add(new ServiceBusMessage("Second"));
 // send the messages
 await sender.SendMessagesAsync(messages);
-```
-
-The second way of doing this is using safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
-
-```C# Snippet:ServiceBusSendAndReceiveSafeBatch
-ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
-
-// send the message batch
-await sender.SendMessagesAsync(messageBatch);
 ```
 
 ### Complete a message
@@ -166,7 +200,7 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -215,7 +249,7 @@ Dead lettering a message is similar to deferring with one main difference being 
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-// deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+// dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
 await receiver.DeadLetterMessageAsync(receivedMessage);
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
@@ -239,32 +273,32 @@ await using var client = new ServiceBusClient(connectionString);
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
-// create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+// create a set of messages that we can send
+ServiceBusMessage[] messages = new ServiceBusMessage[]
+{
+    new ServiceBusMessage("First"),
+    new ServiceBusMessage("Second")
+};
 
 // send the message batch
-await sender.SendMessagesAsync(messageBatch);
+await sender.SendMessagesAsync(messages);
 
-// get the options to use for configuring the processor
+// create the options to use for configuring the processor
 var options = new ServiceBusProcessorOptions
 {
-    // By default after the message handler returns, the processor will complete the message
-    // If I want more fine-grained control over settlement, I can set this to false.
-    AutoComplete = false,
+    // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
+    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
+    AutoCompleteMessages = false,
 
     // I can also allow for multi-threading
     MaxConcurrentCalls = 2
 };
 
 // create a processor that we can use to process the messages
-ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
+await using ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
 
-// since the message handler will run in a background thread, in order to prevent
-// this sample from terminating immediately, we can use a task completion source that
-// we complete from within the message handler.
-TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+// configure the message and error handler to use
 processor.ProcessMessageAsync += MessageHandler;
 processor.ProcessErrorAsync += ErrorHandler;
 
@@ -275,7 +309,6 @@ async Task MessageHandler(ProcessMessageEventArgs args)
 
     // we can evaluate application logic and use that to determine how to settle the message.
     await args.CompleteMessageAsync(args.Message);
-    tcs.SetResult(true);
 }
 
 Task ErrorHandler(ProcessErrorEventArgs args)
@@ -289,13 +322,12 @@ Task ErrorHandler(ProcessErrorEventArgs args)
     Console.WriteLine(args.Exception.ToString());
     return Task.CompletedTask;
 }
+
+// start processing
 await processor.StartProcessingAsync();
 
-// await our task completion source task so that the message handler will be invoked at least once.
-await tcs.Task;
-
-// stop processing once the task completion source was completed.
-await processor.StopProcessingAsync();
+// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
+Console.ReadKey();
 ```
 
 ### Authenticating with Azure.Identity

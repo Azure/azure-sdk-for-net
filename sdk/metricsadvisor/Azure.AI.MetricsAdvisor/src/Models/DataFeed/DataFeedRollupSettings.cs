@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         private IList<string> _autoRollupGroupByColumnNames;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DataFeedRollupSettings"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedRollupSettings"/> class.
         /// </summary>
         public DataFeedRollupSettings()
         {
@@ -42,18 +42,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DataFeedRollupType? RollupType { get; set; }
 
-        // TODO: double check if RollupMethod is really required for NeedRollup.
-
         /// <summary>
         /// The roll-up method the service should apply to the ingested data for anomaly detection. This property
         /// must be set if <see cref="RollupType"/> is <see cref="DataFeedRollupType.NeedRollup"/>.
         /// </summary>
         public DataFeedAutoRollupMethod? RollupMethod { get; set; }
 
-        // TODODOCS: what is this used for?
         /// <summary>
+        /// Defines the column names to which these <see cref="DataFeedRollupSettings"/> will apply.
         /// </summary>
         /// <exception cref="ArgumentNullException"><see cref="AutoRollupGroupByColumnNames"/> is null.</exception>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<string> AutoRollupGroupByColumnNames
         {
             get => _autoRollupGroupByColumnNames;
@@ -63,5 +62,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 _autoRollupGroupByColumnNames = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
     }
 }

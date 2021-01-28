@@ -28,9 +28,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageIdCreateBatch class.
         /// </summary>
-        /// <param name="metadata">The metadata of image. Limited to 50
-        /// key-value pairs per image. The length of key is limited to 256. The
-        /// length of value is limited to 512.</param>
+        /// <param name="metadata">The metadata of image. Limited to 10
+        /// key-value pairs per image. The length of key is limited to 128. The
+        /// length of value is limited to 256.</param>
         public ImageIdCreateBatch(IList<ImageIdCreateEntry> images = default(IList<ImageIdCreateEntry>), IList<System.Guid> tagIds = default(IList<System.Guid>), IDictionary<string, string> metadata = default(IDictionary<string, string>))
         {
             Images = images;
@@ -55,9 +55,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public IList<System.Guid> TagIds { get; set; }
 
         /// <summary>
-        /// Gets or sets the metadata of image. Limited to 50 key-value pairs
-        /// per image. The length of key is limited to 256. The length of value
-        /// is limited to 512.
+        /// Gets or sets the metadata of image. Limited to 10 key-value pairs
+        /// per image. The length of key is limited to 128. The length of value
+        /// is limited to 256.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IDictionary<string, string> Metadata { get; set; }

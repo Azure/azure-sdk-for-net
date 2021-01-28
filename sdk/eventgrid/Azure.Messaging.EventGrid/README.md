@@ -7,7 +7,7 @@ Use the client library for Azure Event Grid to:
 - Consume events that have been delivered to event handlers
 - Generate SAS tokens to authenticate the client publishing events to Azure Event Grid topics
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/src) | [Package (NuGet)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/azure/event-grid/) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventGrid/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/azure/event-grid/) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples)
 
 ## Getting started
 
@@ -16,7 +16,7 @@ Use the client library for Azure Event Grid to:
 Install the client library from [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.EventGrid --version 4.0.0-beta.1
+dotnet add package Azure.Messaging.EventGrid --version 4.0.0-beta.4
 ```
 
 ### Prerequisites
@@ -43,18 +43,18 @@ az eventgrid topic key list --name <your-resource-name> --resource-group <your-r
 Once you have your access key and topic endpoint, you can create the publisher client as follows:
 ```C#
 EventGridPublisherClient client = new EventGridPublisherClient(
-    "<endpoint>",
+    new Uri("<endpoint>"),
     new AzureKeyCredential("<access-key>"));
 ```
 You can also create a **Shared Access Signature** to authenticate the client using the same access key. The signature can be generated using the endpoint, access key, and the time at which the signature becomes invalid for authentication. Create the client using the `EventGridSharedAccessSignatureCredential` type:
 ```C#
 string sasToken = EventGridPublisherClient.BuildSharedAccessSignature(
-    "<endpoint>",
+    new Uri("<endpoint>"),
     DateTimeOffset.UtcNow.AddMinutes(60),
     new AzureKeyCredential("<access-key>"));
 
 EventGridPublisherClient client = new EventGridPublisherClient(
-    "<endpoint>",
+    new Uri("<endpoint>"),
     new EventGridSharedAccessSignatureCredential(sasToken));
 ```
 
@@ -211,7 +211,7 @@ foreach (EventGridEvent egEvent in egEvents)
             if (egEvent.EventType == "MyApp.Models.CustomEventType")
             {
                 // You can use BinaryData methods to deserialize the payload
-                TestPayload deserializedEventData = await unknownType.ToObjectAsync<TestPayload>();
+                TestPayload deserializedEventData = unknownType.ToObjectFromJson<TestPayload>();
                 Console.WriteLine(deserializedEventData.Name);
             }
             break;
@@ -230,6 +230,9 @@ foreach (EventGridEvent egEvent in egEvents)
 
 ### Setting up console logging
 You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig deeper into the requests you're making against the service.
+
+### Distributed Tracing
+The Event Grid library supports distributing tracing out of the box. In order to adhere to the CloudEvents specification's [guidance](https://github.com/cloudevents/spec/blob/master/extensions/distributed-tracing.md) on distributing tracing, the library will set the `traceparent` and `tracestate` on the [ExtensionAttributes](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/src/Customization/CloudEvent.cs#L126) of a `CloudEvent` when distributed tracing is enabled. To learn more about how to enable distributed tracing in your application, take a look at the Azure SDK [distributed tracing documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#Distributed-tracing).
 
 ## Next steps
 

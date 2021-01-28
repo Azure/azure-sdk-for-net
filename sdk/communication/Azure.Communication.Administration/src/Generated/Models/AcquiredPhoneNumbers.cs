@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> A wrapper of list of phone numbers. </summary>
-    public partial class AcquiredPhoneNumbers
+    internal partial class AcquiredPhoneNumbers
     {
         /// <summary> Initializes a new instance of AcquiredPhoneNumbers. </summary>
         internal AcquiredPhoneNumbers()

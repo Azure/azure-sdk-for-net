@@ -1,6 +1,27 @@
 # Release History
 
-## 5.3.0-beta.4 (Unreleased)
+## 5.3.0-beta.5 (Unreleased)
+
+
+## 5.3.0-beta.4 (2020-11-10)
+
+### Changes
+
+#### New Features
+
+- Connection strings can now be parsed into their key/value pairs using the `EventHubsConnectionStringProperties` class.
+
+- The body of an event has been moved to the `EventData.EventBody` property and makes use of the new `BinaryData` type.  To preserve backwards compatibility, the existing `EventData.Body` property has been preserved with the current semantics.
+
+- Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
+
+#### Key Bug Fixes
+
+- The `EventHubsException.ToString` result will now properly follow the format of other .NET exception output.
+
+- Signaling the cancellation token will no longer cause the `SendAsync` method of the `EventHubProducerClient` to ignore the result of the service operation if publishing has already completed.
+
+- The calculation for authorization token expiration has been fixed, resulting in fewer token refreshes and network requests.
 
 ## 5.3.0-beta.3 (2020-09-30)
 

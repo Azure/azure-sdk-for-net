@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("protocol"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     protocol = new DdosCustomPolicyProtocol(property.Value.GetString());
                     continue;
                 }
@@ -63,6 +68,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("triggerSensitivityOverride"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     triggerSensitivityOverride = new DdosCustomPolicyTriggerSensitivityOverride(property.Value.GetString());
                     continue;
                 }

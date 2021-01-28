@@ -127,6 +127,11 @@ namespace Microsoft.Azure.Management.Compute
         IVirtualMachinesOperations VirtualMachines { get; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetsOperations.
+        /// </summary>
+        IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineSizesOperations.
         /// </summary>
         IVirtualMachineSizesOperations VirtualMachineSizes { get; }
@@ -135,11 +140,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IImagesOperations.
         /// </summary>
         IImagesOperations Images { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetsOperations.
-        /// </summary>
-        IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; }
 
         /// <summary>
         /// Gets the IVirtualMachineScaleSetExtensionsOperations.
@@ -170,6 +170,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IVirtualMachineRunCommandsOperations.
         /// </summary>
         IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMRunCommandsOperations.
+        /// </summary>
+        IVirtualMachineScaleSetVMRunCommandsOperations VirtualMachineScaleSetVMRunCommands { get; }
 
         /// <summary>
         /// Gets the IResourceSkusOperations.
@@ -220,31 +225,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IGalleryApplicationVersionsOperations.
         /// </summary>
         IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; }
-
-        /// <summary>
-        /// Gets the IGallerySharingProfileOperations.
-        /// </summary>
-        IGallerySharingProfileOperations GallerySharingProfile { get; }
-
-        /// <summary>
-        /// Gets the ISharedGalleriesOperations.
-        /// </summary>
-        ISharedGalleriesOperations SharedGalleries { get; }
-
-        /// <summary>
-        /// Gets the ISharedGalleryImagesOperations.
-        /// </summary>
-        ISharedGalleryImagesOperations SharedGalleryImages { get; }
-
-        /// <summary>
-        /// Gets the ISharedGalleryImageVersionsOperations.
-        /// </summary>
-        ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; }
-
-        /// <summary>
-        /// Gets the IContainerServicesOperations.
-        /// </summary>
-        IContainerServicesOperations ContainerServices { get; }
 
     }
 }

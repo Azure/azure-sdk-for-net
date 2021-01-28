@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "5600e213-9bbf-dcf6-30eb-7d445eb51285",
         "x-ms-date": "Thu, 05 Mar 2020 21:44:00 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "5600e213-9bbf-dcf6-30eb-7d445eb51285",
         "x-ms-request-id": "c9ef6358-f01a-0012-4437-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -72,7 +72,7 @@
         "x-ms-file-permission-key": "7855875120676328179*422928105932735866",
         "x-ms-request-id": "c9ef635a-f01a-0012-4537-f3e9eb000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -95,7 +95,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -118,7 +118,7 @@
         "x-ms-file-permission-key": "12501538048846835188*422928105932735866",
         "x-ms-request-id": "c9ef635b-f01a-0012-4637-f3e9eb000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -135,7 +135,7 @@
         "x-ms-client-request-id": "b3edfcc8-f2aa-ec5c-00b0-903cf4c0ca3c",
         "x-ms-date": "Thu, 05 Mar 2020 21:44:00 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -150,7 +150,7 @@
         ],
         "x-ms-client-request-id": "b3edfcc8-f2aa-ec5c-00b0-903cf4c0ca3c",
         "x-ms-request-id": "c9ef635d-f01a-0012-4737-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -171,7 +171,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -194,7 +194,7 @@
         "x-ms-file-permission-key": "7855875120676328179*422928105932735866",
         "x-ms-request-id": "c9ef635f-f01a-0012-4837-f3e9eb000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -217,7 +217,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -240,7 +240,7 @@
         "x-ms-file-permission-key": "12501538048846835188*422928105932735866",
         "x-ms-request-id": "c9ef6360-f01a-0012-4937-f3e9eb000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -259,7 +259,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:44:01 GMT",
         "x-ms-range": "bytes=0-1023",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10",
+        "x-ms-version": "2020-04-08",
         "x-ms-write": "update"
       },
       "RequestBody": "EwawLy4nFEB3KQAPvKkm6zdAilojTvc6KzCYWEbLxrGQTOxq6\u002B2B1\u002B77uZnvaJ\u002BkD90sRXcLjsQPdQT9j7v5rGJPfm\u002B8u/9Kv7NsKJRdS8KQ80lonoE5hb0nWnXpg0gyAQ02n\u002Bkv51Td4obDnmUwsipBbJtykA7hFfmxlWCJYDtrOSaHJqvZYAz1irv6duZY96hLpxesv3H\u002BVYnwflLzVIJKWGU/qIt\u002BaAuPfQVT5p8TWZ24Prkkvnq1idEh6OK5ATY5sB2BGE4dzT8LHUFrqm/q3CS1OhXJJZrqiR\u002B6XH8o1nvOGjWCkkBOmnB5GaA4St5hNwy\u002BBMchcIqClo8uY3C/4kfFnJA5Z0rjZp\u002BlTwz5sT9BWCRzatK0raqr//uxIDf/ujZZc61NJ8/B250neyB9iOVQ7QpMTHh1EO7mjmhPMUZopZXWoD6R8zFVsY40jTGJLXYWYTIts22\u002B5GK\u002BZ5hncqlXv9aLp\u002BimvvnZ9prpQYO9XGHxOdATOvEnF7vb0oyY7T/l3M5b/YWOb6I5VLzS1KPfAQo3djnZRITkZI8sy\u002BttQAhaBGS1YV/bY8kt2uY1VEIY/NGBYXcGC5hJdpn2YaO3yxOzeNA\u002BKZ\u002BrXBJvrGmdrw9MFM4a7N\u002BQVPjMa\u002BvF5QEldQ7Sgdxy2dIy1QRll18urMeKqUzVnd80IyPXcr605ncQSTZbyy4z2jr76BbaK7yYnb8kOzu1UNgvnl64mmcUfe\u002BNVE4p0\u002BGYV84R2bXIWvdnP9T\u002BkKs7W/hdKyzQej/T52onTNdub8rei\u002BNto3cjZkRmUVuSFe1DUvhVzKe0yNyPPvJKoQ0f\u002BM8JIATHzriBOcXoaSnkQNF84/rfGKMjKsMH3mSF2MU3R1iLifXpfIQ/1JLiy16zqv4gzr0SP\u002BAs5vZBwPBT/GAAsSHRWbfbkmd2n0QQQV5kVDNmZAoHJAh3XqL/qLyT7Ncx4Rk84VFGRTtWnKCbHKWX3Gu87ZdW\u002BI0ZWfoU3Oqr4rNs3l9FJ3LiHx/OsYho3EL8aMtQ1/9A2uiMI4hXMmhRqrnsLj1GUrT52s14iEcEsXy3F3MeWwu0LAR2uATpiu22fAbOe60FthYXVvwxx1Khh3ELnxr1Mk\u002BuOAI50JmvEE/gwQtANjbPsmFdBwQOgmSx1DCT3evSwUq3H0KrzOZ8Z0asUQZGYFA6PO25lypKoLadh/toGzJkDQDBiRb0I\u002BV74Z\u002B\u002BYTBea3TgWKH9GSofbH\u002BMDUXqE0sUSEQGhdY6RhgIPraLiz6FPxuHiMKQZ/TVoR2XZxWgkM1TqhnsV\u002BWdphKI9dt0lOBABs4pY4uJg\u002BBQMOS5ot4CaK7oN\u002BElmOc16eKwCHIYYQw8V2BHdixCyg==",
@@ -277,7 +277,7 @@
         "x-ms-client-request-id": "a87af3e6-7bd8-376e-ced7-7d4b7ebbf181",
         "x-ms-request-id": "c9ef6361-f01a-0012-4a37-f3e9eb000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -300,7 +300,7 @@
         "x-ms-file-permission": "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)",
         "x-ms-file-permission-copy-mode": "override",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -317,7 +317,7 @@
         "x-ms-copy-id": "70f9eb3b-29f3-4ee5-b3da-e3e39e23bb56",
         "x-ms-copy-status": "success",
         "x-ms-request-id": "c9ef6362-f01a-0012-4b37-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -334,7 +334,7 @@
         "x-ms-client-request-id": "8b0f4028-6f5a-0ccf-7a0e-2296670a9e26",
         "x-ms-date": "Thu, 05 Mar 2020 21:44:01 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -367,7 +367,7 @@
         "x-ms-request-id": "c9ef6363-f01a-0012-4c37-f3e9eb000000",
         "x-ms-server-encrypted": "true",
         "x-ms-type": "File",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -385,7 +385,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:44:01 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -398,7 +398,7 @@
         ],
         "x-ms-client-request-id": "25015f1a-29a8-2c70-dbd9-76360cdcbeb5",
         "x-ms-request-id": "c9ef6364-f01a-0012-4d37-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -416,7 +416,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:44:01 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -429,7 +429,7 @@
         ],
         "x-ms-client-request-id": "087be25c-7908-9e7d-471c-641748c100a4",
         "x-ms-request-id": "c9ef6365-f01a-0012-4e37-f3e9eb000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     public partial class KeyVaultRoleDefinition : IUtf8JsonSerializable
     {
@@ -86,6 +86,11 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("roleName"))
@@ -105,6 +110,11 @@ namespace Azure.Security.KeyVault.Administration.Models
                         }
                         if (property0.NameEquals("permissions"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<KeyVaultPermission> array = new List<KeyVaultPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -115,6 +125,11 @@ namespace Azure.Security.KeyVault.Administration.Models
                         }
                         if (property0.NameEquals("assignableScopes"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

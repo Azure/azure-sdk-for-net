@@ -47,8 +47,8 @@ namespace Azure.Messaging.EventHubs.Tests
             // If the contents of each body is not equal, the events are not
             // equal.
 
-            var instanceBody = instance.EventBody.ToBytes().ToArray();
-            var otherBody = other.EventBody.ToBytes().ToArray();
+            var instanceBody = instance.EventBody.ToArray();
+            var otherBody = other.EventBody.ToArray();
 
             if (instanceBody.Length != otherBody.Length)
             {

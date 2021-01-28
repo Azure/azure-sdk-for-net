@@ -29,7 +29,7 @@ KeyVaultSecret secret = client.GetSecret("Name");
 
 ## Creating a mock of the method that returns Pageable
 
-For methods that return instances of `Pageable` or `AsyncPageable`, `Mock` can be used to create an instance of type that is derived from these classes:
+For methods that return instances of `Pageable` or `AsyncPageable`, `[Async]Pageable<T>.FromPages` method can be used to create an instance for test:
 
 ```C# Snippet:ClientMockWithPageable
 // Create a client mock
@@ -43,15 +43,11 @@ var pageValues = new[] { deletedValue };
 var page = Page<DeletedSecret>.FromValues(pageValues, default, new Mock<Response>().Object);
 
 // Create a mock for the Pageable
-var pageableMock = new Mock<Pageable<DeletedSecret>> { CallBase = true };
-
-// Setup AsPages method in the Pageable mock
-pageableMock.Setup(c => c.AsPages(It.IsAny<string>(), default))
-    .Returns(new[] { page });
+var pageable = Pageable<DeletedSecret>.FromPages(new[] { page });
 
 // Setup client method that returns Pageable
 mock.Setup(c => c.GetDeletedSecrets(default))
-    .Returns(pageableMock.Object);
+    .Returns(pageable);
 
 // Use the client mock
 SecretClient client = mock.Object;

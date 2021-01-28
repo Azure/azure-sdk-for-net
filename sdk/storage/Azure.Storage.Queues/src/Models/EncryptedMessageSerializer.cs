@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Queues.Specialized.Models
@@ -13,9 +13,9 @@ namespace Azure.Storage.Queues.Specialized.Models
         private const string EncryptedMessage_EncryptedMessageTextName = "EncryptedMessageContents";
 
         #region Serialize
-        public static string Serialize(EncryptedMessage data)
+        public static BinaryData Serialize(EncryptedMessage data)
         {
-            return Encoding.UTF8.GetString(SerializeEncryptedMessage(data).ToArray());
+            return BinaryData.FromBytes(SerializeEncryptedMessage(data));
         }
 
         public static ReadOnlyMemory<byte> SerializeEncryptedMessage(EncryptedMessage message)
@@ -42,7 +42,7 @@ namespace Azure.Storage.Queues.Specialized.Models
         #endregion
 
         #region Deserialize
-        public static bool TryDeserialize(string serializedData, out EncryptedMessage encryptedMessage)
+        public static bool TryDeserialize(BinaryData serializedData, out EncryptedMessage encryptedMessage)
         {
             try
             {
@@ -58,9 +58,9 @@ namespace Azure.Storage.Queues.Specialized.Models
             }
         }
 
-        public static EncryptedMessage Deserialize(string serializedData)
+        public static EncryptedMessage Deserialize(BinaryData serializedData)
         {
-            var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(serializedData));
+            var reader = new Utf8JsonReader(serializedData.ToMemory().Span);
             return DeserializeEncryptedMessage(ref reader);
         }
 

@@ -8,10 +8,9 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-
 
 namespace Azure.ResourceManager.Compute.Tests
 {
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 m_resourceGroup1Name,
                 new ResourceGroup(m_location)
                 {
-                    Tags ={ { m_resourceGroup1Name, Recording.UtcNow.ToString("u") } }
+                    Tags = { { m_resourceGroup1Name, Recording.UtcNow.ToString("u") } }
                 });
         }
 
@@ -331,7 +330,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 resourceGroup2Name,
                 new ResourceGroup(m_location)
                 {
-                    Tags ={ { resourceGroup2Name, Recording.UtcNow.ToString("u") } }
+                    Tags = { { resourceGroup2Name, Recording.UtcNow.ToString("u") } }
                 });
 
             ProximityPlacementGroup inputProximityPlacementGroup2 = new ProximityPlacementGroup(m_location)
@@ -402,7 +401,6 @@ namespace Azure.ResourceManager.Compute.Tests
         private void ValidateProximityPlacementGroup(ProximityPlacementGroup expectedProximityPlacementGroup, ProximityPlacementGroup outputProximityPlacementGroup,
             string expectedProximityPlacementGroupName)
         {
-
             Assert.True(outputProximityPlacementGroup != null, "ProximityPlacementGroup is null in response.");
             Assert.True(expectedProximityPlacementGroupName == outputProximityPlacementGroup.Name, "ProximityPlacementGroup.Name in response mismatch with expected value.");
             Assert.True(

@@ -39,11 +39,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("autoUpgradePolicy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     autoUpgradePolicy = AutoUpgradePolicyResource.DeserializeAutoUpgradePolicyResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetMaxThroughput"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     targetMaxThroughput = property.Value.GetInt32();
                     continue;
                 }

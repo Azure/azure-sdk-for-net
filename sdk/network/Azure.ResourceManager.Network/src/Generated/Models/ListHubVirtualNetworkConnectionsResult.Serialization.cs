@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<HubVirtualNetworkConnection> array = new List<HubVirtualNetworkConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

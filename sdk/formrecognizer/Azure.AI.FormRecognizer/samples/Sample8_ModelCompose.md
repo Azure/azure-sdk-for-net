@@ -40,10 +40,10 @@ string purchaseOrderOfficeEquipmentUrl = "<purchaseOrderOfficeEquipment>";
 string purchaseOrderFurnitureUrl = "<purchaseOrderFurniture>";
 string purchaseOrderCleaningSuppliesUrl = "<purchaseOrderCleaningSupplies>";
 
-Response<CustomFormModel> purchaseOrderOfficeSuppliesModel = await client.StartTrainingAsync(new Uri(purchaseOrderOfficeSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Office supplies" }).WaitForCompletionAsync();
-Response<CustomFormModel> purchaseOrderOfficeEquipmentModel = await client.StartTrainingAsync(new Uri(purchaseOrderOfficeEquipmentUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Office Equipment" }).WaitForCompletionAsync();
-Response<CustomFormModel> purchaseOrderFurnitureModel = await client.StartTrainingAsync(new Uri(purchaseOrderFurnitureUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Furniture" }).WaitForCompletionAsync();
-Response<CustomFormModel> purchaseOrderCleaningSuppliesModel = await client.StartTrainingAsync(new Uri(purchaseOrderCleaningSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "Purchase order - Cleaning Supplies" }).WaitForCompletionAsync();
+CustomFormModel purchaseOrderOfficeSuppliesModel = (await client.StartTrainingAsync(new Uri(purchaseOrderOfficeSuppliesUrl), useTrainingLabels: true, "Purchase order - Office supplies").WaitForCompletionAsync()).Value;
+CustomFormModel purchaseOrderOfficeEquipmentModel = (await client.StartTrainingAsync(new Uri(purchaseOrderOfficeEquipmentUrl), useTrainingLabels: true, "Purchase order - Office Equipment").WaitForCompletionAsync()).Value;
+CustomFormModel purchaseOrderFurnitureModel = (await client.StartTrainingAsync(new Uri(purchaseOrderFurnitureUrl), useTrainingLabels: true, "Purchase order - Furniture").WaitForCompletionAsync()).Value;
+CustomFormModel purchaseOrderCleaningSuppliesModel = (await client.StartTrainingAsync(new Uri(purchaseOrderCleaningSuppliesUrl), useTrainingLabels: true, "Purchase order - Cleaning Supplies").WaitForCompletionAsync()).Value;
 ```
 
 When a purchase order happens, the employee in charge uploads the form to our application. The application then needs to recognize the form to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the form, you can create a composed model that aggregates the previous models, and use that model in `StartRecognizeCustomForms` and let the service decide which model fits best according to the form provided.
@@ -51,18 +51,18 @@ When a purchase order happens, the employee in charge uploads the form to our ap
 ```C# Snippet:FormRecognizerSampleCreateComposedModel
 List<string> modelIds = new List<string>()
 {
-    purchaseOrderOfficeSuppliesModel.Value.ModelId,
-    purchaseOrderOfficeEquipmentModel.Value.ModelId,
-    purchaseOrderFurnitureModel.Value.ModelId,
-    purchaseOrderCleaningSuppliesModel.Value.ModelId
+    purchaseOrderOfficeSuppliesModel.ModelId,
+    purchaseOrderOfficeEquipmentModel.ModelId,
+    purchaseOrderFurnitureModel.ModelId,
+    purchaseOrderCleaningSuppliesModel.ModelId
 };
 
-Response<CustomFormModel> purchaseOrderModelResponse = await client.StartCreateComposedModelAsync(modelIds).WaitForCompletionAsync();
-CustomFormModel purchaseOrderModel = purchaseOrderModelResponse.Value;
+CustomFormModel purchaseOrderModel = (await client.StartCreateComposedModelAsync(modelIds, "Composed Purchase order").WaitForCompletionAsync()).Value;
 
 Console.WriteLine($"Purchase Order Model Info:");
 Console.WriteLine($"    Is composed model: {purchaseOrderModel.Properties.IsComposedModel}");
 Console.WriteLine($"    Model Id: {purchaseOrderModel.ModelId}");
+Console.WriteLine($"    Model name: {purchaseOrderModel.ModelName}");
 Console.WriteLine($"    Model Status: {purchaseOrderModel.Status}");
 Console.WriteLine($"    Create model started on: {purchaseOrderModel.TrainingStartedOn}");
 Console.WriteLine($"    Create model completed on: {purchaseOrderModel.TrainingCompletedOn}");

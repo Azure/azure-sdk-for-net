@@ -39,6 +39,348 @@ namespace Azure.AI.TextAnalytics
             _pipeline = pipeline;
         }
 
+        internal HttpMessage CreateAnalyzeRequest(AnalyzeBatchInput body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendPath("/analyze", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
+            if (body != null)
+            {
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed. </summary>
+        /// <param name="body"> Collection of documents to analyze and tasks to execute. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<TextAnalyticsAnalyzeHeaders>> AnalyzeAsync(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeRequest(body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new TextAnalyticsAnalyzeHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed. </summary>
+        /// <param name="body"> Collection of documents to analyze and tasks to execute. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> Analyze(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeRequest(body);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new TextAnalyticsAnalyzeHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeStatusRequest(string jobId, bool? showStats, int? top, int? skip)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendPath("/analyze/jobs/", false);
+            uri.AppendPath(jobId, true);
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
+        /// <param name="jobId"> Job ID for Analyze. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="top"> (Optional) Set the maximum number of results per task. When both $top and $skip are specified, $skip is applied first. </param>
+        /// <param name="skip"> (Optional) Set the number of elements to offset in the response. When both $top and $skip are specified, $skip is applied first. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public async Task<Response<AnalyzeJobState>> AnalyzeStatusAsync(string jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+
+            using var message = CreateAnalyzeStatusRequest(jobId, showStats, top, skip);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AnalyzeJobState value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AnalyzeJobState.DeserializeAnalyzeJobState(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
+        /// <param name="jobId"> Job ID for Analyze. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="top"> (Optional) Set the maximum number of results per task. When both $top and $skip are specified, $skip is applied first. </param>
+        /// <param name="skip"> (Optional) Set the number of elements to offset in the response. When both $top and $skip are specified, $skip is applied first. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public Response<AnalyzeJobState> AnalyzeStatus(string jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+
+            using var message = CreateAnalyzeStatusRequest(jobId, showStats, top, skip);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AnalyzeJobState value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AnalyzeJobState.DeserializeAnalyzeJobState(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateHealthStatusRequest(Guid jobId, int? top, int? skip, bool? showStats)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendPath("/entities/health/jobs/", false);
+            uri.AppendPath(jobId, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="top"> (Optional) Set the maximum number of results per task. When both $top and $skip are specified, $skip is applied first. </param>
+        /// <param name="skip"> (Optional) Set the number of elements to offset in the response. When both $top and $skip are specified, $skip is applied first. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<HealthcareJobState>> HealthStatusAsync(Guid jobId, int? top = null, int? skip = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateHealthStatusRequest(jobId, top, skip, showStats);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        HealthcareJobState value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = HealthcareJobState.DeserializeHealthcareJobState(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="top"> (Optional) Set the maximum number of results per task. When both $top and $skip are specified, $skip is applied first. </param>
+        /// <param name="skip"> (Optional) Set the number of elements to offset in the response. When both $top and $skip are specified, $skip is applied first. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<HealthcareJobState> HealthStatus(Guid jobId, int? top = null, int? skip = null, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateHealthStatusRequest(jobId, top, skip, showStats);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        HealthcareJobState value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = HealthcareJobState.DeserializeHealthcareJobState(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCancelHealthJobRequest(Guid jobId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendPath("/entities/health/jobs/", false);
+            uri.AppendPath(jobId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Cancel healthcare prediction job. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders>> CancelHealthJobAsync(Guid jobId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateCancelHealthJobRequest(jobId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new TextAnalyticsCancelHealthJobHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Cancel healthcare prediction job. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> CancelHealthJob(Guid jobId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateCancelHealthJobRequest(jobId);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new TextAnalyticsCancelHealthJobHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateHealthRequest(MultiLanguageBatchInput input, string modelVersion, StringIndexType? stringIndexType)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendPath("/entities/health/jobs", false);
+            if (modelVersion != null)
+            {
+                uri.AppendQuery("model-version", modelVersion, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(input);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Start a healthcare analysis job to recognize healthcare related entities (drugs, conditions, symptoms, etc) and their relations. </summary>
+        /// <param name="input"> Collection of documents to analyze. </param>
+        /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
+        /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public async Task<ResponseWithHeaders<TextAnalyticsHealthHeaders>> HealthAsync(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            using var message = CreateHealthRequest(input, modelVersion, stringIndexType);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new TextAnalyticsHealthHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Start a healthcare analysis job to recognize healthcare related entities (drugs, conditions, symptoms, etc) and their relations. </summary>
+        /// <param name="input"> Collection of documents to analyze. </param>
+        /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
+        /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public ResponseWithHeaders<TextAnalyticsHealthHeaders> Health(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            using var message = CreateHealthRequest(input, modelVersion, stringIndexType);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new TextAnalyticsHealthHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateEntitiesRecognitionGeneralRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, StringIndexType? stringIndexType)
         {
             var message = _pipeline.CreateMessage();
@@ -46,7 +388,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.2", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/entities/recognition/general", false);
             if (modelVersion != null)
             {
@@ -136,7 +478,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.2", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/entities/recognition/pii", false);
             if (modelVersion != null)
             {
@@ -170,7 +512,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
-        /// <param name="domain"> (Optional) if set to &apos;PHI&apos;, response will contain only PHI entities. </param>
+        /// <param name="domain"> (Optional) if specified, will set the PII domain to include only a subset of the entity categories. Possible values include: &apos;PHI&apos;, &apos;none&apos;. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
@@ -204,7 +546,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
-        /// <param name="domain"> (Optional) if set to &apos;PHI&apos;, response will contain only PHI entities. </param>
+        /// <param name="domain"> (Optional) if specified, will set the PII domain to include only a subset of the entity categories. Possible values include: &apos;PHI&apos;, &apos;none&apos;. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
@@ -238,7 +580,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.2", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/entities/linking", false);
             if (modelVersion != null)
             {
@@ -328,7 +670,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.2", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/keyPhrases", false);
             if (modelVersion != null)
             {
@@ -412,7 +754,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.2", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/languages", false);
             if (modelVersion != null)
             {
@@ -496,7 +838,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.2", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/sentiment", false);
             if (modelVersion != null)
             {

@@ -42,16 +42,31 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("ddosCustomPolicy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ddosCustomPolicy = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectionCoverage"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     protectionCoverage = new DdosSettingsProtectionCoverage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("protectedIP"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     protectedIP = property.Value.GetBoolean();
                     continue;
                 }

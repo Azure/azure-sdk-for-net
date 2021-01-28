@@ -35,6 +35,16 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [Test]
+        public async Task RecognizeLinkedEntitiesWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            string document = singleEnglish;
+
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(document);
+            Assert.AreEqual(3, linkedEntities.Count);
+        }
+
+        [Test]
         public async Task RecognizeLinkedEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();

@@ -42,10 +42,11 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <param name="createdTime">Time when DigitalTwinsInstance was
         /// created.</param>
         /// <param name="lastUpdatedTime">Time when DigitalTwinsInstance was
-        /// created.</param>
+        /// updated.</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Provisioning', 'Deleting', 'Succeeded', 'Failed',
-        /// 'Canceled'</param>
+        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
+        /// 'Moving'</param>
         /// <param name="hostName">Api endpoint to work with
         /// DigitalTwinsInstance.</param>
         public DigitalTwinsDescription(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? lastUpdatedTime = default(System.DateTime?), string provisioningState = default(string), string hostName = default(string))
@@ -70,14 +71,15 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         public System.DateTime? CreatedTime { get; private set; }
 
         /// <summary>
-        /// Gets time when DigitalTwinsInstance was created.
+        /// Gets time when DigitalTwinsInstance was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastUpdatedTime")]
         public System.DateTime? LastUpdatedTime { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state. Possible values include:
-        /// 'Provisioning', 'Deleting', 'Succeeded', 'Failed', 'Canceled'
+        /// 'Provisioning', 'Deleting', 'Succeeded', 'Failed', 'Canceled',
+        /// 'Deleted', 'Warning', 'Suspending', 'Restoring', 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

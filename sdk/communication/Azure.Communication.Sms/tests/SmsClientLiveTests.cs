@@ -31,8 +31,8 @@ namespace Azure.Communication.Sms.Tests
                 SendSmsResponse result = await client.SendAsync(
                    //@@ from: new PhoneNumber("+18001230000"), // Phone number acquired on your Azure Communication resource
                    //@@ to: new PhoneNumber("+18005670000"),
-                   /*@@*/ from: new PhoneNumber(TestEnvironment.FromPhoneNumber),
-                   /*@@*/ to: new PhoneNumber(TestEnvironment.ToPhoneNumber),
+                   /*@@*/ from: new PhoneNumberIdentifier(TestEnvironment.PhoneNumber),
+                   /*@@*/ to: new PhoneNumberIdentifier(TestEnvironment.PhoneNumber),
                    message: "Hi");
                 Console.WriteLine($"Sms id: {result.MessageId}");
                 #endregion Snippet:Azure_Communication_Sms_Tests_SendAsync

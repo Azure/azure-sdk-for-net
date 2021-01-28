@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Samples
         /// For this sample, you can use the training forms found in the `trainingFiles` folder.
         /// Upload the forms to your storage container and then generate a container SAS URL.
 
-        /// For more information see https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/overview#custom-models
+        /// For more information see https://docs.microsoft.com/azure/cognitive-services/form-recognizer/overview#custom-models
 
         [Test]
         public async Task OutputModelsTrainedWithLabels()
@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Samples
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Model trained with labels
-            CustomFormModel modelTrainedWithLabels = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true, new TrainingOptions() { ModelDisplayName = "My Model with labels"} ).WaitForCompletionAsync();
+            CustomFormModel modelTrainedWithLabels = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true, "My Model with labels").WaitForCompletionAsync();
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Samples
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Model trained without labels
-            CustomFormModel modelTrainedWithoutLabels = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelDisplayName = "My Model" }).WaitForCompletionAsync();
+            CustomFormModel modelTrainedWithoutLabels = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My Model").WaitForCompletionAsync();
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {

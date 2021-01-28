@@ -1,5 +1,5 @@
 {
-    "@id": "dtmi:samples:Building;1",
+    "@id": "dtmi:com:samples:Building;1",
     "@type": "Interface",
     "@context": "dtmi:dtdl:context;2",
     "displayName": "Building",
@@ -7,7 +7,7 @@
         {
             "@type": "Relationship",
             "name": "has",
-            "target": "dtmi:samples:Floor;1",
+            "target": "dtmi:com:samples:Floor;1",
             "properties": [
                 {
                     "@type": "Property",
@@ -19,7 +19,7 @@
         {
             "@type": "Relationship",
             "name": "isEquippedWith",
-            "target": "dtmi:samples:HVAC;1"
+            "target": "dtmi:com:samples:HVAC;1"
         },
         {
             "@type": "Property",

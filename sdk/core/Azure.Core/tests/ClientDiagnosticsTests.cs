@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
@@ -18,7 +19,6 @@ namespace Azure.Core.Tests
         [Test]
         public void CreatesActivityWithNameAndTags()
         {
-
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 
@@ -52,7 +52,6 @@ namespace Azure.Core.Tests
         [Test]
         public void ResourceNameIsOptional()
         {
-
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", null, true);
 
@@ -99,7 +98,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
 
-            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetProperty("Links").GetValue(startEvent.Value);
+            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startEvent.Value);
             Activity[] activitiesArray = activities.ToArray();
 
             Assert.AreEqual(activitiesArray.Length, 2);
@@ -143,7 +142,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
 
-            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetProperty("Links").GetValue(startEvent.Value);
+            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startEvent.Value);
             Activity linkedActivity = activities.Single();
 
             Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity.IdFormat);

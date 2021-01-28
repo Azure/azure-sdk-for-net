@@ -26,25 +26,25 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public abstract bool SupportsOperation(KeyOperation operation);
 
-        public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
+        public virtual DecryptResult Decrypt(DecryptOptions options, CancellationToken cancellationToken = default)
         {
             throw CreateOperationNotSupported(nameof(Decrypt));
         }
 
-        public virtual Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
+        public virtual Task<DecryptResult> DecryptAsync(DecryptOptions options, CancellationToken cancellationToken = default)
         {
-            DecryptResult result = Decrypt(algorithm, ciphertext, cancellationToken);
+            DecryptResult result = Decrypt(options, cancellationToken);
             return Task.FromResult(result);
         }
 
-        public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
+        public virtual EncryptResult Encrypt(EncryptOptions options, CancellationToken cancellationToken = default)
         {
             throw CreateOperationNotSupported(nameof(Encrypt));
         }
 
-        public virtual Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
+        public virtual Task<EncryptResult> EncryptAsync(EncryptOptions options, CancellationToken cancellationToken = default)
         {
-            EncryptResult result = Encrypt(algorithm, plaintext, cancellationToken);
+            EncryptResult result = Encrypt(options, cancellationToken);
             return Task.FromResult(result);
         }
 

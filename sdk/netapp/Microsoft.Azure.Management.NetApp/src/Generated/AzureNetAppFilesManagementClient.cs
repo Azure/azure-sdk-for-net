@@ -107,6 +107,31 @@ namespace Microsoft.Azure.Management.NetApp
         public virtual ISnapshotsOperations Snapshots { get; private set; }
 
         /// <summary>
+        /// Gets the ISnapshotPoliciesOperations.
+        /// </summary>
+        public virtual ISnapshotPoliciesOperations SnapshotPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IAccountBackupsOperations.
+        /// </summary>
+        public virtual IAccountBackupsOperations AccountBackups { get; private set; }
+
+        /// <summary>
+        /// Gets the IBackupsOperations.
+        /// </summary>
+        public virtual IBackupsOperations Backups { get; private set; }
+
+        /// <summary>
+        /// Gets the IBackupPoliciesOperations.
+        /// </summary>
+        public virtual IBackupPoliciesOperations BackupPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IVaultsOperations.
+        /// </summary>
+        public virtual IVaultsOperations Vaults { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the AzureNetAppFilesManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -353,8 +378,13 @@ namespace Microsoft.Azure.Management.NetApp
             Pools = new PoolsOperations(this);
             Volumes = new VolumesOperations(this);
             Snapshots = new SnapshotsOperations(this);
+            SnapshotPolicies = new SnapshotPoliciesOperations(this);
+            AccountBackups = new AccountBackupsOperations(this);
+            Backups = new BackupsOperations(this);
+            BackupPolicies = new BackupPoliciesOperations(this);
+            Vaults = new VaultsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-02-01";
+            ApiVersion = "2020-07-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

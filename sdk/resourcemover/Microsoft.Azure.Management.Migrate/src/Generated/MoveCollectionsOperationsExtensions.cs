@@ -446,6 +446,52 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
             }
 
             /// <summary>
+            /// Removes the set of move resources included in the request body from move
+            /// collection. The orchestration is done by service. To aid the user to
+            /// prerequisite the operation the client can call operation with validateOnly
+            /// property set to true.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='moveCollectionName'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static OperationStatus BulkRemove(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName, BulkRemoveRequest body = default(BulkRemoveRequest))
+            {
+                return operations.BulkRemoveAsync(resourceGroupName, moveCollectionName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Removes the set of move resources included in the request body from move
+            /// collection. The orchestration is done by service. To aid the user to
+            /// prerequisite the operation the client can call operation with validateOnly
+            /// property set to true.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='moveCollectionName'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> BulkRemoveAsync(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName, BulkRemoveRequest body = default(BulkRemoveRequest), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BulkRemoveWithHttpMessagesAsync(resourceGroupName, moveCollectionName, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get all Move Collections.
             /// </summary>
             /// <remarks>
@@ -810,6 +856,52 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
             public static async Task<OperationStatus> BeginResolveDependenciesAsync(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginResolveDependenciesWithHttpMessagesAsync(resourceGroupName, moveCollectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Removes the set of move resources included in the request body from move
+            /// collection. The orchestration is done by service. To aid the user to
+            /// prerequisite the operation the client can call operation with validateOnly
+            /// property set to true.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='moveCollectionName'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static OperationStatus BeginBulkRemove(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName, BulkRemoveRequest body = default(BulkRemoveRequest))
+            {
+                return operations.BeginBulkRemoveAsync(resourceGroupName, moveCollectionName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Removes the set of move resources included in the request body from move
+            /// collection. The orchestration is done by service. To aid the user to
+            /// prerequisite the operation the client can call operation with validateOnly
+            /// property set to true.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='moveCollectionName'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> BeginBulkRemoveAsync(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName, BulkRemoveRequest body = default(BulkRemoveRequest), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginBulkRemoveWithHttpMessagesAsync(resourceGroupName, moveCollectionName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

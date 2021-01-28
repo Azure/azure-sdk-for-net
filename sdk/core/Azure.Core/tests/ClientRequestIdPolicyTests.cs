@@ -72,7 +72,6 @@ namespace Azure.Core.Tests
         {
             var transport = new MockTransport(r => new MockResponse(200));
 
-
             using (HttpPipeline.CreateClientRequestIdScope("custom-id"))
             using (HttpPipeline.CreateClientRequestIdScope("nested-custom-id"))
             {

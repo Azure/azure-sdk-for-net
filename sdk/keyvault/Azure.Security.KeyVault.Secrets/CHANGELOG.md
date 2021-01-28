@@ -1,7 +1,15 @@
 # Release History
 
-## 4.2.0-beta.2 (Unreleased)
+## 4.2.0-beta.4 (Unreleased)
 
+
+## 4.2.0-beta.3 (2020-11-12)
+
+- Bug fixes and performance improvements.
+
+## 4.2.0-beta.2 (2020-10-06)
+
+- Bug fixes and performance improvements.
 
 ## 4.2.0-beta.1 (2020-09-08)
 

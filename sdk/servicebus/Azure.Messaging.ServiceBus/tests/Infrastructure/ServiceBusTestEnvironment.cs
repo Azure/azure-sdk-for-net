@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         private readonly Lazy<NamespaceProperties> ActiveServiceBusNamespace;
 
         /// <summary>The active Service Bus namespace for this test run, lazily created.</summary>
-        private readonly Lazy<ConnectionStringProperties> ParsedConnectionString;
+        private readonly Lazy<ServiceBusConnectionStringProperties> ParsedConnectionString;
 
         /// <summary>
         ///   Indicates whether or not an ephemeral namespace was created for the current test execution.
@@ -126,10 +126,10 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///   Initializes a new instance of the <see cref="ServiceBusTestEnvironment"/> class.
         /// </summary>
         ///
-        public ServiceBusTestEnvironment() : base("servicebus")
+        public ServiceBusTestEnvironment()
         {
             ActiveServiceBusNamespace = new Lazy<NamespaceProperties>(EnsureServiceBusNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
-            ParsedConnectionString = new Lazy<ConnectionStringProperties>(() => ConnectionStringParser.Parse(ServiceBusConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
+            ParsedConnectionString = new Lazy<ServiceBusConnectionStringProperties>(() => ServiceBusConnectionStringProperties.Parse(ServiceBusConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             if (!string.IsNullOrEmpty(OverrideServiceBusConnectionString))
             {
-                var parsed = ConnectionStringParser.Parse(OverrideServiceBusConnectionString);
+                var parsed = ServiceBusConnectionStringProperties.Parse(OverrideServiceBusConnectionString);
 
                 return new NamespaceProperties
                 (

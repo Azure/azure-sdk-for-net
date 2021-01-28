@@ -814,7 +814,6 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(1, correlationContexts.Count());
         }
 
-
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
             using (var stream = new MemoryStream())

@@ -34,6 +34,11 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("details"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -49,6 +54,11 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("innererror"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     innererror = DeserializeInnerError(property.Value);
                     continue;
                 }

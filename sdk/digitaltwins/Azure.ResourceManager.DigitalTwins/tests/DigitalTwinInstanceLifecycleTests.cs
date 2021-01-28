@@ -5,10 +5,11 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.DigitalTwins.Models;
 using FluentAssertions;
 using NUnit.Framework;
+using ProvisioningState = Azure.ResourceManager.DigitalTwins.Models.ProvisioningState;
 
 namespace Azure.ResourceManager.DigitalTwins.Tests
 {
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
         {
             string dtInstanceName;
             Response<CheckNameResult> checkNameResponse = null;
+            string location = "westus2";
             const int maxTryCount = 5;
             int tryCount = 0;
 
@@ -61,7 +63,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                 {
                     checkNameResponse = await DigitalTwinsManagementClient.DigitalTwins
                         .CheckNameAvailabilityAsync(
-                            TestEnvironment.Location,
+                            location,
                             dtInstanceName)
                         .ConfigureAwait(false);
                 }
@@ -87,7 +89,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                     .StartCreateOrUpdateAsync(
                         resourceGroupName,
                         dtInstanceName,
-                        new DigitalTwinsDescription(TestEnvironment.Location))
+                        new DigitalTwinsDescription(location))
                     .ConfigureAwait(false);
 
                 // IsAsync seems to be broken. My async method gets the breakpoint no matter the mode.
@@ -106,7 +108,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                 // Validate create
                 DigitalTwinsDescription createdDtInstance = createdResponse.Value;
                 createdDtInstance.Name.Should().Be(dtInstanceName);
-                createdDtInstance.Location.Should().Be(TestEnvironment.Location);
+                createdDtInstance.Location.Should().Be(location);
                 createdDtInstance.ProvisioningState.Should().Be(ProvisioningState.Succeeded);
                 createdDtInstance.HostName.Should().NotBeNullOrWhiteSpace();
                 createdDtInstance.Id.Should().NotBeNullOrWhiteSpace();
@@ -124,7 +126,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                 getResponse.GetRawResponse().Status.Should().Be(200);
                 getResponse.GetRawResponse().ClientRequestId.Should().NotBeNullOrWhiteSpace();
                 getResponse.Value.Name.Should().Be(dtInstanceName);
-                getResponse.Value.Location.Should().Be(TestEnvironment.Location);
+                getResponse.Value.Location.Should().Be(location);
                 getResponse.Value.ProvisioningState.Should().Be(ProvisioningState.Succeeded);
                 getResponse.Value.HostName.Should().NotBeNullOrWhiteSpace();
                 getResponse.Value.Id.Should().NotBeNullOrWhiteSpace();
@@ -145,7 +147,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                     }
                 }
                 foundInstance.Name.Should().Be(dtInstanceName);
-                foundInstance.Location.Should().Be(TestEnvironment.Location);
+                foundInstance.Location.Should().Be(location);
                 foundInstance.ProvisioningState.Should().Be(ProvisioningState.Succeeded);
                 foundInstance.HostName.Should().NotBeNullOrWhiteSpace();
                 foundInstance.Id.Should().NotBeNullOrWhiteSpace();

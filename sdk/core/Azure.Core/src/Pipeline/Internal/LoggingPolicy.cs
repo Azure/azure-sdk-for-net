@@ -204,7 +204,9 @@ namespace Azure.Core.Pipeline
 
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 var result = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
 
                 var countToLog = result;
                 DecrementLength(ref countToLog);
@@ -269,7 +271,6 @@ namespace Azure.Core.Pipeline
 
                 var bytes = await FormatAsync(stream, async).ConfigureAwait(false).EnsureCompleted(async);
                 Log(requestId, eventType, bytes, textEncoding);
-
             }
 
             public async ValueTask LogAsync(string requestId, RequestContent? content, Encoding? textEncoding, bool async)

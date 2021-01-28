@@ -3,7 +3,7 @@
 <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Administration client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Administration client library</AssemblyTitle>
-    <Version>4.0.0-beta.2</Version>
+    <Version>4.0.0-beta.4</Version>
     <PackageTags>Microsoft Azure Key Vault Administration;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;CA1812</NoWarn>
@@ -16,6 +16,7 @@
   <ItemGroup>
     <!-- Include just the few items we need from Azure.Security.KeyVault.Shared -->
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\ClientDiagnostics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\ClientOptionsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\IJsonSerializable.cs" />
   </ItemGroup>

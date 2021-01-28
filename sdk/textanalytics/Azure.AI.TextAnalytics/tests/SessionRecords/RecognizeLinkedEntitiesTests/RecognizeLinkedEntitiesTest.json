@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.2/entities/linking?stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/linking?stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,10 +11,10 @@
         "Content-Length": "103",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f418ee8a16880a4f963d0011c35ff16d-4dc9a5aa859da841-00",
+        "traceparent": "00-bbf39edd853edc48927c350bcf756f36-c14aed5cc9eaef46-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200831.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201116.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "5dbd0e4d74f1991eb1c26555a87606e8",
         "x-ms-return-client-request-id": "true"
@@ -30,20 +30,36 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "84318bf7-978f-4169-8aac-8421a05e7ff0",
+        "apim-request-id": "363f5e6e-88b6-4214-a918-074ba8b69754",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Mon, 31 Aug 2020 18:39:11 GMT",
+        "Date": "Tue, 17 Nov 2020 20:18:09 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
+        "x-envoy-upstream-service-time": "20"
       },
       "ResponseBody": {
         "documents": [
           {
             "id": "0",
             "entities": [
+              {
+                "bingId": "a093e9b9-90f5-a3d5-c4b8-5855e1b01f85",
+                "name": "Microsoft",
+                "matches": [
+                  {
+                    "text": "Microsoft",
+                    "offset": 0,
+                    "length": 9,
+                    "confidenceScore": 0.49
+                  }
+                ],
+                "language": "en",
+                "id": "Microsoft",
+                "url": "https://en.wikipedia.org/wiki/Microsoft",
+                "dataSource": "Wikipedia"
+              },
               {
                 "bingId": "0d47c987-0042-5576-15e8-97af601614fa",
                 "name": "Bill Gates",
@@ -75,22 +91,6 @@
                 "id": "Paul Allen",
                 "url": "https://en.wikipedia.org/wiki/Paul_Allen",
                 "dataSource": "Wikipedia"
-              },
-              {
-                "bingId": "a093e9b9-90f5-a3d5-c4b8-5855e1b01f85",
-                "name": "Microsoft",
-                "matches": [
-                  {
-                    "text": "Microsoft",
-                    "offset": 0,
-                    "length": 9,
-                    "confidenceScore": 0.49
-                  }
-                ],
-                "language": "en",
-                "id": "Microsoft",
-                "url": "https://en.wikipedia.org/wiki/Microsoft",
-                "dataSource": "Wikipedia"
               }
             ],
             "warnings": []
@@ -104,6 +104,6 @@
   "Variables": {
     "RandomSeed": "862299711",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
+    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
   }
 }

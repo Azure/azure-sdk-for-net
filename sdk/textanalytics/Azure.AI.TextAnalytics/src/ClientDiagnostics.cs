@@ -24,6 +24,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The error message.</param>
         /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
+#pragma warning disable CA1822 // Member can be static
         partial void ExtractFailureContent(
             string? content,
             ref string? message,
@@ -31,6 +32,7 @@ namespace Azure.Core.Pipeline
 #pragma warning disable CA1801 // Remove unused parameter
             ref IDictionary<string, string>? additionalInfo)
 #pragma warning restore CA1801 // Remove unused parameter
+#pragma warning restore CA1822 // Member can be static
         {
             if (!string.IsNullOrEmpty(content))
             {

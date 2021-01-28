@@ -1,0 +1,105 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/phonenumbers?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Sat, 21 Nov 2020 03:49:27 GMT",
+        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201120.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "d1a7fb1f13bb8f936be0e578cf161573",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 21 Nov 2020 03:49:28 GMT",
+        "MS-CV": "ESknZ9n5TEGmoHN/bhXbLw.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0R464XwAAAADtJ6oJDALMT7/7vtuTnU5jWVZSMzBFREdFMDMyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "523ms"
+      },
+      "ResponseBody": {
+        "phoneNumbers": [
+          {
+            "phoneNumber": "Sanitized",
+            "acquiredCapabilities": [
+              "Azure",
+              "InboundCalling",
+              "UserAssignment",
+              "Geographic",
+              "OutboundCalling"
+            ],
+            "availableCapabilities": [
+              "UserAssignment",
+              "Geographic",
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling"
+            ],
+            "assignmentStatus": "Unassigned",
+            "placeName": "Birmingham, United States",
+            "activationState": "Activated"
+          },
+          {
+            "phoneNumber": "Sanitized",
+            "acquiredCapabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "OutboundCalling",
+              "TollFree"
+            ],
+            "availableCapabilities": [
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling",
+              "ThirdPartyAppAssignment",
+              "ConferenceAssignment",
+              "FirstPartyAppAssignment",
+              "TollFree",
+              "InboundA2PSms",
+              "OutboundA2PSms"
+            ],
+            "assignmentStatus": "ThirdPartyAppAssigned",
+            "placeName": "Toll-Free, United States",
+            "activationState": "Activated"
+          },
+          {
+            "phoneNumber": "Sanitized",
+            "acquiredCapabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "OutboundCalling",
+              "TollFree"
+            ],
+            "availableCapabilities": [
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling",
+              "ThirdPartyAppAssignment",
+              "ConferenceAssignment",
+              "FirstPartyAppAssignment",
+              "TollFree",
+              "InboundA2PSms",
+              "OutboundA2PSms"
+            ],
+            "assignmentStatus": "Unassigned",
+            "placeName": "Toll-Free, United States",
+            "activationState": "Activated"
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==;",
+    "RandomSeed": "1419959097"
+  }
+}

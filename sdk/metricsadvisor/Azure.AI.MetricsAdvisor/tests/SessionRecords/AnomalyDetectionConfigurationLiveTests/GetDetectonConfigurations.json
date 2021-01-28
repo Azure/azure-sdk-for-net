@@ -1,0 +1,304 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/27e3015f-04fd-44ba-a20b-bc529a0aebae/enrichment/anomalyDetection/configurations",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201215.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "5aacc5579284336db5b38189b9f50b1b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d8e17e61-595f-4373-bcf1-a51990a39f72",
+        "Content-Length": "5874",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 16 Dec 2020 18:41:44 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "115",
+        "x-request-id": "d8e17e61-595f-4373-bcf1-a51990a39f72"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "anomalyDetectionConfigurationId": "e17f32d4-3ddf-4dc7-84ee-b4130c7e1777",
+            "name": "detection-config",
+            "description": "",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "wholeMetricConfiguration": {
+              "smartDetectionCondition": {
+                "sensitivity": 100.0,
+                "anomalyDetectorDirection": "Both",
+                "suppressCondition": {
+                  "minNumber": 1,
+                  "minRatio": 100.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          },
+          {
+            "anomalyDetectionConfigurationId": "10240200-6f3a-4783-b8e4-e7b34a3973d6",
+            "name": "my_detection_config",
+            "description": "anomaly detection config for metric",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "wholeMetricConfiguration": {
+              "conditionOperator": "OR",
+              "smartDetectionCondition": {
+                "sensitivity": 10.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              },
+              "hardThresholdCondition": {
+                "upperBound": 100.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              },
+              "changeThresholdCondition": {
+                "changePercentage": 20.0,
+                "shiftPoint": 10,
+                "anomalyDetectorDirection": "Both",
+                "withinRange": true,
+                "suppressCondition": {
+                  "minNumber": 5,
+                  "minRatio": 2.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          },
+          {
+            "anomalyDetectionConfigurationId": "5d50b465-7565-4167-b33b-b92eb3199254",
+            "name": "test_detection_configuration1605051259010",
+            "description": "Detection configuration description",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "wholeMetricConfiguration": {
+              "smartDetectionCondition": {
+                "sensitivity": 100.0,
+                "anomalyDetectorDirection": "Both",
+                "suppressCondition": {
+                  "minNumber": 1,
+                  "minRatio": 1.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          },
+          {
+            "anomalyDetectionConfigurationId": "eb6ef516-9a09-4535-8ade-f64e26dfaefb",
+            "name": "js-detection-config-160521899279304202",
+            "description": "fresh detection",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "wholeMetricConfiguration": {
+              "conditionOperator": "AND",
+              "hardThresholdCondition": {
+                "upperBound": 400.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              },
+              "changeThresholdCondition": {
+                "changePercentage": 33.0,
+                "shiftPoint": 1,
+                "anomalyDetectorDirection": "Both",
+                "withinRange": true,
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          },
+          {
+            "anomalyDetectionConfigurationId": "1d270422-7ef8-4d3e-99e9-46b2bb1362fc",
+            "name": "js-detection-config-160521901418201870",
+            "description": "fresh detection",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "wholeMetricConfiguration": {
+              "conditionOperator": "AND",
+              "hardThresholdCondition": {
+                "upperBound": 400.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              },
+              "changeThresholdCondition": {
+                "changePercentage": 33.0,
+                "shiftPoint": 1,
+                "anomalyDetectorDirection": "Both",
+                "withinRange": true,
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          },
+          {
+            "anomalyDetectionConfigurationId": "64993d1d-02b8-4e0b-87d3-13095b187fe4",
+            "name": "js-detection-config-160521939989909966",
+            "description": "fresh detection",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "wholeMetricConfiguration": {
+              "conditionOperator": "AND",
+              "hardThresholdCondition": {
+                "upperBound": 400.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              },
+              "changeThresholdCondition": {
+                "changePercentage": 33.0,
+                "shiftPoint": 1,
+                "anomalyDetectorDirection": "Both",
+                "withinRange": true,
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          },
+          {
+            "anomalyDetectionConfigurationId": "dc0a5df5-c84e-4e9b-9065-f4017c4fbb97",
+            "name": "js-detection-config-160521942344906897",
+            "description": "fresh detection",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "wholeMetricConfiguration": {
+              "conditionOperator": "AND",
+              "hardThresholdCondition": {
+                "upperBound": 400.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              },
+              "changeThresholdCondition": {
+                "changePercentage": 33.0,
+                "shiftPoint": 1,
+                "anomalyDetectorDirection": "Both",
+                "withinRange": true,
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          },
+          {
+            "anomalyDetectionConfigurationId": "0491bfd7-b80a-4c2b-a32b-009e355a6cf5",
+            "name": "js-detection-config-160521950750209992",
+            "description": "fresh detection",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "wholeMetricConfiguration": {
+              "conditionOperator": "AND",
+              "hardThresholdCondition": {
+                "upperBound": 400.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              },
+              "changeThresholdCondition": {
+                "changePercentage": 33.0,
+                "shiftPoint": 1,
+                "anomalyDetectorDirection": "Both",
+                "withinRange": true,
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          },
+          {
+            "anomalyDetectionConfigurationId": "d803825a-12bf-4ae3-abcc-efd051509a1a",
+            "name": "js-detection-config-160521952580900483",
+            "description": "fresh detection",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "wholeMetricConfiguration": {
+              "conditionOperator": "AND",
+              "hardThresholdCondition": {
+                "upperBound": 400.0,
+                "anomalyDetectorDirection": "Up",
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              },
+              "changeThresholdCondition": {
+                "changePercentage": 33.0,
+                "shiftPoint": 1,
+                "anomalyDetectorDirection": "Both",
+                "withinRange": true,
+                "suppressCondition": {
+                  "minNumber": 2,
+                  "minRatio": 2.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          },
+          {
+            "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+            "name": "Default",
+            "description": "",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "wholeMetricConfiguration": {
+              "smartDetectionCondition": {
+                "sensitivity": 100.0,
+                "anomalyDetectorDirection": "Both",
+                "suppressCondition": {
+                  "minNumber": 1,
+                  "minRatio": 100.0
+                }
+              }
+            },
+            "dimensionGroupOverrideConfigurations": [],
+            "seriesOverrideConfigurations": []
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "57562070"
+  }
+}

@@ -10,18 +10,17 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
-    internal class AppServiceV2017ManagedIdentitySource : IManagedIdentitySource
+    internal class AppServiceV2017ManagedIdentitySource : ManagedIdentitySource
     {
         // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity
         private const string AppServiceMsiApiVersion = "2017-09-01";
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
 
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _secret;
         private readonly string _clientId;
 
-        public static IManagedIdentitySource TryCreate(HttpPipeline pipeline, string clientId)
+        public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
         {
             string msiEndpoint = EnvironmentVariables.MsiEndpoint;
             string msiSecret = EnvironmentVariables.MsiSecret;
@@ -42,23 +41,22 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
             }
 
-            return new AppServiceV2017ManagedIdentitySource(pipeline, endpointUri, msiSecret, clientId);
+            return new AppServiceV2017ManagedIdentitySource(options.Pipeline, endpointUri, msiSecret, options.ClientId);
         }
 
-        private AppServiceV2017ManagedIdentitySource(HttpPipeline pipeline, Uri endpoint, string secret, string clientId)
+        private AppServiceV2017ManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string secret, string clientId) : base(pipeline)
         {
-            _pipeline = pipeline;
             _endpoint = endpoint;
             _secret = secret;
             _clientId = clientId;
         }
 
-        public Request CreateRequest(string[] scopes)
+        protected override Request CreateRequest(string[] scopes)
         {
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
 
-            Request request = _pipeline.CreateRequest();
+            Request request = Pipeline.HttpPipeline.CreateRequest();
 
             request.Method = RequestMethod.Get;
             request.Headers.Add("secret", _secret);
@@ -73,18 +71,5 @@ namespace Azure.Identity
 
             return request;
         }
-
-        public AccessToken GetAccessTokenFromJson(in JsonElement jsonAccessToken, in JsonElement jsonExpiresOn)
-        {
-            // AppService version 2017-09-01 sends expires_on as a string formatted datetimeoffset
-            if (DateTimeOffset.TryParse(jsonExpiresOn.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset expiresOn))
-            {
-                return new AccessToken(jsonAccessToken.GetString(), expiresOn);
-            }
-
-            throw new AuthenticationFailedException(ManagedIdentityClient.AuthenticationResponseInvalidFormatError);
-        }
-
-        public ValueTask HandleFailedRequestAsync(Response response, ClientDiagnostics diagnostics, bool async) => new ValueTask();
     }
 }

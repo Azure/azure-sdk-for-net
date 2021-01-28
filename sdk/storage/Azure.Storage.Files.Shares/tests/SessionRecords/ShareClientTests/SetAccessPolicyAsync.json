@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "f6e55db0-af1e-5c3c-d46f-056f6fe3db10",
         "x-ms-date": "Fri, 31 Jul 2020 22:39:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "f6e55db0-af1e-5c3c-d46f-056f6fe3db10",
         "x-ms-request-id": "3e8fb794-a01a-0136-2f8b-67791c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "6c5c6004-f480-f27e-4c88-f067f13bb14a",
         "x-ms-date": "Fri, 31 Jul 2020 22:39:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Edgkqydysoehrwuqwwudx\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2020-07-31T21:39:50.6656494Z\u003C/Start\u003E\u003CExpiry\u003E2020-07-31T23:39:50.6656494Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
       "StatusCode": 200,
@@ -62,7 +62,7 @@
         ],
         "x-ms-client-request-id": "6c5c6004-f480-f27e-4c88-f067f13bb14a",
         "x-ms-request-id": "3e8fb797-a01a-0136-308b-67791c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -80,7 +80,7 @@
         "x-ms-date": "Fri, 31 Jul 2020 22:39:50 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -93,7 +93,7 @@
         ],
         "x-ms-client-request-id": "5dc58b4a-99c8-aa20-99e5-ac8491ea5dad",
         "x-ms-request-id": "3e8fb798-a01a-0136-318b-67791c000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

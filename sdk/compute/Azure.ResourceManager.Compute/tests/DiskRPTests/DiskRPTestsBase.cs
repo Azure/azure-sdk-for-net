@@ -7,9 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using ResourceIdentityType = Azure.ResourceManager.Compute.Models.ResourceIdentityType;
 
 namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 {
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             // Patch
             var updatesnapshot = new SnapshotUpdate()
             {
-                Tags = {{tagKey, "tagvalue"}}
+                Tags = { { tagKey, "tagvalue" } }
             };
 
             snapshotOut = await WaitForCompletionAsync(await SnapshotsOperations.StartUpdateAsync(rgName, snapshotName, updatesnapshot));

@@ -10,7 +10,7 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Spark job definition resource type. </summary>
-    public partial class SparkJobDefinitionResource : SubResource
+    public partial class SparkJobDefinitionResource : AzureEntityResource
     {
         /// <summary> Initializes a new instance of SparkJobDefinitionResource. </summary>
         /// <param name="properties"> Properties of spark job definition. </param>
@@ -26,10 +26,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SparkJobDefinitionResource. </summary>
-        /// <param name="id"> The resource identifier. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of spark job definition. </param>
         internal SparkJobDefinitionResource(string id, string name, string type, string etag, SparkJobDefinition properties) : base(id, name, type, etag)
         {

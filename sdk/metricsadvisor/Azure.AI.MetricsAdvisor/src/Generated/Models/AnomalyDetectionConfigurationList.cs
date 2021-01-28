@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AnomalyDetectionConfigurationList. </summary>
         /// <param name="value"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AnomalyDetectionConfigurationList(IEnumerable<MetricAnomalyDetectionConfiguration> value)
+        internal AnomalyDetectionConfigurationList(IEnumerable<AnomalyDetectionConfiguration> value)
         {
             if (value == null)
             {
@@ -29,11 +29,11 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> Initializes a new instance of AnomalyDetectionConfigurationList. </summary>
         /// <param name="value"> . </param>
-        internal AnomalyDetectionConfigurationList(IReadOnlyList<MetricAnomalyDetectionConfiguration> value)
+        internal AnomalyDetectionConfigurationList(IReadOnlyList<AnomalyDetectionConfiguration> value)
         {
             Value = value;
         }
 
-        public IReadOnlyList<MetricAnomalyDetectionConfiguration> Value { get; }
+        public IReadOnlyList<AnomalyDetectionConfiguration> Value { get; }
     }
 }

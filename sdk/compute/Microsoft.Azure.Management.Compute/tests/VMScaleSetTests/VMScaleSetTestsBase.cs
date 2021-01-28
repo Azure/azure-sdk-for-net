@@ -29,7 +29,8 @@ namespace Compute.Tests
             string publisher = "Microsoft.Compute",
             string type = "VMAccessAgent",
             string version = "2.0",
-            bool autoUpdateMinorVersion = true)
+            bool autoUpdateMinorVersion = true,
+            bool? enableAutomaticUpgrade = null)
         {
             var vmExtension = new VirtualMachineScaleSetExtension
             {
@@ -39,7 +40,8 @@ namespace Compute.Tests
                 TypeHandlerVersion = version,
                 AutoUpgradeMinorVersion = autoUpdateMinorVersion,
                 Settings = "{}",
-                ProtectedSettings = "{}"
+                ProtectedSettings = "{}",
+                EnableAutomaticUpgrade = enableAutomaticUpgrade
             };
 
             return vmExtension;
@@ -124,7 +126,7 @@ namespace Compute.Tests
             var vmssName = TestUtilities.GenerateName("vmss");
             bool createOSDisk = !hasManagedDisks || osDiskSizeInGB != null;
 
-            string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA0 : VirtualMachineSizeTypes.StandardA1V2;
+            string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA1V2 : VirtualMachineSizeTypes.StandardA1V2;
 
             var vmScaleSet = new VirtualMachineScaleSet()
             {
@@ -646,7 +648,7 @@ namespace Compute.Tests
                 bool expectedAutomaticRepairsEnabledValue = vmScaleSet.AutomaticRepairsPolicy.Enabled ?? false;
                 Assert.True(vmScaleSetOut.AutomaticRepairsPolicy.Enabled == expectedAutomaticRepairsEnabledValue);
 
-                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT30M";
+                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT10M";
                 Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.GracePeriod, expectedAutomaticRepairsGracePeriodValue, ignoreCase: true);
             }
 

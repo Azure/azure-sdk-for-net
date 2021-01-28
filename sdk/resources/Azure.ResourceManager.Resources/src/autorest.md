@@ -26,3 +26,15 @@ directive:
     where: $.paths
     transform: delete $["/providers/Microsoft.Resources/operations"]
 ```
+
+## Swagger workarounds
+
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.DeploymentOperationProperties
+  transform: >
+    $.properties.statusMessage["x-nullable"] = true;
+````

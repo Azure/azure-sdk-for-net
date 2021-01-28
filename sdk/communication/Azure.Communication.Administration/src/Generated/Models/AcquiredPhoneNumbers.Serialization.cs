@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class AcquiredPhoneNumbers
+    internal partial class AcquiredPhoneNumbers
     {
         internal static AcquiredPhoneNumbers DeserializeAcquiredPhoneNumbers(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.Communication.Administration.Models
             {
                 if (property.NameEquals("phoneNumbers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AcquiredPhoneNumber> array = new List<AcquiredPhoneNumber>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

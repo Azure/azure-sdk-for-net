@@ -13,19 +13,12 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class DefaultAzureCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class DefaultAzureCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
         public DefaultAzureCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
             TestDiagnostics = false;
         }
 
@@ -149,7 +142,7 @@ namespace Azure.Identity.Tests
 
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var testProcess = new TestProcess { Output = processOutput };
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), vscAdapter) { ManagedIdentitySourceFactory = () => default };
@@ -185,7 +178,7 @@ namespace Azure.Identity.Tests
 
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Output = processOutput }};
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, vscAdapter) { ManagedIdentitySourceFactory = () => default };
@@ -217,7 +210,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
             });
 
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", "{}");
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
             var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }), vscAdapter) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
@@ -273,7 +266,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
             });
 
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 

@@ -21,7 +21,6 @@ namespace Azure.AI.FormRecognizer.Samples
             string resourceId = TestEnvironment.TargetResourceId;
             string resourceRegion = TestEnvironment.TargetResourceRegion;
 
-
             #region Snippet:FormRecognizerSampleCreateCopySourceClient
             //@@ string endpoint = "<source_endpoint>";
             //@@ string apiKey = "<source_apiKey>";

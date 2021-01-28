@@ -36,25 +36,27 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="systemData">SystemData of SqlDatabase.</param>
         /// <param name="collation">The collation of the database.</param>
         /// <param name="maxSizeBytes">The max size of the database expressed
         /// in bytes.</param>
         /// <param name="databaseGuid">The Guid of the database.</param>
-        public SqlDatabase(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string collation = default(string), long? maxSizeBytes = default(long?), System.Guid? databaseGuid = default(System.Guid?))
+        /// <param name="status">Status of the database.</param>
+        public SqlDatabase(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string collation = default(string), long? maxSizeBytes = default(long?), System.Guid? databaseGuid = default(System.Guid?), string status = default(string))
             : base(location, id, name, type, tags)
         {
             SystemData = systemData;
             Collation = collation;
             MaxSizeBytes = maxSizeBytes;
             DatabaseGuid = databaseGuid;
+            Status = status;
             CustomInit();
         }
 
@@ -86,6 +88,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseGuid")]
         public System.Guid? DatabaseGuid { get; private set; }
+
+        /// <summary>
+        /// Gets status of the database.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public string Status { get; private set; }
 
         /// <summary>
         /// Validate the object.

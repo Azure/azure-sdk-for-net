@@ -42,11 +42,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("osDiskImage"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     osDiskImage = DiskImageEncryption.DeserializeDiskImageEncryption(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DataDiskImageEncryption> array = new List<DataDiskImageEncryption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Compute.Tests
     [AsyncOnly]
     public class DedicatedHostTests : VMTestBase
     {
-
         public DedicatedHostTests(bool isAsync)
            : base(isAsync)
         {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // Update existing dedicated host group
             DedicatedHostGroupUpdate updateDHGInput = new DedicatedHostGroupUpdate()
             {
-                Tags ={ { "testKey", "testValue" } }
+                Tags = { { "testKey", "testValue" } }
             };
             createdDHG.Tags.InitializeFrom(updateDHGInput.Tags);
             updateDHGInput.PlatformFaultDomainCount = returnedDHG.PlatformFaultDomainCount; // There is a bug in PATCH.  PlatformFaultDomainCount is a required property now.
@@ -110,7 +109,6 @@ namespace Azure.ResourceManager.Compute.Tests
                 Assert.AreEqual(expectedDHG.Location, actualDHG.Location);
                 Assert.AreEqual(expectedDHG.Name, actualDHG.Name);
             }
-
         }
 
         private void ValidateDedicatedHost(DedicatedHost expectedDH, DedicatedHost actualDH)

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Synapse Analytics Access Control client library</Description>
     <AssemblyTitle>Azure.Analytics.Synapse.AccessControl</AssemblyTitle>
-    <Version>1.0.0-preview.3</Version>
+    <Version>1.0.0-beta.1</Version>
     <PackageTags>Microsoft Azure Synapse Access Control;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 

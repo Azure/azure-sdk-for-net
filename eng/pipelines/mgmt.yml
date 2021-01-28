@@ -39,6 +39,7 @@ pr:
     - sdk/cdn/Microsoft.Azure.Management.Cdn
     - sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices
     - sdk/compute/Microsoft.Azure.Management.Compute
+    - sdk/confluent/Microsoft.Azure.Management.Confluent
     - sdk/consumption/Microsoft.Azure.Management.Consumption
     - sdk/containerinstance/Microsoft.Azure.Management.ContainerInstance
     - sdk/containerregistry/Microsoft.Azure.Management.ContainerRegistry
@@ -49,6 +50,7 @@ pr:
     - sdk/customproviders/Microsoft.Azure.Management.CustomProviders
     - sdk/databox/Microsoft.Azure.Management.DataBox
     - sdk/databoxedge/Microsoft.Azure.Management.DataBoxEdge
+    - sdk/datadog/Microsoft.Azure.Management.Datadog
     - sdk/datafactory/Microsoft.Azure.Management.DataFactory
     - sdk/datalake-analytics/Microsoft.Azure.Management.DataLake.Analytics
     - sdk/datalake-store/Microsoft.Azure.Management.DataLake.Store
@@ -115,14 +117,16 @@ pr:
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     - sdk/redis/Microsoft.Azure.Management.RedisCache
-    - sdk/regionmove/Microsoft.Azure.Management.Migrate
+    - sdk/redisenterprise/Microsoft.Azure.Management.RedisEnterpriseCache
     - sdk/relay/Microsoft.Azure.Management.Relay
     - sdk/reservations/Microsoft.Azure.Management.Reservations
     - sdk/resourcegraph/Microsoft.Azure.Management.ResourceGraph
+    - sdk/resourcemover/Microsoft.Azure.Management.Migrate
     - sdk/resources/Microsoft.Azure.Management.Resource
     - sdk/scheduler/Microsoft.Azure.Management.Scheduler
     - sdk/search/Microsoft.Azure.Management.Search
     - sdk/securitycenter/Microsoft.Azure.Management.SecurityCenter
+    - sdk/securityinsights/Microsoft.Azure.Management.SecurityInsights
     - sdk/servermanagement/Microsoft.Azure.Management.ServerManagement
     - sdk/servicebus/Microsoft.Azure.Management.ServiceBus
     - sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric
@@ -140,6 +144,7 @@ pr:
     - sdk/synapse/Microsoft.Azure.Management.Synapse
     - sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager
     - sdk/websites/Microsoft.Azure.Management.WebSites
+    - sdk/workloadmonitor/Microsoft.Azure.Management.WorkloadMonitor
     - eng/pipelines/mgmt.yml
     - eng/pipelines/templates/jobs/archetype-sdk-mgmt.yml
 

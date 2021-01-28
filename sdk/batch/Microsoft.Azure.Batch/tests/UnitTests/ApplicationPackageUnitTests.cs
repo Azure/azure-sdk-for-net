@@ -29,41 +29,39 @@ namespace Azure.Batch.Unit.Tests
 
             IList<string> versions = new[] { "1.0", "1.5" };
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
-                    {
-                        var request = (Protocol.BatchRequest<Models.ApplicationListOptions, AzureOperationResponse<IPage<Models.ApplicationSummary>, Models.ApplicationListHeaders>>)baseRequest;
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
+                {
+                    var request = (Protocol.BatchRequest<Models.ApplicationListOptions, AzureOperationResponse<IPage<Models.ApplicationSummary>, Models.ApplicationListHeaders>>)baseRequest;
 
-                        request.ServiceRequestFunc = (token) =>
+                    request.ServiceRequestFunc = (token) =>
+                        {
+                            var response = new AzureOperationResponse<IPage<Models.ApplicationSummary>, Models.ApplicationListHeaders>
                             {
-                                var response = new AzureOperationResponse<IPage<Models.ApplicationSummary>, Models.ApplicationListHeaders>
+                                Body = new FakePage<Models.ApplicationSummary>(new[]
                                 {
-                                    Body = new FakePage<Models.ApplicationSummary>(new[]
-                                    {
                                         new Models.ApplicationSummary
                                             {
                                                 Id = applicationId,
                                                 DisplayName = displayName,
                                                 Versions = versions
                                             },
-                                    })
-                                };
-
-                                return Task.FromResult(response);
+                                })
                             };
-                    });
 
-                IPagedEnumerable<Microsoft.Azure.Batch.ApplicationSummary> applicationSummaries = client.ApplicationOperations.ListApplicationSummaries(additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+                            return Task.FromResult(response);
+                        };
+                });
 
-                Assert.Single(applicationSummaries);
+            IPagedEnumerable<Microsoft.Azure.Batch.ApplicationSummary> applicationSummaries = client.ApplicationOperations.ListApplicationSummaries(additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
-                var applicationSummary = applicationSummaries.First();
-                Assert.Equal(applicationId, applicationSummary.Id);
-                Assert.Equal(displayName, applicationSummary.DisplayName);
-                Assert.Equal(versions.First(), applicationSummary.Versions.First());
-                Assert.Equal(versions.Count, applicationSummary.Versions.ToList().Count);
-            }
+            Assert.Single(applicationSummaries);
+
+            var applicationSummary = applicationSummaries.First();
+            Assert.Equal(applicationId, applicationSummary.Id);
+            Assert.Equal(displayName, applicationSummary.DisplayName);
+            Assert.Equal(versions.First(), applicationSummary.Versions.First());
+            Assert.Equal(versions.Count, applicationSummary.Versions.ToList().Count);
         }
 
         [Fact]
@@ -75,37 +73,35 @@ namespace Azure.Batch.Unit.Tests
 
             IList<string> versions = new[] { "1.0", "1.5" };
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
-                    baseRequest =>
-                    {
-                        var request = (Protocol.BatchRequest<Models.ApplicationGetOptions, AzureOperationResponse<Models.ApplicationSummary, Models.ApplicationGetHeaders>>)baseRequest;
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
+                baseRequest =>
+                {
+                    var request = (Protocol.BatchRequest<Models.ApplicationGetOptions, AzureOperationResponse<Models.ApplicationSummary, Models.ApplicationGetHeaders>>)baseRequest;
 
-                        request.ServiceRequestFunc = (token) =>
+                    request.ServiceRequestFunc = (token) =>
+                        {
+                            var response = new AzureOperationResponse<Models.ApplicationSummary, Models.ApplicationGetHeaders>
                             {
-                                var response = new AzureOperationResponse<Models.ApplicationSummary, Models.ApplicationGetHeaders>
+                                Body = new Models.ApplicationSummary
                                 {
-                                    Body = new Models.ApplicationSummary
-                                    {
-                                        Id = applicationId,
-                                        DisplayName = displayName,
-                                        Versions = versions
-                                    }
-                                };
-
-                                return Task.FromResult(response);
+                                    Id = applicationId,
+                                    DisplayName = displayName,
+                                    Versions = versions
+                                }
                             };
-                    });
+
+                            return Task.FromResult(response);
+                        };
+                });
 
 
-                Microsoft.Azure.Batch.ApplicationSummary applicationSummary = client.ApplicationOperations.GetApplicationSummaryAsync(applicationId, additionalBehaviors: new List<BatchClientBehavior> { interceptor }).Result;
-                Assert.Equal(applicationId, applicationSummary.Id);
-                Assert.Equal(displayName, applicationSummary.DisplayName);
+            Microsoft.Azure.Batch.ApplicationSummary applicationSummary = client.ApplicationOperations.GetApplicationSummaryAsync(applicationId, additionalBehaviors: new List<BatchClientBehavior> { interceptor }).Result;
+            Assert.Equal(applicationId, applicationSummary.Id);
+            Assert.Equal(displayName, applicationSummary.DisplayName);
 
 
-                Assert.Equal(versions.First(), applicationSummary.Versions.First());
-            }
+            Assert.Equal(versions.First(), applicationSummary.Versions.First());
         }
 
         [Fact]
@@ -117,34 +113,32 @@ namespace Azure.Batch.Unit.Tests
 
             IList<string> versions = new[] { "1.0", "1.5" };
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
             {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
+                var request = (Protocol.BatchRequest<Models.ApplicationGetOptions, AzureOperationResponse<Models.ApplicationSummary, Models.ApplicationGetHeaders>>)baseRequest;
+
+                request.ServiceRequestFunc = (token) =>
                 {
-                    var request = (Protocol.BatchRequest<Models.ApplicationGetOptions, AzureOperationResponse<Models.ApplicationSummary, Models.ApplicationGetHeaders>>)baseRequest;
-
-                    request.ServiceRequestFunc = (token) =>
+                    var response = new AzureOperationResponse<Models.ApplicationSummary, Models.ApplicationGetHeaders>
                     {
-                        var response = new AzureOperationResponse<Models.ApplicationSummary, Models.ApplicationGetHeaders>
+                        Body = new Models.ApplicationSummary
                         {
-                            Body = new Models.ApplicationSummary
-                            {
-                                Id = applicationId,
-                                DisplayName = displayName,
-                                Versions = versions
-                            }
-                        };
-
-                        return Task.FromResult(response);
+                            Id = applicationId,
+                            DisplayName = displayName,
+                            Versions = versions
+                        }
                     };
-                });
+
+                    return Task.FromResult(response);
+                };
+            });
 
 
-                Microsoft.Azure.Batch.ApplicationSummary applicationSummary = client.ApplicationOperations.GetApplicationSummary(applicationId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
-                Assert.Equal(applicationId, applicationSummary.Id);
-                Assert.Equal(displayName, applicationSummary.DisplayName);
-                Assert.Equal(versions.First(), applicationSummary.Versions.First());
-            }
+            Microsoft.Azure.Batch.ApplicationSummary applicationSummary = client.ApplicationOperations.GetApplicationSummary(applicationId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+            Assert.Equal(applicationId, applicationSummary.Id);
+            Assert.Equal(displayName, applicationSummary.DisplayName);
+            Assert.Equal(versions.First(), applicationSummary.Versions.First());
         }
 
         [Fact]
@@ -162,12 +156,12 @@ namespace Azure.Batch.Unit.Tests
             var requests = new List<Uri>();
             var results = new List<Microsoft.Azure.Batch.ApplicationSummary>();
 
-            Func<Uri, string> responseBody = uri =>
+            string responseBody(Uri uri)
             {
                 requests.Add(uri);
 
                 return fakeResponse;
-            };
+            }
 
             using (BatchClient client = BatchClient.Open(FakeClient.Create(HttpStatusCode.OK, responseBody)))
             {
@@ -210,17 +204,17 @@ namespace Azure.Batch.Unit.Tests
             var requests = new List<Uri>();
             var results = new List<Microsoft.Azure.Batch.ApplicationSummary>();
 
-            Func<Uri, string> responseBody = uri =>
-                {
-                    requests.Add(uri);
+            string responseBody(Uri uri)
+            {
+                requests.Add(uri);
 
-                    switch (uri.AbsoluteUri)
-                    {
-                        case "http://skip1/": return fakeResponse2;
-                        case "http://skip2/": return fakeResponse3;
-                        default: return fakeResponse1;
-                    }
+                return uri.AbsoluteUri switch
+                {
+                    "http://skip1/" => fakeResponse2,
+                    "http://skip2/" => fakeResponse3,
+                    _ => fakeResponse1,
                 };
+            }
 
             using (BatchClient client = BatchClient.Open(FakeClient.Create(HttpStatusCode.OK, responseBody)))
             {

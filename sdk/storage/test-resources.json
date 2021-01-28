@@ -114,7 +114,15 @@
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[concat(variables('primaryAccountName'), '/default')]",
             "properties": {
-                "isVersioningEnabled": true
+                "isVersioningEnabled": true,
+                "lastAccessTimeTrackingPolicy": {
+                    "enable": true,
+                    "name": "AccessTimeTracking",
+                    "trackingGranularityInDays": 1,
+                    "blobType": [
+                        "blockBlob"
+                    ]
+                }
             },
             "dependsOn": [
                 "[variables('primaryAccountName')]"

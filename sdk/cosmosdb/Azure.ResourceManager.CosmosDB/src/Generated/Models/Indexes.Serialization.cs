@@ -42,16 +42,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("dataType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dataType = new DataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("precision"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     precision = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("kind"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     kind = new IndexKind(property.Value.GetString());
                     continue;
                 }

@@ -54,7 +54,6 @@ namespace Azure.Data.Tables
                         // serialize enum as string
                         annotatedDictionary[prop.Name] = enumValue.ToString();
                         break;
-
                 }
             }
 

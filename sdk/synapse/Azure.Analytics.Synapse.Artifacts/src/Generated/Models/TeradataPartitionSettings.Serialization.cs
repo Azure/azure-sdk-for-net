@@ -42,16 +42,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("partitionColumnName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionColumnName = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionUpperBound"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionUpperBound = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionLowerBound"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionLowerBound = property.Value.GetObject();
                     continue;
                 }

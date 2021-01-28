@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("radiusServerScore"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     radiusServerScore = property.Value.GetInt64();
                     continue;
                 }

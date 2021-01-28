@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// <param name="previousQnaId">Previous QnA Id - qnaId of the top
         /// result.</param>
         /// <param name="previousUserQuery">Previous user query.</param>
-        public QueryContextDTO(string previousQnaId = default(string), string previousUserQuery = default(string))
+        public QueryContextDTO(int? previousQnaId = default(int?), string previousUserQuery = default(string))
         {
             PreviousQnaId = previousQnaId;
             PreviousUserQuery = previousUserQuery;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// Gets or sets previous QnA Id - qnaId of the top result.
         /// </summary>
         [JsonProperty(PropertyName = "previousQnaId")]
-        public string PreviousQnaId { get; set; }
+        public int? PreviousQnaId { get; set; }
 
         /// <summary>
         /// Gets or sets previous user query.

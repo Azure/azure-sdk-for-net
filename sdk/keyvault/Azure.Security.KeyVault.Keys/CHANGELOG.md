@@ -1,7 +1,19 @@
 # Release History
 
-## 4.2.0-beta.2 (Unreleased)
+## 4.2.0-beta.4 (Unreleased)
 
+
+## 4.2.0-beta.3 (2020-11-12)
+
+### Added
+
+- Added `KeyType.OctHsm` to support "oct-HSM" key operations.
+- Added AES-GCM and AES-CBC support for encrypting and decrypting, including new `Encrypt` and `Decrypt` overloads.
+- Added support for Secure Key Release including the `Export` method on `KeyClient` and `ReleasePolicy` property on various models.
+
+## 4.2.0-beta.2 (2020-10-06)
+
+- Bug fixes and performance improvements.
 
 ## 4.2.0-beta.1 (2020-09-08)
 

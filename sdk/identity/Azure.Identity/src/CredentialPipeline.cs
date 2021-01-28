@@ -24,6 +24,15 @@ namespace Azure.Identity
             Diagnostics = new ClientDiagnostics(options);
         }
 
+        public CredentialPipeline(Uri authorityHost, HttpPipeline httpPipeline, ClientDiagnostics diagnostics)
+        {
+            AuthorityHost = authorityHost;
+
+            HttpPipeline = httpPipeline;
+
+            Diagnostics = diagnostics;
+        }
+
         public static CredentialPipeline GetInstance(TokenCredentialOptions options)
         {
             return options is null ? s_singleton.Value : new CredentialPipeline(options);

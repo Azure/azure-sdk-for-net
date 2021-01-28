@@ -443,7 +443,6 @@ namespace Azure.Core.Tests
                 base.Dispose(disposing);
                 IsDisposed = true;
             }
-
         }
     }
 }

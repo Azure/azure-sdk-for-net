@@ -45,7 +45,7 @@ namespace Azure.Communication.Sms
         private SmsClient(SmsClientOptions options, ConnectionString connectionString)
             : this(
                   clientDiagnostics: new ClientDiagnostics(options),
-                  pipeline: options.BuildHttpPipline(connectionString),
+                  pipeline: options.BuildHttpPipeline(connectionString),
                   endpointUrl: connectionString.GetRequired("endpoint"),
                   apiVersion: options.ApiVersion)
         { }
@@ -62,7 +62,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual async Task<Response<SendSmsResponse>> SendAsync(PhoneNumber from, PhoneNumber to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendSmsResponse>> SendAsync(PhoneNumberIdentifier from, PhoneNumberIdentifier to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from.Value, nameof(from));
             Argument.AssertNotNullOrEmpty(to.Value, nameof(to));
@@ -81,7 +81,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Response<SendSmsResponse> Send(PhoneNumber from, PhoneNumber to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SendSmsResponse> Send(PhoneNumberIdentifier from, PhoneNumberIdentifier to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from.Value, nameof(from));
             Argument.AssertNotNullOrEmpty(to.Value, nameof(to));
@@ -98,7 +98,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual async Task<Response<SendSmsResponse>> SendAsync(PhoneNumber from, IEnumerable<PhoneNumber> to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendSmsResponse>> SendAsync(PhoneNumberIdentifier from, IEnumerable<PhoneNumberIdentifier> to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
             scope.Start();
@@ -124,7 +124,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Response<SendSmsResponse> Send(PhoneNumber from, IEnumerable<PhoneNumber> to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SendSmsResponse> Send(PhoneNumberIdentifier from, IEnumerable<PhoneNumberIdentifier> to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
             scope.Start();

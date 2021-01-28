@@ -106,7 +106,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public ShareLeaseClient(ShareClient client, string leaseId = null)
+        internal ShareLeaseClient(ShareClient client, string leaseId = null)
         {
             _share = client ?? throw Errors.ArgumentNull(nameof(client));
             LeaseId = leaseId ?? CreateUniqueLeaseId();
@@ -358,7 +358,6 @@ namespace Azure.Storage.Files.Shares.Specialized
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -497,7 +496,6 @@ namespace Azure.Storage.Files.Shares.Specialized
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -644,7 +642,6 @@ namespace Azure.Storage.Files.Shares.Specialized
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -791,7 +788,6 @@ namespace Azure.Storage.Files.Shares.Specialized
                             .ConfigureAwait(false))
                             .ToLease();
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -924,7 +920,6 @@ namespace Azure.Storage.Files.Shares.Specialized
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
-
                 }
                 catch (Exception ex)
                 {

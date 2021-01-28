@@ -13,28 +13,25 @@ namespace Azure.Identity.Tests.Mock
         public MockManagedIdentityClient()
             : this(null)
         {
-
         }
 
         public MockManagedIdentityClient(CredentialPipeline pipeline)
             : this(pipeline, null)
         {
-
         }
 
         public MockManagedIdentityClient(CredentialPipeline pipeline, string clientId)
             : base(pipeline, clientId)
         {
-
         }
-        public Func<IManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
+        public Func<ManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
 
         public Func<AccessToken> TokenFactory { get; set; }
 
-        public override ValueTask<AccessToken> AuthenticateAsync(bool async, string[] scopes, CancellationToken cancellationToken)
-              => TokenFactory != null ? new ValueTask<AccessToken>(TokenFactory()) : base.AuthenticateAsync(async, scopes, cancellationToken);
+        public override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
+              => TokenFactory != null ? new ValueTask<AccessToken>(TokenFactory()) : base.AuthenticateAsync(async, context, cancellationToken);
 
-        private protected override ValueTask<IManagedIdentitySource> GetManagedIdentitySourceAsync(bool async, CancellationToken cancellationToken)
-            => ManagedIdentitySourceFactory != null ? new ValueTask<IManagedIdentitySource>(ManagedIdentitySourceFactory()) : base.GetManagedIdentitySourceAsync(async, cancellationToken);
+        private protected override ValueTask<ManagedIdentitySource> GetManagedIdentitySourceAsync(bool async, CancellationToken cancellationToken)
+            => ManagedIdentitySourceFactory != null ? new ValueTask<ManagedIdentitySource>(ManagedIdentitySourceFactory()) : base.GetManagedIdentitySourceAsync(async, cancellationToken);
     }
 }

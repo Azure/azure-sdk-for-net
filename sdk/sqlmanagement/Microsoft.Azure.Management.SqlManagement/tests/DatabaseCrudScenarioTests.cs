@@ -107,7 +107,7 @@ namespace Sql.Tests
                 {
                     Location = server.Location,
                     Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4", "Hyperscale"),
-                    ReadReplicaCount = 4,
+                    HighAvailabilityReplicaCount = 4,
                 };
                 var db7 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db7Input);
                 Assert.NotNull(db7);
@@ -231,6 +231,7 @@ namespace Sql.Tests
                 Collation = SqlTestConstants.DefaultCollation,
                 MaxSizeBytes = 2 * 1024L * 1024L * 1024L,
                 Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0),
+                ZoneRedundant = false,
                 Tags = tags,
             };
             var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
@@ -253,6 +254,7 @@ namespace Sql.Tests
             //
             dynamic updateEditionAndSloInput = createModelFunc();
             updateEditionAndSloInput.Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0, "Standard");
+            updateEditionAndSloInput.ZoneRedundant = false;
             var db2 = updateFunc(resourceGroup.Name, server.Name, dbName, updateEditionAndSloInput);
             SqlManagementTestUtilities.ValidateDatabase(updateEditionAndSloInput, db2, dbName);
 

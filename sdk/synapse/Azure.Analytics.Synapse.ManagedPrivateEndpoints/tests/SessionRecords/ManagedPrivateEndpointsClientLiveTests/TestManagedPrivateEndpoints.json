@@ -1,0 +1,275 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://testsynapsevnet.dev.azuresynapse.net/managedVirtualNetworks/default/managedPrivateEndpoints/myPrivateEndpoint7882?api-version=2019-06-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "201",
+        "Content-Type": "application/json",
+        "traceparent": "00-e1f7ec07d3554d4ab5fe1663356668cb-a78204e0a94ffa43-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201028.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "2c77d15414b442a08b40e097de18b62b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "privateLinkResourceId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/myStorageAccount20002",
+          "groupId": "blob"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Headers": "Location",
+        "Access-Control-Expose-Headers": "Location",
+        "Content-Length": "641",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Oct 2020 06:30:30 GMT",
+        "Location": "https://testsynapsevnet.dev.azuresynapse.net/managedVirtualNetworks/default/managedPrivateEndpoints/myPrivateEndpoint7882?api-version=2019-06-01-preview",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "2c77d15414b442a08b40e097de18b62b",
+        "x-ms-request-id": "8aba1256-027e-4c35-af56-b2727a4ff0b8"
+      },
+      "ResponseBody": {
+        "name": "myPrivateEndpoint7882",
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet/managedVirtualNetworks/default/managedPrivateEndpoints/myPrivateEndpoint7882",
+        "type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+        "properties": {
+          "privateLinkResourceId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/myStorageAccount20002",
+          "groupId": "blob",
+          "provisioningState": "Provisioning",
+          "connectionState": {},
+          "isReserved": false,
+          "fqdns": [],
+          "isCompliant": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://testsynapsevnet.dev.azuresynapse.net/managedVirtualNetworks/default/managedPrivateEndpoints?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201028.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "7dd93c177c8a7a148f5d7fa3a0de7f85",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2268",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Oct 2020 06:30:30 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "7dd93c177c8a7a148f5d7fa3a0de7f85",
+        "x-ms-request-id": "7a5d76c7-7b6d-46b4-a909-4a9802e2d7d0"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "myPrivateEndpoint7882",
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet/managedVirtualNetworks/default/managedPrivateEndpoints/myPrivateEndpoint7882",
+            "type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+            "properties": {
+              "privateLinkResourceId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/myStorageAccount20002",
+              "groupId": "blob",
+              "provisioningState": "Provisioning",
+              "connectionState": {},
+              "isReserved": false,
+              "fqdns": [],
+              "isCompliant": false
+            }
+          },
+          {
+            "name": "synapse-ws-sql--testsynapsevnet",
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet/managedVirtualNetworks/default/managedPrivateEndpoints/synapse-ws-sql--testsynapsevnet",
+            "type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+            "properties": {
+              "privateLinkResourceId": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet",
+              "groupId": "sql",
+              "provisioningState": "Succeeded",
+              "connectionState": {
+                "status": "Approved",
+                "description": "Approved by Microsoft.Synapse Resource Provider",
+                "actionsRequired": ""
+              },
+              "isReserved": true,
+              "fqdns": [
+                "testsynapsevnet.sql.azuresynapse.net"
+              ],
+              "isCompliant": false
+            }
+          },
+          {
+            "name": "synapse-ws-sqlOnDemand--testsynapsevnet",
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet/managedVirtualNetworks/default/managedPrivateEndpoints/synapse-ws-sqlOnDemand--testsynapsevnet",
+            "type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+            "properties": {
+              "privateLinkResourceId": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet",
+              "groupId": "sqlOnDemand",
+              "provisioningState": "Succeeded",
+              "connectionState": {
+                "status": "Approved",
+                "description": "Approved by Microsoft.Synapse Resource Provider",
+                "actionsRequired": ""
+              },
+              "isReserved": true,
+              "fqdns": [
+                "testsynapsevnet-ondemand.sql.azuresynapse.net"
+              ],
+              "isCompliant": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://testsynapsevnet.dev.azuresynapse.net/managedVirtualNetworks/default/managedPrivateEndpoints/myPrivateEndpoint7882?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7777f9faabefae44b8c48f71fae45d61-b4c5c726fa9ed94d-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201028.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "9f986633d3731b3d46d7b5c6afcf59f9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Oct 2020 06:30:30 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "9f986633d3731b3d46d7b5c6afcf59f9",
+        "x-ms-request-id": "97bd09df-a858-4a7d-9a9d-30b49611ad4e"
+      },
+      "ResponseBody": {
+        "name": "myPrivateEndpoint7882",
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet/managedVirtualNetworks/default/managedPrivateEndpoints/myPrivateEndpoint7882",
+        "type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+        "properties": {
+          "privateLinkResourceId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/myStorageAccount20002",
+          "groupId": "blob",
+          "provisioningState": "Failed",
+          "connectionState": {},
+          "isReserved": false,
+          "fqdns": [],
+          "isCompliant": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://testsynapsevnet.dev.azuresynapse.net/managedVirtualNetworks/default/managedPrivateEndpoints/myPrivateEndpoint7882?api-version=2019-06-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4d7ff91613e5334fac22cc0a3feec41d-8c35445353b6af4b-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201028.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "8ed15d129b17d775bcfc9c5695fda1ad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 29 Oct 2020 06:30:31 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "8ed15d129b17d775bcfc9c5695fda1ad",
+        "x-ms-request-id": "6391e363-5ff3-44ed-bd2a-a4e7052d873c"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://testsynapsevnet.dev.azuresynapse.net/managedVirtualNetworks/default/managedPrivateEndpoints?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201028.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "78635bc0178043b8ffbe36b3c74ecbbf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1626",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Oct 2020 06:30:31 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "78635bc0178043b8ffbe36b3c74ecbbf",
+        "x-ms-request-id": "d0709634-4fbc-4cb3-8b79-d90fc8b69c7c"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "synapse-ws-sql--testsynapsevnet",
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet/managedVirtualNetworks/default/managedPrivateEndpoints/synapse-ws-sql--testsynapsevnet",
+            "type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+            "properties": {
+              "privateLinkResourceId": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet",
+              "groupId": "sql",
+              "provisioningState": "Succeeded",
+              "connectionState": {
+                "status": "Approved",
+                "description": "Approved by Microsoft.Synapse Resource Provider",
+                "actionsRequired": ""
+              },
+              "isReserved": true,
+              "fqdns": [
+                "testsynapsevnet.sql.azuresynapse.net"
+              ],
+              "isCompliant": false
+            }
+          },
+          {
+            "name": "synapse-ws-sqlOnDemand--testsynapsevnet",
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet/managedVirtualNetworks/default/managedPrivateEndpoints/synapse-ws-sqlOnDemand--testsynapsevnet",
+            "type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+            "properties": {
+              "privateLinkResourceId": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet",
+              "groupId": "sqlOnDemand",
+              "provisioningState": "Succeeded",
+              "connectionState": {
+                "status": "Approved",
+                "description": "Approved by Microsoft.Synapse Resource Provider",
+                "actionsRequired": ""
+              },
+              "isReserved": true,
+              "fqdns": [
+                "testsynapsevnet-ondemand.sql.azuresynapse.net"
+              ],
+              "isCompliant": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapsevnet.dev.azuresynapse.net",
+    "RandomSeed": "1449146035"
+  }
+}

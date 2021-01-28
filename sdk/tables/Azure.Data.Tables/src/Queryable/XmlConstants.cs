@@ -249,7 +249,7 @@ namespace Azure.Data.Tables.Queryable
         internal const string LiteralPrefixBinary = "binary";
         internal const string LiteralPrefixDateTime = "datetime";
         internal const string LiteralPrefixGuid = "guid";
-        internal const string XmlBinaryPrefix = "X";
+        internal const char XmlBinaryPrefix = 'X';
         internal const string XmlDecimalLiteralSuffix = "M";
         internal const string XmlInt64LiteralSuffix = "L";
         internal const string XmlSingleLiteralSuffix = "f";

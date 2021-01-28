@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 {
     /// <summary>
     ///   Serves as an ETW event source for logging of information about
-    ///   Entitys client.
+    ///   Entity's client.
     /// </summary>
     ///
     /// <remarks>
@@ -37,13 +37,13 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>
         ///   Prevents an instance of the <see cref="ServiceBusEventSource"/> class from being
         ///   created outside the scope of the <see cref="Log" /> instance, as well as setting up the
-        ///   integration with AzureEventSourceListenter.
+        ///   integration with AzureEventSourceListener.
         /// </summary>
         private ServiceBusEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
         {
         }
 
-        // parameterless constructor for mocking
+        // Parameterless constructor for mocking
         internal ServiceBusEventSource() { }
 
         #region event constants
@@ -186,6 +186,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorMessageHandlerCompleteEvent = 103;
         internal const int ProcessorMessageHandlerExceptionEvent = 104;
 
+        internal const int RequestAuthorizationStartEvent = 105;
+        internal const int RequestAuthorizationCompleteEvent = 106;
+        internal const int RequestAuthorizationExceptionEvent = 107;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -285,12 +289,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [NonEvent]
-        public virtual void ReceiveDeferredMessageStart(string identifier, IList<long> sequenceNumbers)
+        public virtual void ReceiveDeferredMessageStart(string identifier, long[] sequenceNumbers)
         {
             if (IsEnabled())
             {
                 var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
-                ReceiveDeferredMessageStartCore(identifier, sequenceNumbers.Count, formattedSequenceNumbers);
+                ReceiveDeferredMessageStartCore(identifier, sequenceNumbers.Length, formattedSequenceNumbers);
             }
         }
 
@@ -1094,6 +1098,33 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ManagementLinkClosedEvent, identifier, linkException);
+            }
+        }
+
+        [Event(RequestAuthorizationStartEvent, Level = EventLevel.Verbose, Message = "{0}: Requesting authorization to {1}")]
+        public virtual void RequestAuthorizationStart(string identifier, string endpoint)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(RequestAuthorizationStartEvent, identifier, endpoint);
+            }
+        }
+
+        [Event(RequestAuthorizationCompleteEvent, Level = EventLevel.Verbose, Message = "{0}: Authorization to {1} complete. Expiration time: {2}")]
+        public virtual void RequestAuthorizationComplete(string identifier, string endpoint, string expiration)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(RequestAuthorizationCompleteEvent, identifier, endpoint, expiration);
+            }
+        }
+
+        [Event(RequestAuthorizationExceptionEvent, Level = EventLevel.Verbose, Message = "{0}: An exception occured while requesting authorization to {1}. Exception: {2}.")]
+        public virtual void RequestAuthorizationException(string identifier, string endpoint, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(RequestAuthorizationExceptionEvent, identifier, endpoint, exception);
             }
         }
         #endregion

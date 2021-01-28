@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -74,30 +79,60 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("source"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             source = ConnectionMonitorSource.DeserializeConnectionMonitorSource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("destination"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             destination = ConnectionMonitorDestination.DeserializeConnectionMonitorDestination(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoStart"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             autoStart = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("monitoringIntervalInSeconds"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             monitoringIntervalInSeconds = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("endpoints"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ConnectionMonitorEndpoint> array = new List<ConnectionMonitorEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -108,6 +143,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("testConfigurations"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ConnectionMonitorTestConfiguration> array = new List<ConnectionMonitorTestConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -118,6 +158,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("testGroups"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ConnectionMonitorTestGroup> array = new List<ConnectionMonitorTestGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -128,6 +173,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("outputs"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ConnectionMonitorOutput> array = new List<ConnectionMonitorOutput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -143,11 +193,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
@@ -158,6 +218,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("connectionMonitorType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             connectionMonitorType = new ConnectionMonitorType(property0.Value.GetString());
                             continue;
                         }

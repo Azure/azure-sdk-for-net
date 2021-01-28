@@ -44,7 +44,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="poolId">poolId</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public CapacityPool(string location, long size, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string poolId = default(string), string provisioningState = default(string))
+        /// <param name="totalThroughputMibps">Total throughput of pool in
+        /// Mibps</param>
+        /// <param name="utilizedThroughputMibps">Utilized throughput of pool
+        /// in Mibps</param>
+        /// <param name="qosType">qosType</param>
+        public CapacityPool(string location, long size, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string poolId = default(string), string provisioningState = default(string), double? totalThroughputMibps = default(double?), double? utilizedThroughputMibps = default(double?), string qosType = default(string))
         {
             Location = location;
             Id = id;
@@ -55,6 +60,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
             Size = size;
             ServiceLevel = serviceLevel;
             ProvisioningState = provisioningState;
+            TotalThroughputMibps = totalThroughputMibps;
+            UtilizedThroughputMibps = utilizedThroughputMibps;
+            QosType = qosType;
             CustomInit();
         }
 
@@ -127,6 +135,27 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets total throughput of pool in Mibps
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.totalThroughputMibps")]
+        public double? TotalThroughputMibps { get; private set; }
+
+        /// <summary>
+        /// Gets utilized throughput of pool in Mibps
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.utilizedThroughputMibps")]
+        public double? UtilizedThroughputMibps { get; private set; }
+
+        /// <summary>
+        /// Gets or sets qosType
+        /// </summary>
+        /// <remarks>
+        /// The qos type of the pool. Possible values include: 'Auto', 'Manual'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.qosType")]
+        public string QosType { get; set; }
 
         /// <summary>
         /// Validate the object.

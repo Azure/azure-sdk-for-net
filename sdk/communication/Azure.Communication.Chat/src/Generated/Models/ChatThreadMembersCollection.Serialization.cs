@@ -21,6 +21,11 @@ namespace Azure.Communication.Chat
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ChatThreadMemberInternal> array = new List<ChatThreadMemberInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

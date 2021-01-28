@@ -257,7 +257,6 @@ namespace Azure.Core
 
         private DynamicJson GetPropertyValue(string propertyName)
         {
-
             if (EnsureObject().TryGetValue(propertyName, out DynamicJson element))
             {
                 return element;
@@ -371,7 +370,6 @@ namespace Azure.Core
             }
         }
 
-
         /// <summary>
         ///
         /// </summary>
@@ -445,7 +443,6 @@ namespace Azure.Core
         public static explicit operator float(DynamicJson json) => json.GetFloat();
         public static explicit operator double(DynamicJson json) => json.GetDouble();
 
-
         public static explicit operator bool?(DynamicJson json) => json._kind == JsonValueKind.Null ? (bool?)null : json.GetBoolean();
         public static explicit operator int?(DynamicJson json) => json._kind == JsonValueKind.Null ? (int?)null : json.GetIn32();
         public static explicit operator long?(DynamicJson json) => json._kind == JsonValueKind.Null ? (long?)null : json.GetLong();
@@ -518,16 +515,16 @@ namespace Azure.Core
             return JsonSerializer.Deserialize<T>(ToString(), options);
         }
 
-        public T Deserialize<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
+        public T? Deserialize<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
         {
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(ToString()));
-            return (T) serializer.Deserialize(stream, typeof(T), cancellationToken);
+            return (T?)serializer.Deserialize(stream, typeof(T), cancellationToken);
         }
 
-        public async Task<T> DeserializeAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
+        public async Task<T?> DeserializeAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
         {
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(ToString()));
-            return (T) await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false);
+            return (T?)(await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false))!;
         }
 
         private struct Number
@@ -585,6 +582,5 @@ namespace Azure.Core
                 return _double;
             }
         }
-
     }
 }

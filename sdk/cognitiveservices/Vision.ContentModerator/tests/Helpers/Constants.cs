@@ -394,7 +394,7 @@ namespace ContentModeratorTests
 
 	#endregion
 
-   
+
 	#endregion
 
 	public  static class Constants
@@ -403,9 +403,9 @@ namespace ContentModeratorTests
 
 
         #region Declarations
-        // variables 
+        // variables
         public static string ContentModeratorSubscriptionKey= "", ReviewAPISubscriptionKey,TeamName="TeamNov2017";
-        
+
         // optional Parameters
         public static BodyModel  AddImage, matchImage ;
         //for Add Transcripts
@@ -414,9 +414,9 @@ namespace ContentModeratorTests
         public static string label;
         public static int tag, TermOffset=0, TermLimit = 50;
         public static List<string> tags;
-        
-		public static readonly string ImageForModeration = "https://pbs.twimg.com/media/BfopodJCUAAjmkU.jpg:large"; 
-		public static readonly string TextForModeration = "Crappy"; 
+
+		public static readonly string ImageForModeration = "https://pbs.twimg.com/media/BfopodJCUAAjmkU.jpg:large";
+		public static readonly string TextForModeration = "Crappy";
 		public static readonly string VideoForModeration = "https://rvdevmediaservicetest.streaming.mediaservices.windows.net/f7f073c3-66e5-436d-acee-827d3437df29/Roar.ism/manifest";
 		public static List<VideoFrameBodyItemMetadataItem> vdoFrmMetadata = new List<VideoFrameBodyItemMetadataItem>()
 		{
@@ -432,7 +432,7 @@ namespace ContentModeratorTests
 					new CreateVideoReviewsBodyItemMetadataItem("a","False"),
 					new CreateVideoReviewsBodyItemMetadataItem("racyScore","0.151"),
 					new CreateVideoReviewsBodyItemMetadataItem("ExternalId","Video1.mp4")
-					
+
 		};
 		public static List<TranscriptModerationBodyItemTermsItem> transcriptTermsList = new List<TranscriptModerationBodyItemTermsItem>()
 		{
@@ -461,10 +461,9 @@ namespace ContentModeratorTests
 				}
 				return tList;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-
-				throw e;
+				throw;
 			}
 		}
 		public static CreateVideoReviewsBodyItem GenerateVideoReviewBody(ReviewStatus rs = ReviewStatus.PENDING)
@@ -481,9 +480,9 @@ namespace ContentModeratorTests
 				cbi.CallbackEndpoint = "";
 				return cbi;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-				throw e;
+				throw;
 			}
 		}
 
@@ -497,9 +496,9 @@ namespace ContentModeratorTests
 				cvri.Add(new CreateVideoReviewsBodyItemVideoFramesItem("frm4", 25, "http://cvs-docs.azurewebsites.net/test-data/A1.jpg", new List<CreateVideoReviewsBodyItemVideoFramesItemReviewerResultTagsItem>(), new List<CreateVideoReviewsBodyItemVideoFramesItemMetadataItem>() { new CreateVideoReviewsBodyItemVideoFramesItemMetadataItem("apiScoreVal", "0.206"), new CreateVideoReviewsBodyItemVideoFramesItemMetadataItem("a", "False") }));
 				return cvri;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-				throw e;
+				throw;
 			}
 
 		}
@@ -526,20 +525,19 @@ namespace ContentModeratorTests
                 }
 				return fList;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-
-				throw e;
+				throw;
 			}
 
-		}        
+		}
 		public static Body GenerateRequestBody()
 		{
 			Body b = new Body();
 			try
 			{
 				b.Name = "test";
-				return b; 
+				return b;
 			}
 			catch (Exception e )
 			{
@@ -554,15 +552,15 @@ namespace ContentModeratorTests
 			try
 			{
 				ContentModeratorClient client = new ContentModeratorClient(new ApiKeyServiceClientCredentials(ReviewAPISubscriptionKey));
-                
+
                 client.Endpoint = "https://southeastasia.api.cognitive.microsoft.com";
-               
+
                 return client;
 
 			}
-			catch (Exception w)
+			catch (Exception)
 			{
-				throw w;
+				throw;
 			}
 		}
         public static ContentModeratorClient GenerateClient(ReviewAPI api, DelegatingHandler handler)
@@ -576,9 +574,9 @@ namespace ContentModeratorTests
                 return client;
 
             }
-            catch (Exception w)
+            catch (Exception)
             {
-                throw w;
+                throw;
             }
         }
 
@@ -587,7 +585,7 @@ namespace ContentModeratorTests
 		{
 			ReviewResponses rr = new ReviewResponses();
 			Utilities u = new Utilities();
-			Stream zipFramesStream; 
+			Stream zipFramesStream;
             string s = @"
                 [
                 {""Timestamp"":""5"",""FrameImage"":""201708vc884ee3ad69e439eaaf5e57940c2f7a2_9.png"", ""Metadata"":[{""Key"":""adultScore"",""Value"":""0.0040786""},{""Key"":""a"",""Value"":""False""},{""Key"":""racyScore"",""Value"":""0.101146""},{""Key"":""r"",""Value"":""False""},{""Key"":""ExternalId"",""Value"":""testone.png""}],""ReviewerResultTags"":[], ""FrameImageBytes"":[]},
@@ -599,7 +597,7 @@ namespace ContentModeratorTests
 
 			try
 			{
-			   
+
 				zipFramesStream = new FileStream(Path.Combine(TestBase.currentExecutingDirectory, "RoarFrames.zip"), FileMode.Open, FileAccess.Read);
 				switch (api)
 				{
@@ -638,9 +636,9 @@ namespace ContentModeratorTests
 				rr.InnerException = e;
 				return rr;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-				throw e;
+				throw;
 			}
 		}
 
@@ -758,7 +756,7 @@ namespace ContentModeratorTests
                         break;
                     case ReviewAPI.WORKFLOW_GETALL:
                         break;
-                    
+
                     case ReviewAPI.PUBLISH_VIDEO:
                         var tempPusblishVideo = client.Reviews.PublishVideoReviewWithHttpMessagesAsync(teamName, reviewId);
                         u.WaitUntilCompleted(tempPusblishVideo);
@@ -825,9 +823,9 @@ namespace ContentModeratorTests
                 return client;
 
 			}
-			catch (Exception w)
+			catch (Exception)
 			{
-				throw w;
+				throw;
 			}
 		}
 
@@ -841,23 +839,22 @@ namespace ContentModeratorTests
                 return client;
 
             }
-            catch (Exception w)
+            catch (Exception)
             {
-                throw w;
+                throw;
             }
         }
         public static BodyModel  GetImageURL(DataRepresentation dr, string value)
 		{
 			try
-			{ 
+			{
 
 				return new BodyModel (dr.GetDescription(), value);
 
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-
-				throw e;
+				throw;
 			}
 
 
@@ -873,14 +870,13 @@ namespace ContentModeratorTests
 				b.Name = $"BVT{c.GetDescription()}List" + num;
 				b.Description = $"BVT{c.GetDescription()}List" + num;
                 b.Metadata = new Dictionary<string, string>();
-                b.Metadata["Key One"] = $"BVT{c.GetDescription()}ListKeyNote1" + num; 
-				b.Metadata["Key Two"] = $"BVT{c.GetDescription()}ListKeyNote2" + num; 
-				return b; 
+                b.Metadata["Key One"] = $"BVT{c.GetDescription()}ListKeyNote1" + num;
+				b.Metadata["Key Two"] = $"BVT{c.GetDescription()}ListKeyNote2" + num;
+				return b;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-
-				throw e;
+				throw;
 			}
 		}
 
@@ -901,8 +897,8 @@ namespace ContentModeratorTests
 			try
 			{
 				//string tc = "Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052 <HTML>HTML tags</HTML>";
-				
-				
+
+
 				TestBase.wait(2);
 
 				switch (api)
@@ -939,11 +935,10 @@ namespace ContentModeratorTests
                 r.InnerException = e;
                 return r;
             }
-            catch (Exception e)
-			{
-
-				throw e;
-			}
+            catch (Exception)
+            {
+                throw;
+            }
 
 		}
 
@@ -1040,9 +1035,9 @@ namespace ContentModeratorTests
 			Responses r = new Responses();
 			Utilities u = new Utilities();
 			TestBase.wait(2);
-   
+
    try
-            { 
+            {
                 switch (api)
 				{
                     case ContentModeratorAPI.ADD_IMAGE:
@@ -1113,14 +1108,14 @@ namespace ContentModeratorTests
 				r.InnerException = e;
 				return r;
 			}
-			catch (Exception ee)
+			catch (Exception)
 			{
 
-				throw ee;
+				throw;
 			}
 		}
 
-        
+
 
 		/// <summary>
 		/// This method is for Listmanagement apis
@@ -1137,10 +1132,10 @@ namespace ContentModeratorTests
 		{
 			Responses r = new Responses();
 			Utilities u = new Utilities();
-			
+
 			try
 
-			{ 
+			{
 				TestBase.wait(2);
 			switch (api)
 				{
@@ -1282,10 +1277,9 @@ namespace ContentModeratorTests
 				r.InnerException = ee;
 				return r;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-
-				throw e;
+				throw;
 			}
 
 		}

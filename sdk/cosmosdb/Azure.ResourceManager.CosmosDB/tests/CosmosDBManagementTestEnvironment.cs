@@ -7,8 +7,5 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 {
     public class CosmosDBManagementTestEnvironment : TestEnvironment
     {
-        public CosmosDBManagementTestEnvironment() : base("cosmosdb")
-        {
-        }
     }
 }

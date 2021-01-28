@@ -41,7 +41,6 @@ namespace Azure.Messaging.EventHubs.Core
                 Argument.AssertNotNegative(maximumWaitTime.Value, nameof(maximumWaitTime));
             }
 
-
             CancellationToken waitToken = cancellationToken;
             var waitSource = default(CancellationTokenSource);
 

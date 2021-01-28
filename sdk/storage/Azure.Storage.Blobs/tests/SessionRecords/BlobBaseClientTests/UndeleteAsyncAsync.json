@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "327ff90f-affa-5803-28c5-fcc5c5b20353",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "327ff90f-affa-5803-28c5-fcc5c5b20353",
         "x-ms-request-id": "cdd8d76b-101e-009c-3248-09e0c6000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-client-request-id": "574fe4e5-2929-1acb-4c7c-bd7e64cbfbc1",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -60,7 +60,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "574fe4e5-2929-1acb-4c7c-bd7e64cbfbc1",
         "x-ms-request-id": "8f6c9b46-301e-0032-4248-094dd7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E"
     },
@@ -79,7 +79,7 @@
         "x-ms-client-request-id": "e1df6d1a-ac63-cb29-720b-b42cba34c11c",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E2\u003C/Days\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E",
       "StatusCode": 202,
@@ -92,7 +92,7 @@
         ],
         "x-ms-client-request-id": "e1df6d1a-ac63-cb29-720b-b42cba34c11c",
         "x-ms-request-id": "8f6c9b52-301e-0032-4c48-094dd7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -109,7 +109,7 @@
         "x-ms-client-request-id": "f664f63e-19eb-e35d-b42d-488e8b45dc12",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:20 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -123,7 +123,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "f664f63e-19eb-e35d-b42d-488e8b45dc12",
         "x-ms-request-id": "8f6c9b6c-301e-0032-5d48-094dd7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E2\u003C/Days\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E"
     },
@@ -142,7 +142,7 @@
         "x-ms-client-request-id": "daaa09c3-c604-050a-a4e2-cd94097787e1",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:20 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "stPtxM/KMIDOJIY6qGYZLNr9OLCbw308lzt9saqxR1tBO9y4VxhDzP1Jxz97JIASIUPRniA8cO9VsSyTTH/WHNwr\u002BGyKYNTCumuzUfs\u002BwXO7a49n4Kk6BcvtY6bsr4B9c6tjTysTiMFuDuS1iB7zF/C42OHwbjsz8POhnf0u1grrNt1Q2nFHp\u002BPO\u002BNLEhXys\u002BUu1M9aejQRvL143curEQDjZylJAozx/cDH\u002BInZpbmt29aSxeKIzTKjZ4KoSEDT4CbeZ6rsqa1UPNsKloGqOBsHzwH1GEsiVpn2pZ8ORbGD8BRi/z4OwTIlOokLgjqw9StrpH0\u002B3sffvBEQ9gAOSfcphqJpSzzY9QnTz\u002BHCGtBjQaxzpqEwRRVQhz8s/csuGvCR3fuUR63ujrN3aw7mGaU8sbBXmqNV9UGNFMf9r/s\u002BobTtMDjUyv4ChRftvNoKbm2Z7EgW2nxNO\u002Bi6By7p8N60NMlV9OloZ\u002Ba2VRWPZDhnhqpaY7\u002BvJ8s4o/RQHsfPFJQ1OYQQsHmELYRhYIFmwdewVoCEj40fCRD\u002BGVDxGEki6zyBVi6wVtIs1jI7ScdF0eIgo8RDRoUHFix3EpckkxU/QnVE5Wuk/AOuV7la579JtEty0HiE36S3ej/\u002BOUA7CEMc\u002BAtOAOx2e6PElO7PrC5xLVpPtcKcumbQjWsvpsK/c096Oe\u002B3\u002B7Na/FTUvEq1684NjQ/p71KAgEGkfXeBStTdBSGjUXJCvTGm8Lltx/ocHqWdHhm21Yf4\u002BbmqE34/2bF/\u002B7clFpZfzs/eQvqZFrxHhF7R5Ci7KjOZplu4lK2zaxsH7chC9wgPQVNJ1JaNX\u002BL5YosjbfGIxM2Hj2w\u002BozYiLtfflSTwBJFWwqbZbVWdDEZ0vzYmk/0leyj\u002Bv2ub0J4dK6W\u002Brcq\u002BCV31yKtOr1d75n8pxef/\u002B57auhn/9UUpvvIEvEWv3l5/urHULMdR1svRgtTocg62HSwK5/esvhQYzAm1RfMRzAggrgs2K87XhONOLnZsPUznUp8VoPpmzvydv2C5nIzYw7LMx8QDg/VhM18QXpOdrI680fdX/CsNud8KlGhqHehSdWrDn3WI49KpsG2fVmxs/BLR/MqZgMeHww3k9OuI\u002BxVyvekk3g0ZN\u002B4kqku9cmdynZRZmB0duPCnO9xro\u002BrnILlYKJSHRB4BuMTccNp7ykymdltTL170VQT0faYwrZADQYmSYUXS61V2V\u002BNYPUQaL22PxS2Tk/FaY9ePksZ70Qs03TNM5WUG04sB3Nd/nBe82lI0oOhib62YOAFyQ1iO/obUI2AQzUYEiPGmkbcZ2sO/0rR0QzAi0m2FtK1nkJAuct5Qq3izqA0MLBf6v936fl09snCkGrg==",
       "StatusCode": 201,
@@ -160,7 +160,7 @@
         "x-ms-content-crc64": "vkvmPUA68V0=",
         "x-ms-request-id": "8f6c9b6e-301e-0032-5f48-094dd7000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -177,7 +177,7 @@
         "x-ms-client-request-id": "93a97d4b-2c7f-0ea9-a24e-99c1f8921fc5",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:20 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -191,7 +191,7 @@
         "x-ms-client-request-id": "93a97d4b-2c7f-0ea9-a24e-99c1f8921fc5",
         "x-ms-delete-type-permanent": "false",
         "x-ms-request-id": "8f6c9b75-301e-0032-6348-094dd7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -208,7 +208,7 @@
         "x-ms-client-request-id": "8b485f19-f4ce-6962-5fb1-db3b5685458a",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:20 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -221,7 +221,7 @@
         ],
         "x-ms-client-request-id": "8b485f19-f4ce-6962-5fb1-db3b5685458a",
         "x-ms-request-id": "8f6c9b7c-301e-0032-6848-094dd7000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -238,7 +238,7 @@
         "x-ms-client-request-id": "98a7e499-9349-9cf6-1907-4cc1f30b7d3d",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:20 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -252,7 +252,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "98a7e499-9349-9cf6-1907-4cc1f30b7d3d",
         "x-ms-request-id": "cf60bd4a-a01e-007d-7e48-093c83000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E2\u003C/Days\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E"
     },
@@ -271,7 +271,7 @@
         "x-ms-client-request-id": "71a25da1-acde-3041-0cb8-ba76d039882a",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:21 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": "\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E",
       "StatusCode": 202,
@@ -284,7 +284,7 @@
         ],
         "x-ms-client-request-id": "71a25da1-acde-3041-0cb8-ba76d039882a",
         "x-ms-request-id": "cf60bd50-a01e-007d-0248-093c83000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
@@ -301,7 +301,7 @@
         "x-ms-client-request-id": "9620740d-0b69-7a5e-f12d-ee1726c02c2a",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:21 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -315,7 +315,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "9620740d-0b69-7a5e-f12d-ee1726c02c2a",
         "x-ms-request-id": "cf60bd61-a01e-007d-0c48-093c83000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/DeleteRetentionPolicy\u003E\u003CStaticWebsite\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/StaticWebsite\u003E\u003C/StorageServiceProperties\u003E"
     },
@@ -332,7 +332,7 @@
         "x-ms-client-request-id": "5b69ef3f-f219-4bc1-3471-4bfd269592ed",
         "x-ms-date": "Thu, 02 Apr 2020 23:46:21 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -345,7 +345,7 @@
         ],
         "x-ms-client-request-id": "5b69ef3f-f219-4bc1-3471-4bfd269592ed",
         "x-ms-request-id": "cf60bd66-a01e-007d-1048-093c83000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     }

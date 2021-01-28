@@ -8,10 +8,6 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class EventGridTestEnvironment : TestEnvironment
     {
-        public EventGridTestEnvironment() : base("eventgrid")
-        {
-        }
-
         public const string TopicKeyEnvironmentVariableName = "EVENT_GRID_TOPIC_KEY";
         public const string TopicEndpointEnvironmentVariableName = "EVENT_GRID_TOPIC_ENDPOINT";
 
@@ -23,7 +19,6 @@ namespace Azure.Messaging.EventGrid.Tests
 
         public const string CustomEventTopicKeyEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY";
         public const string CustomEventTopicEndpointEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_ENDPOINT";
-
 
         public string TopicHost => GetRecordedVariable(TopicEndpointEnvironmentVariableName);
         public string TopicKey => GetRecordedVariable(TopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));

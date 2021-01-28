@@ -31,8 +31,8 @@ namespace Azure.Core.Http.Multipart
         private readonly Stream _inner;
         private readonly byte[] _buffer;
         private readonly ArrayPool<byte> _bytePool;
-        private int _bufferOffset = 0;
-        private int _bufferCount = 0;
+        private int _bufferOffset;
+        private int _bufferCount;
         private bool _disposed;
 
         /// <summary>
@@ -172,6 +172,7 @@ namespace Azure.Core.Http.Multipart
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             if (!_disposed)
             {
                 _disposed = true;

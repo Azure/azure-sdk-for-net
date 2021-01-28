@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("status"))
@@ -76,16 +81,31 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("lastRestoredFileTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             lastRestoredFileTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("percentCompleted"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             percentCompleted = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("unrestorableFiles"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -96,6 +116,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("numberOfFilesDetected"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             numberOfFilesDetected = property0.Value.GetInt64();
                             continue;
                         }
@@ -106,6 +131,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("lastUploadedFileTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             lastUploadedFileTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }

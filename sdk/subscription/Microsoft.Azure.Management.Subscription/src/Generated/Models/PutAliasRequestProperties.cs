@@ -38,12 +38,14 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// fieldLed, partnerLed or LegacyEA</param>
         /// <param name="subscriptionId">This parameter can be used to create
         /// alias for existing subscription Id</param>
-        public PutAliasRequestProperties(string displayName = default(string), string workload = default(string), string billingScope = default(string), string subscriptionId = default(string))
+        /// <param name="resellerId">Reseller ID, basically MPN Id</param>
+        public PutAliasRequestProperties(string displayName = default(string), string workload = default(string), string billingScope = default(string), string subscriptionId = default(string), string resellerId = default(string))
         {
             DisplayName = displayName;
             Workload = workload;
             BillingScope = billingScope;
             SubscriptionId = subscriptionId;
+            ResellerId = resellerId;
             CustomInit();
         }
 
@@ -79,6 +81,12 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// </summary>
         [JsonProperty(PropertyName = "subscriptionId")]
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets reseller ID, basically MPN Id
+        /// </summary>
+        [JsonProperty(PropertyName = "resellerId")]
+        public string ResellerId { get; set; }
 
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor
         private string _apiKey;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="MetricsAdvisorKeyCredential"/> class.
+        /// Initializes a new instance of the <see cref="MetricsAdvisorKeyCredential"/> class.
         /// </summary>
         /// <param name="subscriptionKey">Key to use to authenticate with the Azure service.</param>
         /// <param name="apiKey">Key to use to authenticate the user with the Metrics Advisor service. Used to identify administrators.</param>

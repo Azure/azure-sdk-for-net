@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,15 +34,17 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// </summary>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Provisioning', 'Deleting', 'Succeeded', 'Failed',
-        /// 'Canceled'</param>
+        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
+        /// 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
-        /// <param name="tags">The resource tags.</param>
-        public DigitalTwinsEndpointResourceProperties(string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="deadLetterSecret">Dead letter storage secret. Will be
+        /// obfuscated during read.</param>
+        public DigitalTwinsEndpointResourceProperties(string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string deadLetterSecret = default(string))
         {
             ProvisioningState = provisioningState;
             CreatedTime = createdTime;
-            Tags = tags;
+            DeadLetterSecret = deadLetterSecret;
             CustomInit();
         }
 
@@ -55,7 +55,9 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
 
         /// <summary>
         /// Gets the provisioning state. Possible values include:
-        /// 'Provisioning', 'Deleting', 'Succeeded', 'Failed', 'Canceled'
+        /// 'Provisioning', 'Deleting', 'Succeeded', 'Failed', 'Canceled',
+        /// 'Deleted', 'Warning', 'Suspending', 'Restoring', 'Moving',
+        /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -67,10 +69,11 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         public System.DateTime? CreatedTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource tags.
+        /// Gets or sets dead letter storage secret. Will be obfuscated during
+        /// read.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "deadLetterSecret")]
+        public string DeadLetterSecret { get; set; }
 
     }
 }

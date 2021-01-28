@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "222518bf-94e7-cb5e-69a8-ac1f4de05361",
         "x-ms-date": "Thu, 12 Sep 2019 23:49:55 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -27,7 +27,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "222518bf-94e7-cb5e-69a8-ac1f4de05361",
         "x-ms-request-id": "5911b414-901e-003e-07c4-69e973000000",
-        "x-ms-version": "2020-02-10"
+        "x-ms-version": "2020-04-08"
       },
       "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceStats\u003e\u003cGeoReplication\u003e\u003cStatus\u003elive\u003c\u002fStatus\u003e\u003cLastSyncTime\u003eThu, 12 Sep 2019 23:46:42 GMT\u003c\u002fLastSyncTime\u003e\u003c\u002fGeoReplication\u003e\u003c\u002fStorageServiceStats\u003e"
     }

@@ -1,0 +1,64 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/27e3015f-04fd-44ba-a20b-bc529a0aebae/dimension/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "24",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "6e5c6129e79b5d6237f1747d6123a875",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "dimensionName": "city"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "22113fb4-2ec4-485f-9cbb-8b039fbe3382",
+        "Content-Length": "402",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 15 Dec 2020 01:35:47 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "90",
+        "x-request-id": "22113fb4-2ec4-485f-9cbb-8b039fbe3382"
+      },
+      "ResponseBody": {
+        "value": [
+          "Abidjan",
+          "Ahmadabad",
+          "Alexandria",
+          "Ankara",
+          "Atlanta",
+          "Baghdad",
+          "Bangkok",
+          "Barcelona",
+          "Beijing",
+          "Belo Horizonte",
+          "Bengaluru",
+          "Bogota",
+          "Boston",
+          "Brasilia",
+          "Buenos Aires",
+          "Cairo",
+          "Chengdu",
+          "Chennai",
+          "Chicago",
+          "Chittagong"
+        ],
+        "@nextLink": "https://js-metrics-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/metrics/27e3015f-04fd-44ba-a20b-bc529a0aebae/dimension/query?$top=20\u0026$skip=20"
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "554117673"
+  }
+}

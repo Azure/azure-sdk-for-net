@@ -5,7 +5,6 @@ using System;
 
 namespace Azure.Data.Tables
 {
-
     public interface ITableEntity
     {
         /// <summary>

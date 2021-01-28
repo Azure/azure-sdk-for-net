@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Core.Serialization
 {
@@ -38,7 +39,7 @@ namespace Azure.Core.Serialization
         /// <param name="stream">The <see cref="System.IO.Stream"/> to read from.</param>
         /// <param name="returnType">The type of the object to convert to and return.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
-        public abstract object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken);
+        public abstract object? Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken);
 
         /// <summary>
         /// Read the binary representation into a <paramref name="returnType"/>.
@@ -47,6 +48,6 @@ namespace Azure.Core.Serialization
         /// <param name="stream">The <see cref="System.IO.Stream"/> to read from.</param>
         /// <param name="returnType">The type of the object to convert to and return.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
-        public abstract ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken);
+        public abstract ValueTask<object?> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken);
     }
 }

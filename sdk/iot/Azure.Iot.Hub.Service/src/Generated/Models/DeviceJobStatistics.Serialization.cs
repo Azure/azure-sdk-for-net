@@ -23,26 +23,51 @@ namespace Azure.Iot.Hub.Service.Models
             {
                 if (property.NameEquals("deviceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     deviceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("failedCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     failedCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("succeededCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     succeededCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("runningCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     runningCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("pendingCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     pendingCount = property.Value.GetInt32();
                     continue;
                 }

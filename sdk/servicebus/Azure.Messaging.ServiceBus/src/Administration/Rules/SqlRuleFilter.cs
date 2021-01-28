@@ -21,7 +21,6 @@ namespace Azure.Messaging.ServiceBus.Administration
     /// </remarks>
     public class SqlRuleFilter : RuleFilter
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlRuleFilter" /> class using the specified SQL expression.
         /// </summary>
@@ -105,12 +104,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return false;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <summary>Compares two <see cref="SqlRuleFilter"/> values for equality.</summary>
         public static bool operator ==(SqlRuleFilter left, SqlRuleFilter right)
         {
             if (ReferenceEquals(left, right))
@@ -126,12 +120,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <summary>Compares two <see cref="SqlRuleFilter"/> values for inequality.</summary>
         public static bool operator !=(SqlRuleFilter left, SqlRuleFilter right)
         {
             return !(left == right);

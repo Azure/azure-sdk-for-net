@@ -14,6 +14,7 @@ Familiarity with the `Microsoft.Azure.ServiceBus` library is assumed. For those 
   - [Sending messages](#sending-messages)
   - [Receiving messages](#receiving-messages)
   - [Working with sessions](#working-with-sessions)
+- [Known gaps](#known-gaps-from-previous-library)
 - [Additional samples](#additional-samples)
 
 ## Migration benefits
@@ -56,13 +57,17 @@ By making this connection sharing be implicit to a `ServiceBusClient` instance, 
 
 While we continue to support connection strings when constructing a client, the main difference is when using Azure Active Directory. We now use the new [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) library to share a single authentication solution between clients of different Azure services.
 
-```cs
+Authenticate with Active Directory:
+```C# Snippet:ServiceBusAuthAAD
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+```
 
+Authenticate with connection string:
+```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
-string connectionString = "Endpoint=sb://yournamespace.servicebus.windows.net/;SharedAccessKeyName=your-key-name;SharedAccessKey=your-key";
+string connectionString = "<connection_string>";
 ServiceBusClient client = new ServiceBusClient(connectionString);
 ```
 
@@ -72,7 +77,7 @@ Previously, in `Microsoft.Azure.ServiceBus`, you could send messages either by u
 
 While the `QueueClient` supported the simple send operation, the `MessageSender` supported that and advanced scenarios like scheduling to send messages at a later time and cancelling such scheduled messages.
 
-```cs
+```C# 
 // create a message to send
 Message message = new Message(Encoding.Default.GetBytes("Hello world!"));
 
@@ -89,14 +94,16 @@ Now in `Azure.Messaging.ServiceBus`, we combine all the send related features un
 
 We continue to support sending bytes in the message. Though, if you are working with strings, you can now create a message directly without having to convert it to bytes first.
 
-```cs
-// create the client
-var client = new ServiceBusClient(connectionString);
+```C# Snippet:ServiceBusSendSingleMessage
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
-// create a message to send
+// create a message that we can send. UTF-8 encoding is used when providing a string.
 ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
 // send the message
@@ -105,37 +112,49 @@ await sender.SendMessageAsync(message);
 
 The feature to send a list of messages in a single call was implemented by batching all the messages into a single AMQP message and sending that to the service.
 
-While we continue to support this feature, it always had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.
+While we continue to support this feature, it had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.
+While the below code sample uses a local queue as the source of messages to be safely batched and sent, your application may use a list or an array of messages that have accumulated from a different part of your code.
 
-In the below code snippet, `inputMessageArray` is an array of messages which we will loop over to safely batch and then send.
+```C# Snippet:ServiceBusSendAndReceiveSafeBatch
+// add the messages that we plan to send to a local queue
+Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
+messages.Enqueue(new ServiceBusMessage("First message"));
+messages.Enqueue(new ServiceBusMessage("Second message"));
+messages.Enqueue(new ServiceBusMessage("Third message"));
 
-```cs
-ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+// create a message batch that we can send
+// total number of messages to be sent to the Service Bus queue
+int messageCount = messages.Count;
 
-for (var i = 0; i < inputMessageArray.Length; i++)
+// while all messages are not sent to the Service Bus queue
+while (messages.Count > 0)
 {
-    if (!messageBatch.TryAddMessage(inputMessageArray[i]))
-    {
-      if (messageBatch.Count == 0) 
-      {
-        Console.WriteLine($"Failed to fit message number in a batch {i}");
-        break;
-      }
+    // start a new batch
+    using ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
 
-      // Decrement counter so that message number i can get another chance in a new batch
-      i--;
-
-      // send the message batch and create a new batch
-      await sender.SendMessagesAsync(messageBatch);
-      messageBatch.Dispose();
-      messageBatch = await sender.CreateMessageBatchAsync();
-    } 
-    else if (i == inputMessageArray.Length) 
+    // add the first message to the batch
+    if (messageBatch.TryAddMessage(messages.Peek()))
     {
-      // send the final batch
-      await sender.SendMessagesAsync(messageBatch);
-      messageBatch.Dispose();
+        // dequeue the message from the .NET queue once the message is added to the batch
+        messages.Dequeue();
     }
+    else
+    {
+        // if the first message can't fit, then it is too large for the batch
+        throw new Exception($"Message {messageCount - messages.Count} is too large and cannot be sent.");
+    }
+
+    // add as many messages as possible to the current batch
+    while (messages.Count > 0 && messageBatch.TryAddMessage(messages.Peek()))
+    {
+        // dequeue the message from the .NET queue as it has been added to the batch
+        messages.Dequeue();
+    }
+
+    // now, send the batch
+    await sender.SendMessagesAsync(messageBatch);
+
+    // if there are any remaining messages in the .NET queue, the while loop repeats
 }
 ```
 
@@ -146,7 +165,7 @@ Previously, in `Microsoft.Azure.ServiceBus`, you could receive messages either b
 While the `QueueClient` supported the simple push model where you could register message and error handlers/callbacks, the `MessageReceiver` provided you with ways to receive messages (both normal and deferred) in batches, settle messages and renew locks.
 
 
-```cs
+```C#
 // create the QueueClient
 QueueClient queueClient = new QueueClient(connectionString, queueName);
 
@@ -179,39 +198,69 @@ await receiver.CompleteAsync(receivedMessage);
 
 Now in `Azure.Messaging.ServiceBus`, we introduce a dedicated class `ServiceBusProcessor` which takes your message and error handlers to provide you with the same simple way to get started with processing your messages as message handlers in the previous packages, with auto-complete and auto-lock renewal features. This class also provides a graceful shutdown via the `StopProcessingAsync` method which will ensure that no more messages will be received, but at the same time you can continue the processing and settling the messages already in flight.
 
-The concept of a receiver remains for users who need to have a more fine grained control over the receiving and settling messages. The difference is that this is now created from the top-level `ServiceBusClient` via the `CreateReceiver()` method that would take the queue or subscription you want to target.
+The concept of a receiver remains for users who need to have a more fine grained control over the receiving and settling messages. The difference is that this is now created from the top-level `ServiceBusClient` via the `CreateReceiver()` method that would take the queue or subscription you want to target. 
 
-```cs
-// create the ServiceBusClient
-var client = new ServiceBusClient(connectionString);
+Another notable difference from the previous library when it comes to receiving messages, is that the new library uses a separate type for received messages, `ServiceBusReceivedMessage`. This helps reduce the surface area of the sendable messages by excluding properties that are set by the service itself and cannot be set by a user when sending messages. In order to construct a `ServiceBusReceivedMessage` for mocking purposes, use the `ServiceBusModelFactory.ServiceBusReceivedMessage` method. In general, output types that are meant to be constructed only by the library can be created for mocking using the `ServiceBusModelFactory` static class.
 
-// define the message handler
-async Task MessageHandler(ProcessMessageEventArgs args)
+```C# Snippet:ServiceBusConfigureProcessor
+// create the options to use for configuring the processor
+var options = new ServiceBusProcessorOptions
 {
-    Console.WriteLine(args.Message.Body.ToString());
-}
+    // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
+    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
+    AutoCompleteMessages = false,
 
-// define the error handler
-Task ErrorHandler(ProcessErrorEventArgs args)
-{
-    Console.WriteLine($"Message handler encountered an exception {args.Exception}.");
-    return Task.CompletedTask;
-}
+    // I can also allow for multi-threading
+    MaxConcurrentCalls = 2
+};
 
-// create a processor and register handlers that we can use to process the messages
-ServiceBusProcessor processor = client.CreateProcessor(queueName);
+// create a processor that we can use to process the messages
+await using ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
+
+// configure the message and error handler to use
 processor.ProcessMessageAsync += MessageHandler;
 processor.ProcessErrorAsync += ErrorHandler;
+
+async Task MessageHandler(ProcessMessageEventArgs args)
+{
+    string body = args.Message.Body.ToString();
+    Console.WriteLine(body);
+
+    // we can evaluate application logic and use that to determine how to settle the message.
+    await args.CompleteMessageAsync(args.Message);
+}
+
+Task ErrorHandler(ProcessErrorEventArgs args)
+{
+    // the error source tells me at what point in the processing an error occurred
+    Console.WriteLine(args.ErrorSource);
+    // the fully qualified namespace is available
+    Console.WriteLine(args.FullyQualifiedNamespace);
+    // as well as the entity path
+    Console.WriteLine(args.EntityPath);
+    Console.WriteLine(args.Exception.ToString());
+    return Task.CompletedTask;
+}
 
 // start processing
 await processor.StartProcessingAsync();
 
-// Or receive using the receiver
-var receiver = client.CreateReceiver(queueName);
-var receivedMessage = await receiver.ReceiveMessageAsync();
-Console.WriteLine($"Received message with Body: {receivedMessage.Body}");
-await receiver.CompleteMessageAsync(receivedMessage);
+// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
+Console.ReadKey();
+```
 
+Or receive using the receiver:
+```C# Snippet:ServiceBusReceiveSingleMessage
+// create a receiver that we can use to receive the message
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+// get the message body as a string
+string body = receivedMessage.Body.ToString();
+Console.WriteLine(body);
 ```
 ### Working with sessions
 
@@ -225,34 +274,91 @@ Now in `Azure.Messaging.ServiceBus`, we simplfify this by giving session variant
 
 The below code snippet shows you the session variation of the `ServiceBusProcessor`.
 
-```cs
-// create a processor to receive events from the next available session
-ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName);
-
-// create a processor to receive events from the given set of sessions
+```C# Snippet:ServiceBusConfigureSessionProcessor
+// create the options to use for configuring the processor
 var options = new ServiceBusSessionProcessorOptions
 {
-    SessionIds = ["my-session", "your-session"],
-};
-ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
+    // By default after the message handler returns, the processor will complete the message
+    // If I want more fine-grained control over settlement, I can set this to false.
+    AutoCompleteMessages = false,
 
-// create a processor to receive events from the 3 next available sessions
-var options = new ServiceBusSessionProcessorOptions
-{
-    MaxConcurrentSessions = 3
+    // I can also allow for processing multiple sessions
+    MaxConcurrentSessions = 5,
+
+    // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
+    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
+    MaxConcurrentCallsPerSession = 2,
+
+    // Processing can be optionally limited to a subset of session Ids.
+    SessionIds = { "my-session", "your-session" },
 };
-ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName);
+
+// create a session processor that we can use to process the messages
+await using ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
+
+// configure the message and error handler to use
+processor.ProcessMessageAsync += MessageHandler;
+processor.ProcessErrorAsync += ErrorHandler;
+
+async Task MessageHandler(ProcessSessionMessageEventArgs args)
+{
+    var body = args.Message.Body.ToString();
+
+    // we can evaluate application logic and use that to determine how to settle the message.
+    await args.CompleteMessageAsync(args.Message);
+
+    // we can also set arbitrary session state using this receiver
+    // the state is specific to the session, and not any particular message
+    await args.SetSessionStateAsync(new BinaryData("some state"));
+}
+
+Task ErrorHandler(ProcessErrorEventArgs args)
+{
+    // the error source tells me at what point in the processing an error occurred
+    Console.WriteLine(args.ErrorSource);
+    // the fully qualified namespace is available
+    Console.WriteLine(args.FullyQualifiedNamespace);
+    // as well as the entity path
+    Console.WriteLine(args.EntityPath);
+    Console.WriteLine(args.Exception.ToString());
+    return Task.CompletedTask;
+}
+
+// start processing
+await processor.StartProcessingAsync();
+
+// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
+Console.ReadKey();
 ```
 
 The below code snippet shows you the session variation of the receiver. Please note that creating a session receiver is an async operation because the library will need to get a lock on the session by connecting to the service first.
 
-```cs
-// create a receiver to receive events from the next available session
+Create a receiver that will receive from the next available session:
+```C# Snippet:ServiceBusReceiveNextSession
 ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(queueName);
 
-// create a receiver to receive events from the given session
-ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(queueName, "my-session");
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+Console.WriteLine(receivedMessage.SessionId);
 ```
+
+Create a receiver that will receive from a specific session:
+```C# Snippet:ServiceBusReceiveFromSpecificSession
+// create a receiver specifying a particular session
+ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(queueName, "Session2");
+
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+Console.WriteLine(receivedMessage.SessionId);
+```
+
+## Known Gaps from Previous Library
+There are a few features that are yet to be implemented in `Azure.Messaging.ServiceBus`, but were present in the previous library `Microsoft.Azure.ServiceBus`. The plan is to add these features in upcoming releases (unless otherwise noted), but they will not be available in the version 7.0.0:
+- **Cross entity transactions** - In the previous library, Microsoft.Azure.ServiceBus, transactions could work across multiple entities by leveraging the [`viaEntityPath`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/Core/MessageSender.cs#L118) parameter of the `MessageSender` constructor. The service is planning to make backward compatible updates that would make it possible to do cross-entity transactions without specificing a "via" entity. The new library plans to take advantage of this new feature and therefore, the cross entity transactions feature will be available in the upcoming release instead of the current version 7.0.0. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/17355.
+- **Plugins** - In the previous library, Microsoft.Azure.ServiceBus, users could [register plugins](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/QueueClient.cs#L527) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. This feature is not yet supported in the new library but will be added in an upcoming release. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/12943.
+- **AMQP Body Sections** - In the previous library, Microsoft.Azure.ServiceBus, it was possible to read the message body even if it was not stored in the [AMQP data section](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data) by using the [`GetBody<T>`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/Extensions/MessageInterOpExtensions.cs#L76) extension method. In the new library, we currently do not expose a way to get the message body if it is not populated in the AMQP data section. We will add support for both setting and retrieving the message body in any of the AMQP body sections in an upcoming release. This includes the [data](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data), [sequence](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-amqp-sequence), [value](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-amqp-value) body sections. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/17356.
+- **Max receive wait time for Processor** - In the previous library, Microsoft.Azure.ServiceBus, it was possible to configure the maximum amount of time each receive call would wait when receiving a message using the message pump (this is known as the Processor in the new library). This was not included in the GA release of the new library as we were not certain that this configuration option would be needed for users of the processor. Feedback for this feature request can be submitted and tracked via https://github.com/Azure/azure-sdk-for-net/issues/16773.
 
 ## Additional samples
 

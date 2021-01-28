@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("ultraSSDEnabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ultraSSDEnabled = property.Value.GetBoolean();
                     continue;
                 }

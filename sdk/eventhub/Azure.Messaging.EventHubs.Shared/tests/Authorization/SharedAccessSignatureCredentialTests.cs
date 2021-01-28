@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ShouldUpdateSharedAccessKey()
+        public void SharedAccessKeyCanBeUpdated()
         {
             var value = "TOkEn!";
             var tokenExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromSeconds(GetSignatureRefreshBuffer().TotalSeconds / 2));
@@ -193,6 +193,28 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(newSignature.SharedAccessKeyName, Is.EqualTo("new-key-name"));
             Assert.That(newSignature.SharedAccessKey, Is.EqualTo("new-key"));
             Assert.That(newSignature.SignatureExpiration, Is.EqualTo(signature.SignatureExpiration));
+        }
+
+        /// <summary>
+        ///   Verifies that a signature can be rotated without refreshing its validity.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedAccesSignatureCanBeUpdated()
+        {
+            var tokenExpiration = TimeSpan.FromSeconds(GetSignatureRefreshBuffer().TotalSeconds / 2);
+            var signature = new SharedAccessSignature("hub-name", "keyName", "key", tokenExpiration);
+            var updatedSignature = new SharedAccessSignature("hub-name", "newKeyName", "newKey", tokenExpiration.Add(TimeSpan.FromMinutes(30)));
+            var credential = new SharedAccessSignatureCredential(signature);
+
+            credential.UpdateSharedAccessSignature(updatedSignature.Value);
+
+            var newSignature = GetSharedAccessSignature(credential);
+
+            Assert.That(newSignature.Value, Is.EqualTo(updatedSignature.Value));
+            Assert.That(newSignature.SharedAccessKeyName, Is.EqualTo(updatedSignature.SharedAccessKeyName));
+            Assert.That(newSignature.SharedAccessKey, Is.Null);
+            Assert.That(newSignature.SignatureExpiration, Is.EqualTo(updatedSignature.SignatureExpiration).Within(TimeSpan.FromSeconds(5)));
         }
 
         /// <summary>

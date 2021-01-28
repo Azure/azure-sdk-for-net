@@ -19,6 +19,11 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
             {
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
