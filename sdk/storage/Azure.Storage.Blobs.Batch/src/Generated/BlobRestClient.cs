@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs.Batch
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSetAccessTierRequest(AccessTier tier, int? timeout, RehydratePriority? rehydratePriority, string leaseId, string ifTags)
+        internal HttpMessage CreateSetAccessTierRequest(BatchAccessTier tier, int? timeout, BatchRehydratePriority? rehydratePriority, string leaseId, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -114,7 +114,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobSetAccessTierHeaders>> SetAccessTierAsync(AccessTier tier, int? timeout = null, RehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobSetAccessTierHeaders>> SetAccessTierAsync(BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetAccessTierRequest(tier, timeout, rehydratePriority, leaseId, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -136,7 +136,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobSetAccessTierHeaders> SetAccessTier(AccessTier tier, int? timeout = null, RehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobSetAccessTierHeaders> SetAccessTier(BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetAccessTierRequest(tier, timeout, rehydratePriority, leaseId, ifTags);
             _pipeline.Send(message, cancellationToken);

@@ -344,15 +344,25 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions leaseAccessConditions = default)
         {
             SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
-            HttpMessage message = BatchRestClient.Blob.SetAccessTierAsync_CreateMessage(
-                pipeline: _client.BatchOperationPipeline,
-                resourceUri: blobUri,
-                tier: accessTier,
-                version: _client.Version.ToVersionString(),
-                rehydratePriority: rehydratePriority,
-                leaseId: leaseAccessConditions?.LeaseId);
+
+            HttpMessage message = BlobRestClient.CreateSetAccessTierRequest(
+                accessTier.ToBatchAccessTier(),
+                // TODO make timeout optional
+                timeout: null,
+                rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),
+                leaseId: leaseAccessConditions?.LeaseId,
+                ifTags: leaseAccessConditions.TagConditions);
+
             _messages.Add(message);
-            return new DelayedResponse(message, response => BatchRestClient.Blob.SetAccessTierAsync_CreateResponse(_client.ClientDiagnostics, response));
+
+            // TODO this probably doesn't work.
+            return new DelayedResponse(
+                message,
+                response =>
+                {
+                    BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(message.Response);
+                    return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, message.Response);
+                });
         }
 
         /// <summary>

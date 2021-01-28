@@ -142,3 +142,46 @@ directive:
         };
     }
 ```
+
+### Delete all parameters except those for SubmitBatch and operations
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $ = {
+        "Body": $.Body,
+        "ContentLength": $.ContentLength,
+        "MultipartContentType": $.MultipartContentType,
+        "Timeout": $.Timeout,
+        "ApiVersionParameter": $.ApiVersionParameter,
+        "ClientRequestId": $.ClientRequestId,
+        "Url": $.Url,
+        "AccessTierRequired": $.AccessTierRequired,
+        "RehydratePriority": $.RehydratePriority,
+        "LeaseIdOptional": $.LeaseIdOptional,
+        "Snapshot": $.Snapshot,
+        "DeleteSnapshots": $.DeleteSnapshots,
+        "IfModifiedSince": $.IfModifiedSince,
+        "IfUnmodifiedSince": $.IfUnmodifiedSince,
+        "IfMatch": $.IfMatch,
+        "IfNoneMatch": $.IfNoneMatch,
+        "VersionId": $.VersionId,
+        "IfTags": $.IfTags,
+        "BlobDeleteType": $.BlobDeleteType,
+        "ContainerName": $.ContainerName,
+        "Blob": $.Blob
+    };
+
+    return $;
+```
+
+### Rename AccessTierRequired and RehydratePriority
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.AccessTierRequired["x-ms-enum"].name = "BatchAccessTier";
+    $.RehydratePriority["x-ms-enum"].name = "BatchRehydratePriority";
+```

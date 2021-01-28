@@ -418,7 +418,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response.Value,
                         response.Headers.ContentType,
                         throwOnAnyFailure,
-                        async)
+                        async,
+                        cancellationToken)
                         .ConfigureAwait(false);
 
                     return response.GetRawResponse();
@@ -451,7 +452,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response.Value,
                         response.Headers.ContentType,
                         throwOnAnyFailure,
-                        async)
+                        async,
+                        cancellationToken)
                         .ConfigureAwait(false);
 
                     return response.GetRawResponse();
@@ -621,7 +623,10 @@ namespace Azure.Storage.Blobs.Specialized
                     if (responses.Length == 1 && responses[0].Status == 400)
                     {
                         // We'll re-process this response as a batch result
-                        BatchRestClient.Service.SubmitBatchAsync_CreateResponse(ClientDiagnostics, responses[0]);
+
+                        // TODO this probably doesn't work.
+                        throw ClientDiagnostics.CreateRequestFailedException(responses[0]);
+                        //BatchRestClient.Service.SubmitBatchAsync_CreateResponse(ClientDiagnostics, responses[0]);
                     }
                     else
                     {
