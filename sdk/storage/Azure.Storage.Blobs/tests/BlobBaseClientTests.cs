@@ -6528,6 +6528,18 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreSame(blobContainerClientMock.Object, blobContainerClient);
         }
 
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<BlobBaseClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+        }
+
         public IEnumerable<AccessConditionParameters> AccessConditions_Data
             => new[]
             {

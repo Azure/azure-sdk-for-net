@@ -281,16 +281,15 @@ namespace Azure.Storage.Files.Shares
 
         private ShareRestClient BuildShareRestClient(Uri uri)
         {
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
-            {
-                ShareName = null
-            };
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri);
+            _name = uriBuilder.ShareName;
+            uriBuilder.ShareName = null;
             return new ShareRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
                 uriBuilder.ToUri().ToString(),
-                path: Name,
-                ClientConfiguration.Version.ToVersionString());
+                path: _name,
+                _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
 

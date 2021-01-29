@@ -331,11 +331,11 @@ namespace Azure.Storage.Files.Shares
                 DirectoryOrFilePath = null
             };
             return new DirectoryRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
                 uriBuilder.ToUri().ToString(),
                 path: $"{ShareName}/{Path.EscapePath()}",
-                ClientConfiguration.Version.ToVersionString());
+                _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
 

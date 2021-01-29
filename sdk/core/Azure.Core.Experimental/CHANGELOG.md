@@ -1,7 +1,7 @@
 # Release History
 
 ## 0.1.0-preview.8 (Unreleased)
-
+- Methods from `SerializationExtensions` moved into `Azure.Core` package.
 
 ## 0.1.0-preview.7 (2020-10-28)
 
