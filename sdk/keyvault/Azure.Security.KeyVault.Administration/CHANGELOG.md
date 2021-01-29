@@ -2,6 +2,9 @@
 
 ## 4.0.0-beta.4 (Unreleased)
 
+### Added
+
+- Support in `KeyVaultAccessControlClient` to create, update, and delete custom role definitions.
 
 ## 4.0.0-beta.3 (2020-11-12)
 
