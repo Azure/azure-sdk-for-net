@@ -10,96 +10,13 @@
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for TrafficViewEnrollmentStatus.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(TrafficViewEnrollmentStatusConverter))]
-    public struct TrafficViewEnrollmentStatus : System.IEquatable<TrafficViewEnrollmentStatus>
+    public static class TrafficViewEnrollmentStatus
     {
-        private TrafficViewEnrollmentStatus(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly TrafficViewEnrollmentStatus Enabled = "Enabled";
-
-        public static readonly TrafficViewEnrollmentStatus Disabled = "Disabled";
-
-
-        /// <summary>
-        /// Underlying value of enum TrafficViewEnrollmentStatus
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for TrafficViewEnrollmentStatus
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type TrafficViewEnrollmentStatus
-        /// </summary>
-        public bool Equals(TrafficViewEnrollmentStatus e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to TrafficViewEnrollmentStatus
-        /// </summary>
-        public static implicit operator TrafficViewEnrollmentStatus(string value)
-        {
-            return new TrafficViewEnrollmentStatus(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert TrafficViewEnrollmentStatus to string
-        /// </summary>
-        public static implicit operator string(TrafficViewEnrollmentStatus e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum TrafficViewEnrollmentStatus
-        /// </summary>
-        public static bool operator == (TrafficViewEnrollmentStatus e1, TrafficViewEnrollmentStatus e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum TrafficViewEnrollmentStatus
-        /// </summary>
-        public static bool operator != (TrafficViewEnrollmentStatus e1, TrafficViewEnrollmentStatus e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for TrafficViewEnrollmentStatus
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is TrafficViewEnrollmentStatus && Equals((TrafficViewEnrollmentStatus)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode TrafficViewEnrollmentStatus
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }
