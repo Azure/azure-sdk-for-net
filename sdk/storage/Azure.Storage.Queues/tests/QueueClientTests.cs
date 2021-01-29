@@ -954,6 +954,52 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task TakesSnapshotOfMessageDecodingFailedHandlersAtConstruction()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            QueueMessage badMessage = null;
+            QueueMessage badMessage2 = null;
+            QueueMessage badMessage3 = null;
+            var options = GetOptions();
+            options.MessageEncoding = QueueMessageEncoding.Base64;
+            options.MessageDecodingFailed += arg =>
+            {
+                badMessage = arg.ReceivedMessage;
+                return Task.CompletedTask;
+            };
+            options.MessageDecodingFailed += arg =>
+            {
+                badMessage2 = arg.ReceivedMessage;
+                return Task.CompletedTask;
+            };
+
+            var encodingClient = GetServiceClient_SharedKey(options).GetQueueClient(test.Queue.Name);
+
+            // add third handler after client creation
+            options.MessageDecodingFailed += arg =>
+            {
+                badMessage3 = arg.ReceivedMessage;
+                return Task.CompletedTask;
+            };
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            QueueMessage[] queueMessages = await encodingClient.ReceiveMessagesAsync(10);
+
+            // Assert
+            Assert.AreEqual(1, queueMessages.Count());
+            Assert.NotNull(badMessage);
+            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
+            Assert.NotNull(badMessage2);
+            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
+            Assert.Null(badMessage3);
+        }
+
+        [Test]
         public async Task PropagatesExceptionIfInvalidQueueMessageAndHandlerThrows()
         {
             // Arrange

@@ -3225,6 +3225,7 @@ namespace Azure.Storage.Queues.Specialized
         /// <returns>A new <see cref="QueueServiceClient"/> instance.</returns>
         public static QueueServiceClient GetParentQueueServiceClient(this QueueClient client)
         {
+            Argument.AssertNotNull(client, nameof(client));
             return client.GetParentQueueServiceClientCore();
         }
     }
