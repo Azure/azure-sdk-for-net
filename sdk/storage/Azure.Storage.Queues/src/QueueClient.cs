@@ -85,7 +85,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         internal virtual MessageIdRestClient MessageIdRestClient => _messageIdRestClient;
 
-        internal bool UsingClientSideEncryption => ClientConfiguration.ClientSideEncryption != default;
+        internal bool UsingClientSideEncryption => _clientConfiguration.ClientSideEncryption != default;
 
         /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
@@ -390,25 +390,25 @@ namespace Azure.Storage.Queues
             string uriString = uriBuilder.ToUri().ToString();
 
             QueueRestClient queueRestClient = new QueueRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
                 uriString,
                 queueName,
-                ClientConfiguration.Version.ToVersionString());
+                _clientConfiguration.Version.ToVersionString());
 
             MessagesRestClient messagesRestClient = new MessagesRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
                 uriString,
                 queueName,
-                ClientConfiguration.Version.ToVersionString());
+                _clientConfiguration.Version.ToVersionString());
 
             MessageIdRestClient messageIdRestClient = new MessageIdRestClient(
-                ClientConfiguration.ClientDiagnostics,
-                ClientConfiguration.Pipeline,
+                _clientConfiguration.ClientDiagnostics,
+                _clientConfiguration.Pipeline,
                 uriString,
                 queueName,
-                ClientConfiguration.Version.ToVersionString());
+                _clientConfiguration.Version.ToVersionString());
 
             return (queueRestClient, messagesRestClient, messageIdRestClient);
         }
@@ -436,9 +436,17 @@ namespace Azure.Storage.Queues
         /// <returns>New instance with provided options and same internals otherwise.</returns>
         protected internal virtual QueueClient WithClientSideEncryptionOptionsCore(ClientSideEncryptionOptions clientSideEncryptionOptions)
         {
+            QueueClientConfiguration queueClientConfiguration = new QueueClientConfiguration(
+                ClientConfiguration.Pipeline,
+                ClientConfiguration.SharedKeyCredential,
+                ClientConfiguration.ClientDiagnostics,
+                ClientConfiguration.Version,
+                QueueClientSideEncryptionOptions.CloneFrom(clientSideEncryptionOptions),
+                ClientConfiguration.MessageEncoding);
+
             return new QueueClient(
                 Uri,
-                ClientConfiguration);
+                queueClientConfiguration);
         }
 
         #region Create
@@ -2309,30 +2317,16 @@ namespace Azure.Storage.Queues
 
             try
             {
-                ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders> response;
                 scope.Start();
+                Response<QueueMessage[]> response = await ReceiveMessagesInternal(
+                    maxMessages: 1,
+                    visibilityTimeout: visibilityTimeout,
+                    operationName: $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
-                if (async)
-                {
-                    response = await _messagesRestClient.DequeueAsync(
-                        numberOfMessages: 1,
-                        visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                else
-                {
-                    response = _messagesRestClient.Dequeue(
-                        numberOfMessages: 1,
-                        visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                        cancellationToken: cancellationToken);
-                }
-
-#pragma warning disable CA1826 // Do not use Enumerable methods on indexable collections
-                DequeuedMessageItem dequeuedMessageItem = response.Value.FirstOrDefault();
-                QueueMessage queueMessage = QueueMessage.ToQueueMessage(dequeuedMessageItem, ClientConfiguration.MessageEncoding);
-#pragma warning restore CA1826 // Do not use Enumerable methods on indexable collections
-                return Response.FromValue(queueMessage, response.GetRawResponse());
+                return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
             }
             catch (Exception ex)
             {

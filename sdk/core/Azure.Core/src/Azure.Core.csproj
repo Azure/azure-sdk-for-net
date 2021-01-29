@@ -9,7 +9,7 @@
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks);net461;net5.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +20,7 @@
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
   <ItemGroup>

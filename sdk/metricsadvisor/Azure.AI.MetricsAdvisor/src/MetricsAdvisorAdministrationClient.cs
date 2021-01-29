@@ -54,10 +54,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
-        /// <param name="credential">A credential used to authenticate to the Azure Service.</param>
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         public MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, null)
@@ -65,10 +65,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
-        /// <param name="credential">A credential used to authenticate to the Azure Service.</param>
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         public MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientsOptions options)
