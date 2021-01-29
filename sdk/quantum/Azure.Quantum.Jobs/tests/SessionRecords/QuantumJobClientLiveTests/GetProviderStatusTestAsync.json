@@ -6,7 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210128.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": [
+          "azsdk-net-Quantum.Jobs/1.0.0-alpha.20210128.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "318157461c95a48437208cd4ed2e74a0",
         "x-ms-return-client-request-id": "true"
       },
@@ -15,13 +18,9 @@
       "ResponseHeaders": {
         "Content-Length": "1140",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 Jan 2021 00:41:37 GMT",
+        "Date": "Fri, 29 Jan 2021 03:09:47 GMT",
         "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
         "Server": "Microsoft-IIS/10.0",
-        "Set-Cookie": [
-          "ARRAffinity=a80c7c3a42bc29f88c9055a7e2789984b224746994993027ab866c65455cca24;Path=/;HttpOnly;Secure;Domain=westus.quantum.azure.com",
-          "ARRAffinitySameSite=a80c7c3a42bc29f88c9055a7e2789984b224746994993027ab866c65455cca24;Path=/;HttpOnly;SameSite=None;Secure;Domain=westus.quantum.azure.com"
-        ],
         "Strict-Transport-Security": "max-age=2592000",
         "X-Powered-By": "ASP.NET"
       },

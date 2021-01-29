@@ -15,9 +15,21 @@ namespace Azure.Quantum.Jobs.Tests
 {
     public class QuantumJobClientTestEnvironment : TestEnvironment
     {
+        private bool _initialized = false;
         private readonly Lazy<AzLoginAccessTokenInfo> _azLoginAccessTokenInfo = new Lazy<AzLoginAccessTokenInfo>(QuantumJobClientTestEnvironment.GetAzLoginAccessTokenInfo);
 
         public string WorkspaceName => GetRecordedVariable("WORKSPACE_NAME");
+
+        public string GetRandomId(string idName)
+        {
+            var randomId = Guid.NewGuid().ToString("N");
+            var randomIdVariableName = $"RANDOM_ID_{idName}";
+            if (Mode == RecordedTestMode.Record)
+            {
+                Environment.SetEnvironmentVariable(randomIdVariableName, randomId);
+            }
+            return GetRecordedVariable(randomIdVariableName);
+        }
 
         public new TokenCredential Credential
         {
@@ -120,7 +132,5 @@ namespace Azure.Quantum.Jobs.Tests
             var accessTokenInfo = JsonConvert.DeserializeObject<AzLoginAccessTokenInfo>(azProcessOutput);
             return accessTokenInfo;
         }
-
-        private bool _initialized = false;
     }
 }
