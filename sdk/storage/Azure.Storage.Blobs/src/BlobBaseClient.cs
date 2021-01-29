@@ -3258,27 +3258,38 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    Response<BlobPropertiesInternal> response = await BlobRestClient.Blob.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        leaseId: conditions?.LeaseId,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: operationName,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobGetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.GetPropertiesAsync(
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.GetProperties(
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return Response.FromValue(
-                        response.Value.ToBlobProperties(),
+                        response.ToBlobProperties(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -3418,35 +3429,37 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    Response<SetHttpHeadersOperation> response =
-                        await BlobRestClient.Blob.SetHttpHeadersAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            version: Version.ToVersionString(),
-                            blobCacheControl: httpHeaders?.CacheControl,
-                            blobContentType: httpHeaders?.ContentType,
-                            blobContentHash: httpHeaders?.ContentHash,
-                            blobContentEncoding: httpHeaders?.ContentEncoding,
-                            blobContentLanguage: httpHeaders?.ContentLanguage,
-                            blobContentDisposition: httpHeaders?.ContentDisposition,
+                    ResponseWithHeaders<BlobSetHttpHeadersHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.SetHttpHeadersAsync(
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch,
-                            ifNoneMatch: conditions?.IfNoneMatch,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
                             ifTags: conditions?.TagConditions,
-                            async: async,
-                            operationName: "BlobBaseClient.SetHttpHeaders",
+                            blobHttpHeaders: httpHeaders,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.SetHttpHeaders(
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobHttpHeaders: httpHeaders,
+                            cancellationToken: cancellationToken);
+                    }
+
                     return Response.FromValue(
-                        new BlobInfo
-                        {
-                            LastModified = response.Value.LastModified,
-                            ETag = response.Value.ETag,
-                            BlobSequenceNumber = response.Value.BlobSequenceNumber
-                        }, response.GetRawResponse());
+                        response.ToBlobInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -3583,34 +3596,43 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    Response<SetMetadataOperation> response =
-                        await BlobRestClient.Blob.SetMetadataAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            version: Version.ToVersionString(),
+                    ResponseWithHeaders<BlobSetMetadataHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.SetMetadataAsync(
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                             encryptionScope: EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch,
-                            ifNoneMatch: conditions?.IfNoneMatch,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
                             ifTags: conditions?.TagConditions,
-                            async: async,
-                            operationName: "BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.SetMetadata(
+                            metadata: metadata,
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
                     return Response.FromValue(
-                        new BlobInfo
-                        {
-                            LastModified = response.Value.LastModified,
-                            ETag = response.Value.ETag,
-                            VersionId = response.Value.VersionId
-                        }, response.GetRawResponse());
+                        response.ToBlobInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -3747,26 +3769,43 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await BlobRestClient.Blob.CreateSnapshotAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        leaseId: conditions?.LeaseId,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: "BlobBaseClient.CreateSnapshot",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobCreateSnapshotHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.CreateSnapshotAsync(
+                            metadata: metadata,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.CreateSnapshot(
+                            metadata: metadata,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobSnapshotInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -3945,19 +3984,29 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await BlobRestClient.Blob.SetAccessTierAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        tier: accessTier,
-                        version: Version.ToVersionString(),
-                        rehydratePriority: rehydratePriority,
-                        leaseId: conditions?.LeaseId,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: "BlobBaseClient.SetAccessTier",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobSetTierHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.SetTierAsync(
+                            tier: accessTier,
+                            rehydratePriority: rehydratePriority,
+                            leaseId: conditions?.LeaseId,
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.SetTier(
+                            tier: accessTier,
+                            rehydratePriority: rehydratePriority,
+                            leaseId: conditions?.LeaseId,
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
@@ -4077,17 +4126,23 @@ namespace Azure.Storage.Blobs.Specialized
 
                 try
                 {
-                    Response<BlobTags> response = await BlobRestClient.Blob.GetTagsAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: Uri,
-                        version: Version.ToVersionString(),
-                        ifTags: conditions?.TagConditions,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(BlobBaseClient)}.{nameof(GetTags)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobTags, BlobGetTagsHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.GetTagsAsync(
+                            ifTags: conditions?.TagConditions,
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.GetTags(
+                            ifTags: conditions?.TagConditions,
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken);
+                    }
 
                     GetBlobTagResult result = new GetBlobTagResult
                     {
@@ -4240,18 +4295,27 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(tags)}: {tags}");
                 try
                 {
-                    return await BlobRestClient.Blob.SetTagsAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: Uri,
-                        version: Version.ToVersionString(),
-                        tags: tags.ToBlobTags(),
-                        ifTags: conditions?.TagConditions,
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(BlobBaseClient)}.{nameof(SetTags)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobSetTagsHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.SetTagsAsync(
+                            ifTags: conditions?.TagConditions,
+                            leaseId: conditions?.LeaseId,
+                            tags: tags.ToBlobTags(),
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.SetTags(
+                            ifTags: conditions?.TagConditions,
+                            leaseId: conditions?.LeaseId,
+                            tags: tags.ToBlobTags(),
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
