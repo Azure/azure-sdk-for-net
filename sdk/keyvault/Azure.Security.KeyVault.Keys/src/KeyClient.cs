@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
-        /// If the named key already exists, Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// If the named key already exists, Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="name">The name of the key.</param>
         /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
-        /// If the named key already exists, Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// If the named key already exists, Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="name">The name of the key.</param>
         /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
@@ -144,7 +144,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new Elliptic Curve key in Key Vault. If the named key already exists,
-        /// Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="ecKeyOptions">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new Elliptic Curve key in Key Vault. If the named key already exists,
-        /// Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="ecKeyOptions">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -202,7 +202,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new RSA key in Key Vault. If the named key already exists, Azure Key Vault creates a new
-        /// version of the key. It requires the keys/create permission.
+        /// version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="rsaKeyOptions">The key options object containing information about the RSA key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -231,7 +231,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new RSA key in Key Vault. If the named key already exists, Azure Key Vault creates a new
-        /// version of the key. It requires the keys/create permission.
+        /// version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="rsaKeyOptions">The key options object containing information about the RSA key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -250,6 +250,64 @@ namespace Azure.Security.KeyVault.Keys
             try
             {
                 return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(rsaKeyOptions.Name), cancellationToken, KeysPath, rsaKeyOptions.Name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new AES key in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="octKeyOptions">The key options object containing information about the AES key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="octKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<KeyVaultKey> CreateOctKey(CreateOctKeyOptions octKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(octKeyOptions, nameof(octKeyOptions));
+
+            var parameters = new KeyRequestParameters(octKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOctKey)}");
+            scope.AddAttribute("key", octKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(octKeyOptions.Name), cancellationToken, KeysPath, octKeyOptions.Name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new AES key in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="octKeyOptions">The key options object containing information about the AES key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="octKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<KeyVaultKey>> CreateOctKeyAsync(CreateOctKeyOptions octKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(octKeyOptions, nameof(octKeyOptions));
+
+            var parameters = new KeyRequestParameters(octKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOctKey)}");
+            scope.AddAttribute("key", octKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(octKeyOptions.Name), cancellationToken, KeysPath, octKeyOptions.Name, "/create").ConfigureAwait(false);
             }
             catch (Exception e)
             {

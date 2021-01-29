@@ -43,5 +43,33 @@ namespace Azure.Security.KeyVault.Keys.Tests
             int publicExponent = rsaParams.Exponent.ToInt32();
             Assert.AreEqual(3, publicExponent);
         }
+
+        [Test]
+        public async Task CreateOctHsmKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            CreateOctKeyOptions options = new CreateOctKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey ecHsmkey = await Client.CreateOctKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+
+            AssertKeyVaultKeysEqual(ecHsmkey, keyReturned);
+        }
+
+        [Test]
+        public async Task CreateOctKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            CreateOctKeyOptions ecKey = new CreateOctKeyOptions(keyName, hardwareProtected: false);
+            KeyVaultKey keyNoHsm = await Client.CreateOctKeyAsync(ecKey);
+            RegisterForCleanup(keyNoHsm.Name);
+
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyNoHsm.Name);
+
+            AssertKeyVaultKeysEqual(keyNoHsm, keyReturned);
+        }
     }
 }
