@@ -32,15 +32,6 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        /// Registers a <see cref="TextAnalyticsClient"/> instance with the provided <paramref name="endpoint"/> and <paramref name="credential"/>.
-        /// </summary>
-        public static IAzureClientBuilder<TextAnalyticsClient, QARuntimeOptions> AddTextAnalyticsClient2<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<TextAnalyticsClient, QARuntimeOptions>(options => new TextAnalyticsClient(endpoint, credential, options));
-        }
-
-        /// <summary>
         /// Registers a <see cref="TextAnalyticsClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
         public static IAzureClientBuilder<TextAnalyticsClient, TextAnalyticsClientOptions> AddTextAnalyticsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
@@ -48,8 +39,5 @@ namespace Microsoft.Extensions.Azure
         {
             return builder.RegisterClientFactory<TextAnalyticsClient, TextAnalyticsClientOptions>(configuration);
         }
-
-
-
     }
 }
