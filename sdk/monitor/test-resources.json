@@ -39,7 +39,7 @@
             "name": "[parameters('baseName')]",
             "type": "microsoft.insights/components",
             "location": "[parameters('location')]",
-            "apiVersion": "2014-08-01",
+            "apiVersion": "2015-05-01",
             "properties": {
                 "Application_Type": "other"
             }
@@ -47,7 +47,11 @@
     ],
     "outputs": {
         "INSTRUMENTATION_KEY": {
-            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2014-04-01').InstrumentationKey]",
+            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').InstrumentationKey]",
+            "type": "string"
+        },
+		"CONNECTION_STRING": {
+            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').ConnectionString]",
             "type": "string"
         }
     }

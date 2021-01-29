@@ -50,7 +50,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
         {
             var options = this.InstrumentClientOptions(new AzureMonitorExporterOptions
             {
-                ConnectionString = $"InstrumentationKey={TestEnvironment.InstrumentationKey}",
+                ConnectionString = TestEnvironment.ConnectionString,
             });
 
             var processor = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(options));
@@ -64,7 +64,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
 
             using var serviceProvider = serviceCollection.BuildServiceProvider();
             var logger = serviceProvider.GetRequiredService<ILogger<AzureMonitorLiveTests>>();
-
             return logger;
         }
     }
