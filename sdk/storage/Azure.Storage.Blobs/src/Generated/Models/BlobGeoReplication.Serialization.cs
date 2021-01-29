@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class GeoReplication
+    public partial class BlobGeoReplication
     {
-        internal static GeoReplication DeserializeGeoReplication(XElement element)
+        internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element)
         {
             GeoReplicationStatusType status = default;
             DateTimeOffset lastSyncTime = default;
@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 lastSyncTime = lastSyncTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new GeoReplication(status, lastSyncTime);
+            return new BlobGeoReplication(status, lastSyncTime);
         }
     }
 }

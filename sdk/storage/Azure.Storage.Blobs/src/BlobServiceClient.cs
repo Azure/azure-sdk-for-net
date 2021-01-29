@@ -1124,16 +1124,23 @@ namespace Azure.Storage.Blobs
                     $"{nameof(properties)}: {properties}");
                 try
                 {
-                    return await BlobRestClient.Service.SetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        properties,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(BlobServiceClient)}.{nameof(SetProperties)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ServiceSetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response  = await ServiceRestClient.SetPropertiesAsync(
+                            storageServiceProperties: properties,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ServiceRestClient.SetProperties(
+                            storageServiceProperties: properties,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
@@ -1244,15 +1251,23 @@ namespace Azure.Storage.Blobs
                 Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await BlobRestClient.Service.GetStatisticsAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetStatistics)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ServiceRestClient.GetStatisticsAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ServiceRestClient.GetStatistics(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

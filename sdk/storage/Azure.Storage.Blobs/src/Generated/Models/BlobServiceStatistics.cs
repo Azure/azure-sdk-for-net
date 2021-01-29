@@ -8,21 +8,21 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Stats for the storage service. </summary>
-    public partial class StorageServiceStats
+    public partial class BlobServiceStatistics
     {
-        /// <summary> Initializes a new instance of StorageServiceStats. </summary>
-        internal StorageServiceStats()
+        /// <summary> Initializes a new instance of BlobServiceStatistics. </summary>
+        internal BlobServiceStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageServiceStats. </summary>
+        /// <summary> Initializes a new instance of BlobServiceStatistics. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
-        internal StorageServiceStats(GeoReplication geoReplication)
+        internal BlobServiceStatistics(BlobGeoReplication geoReplication)
         {
             GeoReplication = geoReplication;
         }
 
         /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
-        public GeoReplication GeoReplication { get; }
+        public BlobGeoReplication GeoReplication { get; }
     }
 }

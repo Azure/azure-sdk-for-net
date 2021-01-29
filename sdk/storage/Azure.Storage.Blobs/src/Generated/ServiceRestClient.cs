@@ -212,7 +212,7 @@ namespace Azure.Storage.Blobs
         /// <summary> Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<StorageServiceStats, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -221,11 +221,11 @@ namespace Azure.Storage.Blobs
             {
                 case 200:
                     {
-                        StorageServiceStats value = default;
+                        BlobServiceStatistics value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
                         {
-                            value = StorageServiceStats.DeserializeStorageServiceStats(storageServiceStatsElement);
+                            value = BlobServiceStatistics.DeserializeBlobServiceStatistics(storageServiceStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -237,7 +237,7 @@ namespace Azure.Storage.Blobs
         /// <summary> Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<StorageServiceStats, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -246,11 +246,11 @@ namespace Azure.Storage.Blobs
             {
                 case 200:
                     {
-                        StorageServiceStats value = default;
+                        BlobServiceStatistics value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
                         {
-                            value = StorageServiceStats.DeserializeStorageServiceStats(storageServiceStatsElement);
+                            value = BlobServiceStatistics.DeserializeBlobServiceStatistics(storageServiceStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

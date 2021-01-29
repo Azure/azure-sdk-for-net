@@ -10,12 +10,12 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
-    public partial class GeoReplication
+    public partial class BlobGeoReplication
     {
-        /// <summary> Initializes a new instance of GeoReplication. </summary>
+        /// <summary> Initializes a new instance of BlobGeoReplication. </summary>
         /// <param name="status"> The status of the secondary location. </param>
         /// <param name="lastSyncTime"> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
-        internal GeoReplication(GeoReplicationStatusType status, DateTimeOffset lastSyncTime)
+        internal BlobGeoReplication(GeoReplicationStatusType status, DateTimeOffset lastSyncTime)
         {
             Status = status;
             LastSyncTime = lastSyncTime;
