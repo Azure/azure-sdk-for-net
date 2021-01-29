@@ -279,7 +279,7 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute3", "3"));
 
-            Assert.AreEqual(activityAfterStart, activitySourceActivity);
+            Assert.AreEqual(activityAfterStart, diagnosticSourceActivity);
         }
 
         [Test]

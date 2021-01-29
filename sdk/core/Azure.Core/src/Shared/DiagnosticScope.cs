@@ -179,12 +179,12 @@ namespace Azure.Core.Pipeline
 
         public void Start()
         {
+            _activitySourceAdapter?.Start();
+
             if (_legacyActivity != null)
             {
                 _source.StartActivity(_legacyActivity, _diagnosticSourceArgs);
             }
-
-            _activitySourceAdapter?.Start();
         }
 
         public void SetStartTime(DateTime dateTime)
@@ -195,13 +195,19 @@ namespace Azure.Core.Pipeline
 
         public void Dispose()
         {
-            // Reverse the Start order
-            _activitySourceAdapter?.Dispose();
-
             if (_legacyActivity != null)
             {
+#if DEBUG
+                if (Activity.Current != _legacyActivity)
+                {
+                    throw new InvalidOperationException("Activity is already stopped.");
+                }
+#endif
                 _source.StopActivity(_legacyActivity, _diagnosticSourceArgs);
             }
+
+            // Reverse the Start order
+            _activitySourceAdapter?.Dispose();
         }
 
         public void Failed(Exception e)
@@ -358,6 +364,13 @@ namespace Azure.Core.Pipeline
 
             public void Dispose()
             {
+#if DEBUG
+                if (_currentActivity != null &&
+                    _currentActivity != Activity.Current)
+                {
+                    throw new InvalidOperationException("Activity is already stopped.");
+                }
+#endif
                 (_currentActivity as IDisposable)?.Dispose();
             }
         }

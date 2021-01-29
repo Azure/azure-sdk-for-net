@@ -66,26 +66,19 @@ namespace Azure.Core.Pipeline
 
             scope.Start();
 
-            try
+            if (async)
             {
-                if (async)
-                {
-                    await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
-                }
-                else
-                {
-                    ProcessNextAsync(message, pipeline, false).EnsureCompleted();
-                }
-
-                scope.AddAttribute("http.status_code", message.Response.Status, static i => i.ToString(CultureInfo.InvariantCulture));
-                if (message.Response.Headers.RequestId is string serviceRequestId)
-                {
-                    scope.AddAttribute("serviceRequestId", serviceRequestId);
-                }
+                await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
             }
-            finally
+            else
             {
-                scope.Dispose();
+                ProcessNextAsync(message, pipeline, false).EnsureCompleted();
+            }
+
+            scope.AddAttribute("http.status_code", message.Response.Status, static i => i.ToString(CultureInfo.InvariantCulture));
+            if (message.Response.Headers.RequestId is string serviceRequestId)
+            {
+                scope.AddAttribute("serviceRequestId", serviceRequestId);
             }
         }
 
