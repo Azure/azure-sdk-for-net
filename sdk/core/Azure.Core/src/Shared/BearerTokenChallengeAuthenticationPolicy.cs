@@ -333,6 +333,11 @@ namespace Azure.Core.Pipeline
 
                 if (context.Scopes != null)
                 {
+                    if (context.Scopes.Length != _currentContext.Value.Scopes?.Length)
+                    {
+                        return true;
+                    }
+
                     for (int i = 0; i < context.Scopes.Length; i++)
                     {
                         if (context.Scopes[i] != _currentContext.Value.Scopes?[i])
