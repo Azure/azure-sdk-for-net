@@ -79,6 +79,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         internal virtual ContainerRestClient ContainerrestClient => _containerRestClient;
 
+        /// <summary>
+        /// The name of the container associated with the BlobBatchClient,
+        /// or null if the BlobBatchClient is assocaited with a BlobServiceClient.
+        /// </summary>
+        private readonly string _containerName;
+
+        /// <summary>
+        /// The name of the container associated with the BlobBatchClient,
+        /// or null if the BlobBatchClient is assocaited with a BlobServiceClient.
+        /// </summary>
+        internal virtual string ContainerName => _containerName;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobBatchClient"/>
@@ -143,7 +155,7 @@ namespace Azure.Storage.Blobs.Specialized
             (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients();
             _serviceRestClient = serviceRestClient;
             _containerRestClient = containerRestClient;
-
+            _containerName = client.Name;
             _isContainerScoped = true;
         }
 
@@ -203,7 +215,6 @@ namespace Azure.Storage.Blobs.Specialized
                 clientDiagnostics: ClientDiagnostics,
                 pipeline: Pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                containerName: containerName,
                 version: Version.ToVersionString());
 
             return (serviceRestClient, containerRestClient);
@@ -397,6 +408,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await _containerRestClient.SubmitBatchAsync(
+                            containerName: ContainerName,
                             contentLength: content.Length,
                             multipartContentType: contentType,
                             body: content,
@@ -406,6 +418,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = _containerRestClient.SubmitBatch(
+                            containerName: ContainerName,
                             contentLength: content.Length,
                             multipartContentType: contentType,
                             body: content,
@@ -458,55 +471,6 @@ namespace Azure.Storage.Blobs.Specialized
 
                     return response.GetRawResponse();
                 }
-
-                //// Send the batch request
-                //Response<BlobBatchResult> batchResult;
-
-                //if (_isContainerScoped)
-                //{
-                //    batchResult = await BatchRestClient.Container.SubmitBatchAsync(
-                //        clientDiagnostics: ClientDiagnostics,
-                //        pipeline: Pipeline,
-                //        resourceUri: Uri,
-                //        body: content,
-                //        contentLength: content.Length,
-                //        multipartContentType: contentType,s
-                //        version: Version.ToVersionString(),
-                //        async: async,
-                //        operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
-                //        cancellationToken: cancellationToken)
-                //        .ConfigureAwait(false);
-                //}
-                //else
-                //{
-                //    batchResult = await BatchRestClient.Service.SubmitBatchAsync(
-                //        clientDiagnostics: ClientDiagnostics,
-                //        pipeline: Pipeline,
-                //        resourceUri: Uri,
-                //        body: content,
-                //        contentLength: content.Length,
-                //        multipartContentType: contentType,
-                //        version: Version.ToVersionString(),
-                //        async: async,
-                //        operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
-                //        cancellationToken: cancellationToken)
-                //        .ConfigureAwait(false);
-                //}
-
-                //// Split the responses apart and update the sub-operation responses
-                //Response raw = batchResult.GetRawResponse();
-                //await UpdateOperationResponses(
-                //    messages,
-                //    raw,
-                //    batchResult.Value.Content,
-                //    batchResult.Value.ContentType,
-                //    throwOnAnyFailure,
-                //    async,
-                //    cancellationToken)
-                //    .ConfigureAwait(false);
-
-                //// Return the batch result
-                //return raw;
             }
             catch (Exception ex)
             {

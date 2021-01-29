@@ -83,7 +83,6 @@ directive:
 - from: swagger-document
   where: $.parameters
   transform: >
-    delete $.ContainerName["x-ms-parameter-location"];
     delete $.Snapshot["x-ms-parameter-location"];
     delete $.VersionId["x-ms-parameter-location"];
 ```
@@ -91,10 +90,9 @@ directive:
 ### Make Blob a constructor parameter
 ``` yaml
 directive:
-- from: swagger-document
+- from: swagger-documents
   where: $.parameters
   transform: >
-    delete $.Blob["x-ms-parameter-location"];
     $.Blob["x-ms-skip-url-encoding"] = true;
 ```
 

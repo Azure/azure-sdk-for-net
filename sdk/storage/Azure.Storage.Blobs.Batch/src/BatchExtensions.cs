@@ -8,16 +8,16 @@ namespace Azure.Storage.Blobs.Batch
 {
     internal static class BatchExtensions
     {
-        // TODO
         public static BatchAccessTier ToBatchAccessTier(this AccessTier accessTier)
-        {
-            return BatchAccessTier.P10;
-        }
+            => new BatchAccessTier(accessTier.ToString());
 
-        // TODO
         public static BatchRehydratePriority? ToBatchRehydratePriority(this RehydratePriority? rehydratePriority)
         {
-            return null;
+            if (rehydratePriority == null)
+            {
+                return null;
+            }
+            return new BatchRehydratePriority(rehydratePriority.ToString());
         }
     }
 }

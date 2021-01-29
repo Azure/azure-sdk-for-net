@@ -86,17 +86,14 @@ namespace Azure.Storage.Blobs.Specialized
             _isContainerScoped = client.IsContainerScoped;
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
-            string containerName = uriBuilder.BlobContainerName;
-            string blobName = uriBuilder.BlobName;
             uriBuilder.BlobContainerName = null;
+            uriBuilder.BlobName = null;
 
             // TODO blob name encoding could be wrong.
             _blobRestClient = new BlobRestClient(
                 clientDiagnostics: _client.ClientDiagnostics,
                 pipeline: _client.Pipeline,
                 url: uriBuilder.ToUri().ToString(),
-                containerName: containerName,
-                blob: blobName,
                 version: _client.Version.ToVersionString());
         }
 
@@ -179,15 +176,34 @@ namespace Azure.Storage.Blobs.Specialized
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default)
         {
-            var blobUri = new BlobUriBuilder(_client.Uri)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return DeleteBlob(
-                blobUri.ToUri(),
-                snapshotsOption,
-                conditions);
+            SetBatchOperationType(BlobBatchOperationType.Delete);
+
+            HttpMessage message = BlobRestClient.CreateDeleteRequest(
+                containerName: blobContainerName,
+                // TODO what about encoded blob names?
+                blob: blobName,
+                // TODO make timeout optional.
+                timeout: null,
+                leaseId: conditions?.LeaseId,
+                //TODO
+                //deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
+                deleteSnapshots: DeleteSnapshotsOptionType.Include,
+                ifModifiedSince: conditions?.IfModifiedSince,
+                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                ifMatch: conditions?.IfMatch.ToString(),
+                ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                ifTags: conditions?.TagConditions);
+
+            _messages.Add(message);
+
+            // TODO no idea if this will work.
+            return new DelayedResponse(
+                message,
+                response =>
+                {
+                    BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(message.Response);
+                    return ResponseWithHeaders.FromValue(blobDeleteHeaders, message.Response);
+                });
         }
 
         /// <summary>
@@ -222,34 +238,13 @@ namespace Azure.Storage.Blobs.Specialized
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default)
         {
-            SetBatchOperationType(BlobBatchOperationType.Delete);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(blobUri);
 
-            // TODO make timeout optional.
-            HttpMessage message = BlobRestClient.CreateDeleteRequest(
-                timeout: null,
-                leaseId: conditions?.LeaseId,
-                //TODO
-                //deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
-                deleteSnapshots: DeleteSnapshotsOptionType.Include,
-                ifModifiedSince: conditions?.IfModifiedSince,
-                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                ifMatch: conditions?.IfMatch.ToString(),
-                ifNoneMatch: conditions?.IfNoneMatch.ToString(),
-                ifTags: conditions?.TagConditions);
-
-            _messages.Add(message);
-
-            // TODO no idea if this will work.
-            return new DelayedResponse(
-                message,
-                response =>
-                {
-                    BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(message.Response);
-                    return ResponseWithHeaders.FromValue(blobDeleteHeaders, message.Response);
-                });
-
-            // TODO remove this.
-            //return new DelayedResponse(message, response => BatchRestClient.Blob.DeleteAsync_CreateResponse(_client.ClientDiagnostics, response));
+            return DeleteBlob(
+                blobContainerName: uriBuilder.BlobContainerName,
+                blobName: uriBuilder.BlobName,
+                snapshotsOption: snapshotsOption,
+                conditions: conditions);
         }
         #endregion DeleteBlob
 
@@ -294,16 +289,29 @@ namespace Azure.Storage.Blobs.Specialized
             RehydratePriority? rehydratePriority = default,
             BlobRequestConditions leaseAccessConditions = default)
         {
-            var blobUri = new BlobUriBuilder(_client.Uri)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return SetBlobAccessTier(
-                blobUri.ToUri(),
-                accessTier,
-                rehydratePriority,
-                leaseAccessConditions);
+            SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
+
+            HttpMessage message = BlobRestClient.CreateSetAccessTierRequest(
+                containerName: blobContainerName,
+                // TODO what about special characters in blob name?
+                blob: blobName,
+                accessTier.ToBatchAccessTier(),
+                // TODO make timeout optional
+                timeout: null,
+                rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),
+                leaseId: leaseAccessConditions?.LeaseId,
+                ifTags: leaseAccessConditions.TagConditions);
+
+            _messages.Add(message);
+
+            // TODO this probably doesn't work.
+            return new DelayedResponse(
+                message,
+                response =>
+                {
+                    BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(message.Response);
+                    return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, message.Response);
+                });
         }
 
         /// <summary>
@@ -343,26 +351,14 @@ namespace Azure.Storage.Blobs.Specialized
             RehydratePriority? rehydratePriority = default,
             BlobRequestConditions leaseAccessConditions = default)
         {
-            SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(blobUri);
 
-            HttpMessage message = BlobRestClient.CreateSetAccessTierRequest(
-                accessTier.ToBatchAccessTier(),
-                // TODO make timeout optional
-                timeout: null,
-                rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),
-                leaseId: leaseAccessConditions?.LeaseId,
-                ifTags: leaseAccessConditions.TagConditions);
-
-            _messages.Add(message);
-
-            // TODO this probably doesn't work.
-            return new DelayedResponse(
-                message,
-                response =>
-                {
-                    BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(message.Response);
-                    return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, message.Response);
-                });
+            return SetBlobAccessTier(
+                blobContainerName: uriBuilder.BlobContainerName,
+                blobName: uriBuilder.BlobName,
+                accessTier: accessTier,
+                rehydratePriority: rehydratePriority,
+                leaseAccessConditions: leaseAccessConditions);
         }
 
         /// <summary>
