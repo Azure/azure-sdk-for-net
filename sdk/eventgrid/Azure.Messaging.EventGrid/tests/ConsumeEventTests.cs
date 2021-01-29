@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", egEvent.Topic);
             Assert.AreEqual("2d1781af-3a4c-4d7c-bd0c-e34b19da4e66", egEvent.Id);
             Assert.AreEqual("mySubject", egEvent.Subject);
-            Assert.AreEqual(SystemEventMappings.EventGridSubscriptionValidationEventName, egEvent.EventType);
+            Assert.AreEqual(SystemEventNames.EventGridSubscriptionValidation, egEvent.EventType);
             Assert.AreEqual(DateTimeOffset.Parse("2018-01-25T22:12:19.4556811Z"), egEvent.EventTime);
             Assert.AreEqual("1", egEvent.DataVersion);
         }
@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 switch (egEvent.EventType)
                 {
-                    case SystemEventMappings.StorageBlobDeletedEventName:
+                    case SystemEventNames.StorageBlobDeleted:
                         StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.AsSystemEventData();
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                         Assert.AreEqual("/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount", egEvent.Topic);
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 switch (egEvent.EventType)
                 {
-                    case SystemEventMappings.StorageBlobDeletedEventName:
+                    case SystemEventNames.StorageBlobDeleted:
                         StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.AsSystemEventData();
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                         break;
@@ -88,11 +88,11 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 switch (egEvent.EventType)
                 {
-                    case SystemEventMappings.StorageBlobCreatedEventName:
+                    case SystemEventNames.StorageBlobCreated:
                         StorageBlobCreatedEventData blobCreated = (StorageBlobCreatedEventData)egEvent.AsSystemEventData();
                         Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
                         break;
-                    case SystemEventMappings.StorageBlobDeletedEventName:
+                    case SystemEventNames.StorageBlobDeleted:
                         StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.AsSystemEventData();
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                         break;
@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(egEvent);
             switch (egEvent.EventType)
             {
-                case SystemEventMappings.StorageBlobDeletedEventName:
+                case SystemEventNames.StorageBlobDeleted:
                     StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.AsSystemEventData();
                     Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                     break;
@@ -127,13 +127,13 @@ namespace Azure.Messaging.EventGrid.Tests
                 });
 
             EventGridEvent egEvent = new EventGridEvent(
+                "/contoso/items",
+                "Contoso.Items.ItemReceived",
+                "1",
                 new ContosoItemReceivedEventData()
                 {
                     ItemSku = "512d38b6-c7b8-40c8-89fe-f46f9e9622b6"
-                },
-                "/contoso/items",
-                "Contoso.Items.ItemReceived",
-                "1");
+                });
             Assert.That(() => egEvent.GetData<ContosoItemReceivedEventData>(customSerializer),
                 Throws.InstanceOf<InvalidOperationException>());
 
@@ -1402,7 +1402,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual("994bc3f8-c90c-6fc3-9e83-6783db2221d5", cloudEvent.Id);
             Assert.AreEqual("Subject-0", cloudEvent.Source);
-            Assert.AreEqual(SystemEventMappings.StorageBlobDeletedEventName, cloudEvent.Type);
+            Assert.AreEqual(SystemEventNames.StorageBlobDeleted, cloudEvent.Type);
             Assert.AreEqual("text/plain", cloudEvent.DataContentType);
             Assert.AreEqual("subject", cloudEvent.Subject);
             Assert.AreEqual("1.0", cloudEvent.DataSchema);
@@ -1419,7 +1419,7 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             Assert.NotNull(events);
 
-            if (events[0].Type == SystemEventMappings.StorageBlobDeletedEventName)
+            if (events[0].Type == SystemEventNames.StorageBlobDeleted)
             {
                 StorageBlobDeletedEventData eventData = events[0].GetData<StorageBlobDeletedEventData>();
                 Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
@@ -1439,7 +1439,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(cloudEvent);
             switch (cloudEvent.Type)
             {
-                case SystemEventMappings.StorageBlobDeletedEventName:
+                case SystemEventNames.StorageBlobDeleted:
                     StorageBlobDeletedEventData blobDeleted =cloudEvent.GetData<StorageBlobDeletedEventData>();
                     Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                     break;
@@ -1454,7 +1454,7 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            if (events[0].Type == SystemEventMappings.StorageBlobDeletedEventName)
+            if (events[0].Type == SystemEventNames.StorageBlobDeleted)
             {
                 StorageBlobDeletedEventData eventData = events[0].GetData<StorageBlobDeletedEventData>();
                 Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);

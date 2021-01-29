@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,12 +19,12 @@ namespace Azure.Messaging.EventGrid
     {
         /// <summary> Initializes a new instance of <see cref="EventGridEvent"/>. </summary>
         /// <param name="subject"> A resource path relative to the topic path. </param>
-        /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="eventType"> The type of the event that occurred. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
+        /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="dataSerializationType">The type to use when serializing the data.
         /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="data"/>.</param>
-        public EventGridEvent(object data, string subject, string eventType, string dataVersion, Type dataSerializationType = default)
+        public EventGridEvent(string subject, string eventType, string dataVersion, object data, Type dataSerializationType = default)
         {
             Argument.AssertNotNull(subject, nameof(subject));
             Argument.AssertNotNull(data, nameof(data));
