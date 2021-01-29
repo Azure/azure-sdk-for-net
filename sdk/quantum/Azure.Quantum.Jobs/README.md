@@ -148,7 +148,7 @@ var allJobs = quantumJobClient.GetJobs().ToList();
 
 ## Contributing
 
-See the [Storage CONTRIBUTING.md][contributing] for details on building,
+See the [CONTRIBUTING.md][contributing] for details on building,
 testing, and contributing to this library.
 
 This project welcomes contributions and suggestions.  Most contributions require
@@ -165,7 +165,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/quantum/Azure.Quantum.Jobs/src
 [package]: https://www.nuget.org/packages/Azure.Quantum.Jobs/
-[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/CONTRIBUTING.md
+[contributing]: https://github.com/Azure/azure-sdk-for-net/tree/master/CONTRIBUTING.md
 [subscriptions]: https://ms.portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
