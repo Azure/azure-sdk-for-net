@@ -136,8 +136,10 @@ JobDetails myJob = (quantumJobClient.GetJob(jobId)).Value;
 To enumerate all the jobs in the workspace, use the GetJobs() function.
 
 ```C# Snippet:Azure_Quantum_Jobs_GetJobs
-// Get all jobs from the workspace (.ToList() will force all pages to be fetched)
-var allJobs = quantumJobClient.GetJobs().ToList();
+foreach (JobDetails job in quantumJobClient.GetJobs())
+{
+    Console.WriteLine($"  {job.Name}");
+}
 ```
 
 ## Next steps

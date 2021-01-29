@@ -126,16 +126,11 @@ namespace Azure.Quantum.Jobs.Samples
             Console.WriteLine($@"Getting list of Quantum jobs...");
 
             #region Snippet:Azure_Quantum_Jobs_GetJobs
-            // Get all jobs from the workspace (.ToList() will force all pages to be fetched)
-            var allJobs = quantumJobClient.GetJobs().ToList();
-            #endregion
-
-            Console.WriteLine($"{allJobs.Count} jobs found. Listing the first 10...");
-            foreach (JobDetails job in allJobs.Take(10))
+            foreach (JobDetails job in quantumJobClient.GetJobs())
             {
                 Console.WriteLine($"  {job.Name}");
             }
-            Console.WriteLine();
+            #endregion
 
             Console.WriteLine("Press [Enter] to exit...");
             Console.ReadLine();
