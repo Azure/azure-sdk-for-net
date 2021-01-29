@@ -420,5 +420,17 @@ namespace Azure.Storage.Blobs
         {
             return null;
         }
+
+        // TODO
+        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<PageBlobCopyIncrementalHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> response)
+        {
+            return null;
+        }
     }
 }

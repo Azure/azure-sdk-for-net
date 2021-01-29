@@ -2809,21 +2809,35 @@ namespace Azure.Storage.Blobs.Specialized
                         CustomerProvidedKey,
                         EncryptionScope).WithSnapshot(snapshot);
 
-                    return await BlobRestClient.PageBlob.CopyIncrementalAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        copySource: pageBlobUri.Uri,
-                        version: Version.ToVersionString(),
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: $"{nameof(PageBlobClient)}.{nameof(StartCopyIncremental)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<PageBlobCopyIncrementalHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PageBlobRestClient.CopyIncrementalAsync(
+                            copySource: pageBlobUri.Uri,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PageBlobRestClient.CopyIncremental(
+                            copySource: pageBlobUri.Uri,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobCopyInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -3073,38 +3087,65 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sourceUri)}: {sourceUri}");
                 try
                 {
-                    return await BlobRestClient.PageBlob.UploadPagesFromUriAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        sourceUri: sourceUri,
-                        sourceRange: sourceRange.ToString(),
-                        sourceContentHash: sourceContentHash,
-                        contentLength: default,
-                        version: Version.ToVersionString(),
-                        timeout: default,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        range: range.ToString(),
-                        leaseId: conditions?.LeaseId,
-                        ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
-                        ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
-                        ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
-                        sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                        sourceIfMatch: sourceConditions?.IfMatch,
-                        sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
-                        async: async,
-                        operationName: $"{nameof(PageBlobClient)}.{nameof(UploadPagesFromUri)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PageBlobRestClient.UploadPagesFromURLAsync(
+                            sourceUrl: sourceUri,
+                            sourceRange: sourceRange.ToString(),
+                            contentLength: 0,
+                            range: range.ToString(),
+                            sourceContentMD5: sourceContentHash,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            leaseId: conditions?.LeaseId,
+                            ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
+                            ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
+                            ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PageBlobRestClient.UploadPagesFromURL(
+                            sourceUrl: sourceUri,
+                            sourceRange: sourceRange.ToString(),
+                            contentLength: 0,
+                            range: range.ToString(),
+                            sourceContentMD5: sourceContentHash,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            leaseId: conditions?.LeaseId,
+                            ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
+                            ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
+                            ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToPageInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
