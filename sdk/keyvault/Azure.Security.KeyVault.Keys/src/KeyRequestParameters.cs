@@ -112,6 +112,15 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
+        internal KeyRequestParameters(CreateOctKeyOptions octKey)
+            : this(octKey.KeyType, octKey)
+        {
+            if (octKey.KeySize.HasValue)
+            {
+                KeySize = octKey.KeySize.Value;
+            }
+        }
+
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if (KeyType != default)
