@@ -127,10 +127,8 @@ Learn more about enabling Azure Active Directory for authentication with Azure S
 
 ### Message encoding
 
-This version of library does not encode message by default. V11 and prior versions base64-encoded messages by default.
-This section shows how message encoding can be customized as well as additional error handling can be provided for poison messages.
-
-#### Configuration
+This version of library does not encode message by default. V11 and prior versions as well as Azure Functions use base64-encoded messages by default.
+Therefore it's recommended to use this feature for interop scenarios.
 
 ```C# Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_ConfigureMessageEncodingAsync
 QueueClientOptions queueClientOptions = new QueueClientOptions()
@@ -140,47 +138,6 @@ QueueClientOptions queueClientOptions = new QueueClientOptions()
 
 QueueClient queueClient = new QueueClient(connectionString, queueName, queueClientOptions);
 ```
-
-#### Poison messages
-
-We provide ability to define handler for situations where queue might contain messages that don't align with encoding setting configured in `QueueClientOptions`.
-The handler gives access to message and its raw body. We don't delete message from queue, therefore handler logic should do that if desired.
-
-The handler is potentially invoked by both synchronous and asynchronous receive and peek APIs. Therefore implementation of the handler should align with `QueueClient` APIs that are being used.
-See [more](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Events.md) about how to implement handler correctly.
-
-The example below shows a handler with all possible cases explored.
-
-```C# Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_InvalidMessageHandlerAsync
-QueueClientOptions queueClientOptions = new QueueClientOptions()
-{
-    MessageEncoding = QueueMessageEncoding.Base64
-};
-
-queueClientOptions.OnInvalidMessage += async (InvalidMessageEventArgs args) =>
-{
-    if (args.Message is PeekedMessage peekedMessage)
-    {
-        Console.WriteLine($"Invalid message has been peeked, message id={peekedMessage.MessageId} body={peekedMessage.Body}");
-    }
-    else if (args.Message is QueueMessage queueMessage)
-    {
-        Console.WriteLine($"Invalid message has been received, message id={queueMessage.MessageId} body={queueMessage.Body}");
-
-        if (args.RunSynchronously)
-        {
-            args.Queue.DeleteMessage(queueMessage.MessageId, queueMessage.PopReceipt);
-        }
-        else
-        {
-            await args.Queue.DeleteMessageAsync(queueMessage.MessageId, queueMessage.PopReceipt);
-        }
-    }
-};
-
-QueueClient queueClient = new QueueClient(connectionString, queueName, queueClientOptions);
-```
-
 
 ## Troubleshooting
 

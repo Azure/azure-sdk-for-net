@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -125,6 +125,39 @@ namespace Azure.Storage.Queues
         ///
         /// <para>The <see cref="QueueClient"/> won't attempt to remove invalid message from the queue. Therefore such handling should be included into
         /// the event handler itself.</para>
+        ///
+        /// <para>The handler is potentially invoked by both synchronous and asynchronous receive and peek APIs. Therefore implementation of the handler should align with `QueueClient` APIs that are being used.
+        /// <see cref="SyncAsyncEventHandler{T}"/> about how to implement handler correctly. The example below shows a handler with all possible cases explored.
+        /// <code snippet="Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_InvalidMessageHandlerAsync">
+        /// QueueClientOptions queueClientOptions = new QueueClientOptions()
+        /// {
+        ///     MessageEncoding = QueueMessageEncoding.Base64
+        /// };
+        ///
+        /// queueClientOptions.OnInvalidMessage += async (InvalidMessageEventArgs args) =&gt;
+        /// {
+        ///     if (args.Message is PeekedMessage peekedMessage)
+        ///     {
+        ///         Console.WriteLine($&quot;Invalid message has been peeked, message id={peekedMessage.MessageId} body={peekedMessage.Body}&quot;);
+        ///     }
+        ///     else if (args.Message is QueueMessage queueMessage)
+        ///     {
+        ///         Console.WriteLine($&quot;Invalid message has been received, message id={queueMessage.MessageId} body={queueMessage.Body}&quot;);
+        ///
+        ///         if (args.RunSynchronously)
+        ///         {
+        ///             args.QueueClient.DeleteMessage(queueMessage.MessageId, queueMessage.PopReceipt);
+        ///         }
+        ///         else
+        ///         {
+        ///             await args.QueueClient.DeleteMessageAsync(queueMessage.MessageId, queueMessage.PopReceipt);
+        ///         }
+        ///     }
+        /// };
+        ///
+        /// QueueClient queueClient = new QueueClient(connectionString, queueName, queueClientOptions);
+        /// </code>
+        /// </para>
         /// </summary>
         public event SyncAsyncEventHandler<InvalidMessageEventArgs> OnInvalidMessage;
 
