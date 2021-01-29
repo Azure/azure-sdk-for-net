@@ -663,7 +663,7 @@ namespace Azure.Storage.Blobs
         /// single segment of blob containers in the storage account, starting
         /// from the specified <paramref name="continuationToken"/>.  Use an empty
         /// <paramref name="continuationToken"/> to start enumeration from the beginning
-        /// and the <see cref="BlobContainersSegment.NextMarker"/> if it's not
+        /// and the <see cref="ListContainersSegmentResponse.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="GetBlobContainersInternal"/>
         /// to continue enumerating the containers segment by segment.
         /// Containers are ordered lexicographically by name.
@@ -675,7 +675,7 @@ namespace Azure.Storage.Blobs
         /// <param name="continuationToken">
         /// An optional string value that identifies the segment of the list
         /// of blob containers to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="BlobContainersSegment.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListContainersSegmentResponse.NextMarker"/>
         /// if the listing operation did not return all blob containers remaining
         /// to be listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="continuationToken"/> parameter
