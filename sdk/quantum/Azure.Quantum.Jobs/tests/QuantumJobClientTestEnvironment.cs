@@ -51,35 +51,25 @@ namespace Azure.Quantum.Jobs.Tests
         {
             if (!_initialized
                 && Mode == RecordedTestMode.Record
-                && (Environment.GetEnvironmentVariable("LOCAL_RECORDING") != null))
+                && (GetOrSetVariable("LOCAL_RECORDING") != null))
             {
-                if (Environment.GetEnvironmentVariable("SUBSCRIPTION_ID") == null)
-                {
-                    Environment.SetEnvironmentVariable("SUBSCRIPTION_ID", _azLoginAccessTokenInfo.Value.SubscriptionId);
-                }
-                if (Environment.GetEnvironmentVariable("WORKSPACE_NAME") == null)
-                {
-                    Environment.SetEnvironmentVariable("WORKSPACE_NAME", "workspace-ms");
-                }
-                if (Environment.GetEnvironmentVariable("RESOURCE_GROUP") == null)
-                {
-                    Environment.SetEnvironmentVariable("RESOURCE_GROUP", "sdk-review-rg");
-                }
-                if (Environment.GetEnvironmentVariable("TENANT_ID") == null)
-                {
-                    Environment.SetEnvironmentVariable("TENANT_ID", _azLoginAccessTokenInfo.Value.TenantId);
-                }
-                if (Environment.GetEnvironmentVariable("LOCATION") == null)
-                {
-                    Environment.SetEnvironmentVariable("LOCATION", "westus");
-                }
-                if (Environment.GetEnvironmentVariable("ENVIRONMENT") == null)
-                {
-                    Environment.SetEnvironmentVariable("ENVIRONMENT", "Prod");
-                }
-
+                GetOrSetVariable("SUBSCRIPTION_ID", _azLoginAccessTokenInfo.Value.SubscriptionId);
+                GetOrSetVariable("TENANT_ID", _azLoginAccessTokenInfo.Value.TenantId);
+                GetOrSetVariable("LOCATION", "westus");
+                GetOrSetVariable("ENVIRONMENT", "Prod");
                 _initialized = true;
             }
+        }
+
+        private string GetOrSetVariable(string variableName, string defaultValue = null)
+        {
+            var value = Environment.GetEnvironmentVariable(variableName);
+            if (value == null)
+            {
+                value = defaultValue;
+                Environment.SetEnvironmentVariable(variableName, value);
+            }
+            return value;
         }
 
         private class AzLoginAccessTokenInfo : TokenCredential
