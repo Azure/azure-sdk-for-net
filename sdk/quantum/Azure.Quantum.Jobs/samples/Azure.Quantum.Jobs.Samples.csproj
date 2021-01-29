@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.Quantum.Jobs.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\github\azure-sdk\azure-sdk-for-net-matus\sdk\quantum\Azure.Quantum.Jobs\samples/../README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\github\azure-sdk\azure-sdk-for-net-matus\sdk\quantum\Azure.Quantum.Jobs\samples/../CHANGELOG.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\github\azure-sdk\azure-sdk-for-net-matus\eng/images/pkgicon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\github\azure-sdk\azure-sdk-for-net-matus\sdk\quantum\Azure.Quantum.Jobs\samples/../README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\github\azure-sdk\azure-sdk-for-net-matus\sdk\quantum\Azure.Quantum.Jobs\samples/../CHANGELOG.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\github\azure-sdk\azure-sdk-for-net-matus\eng/images/pkgicon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\github\azure-sdk\azure-sdk-for-net-matus\sdk\quantum\Azure.Quantum.Jobs\samples/../CHANGELOG.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="problem.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
