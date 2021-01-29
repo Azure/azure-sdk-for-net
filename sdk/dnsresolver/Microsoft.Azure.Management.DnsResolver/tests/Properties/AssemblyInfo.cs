@@ -6,8 +6,8 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Front Door Management Library")]
-[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Front Door.")]
+[assembly: AssemblyTitle("Microsoft Azure DNS Resolver Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure DNS Resolver.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]
