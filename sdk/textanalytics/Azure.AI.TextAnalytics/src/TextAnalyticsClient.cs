@@ -2079,104 +2079,6 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
         /// </para></remarks>
         /// </summary>
-        /// <param name="document">The document to analyze.</param>
-        /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareAsync(string document, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(document, nameof(document));
-            options ??= new AnalyzeHealthcareEntitiesOptions();
-
-            var documents = new List<string>() { document };
-
-            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcare)}");
-            scope.Start();
-
-            try
-            {
-                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(documentInputs, options.ModelVersion, options.StringIndexType, cancellationToken).ConfigureAwait(false);
-                string location = response.Headers.OperationLocation;
-
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
-
-                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Runs a predictive model to identify a collection of healthcare entities
-        /// found in the passed-in document, and include information linking the
-        /// entities to their corresponding entries in a well-known knowledge base.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// <remarks><para>
-        /// Note: In order to use this functionality, request to access public preview is required.
-        /// Azure Active Directory (AAD) is not currently supported. For more information see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
-        /// </para></remarks>
-        /// </summary>
-        /// <param name="document">The document to analyze.</param>
-        /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcare(string document, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(document, nameof(document));
-            options ??= new AnalyzeHealthcareEntitiesOptions();
-
-            var documents = new List<string>() { document };
-
-            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcare)}");
-            scope.Start();
-
-            try
-            {
-                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(documentInputs, options.ModelVersion, options.StringIndexType, cancellationToken);
-                string location = response.Headers.OperationLocation;
-
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
-
-                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Runs a predictive model to identify a collection of healthcare entities
-        /// found in the passed-in document, and include information linking the
-        /// entities to their corresponding entries in a well-known knowledge base.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// <remarks><para>
-        /// Note: In order to use this functionality, request to access public preview is required.
-        /// Azure Active Directory (AAD) is not currently supported. For more information see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
-        /// </para></remarks>
-        /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
         /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
@@ -2184,13 +2086,13 @@ namespace Azure.AI.TextAnalytics
         /// controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new AnalyzeHealthcareEntitiesOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return await StartHealthcareBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2221,13 +2123,13 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new AnalyzeHealthcareEntitiesOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return StartHealthcareBatch(documentInputs, options, cancellationToken);
+            return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
         }
 
         /// <summary>
@@ -2249,7 +2151,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        public virtual AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
@@ -2257,7 +2159,7 @@ namespace Azure.AI.TextAnalytics
 
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            return StartHealthcareBatch(documentInputs, options, cancellationToken);
+            return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
         }
 
         /// <summary>
@@ -2279,7 +2181,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
@@ -2287,14 +2189,14 @@ namespace Azure.AI.TextAnalytics
 
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            return await StartHealthcareBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
-        private AnalyzeHealthcareEntitiesOperation StartHealthcareBatch(MultiLanguageBatchInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        private AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(MultiLanguageBatchInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new AnalyzeHealthcareEntitiesOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcareBatch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}");
             scope.Start();
 
             try
@@ -2313,11 +2215,11 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private async Task<AnalyzeHealthcareEntitiesOperation> StartHealthcareBatchAsync(MultiLanguageBatchInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(MultiLanguageBatchInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new AnalyzeHealthcareEntitiesOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcareBatch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}");
             scope.Start();
 
             try

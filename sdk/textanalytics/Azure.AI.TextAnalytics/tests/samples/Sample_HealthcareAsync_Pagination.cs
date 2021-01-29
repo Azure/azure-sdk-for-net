@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
@@ -37,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 Top = 2
             };
 
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartHealthcareBatchAsync(list, "en", options);
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(list, "en", options);
 
             AsyncPageable<AnalyzeHealthcareEntitiesResult> results = client.GetHealthcareEntities(healthOperation);
 

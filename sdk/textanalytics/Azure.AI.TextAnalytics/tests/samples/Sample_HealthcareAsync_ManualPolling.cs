@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -33,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Samples
                                 minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                                 increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartHealthcareAsync(document);
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(new List<string>() { document });
 
             TimeSpan pollingInterval = new TimeSpan(1000);
 
@@ -67,7 +66,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     foreach (EntityDataSource entityDataSource in entity.DataSources)
                     {
-                        Console.WriteLine($"        ID: {entityDataSource.EntityId}");
+                        Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                         Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                     }
                 }

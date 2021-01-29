@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -38,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 document,
             };
 
-            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartHealthcareBatch(batchInput, "en");
+            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchInput, "en");
 
             await healthOperation.WaitForCompletionAsync();
 
@@ -61,7 +60,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     foreach (EntityDataSource entityDataSource in entity.DataSources)
                     {
-                        Console.WriteLine($"        ID: {entityDataSource.EntityId}");
+                        Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                         Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                     }
                 }

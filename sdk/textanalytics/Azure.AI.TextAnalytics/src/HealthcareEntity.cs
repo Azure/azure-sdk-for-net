@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -15,7 +14,7 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class HealthcareEntity
     {
-        internal HealthcareEntity(HealthcareEntityInternal entity, IEnumerable<HealthcareEntityInternal> healthcareEntities = default, IEnumerable<HealthcareRelationInternal> healthcareRelations = default)
+        internal HealthcareEntity(HealthcareEntityInternal entity, IReadOnlyDictionary<HealthcareEntity, HealthcareEntityRelationType> relatedEntities)
         {
             Category = entity.Category;
             Text = entity.Text;
@@ -23,76 +22,8 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScore = entity.ConfidenceScore;
             Offset = entity.Offset;
             DataSources = entity.Links;
-            if (healthcareEntities != null && healthcareRelations != null)
-            {
-                RelatedEntities = ResolveRelatedEntities(entity, healthcareEntities, healthcareRelations);
-            }
+            RelatedEntities = relatedEntities;
         }
-
-        private static IReadOnlyDictionary<HealthcareEntity, HealthcareEntityRelationType> ResolveRelatedEntities(HealthcareEntityInternal entity,
-            IEnumerable<HealthcareEntityInternal> healthcareEntities,
-            IEnumerable<HealthcareRelationInternal> healthcareRelations)
-        {
-            Dictionary<HealthcareEntity, HealthcareEntityRelationType> dictionary = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>();
-
-            if (healthcareRelations == null)
-            {
-                return dictionary;
-            }
-
-            foreach (HealthcareRelationInternal relation in healthcareRelations)
-            {
-                int entityIndex = healthcareEntities.ToList().FindIndex(e => e.Text.Equals(entity.Text));
-
-                if (IsEntitySource(relation, entityIndex))
-                {
-                    string targetRef = relation.Target;
-
-                    HealthcareEntityInternal relatedEntity = ResolveHealthcareEntity(healthcareEntities, targetRef);
-
-                    dictionary.Add(new HealthcareEntity(relatedEntity, healthcareEntities, healthcareRelations), relation.RelationType);
-                }
-            }
-
-            return dictionary;
-        }
-
-        internal static HealthcareEntityInternal ResolveHealthcareEntity(IEnumerable<HealthcareEntityInternal> entities, string reference)
-        {
-            var healthcareEntityMatch = _healthcareEntityRegex.Match(reference);
-            if (healthcareEntityMatch.Success)
-            {
-                int entityIndex = int.Parse(healthcareEntityMatch.Groups["entityIndex"].Value, CultureInfo.InvariantCulture);
-
-                if (entityIndex < entities.Count())
-                {
-                    return entities.ElementAt(entityIndex);
-                }
-            }
-
-            throw new InvalidOperationException($"Failed to parse element reference: {reference}");
-        }
-
-        private static Regex _healthcareEntityRegex = new Regex(@"\#/results/documents\/(?<documentIndex>\d*)\/entities\/(?<entityIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
-
-        private static bool IsEntitySource(HealthcareRelationInternal healthcareRelation, int entityIndex)
-        {
-            string sourceRef = healthcareRelation.Source;
-
-            var healthcareEntityMatch = _healthcareEntityRegex.Match(sourceRef);
-
-            if (healthcareEntityMatch.Success)
-            {
-                int index = int.Parse(healthcareEntityMatch.Groups["entityIndex"].Value, CultureInfo.InvariantCulture);
-
-                if (index == entityIndex)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         /// <summary>
         /// Gets the entity text as it appears in the input document.
         /// </summary>
@@ -100,18 +31,18 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the entity category inferred by the Text Analytics service's
-        /// named entity recognition model.  The list of available categories is
+        /// healthcare model.  The list of available categories is
         /// described at
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
         /// </summary>
         public string Category { get; }
 
         /// <summary>
         /// Gets the sub category of the entity inferred by the Text Analytics service's
-        /// named entity recognition model.  This property may not have a value if
+        /// healthcare model.  This property may not have a value if
         /// a sub category doesn't exist for this entity.  The list of available categories and
         /// subcategories is described at
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
         /// </summary>
         public string SubCategory { get; }
 
@@ -127,17 +58,17 @@ namespace Azure.AI.TextAnalytics
         public int Offset { get; }
 
         /// <summary>
-        /// .
+        /// Gets the length of input document.
         /// </summary>
         public int Length { get; }
 
         /// <summary>
-        /// .
+        /// Get the list of data sources for the entity.
         /// </summary>
         public IReadOnlyCollection<EntityDataSource> DataSources { get; }
 
         /// <summary>
-        /// .
+        /// Gets the dictionary for related entity with mapped relation type for each.
         /// </summary>
         public IReadOnlyDictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; }
     }

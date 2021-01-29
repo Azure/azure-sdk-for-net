@@ -13,68 +13,68 @@ namespace Azure.AI.TextAnalytics
     public class HealthcareEntityRelationType : IEquatable<HealthcareEntityRelationType>
     {
         /// <summary>
-        /// Specifies that the entity corresponds to a Person.
+        /// Specifies the relation type of DirectionOfBodyStructure.
         /// </summary>
         public static readonly HealthcareEntityRelationType DirectionOfBodyStructure = new HealthcareEntityRelationType("DirectionOfBodyStructure");
 
         /// <summary>
-        /// Specifies that the entity corresponds to a job type or role held by a person.
+        /// Specifies the relation type of DirectionOfExamination.
         /// </summary>
         public static readonly HealthcareEntityRelationType DirectionOfExamination = new HealthcareEntityRelationType("DirectionOfExamination");
 
         /// <summary>
-        /// RelationOfExamination
+        /// Specifies the relation type of RelationOfExamination.
         /// </summary>
         public static readonly HealthcareEntityRelationType RelationOfExamination = new HealthcareEntityRelationType("RelationOfExamination");
 
         /// <summary>
-        /// TimeOfExamination
+        /// Specifies the relation type of TimeOfExamination.
         /// </summary>
         public static readonly HealthcareEntityRelationType TimeOfExamination = new HealthcareEntityRelationType("TimeOfExamination");
 
         private readonly string _value;
 
-        private HealthcareEntityRelationType(string category)
+        private HealthcareEntityRelationType(string relationtype)
         {
-            Argument.AssertNotNull(category, nameof(category));
-            _value = category;
+            Argument.AssertNotNull(relationtype, nameof(relationtype));
+            _value = relationtype;
         }
 
         /// <summary>
-        /// Defines implicit conversion from string to EntityCategory.
+        /// Defines implicit conversion from string to HealthcareEntityRelationType.
         /// </summary>
-        /// <param name="category">string to convert.</param>
-        /// <returns>The string as an EntityCategory.</returns>
-        public static implicit operator HealthcareEntityRelationType(string category) => new HealthcareEntityRelationType(category);
+        /// <param name="relationtype">string to convert.</param>
+        /// <returns>The string as an HealthcareEntityRelationType.</returns>
+        public static implicit operator HealthcareEntityRelationType(string relationtype) => new HealthcareEntityRelationType(relationtype);
 
         /// <summary>
-        /// Defines explicit conversion from EntityCategory to string.
+        /// Defines explicit conversion from HealthcareEntityRelationType to string.
         /// </summary>
-        /// <param name="category">EntityCategory to convert.</param>
-        /// <returns>The EntityCategory as a string.</returns>
-        public static explicit operator string(HealthcareEntityRelationType category) => category._value;
+        /// <param name="relationtype">HealthcareEntityRelationType to convert.</param>
+        /// <returns>The HealthcareEntityRelationType as a string.</returns>
+        public static explicit operator string(HealthcareEntityRelationType relationtype) => relationtype._value;
 
         /// <summary>
-        /// Compares two EntityCategory values for equality.
+        /// Compares two HealthcareEntityRelationType values for equality.
         /// </summary>
-        /// <param name="left">The first EntityCategory to compare.</param>
-        /// <param name="right">The second EntityCategory to compare.</param>
-        /// <returns>true if the EntityCategory objects are equal or are both null; false otherwise.</returns>
+        /// <param name="left">The first HealthcareEntityRelationType to compare.</param>
+        /// <param name="right">The second HealthcareEntityRelationType to compare.</param>
+        /// <returns>true if the HealthcareEntityRelationType objects are equal or are both null; false otherwise.</returns>
         public static bool operator ==(HealthcareEntityRelationType left, HealthcareEntityRelationType right) => Equals(left, right);
 
         /// <summary>
-        /// Compares two EntityCategory values for inequality.
+        /// Compares two HealthcareEntityRelationType values for inequality.
         /// </summary>
-        /// <param name="left">The first EntityCategory to compare.</param>
-        /// <param name="right">The second EntityCategory to compare.</param>
-        /// <returns>true if the EntityCategory objects are not equal; false otherwise.</returns>
+        /// <param name="left">The first HealthcareEntityRelationType to compare.</param>
+        /// <param name="right">The second HealthcareEntityRelationType to compare.</param>
+        /// <returns>true if the HealthcareEntityRelationType objects are not equal; false otherwise.</returns>
         public static bool operator !=(HealthcareEntityRelationType left, HealthcareEntityRelationType right) => !Equals(left, right);
 
         /// <summary>
-        /// Compares the EntityCategory for equality with another EntityCategory.
+        /// Compares the HealthcareEntityRelationType for equality with another HealthcareEntityRelationType.
         /// </summary>
-        /// <param name="other">The EntityCategory with which to compare.</param>
-        /// <returns><c>true</c> if the EntityCategory objects are equal; otherwise, <c>false</c>.</returns>
+        /// <param name="other">The HealthcareEntityRelationType with which to compare.</param>
+        /// <returns><c>true</c> if the HealthcareEntityRelationType objects are equal; otherwise, <c>false</c>.</returns>
         public bool Equals(HealthcareEntityRelationType other) => _value == other._value;
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="obj">The object to compare with the current object.</param>
         /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HealthcareEntityRelationType category && Equals(category);
+        public override bool Equals(object obj) => obj is HealthcareEntityRelationType relationtype && Equals(relationtype);
 
         /// <summary>
         /// Serves as the default hash function.
@@ -93,9 +93,9 @@ namespace Azure.AI.TextAnalytics
         public override int GetHashCode() => _value.GetHashCode();
 
         /// <summary>
-        /// Returns a string representation of the EntityCategory.
+        /// Returns a string representation of the HealthcareEntityRelationType.
         /// </summary>
-        /// <returns>The EntityCategory as a string.</returns>
+        /// <returns>The HealthcareEntityRelationType as a string.</returns>
         public override string ToString() => _value;
     }
 }

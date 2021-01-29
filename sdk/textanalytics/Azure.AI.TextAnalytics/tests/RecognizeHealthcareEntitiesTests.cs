@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,23 +36,22 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeHealthcareEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = singleEnglish;
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareAsync(document);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
-            Assert.AreEqual(1, resultCollection.Count);
+            Assert.AreEqual(2, resultCollection.Count);
 
-            AnalyzeHealthcareEntitiesResult result = resultCollection.Single();
+            AnalyzeHealthcareEntitiesResult result = resultCollection[0];
 
             var entitiesList = new List<string> { "100mg", "ibuprofen", "twice daily" };
 
             Assert.AreEqual(3, result.Entities.Count);
             Assert.IsNotNull(result.Id);
-            Assert.AreEqual("0", result.Id);
+            Assert.AreEqual("1", result.Id);
 
             foreach (HealthcareEntity entity in result.Entities)
             {
@@ -69,14 +67,15 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 if (entity.Text == "100mg")
                 {
-                    HealthcareEntity relatedEntity= new HealthcareEntity(new HealthcareEntityInternal("ibuprofen", "MedicationName", 27, 0, 1.0, false));
-
                     Assert.IsTrue(entity.RelatedEntities.Count == 1);
-                    Assert.AreEqual(relatedEntity.Text, entity.RelatedEntities.ElementAt(0).Key.Text);
-                    Assert.AreEqual(relatedEntity.Category, entity.RelatedEntities.ElementAt(0).Key.Category);
-                    Assert.AreEqual(relatedEntity.Length, entity.RelatedEntities.ElementAt(0).Key.Length);
-                    Assert.AreEqual(relatedEntity.Offset, entity.RelatedEntities.ElementAt(0).Key.Offset);
-                    Assert.AreEqual(relatedEntity.ConfidenceScore, entity.RelatedEntities.ElementAt(0).Key.ConfidenceScore);
+
+                    var relatedEntity = entity.RelatedEntities.FirstOrDefault().Key;
+
+                    Assert.AreEqual("ibuprofen", relatedEntity.Text);
+                    Assert.AreEqual("MedicationName", relatedEntity.Category);
+                    Assert.AreEqual(0, relatedEntity.Length);
+                    Assert.AreEqual(27, relatedEntity.Offset);
+                    Assert.AreEqual(1.0, relatedEntity.ConfidenceScore);
 
                     // TODO - DosageOfMedication is not in relation types and is returned from the service. Need to add to swagger.
                     //Assert.AreEqual(HealthcareEntityRelationType.DosageOfMedication, entity.RelatedEntities.ElementAt(0).Value);
@@ -90,7 +89,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = singleEnglish;
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(new List<string>() { document }, "en");
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(new List<string>() { document }, "en");
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -113,7 +112,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Top = 1
             };
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, options);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -137,13 +136,13 @@ namespace Azure.AI.TextAnalytics.Tests
                 Skip = 1
             };
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, options);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
-            Assert.IsNotNull(resultCollection[0].HasError);
+            Assert.IsFalse(resultCollection[0].HasError);
             Assert.IsNotNull(resultCollection[0].Warnings);
             Assert.AreEqual(1, resultCollection.Count);
             Assert.AreEqual(6, resultCollection[0].Entities.Count);
@@ -164,7 +163,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 "",
             };
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(documents);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -172,9 +171,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(resultCollection[2].Id);
 
-            var exceptionMessage = "Document text is empty.";
             Assert.IsTrue(resultCollection[2].HasError);
-            Assert.AreEqual(exceptionMessage, resultCollection[2].Error.Message);
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[2].Error.ErrorCode.ToString());
         }
 
@@ -184,7 +181,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             var documents = batchConvenienceDocuments;
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(documents);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -204,7 +201,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true
             };
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(documents, "en", options);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents, "en", options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -228,7 +225,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             List<TextDocumentInput> documents = batchDocuments;
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(documents);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -248,7 +245,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true
             };
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(documents, options);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents, options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -274,7 +271,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 batchDocuments.Add(document);
             }
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, "en");
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
 
             await operation.CancelAsync();
 
@@ -314,7 +311,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Top = 2
             };
 
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartHealthcareBatchAsync(list, "en", options);
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(list, "en", options);
 
             AsyncPageable<AnalyzeHealthcareEntitiesResult> results = client.GetHealthcareEntities(healthOperation);
 
