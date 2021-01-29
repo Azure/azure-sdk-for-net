@@ -33,7 +33,8 @@ namespace Azure.AI.FormRecognizer
         public FormContentType? ContentType { get; set; }
 
         /// <summary>
-        /// Set the locale information for the receipt.
+        /// Sets the locale information for the receipt.
+        /// Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US.
         /// </summary>
         public FormRecognizerLocale? Locale { get; set; }
     }

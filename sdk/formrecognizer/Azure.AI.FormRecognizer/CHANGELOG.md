@@ -6,8 +6,8 @@
 - Renamed the model `Style` to `TextStyle`.
 - Renamed the extensible enum `TextStyle` to `TextStyleName`.
 - Changed object type for property `Pages` under `RecognizeContentOptions` from `IEnumerable` to `IList`.
-- Changed model type for `Locale` from `string` to `FormRecognizerLocale` for `RecognizeBusinessCardsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions`.
-- Changed model type for `Language` from `string` to `FormRecognizerLanguage` for `RecognizeContentOptions`.
+- Changed model type of `Locale` from `string` to `FormRecognizerLocale` in `RecognizeBusinessCardsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions`.
+- Changed model type of `Language` from `string` to `FormRecognizerLanguage` in `RecognizeContentOptions`.
 
 ## 3.1.0-beta.1 (2020-11-23)
 

@@ -33,7 +33,8 @@ namespace Azure.AI.FormRecognizer
         public FormContentType? ContentType { get; set; }
 
         /// <summary>
-        /// Set the locale information for the invoice.
+        /// Sets the locale information for the invoice.
+        /// Supported locales include: en-US.
         /// </summary>
         public FormRecognizerLocale? Locale { get; set; }
     }
