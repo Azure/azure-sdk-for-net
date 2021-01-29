@@ -15,6 +15,7 @@ using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -4797,6 +4798,35 @@ namespace Azure.Storage.Files.DataLake.Tests
                 tokenCredentials,
                 GetOptions()));
             Assert.IsFalse(file3.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewFileName();
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName + "/" + path);
+
+            // Act
+            var file = new Mock<DataLakeFileClient>(blobEndpoint, GetOptions())
+            {
+                CallBase = true
+            };
+            // Assert
+            Assert.IsFalse(file.Object.CanGenerateSasUri);
+
+            // Act
+            var file2 = new Mock<DataLakeFileClient>(blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions())
+            {
+                CallBase = true
+            };
+
+            // Assert
+            Assert.IsTrue(file2.Object.CanGenerateSasUri);
         }
 
         [Test]

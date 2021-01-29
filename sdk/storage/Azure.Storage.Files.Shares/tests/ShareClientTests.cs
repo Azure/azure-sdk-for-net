@@ -15,6 +15,7 @@ using Azure.Storage.Test;
 using NUnit.Framework;
 using System.Threading;
 using Azure.Identity;
+using Moq;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -2251,6 +2252,34 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.IsTrue(snapshotShare.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            string shareName = GetNewShareName();
+            var fileEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + shareName);
+
+            // Act
+            var share = new Mock<ShareClient>(fileEndpoint, GetOptions())
+            {
+                CallBase = true
+            };
+            // Assert
+            Assert.IsFalse(share.Object.CanGenerateSasUri);
+
+            // Act
+            var share2 = new Mock<ShareClient>(fileEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions())
+            {
+                CallBase = true
+            };
+
+            // Assert
+            Assert.IsTrue(share2.Object.CanGenerateSasUri);
         }
 
         [Test]

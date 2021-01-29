@@ -6052,6 +6052,38 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            // Act
+            var blob = new Mock<BlobBaseClient>(blobEndpoint, GetOptions())
+            {
+                CallBase = true
+            };
+            // Assert
+            Assert.IsFalse(blob.Object.CanGenerateSasUri);
+
+            // Arrange
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act
+            var blob2 = new Mock<BlobBaseClient>(connectionString,
+                GetNewContainerName(),
+                GetNewBlobName())
+            {
+                CallBase = true
+            };
+
+            // Assert
+            Assert.IsTrue(blob2.Object.CanGenerateSasUri);
+        }
+
+        [Test]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange

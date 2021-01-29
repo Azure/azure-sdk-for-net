@@ -137,7 +137,7 @@ namespace Azure.Storage.Files.DataLake
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => SharedKeyCredential != null;
+        public virtual bool CanGenerateSasUri => SharedKeyCredential != null;
 
         #region ctors
         /// <summary>

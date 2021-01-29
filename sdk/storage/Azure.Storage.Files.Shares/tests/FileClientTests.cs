@@ -16,6 +16,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using BenchmarkDotNet.Toolchains.Roslyn;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
@@ -4042,6 +4043,35 @@ namespace Azure.Storage.Files.Shares.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             Assert.IsTrue(directory4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            string shareName = GetNewShareName();
+            string path = GetNewFileName();
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + shareName + "/" + path);
+
+            // Act
+            var file = new Mock<ShareFileClient>(blobEndpoint, GetOptions())
+            {
+                CallBase = true
+            };
+            // Assert
+            Assert.IsFalse(file.Object.CanGenerateSasUri);
+
+            // Act
+            var file2 = new Mock<ShareFileClient>(blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions())
+            {
+                CallBase = true
+            };
+
+            // Assert
+            Assert.IsTrue(file2.Object.CanGenerateSasUri);
         }
 
         [Test]

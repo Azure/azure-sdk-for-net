@@ -14,6 +14,7 @@ using Azure.Storage.Sas;
 using Azure.Core.TestFramework;
 using System.Buffers.Text;
 using System.Text;
+using Moq;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -1403,6 +1404,34 @@ namespace Azure.Storage.Queues.Test
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             Assert.IsTrue(container4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            string queueName = GetNewQueueName();
+            var fileEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + queueName);
+
+            // Act
+            var queue = new Mock<QueueClient>(fileEndpoint, GetOptions())
+            {
+                CallBase = true
+            };
+            // Assert
+            Assert.IsFalse(queue.Object.CanGenerateSasUri);
+
+            // Act
+            var queue2 = new Mock<QueueClient>(fileEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions())
+            {
+                CallBase = true
+            };
+
+            // Assert
+            Assert.IsTrue(queue2.Object.CanGenerateSasUri);
         }
 
         [Test]

@@ -12,6 +12,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -841,6 +842,36 @@ namespace Azure.Storage.Blobs.Test
                 GetOptions()));
             BlobContainerClient containerClient5 = serviceClient5.GetBlobContainerClient(GetNewContainerName());
             Assert.IsFalse(containerClient5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateAccountSas_Mockable()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            // Act
+            var service = new Mock<BlobServiceClient>(blobEndpoint, GetOptions())
+            {
+                CallBase = true
+            };
+            // Assert
+            Assert.IsFalse(service.Object.CanGenerateAccountSasUri);
+
+            // Arrange
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act
+            var service2 = new Mock<BlobServiceClient>(connectionString)
+            {
+                CallBase = true
+            };
+
+            // Assert
+            Assert.IsTrue(service2.Object.CanGenerateAccountSasUri);
         }
 
         [Test]
