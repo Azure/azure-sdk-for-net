@@ -89,7 +89,7 @@ Remove-AzADServicePrincipal -ApplicationId $sp.ApplicationId -Force
 
 If you persisted environment variables, you should also remove those as well.
 
-Some scripts accept the `AdditionalParameters` parameter to control additional resource configuration options. For example:
+Some test-resources.json templates utilize the `AdditionalParameters` parameter to control additional resource configuration options. For example:
 
 ```powershell
 New-TestResources.ps1 keyvault -AdditionalParameters @{enableHsm = $true}
