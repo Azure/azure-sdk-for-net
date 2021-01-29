@@ -17,9 +17,12 @@
     </Description>
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Force a project reference until SyncAsyncEventHandler has shipped -->
+    <UseProjectReferenceToAzureClients>true</UseProjectReferenceToAzureClients>
+  </PropertyGroup>
   <ItemGroup>
-    <!-- TODO (kasobol-msft) undo before merge when core ships. -->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
