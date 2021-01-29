@@ -5,9 +5,7 @@ Azure Quantum is a Microsoft Azure service that you can use to run quantum compu
 - Create, enumerate, and cancel quantum jobs
 - Enumerate provider status and quotas
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/quantum) | [Package (PyPi)](https://pypi.org/project/azure-batch/) | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/batch?view=azure-python) | [Product documentation](https://docs.microsoft.com/azure/batch/)
-
-> TIP: Your README should be as **brief** as possible but **no more brief** than necessary to get a developer new to Azure, the service, or the package up and running quickly. Keep it brief, but include everything a developer needs to make their first API call successfully.
+  [Source code][source] | [Package (NuGet)][package] | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/batch?view=azure-python) | [Product documentation](https://docs.microsoft.com/azure/batch/)
 
 ## Getting started
 
@@ -35,15 +33,16 @@ The *Key concepts* section should describe the functionality of the main classes
 
 ## Examples
 
-Include code snippets and short descriptions for each task you listed in the [Introduction](#introduction) (the bulleted list). Briefly explain each operation, but include enough clarity to explain complex or otherwise tricky operations.
+* [Create the client](#create-the-client)
 
-If possible, use the same example snippets that your in-code documentation uses. For example, use the snippets in your `examples.py` that Sphinx ingests via its [literalinclude](https://www.sphinx-doc.org/en/1.5/markup/code.html?highlight=code%20examples#includes) directive. The `examples.py` file containing the snippets should reside alongside your package's code, and should be tested in an automated fashion.
+### Create the client
 
-Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
-
-### Get the thing
-
-The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+Create an instance of the QuantumJobClient by passing in these parameters:
+- Subscription Id - looks like XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX and can be found in your list of subscriptions [subscriptions]
+- Resource Group Name - TODO
+- Location - TODO
+- StorageContainerName - TODO
+- Credential - TODO
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateClient
 // Create a QuantumJobClient
@@ -120,9 +119,25 @@ var allJobs = quantumJobClient.GetJobs().ToList();
 
 ## Contributing
 
-TODO copy from storage blob sample, point to master contributing
+See the [Storage CONTRIBUTING.md][contributing] for details on building,
+testing, and contributing to this library.
+
+This project welcomes contributions and suggestions.  Most contributions require
+you to agree to a Contributor License Agreement (CLA) declaring that you have
+the right to, and actually do, grant us the rights to use your contribution. For
+details, visit [cla.microsoft.com][cla].
+
+This project has adopted the [Microsoft Open Source Code of Conduct][coc].
+For more information see the [Code of Conduct FAQ][coc_faq]
+or contact [opencode@microsoft.com][coc_contact] with any
+additional questions or comments.
+
 
 <!-- LINKS -->
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/quantum/Azure.Quantum.Jobs/src
+[package]: https://www.nuget.org/packages/Azure.Quantum.Jobs/
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/CONTRIBUTING.md
+[subscriptions]: https://ms.portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
