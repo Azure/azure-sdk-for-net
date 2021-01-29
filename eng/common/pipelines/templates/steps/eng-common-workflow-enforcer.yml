@@ -1,0 +1,13 @@
+steps:
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    - pwsh: |
+        $filesInCommonDir = git diff "origin/$(System.PullRequest.TargetBranch)" HEAD --name-only -- 'eng/common/*'
+
+        if ((-not $PrSourceBranch.StartsWith("sync-eng/common")) -and ($filesInCommonDir.Count -gt 0))
+        {
+          Write-Host "##vso[task.LogIssue type=error;]Changes to files under 'eng/common' directory should not be made in this Repo`n${filesInCommonDir}"
+          Write-Host "##vso[task.LogIssue type=error;]Please follow workflow at https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md"
+          exit 1
+        }
+      displayName: Prevent eng/common Changes from non Sync Prs
+      condition: and(succeeded(), ne(variables['Skip.EngCommonWflEnforcer'], 'true'))

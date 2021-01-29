@@ -98,15 +98,10 @@ function Get-GitHubPullRequest {
     $PullRequestNumber,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
-    $AuthToken,
-    [Boolean]$ReturnFiles=$false
+    $AuthToken
   )
 
   $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls/$PullRequestNumber"
-  if ($ReturnFiles) 
-  {
-    $uri += "/files"
-  }
 
   return Invoke-RestMethod `
           -Method GET `
