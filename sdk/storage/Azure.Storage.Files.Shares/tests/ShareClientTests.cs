@@ -2257,29 +2257,18 @@ namespace Azure.Storage.Files.Shares.Tests
         [Test]
         public void CanGenerateSas_Mockable()
         {
-            // Arrange
-            var constants = new TestConstants(this);
-            string shareName = GetNewShareName();
-            var fileEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + shareName);
-
             // Act
-            var share = new Mock<ShareClient>(fileEndpoint, GetOptions())
-            {
-                CallBase = true
-            };
-            // Assert
-            Assert.IsFalse(share.Object.CanGenerateSasUri);
-
-            // Act
-            var share2 = new Mock<ShareClient>(fileEndpoint,
-                constants.Sas.SharedKeyCredential,
-                GetOptions())
-            {
-                CallBase = true
-            };
+            var directory = new Mock<ShareClient>();
+            directory.Setup(x => x.CanGenerateSasUri).Returns(false);
 
             // Assert
-            Assert.IsTrue(share2.Object.CanGenerateSasUri);
+            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateSasUri);
         }
 
         [Test]

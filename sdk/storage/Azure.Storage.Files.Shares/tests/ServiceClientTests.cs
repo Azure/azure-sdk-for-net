@@ -509,31 +509,18 @@ namespace Azure.Storage.Files.Shares.Tests
         [Test]
         public void CanGenerateAccountSas_Mockable()
         {
-            // Arrange
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
-
             // Act
-            var service = new Mock<ShareServiceClient>(blobEndpoint, GetOptions())
-            {
-                CallBase = true
-            };
-            // Assert
-            Assert.IsFalse(service.Object.CanGenerateAccountSasUri);
-
-            // Arrange
-            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
-
-            // Act
-            var service2 = new Mock<ShareServiceClient>(connectionString)
-            {
-                CallBase = true
-            };
+            var directory = new Mock<ShareServiceClient>();
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
 
             // Assert
-            Assert.IsTrue(service2.Object.CanGenerateAccountSasUri);
+            Assert.IsFalse(directory.Object.CanGenerateAccountSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateAccountSasUri);
         }
 
         [Test]

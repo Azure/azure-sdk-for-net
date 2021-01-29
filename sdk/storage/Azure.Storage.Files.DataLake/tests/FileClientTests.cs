@@ -4803,30 +4803,18 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void CanGenerateSas_Mockable()
         {
-            // Arrange
-            var constants = new TestConstants(this);
-            string fileSystemName = GetNewFileSystemName();
-            string path = GetNewFileName();
-            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName + "/" + path);
-
             // Act
-            var file = new Mock<DataLakeFileClient>(blobEndpoint, GetOptions())
-            {
-                CallBase = true
-            };
+            var file = new Mock<DataLakeFileClient>();
+            file.Setup(x => x.CanGenerateSasUri).Returns(false);
+
             // Assert
             Assert.IsFalse(file.Object.CanGenerateSasUri);
 
             // Act
-            var file2 = new Mock<DataLakeFileClient>(blobEndpoint,
-                constants.Sas.SharedKeyCredential,
-                GetOptions())
-            {
-                CallBase = true
-            };
+            file.Setup(x => x.CanGenerateSasUri).Returns(true);
 
             // Assert
-            Assert.IsTrue(file2.Object.CanGenerateSasUri);
+            Assert.IsTrue(file.Object.CanGenerateSasUri);
         }
 
         [Test]

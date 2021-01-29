@@ -598,31 +598,18 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void CanGenerateAccountSas_Mockable()
         {
-            // Arrange
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
-
             // Act
-            var serviceClient = new Mock<DataLakeServiceClient>(blobEndpoint, GetOptions())
-            {
-                CallBase = true
-            };
+            var serviceClient = new Mock<DataLakeServiceClient>();
+            serviceClient.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
+
             // Assert
             Assert.IsFalse(serviceClient.Object.CanGenerateAccountSasUri);
 
-            // Arrange
-            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
-
             // Act
-            var serviceClient2 = new Mock<DataLakeServiceClient>(connectionString)
-            {
-                CallBase = true
-            };
+            serviceClient.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
 
             // Assert
-            Assert.IsTrue(serviceClient2.Object.CanGenerateAccountSasUri);
+            Assert.IsTrue(serviceClient.Object.CanGenerateAccountSasUri);
         }
 
         [Test]
