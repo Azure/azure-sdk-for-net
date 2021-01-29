@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.DnsResolver</PackageId>
+		<Description>Provides management capabilities for Azure DNS Resolver.</Description>
+		<Version>1.0.0</Version>
+		<AssemblyName>Microsoft.Azure.Management.DnsResolver</AssemblyName>
+		<PackageTags>Microsoft Azure DNS Resolver;DNS Resolver</PackageTags>
+		<PackageReleaseNotes>
+<![CDATA[This is a release SDK for Azure DNS Resolver, which allows you to:
+ - create/read/update/delete DNS Resolvers.
+]]>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
+</Project>
