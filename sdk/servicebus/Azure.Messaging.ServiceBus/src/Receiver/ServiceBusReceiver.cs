@@ -34,12 +34,12 @@ namespace Azure.Messaging.ServiceBus
         /// The path of the Service Bus entity that the receiver is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
-        public string EntityPath { get; }
+        public virtual string EntityPath { get; }
 
         /// <summary>
         /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
-        public ServiceBusReceiveMode ReceiveMode { get; }
+        public virtual ServiceBusReceiveMode ReceiveMode { get; }
 
         /// <summary>
         /// Indicates whether the receiver entity is session enabled.
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus
         /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
-        public int PrefetchCount { get; }
+        public virtual int PrefetchCount { get; }
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
