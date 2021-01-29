@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Azure Quantum Client library that enables you to execute Quantum Jobs</Description>
-    <AssemblyTitle>Azure SDK Template</AssemblyTitle>
+    <Description>Azure Quantum Jobs library that enables you to submit and manage Quantum Jobs on Azure Quantum</Description>
+    <AssemblyTitle>Azure Quantum Jobs</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure;Quantum;Quantum Jobs</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

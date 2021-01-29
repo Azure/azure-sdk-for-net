@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-// TODO (kasobol-msft) This is borrowed from https://github.com/Azure/azure-sdk-for-net/pull/18170.
 namespace Azure.Core
 {
     /// <summary>
@@ -93,7 +92,7 @@ namespace Azure.Core
                         Task runHandlerTask = azureHandler(e);
                         // We can consider logging something when e.RunSynchronously
                         // is true, but runHandlerTask.IsComplete is false.
-                        // (We're not bother to check our tests because
+                        // (We'll not bother to check our tests because
                         // EnsureCompleted on the code path that raised the
                         // event will catch it for us.)
                         await runHandlerTask.ConfigureAwait(false);

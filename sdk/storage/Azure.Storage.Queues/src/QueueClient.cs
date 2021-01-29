@@ -437,9 +437,17 @@ namespace Azure.Storage.Queues
         /// <returns>New instance with provided options and same internals otherwise.</returns>
         protected internal virtual QueueClient WithClientSideEncryptionOptionsCore(ClientSideEncryptionOptions clientSideEncryptionOptions)
         {
+            QueueClientConfiguration queueClientConfiguration = new QueueClientConfiguration(
+                ClientConfiguration.Pipeline,
+                ClientConfiguration.SharedKeyCredential,
+                ClientConfiguration.ClientDiagnostics,
+                ClientConfiguration.Version,
+                QueueClientSideEncryptionOptions.CloneFrom(clientSideEncryptionOptions),
+                ClientConfiguration.MessageEncoding);
+
             return new QueueClient(
                 Uri,
-                ClientConfiguration);
+                queueClientConfiguration);
         }
 
         #region Create

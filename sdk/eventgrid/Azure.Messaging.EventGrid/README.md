@@ -96,10 +96,10 @@ Publishing events to Event Grid is performed using the `EventGridPublisherClient
 List<EventGridEvent> eventsList = new List<EventGridEvent>
 {
     new EventGridEvent(
-        "This is the event data",
         "ExampleEventSubject",
         "Example.EventType",
-        "1.0")
+        "1.0",
+        "This is the event data")
 };
 
 // Send the events
@@ -138,10 +138,10 @@ To publish events to any topic in an Event Domain, push the events to the domain
 List<EventGridEvent> eventsList = new List<EventGridEvent>
 {
     new EventGridEvent(
-        "This is the event data",
         "ExampleEventSubject",
         "Example.EventType",
-        "1.0")
+        "1.0",
+        "This is the event data")
     {
         Topic = "MyTopic"
     }
@@ -185,7 +185,7 @@ foreach (CloudEvent cloudEvent in cloudEvents)
             TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
             Console.WriteLine(testPayload.Name);
             break;
-        case SystemEventMappings.StorageBlobDeletedEventName:
+        case SystemEventNames.StorageBlobDeleted:
             // Example for deserializing system events using GetData<T>
             StorageBlobDeletedEventData blobDeleted = cloudEvent.GetData<StorageBlobDeletedEventData>();
             Console.WriteLine(blobDeleted.BlobType);

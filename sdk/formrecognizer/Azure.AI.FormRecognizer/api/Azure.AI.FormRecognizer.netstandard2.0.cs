@@ -1,10 +1,5 @@
 namespace Azure.AI.FormRecognizer
 {
-    public partial class Appearance
-    {
-        internal Appearance() { }
-        public Azure.AI.FormRecognizer.Style Style { get { throw null; } }
-    }
     public enum FormContentType
     {
         Json = 0,
@@ -75,7 +70,7 @@ namespace Azure.AI.FormRecognizer
         public RecognizeContentOptions() { }
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> Pages { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Pages { get { throw null; } }
     }
     public partial class RecognizeCustomFormsOptions
     {
@@ -96,12 +91,6 @@ namespace Azure.AI.FormRecognizer
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public bool IncludeFieldElements { get { throw null; } set { } }
         public string Locale { get { throw null; } set { } }
-    }
-    public partial class Style
-    {
-        internal Style() { }
-        public float Confidence { get { throw null; } }
-        public Azure.AI.FormRecognizer.Models.TextStyle Name { get { throw null; } }
     }
 }
 namespace Azure.AI.FormRecognizer.Models
@@ -177,7 +166,7 @@ namespace Azure.AI.FormRecognizer.Models
     public partial class FormLine : Azure.AI.FormRecognizer.Models.FormElement
     {
         internal FormLine() { }
-        public Azure.AI.FormRecognizer.Appearance Appearance { get { throw null; } }
+        public Azure.AI.FormRecognizer.Models.TextAppearance Appearance { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormWord> Words { get { throw null; } }
     }
     public partial class FormPage
@@ -375,22 +364,33 @@ namespace Azure.AI.FormRecognizer.Models
         Unselected = 0,
         Selected = 1,
     }
+    public partial class TextAppearance
+    {
+        internal TextAppearance() { }
+        public Azure.AI.FormRecognizer.Models.TextStyle Style { get { throw null; } }
+    }
+    public partial class TextStyle
+    {
+        internal TextStyle() { }
+        public float Confidence { get { throw null; } }
+        public Azure.AI.FormRecognizer.Models.TextStyleName Name { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TextStyle : System.IEquatable<Azure.AI.FormRecognizer.Models.TextStyle>
+    public readonly partial struct TextStyleName : System.IEquatable<Azure.AI.FormRecognizer.Models.TextStyleName>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TextStyle(string value) { throw null; }
-        public static Azure.AI.FormRecognizer.Models.TextStyle Handwriting { get { throw null; } }
-        public static Azure.AI.FormRecognizer.Models.TextStyle Other { get { throw null; } }
-        public bool Equals(Azure.AI.FormRecognizer.Models.TextStyle other) { throw null; }
+        public TextStyleName(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.Models.TextStyleName Handwriting { get { throw null; } }
+        public static Azure.AI.FormRecognizer.Models.TextStyleName Other { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.Models.TextStyleName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.FormRecognizer.Models.TextStyle left, Azure.AI.FormRecognizer.Models.TextStyle right) { throw null; }
-        public static implicit operator Azure.AI.FormRecognizer.Models.TextStyle (string value) { throw null; }
-        public static bool operator !=(Azure.AI.FormRecognizer.Models.TextStyle left, Azure.AI.FormRecognizer.Models.TextStyle right) { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.Models.TextStyleName left, Azure.AI.FormRecognizer.Models.TextStyleName right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.Models.TextStyleName (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.Models.TextStyleName left, Azure.AI.FormRecognizer.Models.TextStyleName right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

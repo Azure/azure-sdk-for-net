@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "c2744a43-4260-56c0-72d3-17d01187de74",
         "x-ms-date": "Mon, 14 Dec 2020 21:47:15 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,12 +28,12 @@
         ],
         "x-ms-client-request-id": "c2744a43-4260-56c0-72d3-17d01187de74",
         "x-ms-request-id": "5d742358-601e-002f-5362-d2406b000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-cec5c7f6-2280-e668-213a-df3c83fbea9e/test-directory-36810104-ec55-4e23-b78d-0d26b8141320?sv=2020-04-08\u0026se=2020-12-15T21%3A47%3A16Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=directory",
+      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-cec5c7f6-2280-e668-213a-df3c83fbea9e/test-directory-36810104-ec55-4e23-b78d-0d26b8141320?sv=2020-06-12\u0026se=2020-12-15T21%3A47%3A16Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-cd7bd27b0ca5ed469b0d01fb6a38657d-775e5da311ac2648-00",
@@ -43,7 +43,7 @@
         ],
         "x-ms-client-request-id": "d14ef57b-de7f-576a-2725-0ad235999e5e",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -58,12 +58,12 @@
         ],
         "x-ms-client-request-id": "d14ef57b-de7f-576a-2725-0ad235999e5e",
         "x-ms-request-id": "71c34d56-f01f-004f-7762-d23cf4000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-cec5c7f6-2280-e668-213a-df3c83fbea9e?sv=2020-04-08\u0026se=2020-12-15T21%3A47%3A16Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=filesystem\u0026recursive=false\u0026upn=false",
+      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-cec5c7f6-2280-e668-213a-df3c83fbea9e?sv=2020-06-12\u0026se=2020-12-15T21%3A47%3A16Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=filesystem\u0026recursive=false\u0026upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
@@ -72,7 +72,7 @@
         ],
         "x-ms-client-request-id": "c3aad466-42c5-47a0-b4a2-10611d6b07bc",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -86,7 +86,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "c3aad466-42c5-47a0-b4a2-10611d6b07bc",
         "x-ms-request-id": "71c34d57-f01f-004f-7862-d23cf4000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
         "{\u0022paths\u0022:[{\u0022contentLength\u0022:\u00220\u0022,\u0022creationTime\u0022:\u0022Mon, 14 Dec 2020 21:47:17 GMT\u0022,\u0022etag\u0022:\u00220x8D8A079D3E8E5D2\u0022,\u0022group\u0022:\u0022$superuser\u0022,\u0022isDirectory\u0022:\u0022true\u0022,\u0022lastModified\u0022:\u0022Mon, 14 Dec 2020 21:47:17 GMT\u0022,\u0022name\u0022:\u0022test-directory-36810104-ec55-4e23-b78d-0d26b8141320\u0022,\u0022owner\u0022:\u0022$superuser\u0022,\u0022permissions\u0022:\u0022rwxr-x---\u0022}]}\n"
@@ -105,7 +105,7 @@
         "x-ms-client-request-id": "616c9268-daee-7d98-5662-3dec958bbe57",
         "x-ms-date": "Mon, 14 Dec 2020 21:47:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -118,7 +118,7 @@
         ],
         "x-ms-client-request-id": "616c9268-daee-7d98-5662-3dec958bbe57",
         "x-ms-request-id": "5d7423b6-601e-002f-1162-d2406b000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     }

@@ -1,7 +1,11 @@
 # Release History
 
 ## 3.1.0-beta.2 (Unreleased)
-
+### Breaking changes
+- Renamed the model `Appearance` to `TextAppearance`.
+- Renamed the model `Style` to `TextStyle`.
+- Renamed the extensible enum `TextStyle` to `TextStyleName`.
+- Changed object type for property `Pages` under `RecognizeContentOptions` from `IEnumerable` to `IList`.
 
 ## 3.1.0-beta.1 (2020-11-23)
 

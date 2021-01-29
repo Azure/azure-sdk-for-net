@@ -56,9 +56,71 @@ Each example in the *Examples* section starts with an H3 that describes the exam
 
 The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
 
+```C# Snippet:Azure_Quantum_Jobs_CreateClient
+// Create a QuantumJobClient
+var subscriptionId = "your_subscription_id";
+var resourceGroupName = "your_resource_group_name";
+var workspaceName = "your_quantum_workspace_name";
+var location = "your_location";
+var storageContainerName = "your_container_name";
+var credential = new DefaultAzureCredential(true);
+
+var quantumJobClient =
+    new QuantumJobClient(
+        subscriptionId,
+        resourceGroupName,
+        workspaceName,
+        location,
+        credential);
+```
+
+```C# Snippet:Azure_Quantum_Jobs_GetContainerSasUri
+// Get container Uri with SAS key
+var containerUri = (quantumJobClient.GetStorageSasUri(
+    new BlobDetails(storageContainerName))).Value.SasUri;
+```
+
+```C# Snippet:Azure_Quantum_Jobs_UploadInputData
+// Get input data blob Uri with SAS key
+string blobName = $"myjobinput.json";
+var inputDataUri = (quantumJobClient.GetStorageSasUri(
+    new BlobDetails(storageContainerName)
+    {
+        BlobName = blobName,
+    })).Value.SasUri;
+
+// Upload input data to blob
+var blobClient = new BlobClient(new Uri(inputDataUri));
+var problemFilename = "problem.json";
+blobClient.Upload(problemFilename, overwrite: true);
+```
+
+```C# Snippet:Azure_Quantum_Jobs_CreateJob
+// Submit job
+var jobId = $"job-{Guid.NewGuid():N}";
+var jobName = $"jobName-{Guid.NewGuid():N}";
+var inputDataFormat = "microsoft.qio.v2";
+var outputDataFormat = "microsoft.qio-results.v2";
+var providerId = "microsoft";
+var target = "microsoft.paralleltempering-parameterfree.cpu";
+var createJobDetails = new JobDetails(containerUri, inputDataFormat, providerId, target)
+{
+    Id = jobId,
+    InputDataUri = inputDataUri,
+    Name = jobName,
+    OutputDataFormat = outputDataFormat
+};
+JobDetails createdJob = (quantumJobClient.CreateJob(jobId, createJobDetails)).Value;
+```
+
+```C# Snippet:Azure_Quantum_Jobs_GetJob
+// Get the job that we've just created based on its jobId
+JobDetails myJob = (quantumJobClient.GetJob(jobId)).Value;
+```
+
 ```C# Snippet:Azure_Quantum_Jobs_GetJobs
-var client = new QuantumJobClient("subscriptionId", "resourceGroupName", "workspaceName", "location");
-var jobs = client.GetJobs();
+// Get all jobs from the workspace (.ToList() will force all pages to be fetched)
+var allJobs = quantumJobClient.GetJobs().ToList();
 ```
 
 ## Troubleshooting

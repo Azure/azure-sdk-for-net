@@ -142,7 +142,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType.ConvertToContentType1(),
                     form,
                     recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
-                    recognizeContentOptions.Pages,
+                    recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -181,7 +181,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType.ConvertToContentType1(),
                     form,
                     recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
-                    recognizeContentOptions.Pages,
+                    recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -217,7 +217,7 @@ namespace Azure.AI.FormRecognizer
                 SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
                 Response response = ServiceClient.AnalyzeLayoutAsync(
                     recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
-                    recognizeContentOptions.Pages,
+                    recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -254,7 +254,7 @@ namespace Azure.AI.FormRecognizer
                 SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
                 Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
                     recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
-                    recognizeContentOptions.Pages,
+                    recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
