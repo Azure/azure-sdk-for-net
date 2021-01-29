@@ -3,7 +3,6 @@
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.FunctionalTests
 {
-    using System;
     using System.Threading.Tasks;
 
     using Azure.Core.TestFramework;
@@ -16,38 +15,22 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
 
     using NUnit.Framework;
 
-    public class AzureMonitorLiveTests : RecordedTestBase<AzureMonitorTestEnvironment>
+    public class AzureMonitorLogExporterLiveTests : RecordedTestBase<AzureMonitorTestEnvironment>
     {
-        public AzureMonitorLiveTests(bool isAsync) :
-            base(isAsync, RecordedTestMode.Record)
+        public AzureMonitorLogExporterLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
-            //...
         }
 
+        /// <summary>
+        /// We need to have one TEST in this class for NUnit to discover this class.
+        /// </summary>
         [Test]
         public void Dummy() { }
 
         [RecordedTest]
         public async Task VerifyCanLog()
         {
-            var logger = GetLogger();
-            logger.Log(logLevel: LogLevel.Information, message: "Hello World");
-
-            // VERIFY
-            // TODO: Query logs from Kusto https://dev.applicationinsights.io/quickstart
-
-            //await Task.Run(() => Guid.NewGuid());
-            await Task.Delay(10000);
-        }
-
-        [RecordedTest]
-        public void WillFail()
-        {
-            throw new NotImplementedException("hello");
-        }
-
-        private ILogger<AzureMonitorLiveTests> GetLogger()
-        {
+            // SETUP
             var options = this.InstrumentClientOptions(new AzureMonitorExporterOptions
             {
                 ConnectionString = TestEnvironment.ConnectionString,
@@ -63,8 +46,19 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
             });
 
             using var serviceProvider = serviceCollection.BuildServiceProvider();
-            var logger = serviceProvider.GetRequiredService<ILogger<AzureMonitorLiveTests>>();
-            return logger;
+            var logger = serviceProvider.GetRequiredService<ILogger<AzureMonitorLogExporterLiveTests>>();
+
+            // ACT
+            logger.Log(logLevel: LogLevel.Information, message: "Hello World");
+
+            processor.ForceFlush();
+
+            await Task.Delay(0);
+
+            // VERIFY
+            // TODO: Query logs from Kusto https://dev.applicationinsights.io/quickstart
+            // TODO: FETCH TELEMETRY FROM AZURE MONITOR
+            Assert.Inconclusive();
         }
     }
 }
