@@ -160,9 +160,9 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionName">Optional name used to create the role definition. A new <see cref="Guid"/> will be generated if not specified.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<KeyVaultRoleDefinition>> UpsertRoleDefinitionAsync(string roleDefinitionDescription, KeyVaultPermission permissions, KeyVaultRoleScope roleScope = default, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateRoleDefinitionAsync(string roleDefinitionDescription, KeyVaultPermission permissions, KeyVaultRoleScope roleScope = default, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(UpsertRoleDefinition)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateOrUpdateRoleDefinition)}");
             scope.Start();
             try
             {
@@ -202,9 +202,9 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionName">Optional name used to create the role definition. A new <see cref="Guid"/> will be generated if not specified.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{TResult}"/> containing the result of the operation.</returns>
-        public virtual Response<KeyVaultRoleDefinition> UpsertRoleDefinition(string roleDefinitionDescription, KeyVaultPermission permissions, KeyVaultRoleScope roleScope = default, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultRoleDefinition> CreateOrUpdateRoleDefinition(string roleDefinitionDescription, KeyVaultPermission permissions, KeyVaultRoleScope roleScope = default, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(UpsertRoleDefinition)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateOrUpdateRoleDefinition)}");
             scope.Start();
             try
             {
