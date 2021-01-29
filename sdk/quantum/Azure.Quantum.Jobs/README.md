@@ -123,14 +123,6 @@ JobDetails myJob = (quantumJobClient.GetJob(jobId)).Value;
 var allJobs = quantumJobClient.GetJobs().ToList();
 ```
 
-## Troubleshooting
-
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
-
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
-
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
-
 ## Next steps
 
 * Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
@@ -139,7 +131,7 @@ If the package or a related package supports it, include tips for logging or ena
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+TODO copy from storage blob sample, point to master contributing
 
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
