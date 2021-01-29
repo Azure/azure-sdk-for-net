@@ -1,18 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://login.microsoftonline.com/common/discovery/instance?api-version=1.1\u0026authorization_endpoint=https%3A%2F%2Flogin.microsoftonline.com%2F72f988bf-86f1-41af-91ab-2d7cd011db47%2Foauth2%2Fv2.0%2Fauthorize",
+      "RequestUri": "https://login.microsoftonline.com/common/discovery/instance?api-version=1.1\u0026authorization_endpoint=https%3A%2F%2Flogin.microsoftonline.com%2Fc54fac88-3dd3-461f-a7c4-8a368e0340b3%2Foauth2%2Fv2.0%2Fauthorize",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "client-request-id": "b80efd34-2942-4d44-93b9-e6a69554e0d7",
+        "client-request-id": "7864cd2d-94d8-4cc8-aabf-1534f502a46d",
         "return-client-request-id": "true",
-        "User-Agent": "azsdk-net-Identity/1.4.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-7c558e1214a34746bb8d375ea317f875-b93cb11851131349-00",
+        "User-Agent": "azsdk-net-Identity/1.4.0-alpha.20210129.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-app-name": "UnknownClient",
         "x-app-ver": "0.0.0.0",
         "x-client-CPU": "x64",
         "x-client-OS": "Microsoft Windows NT 10.0.19042.0",
         "x-client-SKU": "MSAL.Desktop",
-        "x-client-Ver": "4.22.0.0",
+        "x-client-Ver": "4.25.0.0",
         "x-ms-client-request-id": "8a4a905606ba1d5b0c16bd8d1442cc41",
         "x-ms-return-client-request-id": "true"
       },
@@ -25,24 +26,24 @@
           "max-age=86400",
           "private"
         ],
-        "client-request-id": "b80efd34-2942-4d44-93b9-e6a69554e0d7",
+        "client-request-id": "7864cd2d-94d8-4cc8-aabf-1534f502a46d",
         "Content-Length": "980",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Dec 2020 14:52:56 GMT",
+        "Date": "Fri, 29 Jan 2021 23:41:51 GMT",
         "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
         "Set-Cookie": [
-          "fpc=AitwLEyKYtVLl9_Pivadehs; expires=Sun, 10-Jan-2021 14:52:56 GMT; path=/; secure; HttpOnly; SameSite=None",
-          "esctx=AQABAAAAAAB2UyzwtQEKR7-rWbgdcBZI4pGK47z5BH67aoou0nOd4Aety99UZiRSRJGnKOmEHi0IIPt4NWO3X2JFJ5DvrKHFkwZJPHfqauC1oILrC-wx5OniDA-BZOtIo7bx6RR8YQyhYXiSpKVpv9mkRHtSInC6vLcbJWKAlstPk1eZm7QmB0BcH7qVmjA5ExUpDcWx7B0gAA; domain=.login.microsoftonline.com; path=/; secure; HttpOnly; SameSite=None",
+          "fpc=Apint3bHShNLr8GhdJrtnPk; expires=Sun, 28-Feb-2021 23:41:52 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "esctx=AQABAAAAAAD--DLA3VO7QrddgJg7WevrhJuVPrOFEvU2HsYmMuoRKtjOYSVxBVJJ31KL87oeSEs3FtArH4JA6zmTdM2fxfX09rTks_JNjYCr4rF0kP_uF_zhmv89Y_f9qe0-qzjQFDYCrhpdfQmipUF2ouD37AOdjr7ncTUVpR2gKi8G_HdvU1lMEyWUrcyOQPTjnJb0PdIgAA; domain=.login.microsoftonline.com; path=/; secure; HttpOnly; SameSite=None",
           "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
           "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ests-server": "2.1.11303.13 - WUS2 ProdSlices",
-        "x-ms-request-id": "118ee085-2443-4506-8ade-211c44db4401"
+        "x-ms-ests-server": "2.1.11444.8 - NCUS ProdSlices",
+        "x-ms-request-id": "dfd69b63-1cde-40ae-acd1-a0c1e7bff300"
       },
       "ResponseBody": {
-        "tenant_discovery_endpoint": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/v2.0/.well-known/openid-configuration",
+        "tenant_discovery_endpoint": "https://login.microsoftonline.com/c54fac88-3dd3-461f-a7c4-8a368e0340b3/v2.0/.well-known/openid-configuration",
         "api-version": "1.1",
         "metadata": [
           {
@@ -89,25 +90,25 @@
       }
     },
     {
-      "RequestUri": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/v2.0/token",
+      "RequestUri": "https://login.microsoftonline.com/c54fac88-3dd3-461f-a7c4-8a368e0340b3/oauth2/v2.0/token",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "client-request-id": "b80efd34-2942-4d44-93b9-e6a69554e0d7",
+        "client-request-id": "7864cd2d-94d8-4cc8-aabf-1534f502a46d",
         "Content-Length": "9",
         "Content-Type": "application/x-www-form-urlencoded",
         "return-client-request-id": "true",
-        "User-Agent": "azsdk-net-Identity/1.4.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-7c558e1214a34746bb8d375ea317f875-4b46789a44a57f45-00",
+        "User-Agent": "azsdk-net-Identity/1.4.0-alpha.20210129.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-app-name": "UnknownClient",
         "x-app-ver": "0.0.0.0",
         "x-client-CPU": "x64",
-        "x-client-current-telemetry": "2|1004,0|",
+        "x-client-current-telemetry": "2|1004,0|,,0,,,,1",
         "x-client-last-telemetry": "2|0|||",
         "x-client-OS": "Microsoft Windows NT 10.0.19042.0",
         "x-client-SKU": "MSAL.Desktop",
-        "x-client-Ver": "4.22.0.0",
+        "x-client-Ver": "4.25.0.0",
         "x-ms-client-request-id": "9496c6d7ed0fa936f419c648f9aad418",
         "x-ms-lib-capability": "retry-after, h429",
-        "x-ms-PKeyAuth": "1.0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "Sanitized",
@@ -117,52 +118,50 @@
           "no-store",
           "no-cache"
         ],
-        "client-request-id": "b80efd34-2942-4d44-93b9-e6a69554e0d7",
-        "Content-Length": "111",
+        "client-request-id": "7864cd2d-94d8-4cc8-aabf-1534f502a46d",
+        "Content-Length": "90",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Dec 2020 14:52:57 GMT",
+        "Date": "Fri, 29 Jan 2021 23:41:52 GMT",
         "Expires": "-1",
         "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
         "Pragma": "no-cache",
         "Set-Cookie": [
-          "fpc=Aswa6-EtQ3pHukBFB1_bsRolWqz-AQAAAMh-ZdcOAAAA; expires=Sun, 10-Jan-2021 14:52:57 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "fpc=ApkElSmk_OtAmK1AzFBNfBZKXQmMAQAAAECUptcOAAAA; expires=Sun, 28-Feb-2021 23:41:53 GMT; path=/; secure; HttpOnly; SameSite=None",
           "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
           "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-clitelem": "1,0,0,,",
-        "x-ms-ests-server": "2.1.11303.13 - SCUS ProdSlices",
-        "x-ms-request-id": "81b9818c-6c63-4d6f-9b2b-f19937999700"
+        "x-ms-ests-server": "2.1.11444.8 - WUS2 ProdSlices",
+        "x-ms-request-id": "8f571382-0564-467b-8074-a8ade6248800"
       },
       "ResponseBody": {
         "token_type": "Bearer",
-        "expires_in": 86399,
-        "ext_expires_in": 86399,
-        "refresh_in": 43199,
+        "expires_in": 3599,
+        "ext_expires_in": 3599,
         "access_token": "Sanitized"
       }
     },
     {
-      "RequestUri": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/v2.0/token",
+      "RequestUri": "https://login.microsoftonline.com/c54fac88-3dd3-461f-a7c4-8a368e0340b3/oauth2/v2.0/token",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "client-request-id": "2815e27e-4213-40ee-a09e-f504d8221735",
+        "client-request-id": "5c25a7e8-55e7-40fe-b677-2329052f1123",
         "Content-Length": "9",
         "Content-Type": "application/x-www-form-urlencoded",
         "return-client-request-id": "true",
-        "User-Agent": "azsdk-net-Identity/1.4.0-alpha.20201211.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-Identity/1.4.0-alpha.20210129.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-app-name": "UnknownClient",
         "x-app-ver": "0.0.0.0",
         "x-client-CPU": "x64",
-        "x-client-current-telemetry": "2|1004,0|",
+        "x-client-current-telemetry": "2|1004,0|,,0,,,,1",
         "x-client-last-telemetry": "2|0|||",
         "x-client-OS": "Microsoft Windows NT 10.0.19042.0",
         "x-client-SKU": "MSAL.Desktop",
-        "x-client-Ver": "4.22.0.0",
+        "x-client-Ver": "4.25.0.0",
         "x-ms-client-request-id": "19cc59601a54349e61d967283eade3d1",
         "x-ms-lib-capability": "retry-after, h429",
-        "x-ms-PKeyAuth": "1.0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "Sanitized",
@@ -172,36 +171,35 @@
           "no-store",
           "no-cache"
         ],
-        "client-request-id": "2815e27e-4213-40ee-a09e-f504d8221735",
-        "Content-Length": "111",
+        "client-request-id": "5c25a7e8-55e7-40fe-b677-2329052f1123",
+        "Content-Length": "90",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Dec 2020 14:52:57 GMT",
+        "Date": "Fri, 29 Jan 2021 23:41:53 GMT",
         "Expires": "-1",
         "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
         "Pragma": "no-cache",
         "Set-Cookie": [
-          "fpc=Ah3oBApiDVFMldff2V1rpaYlWqz-AQAAAMh-ZdcOAAAA; expires=Sun, 10-Jan-2021 14:52:57 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "fpc=Ass5xH05wvhPtBuCKa2p77FKXQmMAQAAAECUptcOAAAA; expires=Sun, 28-Feb-2021 23:41:53 GMT; path=/; secure; HttpOnly; SameSite=None",
           "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
           "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-clitelem": "1,0,0,,",
-        "x-ms-ests-server": "2.1.11303.13 - WUS2 ProdSlices",
-        "x-ms-request-id": "d59d9ce5-3829-4609-b430-590de8231001"
+        "x-ms-ests-server": "2.1.11444.8 - NCUS ProdSlices",
+        "x-ms-request-id": "389ca552-f795-42be-a324-f547097ab400"
       },
       "ResponseBody": {
         "token_type": "Bearer",
-        "expires_in": 86399,
-        "ext_expires_in": 86399,
-        "refresh_in": 43199,
+        "expires_in": 3599,
+        "ext_expires_in": 3599,
         "access_token": "Sanitized"
       }
     }
   ],
   "Variables": {
-    "IDENTITY_SP_CLIENT_ID": "8ea72aed-b61a-4459-9a67-fed7c5baf81e",
-    "IDENTITY_SP_TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "IDENTITY_SP_CLIENT_ID": "26790ce1-d05c-4de7-ba73-51837152f0bc",
+    "IDENTITY_SP_TENANT_ID": "c54fac88-3dd3-461f-a7c4-8a368e0340b3",
     "RandomSeed": "472322850"
   }
 }
