@@ -7,6 +7,6 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     [CodeGenModel("RoleType")]
-    public readonly partial struct KeyVaultRoleType : IEquatable<KeyVaultRoleType>
+    public readonly partial struct KeyVaultRoleType
     { }
 }

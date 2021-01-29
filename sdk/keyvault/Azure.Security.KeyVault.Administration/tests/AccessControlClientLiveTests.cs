@@ -33,6 +33,27 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [RecordedTest]
+        public async Task GetRoleDefinition()
+        {
+            var description = Recording.GenerateAlphaNumericId("role");
+            var name = Recording.Random.NewGuid();
+            var originalPermissions = new KeyVaultPermission();
+            originalPermissions.DataActions.Add(KeyVaultDataAction.BackupHsmKeys);
+
+            KeyVaultRoleDefinition createdDefinition = await Client.CreateOrUpdateRoleDefinitionAsync(description, originalPermissions, KeyVaultRoleScope.Global, name);
+
+            RegisterForCleanup(createdDefinition);
+
+            KeyVaultRoleDefinition fetchedRoleDefinition = await Client.GetRoleDefinitionAsync(name, KeyVaultRoleScope.Global);
+
+            Assert.That(fetchedRoleDefinition.AssignableScopes, Is.EqualTo(new[] { KeyVaultRoleScope.Global }));
+            Assert.That(fetchedRoleDefinition.Description, Is.EqualTo(description));
+            Assert.That(fetchedRoleDefinition.Name, Is.EqualTo(name.ToString()));
+            Assert.That(fetchedRoleDefinition.Permissions.First().DataActions, Is.EquivalentTo(originalPermissions.DataActions));
+            Assert.That(fetchedRoleDefinition.Type, Is.EqualTo(KeyVaultRoleDefinitionType.MicrosoftAuthorizationRoleDefinitions));
+        }
+
+        [RecordedTest]
         public async Task CreateOrUpdateRoleDefinition()
         {
             var description = Recording.GenerateAlphaNumericId("role");

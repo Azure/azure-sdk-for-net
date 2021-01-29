@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     [CodeGenModel("RoleScope")]
-    public readonly partial struct KeyVaultRoleScope : IEquatable<KeyVaultRoleScope>
+    public readonly partial struct KeyVaultRoleScope
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultRoleScope"/> structure.
