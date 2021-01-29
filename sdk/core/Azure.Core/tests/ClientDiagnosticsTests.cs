@@ -318,6 +318,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [NonParallelizable]
+        public void StartActivitySourceActivityIgnoresInvalidLinkParent()
+        {
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+
+            scope.AddLink("LALALA");
+
+            scope.Start();
+            scope.Dispose();
+
+            Assert.AreEqual(0, activityListener.Activities.Single().Links.Count());
+        }
+
+        [Test]
         public void NoopsWhenDisabled()
         {
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", false);

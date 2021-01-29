@@ -519,7 +519,8 @@ namespace Azure.Core.Pipeline
 
                 if (parseMethod == null ||
                     ctor == null ||
-                    s_activityTagsCollectionType == null)
+                    s_activityTagsCollectionType == null ||
+                    s_activityContextType == null)
                 {
                     s_createActivityLinkMethod = (_, _) => null;
                 }
@@ -529,11 +530,12 @@ namespace Azure.Core.Pipeline
                     var tagsParameter = Expression.Parameter(typeof(ICollection<KeyValuePair<string,object>>));
 
                     s_createActivityLinkMethod = Expression.Lambda<Func<string, ICollection<KeyValuePair<string, object>>?, object?>>(
-                        Expression.Convert(
-                            Expression.New(ctor,
-                                Expression.Call(parseMethod, nameParameter, Expression.Default(typeof(string))),
+                        Expression.TryCatch(
+                                Expression.Convert(Expression.New(ctor,
+                                        Expression.Call(parseMethod, nameParameter, Expression.Default(typeof(string))),
                                 Expression.Convert(tagsParameter, s_activityTagsCollectionType)), typeof(object)),
-                            nameParameter, tagsParameter).Compile();
+                        Expression.Catch(typeof(Exception), Expression.Default(typeof(object)))),
+                             nameParameter, tagsParameter).Compile();
                 }
             }
 
