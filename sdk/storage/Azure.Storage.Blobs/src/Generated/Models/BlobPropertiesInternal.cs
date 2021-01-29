@@ -65,7 +65,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="isSealed"> . </param>
         /// <param name="rehydratePriority"> If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard. </param>
         /// <param name="lastAccessedOn"> . </param>
-        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, byte[] contentMD5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatusType? leaseStatus, LeaseStateType? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatusType? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn)
+        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, byte[] contentMD5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn)
         {
             CreationTime = creationTime;
             LastModified = lastModified;
@@ -119,11 +119,11 @@ namespace Azure.Storage.Blobs.Models
         public string CacheControl { get; }
         public long? BlobSequenceNumber { get; }
         public BlobType? BlobType { get; }
-        public LeaseStatusType? LeaseStatus { get; }
-        public LeaseStateType? LeaseState { get; }
+        public LeaseStatus? LeaseStatus { get; }
+        public LeaseState? LeaseState { get; }
         public LeaseDurationType? LeaseDuration { get; }
         public string CopyId { get; }
-        public CopyStatusType? CopyStatus { get; }
+        public CopyStatus? CopyStatus { get; }
         public string CopySource { get; }
         public string CopyProgress { get; }
         public DateTimeOffset? CopyCompletionTime { get; }

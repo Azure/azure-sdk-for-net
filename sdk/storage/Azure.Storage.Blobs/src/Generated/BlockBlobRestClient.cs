@@ -520,7 +520,7 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, <paramref name="blockId"/>, or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobStageBlockHeaders>> StageBlockAsync(string containerName, string blob, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlockInfo>> StageBlockAsync(string containerName, string blob, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -541,7 +541,7 @@ namespace Azure.Storage.Blobs
 
             using var message = CreateStageBlockRequest(containerName, blob, blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlockBlobStageBlockHeaders(message.Response);
+            var headers = new BlockInfo(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -565,7 +565,7 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, <paramref name="blockId"/>, or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobStageBlockHeaders> StageBlock(string containerName, string blob, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlockInfo> StageBlock(string containerName, string blob, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -586,7 +586,7 @@ namespace Azure.Storage.Blobs
 
             using var message = CreateStageBlockRequest(containerName, blob, blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlockBlobStageBlockHeaders(message.Response);
+            var headers = new BlockInfo(message.Response);
             switch (message.Response.Status)
             {
                 case 201:

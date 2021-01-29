@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="preventEncryptionScopeOverride"> . </param>
         /// <param name="deletedTime"> . </param>
         /// <param name="remainingRetentionDays"> . </param>
-        internal ContainerProperties(DateTimeOffset lastModified, string etag, LeaseStatusType? leaseStatus, LeaseStateType? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays)
+        internal ContainerProperties(DateTimeOffset lastModified, string etag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -58,8 +58,8 @@ namespace Azure.Storage.Blobs.Models
 
         public DateTimeOffset LastModified { get; }
         public string Etag { get; }
-        public LeaseStatusType? LeaseStatus { get; }
-        public LeaseStateType? LeaseState { get; }
+        public LeaseStatus? LeaseStatus { get; }
+        public LeaseState? LeaseState { get; }
         public LeaseDurationType? LeaseDuration { get; }
         public PublicAccessType? PublicAccess { get; }
         public bool? HasImmutabilityPolicy { get; }

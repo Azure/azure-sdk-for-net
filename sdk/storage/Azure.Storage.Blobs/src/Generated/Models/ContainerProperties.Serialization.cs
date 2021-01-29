@@ -17,8 +17,8 @@ namespace Azure.Storage.Blobs.Models
         {
             DateTimeOffset lastModified = default;
             string etag = default;
-            LeaseStatusType? leaseStatus = default;
-            LeaseStateType? leaseState = default;
+            LeaseStatus? leaseStatus = default;
+            LeaseState? leaseState = default;
             LeaseDurationType? leaseDuration = default;
             PublicAccessType? publicAccess = default;
             bool? hasImmutabilityPolicy = default;
@@ -37,11 +37,11 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("LeaseStatus") is XElement leaseStatusElement)
             {
-                leaseStatus = leaseStatusElement.Value.ToLeaseStatusType();
+                leaseStatus = leaseStatusElement.Value.ToLeaseStatus();
             }
             if (element.Element("LeaseState") is XElement leaseStateElement)
             {
-                leaseState = leaseStateElement.Value.ToLeaseStateType();
+                leaseState = leaseStateElement.Value.ToLeaseState();
             }
             if (element.Element("LeaseDuration") is XElement leaseDurationElement)
             {

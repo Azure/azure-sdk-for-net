@@ -9,19 +9,17 @@ using System;
 using Azure;
 using Azure.Core;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Blobs.Models
 {
-    internal class BlockBlobStageBlockHeaders
+    public class BlockInfo
     {
         private readonly Response _response;
-        public BlockBlobStageBlockHeaders(Response response)
+        public BlockInfo(Response response)
         {
             _response = response;
         }
         /// <summary> This header is returned so that the client can check for message content integrity. The value of this header is computed by the Blob service; it is not necessarily the same value specified in the request headers. </summary>
         public byte[] ContentMD5 => _response.Headers.TryGetValue("Content-MD5", out byte[] value) ? value : null;
-        /// <summary> Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above. </summary>
-        public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> This header is returned so that the client can check for message content integrity. The value of this header is computed by the Blob service; it is not necessarily the same value specified in the request headers. </summary>
         public byte[] XMsContentCrc64 => _response.Headers.TryGetValue("x-ms-content-crc64", out byte[] value) ? value : null;
         /// <summary> The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise. </summary>

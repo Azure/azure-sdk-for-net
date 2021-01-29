@@ -27,11 +27,11 @@ namespace Azure.Storage.Blobs.Models
             string cacheControl = default;
             long? blobSequenceNumber = default;
             BlobType? blobType = default;
-            LeaseStatusType? leaseStatus = default;
-            LeaseStateType? leaseState = default;
+            LeaseStatus? leaseStatus = default;
+            LeaseState? leaseState = default;
             LeaseDurationType? leaseDuration = default;
             string copyId = default;
-            CopyStatusType? copyStatus = default;
+            CopyStatus? copyStatus = default;
             string copySource = default;
             string copyProgress = default;
             DateTimeOffset? copyCompletionTime = default;
@@ -102,11 +102,11 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("LeaseStatus") is XElement leaseStatusElement)
             {
-                leaseStatus = leaseStatusElement.Value.ToLeaseStatusType();
+                leaseStatus = leaseStatusElement.Value.ToLeaseStatus();
             }
             if (element.Element("LeaseState") is XElement leaseStateElement)
             {
-                leaseState = leaseStateElement.Value.ToLeaseStateType();
+                leaseState = leaseStateElement.Value.ToLeaseState();
             }
             if (element.Element("LeaseDuration") is XElement leaseDurationElement)
             {
@@ -118,7 +118,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("CopyStatus") is XElement copyStatusElement)
             {
-                copyStatus = copyStatusElement.Value.ToCopyStatusType();
+                copyStatus = copyStatusElement.Value.ToCopyStatus();
             }
             if (element.Element("CopySource") is XElement copySourceElement)
             {

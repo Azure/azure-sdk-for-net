@@ -58,13 +58,13 @@ namespace Azure.Storage.Blobs
         /// <summary> URL up to 2 KB in length that specifies the source blob or file used in the last attempted Copy Blob operation where this blob was the destination blob. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List. </summary>
         public string CopySource => _response.Headers.TryGetValue("x-ms-copy-source", out string value) ? value : null;
         /// <summary> State of the copy operation identified by x-ms-copy-id. </summary>
-        public CopyStatusType? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatusType() : (CopyStatusType?)null;
+        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : (CopyStatus?)null;
         /// <summary> When a blob is leased, specifies whether the lease is of infinite or fixed duration. </summary>
         public LeaseDurationType? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToLeaseDurationType() : (LeaseDurationType?)null;
         /// <summary> Lease state of the blob. </summary>
-        public LeaseStateType? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToLeaseStateType() : (LeaseStateType?)null;
+        public LeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToLeaseState() : (LeaseState?)null;
         /// <summary> The current lease status of the blob. </summary>
-        public LeaseStatusType? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToLeaseStatusType() : (LeaseStatusType?)null;
+        public LeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToLeaseStatus() : (LeaseStatus?)null;
         /// <summary> Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob. </summary>

@@ -26,9 +26,9 @@ namespace Azure.Storage.Blobs
         /// <summary> When a blob is leased, specifies whether the lease is of infinite or fixed duration. </summary>
         public LeaseDurationType? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToLeaseDurationType() : (LeaseDurationType?)null;
         /// <summary> Lease state of the blob. </summary>
-        public LeaseStateType? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToLeaseStateType() : (LeaseStateType?)null;
+        public LeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToLeaseState() : (LeaseState?)null;
         /// <summary> The current lease status of the blob. </summary>
-        public LeaseStatusType? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToLeaseStatusType() : (LeaseStatusType?)null;
+        public LeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToLeaseStatus() : (LeaseStatus?)null;
         /// <summary> Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> Indicated whether data in the container may be accessed publicly and the level of access. </summary>

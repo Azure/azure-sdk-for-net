@@ -15,6 +15,58 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobsModelFactory
     {
         /// <summary>
+        /// Creates a new BlobContentInfo instance for mocking.
+        /// </summary>
+        public static BlobContentInfo BlobContentInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            byte[] contentHash,
+            string versionId,
+            string encryptionKeySha256,
+            string encryptionScope,
+            long blobSequenceNumber)
+        {
+            return new BlobContentInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                VersionId = versionId,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                BlobSequenceNumber = blobSequenceNumber,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobAppendInfo instance for mocking.
+        /// </summary>
+        public static BlobAppendInfo BlobAppendInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            byte[] contentHash,
+            byte[] contentCrc64,
+            string blobAppendOffset,
+            int blobCommittedBlockCount,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string encryptionScope)
+        {
+            return new BlobAppendInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                BlobAppendOffset = blobAppendOffset,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+            };
+        }
+
+        /// <summary>
         /// Creates a new BlobAppendInfo instance for mocking.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -170,6 +222,90 @@ namespace Azure.Storage.Blobs.Models
                 RehydratePriority = rehydratePriority,
                 ContentHash = contentHash,
                 LastAccessed = lastAccessed
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobItemProperties instance for mocking.
+        /// </summary>
+        public static BlobItemProperties BlobItemProperties(
+            bool accessTierInferred,
+            bool? serverEncrypted = default,
+            string contentType = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            byte[] contentHash = default,
+            string contentDisposition = default,
+            string cacheControl = default,
+            long? blobSequenceNumber = default,
+            BlobType? blobType = default,
+            LeaseStatus? leaseStatus = default,
+            LeaseState? leaseState = default,
+            LeaseDurationType? leaseDuration = default,
+            string copyId = default,
+            CopyStatus? copyStatus = default,
+            Uri copySource = default,
+            string copyProgress = default,
+            string copyStatusDescription = default,
+            long? contentLength = default,
+            bool? incrementalCopy = default,
+            string destinationSnapshot = default,
+            int? remainingRetentionDays = default,
+            AccessTier? accessTier = default,
+            DateTimeOffset? lastModified = default,
+            ArchiveStatus? archiveStatus = default,
+            string customerProvidedKeySha256 = default,
+            string encryptionScope = default,
+            long? tagCount = default,
+            DateTimeOffset? expiresOn = default,
+            bool? isSealed = default,
+            RehydratePriority? rehydratePriority = default,
+            DateTimeOffset? lastAccessedOn = default,
+            ETag? eTag = default,
+            DateTimeOffset? createdOn = default,
+            DateTimeOffset? copyCompletedOn = default,
+            DateTimeOffset? deletedOn = default,
+            DateTimeOffset? accessTierChangedOn = default)
+        {
+            return new BlobItemProperties()
+            {
+                AccessTierInferred = accessTierInferred,
+                ServerEncrypted = serverEncrypted,
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                ContentLanguage = contentLanguage,
+                ContentHash = contentHash,
+                ContentDisposition = contentDisposition,
+                CacheControl = cacheControl,
+                BlobSequenceNumber = blobSequenceNumber,
+                BlobType = blobType,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
+                CopySource = copySource,
+                CopyProgress = copyProgress,
+                CopyStatusDescription = copyStatusDescription,
+                ContentLength = contentLength,
+                IncrementalCopy = incrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
+                RemainingRetentionDays = remainingRetentionDays,
+                AccessTier = accessTier,
+                LastModified = lastModified,
+                ArchiveStatus = archiveStatus,
+                CustomerProvidedKeySha256 = customerProvidedKeySha256,
+                EncryptionScope = encryptionScope,
+                TagCount = tagCount,
+                ExpiresOn = expiresOn,
+                IsSealed = isSealed,
+                RehydratePriority = rehydratePriority,
+                LastAccessedOn = lastAccessedOn,
+                ETag = eTag,
+                CreatedOn = createdOn,
+                CopyCompletedOn = copyCompletedOn,
+                DeletedOn = deletedOn,
+                AccessTierChangedOn = accessTierChangedOn,
             };
         }
 

@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs
         /// <summary> URL up to 2 KB in length that specifies the source blob or file used in the last attempted Copy Blob operation where this blob was the destination blob. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List. </summary>
         public string CopySource => _response.Headers.TryGetValue("x-ms-copy-source", out string value) ? value : null;
         /// <summary> State of the copy operation identified by x-ms-copy-id. </summary>
-        public CopyStatusType? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatusType() : (CopyStatusType?)null;
+        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : (CopyStatus?)null;
         /// <summary> Included if the blob is incremental copy blob. </summary>
         public bool? IsIncrementalCopy => _response.Headers.TryGetValue("x-ms-incremental-copy", out bool? value) ? value : null;
         /// <summary> Included if the blob is incremental copy blob or incremental copy snapshot, if x-ms-copy-status is success. Snapshot time of the last successful incremental copy snapshot for this blob. </summary>
@@ -50,9 +50,9 @@ namespace Azure.Storage.Blobs
         /// <summary> When a blob is leased, specifies whether the lease is of infinite or fixed duration. </summary>
         public LeaseDurationType? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToLeaseDurationType() : (LeaseDurationType?)null;
         /// <summary> Lease state of the blob. </summary>
-        public LeaseStateType? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToLeaseStateType() : (LeaseStateType?)null;
+        public LeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToLeaseState() : (LeaseState?)null;
         /// <summary> The current lease status of the blob. </summary>
-        public LeaseStatusType? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToLeaseStatusType() : (LeaseStatusType?)null;
+        public LeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToLeaseStatus() : (LeaseStatus?)null;
         /// <summary> The number of bytes present in the response body. </summary>
         public long? ContentLength => _response.Headers.TryGetValue("Content-Length", out long? value) ? value : null;
         /// <summary> The content type specified for the blob. The default content type is &apos;application/octet-stream&apos;. </summary>
