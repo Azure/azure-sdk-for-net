@@ -21,19 +21,27 @@ Include a section after the install command that details any requirements that m
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
 
-### Authenticate the client
+### Authentication
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
+To authenticate with the service, the workspace will use [DefaultAzureCredential](https://docs.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) internally. This will try different authentication mechanisms based on the environment (e.g. Environment Variables, ManagedIdentity, CachedTokens) and finally it will fallback to [InteractiveBrowserCredential](https://docs.microsoft.com/en-us/dotnet/api/azure.identity.interactivebrowsercredential?view=azure-dotnet).
 
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+Workspace will also allow the user to override the above behavior by passing their own [TokenCredential](https://docs.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
+
+In case the user already has an access token (using MSAL manually or even an external library), we will add an overload that accepts the access token string.
+
+`TokenCredential` is the default Authentication mechanism used by Azure SDKs.
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+TODO The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
 
 ## Examples
 
-* [Create the client](#create-the-client)
+* [Get Container SAS URI](#get-container-sas-uri)
+* [Upload Input Data](#upload-input-data)
+* [Create The Job](#create-the-job)
+* [Get Job](#get-job)
+* [Get Jobs](#get-jobs)
 
 ### Create the client
 
@@ -62,11 +70,20 @@ var quantumJobClient =
         credential);
 ```
 
+### Get Container SAS URI
+
+Create a storage container where to put your data.
+
 ```C# Snippet:Azure_Quantum_Jobs_GetContainerSasUri
 // Get container Uri with SAS key
 var containerUri = (quantumJobClient.GetStorageSasUri(
     new BlobDetails(storageContainerName))).Value.SasUri;
 ```
+
+### Upload Input Data
+
+Using the SAS URI, upload the json input data to the blob client.
+TODO - describe what is contains
 
 ```C# Snippet:Azure_Quantum_Jobs_UploadInputData
 // Get input data blob Uri with SAS key
@@ -82,6 +99,10 @@ var blobClient = new BlobClient(new Uri(inputDataUri));
 var problemFilename = "problem.json";
 blobClient.Upload(problemFilename, overwrite: true);
 ```
+
+### Create The Job
+
+Now that you have the blob input data initialized, fill in the job fields and pass it to the CreateJob() function.
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateJob
 // Submit job
@@ -101,10 +122,18 @@ var createJobDetails = new JobDetails(containerUri, inputDataFormat, providerId,
 JobDetails createdJob = (quantumJobClient.CreateJob(jobId, createJobDetails)).Value;
 ```
 
+### Get Job
+
+To retrieve a specific job by its job id, you can use this function.
+
 ```C# Snippet:Azure_Quantum_Jobs_GetJob
 // Get the job that we've just created based on its jobId
 JobDetails myJob = (quantumJobClient.GetJob(jobId)).Value;
 ```
+
+### Get Jobs
+
+To enumerate all the jobs in the workspace, use the GetJobs() function.
 
 ```C# Snippet:Azure_Quantum_Jobs_GetJobs
 // Get all jobs from the workspace (.ToList() will force all pages to be fetched)
