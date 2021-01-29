@@ -25,7 +25,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
         [Test]
-        [Ignore("Service issue: https://github.com/Azure/azure-sdk-for-net/issues/16789")]
         public async Task CreateRsaWithPublicExponent()
         {
             CreateRsaKeyOptions options = new CreateRsaKeyOptions(Recording.GenerateId())
