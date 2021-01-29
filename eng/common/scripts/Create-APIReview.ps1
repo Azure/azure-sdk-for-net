@@ -40,7 +40,6 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
     try
     {
         $Response = Invoke-WebRequest -Method 'POST' -Uri $uri -Body $multipartContent -Headers $headers
-        Write-Host "API Review: $($Response)"
         $StatusCode = $Response.StatusCode
     }
     catch
@@ -82,47 +81,23 @@ else
 }
 
 $FoundFailure = $False
-$pkgInfoPath = Join-Path -Path $ArtifactPath "PackageInfo"
 foreach ($pkgName in $responses.Keys)
 {    
     $respCode = $responses[$pkgName]
     if ($respCode -ne '200')
     {
-        $pkgPropPath = Join-Path -Path $pkgInfoPath ($PackageName + ".json")
-        if (-Not (Test-Path $pkgPropPath))
+        $FoundFailure = $True
+        if ($respCode -eq '201')
         {
-            Write-Host " Package property file path $($pkgPropPath) is invalid."
-            $FoundFailure = $True
+            Write-Host "API Review is pending for package $pkgName"
         }
         else
         {
-            $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
-            $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
-            if ($version.IsPrerelease)
-            {
-                Write-Host "Package version is not GA. Ignoring API view approval status"
-            }
-            elseif ($pkgInfo.SdkType -eq "client" -and $pkgInfo.IsNewSdk)
-            {
-                $FoundFailure = $True
-                if ($respCode -eq '201')
-                {
-                    Write-Error "Automatic API Review approval is pending for package $($PackageName)"
-                }
-                else
-                {
-                    Write-Error "Failed to create API Review for package $($PackageName)"
-                }                
-            }
-            else
-            {
-                Write-Host "API review is not approved for package $($PackageName). Management and track1 package can be released without API review approval."
-            }      
+            Write-Host "Failed to create API Review for package $pkgName"
         }
     }
 }
 if ($FoundFailure)
 {
-    Write-Error "Automatic API review is not yet approved for package $($PackageName)"
-    exit 1
+    Write-Host "Atleast one API review is not yet approved"
 }
