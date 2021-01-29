@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The BlobHierarchyListSegment. </summary>
-    public partial class BlobHierarchyListSegment
+    internal partial class BlobHierarchyListSegment
     {
         /// <summary> Initializes a new instance of BlobHierarchyListSegment. </summary>
         /// <param name="blobItems"> . </param>

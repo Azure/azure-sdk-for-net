@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The result of a Filter Blobs API call. </summary>
-    public partial class FilterBlobSegment
+    internal partial class FilterBlobSegment
     {
         /// <summary> Initializes a new instance of FilterBlobSegment. </summary>
         /// <param name="serviceEndpoint"> . </param>

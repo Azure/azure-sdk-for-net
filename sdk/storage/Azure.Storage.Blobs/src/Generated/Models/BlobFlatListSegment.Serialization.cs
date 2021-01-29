@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobFlatListSegment
+    internal partial class BlobFlatListSegment
     {
         internal static BlobFlatListSegment DeserializeBlobFlatListSegment(XElement element)
         {

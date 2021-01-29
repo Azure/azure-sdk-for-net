@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Blob tags. </summary>
-    public partial class BlobTags
+    internal partial class BlobTags
     {
         /// <summary> Initializes a new instance of BlobTags. </summary>
         /// <param name="blobTagSet"> . </param>

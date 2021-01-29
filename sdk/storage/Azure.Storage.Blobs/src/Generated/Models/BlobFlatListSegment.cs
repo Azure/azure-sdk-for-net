@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The BlobFlatListSegment. </summary>
-    public partial class BlobFlatListSegment
+    internal partial class BlobFlatListSegment
     {
         /// <summary> Initializes a new instance of BlobFlatListSegment. </summary>
         /// <param name="blobItems"> . </param>

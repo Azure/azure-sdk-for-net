@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class ListBlobsFlatSegmentResponse
+    internal partial class ListBlobsFlatSegmentResponse
     {
         internal static ListBlobsFlatSegmentResponse DeserializeListBlobsFlatSegmentResponse(XElement element)
         {

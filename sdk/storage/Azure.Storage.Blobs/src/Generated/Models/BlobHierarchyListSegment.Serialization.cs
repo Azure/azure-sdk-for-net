@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobHierarchyListSegment
+    internal partial class BlobHierarchyListSegment
     {
         internal static BlobHierarchyListSegment DeserializeBlobHierarchyListSegment(XElement element)
         {

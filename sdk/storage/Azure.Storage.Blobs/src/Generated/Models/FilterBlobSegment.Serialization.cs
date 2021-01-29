@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class FilterBlobSegment
+    internal partial class FilterBlobSegment
     {
         internal static FilterBlobSegment DeserializeFilterBlobSegment(XElement element)
         {
