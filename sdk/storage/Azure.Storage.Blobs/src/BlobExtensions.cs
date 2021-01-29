@@ -323,5 +323,30 @@ namespace Azure.Storage.Blobs
         {
             return null;
         }
+
+        // TODO
+        internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerCreateHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobContainerProperties ToBlobContainerProperties(this ResponseWithHeaders<ContainerGetPropertiesHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerSetMetadataHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobContainerAccessPolicy ToBlobContainerAccessPolicy(
+            this ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders> response)
+        {
+            return null;
+        }
     }
 }

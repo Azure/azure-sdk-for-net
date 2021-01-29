@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs
         /// <summary> Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> Indicated whether data in the container may be accessed publicly and the level of access. </summary>
-        public PublicAccessType? BlobPublicAccess => _response.Headers.TryGetValue("x-ms-blob-public-access", out string value) ? new PublicAccessType(value) : (PublicAccessType?)null;
+        public PublicAccessType? BlobPublicAccess => _response.Headers.TryGetValue("x-ms-blob-public-access", out string value) ? value.ToPublicAccessType() : (PublicAccessType?)null;
         /// <summary> Indicates whether the container has an immutability policy set on it. </summary>
         public bool? HasImmutabilityPolicy => _response.Headers.TryGetValue("x-ms-has-immutability-policy", out bool? value) ? value : null;
         /// <summary> Indicates whether the container has a legal hold. </summary>

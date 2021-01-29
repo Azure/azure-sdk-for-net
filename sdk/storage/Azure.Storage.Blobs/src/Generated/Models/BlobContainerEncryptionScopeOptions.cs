@@ -8,16 +8,14 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Parameter group. </summary>
-    public partial class ContainerCpkScopeInfo
+    public partial class BlobContainerEncryptionScopeOptions
     {
-        /// <summary> Initializes a new instance of ContainerCpkScopeInfo. </summary>
-        public ContainerCpkScopeInfo()
+        /// <summary> Initializes a new instance of BlobContainerEncryptionScopeOptions. </summary>
+        public BlobContainerEncryptionScopeOptions()
         {
         }
 
         /// <summary> Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes. </summary>
         public string DefaultEncryptionScope { get; set; }
-        /// <summary> Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container. </summary>
-        public bool? PreventEncryptionScopeOverride { get; set; }
     }
 }

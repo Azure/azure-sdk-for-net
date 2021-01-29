@@ -1208,7 +1208,9 @@ namespace Azure.Storage.Blobs
             BlobContainerEncryptionScopeOptions encryptionScopeOptions,
             bool async,
             CancellationToken cancellationToken,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName = null)
+#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -1219,19 +1221,29 @@ namespace Azure.Storage.Blobs
                     $"{nameof(publicAccessType)}: {publicAccessType}");
                 try
                 {
-                    return await BlobRestClient.Container.CreateAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        access: publicAccessType,
-                        defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
-                        preventEncryptionScopeOverride: encryptionScopeOptions?.PreventEncryptionScopeOverride,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        async: async,
-                        operationName: operationName ?? $"{nameof(BlobContainerClient)}.{nameof(Create)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerCreateHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.CreateAsync(
+                            metadata: metadata,
+                            access: publicAccessType,
+                            containerCpkScopeInfo: encryptionScopeOptions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.Create(
+                            metadata: metadata,
+                            access: publicAccessType,
+                            containerCpkScopeInfo: encryptionScopeOptions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobContainerInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1483,7 +1495,9 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName = null)
+#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -1500,18 +1514,27 @@ namespace Azure.Storage.Blobs
                         throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
                     }
 
-                    return await BlobRestClient.Container.DeleteAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        leaseId: conditions?.LeaseId,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        async: async,
-                        operationName: operationName ?? $"{nameof(BlobContainerClient)}.{nameof(Delete)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerDeleteHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.DeleteAsync(
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.Delete(
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
@@ -1609,13 +1632,9 @@ namespace Azure.Storage.Blobs
 
                 try
                 {
-                    Response<FlattenedContainerItem> response = await BlobRestClient.Container.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
+                    Response<BlobContainerProperties> response =  await GetPropertiesInternal(
+                        conditions: null,
                         async: async,
-                        operationName: $"{nameof(BlobContainerClient)}.{nameof(Exists)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1753,35 +1772,24 @@ namespace Azure.Storage.Blobs
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    // GetProperties returns a flattened set of properties
-                    Response<FlattenedContainerItem> response =
-                        await BlobRestClient.Container.GetPropertiesAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            version: Version.ToVersionString(),
+                    ResponseWithHeaders<ContainerGetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.GetPropertiesAsync(
                             leaseId: conditions?.LeaseId,
-                            async: async,
-                            operationName: $"{nameof(BlobContainerClient)}.{nameof(GetProperties)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.GetProperties(
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken);
+                    }
 
-                    // Turn the flattened properties into a BlobContainerProperties
                     return Response.FromValue(
-                        new BlobContainerProperties()
-                            {
-                                Metadata = response.Value.Metadata,
-                                LastModified = response.Value.LastModified,
-                                ETag = response.Value.ETag,
-                                LeaseStatus = response.Value.LeaseStatus,
-                                LeaseState = response.Value.LeaseState,
-                                LeaseDuration = response.Value.LeaseDuration,
-                                PublicAccess = response.Value.BlobPublicAccess,
-                                HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
-                                HasLegalHold = response.Value.HasLegalHold,
-                                DefaultEncryptionScope = response.Value.DefaultEncryptionScope,
-                                PreventEncryptionScopeOverride = response.Value.DenyEncryptionScopeOverride
-                        },
+                        response.ToBlobContainerProperties(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -1926,18 +1934,29 @@ namespace Azure.Storage.Blobs
                             nameof(RequestConditions.IfNoneMatch));
                     }
 
-                    return await BlobRestClient.Container.SetMetadataAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        leaseId: conditions?.LeaseId,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        async: async,
-                        operationName: $"{nameof(BlobContainerClient)}.{nameof(SetMetadata)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerSetMetadataHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.SetMetadataAsync(
+                            leaseId: conditions?.LeaseId,
+                            metadata: metadata,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.SetMetadata(
+                            leaseId: conditions?.LeaseId,
+                            metadata: metadata,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobContainerInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2063,16 +2082,25 @@ namespace Azure.Storage.Blobs
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await BlobRestClient.Container.GetAccessPolicyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(BlobContainerClient)}.{nameof(GetAccessPolicy)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.GetAccessPolicyAsync(
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.GetAccessPolicy(
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobContainerAccessPolicy(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

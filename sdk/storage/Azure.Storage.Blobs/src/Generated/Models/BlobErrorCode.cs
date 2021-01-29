@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Error codes returned by the service. </summary>
-    internal readonly partial struct StorageErrorCode : IEquatable<StorageErrorCode>
+    internal readonly partial struct BlobErrorCode : IEquatable<BlobErrorCode>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="StorageErrorCode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BlobErrorCode"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageErrorCode(string value)
+        public BlobErrorCode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -136,241 +136,241 @@ namespace Azure.Storage.Blobs.Models
         private const string AuthorizationResourceTypeMismatchValue = "AuthorizationResourceTypeMismatch";
 
         /// <summary> AccountAlreadyExists. </summary>
-        public static StorageErrorCode AccountAlreadyExists { get; } = new StorageErrorCode(AccountAlreadyExistsValue);
+        public static BlobErrorCode AccountAlreadyExists { get; } = new BlobErrorCode(AccountAlreadyExistsValue);
         /// <summary> AccountBeingCreated. </summary>
-        public static StorageErrorCode AccountBeingCreated { get; } = new StorageErrorCode(AccountBeingCreatedValue);
+        public static BlobErrorCode AccountBeingCreated { get; } = new BlobErrorCode(AccountBeingCreatedValue);
         /// <summary> AccountIsDisabled. </summary>
-        public static StorageErrorCode AccountIsDisabled { get; } = new StorageErrorCode(AccountIsDisabledValue);
+        public static BlobErrorCode AccountIsDisabled { get; } = new BlobErrorCode(AccountIsDisabledValue);
         /// <summary> AuthenticationFailed. </summary>
-        public static StorageErrorCode AuthenticationFailed { get; } = new StorageErrorCode(AuthenticationFailedValue);
+        public static BlobErrorCode AuthenticationFailed { get; } = new BlobErrorCode(AuthenticationFailedValue);
         /// <summary> AuthorizationFailure. </summary>
-        public static StorageErrorCode AuthorizationFailure { get; } = new StorageErrorCode(AuthorizationFailureValue);
+        public static BlobErrorCode AuthorizationFailure { get; } = new BlobErrorCode(AuthorizationFailureValue);
         /// <summary> ConditionHeadersNotSupported. </summary>
-        public static StorageErrorCode ConditionHeadersNotSupported { get; } = new StorageErrorCode(ConditionHeadersNotSupportedValue);
+        public static BlobErrorCode ConditionHeadersNotSupported { get; } = new BlobErrorCode(ConditionHeadersNotSupportedValue);
         /// <summary> ConditionNotMet. </summary>
-        public static StorageErrorCode ConditionNotMet { get; } = new StorageErrorCode(ConditionNotMetValue);
+        public static BlobErrorCode ConditionNotMet { get; } = new BlobErrorCode(ConditionNotMetValue);
         /// <summary> EmptyMetadataKey. </summary>
-        public static StorageErrorCode EmptyMetadataKey { get; } = new StorageErrorCode(EmptyMetadataKeyValue);
+        public static BlobErrorCode EmptyMetadataKey { get; } = new BlobErrorCode(EmptyMetadataKeyValue);
         /// <summary> InsufficientAccountPermissions. </summary>
-        public static StorageErrorCode InsufficientAccountPermissions { get; } = new StorageErrorCode(InsufficientAccountPermissionsValue);
+        public static BlobErrorCode InsufficientAccountPermissions { get; } = new BlobErrorCode(InsufficientAccountPermissionsValue);
         /// <summary> InternalError. </summary>
-        public static StorageErrorCode InternalError { get; } = new StorageErrorCode(InternalErrorValue);
+        public static BlobErrorCode InternalError { get; } = new BlobErrorCode(InternalErrorValue);
         /// <summary> InvalidAuthenticationInfo. </summary>
-        public static StorageErrorCode InvalidAuthenticationInfo { get; } = new StorageErrorCode(InvalidAuthenticationInfoValue);
+        public static BlobErrorCode InvalidAuthenticationInfo { get; } = new BlobErrorCode(InvalidAuthenticationInfoValue);
         /// <summary> InvalidHeaderValue. </summary>
-        public static StorageErrorCode InvalidHeaderValue { get; } = new StorageErrorCode(InvalidHeaderValueValue);
+        public static BlobErrorCode InvalidHeaderValue { get; } = new BlobErrorCode(InvalidHeaderValueValue);
         /// <summary> InvalidHttpVerb. </summary>
-        public static StorageErrorCode InvalidHttpVerb { get; } = new StorageErrorCode(InvalidHttpVerbValue);
+        public static BlobErrorCode InvalidHttpVerb { get; } = new BlobErrorCode(InvalidHttpVerbValue);
         /// <summary> InvalidInput. </summary>
-        public static StorageErrorCode InvalidInput { get; } = new StorageErrorCode(InvalidInputValue);
+        public static BlobErrorCode InvalidInput { get; } = new BlobErrorCode(InvalidInputValue);
         /// <summary> InvalidMd5. </summary>
-        public static StorageErrorCode InvalidMd5 { get; } = new StorageErrorCode(InvalidMd5Value);
+        public static BlobErrorCode InvalidMd5 { get; } = new BlobErrorCode(InvalidMd5Value);
         /// <summary> InvalidMetadata. </summary>
-        public static StorageErrorCode InvalidMetadata { get; } = new StorageErrorCode(InvalidMetadataValue);
+        public static BlobErrorCode InvalidMetadata { get; } = new BlobErrorCode(InvalidMetadataValue);
         /// <summary> InvalidQueryParameterValue. </summary>
-        public static StorageErrorCode InvalidQueryParameterValue { get; } = new StorageErrorCode(InvalidQueryParameterValueValue);
+        public static BlobErrorCode InvalidQueryParameterValue { get; } = new BlobErrorCode(InvalidQueryParameterValueValue);
         /// <summary> InvalidRange. </summary>
-        public static StorageErrorCode InvalidRange { get; } = new StorageErrorCode(InvalidRangeValue);
+        public static BlobErrorCode InvalidRange { get; } = new BlobErrorCode(InvalidRangeValue);
         /// <summary> InvalidResourceName. </summary>
-        public static StorageErrorCode InvalidResourceName { get; } = new StorageErrorCode(InvalidResourceNameValue);
+        public static BlobErrorCode InvalidResourceName { get; } = new BlobErrorCode(InvalidResourceNameValue);
         /// <summary> InvalidUri. </summary>
-        public static StorageErrorCode InvalidUri { get; } = new StorageErrorCode(InvalidUriValue);
+        public static BlobErrorCode InvalidUri { get; } = new BlobErrorCode(InvalidUriValue);
         /// <summary> InvalidXmlDocument. </summary>
-        public static StorageErrorCode InvalidXmlDocument { get; } = new StorageErrorCode(InvalidXmlDocumentValue);
+        public static BlobErrorCode InvalidXmlDocument { get; } = new BlobErrorCode(InvalidXmlDocumentValue);
         /// <summary> InvalidXmlNodeValue. </summary>
-        public static StorageErrorCode InvalidXmlNodeValue { get; } = new StorageErrorCode(InvalidXmlNodeValueValue);
+        public static BlobErrorCode InvalidXmlNodeValue { get; } = new BlobErrorCode(InvalidXmlNodeValueValue);
         /// <summary> Md5Mismatch. </summary>
-        public static StorageErrorCode Md5Mismatch { get; } = new StorageErrorCode(Md5MismatchValue);
+        public static BlobErrorCode Md5Mismatch { get; } = new BlobErrorCode(Md5MismatchValue);
         /// <summary> MetadataTooLarge. </summary>
-        public static StorageErrorCode MetadataTooLarge { get; } = new StorageErrorCode(MetadataTooLargeValue);
+        public static BlobErrorCode MetadataTooLarge { get; } = new BlobErrorCode(MetadataTooLargeValue);
         /// <summary> MissingContentLengthHeader. </summary>
-        public static StorageErrorCode MissingContentLengthHeader { get; } = new StorageErrorCode(MissingContentLengthHeaderValue);
+        public static BlobErrorCode MissingContentLengthHeader { get; } = new BlobErrorCode(MissingContentLengthHeaderValue);
         /// <summary> MissingRequiredQueryParameter. </summary>
-        public static StorageErrorCode MissingRequiredQueryParameter { get; } = new StorageErrorCode(MissingRequiredQueryParameterValue);
+        public static BlobErrorCode MissingRequiredQueryParameter { get; } = new BlobErrorCode(MissingRequiredQueryParameterValue);
         /// <summary> MissingRequiredHeader. </summary>
-        public static StorageErrorCode MissingRequiredHeader { get; } = new StorageErrorCode(MissingRequiredHeaderValue);
+        public static BlobErrorCode MissingRequiredHeader { get; } = new BlobErrorCode(MissingRequiredHeaderValue);
         /// <summary> MissingRequiredXmlNode. </summary>
-        public static StorageErrorCode MissingRequiredXmlNode { get; } = new StorageErrorCode(MissingRequiredXmlNodeValue);
+        public static BlobErrorCode MissingRequiredXmlNode { get; } = new BlobErrorCode(MissingRequiredXmlNodeValue);
         /// <summary> MultipleConditionHeadersNotSupported. </summary>
-        public static StorageErrorCode MultipleConditionHeadersNotSupported { get; } = new StorageErrorCode(MultipleConditionHeadersNotSupportedValue);
+        public static BlobErrorCode MultipleConditionHeadersNotSupported { get; } = new BlobErrorCode(MultipleConditionHeadersNotSupportedValue);
         /// <summary> OperationTimedOut. </summary>
-        public static StorageErrorCode OperationTimedOut { get; } = new StorageErrorCode(OperationTimedOutValue);
+        public static BlobErrorCode OperationTimedOut { get; } = new BlobErrorCode(OperationTimedOutValue);
         /// <summary> OutOfRangeInput. </summary>
-        public static StorageErrorCode OutOfRangeInput { get; } = new StorageErrorCode(OutOfRangeInputValue);
+        public static BlobErrorCode OutOfRangeInput { get; } = new BlobErrorCode(OutOfRangeInputValue);
         /// <summary> OutOfRangeQueryParameterValue. </summary>
-        public static StorageErrorCode OutOfRangeQueryParameterValue { get; } = new StorageErrorCode(OutOfRangeQueryParameterValueValue);
+        public static BlobErrorCode OutOfRangeQueryParameterValue { get; } = new BlobErrorCode(OutOfRangeQueryParameterValueValue);
         /// <summary> RequestBodyTooLarge. </summary>
-        public static StorageErrorCode RequestBodyTooLarge { get; } = new StorageErrorCode(RequestBodyTooLargeValue);
+        public static BlobErrorCode RequestBodyTooLarge { get; } = new BlobErrorCode(RequestBodyTooLargeValue);
         /// <summary> ResourceTypeMismatch. </summary>
-        public static StorageErrorCode ResourceTypeMismatch { get; } = new StorageErrorCode(ResourceTypeMismatchValue);
+        public static BlobErrorCode ResourceTypeMismatch { get; } = new BlobErrorCode(ResourceTypeMismatchValue);
         /// <summary> RequestUrlFailedToParse. </summary>
-        public static StorageErrorCode RequestUrlFailedToParse { get; } = new StorageErrorCode(RequestUrlFailedToParseValue);
+        public static BlobErrorCode RequestUrlFailedToParse { get; } = new BlobErrorCode(RequestUrlFailedToParseValue);
         /// <summary> ResourceAlreadyExists. </summary>
-        public static StorageErrorCode ResourceAlreadyExists { get; } = new StorageErrorCode(ResourceAlreadyExistsValue);
+        public static BlobErrorCode ResourceAlreadyExists { get; } = new BlobErrorCode(ResourceAlreadyExistsValue);
         /// <summary> ResourceNotFound. </summary>
-        public static StorageErrorCode ResourceNotFound { get; } = new StorageErrorCode(ResourceNotFoundValue);
+        public static BlobErrorCode ResourceNotFound { get; } = new BlobErrorCode(ResourceNotFoundValue);
         /// <summary> ServerBusy. </summary>
-        public static StorageErrorCode ServerBusy { get; } = new StorageErrorCode(ServerBusyValue);
+        public static BlobErrorCode ServerBusy { get; } = new BlobErrorCode(ServerBusyValue);
         /// <summary> UnsupportedHeader. </summary>
-        public static StorageErrorCode UnsupportedHeader { get; } = new StorageErrorCode(UnsupportedHeaderValue);
+        public static BlobErrorCode UnsupportedHeader { get; } = new BlobErrorCode(UnsupportedHeaderValue);
         /// <summary> UnsupportedXmlNode. </summary>
-        public static StorageErrorCode UnsupportedXmlNode { get; } = new StorageErrorCode(UnsupportedXmlNodeValue);
+        public static BlobErrorCode UnsupportedXmlNode { get; } = new BlobErrorCode(UnsupportedXmlNodeValue);
         /// <summary> UnsupportedQueryParameter. </summary>
-        public static StorageErrorCode UnsupportedQueryParameter { get; } = new StorageErrorCode(UnsupportedQueryParameterValue);
+        public static BlobErrorCode UnsupportedQueryParameter { get; } = new BlobErrorCode(UnsupportedQueryParameterValue);
         /// <summary> UnsupportedHttpVerb. </summary>
-        public static StorageErrorCode UnsupportedHttpVerb { get; } = new StorageErrorCode(UnsupportedHttpVerbValue);
+        public static BlobErrorCode UnsupportedHttpVerb { get; } = new BlobErrorCode(UnsupportedHttpVerbValue);
         /// <summary> AppendPositionConditionNotMet. </summary>
-        public static StorageErrorCode AppendPositionConditionNotMet { get; } = new StorageErrorCode(AppendPositionConditionNotMetValue);
+        public static BlobErrorCode AppendPositionConditionNotMet { get; } = new BlobErrorCode(AppendPositionConditionNotMetValue);
         /// <summary> BlobAlreadyExists. </summary>
-        public static StorageErrorCode BlobAlreadyExists { get; } = new StorageErrorCode(BlobAlreadyExistsValue);
+        public static BlobErrorCode BlobAlreadyExists { get; } = new BlobErrorCode(BlobAlreadyExistsValue);
         /// <summary> BlobImmutableDueToPolicy. </summary>
-        public static StorageErrorCode BlobImmutableDueToPolicy { get; } = new StorageErrorCode(BlobImmutableDueToPolicyValue);
+        public static BlobErrorCode BlobImmutableDueToPolicy { get; } = new BlobErrorCode(BlobImmutableDueToPolicyValue);
         /// <summary> BlobNotFound. </summary>
-        public static StorageErrorCode BlobNotFound { get; } = new StorageErrorCode(BlobNotFoundValue);
+        public static BlobErrorCode BlobNotFound { get; } = new BlobErrorCode(BlobNotFoundValue);
         /// <summary> BlobOverwritten. </summary>
-        public static StorageErrorCode BlobOverwritten { get; } = new StorageErrorCode(BlobOverwrittenValue);
+        public static BlobErrorCode BlobOverwritten { get; } = new BlobErrorCode(BlobOverwrittenValue);
         /// <summary> BlobTierInadequateForContentLength. </summary>
-        public static StorageErrorCode BlobTierInadequateForContentLength { get; } = new StorageErrorCode(BlobTierInadequateForContentLengthValue);
+        public static BlobErrorCode BlobTierInadequateForContentLength { get; } = new BlobErrorCode(BlobTierInadequateForContentLengthValue);
         /// <summary> BlockCountExceedsLimit. </summary>
-        public static StorageErrorCode BlockCountExceedsLimit { get; } = new StorageErrorCode(BlockCountExceedsLimitValue);
+        public static BlobErrorCode BlockCountExceedsLimit { get; } = new BlobErrorCode(BlockCountExceedsLimitValue);
         /// <summary> BlockListTooLong. </summary>
-        public static StorageErrorCode BlockListTooLong { get; } = new StorageErrorCode(BlockListTooLongValue);
+        public static BlobErrorCode BlockListTooLong { get; } = new BlobErrorCode(BlockListTooLongValue);
         /// <summary> CannotChangeToLowerTier. </summary>
-        public static StorageErrorCode CannotChangeToLowerTier { get; } = new StorageErrorCode(CannotChangeToLowerTierValue);
+        public static BlobErrorCode CannotChangeToLowerTier { get; } = new BlobErrorCode(CannotChangeToLowerTierValue);
         /// <summary> CannotVerifyCopySource. </summary>
-        public static StorageErrorCode CannotVerifyCopySource { get; } = new StorageErrorCode(CannotVerifyCopySourceValue);
+        public static BlobErrorCode CannotVerifyCopySource { get; } = new BlobErrorCode(CannotVerifyCopySourceValue);
         /// <summary> ContainerAlreadyExists. </summary>
-        public static StorageErrorCode ContainerAlreadyExists { get; } = new StorageErrorCode(ContainerAlreadyExistsValue);
+        public static BlobErrorCode ContainerAlreadyExists { get; } = new BlobErrorCode(ContainerAlreadyExistsValue);
         /// <summary> ContainerBeingDeleted. </summary>
-        public static StorageErrorCode ContainerBeingDeleted { get; } = new StorageErrorCode(ContainerBeingDeletedValue);
+        public static BlobErrorCode ContainerBeingDeleted { get; } = new BlobErrorCode(ContainerBeingDeletedValue);
         /// <summary> ContainerDisabled. </summary>
-        public static StorageErrorCode ContainerDisabled { get; } = new StorageErrorCode(ContainerDisabledValue);
+        public static BlobErrorCode ContainerDisabled { get; } = new BlobErrorCode(ContainerDisabledValue);
         /// <summary> ContainerNotFound. </summary>
-        public static StorageErrorCode ContainerNotFound { get; } = new StorageErrorCode(ContainerNotFoundValue);
+        public static BlobErrorCode ContainerNotFound { get; } = new BlobErrorCode(ContainerNotFoundValue);
         /// <summary> ContentLengthLargerThanTierLimit. </summary>
-        public static StorageErrorCode ContentLengthLargerThanTierLimit { get; } = new StorageErrorCode(ContentLengthLargerThanTierLimitValue);
+        public static BlobErrorCode ContentLengthLargerThanTierLimit { get; } = new BlobErrorCode(ContentLengthLargerThanTierLimitValue);
         /// <summary> CopyAcrossAccountsNotSupported. </summary>
-        public static StorageErrorCode CopyAcrossAccountsNotSupported { get; } = new StorageErrorCode(CopyAcrossAccountsNotSupportedValue);
+        public static BlobErrorCode CopyAcrossAccountsNotSupported { get; } = new BlobErrorCode(CopyAcrossAccountsNotSupportedValue);
         /// <summary> CopyIdMismatch. </summary>
-        public static StorageErrorCode CopyIdMismatch { get; } = new StorageErrorCode(CopyIdMismatchValue);
+        public static BlobErrorCode CopyIdMismatch { get; } = new BlobErrorCode(CopyIdMismatchValue);
         /// <summary> FeatureVersionMismatch. </summary>
-        public static StorageErrorCode FeatureVersionMismatch { get; } = new StorageErrorCode(FeatureVersionMismatchValue);
+        public static BlobErrorCode FeatureVersionMismatch { get; } = new BlobErrorCode(FeatureVersionMismatchValue);
         /// <summary> IncrementalCopyBlobMismatch. </summary>
-        public static StorageErrorCode IncrementalCopyBlobMismatch { get; } = new StorageErrorCode(IncrementalCopyBlobMismatchValue);
+        public static BlobErrorCode IncrementalCopyBlobMismatch { get; } = new BlobErrorCode(IncrementalCopyBlobMismatchValue);
         /// <summary> IncrementalCopyOfEralierVersionSnapshotNotAllowed. </summary>
-        public static StorageErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get; } = new StorageErrorCode(IncrementalCopyOfEralierVersionSnapshotNotAllowedValue);
+        public static BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get; } = new BlobErrorCode(IncrementalCopyOfEralierVersionSnapshotNotAllowedValue);
         /// <summary> IncrementalCopySourceMustBeSnapshot. </summary>
-        public static StorageErrorCode IncrementalCopySourceMustBeSnapshot { get; } = new StorageErrorCode(IncrementalCopySourceMustBeSnapshotValue);
+        public static BlobErrorCode IncrementalCopySourceMustBeSnapshot { get; } = new BlobErrorCode(IncrementalCopySourceMustBeSnapshotValue);
         /// <summary> InfiniteLeaseDurationRequired. </summary>
-        public static StorageErrorCode InfiniteLeaseDurationRequired { get; } = new StorageErrorCode(InfiniteLeaseDurationRequiredValue);
+        public static BlobErrorCode InfiniteLeaseDurationRequired { get; } = new BlobErrorCode(InfiniteLeaseDurationRequiredValue);
         /// <summary> InvalidBlobOrBlock. </summary>
-        public static StorageErrorCode InvalidBlobOrBlock { get; } = new StorageErrorCode(InvalidBlobOrBlockValue);
+        public static BlobErrorCode InvalidBlobOrBlock { get; } = new BlobErrorCode(InvalidBlobOrBlockValue);
         /// <summary> InvalidBlobTier. </summary>
-        public static StorageErrorCode InvalidBlobTier { get; } = new StorageErrorCode(InvalidBlobTierValue);
+        public static BlobErrorCode InvalidBlobTier { get; } = new BlobErrorCode(InvalidBlobTierValue);
         /// <summary> InvalidBlobType. </summary>
-        public static StorageErrorCode InvalidBlobType { get; } = new StorageErrorCode(InvalidBlobTypeValue);
+        public static BlobErrorCode InvalidBlobType { get; } = new BlobErrorCode(InvalidBlobTypeValue);
         /// <summary> InvalidBlockId. </summary>
-        public static StorageErrorCode InvalidBlockId { get; } = new StorageErrorCode(InvalidBlockIdValue);
+        public static BlobErrorCode InvalidBlockId { get; } = new BlobErrorCode(InvalidBlockIdValue);
         /// <summary> InvalidBlockList. </summary>
-        public static StorageErrorCode InvalidBlockList { get; } = new StorageErrorCode(InvalidBlockListValue);
+        public static BlobErrorCode InvalidBlockList { get; } = new BlobErrorCode(InvalidBlockListValue);
         /// <summary> InvalidOperation. </summary>
-        public static StorageErrorCode InvalidOperation { get; } = new StorageErrorCode(InvalidOperationValue);
+        public static BlobErrorCode InvalidOperation { get; } = new BlobErrorCode(InvalidOperationValue);
         /// <summary> InvalidPageRange. </summary>
-        public static StorageErrorCode InvalidPageRange { get; } = new StorageErrorCode(InvalidPageRangeValue);
+        public static BlobErrorCode InvalidPageRange { get; } = new BlobErrorCode(InvalidPageRangeValue);
         /// <summary> InvalidSourceBlobType. </summary>
-        public static StorageErrorCode InvalidSourceBlobType { get; } = new StorageErrorCode(InvalidSourceBlobTypeValue);
+        public static BlobErrorCode InvalidSourceBlobType { get; } = new BlobErrorCode(InvalidSourceBlobTypeValue);
         /// <summary> InvalidSourceBlobUrl. </summary>
-        public static StorageErrorCode InvalidSourceBlobUrl { get; } = new StorageErrorCode(InvalidSourceBlobUrlValue);
+        public static BlobErrorCode InvalidSourceBlobUrl { get; } = new BlobErrorCode(InvalidSourceBlobUrlValue);
         /// <summary> InvalidVersionForPageBlobOperation. </summary>
-        public static StorageErrorCode InvalidVersionForPageBlobOperation { get; } = new StorageErrorCode(InvalidVersionForPageBlobOperationValue);
+        public static BlobErrorCode InvalidVersionForPageBlobOperation { get; } = new BlobErrorCode(InvalidVersionForPageBlobOperationValue);
         /// <summary> LeaseAlreadyPresent. </summary>
-        public static StorageErrorCode LeaseAlreadyPresent { get; } = new StorageErrorCode(LeaseAlreadyPresentValue);
+        public static BlobErrorCode LeaseAlreadyPresent { get; } = new BlobErrorCode(LeaseAlreadyPresentValue);
         /// <summary> LeaseAlreadyBroken. </summary>
-        public static StorageErrorCode LeaseAlreadyBroken { get; } = new StorageErrorCode(LeaseAlreadyBrokenValue);
+        public static BlobErrorCode LeaseAlreadyBroken { get; } = new BlobErrorCode(LeaseAlreadyBrokenValue);
         /// <summary> LeaseIdMismatchWithBlobOperation. </summary>
-        public static StorageErrorCode LeaseIdMismatchWithBlobOperation { get; } = new StorageErrorCode(LeaseIdMismatchWithBlobOperationValue);
+        public static BlobErrorCode LeaseIdMismatchWithBlobOperation { get; } = new BlobErrorCode(LeaseIdMismatchWithBlobOperationValue);
         /// <summary> LeaseIdMismatchWithContainerOperation. </summary>
-        public static StorageErrorCode LeaseIdMismatchWithContainerOperation { get; } = new StorageErrorCode(LeaseIdMismatchWithContainerOperationValue);
+        public static BlobErrorCode LeaseIdMismatchWithContainerOperation { get; } = new BlobErrorCode(LeaseIdMismatchWithContainerOperationValue);
         /// <summary> LeaseIdMismatchWithLeaseOperation. </summary>
-        public static StorageErrorCode LeaseIdMismatchWithLeaseOperation { get; } = new StorageErrorCode(LeaseIdMismatchWithLeaseOperationValue);
+        public static BlobErrorCode LeaseIdMismatchWithLeaseOperation { get; } = new BlobErrorCode(LeaseIdMismatchWithLeaseOperationValue);
         /// <summary> LeaseIdMissing. </summary>
-        public static StorageErrorCode LeaseIdMissing { get; } = new StorageErrorCode(LeaseIdMissingValue);
+        public static BlobErrorCode LeaseIdMissing { get; } = new BlobErrorCode(LeaseIdMissingValue);
         /// <summary> LeaseIsBreakingAndCannotBeAcquired. </summary>
-        public static StorageErrorCode LeaseIsBreakingAndCannotBeAcquired { get; } = new StorageErrorCode(LeaseIsBreakingAndCannotBeAcquiredValue);
+        public static BlobErrorCode LeaseIsBreakingAndCannotBeAcquired { get; } = new BlobErrorCode(LeaseIsBreakingAndCannotBeAcquiredValue);
         /// <summary> LeaseIsBreakingAndCannotBeChanged. </summary>
-        public static StorageErrorCode LeaseIsBreakingAndCannotBeChanged { get; } = new StorageErrorCode(LeaseIsBreakingAndCannotBeChangedValue);
+        public static BlobErrorCode LeaseIsBreakingAndCannotBeChanged { get; } = new BlobErrorCode(LeaseIsBreakingAndCannotBeChangedValue);
         /// <summary> LeaseIsBrokenAndCannotBeRenewed. </summary>
-        public static StorageErrorCode LeaseIsBrokenAndCannotBeRenewed { get; } = new StorageErrorCode(LeaseIsBrokenAndCannotBeRenewedValue);
+        public static BlobErrorCode LeaseIsBrokenAndCannotBeRenewed { get; } = new BlobErrorCode(LeaseIsBrokenAndCannotBeRenewedValue);
         /// <summary> LeaseLost. </summary>
-        public static StorageErrorCode LeaseLost { get; } = new StorageErrorCode(LeaseLostValue);
+        public static BlobErrorCode LeaseLost { get; } = new BlobErrorCode(LeaseLostValue);
         /// <summary> LeaseNotPresentWithBlobOperation. </summary>
-        public static StorageErrorCode LeaseNotPresentWithBlobOperation { get; } = new StorageErrorCode(LeaseNotPresentWithBlobOperationValue);
+        public static BlobErrorCode LeaseNotPresentWithBlobOperation { get; } = new BlobErrorCode(LeaseNotPresentWithBlobOperationValue);
         /// <summary> LeaseNotPresentWithContainerOperation. </summary>
-        public static StorageErrorCode LeaseNotPresentWithContainerOperation { get; } = new StorageErrorCode(LeaseNotPresentWithContainerOperationValue);
+        public static BlobErrorCode LeaseNotPresentWithContainerOperation { get; } = new BlobErrorCode(LeaseNotPresentWithContainerOperationValue);
         /// <summary> LeaseNotPresentWithLeaseOperation. </summary>
-        public static StorageErrorCode LeaseNotPresentWithLeaseOperation { get; } = new StorageErrorCode(LeaseNotPresentWithLeaseOperationValue);
+        public static BlobErrorCode LeaseNotPresentWithLeaseOperation { get; } = new BlobErrorCode(LeaseNotPresentWithLeaseOperationValue);
         /// <summary> MaxBlobSizeConditionNotMet. </summary>
-        public static StorageErrorCode MaxBlobSizeConditionNotMet { get; } = new StorageErrorCode(MaxBlobSizeConditionNotMetValue);
+        public static BlobErrorCode MaxBlobSizeConditionNotMet { get; } = new BlobErrorCode(MaxBlobSizeConditionNotMetValue);
         /// <summary> NoAuthenticationInformation. </summary>
-        public static StorageErrorCode NoAuthenticationInformation { get; } = new StorageErrorCode(NoAuthenticationInformationValue);
+        public static BlobErrorCode NoAuthenticationInformation { get; } = new BlobErrorCode(NoAuthenticationInformationValue);
         /// <summary> NoPendingCopyOperation. </summary>
-        public static StorageErrorCode NoPendingCopyOperation { get; } = new StorageErrorCode(NoPendingCopyOperationValue);
+        public static BlobErrorCode NoPendingCopyOperation { get; } = new BlobErrorCode(NoPendingCopyOperationValue);
         /// <summary> OperationNotAllowedOnIncrementalCopyBlob. </summary>
-        public static StorageErrorCode OperationNotAllowedOnIncrementalCopyBlob { get; } = new StorageErrorCode(OperationNotAllowedOnIncrementalCopyBlobValue);
+        public static BlobErrorCode OperationNotAllowedOnIncrementalCopyBlob { get; } = new BlobErrorCode(OperationNotAllowedOnIncrementalCopyBlobValue);
         /// <summary> PendingCopyOperation. </summary>
-        public static StorageErrorCode PendingCopyOperation { get; } = new StorageErrorCode(PendingCopyOperationValue);
+        public static BlobErrorCode PendingCopyOperation { get; } = new BlobErrorCode(PendingCopyOperationValue);
         /// <summary> PreviousSnapshotCannotBeNewer. </summary>
-        public static StorageErrorCode PreviousSnapshotCannotBeNewer { get; } = new StorageErrorCode(PreviousSnapshotCannotBeNewerValue);
+        public static BlobErrorCode PreviousSnapshotCannotBeNewer { get; } = new BlobErrorCode(PreviousSnapshotCannotBeNewerValue);
         /// <summary> PreviousSnapshotNotFound. </summary>
-        public static StorageErrorCode PreviousSnapshotNotFound { get; } = new StorageErrorCode(PreviousSnapshotNotFoundValue);
+        public static BlobErrorCode PreviousSnapshotNotFound { get; } = new BlobErrorCode(PreviousSnapshotNotFoundValue);
         /// <summary> PreviousSnapshotOperationNotSupported. </summary>
-        public static StorageErrorCode PreviousSnapshotOperationNotSupported { get; } = new StorageErrorCode(PreviousSnapshotOperationNotSupportedValue);
+        public static BlobErrorCode PreviousSnapshotOperationNotSupported { get; } = new BlobErrorCode(PreviousSnapshotOperationNotSupportedValue);
         /// <summary> SequenceNumberConditionNotMet. </summary>
-        public static StorageErrorCode SequenceNumberConditionNotMet { get; } = new StorageErrorCode(SequenceNumberConditionNotMetValue);
+        public static BlobErrorCode SequenceNumberConditionNotMet { get; } = new BlobErrorCode(SequenceNumberConditionNotMetValue);
         /// <summary> SequenceNumberIncrementTooLarge. </summary>
-        public static StorageErrorCode SequenceNumberIncrementTooLarge { get; } = new StorageErrorCode(SequenceNumberIncrementTooLargeValue);
+        public static BlobErrorCode SequenceNumberIncrementTooLarge { get; } = new BlobErrorCode(SequenceNumberIncrementTooLargeValue);
         /// <summary> SnapshotCountExceeded. </summary>
-        public static StorageErrorCode SnapshotCountExceeded { get; } = new StorageErrorCode(SnapshotCountExceededValue);
+        public static BlobErrorCode SnapshotCountExceeded { get; } = new BlobErrorCode(SnapshotCountExceededValue);
         /// <summary> SnaphotOperationRateExceeded. </summary>
-        public static StorageErrorCode SnaphotOperationRateExceeded { get; } = new StorageErrorCode(SnaphotOperationRateExceededValue);
+        public static BlobErrorCode SnaphotOperationRateExceeded { get; } = new BlobErrorCode(SnaphotOperationRateExceededValue);
         /// <summary> SnapshotsPresent. </summary>
-        public static StorageErrorCode SnapshotsPresent { get; } = new StorageErrorCode(SnapshotsPresentValue);
+        public static BlobErrorCode SnapshotsPresent { get; } = new BlobErrorCode(SnapshotsPresentValue);
         /// <summary> SourceConditionNotMet. </summary>
-        public static StorageErrorCode SourceConditionNotMet { get; } = new StorageErrorCode(SourceConditionNotMetValue);
+        public static BlobErrorCode SourceConditionNotMet { get; } = new BlobErrorCode(SourceConditionNotMetValue);
         /// <summary> SystemInUse. </summary>
-        public static StorageErrorCode SystemInUse { get; } = new StorageErrorCode(SystemInUseValue);
+        public static BlobErrorCode SystemInUse { get; } = new BlobErrorCode(SystemInUseValue);
         /// <summary> TargetConditionNotMet. </summary>
-        public static StorageErrorCode TargetConditionNotMet { get; } = new StorageErrorCode(TargetConditionNotMetValue);
+        public static BlobErrorCode TargetConditionNotMet { get; } = new BlobErrorCode(TargetConditionNotMetValue);
         /// <summary> UnauthorizedBlobOverwrite. </summary>
-        public static StorageErrorCode UnauthorizedBlobOverwrite { get; } = new StorageErrorCode(UnauthorizedBlobOverwriteValue);
+        public static BlobErrorCode UnauthorizedBlobOverwrite { get; } = new BlobErrorCode(UnauthorizedBlobOverwriteValue);
         /// <summary> BlobBeingRehydrated. </summary>
-        public static StorageErrorCode BlobBeingRehydrated { get; } = new StorageErrorCode(BlobBeingRehydratedValue);
+        public static BlobErrorCode BlobBeingRehydrated { get; } = new BlobErrorCode(BlobBeingRehydratedValue);
         /// <summary> BlobArchived. </summary>
-        public static StorageErrorCode BlobArchived { get; } = new StorageErrorCode(BlobArchivedValue);
+        public static BlobErrorCode BlobArchived { get; } = new BlobErrorCode(BlobArchivedValue);
         /// <summary> BlobNotArchived. </summary>
-        public static StorageErrorCode BlobNotArchived { get; } = new StorageErrorCode(BlobNotArchivedValue);
+        public static BlobErrorCode BlobNotArchived { get; } = new BlobErrorCode(BlobNotArchivedValue);
         /// <summary> AuthorizationSourceIPMismatch. </summary>
-        public static StorageErrorCode AuthorizationSourceIPMismatch { get; } = new StorageErrorCode(AuthorizationSourceIPMismatchValue);
+        public static BlobErrorCode AuthorizationSourceIPMismatch { get; } = new BlobErrorCode(AuthorizationSourceIPMismatchValue);
         /// <summary> AuthorizationProtocolMismatch. </summary>
-        public static StorageErrorCode AuthorizationProtocolMismatch { get; } = new StorageErrorCode(AuthorizationProtocolMismatchValue);
+        public static BlobErrorCode AuthorizationProtocolMismatch { get; } = new BlobErrorCode(AuthorizationProtocolMismatchValue);
         /// <summary> AuthorizationPermissionMismatch. </summary>
-        public static StorageErrorCode AuthorizationPermissionMismatch { get; } = new StorageErrorCode(AuthorizationPermissionMismatchValue);
+        public static BlobErrorCode AuthorizationPermissionMismatch { get; } = new BlobErrorCode(AuthorizationPermissionMismatchValue);
         /// <summary> AuthorizationServiceMismatch. </summary>
-        public static StorageErrorCode AuthorizationServiceMismatch { get; } = new StorageErrorCode(AuthorizationServiceMismatchValue);
+        public static BlobErrorCode AuthorizationServiceMismatch { get; } = new BlobErrorCode(AuthorizationServiceMismatchValue);
         /// <summary> AuthorizationResourceTypeMismatch. </summary>
-        public static StorageErrorCode AuthorizationResourceTypeMismatch { get; } = new StorageErrorCode(AuthorizationResourceTypeMismatchValue);
-        /// <summary> Determines if two <see cref="StorageErrorCode"/> values are the same. </summary>
-        public static bool operator ==(StorageErrorCode left, StorageErrorCode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="StorageErrorCode"/> values are not the same. </summary>
-        public static bool operator !=(StorageErrorCode left, StorageErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageErrorCode"/>. </summary>
-        public static implicit operator StorageErrorCode(string value) => new StorageErrorCode(value);
+        public static BlobErrorCode AuthorizationResourceTypeMismatch { get; } = new BlobErrorCode(AuthorizationResourceTypeMismatchValue);
+        /// <summary> Determines if two <see cref="BlobErrorCode"/> values are the same. </summary>
+        public static bool operator ==(BlobErrorCode left, BlobErrorCode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="BlobErrorCode"/> values are not the same. </summary>
+        public static bool operator !=(BlobErrorCode left, BlobErrorCode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="BlobErrorCode"/>. </summary>
+        public static implicit operator BlobErrorCode(string value) => new BlobErrorCode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageErrorCode other && Equals(other);
+        public override bool Equals(object obj) => obj is BlobErrorCode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(StorageErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BlobErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

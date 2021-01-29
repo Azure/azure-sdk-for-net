@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("PublicAccess") is XElement publicAccessElement)
             {
-                publicAccess = new PublicAccessType(publicAccessElement.Value);
+                publicAccess = publicAccessElement.Value.ToPublicAccessType();
             }
             if (element.Element("HasImmutabilityPolicy") is XElement hasImmutabilityPolicyElement)
             {

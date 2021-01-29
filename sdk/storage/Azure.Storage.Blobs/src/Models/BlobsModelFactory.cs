@@ -1334,5 +1334,23 @@ namespace Azure.Storage.Blobs.Models
                 AccountKind = accountKind,
             };
         }
+
+        /// <summary>
+        /// Creates a new BlobContainerAccessPolicy instance for mocking.
+        /// </summary>
+        public static BlobContainerAccessPolicy BlobContainerAccessPolicy(
+            PublicAccessType blobPublicAccess,
+            ETag eTag,
+            DateTimeOffset lastModified,
+            IEnumerable<BlobSignedIdentifier> signedIdentifiers)
+        {
+            return new BlobContainerAccessPolicy()
+            {
+                BlobPublicAccess = blobPublicAccess,
+                ETag = eTag,
+                LastModified = lastModified,
+                SignedIdentifiers = signedIdentifiers,
+            };
+        }
     }
 }

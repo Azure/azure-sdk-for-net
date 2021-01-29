@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(string blob, long contentLength, long blobContentLength, int? timeout, PremiumPageBlobAccessTier? tier, IDictionary<string, string> metadata, long? blobSequenceNumber, string blobTagsString, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateCreateRequest(string blob, long contentLength, long blobContentLength, int? timeout, PremiumPageBlobAccessTier? tier, IDictionary<string, string> metadata, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, long? blobSequenceNumber, string blobTagsString, BlobHttpHeaders blobHttpHeaders, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -99,9 +99,9 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-meta-", metadata);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
             if (blobHttpHeaders?.BlobContentDisposition != null)
             {
@@ -120,25 +120,25 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-scope", cpkScopeInfo.EncryptionScope);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfTags != null)
+            if (ifTags != null)
             {
-                request.Headers.Add("x-ms-if-tags", modifiedAccessConditions.IfTags);
+                request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-blob-content-length", blobContentLength);
             if (blobSequenceNumber != null)
@@ -161,23 +161,27 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="tier"> Optional. Indicates the tier to be set on the page blob. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
         /// <param name="blobHttpHeaders"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobCreateHeaders>> CreateAsync(string blob, long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, IDictionary<string, string> metadata = null, long? blobSequenceNumber = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobCreateHeaders>> CreateAsync(string blob, long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, IDictionary<string, string> metadata = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateCreateRequest(blob, contentLength, blobContentLength, timeout, tier, metadata, blobSequenceNumber, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateCreateRequest(blob, contentLength, blobContentLength, timeout, tier, metadata, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString, blobHttpHeaders, cpkInfo, cpkScopeInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -196,23 +200,27 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="tier"> Optional. Indicates the tier to be set on the page blob. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
         /// <param name="blobHttpHeaders"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobCreateHeaders> Create(string blob, long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, IDictionary<string, string> metadata = null, long? blobSequenceNumber = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobCreateHeaders> Create(string blob, long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, IDictionary<string, string> metadata = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateCreateRequest(blob, contentLength, blobContentLength, timeout, tier, metadata, blobSequenceNumber, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateCreateRequest(blob, contentLength, blobContentLength, timeout, tier, metadata, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString, blobHttpHeaders, cpkInfo, cpkScopeInfo);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -224,7 +232,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUploadPagesRequest(string blob, long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string range, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, SequenceNumberAccessConditions sequenceNumberAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateUploadPagesRequest(string blob, long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, SequenceNumberAccessConditions sequenceNumberAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -250,9 +258,9 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-range", range);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
             if (cpkInfo?.EncryptionKey != null)
             {
@@ -279,25 +287,25 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-if-sequence-number-eq", sequenceNumberAccessConditions.IfSequenceNumberEqualTo.Value);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfTags != null)
+            if (ifTags != null)
             {
-                request.Headers.Add("x-ms-if-tags", modifiedAccessConditions.IfTags);
+                request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/xml");
@@ -319,14 +327,18 @@ namespace Azure.Storage.Blobs
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="sequenceNumberAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesHeaders>> UploadPagesAsync(string blob, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobUploadPagesHeaders>> UploadPagesAsync(string blob, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
@@ -337,7 +349,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadPagesRequest(blob, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
+            using var message = CreateUploadPagesRequest(blob, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobUploadPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -357,14 +369,18 @@ namespace Azure.Storage.Blobs
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="sequenceNumberAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesHeaders> UploadPages(string blob, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobUploadPagesHeaders> UploadPages(string blob, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
@@ -375,7 +391,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadPagesRequest(blob, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
+            using var message = CreateUploadPagesRequest(blob, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobUploadPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -387,7 +403,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateClearPagesRequest(string blob, long contentLength, int? timeout, string range, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, SequenceNumberAccessConditions sequenceNumberAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateClearPagesRequest(string blob, long contentLength, int? timeout, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, SequenceNumberAccessConditions sequenceNumberAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -409,9 +425,9 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-range", range);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
             if (cpkInfo?.EncryptionKey != null)
             {
@@ -438,25 +454,25 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-if-sequence-number-eq", sequenceNumberAccessConditions.IfSequenceNumberEqualTo.Value);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfTags != null)
+            if (ifTags != null)
             {
-                request.Headers.Add("x-ms-if-tags", modifiedAccessConditions.IfTags);
+                request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/xml");
@@ -468,21 +484,25 @@ namespace Azure.Storage.Blobs
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="sequenceNumberAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobClearPagesHeaders>> ClearPagesAsync(string blob, long contentLength, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobClearPagesHeaders>> ClearPagesAsync(string blob, long contentLength, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateClearPagesRequest(blob, contentLength, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
+            using var message = CreateClearPagesRequest(blob, contentLength, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobClearPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -499,21 +519,25 @@ namespace Azure.Storage.Blobs
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="sequenceNumberAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobClearPagesHeaders> ClearPages(string blob, long contentLength, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobClearPagesHeaders> ClearPages(string blob, long contentLength, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateClearPagesRequest(blob, contentLength, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
+            using var message = CreateClearPagesRequest(blob, contentLength, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobClearPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -525,7 +549,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUploadPagesFromURLRequest(string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, LeaseAccessConditions leaseAccessConditions, SequenceNumberAccessConditions sequenceNumberAccessConditions, ModifiedAccessConditions modifiedAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
+        internal HttpMessage CreateUploadPagesFromURLRequest(string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, SequenceNumberAccessConditions sequenceNumberAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -567,9 +591,9 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-scope", cpkScopeInfo.EncryptionScope);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
             if (sequenceNumberAccessConditions?.IfSequenceNumberLessThanOrEqualTo != null)
             {
@@ -583,25 +607,25 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-if-sequence-number-eq", sequenceNumberAccessConditions.IfSequenceNumberEqualTo.Value);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfTags != null)
+            if (ifTags != null)
             {
-                request.Headers.Add("x-ms-if-tags", modifiedAccessConditions.IfTags);
+                request.Headers.Add("x-ms-if-tags", ifTags);
             }
             if (sourceModifiedAccessConditions?.SourceIfModifiedSince != null)
             {
@@ -633,15 +657,19 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceContentMD5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentcrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="sequenceNumberAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/>, <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
@@ -660,7 +688,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateUploadPagesFromURLRequest(blob, sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateUploadPagesFromURLRequest(blob, sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, sourceModifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobUploadPagesFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -681,15 +709,19 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceContentMD5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentcrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="sequenceNumberAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/>, <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
@@ -708,7 +740,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateUploadPagesFromURLRequest(blob, sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateUploadPagesFromURLRequest(blob, sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, sourceModifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobUploadPagesFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -720,7 +752,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPageRangesRequest(string blob, string snapshot, int? timeout, string range, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateGetPageRangesRequest(string blob, string snapshot, int? timeout, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -745,29 +777,29 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-range", range);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfTags != null)
+            if (ifTags != null)
             {
-                request.Headers.Add("x-ms-if-tags", modifiedAccessConditions.IfTags);
+                request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/xml");
@@ -779,18 +811,22 @@ namespace Azure.Storage.Blobs
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesAsync(string blob, string snapshot = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesAsync(string blob, string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetPageRangesRequest(blob, snapshot, timeout, range, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetPageRangesRequest(blob, snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobGetPageRangesHeaders(message.Response);
             switch (message.Response.Status)
@@ -815,18 +851,22 @@ namespace Azure.Storage.Blobs
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRanges(string blob, string snapshot = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRanges(string blob, string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetPageRangesRequest(blob, snapshot, timeout, range, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetPageRangesRequest(blob, snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobGetPageRangesHeaders(message.Response);
             switch (message.Response.Status)
@@ -846,7 +886,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPageRangesDiffRequest(string blob, string snapshot, int? timeout, string prevsnapshot, Uri prevSnapshotUrl, string range, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateGetPageRangesDiffRequest(string blob, string snapshot, int? timeout, string prevsnapshot, Uri prevSnapshotUrl, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -879,29 +919,29 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-range", range);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfTags != null)
+            if (ifTags != null)
             {
-                request.Headers.Add("x-ms-if-tags", modifiedAccessConditions.IfTags);
+                request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/xml");
@@ -915,18 +955,22 @@ namespace Azure.Storage.Blobs
         /// <param name="prevsnapshot"> Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016. </param>
         /// <param name="prevSnapshotUrl"> Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot. </param>
         /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffAsync(string blob, string snapshot = null, int? timeout = null, string prevsnapshot = null, Uri prevSnapshotUrl = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffAsync(string blob, string snapshot = null, int? timeout = null, string prevsnapshot = null, Uri prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetPageRangesDiffRequest(blob, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetPageRangesDiffRequest(blob, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobGetPageRangesDiffHeaders(message.Response);
             switch (message.Response.Status)
@@ -953,18 +997,22 @@ namespace Azure.Storage.Blobs
         /// <param name="prevsnapshot"> Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016. </param>
         /// <param name="prevSnapshotUrl"> Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot. </param>
         /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiff(string blob, string snapshot = null, int? timeout = null, string prevsnapshot = null, Uri prevSnapshotUrl = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiff(string blob, string snapshot = null, int? timeout = null, string prevsnapshot = null, Uri prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetPageRangesDiffRequest(blob, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetPageRangesDiffRequest(blob, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobGetPageRangesDiffHeaders(message.Response);
             switch (message.Response.Status)
@@ -984,7 +1032,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateResizeRequest(string blob, long blobContentLength, int? timeout, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateResizeRequest(string blob, long blobContentLength, int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1001,9 +1049,9 @@ namespace Azure.Storage.Blobs
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
             if (cpkInfo?.EncryptionKey != null)
             {
@@ -1018,25 +1066,25 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-scope", cpkScopeInfo.EncryptionScope);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfTags != null)
+            if (ifTags != null)
             {
-                request.Headers.Add("x-ms-if-tags", modifiedAccessConditions.IfTags);
+                request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-blob-content-length", blobContentLength);
             request.Headers.Add("x-ms-version", version);
@@ -1048,20 +1096,24 @@ namespace Azure.Storage.Blobs
         /// <param name="blob"> The blob name. </param>
         /// <param name="blobContentLength"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobResizeHeaders>> ResizeAsync(string blob, long blobContentLength, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobResizeHeaders>> ResizeAsync(string blob, long blobContentLength, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateResizeRequest(blob, blobContentLength, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateResizeRequest(blob, blobContentLength, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, cpkInfo, cpkScopeInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobResizeHeaders(message.Response);
             switch (message.Response.Status)
@@ -1077,20 +1129,24 @@ namespace Azure.Storage.Blobs
         /// <param name="blob"> The blob name. </param>
         /// <param name="blobContentLength"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobResizeHeaders> Resize(string blob, long blobContentLength, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobResizeHeaders> Resize(string blob, long blobContentLength, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateResizeRequest(blob, blobContentLength, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateResizeRequest(blob, blobContentLength, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, cpkInfo, cpkScopeInfo);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobResizeHeaders(message.Response);
             switch (message.Response.Status)
@@ -1102,7 +1158,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUpdateSequenceNumberRequest(string blob, SequenceNumberActionType sequenceNumberAction, int? timeout, long? blobSequenceNumber, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateUpdateSequenceNumberRequest(string blob, SequenceNumberActionType sequenceNumberAction, int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, long? blobSequenceNumber)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1119,29 +1175,29 @@ namespace Azure.Storage.Blobs
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfTags != null)
+            if (ifTags != null)
             {
-                request.Headers.Add("x-ms-if-tags", modifiedAccessConditions.IfTags);
+                request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-sequence-number-action", sequenceNumberAction.ToSerialString());
             if (blobSequenceNumber != null)
@@ -1157,19 +1213,23 @@ namespace Azure.Storage.Blobs
         /// <param name="blob"> The blob name. </param>
         /// <param name="sequenceNumberAction"> Required if the x-ms-blob-sequence-number header is set for the request. This property applies to page blobs only. This property indicates how the service should modify the blob&apos;s sequence number. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders>> UpdateSequenceNumberAsync(string blob, SequenceNumberActionType sequenceNumberAction, int? timeout = null, long? blobSequenceNumber = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders>> UpdateSequenceNumberAsync(string blob, SequenceNumberActionType sequenceNumberAction, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateUpdateSequenceNumberRequest(blob, sequenceNumberAction, timeout, blobSequenceNumber, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateUpdateSequenceNumberRequest(blob, sequenceNumberAction, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobUpdateSequenceNumberHeaders(message.Response);
             switch (message.Response.Status)
@@ -1185,19 +1245,23 @@ namespace Azure.Storage.Blobs
         /// <param name="blob"> The blob name. </param>
         /// <param name="sequenceNumberAction"> Required if the x-ms-blob-sequence-number header is set for the request. This property applies to page blobs only. This property indicates how the service should modify the blob&apos;s sequence number. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> UpdateSequenceNumber(string blob, SequenceNumberActionType sequenceNumberAction, int? timeout = null, long? blobSequenceNumber = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> UpdateSequenceNumber(string blob, SequenceNumberActionType sequenceNumberAction, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateUpdateSequenceNumberRequest(blob, sequenceNumberAction, timeout, blobSequenceNumber, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateUpdateSequenceNumberRequest(blob, sequenceNumberAction, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobUpdateSequenceNumberHeaders(message.Response);
             switch (message.Response.Status)
@@ -1209,7 +1273,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCopyIncrementalRequest(string blob, Uri copySource, int? timeout, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateCopyIncrementalRequest(string blob, Uri copySource, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1226,25 +1290,25 @@ namespace Azure.Storage.Blobs
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfTags != null)
+            if (ifTags != null)
             {
-                request.Headers.Add("x-ms-if-tags", modifiedAccessConditions.IfTags);
+                request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-copy-source", copySource);
             request.Headers.Add("x-ms-version", version);
@@ -1256,10 +1320,14 @@ namespace Azure.Storage.Blobs
         /// <param name="blob"> The blob name. </param>
         /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobCopyIncrementalHeaders>> CopyIncrementalAsync(string blob, Uri copySource, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobCopyIncrementalHeaders>> CopyIncrementalAsync(string blob, Uri copySource, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
@@ -1270,7 +1338,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateCopyIncrementalRequest(blob, copySource, timeout, modifiedAccessConditions);
+            using var message = CreateCopyIncrementalRequest(blob, copySource, timeout, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobCopyIncrementalHeaders(message.Response);
             switch (message.Response.Status)
@@ -1286,10 +1354,14 @@ namespace Azure.Storage.Blobs
         /// <param name="blob"> The blob name. </param>
         /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobCopyIncrementalHeaders> CopyIncremental(string blob, Uri copySource, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobCopyIncrementalHeaders> CopyIncremental(string blob, Uri copySource, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
@@ -1300,7 +1372,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateCopyIncrementalRequest(blob, copySource, timeout, modifiedAccessConditions);
+            using var message = CreateCopyIncrementalRequest(blob, copySource, timeout, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobCopyIncrementalHeaders(message.Response);
             switch (message.Response.Status)

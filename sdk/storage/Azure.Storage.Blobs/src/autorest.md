@@ -16,6 +16,29 @@ directive:
     delete $.ContainerName["x-ms-parameter-location"];
 ```
 
+### ErrorCode
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.ErrorCode["x-ms-enum"]
+  transform: >
+    $.name = "BlobErrorCode";
+```
+
+### Remove conditions parameter groupings
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.IfMatch["x-ms-parameter-grouping"];
+    delete $.IfModifiedSince["x-ms-parameter-grouping"];
+    delete $.IfNoneMatch["x-ms-parameter-grouping"];
+    delete $.IfUnmodifiedSince["x-ms-parameter-grouping"];
+    delete $.LeaseIdOptional["x-ms-parameter-grouping"];
+    delete $.IfTags["x-ms-parameter-grouping"];
+```
+
 ### Add containerName and blob as a parameter
 ``` yaml
 directive:

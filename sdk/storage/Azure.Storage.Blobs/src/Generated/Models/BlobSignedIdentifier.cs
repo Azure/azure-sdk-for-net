@@ -10,13 +10,13 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> signed identifier. </summary>
-    public partial class SignedIdentifier
+    public partial class BlobSignedIdentifier
     {
-        /// <summary> Initializes a new instance of SignedIdentifier. </summary>
+        /// <summary> Initializes a new instance of BlobSignedIdentifier. </summary>
         /// <param name="id"> a unique id. </param>
         /// <param name="accessPolicy"> An Access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accessPolicy"/> is null. </exception>
-        public SignedIdentifier(string id, AccessPolicy accessPolicy)
+        public BlobSignedIdentifier(string id, AccessPolicy accessPolicy)
         {
             if (id == null)
             {
