@@ -9,6 +9,7 @@ using System.Text;
 using Azure.Storage.Blobs.Models;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 using Azure.Core;
+using System.IO;
 
 namespace Azure.Storage.Blobs
 {
@@ -465,6 +466,14 @@ namespace Azure.Storage.Blobs
 
         // TODO
         internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+#pragma warning disable CA1801 // Review unused parameters
+        internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobQueryHeaders> response, Stream stream)
+#pragma warning restore CA1801 // Review unused parameters
         {
             return null;
         }

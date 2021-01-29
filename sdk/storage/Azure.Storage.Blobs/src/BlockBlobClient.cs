@@ -2143,31 +2143,43 @@ namespace Azure.Storage.Blobs.Specialized
                         OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization(isInput: false)
                     };
 
-                    (Response<BlobQueryResult> result, Stream stream) = await BlobRestClient.Blob.QueryAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: Uri,
-                        version: Version.ToVersionString(),
-                        queryRequest: queryRequest,
-                        leaseId: options?.Conditions?.LeaseId,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        ifModifiedSince: options?.Conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
-                        ifMatch: options?.Conditions?.IfMatch,
-                        ifNoneMatch: options?.Conditions?.IfNoneMatch,
-                        ifTags: options?.Conditions?.TagConditions,
-                        async: async,
-                        operationName: $"{nameof(BlockBlobClient)}.{nameof(Query)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<Stream, BlobQueryHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.QueryAsync(
+                            leaseId: options?.Conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            ifMatch: options?.Conditions?.IfMatch.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch.ToString(),
+                            ifTags: options?.Conditions?.TagConditions,
+                            queryRequest: queryRequest,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.Query(
+                            leaseId: options?.Conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            ifMatch: options?.Conditions?.IfMatch.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch.ToString(),
+                            ifTags: options?.Conditions?.TagConditions,
+                            queryRequest: queryRequest,
+                            cancellationToken: cancellationToken);
+                    }
 
                     Action<BlobQueryError> errorHandler = options?._errorHandler;
-                    Stream parsedStream = new BlobQuickQueryStream(stream, options?.ProgressHandler, errorHandler);
-                    result.Value.Body = parsedStream;
-
-                    return Response.FromValue(result.Value.ToBlobDownloadInfo(), result.GetRawResponse());
+                    Stream parsedStream = new BlobQuickQueryStream(response.Value, options?.ProgressHandler, errorHandler);
+                    return Response.FromValue(
+                        BlobExtensions.ToBlobDownloadInfo(response, parsedStream),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
