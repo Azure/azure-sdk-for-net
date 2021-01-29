@@ -134,8 +134,10 @@ jobs:
           GdnBreakAllTools: false
           GdnBreakGdnToolCredScan: true
           GdnBreakGdnToolCredScanSeverity: Error
-          GdnBreakBaselineFiles: $(Build.SourcesDirectory)/eng/dotnet.gdnbaselines
-          GdnBreakBaselines: baseline        
+          GdnBreakOutputBaselineFile: dotnet
+          GdnBreakOutputBaseline: baseline
+          # GdnBreakBaselineFiles: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
+          # GdnBreakBaselines: baseline  
         continueOnError: true
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
         displayName: 'Publish Security Analysis Logs'
