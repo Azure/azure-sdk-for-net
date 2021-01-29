@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Batching
         /// <summary>
         /// The sender, which we mostly use for raising events.
         /// </summary>
-        private SearchIndexingBufferedSender<T> _sender;
+        private readonly SearchIndexingBufferedSender<T> _sender;
 
         /// <summary>
         /// Creates a new SearchIndexingPublisher which immediately starts

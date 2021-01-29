@@ -135,8 +135,8 @@ namespace Azure.Core
     /// underlying REST call and only differ in whether they block.  We
     /// recommend using our async methods for new applications, but there are
     /// perfectly valid cases for using sync methods as well.  These dual
-    /// method invocation semantics address the needs of our customers, but
-    /// require a little extra care when writing event handlers.
+    /// method invocation semantics allow for flexibility, but require a little
+    /// extra care when writing event handlers.
     /// </para>
     /// <para>
     /// The SyncAsyncEventHandler is a delegate used by events in Azure client
@@ -187,10 +187,20 @@ namespace Azure.Core
     /// parallelism.  The event handlers will finish before returning control
     /// to the code path raising the event.  This means blocking for events
     /// raised synchronously and waiting for the returned <see cref="Task"/> to
-    /// complete for events raised asynchronously.  Any exceptions thrown from
-    /// a handler will be wrapped in a single <see cref="AggregateException"/>.
-    /// Finally, a
-    /// <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing">
+    /// complete for events raised asynchronously.
+    /// </para>
+    /// <para>
+    /// Any exceptions thrown from a handler will be wrapped in a single
+    /// <see cref="AggregateException"/>.  If one handler throws an exception,
+    /// it will not prevent other handlers from running.  This is also relevant
+    /// for cancellation because all handlers are still raised if cancellation
+    /// occurs.  You should both pass <see cref="SyncAsyncEventArgs.CancellationToken"/>
+    /// to asynchronous or long-running synchronous operations and consider
+    /// calling <see cref="System.Threading.CancellationToken.ThrowIfCancellationRequested"/>
+    /// in compute heavy handlers.
+    /// </para>
+    /// <para>
+    /// A <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing">
     /// distributed tracing span</see> is wrapped around your handlers using
     /// the event name so you can see how long your handlers took to run,
     /// whether they made other calls to Azure services, and details about any

@@ -92,7 +92,7 @@ namespace Azure.Core
                         Task runHandlerTask = azureHandler(e);
                         // We can consider logging something when e.RunSynchronously
                         // is true, but runHandlerTask.IsComplete is false.
-                        // (We're not bother to check our tests because
+                        // (We'll not bother to check our tests because
                         // EnsureCompleted on the code path that raised the
                         // event will catch it for us.)
                         await runHandlerTask.ConfigureAwait(false);

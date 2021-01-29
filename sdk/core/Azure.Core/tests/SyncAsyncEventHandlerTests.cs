@@ -22,12 +22,6 @@ namespace Azure.Core.Tests
 
         private ClientDiagnostics GetEmptyDiagnostics() => new ClientDiagnostics(new TestClientOptions());
 
-        private async Task Pause(Action action, TimeSpan? delay = null)
-        {
-            await Task.Delay(delay ?? TimeSpan.FromMilliseconds(10));
-            action();
-        }
-
         public class TestClientOptions : ClientOptions { }
 
         public class TestSyncAsyncEventArgs : SyncAsyncEventArgs
@@ -106,6 +100,7 @@ namespace Azure.Core.Tests
         private class TestHandler<T> where T : SyncAsyncEventArgs
         {
             public TimeSpan? Delay { get; set; }
+            public Func<bool, CancellationToken, Task> Callback { get; set; }
             public string Throws { get; set; }
 
             public T LastEventArgs { get; private set; }
@@ -123,6 +118,7 @@ namespace Azure.Core.Tests
 
                 LastEventArgs = e;
                 RaisedCount++;
+
                 if (Delay != null)
                 {
                     if (e.RunSynchronously)
@@ -134,10 +130,18 @@ namespace Azure.Core.Tests
                         await Task.Delay(Delay.Value, e.CancellationToken);
                     }
                 }
+
+                Func<bool, CancellationToken, Task> callback = Callback;
+                if (callback != null)
+                {
+                    await callback(e.RunSynchronously, e.CancellationToken);
+                }
+
                 if (Throws != null)
                 {
                     throw new InvalidOperationException(Throws);
                 }
+
                 e.CancellationToken.ThrowIfCancellationRequested();
                 CompletedCount++;
             }
@@ -404,9 +408,8 @@ namespace Azure.Core.Tests
             client.Working += second.Handle;
             client.Working += third.Handle;
 
-            await Task.WhenAll(
-                Pause(() => client.Working += fourth.Handle),
-                client.DoWorkAsync());
+            first.Callback = (_, _) => { client.Working += fourth.Handle; return Task.CompletedTask; };
+            await client.DoWorkAsync();
 
             Assert.IsTrue(first.Completed);
             Assert.IsTrue(second.Completed);
@@ -426,9 +429,8 @@ namespace Azure.Core.Tests
             client.Working += second.Handle;
             client.Working += third.Handle;
 
-            await Task.WhenAll(
-                Pause(() => client.Working -= first.Handle),
-                client.DoWorkAsync());
+            first.Callback = (_, _) => { client.Working -= first.Handle; return Task.CompletedTask; };
+            await client.DoWorkAsync();
 
             Assert.IsTrue(first.Completed);
             Assert.IsTrue(second.Completed);
@@ -542,11 +544,10 @@ namespace Azure.Core.Tests
 
             TestClient client = GetClient();
             client.Working += test.Handle;
+            test.Callback = (_, _) => { cancellation.Cancel(); return Task.CompletedTask; };
             try
             {
-                await Task.WhenAll(
-                    Pause(() => cancellation.Cancel()),
-                    client.DoWorkAsync(cancellation.Token));
+                await client.DoWorkAsync(cancellation.Token);
             }
             catch (AggregateException)
             {
@@ -569,11 +570,10 @@ namespace Azure.Core.Tests
             client.Working += second.Handle;
             client.Working += third.Handle;
 
+            first.Callback = (_, _) => { cancellation.Cancel(); return Task.CompletedTask; };
             try
             {
-                await Task.WhenAll(
-                    Pause(() => cancellation.Cancel()),
-                    client.DoWorkAsync(cancellation.Token));
+                await client.DoWorkAsync(cancellation.Token);
             }
             catch (AggregateException)
             {

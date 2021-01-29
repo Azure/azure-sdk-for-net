@@ -10,8 +10,8 @@ methods by their `Async` suffix.  For example, `BlobClient.Download` and
 `BlobClient.DownloadAsync` make the same underlying REST call and only differ in
 whether they block.  We recommend using our async methods for new applications,
 but there are perfectly valid cases for using sync methods as well.  These dual
-method invocation semantics address the needs of our customers, but require a
-little extra care when writing event handlers.
+method invocation semantics allow for flexibility, but require a little extra
+care when writing event handlers.
 
 The `SyncAsyncEventHandler` is a delegate used by events in Azure client
 libraries to represent an event handler that can be invoked from either sync or
@@ -49,9 +49,17 @@ When an event using `SyncAsyncEventHandler` is raised, the handlers will be
 executed sequentially to avoid introducing any unintended parallelism.  The
 event handlers will finish before returning control to the code path raising the
 event.  This means blocking for events raised synchronously and waiting for the
-returned `Task` to complete for events raised asynchronously.  Any exceptions
-thrown from a handler will be wrapped in a single `AggregateException`.  Finally,
-a [distributed tracing span](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
+returned `Task` to complete for events raised asynchronously.
+
+Any exceptions thrown from a handler will be wrapped in a single
+`AggregateException`.  If one handler throws an exception, it will not prevent
+other handlers from running.  This is also relevant for cancellation because all
+handlers are still raised if cancellation occurs.  You should both pass
+`SyncAsyncEventArgs.CancellationToken` to asynchronous or long-running
+synchronous operations and consider calling `CancellationToken.ThrowIfCancellationRequested`
+in compute heavy handlers.
+
+A [distributed tracing span](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
 is wrapped around your handlers using the event name so you can see how long
 your handlers took to run, whether they made other calls to Azure services, and
 details about any exceptions that were thrown.
