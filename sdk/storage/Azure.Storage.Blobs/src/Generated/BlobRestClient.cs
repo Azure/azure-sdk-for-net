@@ -319,7 +319,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string snapshot, string versionId, int? timeout, string leaseId, DeleteSnapshotsOptionType? deleteSnapshots, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateDeleteRequest(string snapshot, string versionId, int? timeout, string leaseId, DeleteSnapshotsOption? deleteSnapshots, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -389,7 +389,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobDeleteHeaders>> DeleteAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, DeleteSnapshotsOptionType? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobDeleteHeaders>> DeleteAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, DeleteSnapshotsOption? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(snapshot, versionId, timeout, leaseId, deleteSnapshots, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -415,7 +415,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobDeleteHeaders> Delete(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, DeleteSnapshotsOptionType? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobDeleteHeaders> Delete(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, DeleteSnapshotsOption? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(snapshot, versionId, timeout, leaseId, deleteSnapshots, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);

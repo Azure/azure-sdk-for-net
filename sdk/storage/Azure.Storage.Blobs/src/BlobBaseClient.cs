@@ -2190,32 +2190,57 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(destinationConditions)}: {destinationConditions}");
                 try
                 {
-                    return await BlobRestClient.Blob.StartCopyFromUriAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        copySource: source,
-                        version: Version.ToVersionString(),
-                        rehydratePriority: rehydratePriority,
-                        tier: accessTier,
-                        sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
-                        sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                        sourceIfMatch: sourceConditions?.IfMatch,
-                        sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
-                        sourceIfTags: sourceConditions?.TagConditions,
-                        ifModifiedSince: destinationConditions?.IfModifiedSince,
-                        ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
-                        ifMatch: destinationConditions?.IfMatch,
-                        ifNoneMatch: destinationConditions?.IfNoneMatch,
-                        leaseId: destinationConditions?.LeaseId,
-                        ifTags: destinationConditions?.TagConditions,
-                        metadata: metadata,
-                        blobTagsString: tags?.ToTagsString(),
-                        sealBlob: sealBlob,
-                        async: async,
-                        operationName: $"{nameof(BlobBaseClient)}.{nameof(StartCopyFromUri)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobStartCopyFromURLHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.StartCopyFromURLAsync(
+                            copySource: source,
+                            metadata: metadata,
+                            tier: accessTier,
+                            rehydratePriority: rehydratePriority,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
+                            sourceIfTags: sourceConditions?.TagConditions,
+                            ifModifiedSince: destinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
+                            ifMatch: destinationConditions?.IfMatch.ToString(),
+                            ifNoneMatch: destinationConditions?.IfNoneMatch.ToString(),
+                            leaseId: destinationConditions?.LeaseId,
+                            ifTags: destinationConditions?.TagConditions,
+                            blobTagsString: tags?.ToTagsString(),
+                            sealBlob: sealBlob,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.StartCopyFromURL(
+                            copySource: source,
+                            metadata: metadata,
+                            tier: accessTier,
+                            rehydratePriority: rehydratePriority,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
+                            sourceIfTags: sourceConditions?.TagConditions,
+                            ifModifiedSince: destinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
+                            ifMatch: destinationConditions?.IfMatch.ToString(),
+                            ifNoneMatch: destinationConditions?.IfNoneMatch.ToString(),
+                            leaseId: destinationConditions?.LeaseId,
+                            ifTags: destinationConditions?.TagConditions,
+                            blobTagsString: tags?.ToTagsString(),
+                            sealBlob: sealBlob,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobCopyInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2353,17 +2378,25 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await BlobRestClient.Blob.AbortCopyFromUriAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        copyId: copyId,
-                        version: Version.ToVersionString(),
-                        leaseId: conditions?.LeaseId,
-                        async: async,
-                        operationName: "BlobBaseClient.AbortCopyFromUri",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobAbortCopyFromURLHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.AbortCopyFromURLAsync(
+                            copyId: copyId,
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.AbortCopyFromURL(
+                            copyId: copyId,
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
@@ -2554,29 +2587,51 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sourceConditions)}: {sourceConditions}\n" +
                     $"{nameof(destinationConditions)}: {destinationConditions}");
 
-                    return await BlobRestClient.Blob.CopyFromUriAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: Uri,
-                        copySource: source,
-                        version: Version.ToVersionString(),
-                        tier: accessTier,
-                        sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
-                        sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                        sourceIfMatch: sourceConditions?.IfMatch,
-                        sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
-                        ifModifiedSince: destinationConditions?.IfModifiedSince,
-                        ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
-                        ifMatch: destinationConditions?.IfMatch,
-                        ifNoneMatch: destinationConditions?.IfNoneMatch,
-                        ifTags: destinationConditions?.TagConditions,
-                        leaseId: destinationConditions?.LeaseId,
-                        metadata: metadata,
-                        blobTagsString: tags?.ToTagsString(),
-                        async: async,
-                        operationName: $"{nameof(BlobBaseClient)}.{nameof(SyncCopyFromUri)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobCopyFromURLHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.CopyFromURLAsync(
+                            copySource: source,
+                            metadata: metadata,
+                            tier: accessTier,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
+                            ifModifiedSince: destinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
+                            ifMatch: destinationConditions?.IfMatch.ToString(),
+                            ifNoneMatch: destinationConditions?.IfNoneMatch.ToString(),
+                            ifTags: destinationConditions?.TagConditions,
+                            leaseId: destinationConditions?.LeaseId,
+                            blobTagsString: tags?.ToTagsString(),
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.CopyFromURL(
+                            copySource: source,
+                            metadata: metadata,
+                            tier: accessTier,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
+                            ifModifiedSince: destinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
+                            ifMatch: destinationConditions?.IfMatch.ToString(),
+                            ifNoneMatch: destinationConditions?.IfNoneMatch.ToString(),
+                            ifTags: destinationConditions?.TagConditions,
+                            leaseId: destinationConditions?.LeaseId,
+                            blobTagsString: tags?.ToTagsString(),
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobCopyInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2881,7 +2936,9 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName = null)
+#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -2893,22 +2950,35 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await BlobRestClient.Blob.DeleteAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
-                        leaseId: conditions?.LeaseId,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: operationName ?? $"{nameof(BlobBaseClient)}.{nameof(Delete)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobDeleteHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.DeleteAsync(
+                            leaseId: conditions?.LeaseId,
+                            deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.Delete(
+                            leaseId: conditions?.LeaseId,
+                            deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
@@ -3116,15 +3186,21 @@ namespace Azure.Storage.Blobs.Specialized
                 Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await BlobRestClient.Blob.UndeleteAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: "BlobBaseClient.Undelete")
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobUndeleteHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.UndeleteAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.Undelete(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {

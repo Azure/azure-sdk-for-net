@@ -501,5 +501,23 @@ namespace Azure.Storage.Blobs
         {
             return null;
         }
+
+        // TODO
+        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<BlobCopyFromURLHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<BlobStartCopyFromURLHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobDownloadHeaders> response, Stream stream)
+        {
+            return null;
+        }
     }
 }
