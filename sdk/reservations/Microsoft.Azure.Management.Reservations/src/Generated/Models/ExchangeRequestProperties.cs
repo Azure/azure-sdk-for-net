@@ -11,30 +11,29 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The email actions.
+    /// Exchange request properties
     /// </summary>
-    public partial class EmailActions
+    public partial class ExchangeRequestProperties
     {
         /// <summary>
-        /// Initializes a new instance of the EmailActions class.
+        /// Initializes a new instance of the ExchangeRequestProperties class.
         /// </summary>
-        public EmailActions()
+        public ExchangeRequestProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EmailActions class.
+        /// Initializes a new instance of the ExchangeRequestProperties class.
         /// </summary>
-        /// <param name="emailAddresses">The list of email actions.</param>
-        public EmailActions(IList<EmailAction> emailAddresses = default(IList<EmailAction>))
+        /// <param name="sessionId">SessionId that was returned by
+        /// CalculateExchange API.</param>
+        public ExchangeRequestProperties(string sessionId = default(string))
         {
-            EmailAddresses = emailAddresses;
+            SessionId = sessionId;
             CustomInit();
         }
 
@@ -44,10 +43,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of email actions.
+        /// Gets or sets sessionId that was returned by CalculateExchange API.
         /// </summary>
-        [JsonProperty(PropertyName = "emailAddresses")]
-        public IList<EmailAction> EmailAddresses { get; set; }
+        [JsonProperty(PropertyName = "sessionId")]
+        public string SessionId { get; set; }
 
     }
 }

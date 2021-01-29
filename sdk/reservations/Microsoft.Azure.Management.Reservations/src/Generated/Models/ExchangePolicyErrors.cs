@@ -11,24 +11,30 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class Properties
+    /// <summary>
+    /// Exchange policy errors
+    /// </summary>
+    public partial class ExchangePolicyErrors
     {
         /// <summary>
-        /// Initializes a new instance of the Properties class.
+        /// Initializes a new instance of the ExchangePolicyErrors class.
         /// </summary>
-        public Properties()
+        public ExchangePolicyErrors()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Properties class.
+        /// Initializes a new instance of the ExchangePolicyErrors class.
         /// </summary>
-        public Properties(SubscriptionScopeProperties propertiesProperty = default(SubscriptionScopeProperties))
+        /// <param name="policyErrors">Exchange Policy errors</param>
+        public ExchangePolicyErrors(IList<ExchangePolicyError> policyErrors = default(IList<ExchangePolicyError>))
         {
-            PropertiesProperty = propertiesProperty;
+            PolicyErrors = policyErrors;
             CustomInit();
         }
 
@@ -38,9 +44,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets exchange Policy errors
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public SubscriptionScopeProperties PropertiesProperty { get; set; }
+        [JsonProperty(PropertyName = "policyErrors")]
+        public IList<ExchangePolicyError> PolicyErrors { get; set; }
 
     }
 }

@@ -13,27 +13,22 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Email Action.
-    /// </summary>
-    public partial class EmailAction
+    public partial class AvailableScopeProperties
     {
         /// <summary>
-        /// Initializes a new instance of the EmailAction class.
+        /// Initializes a new instance of the AvailableScopeProperties class.
         /// </summary>
-        public EmailAction()
+        public AvailableScopeProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EmailAction class.
+        /// Initializes a new instance of the AvailableScopeProperties class.
         /// </summary>
-        /// <param name="emailAddress">The email address for the
-        /// action.</param>
-        public EmailAction(string emailAddress = default(string))
+        public AvailableScopeProperties(SubscriptionScopeProperties properties = default(SubscriptionScopeProperties))
         {
-            EmailAddress = emailAddress;
+            Properties = properties;
             CustomInit();
         }
 
@@ -43,10 +38,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the email address for the action.
         /// </summary>
-        [JsonProperty(PropertyName = "emailAddress")]
-        public string EmailAddress { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public SubscriptionScopeProperties Properties { get; set; }
 
     }
 }

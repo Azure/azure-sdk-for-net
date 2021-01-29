@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static Properties AvailableScopes(this IReservationOperations operations, string reservationOrderId, string reservationId, SubscriptionScopeProperties body)
+            public static AvailableScopeProperties AvailableScopes(this IReservationOperations operations, string reservationOrderId, string reservationId, AvailableScopeRequest body)
             {
                 return operations.AvailableScopesAsync(reservationOrderId, reservationId, body).GetAwaiter().GetResult();
             }
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Properties> AvailableScopesAsync(this IReservationOperations operations, string reservationOrderId, string reservationId, SubscriptionScopeProperties body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AvailableScopeProperties> AvailableScopesAsync(this IReservationOperations operations, string reservationOrderId, string reservationId, AvailableScopeRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AvailableScopesWithHttpMessagesAsync(reservationOrderId, reservationId, body, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static Properties BeginAvailableScopes(this IReservationOperations operations, string reservationOrderId, string reservationId, SubscriptionScopeProperties body)
+            public static AvailableScopeProperties BeginAvailableScopes(this IReservationOperations operations, string reservationOrderId, string reservationId, AvailableScopeRequest body)
             {
                 return operations.BeginAvailableScopesAsync(reservationOrderId, reservationId, body).GetAwaiter().GetResult();
             }
@@ -405,7 +405,7 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Properties> BeginAvailableScopesAsync(this IReservationOperations operations, string reservationOrderId, string reservationId, SubscriptionScopeProperties body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AvailableScopeProperties> BeginAvailableScopesAsync(this IReservationOperations operations, string reservationOrderId, string reservationId, AvailableScopeRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginAvailableScopesWithHttpMessagesAsync(reservationOrderId, reservationId, body, null, cancellationToken).ConfigureAwait(false))
                 {

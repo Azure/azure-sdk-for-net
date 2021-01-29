@@ -11,29 +11,31 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The actions for auto quota increase.
+    /// Available scope request properties
     /// </summary>
-    public partial class Actions
+    public partial class AvailableScopeRequestProperties
     {
         /// <summary>
-        /// Initializes a new instance of the Actions class.
+        /// Initializes a new instance of the AvailableScopeRequestProperties
+        /// class.
         /// </summary>
-        public Actions()
+        public AvailableScopeRequestProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Actions class.
+        /// Initializes a new instance of the AvailableScopeRequestProperties
+        /// class.
         /// </summary>
-        /// <param name="emailActions">The email actions for auto quota
-        /// increase.</param>
-        public Actions(EmailActions emailActions = default(EmailActions))
+        public AvailableScopeRequestProperties(IList<string> scopes = default(IList<string>))
         {
-            EmailActions = emailActions;
+            Scopes = scopes;
             CustomInit();
         }
 
@@ -43,10 +45,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the email actions for auto quota increase.
         /// </summary>
-        [JsonProperty(PropertyName = "emailActions")]
-        public EmailActions EmailActions { get; set; }
+        [JsonProperty(PropertyName = "scopes")]
+        public IList<string> Scopes { get; set; }
 
     }
 }

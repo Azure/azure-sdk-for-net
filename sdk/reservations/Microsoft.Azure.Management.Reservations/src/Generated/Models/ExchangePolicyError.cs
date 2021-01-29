@@ -14,28 +14,25 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Linq;
 
     /// <summary>
-    /// Phone Action.
+    /// error details
     /// </summary>
-    public partial class PhoneAction
+    public partial class ExchangePolicyError
     {
         /// <summary>
-        /// Initializes a new instance of the PhoneAction class.
+        /// Initializes a new instance of the ExchangePolicyError class.
         /// </summary>
-        public PhoneAction()
+        public ExchangePolicyError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PhoneAction class.
+        /// Initializes a new instance of the ExchangePolicyError class.
         /// </summary>
-        /// <param name="phoneNumber">The phone number for the action.</param>
-        /// <param name="preferredChannel">The preferred communication
-        /// channel.</param>
-        public PhoneAction(string phoneNumber = default(string), object preferredChannel = default(object))
+        public ExchangePolicyError(string code = default(string), string message = default(string))
         {
-            PhoneNumber = phoneNumber;
-            PreferredChannel = preferredChannel;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -45,16 +42,14 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the phone number for the action.
         /// </summary>
-        [JsonProperty(PropertyName = "phoneNumber")]
-        public string PhoneNumber { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred communication channel.
         /// </summary>
-        [JsonProperty(PropertyName = "preferredChannel")]
-        public object PreferredChannel { get; set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }

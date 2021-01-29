@@ -14,26 +14,24 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Linq;
 
     /// <summary>
-    /// Settings for auto quota increase.
+    /// Exchange request
     /// </summary>
-    public partial class AqiSettings
+    public partial class ExchangeRequest
     {
         /// <summary>
-        /// Initializes a new instance of the AqiSettings class.
+        /// Initializes a new instance of the ExchangeRequest class.
         /// </summary>
-        public AqiSettings()
+        public ExchangeRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AqiSettings class.
+        /// Initializes a new instance of the ExchangeRequest class.
         /// </summary>
-        /// <param name="autoQuotaIncreaseState">If the subscription has
-        /// enabled automatic quota increase.</param>
-        public AqiSettings(object autoQuotaIncreaseState = default(object))
+        public ExchangeRequest(ExchangeRequestProperties properties = default(ExchangeRequestProperties))
         {
-            AutoQuotaIncreaseState = autoQuotaIncreaseState;
+            Properties = properties;
             CustomInit();
         }
 
@@ -43,11 +41,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets if the subscription has enabled automatic quota
-        /// increase.
         /// </summary>
-        [JsonProperty(PropertyName = "autoQuotaIncreaseState")]
-        public object AutoQuotaIncreaseState { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public ExchangeRequestProperties Properties { get; set; }
 
     }
 }
