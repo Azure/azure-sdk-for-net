@@ -21,27 +21,3 @@ namespace Azure.Storage.Blobs.Models
         public int? LeaseTime { get; internal set; }
     }
 }
-
-namespace Azure.Storage.Blobs
-{
-    /// <summary>
-    /// BlobRestClient response extensions
-    /// </summary>
-    internal static partial class BlobExtensions
-    {
-        /// <summary>
-        /// Convert the internal BrokenLease response into a Lease.  The
-        /// LeaseId will be empty.
-        /// </summary>
-        /// <param name="response">The original response.</param>
-        /// <returns>The Lease response.</returns>
-        internal static Response<BlobLease> ToLease(this Response<BrokenLease> response)
-            => Response.FromValue(
-                new BlobLease
-                {
-                    ETag = response.Value.ETag,
-                    LastModified = response.Value.LastModified,
-                    LeaseTime = response.Value.LeaseTime
-                }, response.GetRawResponse());
-    }
-}

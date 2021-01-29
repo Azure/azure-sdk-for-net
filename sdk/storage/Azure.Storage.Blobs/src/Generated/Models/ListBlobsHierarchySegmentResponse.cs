@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> An enumeration of blobs. </summary>
-    public partial class ListBlobsHierarchySegmentResponse
+    internal partial class ListBlobsHierarchySegmentResponse
     {
         /// <summary> Initializes a new instance of ListBlobsHierarchySegmentResponse. </summary>
         /// <param name="serviceEndpoint"> . </param>

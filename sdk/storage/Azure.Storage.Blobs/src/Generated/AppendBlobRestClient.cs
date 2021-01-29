@@ -12,7 +12,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
@@ -60,7 +59,7 @@ namespace Azure.Storage.Blobs
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(long contentLength, int? timeout, IDictionary<string, string> metadata, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobTagsString, BlobHttpHeaders blobHttpHeaders)
+        internal HttpMessage CreateCreateRequest(long contentLength, int? timeout, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, string blobCacheControl, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobTagsString)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -77,25 +76,25 @@ namespace Azure.Storage.Blobs
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-blob-type", "AppendBlob");
-            if (blobHttpHeaders?.BlobContentType != null)
+            if (blobContentType != null)
             {
-                request.Headers.Add("x-ms-blob-content-type", blobHttpHeaders.BlobContentType);
+                request.Headers.Add("x-ms-blob-content-type", blobContentType);
             }
-            if (blobHttpHeaders?.BlobContentEncoding != null)
+            if (blobContentEncoding != null)
             {
-                request.Headers.Add("x-ms-blob-content-encoding", blobHttpHeaders.BlobContentEncoding);
+                request.Headers.Add("x-ms-blob-content-encoding", blobContentEncoding);
             }
-            if (blobHttpHeaders?.BlobContentLanguage != null)
+            if (blobContentLanguage != null)
             {
-                request.Headers.Add("x-ms-blob-content-language", blobHttpHeaders.BlobContentLanguage);
+                request.Headers.Add("x-ms-blob-content-language", blobContentLanguage);
             }
-            if (blobHttpHeaders?.BlobContentMD5 != null)
+            if (blobContentMD5 != null)
             {
-                request.Headers.Add("x-ms-blob-content-md5", blobHttpHeaders.BlobContentMD5);
+                request.Headers.Add("x-ms-blob-content-md5", blobContentMD5);
             }
-            if (blobHttpHeaders?.BlobCacheControl != null)
+            if (blobCacheControl != null)
             {
-                request.Headers.Add("x-ms-blob-cache-control", blobHttpHeaders.BlobCacheControl);
+                request.Headers.Add("x-ms-blob-cache-control", blobCacheControl);
             }
             if (metadata != null)
             {
@@ -105,9 +104,9 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (blobHttpHeaders?.BlobContentDisposition != null)
+            if (blobContentDisposition != null)
             {
-                request.Headers.Add("x-ms-blob-content-disposition", blobHttpHeaders.BlobContentDisposition);
+                request.Headers.Add("x-ms-blob-content-disposition", blobContentDisposition);
             }
             if (encryptionKey != null)
             {
@@ -154,8 +153,14 @@ namespace Azure.Storage.Blobs
         /// <summary> The Create Append Blob operation creates a new append blob. </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="blobContentType"> Optional. Sets the blob&apos;s content type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Optional. Set the blob&apos;s content language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
+        /// <param name="blobCacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="blobContentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
@@ -165,11 +170,10 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
-        /// <param name="blobHttpHeaders"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AppendBlobCreateHeaders>> CreateAsync(long contentLength, int? timeout = null, IDictionary<string, string> metadata = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AppendBlobCreateHeaders>> CreateAsync(long contentLength, int? timeout = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(contentLength, timeout, metadata, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, blobHttpHeaders);
+            using var message = CreateCreateRequest(contentLength, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -184,8 +188,14 @@ namespace Azure.Storage.Blobs
         /// <summary> The Create Append Blob operation creates a new append blob. </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="blobContentType"> Optional. Sets the blob&apos;s content type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Optional. Set the blob&apos;s content language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
+        /// <param name="blobCacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="blobContentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
@@ -195,11 +205,10 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
-        /// <param name="blobHttpHeaders"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AppendBlobCreateHeaders> Create(long contentLength, int? timeout = null, IDictionary<string, string> metadata = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AppendBlobCreateHeaders> Create(long contentLength, int? timeout = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(contentLength, timeout, metadata, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, blobHttpHeaders);
+            using var message = CreateCreateRequest(contentLength, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobCreateHeaders(message.Response);
             switch (message.Response.Status)

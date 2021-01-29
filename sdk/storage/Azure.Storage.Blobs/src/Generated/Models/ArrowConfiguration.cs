@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> arrow configuration. </summary>
-    public partial class ArrowConfiguration
+    internal partial class ArrowConfiguration
     {
         /// <summary> Initializes a new instance of ArrowConfiguration. </summary>
         /// <param name="schema"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schema"/> is null. </exception>
-        public ArrowConfiguration(IEnumerable<ArrowField> schema)
+        public ArrowConfiguration(IEnumerable<ArrowFieldInternal> schema)
         {
             if (schema == null)
             {
@@ -27,6 +27,6 @@ namespace Azure.Storage.Blobs.Models
             Schema = schema.ToList();
         }
 
-        public IList<ArrowField> Schema { get; }
+        public IList<ArrowFieldInternal> Schema { get; }
     }
 }

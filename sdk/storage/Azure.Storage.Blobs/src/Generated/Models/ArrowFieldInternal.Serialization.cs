@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class ArrowField : IXmlSerializable
+    internal partial class ArrowFieldInternal : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {

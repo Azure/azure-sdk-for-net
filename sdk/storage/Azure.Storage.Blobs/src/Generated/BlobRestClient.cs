@@ -550,7 +550,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetHttpHeadersRequest(int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, BlobHttpHeaders blobHttpHeaders)
+        internal HttpMessage CreateSetHttpHeadersRequest(int? timeout, string blobCacheControl, string blobContentType, byte[] blobContentMD5, string blobContentEncoding, string blobContentLanguage, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobContentDisposition)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -567,25 +567,25 @@ namespace Azure.Storage.Blobs
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            if (blobHttpHeaders?.BlobCacheControl != null)
+            if (blobCacheControl != null)
             {
-                request.Headers.Add("x-ms-blob-cache-control", blobHttpHeaders.BlobCacheControl);
+                request.Headers.Add("x-ms-blob-cache-control", blobCacheControl);
             }
-            if (blobHttpHeaders?.BlobContentType != null)
+            if (blobContentType != null)
             {
-                request.Headers.Add("x-ms-blob-content-type", blobHttpHeaders.BlobContentType);
+                request.Headers.Add("x-ms-blob-content-type", blobContentType);
             }
-            if (blobHttpHeaders?.BlobContentMD5 != null)
+            if (blobContentMD5 != null)
             {
-                request.Headers.Add("x-ms-blob-content-md5", blobHttpHeaders.BlobContentMD5);
+                request.Headers.Add("x-ms-blob-content-md5", blobContentMD5);
             }
-            if (blobHttpHeaders?.BlobContentEncoding != null)
+            if (blobContentEncoding != null)
             {
-                request.Headers.Add("x-ms-blob-content-encoding", blobHttpHeaders.BlobContentEncoding);
+                request.Headers.Add("x-ms-blob-content-encoding", blobContentEncoding);
             }
-            if (blobHttpHeaders?.BlobContentLanguage != null)
+            if (blobContentLanguage != null)
             {
-                request.Headers.Add("x-ms-blob-content-language", blobHttpHeaders.BlobContentLanguage);
+                request.Headers.Add("x-ms-blob-content-language", blobContentLanguage);
             }
             if (leaseId != null)
             {
@@ -611,9 +611,9 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
-            if (blobHttpHeaders?.BlobContentDisposition != null)
+            if (blobContentDisposition != null)
             {
-                request.Headers.Add("x-ms-blob-content-disposition", blobHttpHeaders.BlobContentDisposition);
+                request.Headers.Add("x-ms-blob-content-disposition", blobContentDisposition);
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/xml");
@@ -622,17 +622,22 @@ namespace Azure.Storage.Blobs
 
         /// <summary> The Set HTTP Headers operation sets system properties on the blob. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="blobCacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentType"> Optional. Sets the blob&apos;s content type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
+        /// <param name="blobContentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Optional. Set the blob&apos;s content language. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobHttpHeaders"> Parameter group. </param>
+        /// <param name="blobContentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobSetHttpHeadersHeaders>> SetHttpHeadersAsync(int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobHttpHeaders blobHttpHeaders = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobSetHttpHeadersHeaders>> SetHttpHeadersAsync(int? timeout = null, string blobCacheControl = null, string blobContentType = null, byte[] blobContentMD5 = null, string blobContentEncoding = null, string blobContentLanguage = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobContentDisposition = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetHttpHeadersRequest(timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobHttpHeaders);
+            using var message = CreateSetHttpHeadersRequest(timeout, blobCacheControl, blobContentType, blobContentMD5, blobContentEncoding, blobContentLanguage, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobContentDisposition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetHttpHeadersHeaders(message.Response);
             switch (message.Response.Status)
@@ -646,17 +651,22 @@ namespace Azure.Storage.Blobs
 
         /// <summary> The Set HTTP Headers operation sets system properties on the blob. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="blobCacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentType"> Optional. Sets the blob&apos;s content type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
+        /// <param name="blobContentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Optional. Set the blob&apos;s content language. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobHttpHeaders"> Parameter group. </param>
+        /// <param name="blobContentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobSetHttpHeadersHeaders> SetHttpHeaders(int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobHttpHeaders blobHttpHeaders = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobSetHttpHeadersHeaders> SetHttpHeaders(int? timeout = null, string blobCacheControl = null, string blobContentType = null, byte[] blobContentMD5 = null, string blobContentEncoding = null, string blobContentLanguage = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobContentDisposition = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetHttpHeadersRequest(timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobHttpHeaders);
+            using var message = CreateSetHttpHeadersRequest(timeout, blobCacheControl, blobContentType, blobContentMD5, blobContentEncoding, blobContentLanguage, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobContentDisposition);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetHttpHeadersHeaders(message.Response);
             switch (message.Response.Status)

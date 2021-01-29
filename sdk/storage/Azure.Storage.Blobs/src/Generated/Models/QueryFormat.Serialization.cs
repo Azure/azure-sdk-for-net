@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class QueryFormat : IXmlSerializable
+    internal partial class QueryFormat : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {

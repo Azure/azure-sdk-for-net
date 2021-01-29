@@ -10,12 +10,12 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> json text configuration. </summary>
-    public partial class JsonTextConfiguration
+    internal partial class JsonTextConfigurationInternal
     {
-        /// <summary> Initializes a new instance of JsonTextConfiguration. </summary>
+        /// <summary> Initializes a new instance of JsonTextConfigurationInternal. </summary>
         /// <param name="recordSeparator"> record separator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordSeparator"/> is null. </exception>
-        public JsonTextConfiguration(string recordSeparator)
+        public JsonTextConfigurationInternal(string recordSeparator)
         {
             if (recordSeparator == null)
             {

@@ -10,12 +10,12 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> field of an arrow schema. </summary>
-    public partial class ArrowField
+    internal partial class ArrowFieldInternal
     {
-        /// <summary> Initializes a new instance of ArrowField. </summary>
+        /// <summary> Initializes a new instance of ArrowFieldInternal. </summary>
         /// <param name="type"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
-        public ArrowField(string type)
+        public ArrowFieldInternal(string type)
         {
             if (type == null)
             {

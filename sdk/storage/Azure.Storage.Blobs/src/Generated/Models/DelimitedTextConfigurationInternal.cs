@@ -10,16 +10,16 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> delimited text configuration. </summary>
-    public partial class DelimitedTextConfiguration
+    internal partial class DelimitedTextConfigurationInternal
     {
-        /// <summary> Initializes a new instance of DelimitedTextConfiguration. </summary>
+        /// <summary> Initializes a new instance of DelimitedTextConfigurationInternal. </summary>
         /// <param name="columnSeparator"> column separator. </param>
         /// <param name="fieldQuote"> field quote. </param>
         /// <param name="recordSeparator"> record separator. </param>
         /// <param name="escapeChar"> escape char. </param>
         /// <param name="headersPresent"> has headers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="columnSeparator"/>, <paramref name="fieldQuote"/>, <paramref name="recordSeparator"/>, or <paramref name="escapeChar"/> is null. </exception>
-        public DelimitedTextConfiguration(string columnSeparator, string fieldQuote, string recordSeparator, string escapeChar, bool headersPresent)
+        public DelimitedTextConfigurationInternal(string columnSeparator, string fieldQuote, string recordSeparator, string escapeChar, bool headersPresent)
         {
             if (columnSeparator == null)
             {

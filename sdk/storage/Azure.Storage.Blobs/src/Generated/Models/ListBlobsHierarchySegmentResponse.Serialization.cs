@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class ListBlobsHierarchySegmentResponse
+    internal partial class ListBlobsHierarchySegmentResponse
     {
         internal static ListBlobsHierarchySegmentResponse DeserializeListBlobsHierarchySegmentResponse(XElement element)
         {

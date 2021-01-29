@@ -3510,26 +3510,36 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlobRestClient.SetHttpHeadersAsync(
+                            blobCacheControl: httpHeaders?.CacheControl,
+                            blobContentType: httpHeaders?.ContentType,
+                            blobContentMD5: httpHeaders?.ContentHash,
+                            blobContentEncoding: httpHeaders?.ContentEncoding,
+                            blobContentLanguage: httpHeaders?.ContentLanguage,
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch.ToString(),
                             ifTags: conditions?.TagConditions,
-                            blobHttpHeaders: httpHeaders,
+                            blobContentDisposition: httpHeaders?.ContentDisposition,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = BlobRestClient.SetHttpHeaders(
+                            blobCacheControl: httpHeaders?.CacheControl,
+                            blobContentType: httpHeaders?.ContentType,
+                            blobContentMD5: httpHeaders?.ContentHash,
+                            blobContentEncoding: httpHeaders?.ContentEncoding,
+                            blobContentLanguage: httpHeaders?.ContentLanguage,
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch.ToString(),
                             ifTags: conditions?.TagConditions,
-                            blobHttpHeaders: httpHeaders,
+                            blobContentDisposition: httpHeaders?.ContentDisposition,
                             cancellationToken: cancellationToken);
                     }
 

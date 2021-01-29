@@ -944,8 +944,14 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentLength: size,
                             // TODO?
                             tier: null,
+                            blobContentType: httpHeaders?.ContentType,
+                            blobContentEncoding: httpHeaders?.ContentEncoding,
+                            blobContentLanguage: httpHeaders?.ContentLanguage,
+                            blobContentMD5: httpHeaders?.ContentHash,
+                            blobCacheControl: httpHeaders?.CacheControl,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
+                            blobContentDisposition: httpHeaders?.ContentDisposition,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionScope: EncryptionScope,
@@ -956,7 +962,6 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
-                            blobHttpHeaders: httpHeaders,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -967,8 +972,14 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentLength: size,
                             // TODO?
                             tier: null,
+                            blobContentType: httpHeaders?.ContentType,
+                            blobContentEncoding: httpHeaders?.ContentEncoding,
+                            blobContentLanguage: httpHeaders?.ContentLanguage,
+                            blobContentMD5: httpHeaders?.ContentHash,
+                            blobCacheControl: httpHeaders?.CacheControl,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
+                            blobContentDisposition: httpHeaders?.ContentDisposition,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionScope: EncryptionScope,
@@ -979,7 +990,6 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
-                            blobHttpHeaders: httpHeaders,
                             cancellationToken: cancellationToken);
                     }
 

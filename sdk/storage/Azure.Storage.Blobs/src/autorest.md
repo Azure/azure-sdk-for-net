@@ -59,6 +59,20 @@ directive:
     delete $.IfSequenceNumberEqualTo["x-ms-parameter-grouping"];
 ```
 
+### Remove blob-Http-Headers parameter grouping
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.BlobCacheControl["x-ms-parameter-grouping"];
+    delete $.BlobContentType["x-ms-parameter-grouping"];
+    delete $.BlobContentMD5["x-ms-parameter-grouping"];
+    delete $.BlobContentEncoding["x-ms-parameter-grouping"];
+    delete $.BlobContentLanguage["x-ms-parameter-grouping"];
+    delete $.BlobContentDisposition["x-ms-parameter-grouping"];
+```
+
 ### Remove CPK and encryption scope parameter grouping
 ``` yaml
 directive:

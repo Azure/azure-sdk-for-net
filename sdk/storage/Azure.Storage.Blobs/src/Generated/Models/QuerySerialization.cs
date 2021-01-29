@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The QuerySerialization. </summary>
-    public partial class QuerySerialization
+    internal partial class QuerySerialization
     {
         /// <summary> Initializes a new instance of QuerySerialization. </summary>
         /// <param name="format"> . </param>

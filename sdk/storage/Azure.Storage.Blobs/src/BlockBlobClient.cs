@@ -815,8 +815,14 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await BlockBlobRestClient.UploadAsync(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
+                            blobContentType: blobHttpHeaders?.ContentType,
+                            blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                            blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
+                            blobCacheControl: blobHttpHeaders?.CacheControl,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
+                            blobContentDisposition: blobHttpHeaders?.ContentDisposition,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionScope: EncryptionScope,
@@ -827,7 +833,6 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
-                            blobHttpHeaders: blobHttpHeaders,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -836,8 +841,14 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlockBlobRestClient.Upload(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
+                            blobContentType: blobHttpHeaders?.ContentType,
+                            blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                            blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
+                            blobCacheControl: blobHttpHeaders?.CacheControl,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
+                            blobContentDisposition: blobHttpHeaders?.ContentDisposition,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionScope: EncryptionScope,
@@ -848,7 +859,6 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
-                            blobHttpHeaders: blobHttpHeaders,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1768,8 +1778,14 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = await BlockBlobRestClient.CommitBlockListAsync(
                             blocks: blocks,
+                            blobCacheControl: blobHttpHeaders?.CacheControl,
+                            blobContentType: blobHttpHeaders?.ContentType,
+                            blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                            blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
+                            blobContentDisposition: blobHttpHeaders?.ContentDisposition,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionScope: EncryptionScope,
@@ -1780,7 +1796,6 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
-                            blobHttpHeaders: blobHttpHeaders,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1788,8 +1803,14 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = BlockBlobRestClient.CommitBlockList(
                             blocks: blocks,
+                            blobCacheControl: blobHttpHeaders?.CacheControl,
+                            blobContentType: blobHttpHeaders?.ContentType,
+                            blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                            blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
+                            blobContentDisposition: blobHttpHeaders?.ContentDisposition,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionScope: EncryptionScope,
@@ -1800,7 +1821,6 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
-                            blobHttpHeaders: blobHttpHeaders,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2578,9 +2598,15 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: 0,
                             // TODO what if source URI has special characters?
                             copySource: copySource,
+                            blobContentType: options?.HttpHeaders?.ContentType,
+                            blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
+                            blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
+                            blobContentMD5: options?.HttpHeaders?.ContentHash,
+                            blobCacheControl: options?.HttpHeaders?.CacheControl,
                             // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
                             // metadata: options?.Metadata,
                             leaseId: options?.DestinationConditions?.LeaseId,
+                            blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionScope: EncryptionScope,
@@ -2597,7 +2623,6 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfTags: options?.SourceConditions?.TagConditions,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
-                            blobHttpHeaders: options?.HttpHeaders,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2607,9 +2632,15 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: 0,
                             // TODO what if source URI has special characters?
                             copySource: copySource,
+                            blobContentType: options?.HttpHeaders?.ContentType,
+                            blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
+                            blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
+                            blobContentMD5: options?.HttpHeaders?.ContentHash,
+                            blobCacheControl: options?.HttpHeaders?.CacheControl,
                             // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
                             // metadata: options?.Metadata,
                             leaseId: options?.DestinationConditions?.LeaseId,
+                            blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionScope: EncryptionScope,
@@ -2626,7 +2657,6 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfTags: options?.SourceConditions?.TagConditions,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
-                            blobHttpHeaders: options?.HttpHeaders,
                             cancellationToken: cancellationToken);
                     }
 

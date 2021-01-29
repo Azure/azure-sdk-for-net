@@ -8,7 +8,7 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The QueryFormat. </summary>
-    public partial class QueryFormat
+    internal partial class QueryFormat
     {
         /// <summary> Initializes a new instance of QueryFormat. </summary>
         public QueryFormat()
@@ -18,9 +18,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> The quick query format type. </summary>
         public QueryFormatType? Type { get; set; }
         /// <summary> delimited text configuration. </summary>
-        public DelimitedTextConfiguration DelimitedTextConfiguration { get; set; }
+        public DelimitedTextConfigurationInternal DelimitedTextConfiguration { get; set; }
         /// <summary> json text configuration. </summary>
-        public JsonTextConfiguration JsonTextConfiguration { get; set; }
+        public JsonTextConfigurationInternal JsonTextConfiguration { get; set; }
         /// <summary> arrow configuration. </summary>
         public ArrowConfiguration ArrowConfiguration { get; set; }
     }
