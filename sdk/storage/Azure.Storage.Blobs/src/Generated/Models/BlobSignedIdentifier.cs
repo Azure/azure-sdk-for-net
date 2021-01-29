@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="id"> a unique id. </param>
         /// <param name="accessPolicy"> An Access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accessPolicy"/> is null. </exception>
-        public BlobSignedIdentifier(string id, AccessPolicy accessPolicy)
+        public BlobSignedIdentifier(string id, BlobAccessPolicy accessPolicy)
         {
             if (id == null)
             {
@@ -34,6 +34,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> a unique id. </summary>
         public string Id { get; set; }
         /// <summary> An Access policy. </summary>
-        public AccessPolicy AccessPolicy { get; set; }
+        public BlobAccessPolicy AccessPolicy { get; set; }
     }
 }

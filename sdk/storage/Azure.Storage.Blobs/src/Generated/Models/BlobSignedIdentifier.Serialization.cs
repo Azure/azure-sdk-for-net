@@ -26,14 +26,14 @@ namespace Azure.Storage.Blobs.Models
         internal static BlobSignedIdentifier DeserializeBlobSignedIdentifier(XElement element)
         {
             string id = default;
-            AccessPolicy accessPolicy = default;
+            BlobAccessPolicy accessPolicy = default;
             if (element.Element("Id") is XElement idElement)
             {
                 id = (string)idElement;
             }
             if (element.Element("AccessPolicy") is XElement accessPolicyElement)
             {
-                accessPolicy = AccessPolicy.DeserializeAccessPolicy(accessPolicyElement);
+                accessPolicy = BlobAccessPolicy.DeserializeBlobAccessPolicy(accessPolicyElement);
             }
             return new BlobSignedIdentifier(id, accessPolicy);
         }

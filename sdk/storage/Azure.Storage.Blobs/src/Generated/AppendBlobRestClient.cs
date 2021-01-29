@@ -20,6 +20,7 @@ namespace Azure.Storage.Blobs
     {
         private string url;
         private string containerName;
+        private string blob;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,9 +30,10 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
         /// <param name="containerName"> The container name. </param>
+        /// <param name="blob"> The blob name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, or <paramref name="version"/> is null. </exception>
-        public AppendBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="version"/> is null. </exception>
+        public AppendBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string blob, string version = "2020-06-12")
         {
             if (url == null)
             {
@@ -41,6 +43,10 @@ namespace Azure.Storage.Blobs
             {
                 throw new ArgumentNullException(nameof(containerName));
             }
+            if (blob == null)
+            {
+                throw new ArgumentNullException(nameof(blob));
+            }
             if (version == null)
             {
                 throw new ArgumentNullException(nameof(version));
@@ -48,12 +54,13 @@ namespace Azure.Storage.Blobs
 
             this.url = url;
             this.containerName = containerName;
+            this.blob = blob;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(string blob, long contentLength, int? timeout, IDictionary<string, string> metadata, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobTagsString, BlobHttpHeaders blobHttpHeaders, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo)
+        internal HttpMessage CreateCreateRequest(long contentLength, int? timeout, IDictionary<string, string> metadata, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobTagsString, BlobHttpHeaders blobHttpHeaders)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,7 +70,7 @@ namespace Azure.Storage.Blobs
             uri.AppendPath("/", false);
             uri.AppendPath(containerName, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(blob, true);
+            uri.AppendPath(blob, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -102,18 +109,18 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-blob-content-disposition", blobHttpHeaders.BlobContentDisposition);
             }
-            if (cpkInfo?.EncryptionKey != null)
+            if (encryptionKey != null)
             {
-                request.Headers.Add("x-ms-encryption-key", cpkInfo.EncryptionKey);
+                request.Headers.Add("x-ms-encryption-key", encryptionKey);
             }
-            if (cpkInfo?.EncryptionKeySha256 != null)
+            if (encryptionKeySha256 != null)
             {
-                request.Headers.Add("x-ms-encryption-key-sha256", cpkInfo.EncryptionKeySha256);
+                request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
             request.Headers.Add("x-ms-encryption-algorithm", "AES256");
-            if (cpkScopeInfo?.EncryptionScope != null)
+            if (encryptionScope != null)
             {
-                request.Headers.Add("x-ms-encryption-scope", cpkScopeInfo.EncryptionScope);
+                request.Headers.Add("x-ms-encryption-scope", encryptionScope);
             }
             if (ifModifiedSince != null)
             {
@@ -145,11 +152,13 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Create Append Blob operation creates a new append blob. </summary>
-        /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
@@ -157,18 +166,10 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
         /// <param name="blobHttpHeaders"> Parameter group. </param>
-        /// <param name="cpkInfo"> Parameter group. </param>
-        /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobCreateHeaders>> CreateAsync(string blob, long contentLength, int? timeout = null, IDictionary<string, string> metadata = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AppendBlobCreateHeaders>> CreateAsync(long contentLength, int? timeout = null, IDictionary<string, string> metadata = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, CancellationToken cancellationToken = default)
         {
-            if (blob == null)
-            {
-                throw new ArgumentNullException(nameof(blob));
-            }
-
-            using var message = CreateCreateRequest(blob, contentLength, timeout, metadata, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, blobHttpHeaders, cpkInfo, cpkScopeInfo);
+            using var message = CreateCreateRequest(contentLength, timeout, metadata, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, blobHttpHeaders);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -181,11 +182,13 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Create Append Blob operation creates a new append blob. </summary>
-        /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
@@ -193,18 +196,10 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
         /// <param name="blobHttpHeaders"> Parameter group. </param>
-        /// <param name="cpkInfo"> Parameter group. </param>
-        /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobCreateHeaders> Create(string blob, long contentLength, int? timeout = null, IDictionary<string, string> metadata = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AppendBlobCreateHeaders> Create(long contentLength, int? timeout = null, IDictionary<string, string> metadata = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, CancellationToken cancellationToken = default)
         {
-            if (blob == null)
-            {
-                throw new ArgumentNullException(nameof(blob));
-            }
-
-            using var message = CreateCreateRequest(blob, contentLength, timeout, metadata, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, blobHttpHeaders, cpkInfo, cpkScopeInfo);
+            using var message = CreateCreateRequest(contentLength, timeout, metadata, leaseId, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, blobHttpHeaders);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -216,7 +211,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAppendBlockRequest(string blob, long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, AppendPositionAccessConditions appendPositionAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo)
+        internal HttpMessage CreateAppendBlockRequest(long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, string leaseId, long? maxSize, long? appendPosition, string encryptionKey, string encryptionKeySha256, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -226,7 +221,7 @@ namespace Azure.Storage.Blobs
             uri.AppendPath("/", false);
             uri.AppendPath(containerName, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(blob, true);
+            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "appendblock", true);
             if (timeout != null)
             {
@@ -241,26 +236,26 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (appendPositionAccessConditions?.MaxSize != null)
+            if (maxSize != null)
             {
-                request.Headers.Add("x-ms-blob-condition-maxsize", appendPositionAccessConditions.MaxSize.Value);
+                request.Headers.Add("x-ms-blob-condition-maxsize", maxSize.Value);
             }
-            if (appendPositionAccessConditions?.AppendPosition != null)
+            if (appendPosition != null)
             {
-                request.Headers.Add("x-ms-blob-condition-appendpos", appendPositionAccessConditions.AppendPosition.Value);
+                request.Headers.Add("x-ms-blob-condition-appendpos", appendPosition.Value);
             }
-            if (cpkInfo?.EncryptionKey != null)
+            if (encryptionKey != null)
             {
-                request.Headers.Add("x-ms-encryption-key", cpkInfo.EncryptionKey);
+                request.Headers.Add("x-ms-encryption-key", encryptionKey);
             }
-            if (cpkInfo?.EncryptionKeySha256 != null)
+            if (encryptionKeySha256 != null)
             {
-                request.Headers.Add("x-ms-encryption-key-sha256", cpkInfo.EncryptionKeySha256);
+                request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
             request.Headers.Add("x-ms-encryption-algorithm", "AES256");
-            if (cpkScopeInfo?.EncryptionScope != null)
+            if (encryptionScope != null)
             {
-                request.Headers.Add("x-ms-encryption-scope", cpkScopeInfo.EncryptionScope);
+                request.Headers.Add("x-ms-encryption-scope", encryptionScope);
             }
             if (ifModifiedSince != null)
             {
@@ -295,35 +290,32 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
-        /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="transactionalContentMD5"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="appendPositionAccessConditions"> Parameter group. </param>
-        /// <param name="cpkInfo"> Parameter group. </param>
-        /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobAppendBlockHeaders>> AppendBlockAsync(string blob, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AppendBlobAppendBlockHeaders>> AppendBlockAsync(long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            if (blob == null)
-            {
-                throw new ArgumentNullException(nameof(blob));
-            }
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendBlockRequest(blob, contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, appendPositionAccessConditions, cpkInfo, cpkScopeInfo);
+            using var message = CreateAppendBlockRequest(contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobAppendBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -336,35 +328,32 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
-        /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="transactionalContentMD5"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="appendPositionAccessConditions"> Parameter group. </param>
-        /// <param name="cpkInfo"> Parameter group. </param>
-        /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobAppendBlockHeaders> AppendBlock(string blob, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<AppendBlobAppendBlockHeaders> AppendBlock(long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            if (blob == null)
-            {
-                throw new ArgumentNullException(nameof(blob));
-            }
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendBlockRequest(blob, contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, appendPositionAccessConditions, cpkInfo, cpkScopeInfo);
+            using var message = CreateAppendBlockRequest(contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobAppendBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -376,7 +365,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAppendBlockFromUrlRequest(string blob, Uri sourceUrl, long contentLength, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, byte[] transactionalContentMD5, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, AppendPositionAccessConditions appendPositionAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
+        internal HttpMessage CreateAppendBlockFromUrlRequest(Uri sourceUrl, long contentLength, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, byte[] transactionalContentMD5, string encryptionKey, string encryptionKeySha256, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -386,7 +375,7 @@ namespace Azure.Storage.Blobs
             uri.AppendPath("/", false);
             uri.AppendPath(containerName, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(blob, true);
+            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "appendblock", true);
             if (timeout != null)
             {
@@ -406,30 +395,30 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-source-content-crc64", sourceContentcrc64);
             }
-            if (cpkInfo?.EncryptionKey != null)
+            if (encryptionKey != null)
             {
-                request.Headers.Add("x-ms-encryption-key", cpkInfo.EncryptionKey);
+                request.Headers.Add("x-ms-encryption-key", encryptionKey);
             }
-            if (cpkInfo?.EncryptionKeySha256 != null)
+            if (encryptionKeySha256 != null)
             {
-                request.Headers.Add("x-ms-encryption-key-sha256", cpkInfo.EncryptionKeySha256);
+                request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
             }
             request.Headers.Add("x-ms-encryption-algorithm", "AES256");
-            if (cpkScopeInfo?.EncryptionScope != null)
+            if (encryptionScope != null)
             {
-                request.Headers.Add("x-ms-encryption-scope", cpkScopeInfo.EncryptionScope);
+                request.Headers.Add("x-ms-encryption-scope", encryptionScope);
             }
             if (leaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (appendPositionAccessConditions?.MaxSize != null)
+            if (maxSize != null)
             {
-                request.Headers.Add("x-ms-blob-condition-maxsize", appendPositionAccessConditions.MaxSize.Value);
+                request.Headers.Add("x-ms-blob-condition-maxsize", maxSize.Value);
             }
-            if (appendPositionAccessConditions?.AppendPosition != null)
+            if (appendPosition != null)
             {
-                request.Headers.Add("x-ms-blob-condition-appendpos", appendPositionAccessConditions.AppendPosition.Value);
+                request.Headers.Add("x-ms-blob-condition-appendpos", appendPosition.Value);
             }
             if (ifModifiedSince != null)
             {
@@ -451,21 +440,21 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
-            if (sourceModifiedAccessConditions?.SourceIfModifiedSince != null)
+            if (sourceIfModifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-modified-since", sourceModifiedAccessConditions.SourceIfModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-modified-since", sourceIfModifiedSince.Value, "R");
             }
-            if (sourceModifiedAccessConditions?.SourceIfUnmodifiedSince != null)
+            if (sourceIfUnmodifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-unmodified-since", sourceModifiedAccessConditions.SourceIfUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "R");
             }
-            if (sourceModifiedAccessConditions?.SourceIfMatch != null)
+            if (sourceIfMatch != null)
             {
-                request.Headers.Add("x-ms-source-if-match", sourceModifiedAccessConditions.SourceIfMatch);
+                request.Headers.Add("x-ms-source-if-match", sourceIfMatch);
             }
-            if (sourceModifiedAccessConditions?.SourceIfNoneMatch != null)
+            if (sourceIfNoneMatch != null)
             {
-                request.Headers.Add("x-ms-source-if-none-match", sourceModifiedAccessConditions.SourceIfNoneMatch);
+                request.Headers.Add("x-ms-source-if-none-match", sourceIfNoneMatch);
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/xml");
@@ -473,7 +462,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a source url. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
-        /// <param name="blob"> The blob name. </param>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
@@ -481,30 +469,31 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceContentcrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="transactionalContentMD5"> Specify the transactional md5 for the body, to be validated by the service. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="cpkInfo"> Parameter group. </param>
-        /// <param name="cpkScopeInfo"> Parameter group. </param>
-        /// <param name="appendPositionAccessConditions"> Parameter group. </param>
-        /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="sourceUrl"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders>> AppendBlockFromUrlAsync(string blob, Uri sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, AppendPositionAccessConditions appendPositionAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders>> AppendBlockFromUrlAsync(Uri sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (blob == null)
-            {
-                throw new ArgumentNullException(nameof(blob));
-            }
             if (sourceUrl == null)
             {
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateAppendBlockFromUrlRequest(blob, sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, cpkInfo, cpkScopeInfo, appendPositionAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionScope, leaseId, maxSize, appendPosition, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobAppendBlockFromUrlHeaders(message.Response);
             switch (message.Response.Status)
@@ -517,7 +506,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a source url. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
-        /// <param name="blob"> The blob name. </param>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
@@ -525,30 +513,31 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceContentcrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="transactionalContentMD5"> Specify the transactional md5 for the body, to be validated by the service. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="cpkInfo"> Parameter group. </param>
-        /// <param name="cpkScopeInfo"> Parameter group. </param>
-        /// <param name="appendPositionAccessConditions"> Parameter group. </param>
-        /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="sourceUrl"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> AppendBlockFromUrl(string blob, Uri sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, AppendPositionAccessConditions appendPositionAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/> is null. </exception>
+        public ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> AppendBlockFromUrl(Uri sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (blob == null)
-            {
-                throw new ArgumentNullException(nameof(blob));
-            }
             if (sourceUrl == null)
             {
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateAppendBlockFromUrlRequest(blob, sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, cpkInfo, cpkScopeInfo, appendPositionAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionScope, leaseId, maxSize, appendPosition, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobAppendBlockFromUrlHeaders(message.Response);
             switch (message.Response.Status)
@@ -560,7 +549,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSealRequest(string blob, int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, AppendPositionAccessConditions appendPositionAccessConditions)
+        internal HttpMessage CreateSealRequest(int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, long? appendPosition)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -570,7 +559,7 @@ namespace Azure.Storage.Blobs
             uri.AppendPath("/", false);
             uri.AppendPath(containerName, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(blob, true);
+            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "seal", true);
             if (timeout != null)
             {
@@ -598,33 +587,26 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (appendPositionAccessConditions?.AppendPosition != null)
+            if (appendPosition != null)
             {
-                request.Headers.Add("x-ms-blob-condition-appendpos", appendPositionAccessConditions.AppendPosition.Value);
+                request.Headers.Add("x-ms-blob-condition-appendpos", appendPosition.Value);
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later. </summary>
-        /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
-        /// <param name="appendPositionAccessConditions"> Parameter group. </param>
+        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobSealHeaders>> SealAsync(string blob, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AppendBlobSealHeaders>> SealAsync(int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, long? appendPosition = null, CancellationToken cancellationToken = default)
         {
-            if (blob == null)
-            {
-                throw new ArgumentNullException(nameof(blob));
-            }
-
-            using var message = CreateSealRequest(blob, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, appendPositionAccessConditions);
+            using var message = CreateSealRequest(timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, appendPosition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobSealHeaders(message.Response);
             switch (message.Response.Status)
@@ -637,24 +619,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later. </summary>
-        /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
-        /// <param name="appendPositionAccessConditions"> Parameter group. </param>
+        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobSealHeaders> Seal(string blob, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AppendBlobSealHeaders> Seal(int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, long? appendPosition = null, CancellationToken cancellationToken = default)
         {
-            if (blob == null)
-            {
-                throw new ArgumentNullException(nameof(blob));
-            }
-
-            using var message = CreateSealRequest(blob, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, appendPositionAccessConditions);
+            using var message = CreateSealRequest(timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, appendPosition);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobSealHeaders(message.Response);
             switch (message.Response.Status)

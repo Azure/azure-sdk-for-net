@@ -14,6 +14,16 @@ directive:
   where: $.parameters
   transform: >
     delete $.ContainerName["x-ms-parameter-location"];
+    delete $.Blob["x-ms-parameter-location"];
+```
+
+### Don't encode BlobName
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.Blob["x-ms-skip-url-encoding"] = true;
 ```
 
 ### ErrorCode
@@ -37,6 +47,25 @@ directive:
     delete $.IfUnmodifiedSince["x-ms-parameter-grouping"];
     delete $.LeaseIdOptional["x-ms-parameter-grouping"];
     delete $.IfTags["x-ms-parameter-grouping"];
+    delete $.BlobConditionMaxSize["x-ms-parameter-grouping"];
+    delete $.BlobConditionAppendPos["x-ms-parameter-grouping"];
+    delete $.SourceIfModifiedSince["x-ms-parameter-grouping"];
+    delete $.SourceIfUnmodifiedSince["x-ms-parameter-grouping"];
+    delete $.SourceIfMatch["x-ms-parameter-grouping"];
+    delete $.SourceIfNoneMatch["x-ms-parameter-grouping"];
+    delete $.SourceIfTags["x-ms-parameter-grouping"];
+```
+
+### Remove CPK and encryption scope parameter grouping
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.EncryptionKey["x-ms-parameter-grouping"];
+    delete $.EncryptionKeySha256["x-ms-parameter-grouping"];
+    delete $.EncryptionAlgorithm["x-ms-parameter-grouping"];
+    delete $.EncryptionScope["x-ms-parameter-grouping"];
 ```
 
 ### Add containerName and blob as a parameter

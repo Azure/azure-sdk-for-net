@@ -2308,20 +2308,33 @@ namespace Azure.Storage.Blobs
                         }
                     }
 
-                    return await BlobRestClient.Container.SetAccessPolicyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        permissions: sanitizedPermissions,
-                        leaseId: conditions?.LeaseId,
-                        access: accessType,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        async: async,
-                        operationName: $"{nameof(BlobContainerClient)}.{nameof(SetAccessPolicy)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerSetAccessPolicyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.SetAccessPolicyAsync(
+                            leaseId: conditions?.LeaseId,
+                            access: accessType,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            containerAcl: sanitizedPermissions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.SetAccessPolicy(
+                            leaseId: conditions?.LeaseId,
+                            access: accessType,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            containerAcl: sanitizedPermissions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobContainerInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2420,7 +2433,7 @@ namespace Azure.Storage.Blobs
         /// single segment of blobs in this container, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="BlobsFlatSegment.NextMarker"/> if it's not
+        /// and the <see cref="ListBlobsFlatSegmentResponse.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="GetBlobsAsync"/>
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.
@@ -2432,7 +2445,7 @@ namespace Azure.Storage.Blobs
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="BlobsFlatSegment.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResponse.NextMarker"/>
         /// if the listing operation did not return all blobs remaining to be
         /// listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="marker"/> parameter
@@ -2467,7 +2480,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobsFlatSegment>> GetBlobsInternal(
+        internal async Task<Response<ListBlobsFlatSegmentResponse>> GetBlobsInternal(
             string marker,
             BlobTraits traits,
             BlobStates states,
@@ -2488,28 +2501,43 @@ namespace Azure.Storage.Blobs
 
                 try
                 {
-                    Response<BlobsFlatSegment> response = await BlobRestClient.Container.ListBlobsFlatSegmentAsync(
-                          ClientDiagnostics,
-                          Pipeline,
-                          Uri,
-                          version: Version.ToVersionString(),
-                          marker: marker,
-                          prefix: prefix,
-                          maxresults: pageSizeHint,
-                          include: BlobExtensions.AsIncludeItems(traits, states),
-                          async: async,
-                          operationName: $"{nameof(BlobContainerClient)}.{nameof(GetBlobs)}",
-                          cancellationToken: cancellationToken)
-                          .ConfigureAwait(false);
-                    if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
+                    ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> response;
+
+                    if (async)
                     {
-                        IEnumerable<BlobItem> blobItems = response.Value.BlobItems.ToBlobItems();
-                        foreach (BlobItem blobItem in blobItems)
-                        {
-                            blobItem.Metadata = null;
-                        }
+                        response = await ContainerRestClient.ListBlobFlatSegmentAsync(
+                            prefix: prefix,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            // TODO
+                            include: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
                     }
-                    return response;
+                    else
+                    {
+                        response = ContainerRestClient.ListBlobFlatSegment(
+                            prefix: prefix,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            // TODO
+                            include: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    // TODO
+                    //if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
+                    //{
+                    //    IEnumerable<BlobItem> blobItems = response.Value.BlobItems.ToBlobItems();
+                    //    foreach (BlobItem blobItem in blobItems)
+                    //    {
+                    //        blobItem.Metadata = null;
+                    //    }
+                    //}
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2648,7 +2676,7 @@ namespace Azure.Storage.Blobs
         /// a single segment of blobs in this container, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="BlobsHierarchySegment.NextMarker"/> if it's not
+        /// and the <see cref="ListBlobsHierarchySegmentResponse.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="GetBlobsByHierarchyAsync"/>
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.   A <paramref name="delimiter"/>
@@ -2662,7 +2690,7 @@ namespace Azure.Storage.Blobs
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="BlobsHierarchySegment.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListBlobsHierarchySegmentResponse.NextMarker"/>
         /// if the listing operation did not return all blobs remaining to be
         /// listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="marker"/> parameter
@@ -2714,7 +2742,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobsHierarchySegment>> GetBlobsByHierarchyInternal(
+        internal async Task<Response<ListBlobsHierarchySegmentResponse>> GetBlobsByHierarchyInternal(
             string marker,
             string delimiter,
             BlobTraits traits,
@@ -2736,20 +2764,35 @@ namespace Azure.Storage.Blobs
                     $"{nameof(states)}: {states}");
                 try
                 {
-                    return await BlobRestClient.Container.ListBlobsHierarchySegmentAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        marker: marker,
-                        prefix: prefix,
-                        maxresults: pageSizeHint,
-                        include: BlobExtensions.AsIncludeItems(traits, states),
-                        delimiter: delimiter,
-                        async: async,
-                        operationName: $"{nameof(BlobContainerClient)}.{nameof(GetBlobsByHierarchy)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.ListBlobHierarchySegmentAsync(
+                            delimiter: delimiter,
+                            prefix: prefix,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            // TODO
+                            include: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.ListBlobHierarchySegment(
+                            delimiter: delimiter,
+                            prefix: prefix,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            // TODO
+                            include: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -3153,17 +3196,23 @@ namespace Azure.Storage.Blobs
                         ClientSideEncryption,
                         EncryptionScope);
 
-                    Response response = await BlobRestClient.Container.RenameAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: destContainerClient.Uri,
-                        version: Version.ToVersionString(),
-                        sourceContainerName: Name,
-                        sourceLeaseId: sourceConditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(BlobServiceClient)}.{nameof(Rename)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerRenameHeaders> response;
+
+                    if (async)
+                    {
+                        response = await destContainerClient.ContainerRestClient.RenameAsync(
+                            sourceContainerName: Name,
+                            sourceLeaseId: sourceConditions?.LeaseId,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = destContainerClient.ContainerRestClient.Rename(
+                            sourceContainerName: Name,
+                            sourceLeaseId: sourceConditions?.LeaseId,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return Response.FromValue(
                         destContainerClient,
