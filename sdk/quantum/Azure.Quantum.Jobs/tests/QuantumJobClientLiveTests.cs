@@ -48,25 +48,36 @@ namespace Azure.Quantum.Jobs.Tests
                 containerUri = "https://sanitized";
             }
 
-            // Create container if not exists
-            var containerClient = InstrumentClient(new BlobContainerClient(new Uri(containerUri)));
-            await containerClient.CreateIfNotExistsAsync();
+            if (Mode != RecordedTestMode.Playback)
+            {
+                // Create container if not exists
+                var containerClient = new BlobContainerClient(new Uri(containerUri));
+                await containerClient.CreateIfNotExistsAsync();
+            }
 
             // Get input data blob Uri with SAS key
+            var blobNameGuid = (Mode != RecordedTestMode.Playback) ? $"{Guid.NewGuid():N}" : "65a998d0faa144a7b5d20217ba2fe817";
+            string blobName = $"input-{blobNameGuid}.json";
             var inputDataUri = (await client.GetStorageSasUriAsync(
                 new BlobDetails("testcontainer")
                 {
-                    BlobName = $"input-{Guid.NewGuid():N}.json",
+                    BlobName = blobName,
                 })).Value.SasUri;
 
-            // Upload input data to blob
-            var blobClient = new BlobClient(new Uri(inputDataUri));
-            var problemFilename = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "problem.json");
-            await blobClient.UploadAsync(problemFilename);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                // Upload input data to blob
+                var blobClient = new BlobClient(new Uri(inputDataUri));
+                var problemFilename = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "problem.json");
+                await blobClient.UploadAsync(problemFilename);
+            }
+
+            string jobGuid = (Mode != RecordedTestMode.Playback) ? $"{Guid.NewGuid():N}" : "fceb36446324438ca80a0a78f36631ea";
+            string jobNameGuid = (Mode != RecordedTestMode.Playback) ? $"{Guid.NewGuid():N}" : "dc974691989145949c17f404c02abe9e";
 
             // Submit job
-            var jobId = $"job-{Guid.NewGuid():N}";
-            var jobName = $"jobName-{Guid.NewGuid():N}";
+            var jobId = $"job-{jobGuid}";
+            var jobName = $"jobName-{jobNameGuid}";
             var inputDataFormat = "microsoft.qio.v2";
             var outputDataFormat = "microsoft.qio-results.v2";
             var providerId = "microsoft";
@@ -100,27 +111,13 @@ namespace Azure.Quantum.Jobs.Tests
                 Assert.AreEqual(inputDataUri, jobDetails.InputDataUri);
             }
 
-            for (; ; )
-            {
-                var gotJob = (await client.GetJobAsync(jobId)).Value;
-                Assert.AreEqual(jobDetails.InputDataFormat, gotJob.InputDataFormat);
-                Assert.AreEqual(jobDetails.OutputDataFormat, gotJob.OutputDataFormat);
-                Assert.AreEqual(jobDetails.ProviderId, gotJob.ProviderId);
-                Assert.AreEqual(jobDetails.Target, gotJob.Target);
-                Assert.AreEqual(jobDetails.Id, gotJob.Id);
-                Assert.AreEqual(jobDetails.Name, gotJob.Name);
-
-// TODO - We need to run this on a not-busy day, or otherwise we'll be waiting for a while for it to start executing.
-//                 if (gotJob.Status == JobStatus.Waiting)
-//                 {
-//                     // Job is not yet executing, so we cant cancel it.
-//                     Thread.Sleep(0);
-//                     continue;
-//                 }
-//
-//                 await client.CancelJobAsync(jobId);
-                break;
-            }
+            var gotJob = (await client.GetJobAsync(jobId)).Value;
+            Assert.AreEqual(jobDetails.InputDataFormat, gotJob.InputDataFormat);
+            Assert.AreEqual(jobDetails.OutputDataFormat, gotJob.OutputDataFormat);
+            Assert.AreEqual(jobDetails.ProviderId, gotJob.ProviderId);
+            Assert.AreEqual(jobDetails.Target, gotJob.Target);
+            Assert.AreEqual(jobDetails.Id, gotJob.Id);
+            Assert.AreEqual(jobDetails.Name, gotJob.Name);
         }
 
         [RecordedTest]
@@ -179,8 +176,8 @@ namespace Azure.Quantum.Jobs.Tests
                 ++index;
             }
 
-            // Should have at least a couple in the list.
-            Assert.GreaterOrEqual(index, 2);
+            // Should have at least one in the list.
+            Assert.GreaterOrEqual(index, 1);
         }
 
         [RecordedTest]
