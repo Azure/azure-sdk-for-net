@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.Models
             string versionId = default;
             bool? isCurrentVersion = default;
             BlobPropertiesInternal properties = default;
-            BlobMetadata metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             BlobTags blobTags = default;
             IReadOnlyDictionary<string, string> objectReplicationMetadata = default;
             if (element.Element("Name") is XElement nameElement)
@@ -50,7 +50,12 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("Metadata") is XElement metadataElement)
             {
-                metadata = BlobMetadata.DeserializeBlobMetadata(metadataElement);
+                var dictionary = new Dictionary<string, string>();
+                foreach (var e in metadataElement.Elements())
+                {
+                    dictionary.Add(e.Name.LocalName, (string)e);
+                }
+                metadata = dictionary;
             }
             if (element.Element("Tags") is XElement tagsElement)
             {

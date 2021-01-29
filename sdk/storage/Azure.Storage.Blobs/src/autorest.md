@@ -133,3 +133,12 @@ directive:
     $.LeaseDuration.format = "int64";
     $.LeaseBreakPeriod.format = "int64";
 ```
+
+### Fix BlobMetadata
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.BlobMetadata["properties"];
+```

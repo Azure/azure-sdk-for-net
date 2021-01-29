@@ -39,6 +39,7 @@ namespace Azure.Storage.Blobs.Models
             Deleted = deleted;
             Snapshot = snapshot;
             Properties = properties;
+            Metadata = new ChangeTrackingDictionary<string, string>();
             ObjectReplicationMetadata = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -49,10 +50,10 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="versionId"> . </param>
         /// <param name="isCurrentVersion"> . </param>
         /// <param name="properties"> Properties of a blob. </param>
-        /// <param name="metadata"> . </param>
+        /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
         /// <param name="blobTags"> Blob tags. </param>
         /// <param name="objectReplicationMetadata"> Dictionary of &lt;string&gt;. </param>
-        internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, BlobMetadata metadata, BlobTags blobTags, IReadOnlyDictionary<string, string> objectReplicationMetadata)
+        internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, BlobTags blobTags, IReadOnlyDictionary<string, string> objectReplicationMetadata)
         {
             Name = name;
             Deleted = deleted;
@@ -72,7 +73,8 @@ namespace Azure.Storage.Blobs.Models
         public bool? IsCurrentVersion { get; }
         /// <summary> Properties of a blob. </summary>
         public BlobPropertiesInternal Properties { get; }
-        public BlobMetadata Metadata { get; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IReadOnlyDictionary<string, string> Metadata { get; }
         /// <summary> Blob tags. </summary>
         public BlobTags BlobTags { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
