@@ -2558,47 +2558,69 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(options.DestinationConditions)}: {options?.DestinationConditions}");
                 try
                 {
-                    return await BlobRestClient.BlockBlob.PutBlobFromUrlAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: Uri,
-                        contentLength: 0,
-                        version: Version.ToVersionString(),
-                        copySource: copySource,
-                        timeout: default,
-                        transactionalContentHash: default,
-                        blobContentType: options?.HttpHeaders?.ContentType,
-                        blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
-                        blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
-                        blobContentHash: options?.HttpHeaders?.ContentHash,
-                        blobCacheControl: options?.HttpHeaders?.CacheControl,
-                        // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
-                        // metadata: options?.Metadata,
-                        leaseId: options?.DestinationConditions?.LeaseId,
-                        blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        tier: options?.AccessTier,
-                        ifModifiedSince: options?.DestinationConditions?.IfModifiedSince,
-                        ifUnmodifiedSince: options?.DestinationConditions?.IfUnmodifiedSince,
-                        ifMatch: options?.DestinationConditions?.IfMatch,
-                        ifNoneMatch: options?.DestinationConditions?.IfNoneMatch,
-                        ifTags: options?.DestinationConditions?.TagConditions,
-                        sourceIfModifiedSince: options?.SourceConditions?.IfModifiedSince,
-                        sourceIfUnmodifiedSince: options?.SourceConditions?.IfUnmodifiedSince,
-                        sourceIfMatch: options?.SourceConditions?.IfMatch,
-                        sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch,
-                        sourceIfTags: options?.SourceConditions?.TagConditions,
-                        requestId: default,
-                        sourceContentHash: options?.ContentHash,
-                        blobTagsString: options?.Tags?.ToTagsString(),
-                        copySourceBlobProperties: options?.CopySourceBlobProperties,
-                        async: async,
-                        operationName: $"{nameof(BlockBlobClient)}.{nameof(SyncUploadFromUri)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlockBlobRestClient.PutBlobFromUrlAsync(
+                            contentLength: 0,
+                            // TODO what if source URI has special characters?
+                            copySource: copySource,
+                            // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
+                            // metadata: options?.Metadata,
+                            leaseId: options?.DestinationConditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            tier: options?.AccessTier,
+                            ifModifiedSince: options?.DestinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.DestinationConditions?.IfUnmodifiedSince,
+                            ifMatch: options?.DestinationConditions?.IfMatch.ToString(),
+                            ifNoneMatch: options?.DestinationConditions?.IfNoneMatch.ToString(),
+                            ifTags: options?.DestinationConditions?.TagConditions,
+                            sourceIfModifiedSince: options?.SourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: options?.SourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: options?.SourceConditions?.IfMatch.ToString(),
+                            sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch.ToString(),
+                            sourceIfTags: options?.SourceConditions?.TagConditions,
+                            blobTagsString: options?.Tags?.ToTagsString(),
+                            copySourceBlobProperties: options?.CopySourceBlobProperties,
+                            blobHttpHeaders: options?.HttpHeaders,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlockBlobRestClient.PutBlobFromUrl(
+                            contentLength: 0,
+                            // TODO what if source URI has special characters?
+                            copySource: copySource,
+                            // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
+                            // metadata: options?.Metadata,
+                            leaseId: options?.DestinationConditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            tier: options?.AccessTier,
+                            ifModifiedSince: options?.DestinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.DestinationConditions?.IfUnmodifiedSince,
+                            ifMatch: options?.DestinationConditions?.IfMatch.ToString(),
+                            ifNoneMatch: options?.DestinationConditions?.IfNoneMatch.ToString(),
+                            ifTags: options?.DestinationConditions?.TagConditions,
+                            sourceIfModifiedSince: options?.SourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: options?.SourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: options?.SourceConditions?.IfMatch.ToString(),
+                            sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch.ToString(),
+                            sourceIfTags: options?.SourceConditions?.TagConditions,
+                            blobTagsString: options?.Tags?.ToTagsString(),
+                            copySourceBlobProperties: options?.CopySourceBlobProperties,
+                            blobHttpHeaders: options?.HttpHeaders,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobContentInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
