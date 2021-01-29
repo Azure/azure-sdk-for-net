@@ -46,6 +46,6 @@ namespace Azure.Communication.Sms
         /// <summary> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </summary>
         public string Message { get; }
         /// <summary> Optional configuration for sending SMS messages. </summary>
-        public SendSmsOptions SendSmsOptions { get; set; }
+        public SmsSendOptions SendSmsOptions { get; set; }
     }
 }

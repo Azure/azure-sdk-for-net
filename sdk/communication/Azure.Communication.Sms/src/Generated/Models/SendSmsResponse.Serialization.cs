@@ -15,16 +15,16 @@ namespace Azure.Communication.Sms
     {
         internal static SendSmsResponse DeserializeSendSmsResponse(JsonElement element)
         {
-            IReadOnlyList<SendSmsResult> value = default;
+            IReadOnlyList<SmsSendResult> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<SendSmsResult> array = new List<SendSmsResult>();
+                    List<SmsSendResult> array = new List<SmsSendResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SendSmsResult.DeserializeSendSmsResult(item));
+                        array.Add(SmsSendResult.DeserializeSmsSendResult(item));
                     }
                     value = array;
                     continue;

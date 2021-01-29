@@ -45,7 +45,7 @@ namespace Azure.Communication.Sms
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSendRequest(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId, string repeatabilityFirstSent, SendSmsOptions sendSmsOptions)
+        internal HttpMessage CreateSendRequest(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId, string repeatabilityFirstSent, SmsSendOptions sendSmsOptions)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -84,7 +84,7 @@ namespace Azure.Communication.Sms
         /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/>, or <paramref name="message"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SendSmsResponse, SmsSendHeaders>> SendAsync(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SendSmsOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SendSmsResponse, SmsSendHeaders>> SendAsync(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.Communication.Sms
         /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/>, or <paramref name="message"/> is null. </exception>
-        public ResponseWithHeaders<SendSmsResponse, SmsSendHeaders> Send(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SendSmsOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SendSmsResponse, SmsSendHeaders> Send(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -157,7 +157,7 @@ namespace Azure.Communication.Sms
             }
         }
 
-        internal HttpMessage CreateSendNextPageRequest(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId, string repeatabilityFirstSent, SendSmsOptions sendSmsOptions)
+        internal HttpMessage CreateSendNextPageRequest(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId, string repeatabilityFirstSent, SmsSendOptions sendSmsOptions)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -188,7 +188,7 @@ namespace Azure.Communication.Sms
         /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="from"/>, <paramref name="to"/>, or <paramref name="message"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SendSmsResponse, SmsSendHeaders>> SendNextPageAsync(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SendSmsOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SendSmsResponse, SmsSendHeaders>> SendNextPageAsync(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -234,7 +234,7 @@ namespace Azure.Communication.Sms
         /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="from"/>, <paramref name="to"/>, or <paramref name="message"/> is null. </exception>
-        public ResponseWithHeaders<SendSmsResponse, SmsSendHeaders> SendNextPage(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SendSmsOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SendSmsResponse, SmsSendHeaders> SendNextPage(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

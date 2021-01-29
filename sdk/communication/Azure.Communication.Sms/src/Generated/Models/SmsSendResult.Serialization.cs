@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
-    public partial class SendSmsResult
+    public partial class SmsSendResult
     {
-        internal static SendSmsResult DeserializeSendSmsResult(JsonElement element)
+        internal static SmsSendResult DeserializeSmsSendResult(JsonElement element)
         {
             string to = default;
             Optional<string> messageId = default;
@@ -41,7 +41,7 @@ namespace Azure.Communication.Sms
                     continue;
                 }
             }
-            return new SendSmsResult(to, messageId.Value, httpStatusCode, errorMessage.Value);
+            return new SmsSendResult(to, messageId.Value, httpStatusCode, errorMessage.Value);
         }
     }
 }

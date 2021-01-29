@@ -8,15 +8,12 @@
 namespace Azure.Communication.Sms
 {
     /// <summary> Optional configuration for sending SMS messages. </summary>
-    public partial class SendSmsOptions
+    public partial class SmsSendOptions
     {
-        /// <summary> Initializes a new instance of SendSmsOptions. </summary>
-        public SendSmsOptions()
+        /// <summary> Initializes a new instance of SmsSendOptions. </summary>
+        public SmsSendOptions()
         {
         }
-
-        /// <summary> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </summary>
-        public bool? EnableDeliveryReport { get; set; }
         /// <summary> Use this field to provide metadata that will then be sent back in the corresponding Delivery Report. </summary>
         public string Tag { get; set; }
     }

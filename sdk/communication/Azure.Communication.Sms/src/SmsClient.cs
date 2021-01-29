@@ -97,13 +97,13 @@ namespace Azure.Communication.Sms
         /// <param name="from">The sender's phone number that is owned by the authenticated account.</param>
         /// <param name="to">The recipient's phone number.</param>
         /// <param name="message">The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. If the message has more than 160 characters, the server will split it into multiple SMSs automatically.</param>
-        /// <param name="sendSmsOptions">Optional configuration for sending SMS messages.</param>
+        /// <param name="options">Optional configuration for sending SMS messages.</param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual async Task<Response<SendSmsResult>> SendAsync(string from, string to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions? options = default, CancellationToken cancellationToken = default)
         {
             await Task.Yield();
             throw new NotImplementedException();
@@ -115,14 +115,20 @@ namespace Azure.Communication.Sms
         /// <param name="from">The sender's phone number that is owned by the authenticated account.</param>
         /// <param name="to">The recipient's phone number.</param>
         /// <param name="message">The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. If the message has more than 160 characters, the server will split it into multiple SMSs automatically.</param>
-        /// <param name="sendSmsOptions">Optional configuration for sending SMS messages.</param>
+        /// <param name="options">Optional configuration for sending SMS messages.</param>
         /// <param name="cancellationToken">The cancellation token for the underlying request.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Response<SendSmsResult> Send(string from, string to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SmsSendResult> Send(string from, string to, string message, SmsSendOptions? options = default, CancellationToken cancellationToken = default)
         {
+            /*Argument.AssertNotNullOrEmpty(from, nameof(from));
+            Argument.AssertNotNullOrEmpty(to, nameof(to));
+            Pageable<SendSmsResult> s = Send(from, new[] { to }, message, sendSmsOptions, cancellationToken);
+            SendSmsResult sendSMSResult = s.FirstOrDefault();
+
+            return Response.FromValue(sendSMSResult, s. );*/
             throw new NotImplementedException();
         }
 
@@ -130,30 +136,64 @@ namespace Azure.Communication.Sms
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
         /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, only one recipient in the list is supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
-        /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
+        /// <param name="options"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual AsyncPageable<SendSmsResult> SendAsync(string from, IEnumerable<string> to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SmsSendResult> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions? options = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
+                scope.Start();
+                try
+                {
+                    ResponseWithHeaders<SendSmsResponse, SmsSendHeaders> responseWithHeaders = nextLink is null ?
+                        await RestClient.SendAsync(from, to, message, null, null, options, cancellationToken).ConfigureAwait(false)
+                        : await RestClient.SendNextPageAsync(nextLink, from, to, message, null, null, options, cancellationToken).ConfigureAwait(false);
+
+                    return Page.FromValues(responseWithHeaders.Value.Value, responseWithHeaders.Value.NextLink, responseWithHeaders.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
         /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, only one recipient in the list is supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
-        /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
+        /// <param name="options"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Pageable<SendSmsResult> Send(string from, IEnumerable<string> to, string message, SendSmsOptions? sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SmsSendResult> Send(string from, IEnumerable<string> to, string message, SmsSendOptions? options = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return PageResponseEnumerator.CreateEnumerable(nextLink =>
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
+                scope.Start();
+                try
+                {
+                    ResponseWithHeaders<SendSmsResponse, SmsSendHeaders> responseWithHeaders = nextLink is null ?
+                        RestClient.Send(from, to, message, null, null, options, cancellationToken)
+                        : RestClient.SendNextPage(nextLink, from, to, message, null, null, options, cancellationToken);
+
+                    return Page.FromValues(responseWithHeaders.Value.Value, responseWithHeaders.Value.NextLink, responseWithHeaders.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         private static T AssertNotNull<T>(T argument, string argumentName)

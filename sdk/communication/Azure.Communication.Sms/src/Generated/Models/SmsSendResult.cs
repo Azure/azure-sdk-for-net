@@ -10,13 +10,13 @@ using System;
 namespace Azure.Communication.Sms
 {
     /// <summary> Response for a single recipient. </summary>
-    public partial class SendSmsResult
+    public partial class SmsSendResult
     {
-        /// <summary> Initializes a new instance of SendSmsResult. </summary>
+        /// <summary> Initializes a new instance of SmsSendResult. </summary>
         /// <param name="to"> The recipients&apos;s phone number in E.164 format. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
-        internal SendSmsResult(string to, int httpStatusCode)
+        internal SmsSendResult(string to, int httpStatusCode)
         {
             if (to == null)
             {
@@ -27,12 +27,12 @@ namespace Azure.Communication.Sms
             HttpStatusCode = httpStatusCode;
         }
 
-        /// <summary> Initializes a new instance of SendSmsResult. </summary>
+        /// <summary> Initializes a new instance of SmsSendResult. </summary>
         /// <param name="to"> The recipients&apos;s phone number in E.164 format. </param>
         /// <param name="messageId"> The identifier of the outgoing SMS message. Only present if message processed. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
         /// <param name="errorMessage"> Optional error message in case of 4xx or 5xx errors. </param>
-        internal SendSmsResult(string to, string messageId, int httpStatusCode, string errorMessage)
+        internal SmsSendResult(string to, string messageId, int httpStatusCode, string errorMessage)
         {
             To = to;
             MessageId = messageId;

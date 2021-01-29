@@ -17,7 +17,7 @@ namespace Azure.Communication.Sms
         /// <summary> Initializes a new instance of SendSmsResponse. </summary>
         /// <param name="value"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SendSmsResponse(IEnumerable<SendSmsResult> value)
+        internal SendSmsResponse(IEnumerable<SmsSendResult> value)
         {
             if (value == null)
             {
@@ -30,13 +30,13 @@ namespace Azure.Communication.Sms
         /// <summary> Initializes a new instance of SendSmsResponse. </summary>
         /// <param name="value"> . </param>
         /// <param name="nextLink"> . </param>
-        internal SendSmsResponse(IReadOnlyList<SendSmsResult> value, string nextLink)
+        internal SendSmsResponse(IReadOnlyList<SmsSendResult> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        public IReadOnlyList<SendSmsResult> Value { get; }
+        public IReadOnlyList<SmsSendResult> Value { get; }
         public string NextLink { get; }
     }
 }

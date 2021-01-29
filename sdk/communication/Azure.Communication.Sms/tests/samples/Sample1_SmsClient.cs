@@ -23,7 +23,7 @@ namespace Azure.Communication.Sms.Tests.samples
 
             #region Snippet:SendSms
             /// Send an sms
-            SendSmsResult sendSmsResult = smsClient.Send(
+            SmsSendResult sendSmsResult = smsClient.Send(
                 from: "<leased-phone-number>",
                 to: "<to-phone-number>",
                 message: "<message-to-send>");
@@ -40,11 +40,11 @@ namespace Azure.Communication.Sms.Tests.samples
 
             #region Snippet:SendSms
             /// Send an sms to a single recipient
-            SendSmsResult sendSmsResult = smsClient.Send(
+            SmsSendResult sendSmsResult = smsClient.Send(
                 from: "<leased-phone-number>",
                 to: "<to-phone-number>",
                 message: "<message-to-send>",
-                sendSmsOptions: new SendSmsOptions // OPTIONAL
+                options: new SmsSendOptions // OPTIONAL
                     {
                     EnableDeliveryReport = true,
                     Tag = "<custom-tags>",
@@ -55,16 +55,16 @@ namespace Azure.Communication.Sms.Tests.samples
 
             #region Snippet:SendGroupSms
             /// send an sms to multiple recipients
-            Pageable<SendSmsResult> results = smsClient.Send(
+            Pageable<SmsSendResult> results = smsClient.Send(
                 from: "<leased-phone-number>",
                 to: new[] { "<to-phone-number-1>", "<to-phone-number-2>", "<to-phone-number-3>" },
                 message: "<group-message-to-send>",
-                sendSmsOptions: new SendSmsOptions // OPTIONAL
+                options: new SmsSendOptions // OPTIONAL
                     {
                     EnableDeliveryReport = true,
                     Tag = "<custom-tags>",
                 });
-            foreach (SendSmsResult result in results)
+            foreach (SmsSendResult result in results)
             {
                 Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
             }
@@ -80,7 +80,7 @@ namespace Azure.Communication.Sms.Tests.samples
             // SendSmsOptions is an optional field. It can be used
             // to enable a delivery report to the Azure Event Grid
             // and to add custom tags in the request
-            SendSmsOptions sendSmsOptions = new SendSmsOptions
+            SmsSendOptions sendSmsOptions = new SmsSendOptions
             {
                 EnableDeliveryReport = true,
                 Tag = "<custom-tags>",
@@ -88,7 +88,7 @@ namespace Azure.Communication.Sms.Tests.samples
 
             #region Snippet:SendSms
             /// send an sms to a single recipient asynchronously
-            SendSmsResult sendSmsResult = await smsClient.SendAsync(
+            SmsSendResult sendSmsResult = await smsClient.SendAsync(
                 from: "<leased-phone-number>",
                 to: "<to-phone-number>",
                 message: "<message-to-send>",
@@ -98,12 +98,12 @@ namespace Azure.Communication.Sms.Tests.samples
 
             #region Snippet:SendGroupSms
             /// send an sms to a multiple recipients asynchronously
-            AsyncPageable<SendSmsResult> results = smsClient.SendAsync(
+            AsyncPageable<SmsSendResult> results = smsClient.SendAsync(
                 from: "<leased-phone-number>",
                 to: new[] { "<to-phone-number-1>", "<to-phone-number-2>", "<to-phone-number-3>" },
                 message: "<group-message-to-send>",
                 sendSmsOptions); // OPTIONAL
-            await foreach (SendSmsResult result in results)
+            await foreach (SmsSendResult result in results)
             {
                 Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
             }
