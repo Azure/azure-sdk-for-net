@@ -746,7 +746,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAcquireLeaseRequest(int? timeout, int? duration, string proposedLeaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateAcquireLeaseRequest(int? timeout, long? duration, string proposedLeaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -791,7 +791,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, int? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -812,7 +812,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerAcquireLeaseHeaders> AcquireLease(int? timeout = null, int? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerAcquireLeaseHeaders> AcquireLease(int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
@@ -992,7 +992,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateBreakLeaseRequest(int? timeout, int? breakPeriod, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateBreakLeaseRequest(int? timeout, long? breakPeriod, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1032,7 +1032,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerBreakLeaseHeaders>> BreakLeaseAsync(int? timeout = null, int? breakPeriod = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerBreakLeaseHeaders>> BreakLeaseAsync(int? timeout = null, long? breakPeriod = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateBreakLeaseRequest(timeout, breakPeriod, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1052,7 +1052,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerBreakLeaseHeaders> BreakLease(int? timeout = null, int? breakPeriod = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerBreakLeaseHeaders> BreakLease(int? timeout = null, long? breakPeriod = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateBreakLeaseRequest(timeout, breakPeriod, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);

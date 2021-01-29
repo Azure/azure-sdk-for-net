@@ -515,7 +515,69 @@ namespace Azure.Storage.Blobs
         }
 
         // TODO
+#pragma warning disable CA1801 // Review unused parameters
         internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobDownloadHeaders> response, Stream stream)
+#pragma warning restore CA1801 // Review unused parameters
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobAcquireLeaseHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerAcquireLeaseHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobRenewLeaseHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerRenewLeaseHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ReleasedObjectInfo ToReleasedObjectInfo(this ResponseWithHeaders<BlobReleaseLeaseHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static ReleasedObjectInfo ToReleasedObjectInfo(this ResponseWithHeaders<ContainerReleaseLeaseHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobChangeLeaseHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerChangeLeaseHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobBreakLeaseHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerBreakLeaseHeaders> response)
         {
             return null;
         }

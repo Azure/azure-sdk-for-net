@@ -115,11 +115,21 @@ directive:
     $.Metrics.type = "object";
 ```
 
-## DataLakeStorageError
+### DataLakeStorageError
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions
   transform: >
     delete $.DataLakeStorageError;
+```
+
+### Change LeaseDuration and BreakPerson to a long
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.LeaseDuration.format = "int64";
+    $.LeaseBreakPeriod.format = "int64";
 ```
