@@ -37,7 +37,9 @@ namespace Azure.Quantum.Jobs.Tests
 
         public void Initialize()
         {
-            if (!_initialized && Mode == RecordedTestMode.Record)
+            if (!_initialized
+                && Mode == RecordedTestMode.Record
+                && (Environment.GetEnvironmentVariable("LOCAL_RECORDING") != null))
             {
                 if (Environment.GetEnvironmentVariable("SUBSCRIPTION_ID") == null)
                 {
