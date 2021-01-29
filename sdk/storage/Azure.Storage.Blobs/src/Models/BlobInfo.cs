@@ -48,85 +48,85 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobDownloadInfo : IDisposable, IDownloadedContent
     {
         /// <summary>
-        /// Internal flattened property representation
-        /// </summary>
-        internal FlattenedDownloadProperties _flattened;
-
-        /// <summary>
         /// The blob's type.
         /// </summary>
-        public BlobType BlobType => _flattened.BlobType;
+        public BlobType BlobType { get; internal set; }
 
         /// <summary>
         /// The number of bytes present in the response body.
         /// </summary>
-        public long ContentLength => _flattened.ContentLength;
+        public long ContentLength { get; internal set; }
 
         /// <summary>
         /// Content
         /// </summary>
-        public Stream Content => _flattened.Content;
+        public Stream Content { get; internal set; }
 
         /// <summary>
         /// The media type of the body of the response. For Download Blob this is 'application/octet-stream'
         /// </summary>
-        public string ContentType => _flattened.ContentType;
+        public string ContentType { get; internal set; }
 
         /// <summary>
         /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
         /// </summary>
 #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] ContentHash => _flattened.ContentHash;
+        public byte[] ContentHash { get; internal set; }
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
         /// Details returned when downloading a Blob
         /// </summary>
-        public BlobDownloadDetails Details { get; private set; }
+        public BlobDownloadDetails Details { get; internal set; }
 
         /// <summary>
-        /// Creates a new DownloadInfo backed by FlattenedDownloadProperties
+        /// Constructor.
         /// </summary>
-        /// <param name="flattened">The FlattenedDownloadProperties returned with the request</param>
-        internal BlobDownloadInfo(FlattenedDownloadProperties flattened)
-        {
-            _flattened = flattened;
-            Details = new BlobDownloadDetails() {
-                LastModified = flattened.LastModified,
-                Metadata = flattened.Metadata,
-                ContentRange = flattened.ContentRange,
-                ETag = flattened.ETag,
-                ContentEncoding = flattened.ContentEncoding,
-                CacheControl = flattened.CacheControl,
-                ContentDisposition = flattened.ContentDisposition,
-                ContentLanguage = flattened.ContentLanguage,
-                BlobSequenceNumber = flattened.BlobSequenceNumber,
-                CopyCompletedOn = flattened.CopyCompletionTime,
-                CopyStatusDescription = flattened.CopyStatusDescription,
-                CopyId = flattened.CopyId,
-                CopyProgress = flattened.CopyProgress,
-                CopySource = flattened.CopySource,
-                CopyStatus = flattened.CopyStatus,
-                LeaseDuration = flattened.LeaseDuration,
-                LeaseState = flattened.LeaseState,
-                LeaseStatus = flattened.LeaseStatus,
-                AcceptRanges = flattened.AcceptRanges,
-                BlobCommittedBlockCount = flattened.BlobCommittedBlockCount,
-                IsServerEncrypted = flattened.IsServerEncrypted,
-                EncryptionKeySha256 = flattened.EncryptionKeySha256,
-                EncryptionScope = flattened.EncryptionScope,
-                BlobContentHash = flattened.BlobContentHash,
-                TagCount = flattened.TagCount,
-                VersionId = flattened.VersionId,
-                IsSealed = flattened.IsSealed,
-                ObjectReplicationSourceProperties =
-                    flattened.ObjectReplicationRules?.Count > 0
-                    ? BlobExtensions.ParseObjectReplicationIds(flattened.ObjectReplicationRules)
-                    : null,
-                ObjectReplicationDestinationPolicyId = flattened.ObjectReplicationPolicyId,
-                LastAccessed = flattened.LastAccessed
-            };
-        }
+        internal BlobDownloadInfo() { }
+
+        ///// <summary>
+        ///// Creates a new DownloadInfo backed by FlattenedDownloadProperties
+        ///// </summary>
+        ///// <param name="flattened">The FlattenedDownloadProperties returned with the request</param>
+        //internal BlobDownloadInfo(FlattenedDownloadProperties flattened)
+        //{
+        //    _flattened = flattened;
+        //    Details = new BlobDownloadDetails() {
+        //        LastModified = flattened.LastModified,
+        //        Metadata = flattened.Metadata,
+        //        ContentRange = flattened.ContentRange,
+        //        ETag = flattened.ETag,
+        //        ContentEncoding = flattened.ContentEncoding,
+        //        CacheControl = flattened.CacheControl,
+        //        ContentDisposition = flattened.ContentDisposition,
+        //        ContentLanguage = flattened.ContentLanguage,
+        //        BlobSequenceNumber = flattened.BlobSequenceNumber,
+        //        CopyCompletedOn = flattened.CopyCompletionTime,
+        //        CopyStatusDescription = flattened.CopyStatusDescription,
+        //        CopyId = flattened.CopyId,
+        //        CopyProgress = flattened.CopyProgress,
+        //        CopySource = flattened.CopySource,
+        //        CopyStatus = flattened.CopyStatus,
+        //        LeaseDuration = flattened.LeaseDuration,
+        //        LeaseState = flattened.LeaseState,
+        //        LeaseStatus = flattened.LeaseStatus,
+        //        AcceptRanges = flattened.AcceptRanges,
+        //        BlobCommittedBlockCount = flattened.BlobCommittedBlockCount,
+        //        IsServerEncrypted = flattened.IsServerEncrypted,
+        //        EncryptionKeySha256 = flattened.EncryptionKeySha256,
+        //        EncryptionScope = flattened.EncryptionScope,
+        //        BlobContentHash = flattened.BlobContentHash,
+        //        TagCount = flattened.TagCount,
+        //        VersionId = flattened.VersionId,
+        //        IsSealed = flattened.IsSealed,
+        //        ObjectReplicationSourceProperties =
+        //            flattened.ObjectReplicationRules?.Count > 0
+        //            ? BlobExtensions.ParseObjectReplicationIds(flattened.ObjectReplicationRules)
+        //            : null,
+        //        ObjectReplicationDestinationPolicyId = flattened.ObjectReplicationPolicyId,
+        //        LastAccessed = flattened.LastAccessed
+        //    };
+        //}
 
         /// <summary>
         /// Disposes the BlobDownloadInfo by calling Dispose on the underlying Content stream.
@@ -308,7 +308,9 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset lastModified = default,
             long blobSequenceNumber = default,
             BlobType blobType = default,
+#pragma warning disable CA1801 // Review unused parameters
             byte[] contentCrc64 = default,
+#pragma warning restore CA1801 // Review unused parameters
             string contentLanguage = default,
             string copyStatusDescription = default,
             string copyId = default,
@@ -339,44 +341,44 @@ namespace Azure.Storage.Blobs.Models
             long tagCount = default,
             DateTimeOffset lastAccessed = default)
         {
-            return new BlobDownloadInfo(
-                new FlattenedDownloadProperties()
+            return new BlobDownloadInfo
+            {
+                BlobType = blobType,
+                ContentLength = contentLength,
+                Content = content,
+                ContentType = contentType,
+                ContentHash = contentHash,
+                Details = new BlobDownloadDetails
                 {
                     LastModified = lastModified,
-                    BlobSequenceNumber = blobSequenceNumber,
-                    BlobType = blobType,
-                    ContentCrc64 = contentCrc64,
+                    Metadata = metadata,
+                    ContentRange = contentRange,
+                    ETag = eTag,
+                    ContentEncoding = contentEncoding,
+                    CacheControl = cacheControl,
+                    ContentDisposition = contentDisposition,
                     ContentLanguage = contentLanguage,
+                    BlobSequenceNumber = blobSequenceNumber,
+                    CopyCompletedOn = copyCompletionTime,
                     CopyStatusDescription = copyStatusDescription,
                     CopyId = copyId,
                     CopyProgress = copyProgress,
                     CopySource = copySource,
                     CopyStatus = copyStatus,
-                    ContentDisposition = contentDisposition,
                     LeaseDuration = leaseDuration,
-                    CacheControl = cacheControl,
                     LeaseState = leaseState,
-                    ContentEncoding = contentEncoding,
                     LeaseStatus = leaseStatus,
-                    ContentHash = contentHash,
                     AcceptRanges = acceptRanges,
-                    ETag = eTag,
                     BlobCommittedBlockCount = blobCommittedBlockCount,
-                    ContentRange = contentRange,
                     IsServerEncrypted = isServerEncrypted,
-                    ContentType = contentType,
                     EncryptionKeySha256 = encryptionKeySha256,
                     EncryptionScope = encryptionScope,
-                    ContentLength = contentLength,
                     BlobContentHash = blobContentHash,
-                    Metadata = metadata,
-                    Content = content,
-                    CopyCompletionTime = copyCompletionTime,
-                    VersionId = versionId,
                     TagCount = tagCount,
+                    VersionId = versionId,
                     LastAccessed = lastAccessed
                 }
-            );
+            };
         }
 
         /// <summary>
@@ -387,7 +389,9 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset lastModified ,
             long blobSequenceNumber,
             BlobType blobType,
+#pragma warning disable CA1801 // Review unused parameters
             byte[] contentCrc64,
+#pragma warning restore CA1801 // Review unused parameters
             string contentLanguage,
             string copyStatusDescription,
             string copyId,
@@ -417,43 +421,43 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset copyCompletionTime,
             long tagCount)
         {
-            return new BlobDownloadInfo(
-                new FlattenedDownloadProperties()
+            return new BlobDownloadInfo
+            {
+                BlobType = blobType,
+                ContentLength = contentLength,
+                Content = content,
+                ContentType = contentType,
+                ContentHash = contentHash,
+                Details = new BlobDownloadDetails
                 {
                     LastModified = lastModified,
-                    BlobSequenceNumber = blobSequenceNumber,
-                    BlobType = blobType,
-                    ContentCrc64 = contentCrc64,
+                    Metadata = metadata,
+                    ContentRange = contentRange,
+                    ETag = eTag,
+                    ContentEncoding = contentEncoding,
+                    CacheControl = cacheControl,
+                    ContentDisposition = contentDisposition,
                     ContentLanguage = contentLanguage,
+                    BlobSequenceNumber = blobSequenceNumber,
+                    CopyCompletedOn = copyCompletionTime,
                     CopyStatusDescription = copyStatusDescription,
                     CopyId = copyId,
                     CopyProgress = copyProgress,
                     CopySource = copySource,
                     CopyStatus = copyStatus,
-                    ContentDisposition = contentDisposition,
                     LeaseDuration = leaseDuration,
-                    CacheControl = cacheControl,
                     LeaseState = leaseState,
-                    ContentEncoding = contentEncoding,
                     LeaseStatus = leaseStatus,
-                    ContentHash = contentHash,
                     AcceptRanges = acceptRanges,
-                    ETag = eTag,
                     BlobCommittedBlockCount = blobCommittedBlockCount,
-                    ContentRange = contentRange,
                     IsServerEncrypted = isServerEncrypted,
-                    ContentType = contentType,
                     EncryptionKeySha256 = encryptionKeySha256,
                     EncryptionScope = encryptionScope,
-                    ContentLength = contentLength,
                     BlobContentHash = blobContentHash,
-                    Metadata = metadata,
-                    Content = content,
-                    CopyCompletionTime = copyCompletionTime,
+                    TagCount = tagCount,
                     VersionId = versionId,
-                    TagCount = tagCount
                 }
-            );
+            };
         }
 
         /// <summary>
@@ -464,7 +468,9 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset lastModified,
             long blobSequenceNumber,
             BlobType blobType,
+#pragma warning disable CA1801 // Review unused parameters
             byte[] contentCrc64,
+#pragma warning restore CA1801 // Review unused parameters
             string contentLanguage,
             string copyStatusDescription,
             string copyId,
@@ -492,41 +498,41 @@ namespace Azure.Storage.Blobs.Models
             Stream content,
             DateTimeOffset copyCompletionTime)
         {
-            return new BlobDownloadInfo(
-                new FlattenedDownloadProperties()
+            return new BlobDownloadInfo
+            {
+                BlobType = blobType,
+                ContentLength = contentLength,
+                Content = content,
+                ContentType = contentType,
+                ContentHash = contentHash,
+                Details = new BlobDownloadDetails
                 {
                     LastModified = lastModified,
-                    BlobSequenceNumber = blobSequenceNumber,
-                    BlobType = blobType,
-                    ContentCrc64 = contentCrc64,
+                    Metadata = metadata,
+                    ContentRange = contentRange,
+                    ETag = eTag,
+                    ContentEncoding = contentEncoding,
+                    CacheControl = cacheControl,
+                    ContentDisposition = contentDisposition,
                     ContentLanguage = contentLanguage,
+                    BlobSequenceNumber = blobSequenceNumber,
+                    CopyCompletedOn = copyCompletionTime,
                     CopyStatusDescription = copyStatusDescription,
                     CopyId = copyId,
                     CopyProgress = copyProgress,
                     CopySource = copySource,
                     CopyStatus = copyStatus,
-                    ContentDisposition = contentDisposition,
                     LeaseDuration = leaseDuration,
-                    CacheControl = cacheControl,
                     LeaseState = leaseState,
-                    ContentEncoding = contentEncoding,
                     LeaseStatus = leaseStatus,
-                    ContentHash = contentHash,
                     AcceptRanges = acceptRanges,
-                    ETag = eTag,
                     BlobCommittedBlockCount = blobCommittedBlockCount,
-                    ContentRange = contentRange,
                     IsServerEncrypted = isServerEncrypted,
-                    ContentType = contentType,
                     EncryptionKeySha256 = encryptionKeySha256,
                     EncryptionScope = encryptionScope,
-                    ContentLength = contentLength,
                     BlobContentHash = blobContentHash,
-                    Metadata = metadata,
-                    Content = content,
-                    CopyCompletionTime = copyCompletionTime
                 }
-            );
+            };
         }
 
         /// <summary>
@@ -537,7 +543,9 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset lastModified,
             long blobSequenceNumber,
             BlobType blobType,
+#pragma warning disable CA1801 // Review unused parameters
             byte[] contentCrc64,
+#pragma warning restore CA1801 // Review unused parameters
             string contentLanguage,
             string copyStatusDescription,
             string copyId,
@@ -564,40 +572,40 @@ namespace Azure.Storage.Blobs.Models
             Stream content,
             DateTimeOffset copyCompletionTime)
         {
-            return new BlobDownloadInfo(
-                new FlattenedDownloadProperties()
+            return new BlobDownloadInfo
+            {
+                BlobType = blobType,
+                ContentLength = contentLength,
+                Content = content,
+                ContentType = contentType,
+                ContentHash = contentHash,
+                Details = new BlobDownloadDetails
                 {
                     LastModified = lastModified,
-                    BlobSequenceNumber = blobSequenceNumber,
-                    BlobType = blobType,
-                    ContentCrc64 = contentCrc64,
+                    Metadata = metadata,
+                    ContentRange = contentRange,
+                    ETag = eTag,
+                    ContentEncoding = contentEncoding,
+                    CacheControl = cacheControl,
+                    ContentDisposition = contentDisposition,
                     ContentLanguage = contentLanguage,
+                    BlobSequenceNumber = blobSequenceNumber,
+                    CopyCompletedOn = copyCompletionTime,
                     CopyStatusDescription = copyStatusDescription,
                     CopyId = copyId,
                     CopyProgress = copyProgress,
                     CopySource = copySource,
                     CopyStatus = copyStatus,
-                    ContentDisposition = contentDisposition,
                     LeaseDuration = leaseDuration,
-                    CacheControl = cacheControl,
                     LeaseState = leaseState,
-                    ContentEncoding = contentEncoding,
                     LeaseStatus = leaseStatus,
-                    ContentHash = contentHash,
                     AcceptRanges = acceptRanges,
-                    ETag = eTag,
                     BlobCommittedBlockCount = blobCommittedBlockCount,
-                    ContentRange = contentRange,
                     IsServerEncrypted = isServerEncrypted,
-                    ContentType = contentType,
                     EncryptionKeySha256 = encryptionKeySha256,
-                    ContentLength = contentLength,
                     BlobContentHash = blobContentHash,
-                    Metadata = metadata,
-                    Content = content,
-                    CopyCompletionTime = copyCompletionTime
                 }
-            );
+            };
         }
     }
 }
