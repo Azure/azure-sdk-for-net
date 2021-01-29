@@ -1074,6 +1074,20 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary>
+        /// Creates a new BlobContainerInfo instance for mocking.
+        /// </summary>
+        public static BlobContainerInfo BlobContainerInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            return new BlobContainerInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+            };
+        }
+
+        /// <summary>
         /// Creates a new BlobContainerItem instance for mocking.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

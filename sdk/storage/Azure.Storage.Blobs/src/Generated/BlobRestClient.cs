@@ -20,6 +20,7 @@ namespace Azure.Storage.Blobs
     internal partial class BlobRestClient
     {
         private string url;
+        private string containerName;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -28,13 +29,18 @@ namespace Azure.Storage.Blobs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
+        /// <param name="containerName"> The container name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, or <paramref name="version"/> is null. </exception>
+        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string version = "2020-06-12")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
             }
             if (version == null)
             {
@@ -42,12 +48,13 @@ namespace Azure.Storage.Blobs
             }
 
             this.url = url;
+            this.containerName = containerName;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateDownloadRequest(string containerName, string blob, string snapshot, string versionId, int? timeout, string range, bool? rangeGetContentMD5, bool? rangeGetContentCRC64, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateDownloadRequest(string blob, string snapshot, string versionId, int? timeout, string range, bool? rangeGetContentMD5, bool? rangeGetContentCRC64, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -122,7 +129,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Download operation reads or downloads a blob from the system, including its metadata and properties. You can also call Download to read a snapshot. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It&apos;s for service version 2019-10-10 and newer. </param>
@@ -134,19 +140,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, BlobDownloadHeaders>> DownloadAsync(string containerName, string blob, string snapshot = null, string versionId = null, int? timeout = null, string range = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<Stream, BlobDownloadHeaders>> DownloadAsync(string blob, string snapshot = null, string versionId = null, int? timeout = null, string range = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateDownloadRequest(containerName, blob, snapshot, versionId, timeout, range, rangeGetContentMD5, rangeGetContentCRC64, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
+            using var message = CreateDownloadRequest(blob, snapshot, versionId, timeout, range, rangeGetContentMD5, rangeGetContentCRC64, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobDownloadHeaders(message.Response);
             switch (message.Response.Status)
@@ -163,7 +165,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Download operation reads or downloads a blob from the system, including its metadata and properties. You can also call Download to read a snapshot. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It&apos;s for service version 2019-10-10 and newer. </param>
@@ -175,19 +176,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<Stream, BlobDownloadHeaders> Download(string containerName, string blob, string snapshot = null, string versionId = null, int? timeout = null, string range = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<Stream, BlobDownloadHeaders> Download(string blob, string snapshot = null, string versionId = null, int? timeout = null, string range = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateDownloadRequest(containerName, blob, snapshot, versionId, timeout, range, rangeGetContentMD5, rangeGetContentCRC64, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
+            using var message = CreateDownloadRequest(blob, snapshot, versionId, timeout, range, rangeGetContentMD5, rangeGetContentCRC64, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobDownloadHeaders(message.Response);
             switch (message.Response.Status)
@@ -203,7 +200,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string containerName, string blob, string snapshot, string versionId, int? timeout, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateGetPropertiesRequest(string blob, string snapshot, string versionId, int? timeout, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -266,7 +263,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does not return the content of the blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It&apos;s for service version 2019-10-10 and newer. </param>
@@ -275,19 +271,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobGetPropertiesHeaders>> GetPropertiesAsync(string containerName, string blob, string snapshot = null, string versionId = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobGetPropertiesHeaders>> GetPropertiesAsync(string blob, string snapshot = null, string versionId = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetPropertiesRequest(containerName, blob, snapshot, versionId, timeout, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
+            using var message = CreateGetPropertiesRequest(blob, snapshot, versionId, timeout, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -300,7 +292,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does not return the content of the blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It&apos;s for service version 2019-10-10 and newer. </param>
@@ -309,19 +300,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobGetPropertiesHeaders> GetProperties(string containerName, string blob, string snapshot = null, string versionId = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobGetPropertiesHeaders> GetProperties(string blob, string snapshot = null, string versionId = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetPropertiesRequest(containerName, blob, snapshot, versionId, timeout, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
+            using var message = CreateGetPropertiesRequest(blob, snapshot, versionId, timeout, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -333,7 +320,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string containerName, string blob, string snapshot, string versionId, int? timeout, DeleteSnapshotsOptionType? deleteSnapshots, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateDeleteRequest(string blob, string snapshot, string versionId, int? timeout, DeleteSnapshotsOptionType? deleteSnapshots, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -392,7 +379,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> If the storage account&apos;s soft delete feature is disabled then, when a blob is deleted, it is permanently removed from the storage account. If the storage account&apos;s soft delete feature is enabled, then, when a blob is deleted, it is marked for deletion and becomes inaccessible immediately. However, the blob service retains the blob or snapshot for the number of days specified by the DeleteRetentionPolicy section of [Storage service properties] (Set-Blob-Service-Properties.md). After the specified number of days has passed, the blob&apos;s data is permanently removed from the storage account. Note that you continue to be charged for the soft-deleted blob&apos;s storage until it is permanently removed. Use the List Blobs API and specify the &quot;include=deleted&quot; query parameter to discover which blobs and snapshots have been soft deleted. You can then use the Undelete Blob API to restore a soft-deleted blob. All other operations on a soft-deleted blob or snapshot causes the service to return an HTTP status code of 404 (ResourceNotFound). </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It&apos;s for service version 2019-10-10 and newer. </param>
@@ -401,19 +387,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobDeleteHeaders>> DeleteAsync(string containerName, string blob, string snapshot = null, string versionId = null, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobDeleteHeaders>> DeleteAsync(string blob, string snapshot = null, string versionId = null, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateDeleteRequest(containerName, blob, snapshot, versionId, timeout, deleteSnapshots, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateDeleteRequest(blob, snapshot, versionId, timeout, deleteSnapshots, leaseAccessConditions, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -426,7 +408,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> If the storage account&apos;s soft delete feature is disabled then, when a blob is deleted, it is permanently removed from the storage account. If the storage account&apos;s soft delete feature is enabled, then, when a blob is deleted, it is marked for deletion and becomes inaccessible immediately. However, the blob service retains the blob or snapshot for the number of days specified by the DeleteRetentionPolicy section of [Storage service properties] (Set-Blob-Service-Properties.md). After the specified number of days has passed, the blob&apos;s data is permanently removed from the storage account. Note that you continue to be charged for the soft-deleted blob&apos;s storage until it is permanently removed. Use the List Blobs API and specify the &quot;include=deleted&quot; query parameter to discover which blobs and snapshots have been soft deleted. You can then use the Undelete Blob API to restore a soft-deleted blob. All other operations on a soft-deleted blob or snapshot causes the service to return an HTTP status code of 404 (ResourceNotFound). </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It&apos;s for service version 2019-10-10 and newer. </param>
@@ -435,19 +416,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobDeleteHeaders> Delete(string containerName, string blob, string snapshot = null, string versionId = null, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobDeleteHeaders> Delete(string blob, string snapshot = null, string versionId = null, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateDeleteRequest(containerName, blob, snapshot, versionId, timeout, deleteSnapshots, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateDeleteRequest(blob, snapshot, versionId, timeout, deleteSnapshots, leaseAccessConditions, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -459,7 +436,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUndeleteRequest(string containerName, string blob, int? timeout)
+        internal HttpMessage CreateUndeleteRequest(string blob, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -482,23 +459,18 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Undelete a blob that was previously soft deleted. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobUndeleteHeaders>> UndeleteAsync(string containerName, string blob, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobUndeleteHeaders>> UndeleteAsync(string blob, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateUndeleteRequest(containerName, blob, timeout);
+            using var message = CreateUndeleteRequest(blob, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobUndeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -511,23 +483,18 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Undelete a blob that was previously soft deleted. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobUndeleteHeaders> Undelete(string containerName, string blob, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobUndeleteHeaders> Undelete(string blob, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateUndeleteRequest(containerName, blob, timeout);
+            using var message = CreateUndeleteRequest(blob, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobUndeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -539,7 +506,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetExpiryRequest(string containerName, string blob, BlobExpiryOptions expiryOptions, int? timeout, string expiresOn)
+        internal HttpMessage CreateSetExpiryRequest(string blob, BlobExpiryOptions expiryOptions, int? timeout, string expiresOn)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -567,25 +534,20 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Sets the time a blob will expire and be deleted. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobSetExpiryHeaders>> SetExpiryAsync(string containerName, string blob, BlobExpiryOptions expiryOptions, int? timeout = null, string expiresOn = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobSetExpiryHeaders>> SetExpiryAsync(string blob, BlobExpiryOptions expiryOptions, int? timeout = null, string expiresOn = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetExpiryRequest(containerName, blob, expiryOptions, timeout, expiresOn);
+            using var message = CreateSetExpiryRequest(blob, expiryOptions, timeout, expiresOn);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetExpiryHeaders(message.Response);
             switch (message.Response.Status)
@@ -598,25 +560,20 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Sets the time a blob will expire and be deleted. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobSetExpiryHeaders> SetExpiry(string containerName, string blob, BlobExpiryOptions expiryOptions, int? timeout = null, string expiresOn = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobSetExpiryHeaders> SetExpiry(string blob, BlobExpiryOptions expiryOptions, int? timeout = null, string expiresOn = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetExpiryRequest(containerName, blob, expiryOptions, timeout, expiresOn);
+            using var message = CreateSetExpiryRequest(blob, expiryOptions, timeout, expiresOn);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetExpiryHeaders(message.Response);
             switch (message.Response.Status)
@@ -628,7 +585,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetHttpHeadersRequest(string containerName, string blob, int? timeout, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateSetHttpHeadersRequest(string blob, int? timeout, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -699,26 +656,21 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Set HTTP Headers operation sets system properties on the blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="blobHttpHeaders"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobSetHttpHeadersHeaders>> SetHttpHeadersAsync(string containerName, string blob, int? timeout = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobSetHttpHeadersHeaders>> SetHttpHeadersAsync(string blob, int? timeout = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetHttpHeadersRequest(containerName, blob, timeout, blobHttpHeaders, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateSetHttpHeadersRequest(blob, timeout, blobHttpHeaders, leaseAccessConditions, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetHttpHeadersHeaders(message.Response);
             switch (message.Response.Status)
@@ -731,26 +683,21 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Set HTTP Headers operation sets system properties on the blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="blobHttpHeaders"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobSetHttpHeadersHeaders> SetHttpHeaders(string containerName, string blob, int? timeout = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobSetHttpHeadersHeaders> SetHttpHeaders(string blob, int? timeout = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetHttpHeadersRequest(containerName, blob, timeout, blobHttpHeaders, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateSetHttpHeadersRequest(blob, timeout, blobHttpHeaders, leaseAccessConditions, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetHttpHeadersHeaders(message.Response);
             switch (message.Response.Status)
@@ -762,7 +709,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(string containerName, string blob, int? timeout, IDictionary<string, string> metadata, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateSetMetadataRequest(string blob, int? timeout, IDictionary<string, string> metadata, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -826,7 +773,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value pairs. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
@@ -835,19 +781,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobSetMetadataHeaders>> SetMetadataAsync(string containerName, string blob, int? timeout = null, IDictionary<string, string> metadata = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobSetMetadataHeaders>> SetMetadataAsync(string blob, int? timeout = null, IDictionary<string, string> metadata = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetMetadataRequest(containerName, blob, timeout, metadata, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateSetMetadataRequest(blob, timeout, metadata, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -860,7 +802,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value pairs. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
@@ -869,19 +810,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobSetMetadataHeaders> SetMetadata(string containerName, string blob, int? timeout = null, IDictionary<string, string> metadata = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobSetMetadataHeaders> SetMetadata(string blob, int? timeout = null, IDictionary<string, string> metadata = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetMetadataRequest(containerName, blob, timeout, metadata, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateSetMetadataRequest(blob, timeout, metadata, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetMetadataHeaders(message.Response);
             switch (message.Response.Status)
@@ -893,7 +830,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAcquireLeaseRequest(string containerName, string blob, int? timeout, int? duration, string proposedLeaseId, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateAcquireLeaseRequest(string blob, int? timeout, int? duration, string proposedLeaseId, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -945,26 +882,21 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobAcquireLeaseHeaders>> AcquireLeaseAsync(string containerName, string blob, int? timeout = null, int? duration = null, string proposedLeaseId = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobAcquireLeaseHeaders>> AcquireLeaseAsync(string blob, int? timeout = null, int? duration = null, string proposedLeaseId = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateAcquireLeaseRequest(containerName, blob, timeout, duration, proposedLeaseId, modifiedAccessConditions);
+            using var message = CreateAcquireLeaseRequest(blob, timeout, duration, proposedLeaseId, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobAcquireLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -977,26 +909,21 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobAcquireLeaseHeaders> AcquireLease(string containerName, string blob, int? timeout = null, int? duration = null, string proposedLeaseId = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobAcquireLeaseHeaders> AcquireLease(string blob, int? timeout = null, int? duration = null, string proposedLeaseId = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateAcquireLeaseRequest(containerName, blob, timeout, duration, proposedLeaseId, modifiedAccessConditions);
+            using var message = CreateAcquireLeaseRequest(blob, timeout, duration, proposedLeaseId, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobAcquireLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1008,7 +935,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateReleaseLeaseRequest(string containerName, string blob, string leaseId, int? timeout, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateReleaseLeaseRequest(string blob, string leaseId, int? timeout, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1053,19 +980,14 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobReleaseLeaseHeaders>> ReleaseLeaseAsync(string containerName, string blob, string leaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="leaseId"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobReleaseLeaseHeaders>> ReleaseLeaseAsync(string blob, string leaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1075,7 +997,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(leaseId));
             }
 
-            using var message = CreateReleaseLeaseRequest(containerName, blob, leaseId, timeout, modifiedAccessConditions);
+            using var message = CreateReleaseLeaseRequest(blob, leaseId, timeout, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobReleaseLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1088,19 +1010,14 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<BlobReleaseLeaseHeaders> ReleaseLease(string containerName, string blob, string leaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="leaseId"/> is null. </exception>
+        public ResponseWithHeaders<BlobReleaseLeaseHeaders> ReleaseLease(string blob, string leaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1110,7 +1027,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(leaseId));
             }
 
-            using var message = CreateReleaseLeaseRequest(containerName, blob, leaseId, timeout, modifiedAccessConditions);
+            using var message = CreateReleaseLeaseRequest(blob, leaseId, timeout, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobReleaseLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1122,7 +1039,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateRenewLeaseRequest(string containerName, string blob, string leaseId, int? timeout, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateRenewLeaseRequest(string blob, string leaseId, int? timeout, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1167,19 +1084,14 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobRenewLeaseHeaders>> RenewLeaseAsync(string containerName, string blob, string leaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="leaseId"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobRenewLeaseHeaders>> RenewLeaseAsync(string blob, string leaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1189,7 +1101,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(leaseId));
             }
 
-            using var message = CreateRenewLeaseRequest(containerName, blob, leaseId, timeout, modifiedAccessConditions);
+            using var message = CreateRenewLeaseRequest(blob, leaseId, timeout, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobRenewLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1202,19 +1114,14 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<BlobRenewLeaseHeaders> RenewLease(string containerName, string blob, string leaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="leaseId"/> is null. </exception>
+        public ResponseWithHeaders<BlobRenewLeaseHeaders> RenewLease(string blob, string leaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1224,7 +1131,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(leaseId));
             }
 
-            using var message = CreateRenewLeaseRequest(containerName, blob, leaseId, timeout, modifiedAccessConditions);
+            using var message = CreateRenewLeaseRequest(blob, leaseId, timeout, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobRenewLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1236,7 +1143,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateChangeLeaseRequest(string containerName, string blob, string leaseId, string proposedLeaseId, int? timeout, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateChangeLeaseRequest(string blob, string leaseId, string proposedLeaseId, int? timeout, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1282,20 +1189,15 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, <paramref name="leaseId"/>, or <paramref name="proposedLeaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobChangeLeaseHeaders>> ChangeLeaseAsync(string containerName, string blob, string leaseId, string proposedLeaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/>, <paramref name="leaseId"/>, or <paramref name="proposedLeaseId"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobChangeLeaseHeaders>> ChangeLeaseAsync(string blob, string leaseId, string proposedLeaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1309,7 +1211,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(proposedLeaseId));
             }
 
-            using var message = CreateChangeLeaseRequest(containerName, blob, leaseId, proposedLeaseId, timeout, modifiedAccessConditions);
+            using var message = CreateChangeLeaseRequest(blob, leaseId, proposedLeaseId, timeout, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobChangeLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1322,20 +1224,15 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, <paramref name="leaseId"/>, or <paramref name="proposedLeaseId"/> is null. </exception>
-        public ResponseWithHeaders<BlobChangeLeaseHeaders> ChangeLease(string containerName, string blob, string leaseId, string proposedLeaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/>, <paramref name="leaseId"/>, or <paramref name="proposedLeaseId"/> is null. </exception>
+        public ResponseWithHeaders<BlobChangeLeaseHeaders> ChangeLease(string blob, string leaseId, string proposedLeaseId, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1349,7 +1246,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(proposedLeaseId));
             }
 
-            using var message = CreateChangeLeaseRequest(containerName, blob, leaseId, proposedLeaseId, timeout, modifiedAccessConditions);
+            using var message = CreateChangeLeaseRequest(blob, leaseId, proposedLeaseId, timeout, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobChangeLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1361,7 +1258,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateBreakLeaseRequest(string containerName, string blob, int? timeout, int? breakPeriod, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateBreakLeaseRequest(string blob, int? timeout, int? breakPeriod, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1409,25 +1306,20 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobBreakLeaseHeaders>> BreakLeaseAsync(string containerName, string blob, int? timeout = null, int? breakPeriod = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobBreakLeaseHeaders>> BreakLeaseAsync(string blob, int? timeout = null, int? breakPeriod = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateBreakLeaseRequest(containerName, blob, timeout, breakPeriod, modifiedAccessConditions);
+            using var message = CreateBreakLeaseRequest(blob, timeout, breakPeriod, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobBreakLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1440,25 +1332,20 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobBreakLeaseHeaders> BreakLease(string containerName, string blob, int? timeout = null, int? breakPeriod = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobBreakLeaseHeaders> BreakLease(string blob, int? timeout = null, int? breakPeriod = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateBreakLeaseRequest(containerName, blob, timeout, breakPeriod, modifiedAccessConditions);
+            using var message = CreateBreakLeaseRequest(blob, timeout, breakPeriod, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobBreakLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -1470,7 +1357,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCreateSnapshotRequest(string containerName, string blob, int? timeout, IDictionary<string, string> metadata, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateCreateSnapshotRequest(string blob, int? timeout, IDictionary<string, string> metadata, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions, LeaseAccessConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1534,7 +1421,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Create Snapshot operation creates a read-only snapshot of a blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
@@ -1543,19 +1429,15 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobCreateSnapshotHeaders>> CreateSnapshotAsync(string containerName, string blob, int? timeout = null, IDictionary<string, string> metadata = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobCreateSnapshotHeaders>> CreateSnapshotAsync(string blob, int? timeout = null, IDictionary<string, string> metadata = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateCreateSnapshotRequest(containerName, blob, timeout, metadata, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateCreateSnapshotRequest(blob, timeout, metadata, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobCreateSnapshotHeaders(message.Response);
             switch (message.Response.Status)
@@ -1568,7 +1450,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Create Snapshot operation creates a read-only snapshot of a blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
@@ -1577,19 +1458,15 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobCreateSnapshotHeaders> CreateSnapshot(string containerName, string blob, int? timeout = null, IDictionary<string, string> metadata = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobCreateSnapshotHeaders> CreateSnapshot(string blob, int? timeout = null, IDictionary<string, string> metadata = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateCreateSnapshotRequest(containerName, blob, timeout, metadata, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateCreateSnapshotRequest(blob, timeout, metadata, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobCreateSnapshotHeaders(message.Response);
             switch (message.Response.Status)
@@ -1601,7 +1478,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateStartCopyFromURLRequest(string containerName, string blob, Uri copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, RehydratePriority? rehydratePriority, string blobTagsString, bool? sealBlob, SourceModifiedAccessConditions sourceModifiedAccessConditions, ModifiedAccessConditions modifiedAccessConditions, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateStartCopyFromURLRequest(string blob, Uri copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, RehydratePriority? rehydratePriority, string blobTagsString, bool? sealBlob, SourceModifiedAccessConditions sourceModifiedAccessConditions, ModifiedAccessConditions modifiedAccessConditions, LeaseAccessConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1688,7 +1565,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Start Copy From URL operation copies a blob or an internet resource to a new blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1701,13 +1577,9 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobStartCopyFromURLHeaders>> StartCopyFromURLAsync(string containerName, string blob, Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, string blobTagsString = null, bool? sealBlob = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copySource"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobStartCopyFromURLHeaders>> StartCopyFromURLAsync(string blob, Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, string blobTagsString = null, bool? sealBlob = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1717,7 +1589,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateStartCopyFromURLRequest(containerName, blob, copySource, timeout, metadata, tier, rehydratePriority, blobTagsString, sealBlob, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateStartCopyFromURLRequest(blob, copySource, timeout, metadata, tier, rehydratePriority, blobTagsString, sealBlob, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobStartCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1730,7 +1602,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Start Copy From URL operation copies a blob or an internet resource to a new blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1743,13 +1614,9 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<BlobStartCopyFromURLHeaders> StartCopyFromURL(string containerName, string blob, Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, string blobTagsString = null, bool? sealBlob = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copySource"/> is null. </exception>
+        public ResponseWithHeaders<BlobStartCopyFromURLHeaders> StartCopyFromURL(string blob, Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, string blobTagsString = null, bool? sealBlob = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1759,7 +1626,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateStartCopyFromURLRequest(containerName, blob, copySource, timeout, metadata, tier, rehydratePriority, blobTagsString, sealBlob, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateStartCopyFromURLRequest(blob, copySource, timeout, metadata, tier, rehydratePriority, blobTagsString, sealBlob, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobStartCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1771,7 +1638,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCopyFromURLRequest(string containerName, string blob, Uri copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, byte[] sourceContentMD5, string blobTagsString, SourceModifiedAccessConditions sourceModifiedAccessConditions, ModifiedAccessConditions modifiedAccessConditions, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateCopyFromURLRequest(string blob, Uri copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, byte[] sourceContentMD5, string blobTagsString, SourceModifiedAccessConditions sourceModifiedAccessConditions, ModifiedAccessConditions modifiedAccessConditions, LeaseAccessConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1851,7 +1718,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response until the copy is complete. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1863,13 +1729,9 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobCopyFromURLHeaders>> CopyFromURLAsync(string containerName, string blob, Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, byte[] sourceContentMD5 = null, string blobTagsString = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copySource"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobCopyFromURLHeaders>> CopyFromURLAsync(string blob, Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, byte[] sourceContentMD5 = null, string blobTagsString = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1879,7 +1741,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateCopyFromURLRequest(containerName, blob, copySource, timeout, metadata, tier, sourceContentMD5, blobTagsString, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateCopyFromURLRequest(blob, copySource, timeout, metadata, tier, sourceContentMD5, blobTagsString, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1892,7 +1754,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response until the copy is complete. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1904,13 +1765,9 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<BlobCopyFromURLHeaders> CopyFromURL(string containerName, string blob, Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, byte[] sourceContentMD5 = null, string blobTagsString = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copySource"/> is null. </exception>
+        public ResponseWithHeaders<BlobCopyFromURLHeaders> CopyFromURL(string blob, Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, byte[] sourceContentMD5 = null, string blobTagsString = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1920,7 +1777,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateCopyFromURLRequest(containerName, blob, copySource, timeout, metadata, tier, sourceContentMD5, blobTagsString, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateCopyFromURLRequest(blob, copySource, timeout, metadata, tier, sourceContentMD5, blobTagsString, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1932,7 +1789,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAbortCopyFromURLRequest(string containerName, string blob, string copyId, int? timeout, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateAbortCopyFromURLRequest(string blob, string copyId, int? timeout, LeaseAccessConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1961,19 +1818,14 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full metadata. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="copyId"> The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="copyId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobAbortCopyFromURLHeaders>> AbortCopyFromURLAsync(string containerName, string blob, string copyId, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copyId"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobAbortCopyFromURLHeaders>> AbortCopyFromURLAsync(string blob, string copyId, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1983,7 +1835,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copyId));
             }
 
-            using var message = CreateAbortCopyFromURLRequest(containerName, blob, copyId, timeout, leaseAccessConditions);
+            using var message = CreateAbortCopyFromURLRequest(blob, copyId, timeout, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobAbortCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1996,19 +1848,14 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full metadata. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="copyId"> The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="copyId"/> is null. </exception>
-        public ResponseWithHeaders<BlobAbortCopyFromURLHeaders> AbortCopyFromURL(string containerName, string blob, string copyId, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copyId"/> is null. </exception>
+        public ResponseWithHeaders<BlobAbortCopyFromURLHeaders> AbortCopyFromURL(string blob, string copyId, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -2018,7 +1865,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copyId));
             }
 
-            using var message = CreateAbortCopyFromURLRequest(containerName, blob, copyId, timeout, leaseAccessConditions);
+            using var message = CreateAbortCopyFromURLRequest(blob, copyId, timeout, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobAbortCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -2030,7 +1877,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetTierRequest(string containerName, string blob, AccessTier tier, string snapshot, string versionId, int? timeout, RehydratePriority? rehydratePriority, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateSetTierRequest(string blob, AccessTier tier, string snapshot, string versionId, int? timeout, RehydratePriority? rehydratePriority, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2074,7 +1921,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage account and on a block blob in a blob storage account (locally redundant storage only). A premium page blob&apos;s tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob&apos;s tier determines Hot/Cool/Archive storage type. This operation does not update the blob&apos;s ETag. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="tier"> Indicates the tier to be set on the blob. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
@@ -2084,19 +1930,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobSetTierHeaders>> SetTierAsync(string containerName, string blob, AccessTier tier, string snapshot = null, string versionId = null, int? timeout = null, RehydratePriority? rehydratePriority = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobSetTierHeaders>> SetTierAsync(string blob, AccessTier tier, string snapshot = null, string versionId = null, int? timeout = null, RehydratePriority? rehydratePriority = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetTierRequest(containerName, blob, tier, snapshot, versionId, timeout, rehydratePriority, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateSetTierRequest(blob, tier, snapshot, versionId, timeout, rehydratePriority, leaseAccessConditions, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetTierHeaders(message.Response);
             switch (message.Response.Status)
@@ -2110,7 +1952,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage account and on a block blob in a blob storage account (locally redundant storage only). A premium page blob&apos;s tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob&apos;s tier determines Hot/Cool/Archive storage type. This operation does not update the blob&apos;s ETag. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="tier"> Indicates the tier to be set on the blob. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
@@ -2120,19 +1961,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobSetTierHeaders> SetTier(string containerName, string blob, AccessTier tier, string snapshot = null, string versionId = null, int? timeout = null, RehydratePriority? rehydratePriority = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobSetTierHeaders> SetTier(string blob, AccessTier tier, string snapshot = null, string versionId = null, int? timeout = null, RehydratePriority? rehydratePriority = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetTierRequest(containerName, blob, tier, snapshot, versionId, timeout, rehydratePriority, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateSetTierRequest(blob, tier, snapshot, versionId, timeout, rehydratePriority, leaseAccessConditions, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetTierHeaders(message.Response);
             switch (message.Response.Status)
@@ -2145,7 +1982,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetAccountInfoRequest(string containerName, string blob)
+        internal HttpMessage CreateGetAccountInfoRequest(string blob)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2165,22 +2002,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns the sku name and account kind. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobGetAccountInfoHeaders>> GetAccountInfoAsync(string containerName, string blob, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobGetAccountInfoHeaders>> GetAccountInfoAsync(string blob, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetAccountInfoRequest(containerName, blob);
+            using var message = CreateGetAccountInfoRequest(blob);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobGetAccountInfoHeaders(message.Response);
             switch (message.Response.Status)
@@ -2193,22 +2025,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns the sku name and account kind. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobGetAccountInfoHeaders> GetAccountInfo(string containerName, string blob, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobGetAccountInfoHeaders> GetAccountInfo(string blob, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetAccountInfoRequest(containerName, blob);
+            using var message = CreateGetAccountInfoRequest(blob);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobGetAccountInfoHeaders(message.Response);
             switch (message.Response.Status)
@@ -2220,7 +2047,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateQueryRequest(string containerName, string blob, string snapshot, int? timeout, QueryRequest queryRequest, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateQueryRequest(string blob, string snapshot, int? timeout, QueryRequest queryRequest, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2287,7 +2114,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Query operation enables users to select/project on blob data by providing simple query expressions. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -2296,19 +2122,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, BlobQueryHeaders>> QueryAsync(string containerName, string blob, string snapshot = null, int? timeout = null, QueryRequest queryRequest = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<Stream, BlobQueryHeaders>> QueryAsync(string blob, string snapshot = null, int? timeout = null, QueryRequest queryRequest = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateQueryRequest(containerName, blob, snapshot, timeout, queryRequest, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
+            using var message = CreateQueryRequest(blob, snapshot, timeout, queryRequest, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobQueryHeaders(message.Response);
             switch (message.Response.Status)
@@ -2325,7 +2147,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Query operation enables users to select/project on blob data by providing simple query expressions. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -2334,19 +2155,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<Stream, BlobQueryHeaders> Query(string containerName, string blob, string snapshot = null, int? timeout = null, QueryRequest queryRequest = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<Stream, BlobQueryHeaders> Query(string blob, string snapshot = null, int? timeout = null, QueryRequest queryRequest = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateQueryRequest(containerName, blob, snapshot, timeout, queryRequest, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
+            using var message = CreateQueryRequest(blob, snapshot, timeout, queryRequest, leaseAccessConditions, cpkInfo, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobQueryHeaders(message.Response);
             switch (message.Response.Status)
@@ -2362,7 +2179,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetTagsRequest(string containerName, string blob, int? timeout, string snapshot, string versionId, ModifiedAccessConditions modifiedAccessConditions, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateGetTagsRequest(string blob, int? timeout, string snapshot, string versionId, ModifiedAccessConditions modifiedAccessConditions, LeaseAccessConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2401,7 +2218,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Tags operation enables users to get the tags associated with a blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
@@ -2409,19 +2225,15 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobTags, BlobGetTagsHeaders>> GetTagsAsync(string containerName, string blob, int? timeout = null, string snapshot = null, string versionId = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobTags, BlobGetTagsHeaders>> GetTagsAsync(string blob, int? timeout = null, string snapshot = null, string versionId = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetTagsRequest(containerName, blob, timeout, snapshot, versionId, modifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateGetTagsRequest(blob, timeout, snapshot, versionId, modifiedAccessConditions, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobGetTagsHeaders(message.Response);
             switch (message.Response.Status)
@@ -2442,7 +2254,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Tags operation enables users to get the tags associated with a blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
@@ -2450,19 +2261,15 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobTags, BlobGetTagsHeaders> GetTags(string containerName, string blob, int? timeout = null, string snapshot = null, string versionId = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobTags, BlobGetTagsHeaders> GetTags(string blob, int? timeout = null, string snapshot = null, string versionId = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetTagsRequest(containerName, blob, timeout, snapshot, versionId, modifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateGetTagsRequest(blob, timeout, snapshot, versionId, modifiedAccessConditions, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobGetTagsHeaders(message.Response);
             switch (message.Response.Status)
@@ -2482,7 +2289,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetTagsRequest(string containerName, string blob, int? timeout, string versionId, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, BlobTags tags, ModifiedAccessConditions modifiedAccessConditions, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateSetTagsRequest(string blob, int? timeout, string versionId, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, BlobTags tags, ModifiedAccessConditions modifiedAccessConditions, LeaseAccessConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2532,7 +2339,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Set Tags operation enables users to set tags on a blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It&apos;s for service version 2019-10-10 and newer. </param>
@@ -2542,19 +2348,15 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobSetTagsHeaders>> SetTagsAsync(string containerName, string blob, int? timeout = null, string versionId = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, BlobTags tags = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlobSetTagsHeaders>> SetTagsAsync(string blob, int? timeout = null, string versionId = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, BlobTags tags = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetTagsRequest(containerName, blob, timeout, versionId, transactionalContentMD5, transactionalContentCrc64, tags, modifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateSetTagsRequest(blob, timeout, versionId, transactionalContentMD5, transactionalContentCrc64, tags, modifiedAccessConditions, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetTagsHeaders(message.Response);
             switch (message.Response.Status)
@@ -2567,7 +2369,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Set Tags operation enables users to set tags on a blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It&apos;s for service version 2019-10-10 and newer. </param>
@@ -2577,19 +2378,15 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobSetTagsHeaders> SetTags(string containerName, string blob, int? timeout = null, string versionId = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, BlobTags tags = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlobSetTagsHeaders> SetTags(string blob, int? timeout = null, string versionId = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, BlobTags tags = null, ModifiedAccessConditions modifiedAccessConditions = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetTagsRequest(containerName, blob, timeout, versionId, transactionalContentMD5, transactionalContentCrc64, tags, modifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateSetTagsRequest(blob, timeout, versionId, transactionalContentMD5, transactionalContentCrc64, tags, modifiedAccessConditions, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetTagsHeaders(message.Response);
             switch (message.Response.Status)

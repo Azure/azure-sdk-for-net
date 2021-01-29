@@ -175,6 +175,16 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public bool CanGenerateSasUri => SharedKeyCredential != null;
 
+        /// <summary>
+        /// ContainerRestClient.
+        /// </summary>
+        private readonly ContainerRestClient _containerRestClient;
+
+        /// <summary>
+        /// ContainerRestClient.
+        /// </summary>
+        internal virtual ContainerRestClient ContainerRestClient => _containerRestClient;
+
         #region ctor
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
@@ -239,6 +249,8 @@ namespace Azure.Storage.Blobs
             _customerProvidedKey = options.CustomerProvidedKey;
             _encryptionScope = options.EncryptionScope;
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            _containerRestClient = BuildContainerRestClient(_uri);
+
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -363,6 +375,8 @@ namespace Azure.Storage.Blobs
             _customerProvidedKey = options.CustomerProvidedKey;
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
+            _containerRestClient = BuildContainerRestClient(blobContainerUri);
+
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -408,6 +422,8 @@ namespace Azure.Storage.Blobs
             _customerProvidedKey = customerProvidedKey;
             _clientSideEncryption = clientSideEncryption?.Clone();
             _encryptionScope = encryptionScope;
+            _containerRestClient = BuildContainerRestClient(containerUri);
+
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -443,6 +459,20 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: null,
                 clientSideEncryption: null,
                 encryptionScope: null);
+        }
+
+        private ContainerRestClient BuildContainerRestClient(Uri uri)
+        {
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(uri);
+            string containerName = uriBuilder.BlobContainerName;
+            uriBuilder.BlobContainerName = null;
+
+            return new ContainerRestClient(
+                clientDiagnostics: _clientDiagnostics,
+                pipeline: _pipeline,
+                url: uri.ToString(),
+                containerName: containerName,
+                version: _version.ToVersionString());
         }
         #endregion ctor
 

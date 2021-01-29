@@ -19,6 +19,7 @@ namespace Azure.Storage.Blobs
     internal partial class AppendBlobRestClient
     {
         private string url;
+        private string containerName;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -27,13 +28,18 @@ namespace Azure.Storage.Blobs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
+        /// <param name="containerName"> The container name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public AppendBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, or <paramref name="version"/> is null. </exception>
+        public AppendBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string version = "2020-06-12")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
             }
             if (version == null)
             {
@@ -41,12 +47,13 @@ namespace Azure.Storage.Blobs
             }
 
             this.url = url;
+            this.containerName = containerName;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(string containerName, string blob, long contentLength, int? timeout, IDictionary<string, string> metadata, string blobTagsString, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateCreateRequest(string blob, long contentLength, int? timeout, IDictionary<string, string> metadata, string blobTagsString, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -138,7 +145,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Create Append Blob operation creates a new append blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -150,19 +156,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobCreateHeaders>> CreateAsync(string containerName, string blob, long contentLength, int? timeout = null, IDictionary<string, string> metadata = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AppendBlobCreateHeaders>> CreateAsync(string blob, long contentLength, int? timeout = null, IDictionary<string, string> metadata = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateCreateRequest(containerName, blob, contentLength, timeout, metadata, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateCreateRequest(blob, contentLength, timeout, metadata, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -175,7 +177,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Create Append Blob operation creates a new append blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -187,19 +188,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobCreateHeaders> Create(string containerName, string blob, long contentLength, int? timeout = null, IDictionary<string, string> metadata = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<AppendBlobCreateHeaders> Create(string blob, long contentLength, int? timeout = null, IDictionary<string, string> metadata = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateCreateRequest(containerName, blob, contentLength, timeout, metadata, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateCreateRequest(blob, contentLength, timeout, metadata, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -211,7 +208,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAppendBlockRequest(string containerName, string blob, long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, LeaseAccessConditions leaseAccessConditions, AppendPositionAccessConditions appendPositionAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateAppendBlockRequest(string blob, long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, LeaseAccessConditions leaseAccessConditions, AppendPositionAccessConditions appendPositionAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -290,7 +287,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
@@ -303,13 +299,9 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobAppendBlockHeaders>> AppendBlockAsync(string containerName, string blob, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, LeaseAccessConditions leaseAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AppendBlobAppendBlockHeaders>> AppendBlockAsync(string blob, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, LeaseAccessConditions leaseAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -319,7 +311,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendBlockRequest(containerName, blob, contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateAppendBlockRequest(blob, contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobAppendBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -332,7 +324,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
@@ -345,13 +336,9 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobAppendBlockHeaders> AppendBlock(string containerName, string blob, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, LeaseAccessConditions leaseAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<AppendBlobAppendBlockHeaders> AppendBlock(string blob, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, LeaseAccessConditions leaseAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -361,7 +348,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendBlockRequest(containerName, blob, contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateAppendBlockRequest(blob, contentLength, body, timeout, transactionalContentMD5, transactionalContentCrc64, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobAppendBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -373,7 +360,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAppendBlockFromUrlRequest(string containerName, string blob, Uri sourceUrl, long contentLength, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, byte[] transactionalContentMD5, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, LeaseAccessConditions leaseAccessConditions, AppendPositionAccessConditions appendPositionAccessConditions, ModifiedAccessConditions modifiedAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
+        internal HttpMessage CreateAppendBlockFromUrlRequest(string blob, Uri sourceUrl, long contentLength, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, byte[] transactionalContentMD5, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, LeaseAccessConditions leaseAccessConditions, AppendPositionAccessConditions appendPositionAccessConditions, ModifiedAccessConditions modifiedAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -470,7 +457,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a source url. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
         /// <param name="contentLength"> The length of the request. </param>
@@ -486,13 +472,9 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="sourceUrl"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders>> AppendBlockFromUrlAsync(string containerName, string blob, Uri sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="sourceUrl"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders>> AppendBlockFromUrlAsync(string blob, Uri sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -502,7 +484,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateAppendBlockFromUrlRequest(containerName, blob, sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateAppendBlockFromUrlRequest(blob, sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobAppendBlockFromUrlHeaders(message.Response);
             switch (message.Response.Status)
@@ -515,7 +497,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a source url. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
         /// <param name="contentLength"> The length of the request. </param>
@@ -531,13 +512,9 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="sourceUrl"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> AppendBlockFromUrl(string containerName, string blob, Uri sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="sourceUrl"/> is null. </exception>
+        public ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> AppendBlockFromUrl(string blob, Uri sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -547,7 +524,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateAppendBlockFromUrlRequest(containerName, blob, sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateAppendBlockFromUrlRequest(blob, sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobAppendBlockFromUrlHeaders(message.Response);
             switch (message.Response.Status)
@@ -559,7 +536,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSealRequest(string containerName, string blob, int? timeout, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions, AppendPositionAccessConditions appendPositionAccessConditions)
+        internal HttpMessage CreateSealRequest(string blob, int? timeout, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions, AppendPositionAccessConditions appendPositionAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -606,26 +583,21 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="appendPositionAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobSealHeaders>> SealAsync(string containerName, string blob, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AppendBlobSealHeaders>> SealAsync(string blob, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSealRequest(containerName, blob, timeout, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions);
+            using var message = CreateSealRequest(blob, timeout, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobSealHeaders(message.Response);
             switch (message.Response.Status)
@@ -638,26 +610,21 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="appendPositionAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobSealHeaders> Seal(string containerName, string blob, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<AppendBlobSealHeaders> Seal(string blob, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, AppendPositionAccessConditions appendPositionAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSealRequest(containerName, blob, timeout, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions);
+            using var message = CreateSealRequest(blob, timeout, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobSealHeaders(message.Response);
             switch (message.Response.Status)

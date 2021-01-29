@@ -20,6 +20,7 @@ namespace Azure.Storage.Blobs
     internal partial class BlockBlobRestClient
     {
         private string url;
+        private string containerName;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -28,13 +29,18 @@ namespace Azure.Storage.Blobs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
+        /// <param name="containerName"> The container name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public BlockBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, or <paramref name="version"/> is null. </exception>
+        public BlockBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string version = "2020-06-12")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
             }
             if (version == null)
             {
@@ -42,12 +48,13 @@ namespace Azure.Storage.Blobs
             }
 
             this.url = url;
+            this.containerName = containerName;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateUploadRequest(string containerName, string blob, long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, IDictionary<string, string> metadata, AccessTier? tier, string blobTagsString, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateUploadRequest(string blob, long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, IDictionary<string, string> metadata, AccessTier? tier, string blobTagsString, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -150,7 +157,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob overwrites any existing metadata on the blob. Partial updates are not supported with Put Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of the content of a block blob, use the Put Block List operation. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
@@ -165,13 +171,9 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobUploadHeaders>> UploadAsync(string containerName, string blob, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlockBlobUploadHeaders>> UploadAsync(string blob, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -181,7 +183,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadRequest(containerName, blob, contentLength, body, timeout, transactionalContentMD5, metadata, tier, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateUploadRequest(blob, contentLength, body, timeout, transactionalContentMD5, metadata, tier, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobUploadHeaders(message.Response);
             switch (message.Response.Status)
@@ -194,7 +196,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob overwrites any existing metadata on the blob. Partial updates are not supported with Put Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of the content of a block blob, use the Put Block List operation. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
@@ -209,13 +210,9 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobUploadHeaders> Upload(string containerName, string blob, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<BlockBlobUploadHeaders> Upload(string blob, long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -225,7 +222,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadRequest(containerName, blob, contentLength, body, timeout, transactionalContentMD5, metadata, tier, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateUploadRequest(blob, contentLength, body, timeout, transactionalContentMD5, metadata, tier, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobUploadHeaders(message.Response);
             switch (message.Response.Status)
@@ -237,7 +234,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreatePutBlobFromUrlRequest(string containerName, string blob, long contentLength, Uri copySource, int? timeout, byte[] transactionalContentMD5, IDictionary<string, string> metadata, AccessTier? tier, byte[] sourceContentMD5, string blobTagsString, bool? copySourceBlobProperties, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
+        internal HttpMessage CreatePutBlobFromUrlRequest(string blob, long contentLength, Uri copySource, int? timeout, byte[] transactionalContentMD5, IDictionary<string, string> metadata, AccessTier? tier, byte[] sourceContentMD5, string blobTagsString, bool? copySourceBlobProperties, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,7 +359,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Put Blob from URL operation creates a new Block Blob where the contents of the blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version. Partial updates are not supported with Put Blob from URL; the content of an existing blob is overwritten with the content of the new blob.  To perform partial updates to a block blob’s contents using a source URL, use the Put Block from URL API in conjunction with Put Block List. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
@@ -380,13 +376,9 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders>> PutBlobFromUrlAsync(string containerName, string blob, long contentLength, Uri copySource, int? timeout = null, byte[] transactionalContentMD5 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, byte[] sourceContentMD5 = null, string blobTagsString = null, bool? copySourceBlobProperties = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copySource"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders>> PutBlobFromUrlAsync(string blob, long contentLength, Uri copySource, int? timeout = null, byte[] transactionalContentMD5 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, byte[] sourceContentMD5 = null, string blobTagsString = null, bool? copySourceBlobProperties = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -396,7 +388,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreatePutBlobFromUrlRequest(containerName, blob, contentLength, copySource, timeout, transactionalContentMD5, metadata, tier, sourceContentMD5, blobTagsString, copySourceBlobProperties, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreatePutBlobFromUrlRequest(blob, contentLength, copySource, timeout, transactionalContentMD5, metadata, tier, sourceContentMD5, blobTagsString, copySourceBlobProperties, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobPutBlobFromUrlHeaders(message.Response);
             switch (message.Response.Status)
@@ -409,7 +401,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Put Blob from URL operation creates a new Block Blob where the contents of the blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version. Partial updates are not supported with Put Blob from URL; the content of an existing blob is overwritten with the content of the new blob.  To perform partial updates to a block blob’s contents using a source URL, use the Put Block from URL API in conjunction with Put Block List. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
@@ -427,13 +418,9 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> PutBlobFromUrl(string containerName, string blob, long contentLength, Uri copySource, int? timeout = null, byte[] transactionalContentMD5 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, byte[] sourceContentMD5 = null, string blobTagsString = null, bool? copySourceBlobProperties = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copySource"/> is null. </exception>
+        public ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> PutBlobFromUrl(string blob, long contentLength, Uri copySource, int? timeout = null, byte[] transactionalContentMD5 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, byte[] sourceContentMD5 = null, string blobTagsString = null, bool? copySourceBlobProperties = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -443,7 +430,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreatePutBlobFromUrlRequest(containerName, blob, contentLength, copySource, timeout, transactionalContentMD5, metadata, tier, sourceContentMD5, blobTagsString, copySourceBlobProperties, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreatePutBlobFromUrlRequest(blob, contentLength, copySource, timeout, transactionalContentMD5, metadata, tier, sourceContentMD5, blobTagsString, copySourceBlobProperties, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobPutBlobFromUrlHeaders(message.Response);
             switch (message.Response.Status)
@@ -455,7 +442,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateStageBlockRequest(string containerName, string blob, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo)
+        internal HttpMessage CreateStageBlockRequest(string blob, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -507,7 +494,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Stage Block operation creates a new block to be committed as part of a blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="blockId"> A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified for the blockid parameter must be the same size for each block. </param>
         /// <param name="contentLength"> The length of the request. </param>
@@ -519,13 +505,9 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, <paramref name="blockId"/>, or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobStageBlockHeaders>> StageBlockAsync(string containerName, string blob, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/>, <paramref name="blockId"/>, or <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlockBlobStageBlockHeaders>> StageBlockAsync(string blob, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -539,7 +521,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStageBlockRequest(containerName, blob, blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo);
+            using var message = CreateStageBlockRequest(blob, blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobStageBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -552,7 +534,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Stage Block operation creates a new block to be committed as part of a blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="blockId"> A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified for the blockid parameter must be the same size for each block. </param>
         /// <param name="contentLength"> The length of the request. </param>
@@ -564,13 +545,9 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkInfo"> Parameter group. </param>
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, <paramref name="blockId"/>, or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobStageBlockHeaders> StageBlock(string containerName, string blob, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/>, <paramref name="blockId"/>, or <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<BlockBlobStageBlockHeaders> StageBlock(string blob, string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -584,7 +561,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStageBlockRequest(containerName, blob, blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo);
+            using var message = CreateStageBlockRequest(blob, blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobStageBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -596,7 +573,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateStageBlockFromURLRequest(string containerName, string blob, string blockId, long contentLength, Uri sourceUrl, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, LeaseAccessConditions leaseAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
+        internal HttpMessage CreateStageBlockFromURLRequest(string blob, string blockId, long contentLength, Uri sourceUrl, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, LeaseAccessConditions leaseAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -666,7 +643,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="blockId"> A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified for the blockid parameter must be the same size for each block. </param>
         /// <param name="contentLength"> The length of the request. </param>
@@ -680,13 +656,9 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, <paramref name="blockId"/>, or <paramref name="sourceUrl"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders>> StageBlockFromURLAsync(string containerName, string blob, string blockId, long contentLength, Uri sourceUrl, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/>, <paramref name="blockId"/>, or <paramref name="sourceUrl"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders>> StageBlockFromURLAsync(string blob, string blockId, long contentLength, Uri sourceUrl, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -700,7 +672,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateStageBlockFromURLRequest(containerName, blob, blockId, contentLength, sourceUrl, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateStageBlockFromURLRequest(blob, blockId, contentLength, sourceUrl, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobStageBlockFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -713,7 +685,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="blockId"> A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified for the blockid parameter must be the same size for each block. </param>
         /// <param name="contentLength"> The length of the request. </param>
@@ -727,13 +698,9 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, <paramref name="blockId"/>, or <paramref name="sourceUrl"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> StageBlockFromURL(string containerName, string blob, string blockId, long contentLength, Uri sourceUrl, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/>, <paramref name="blockId"/>, or <paramref name="sourceUrl"/> is null. </exception>
+        public ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> StageBlockFromURL(string blob, string blockId, long contentLength, Uri sourceUrl, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -747,7 +714,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateStageBlockFromURLRequest(containerName, blob, blockId, contentLength, sourceUrl, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateStageBlockFromURLRequest(blob, blockId, contentLength, sourceUrl, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobStageBlockFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -759,7 +726,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCommitBlockListRequest(string containerName, string blob, BlockLookupList blocks, int? timeout, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, IDictionary<string, string> metadata, AccessTier? tier, string blobTagsString, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateCommitBlockListRequest(string blob, BlockLookupList blocks, int? timeout, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, IDictionary<string, string> metadata, AccessTier? tier, string blobTagsString, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -867,7 +834,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as part of a blob, a block must have been successfully written to the server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that have changed, then committing the new and existing blocks together. You can do this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded version of the block, whichever list it may belong to. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="blocks"> The BlockLookupList to use. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -882,13 +848,9 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="blocks"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobCommitBlockListHeaders>> CommitBlockListAsync(string containerName, string blob, BlockLookupList blocks, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="blocks"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlockBlobCommitBlockListHeaders>> CommitBlockListAsync(string blob, BlockLookupList blocks, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -898,7 +860,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(blocks));
             }
 
-            using var message = CreateCommitBlockListRequest(containerName, blob, blocks, timeout, transactionalContentMD5, transactionalContentCrc64, metadata, tier, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateCommitBlockListRequest(blob, blocks, timeout, transactionalContentMD5, transactionalContentCrc64, metadata, tier, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobCommitBlockListHeaders(message.Response);
             switch (message.Response.Status)
@@ -911,7 +873,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as part of a blob, a block must have been successfully written to the server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that have changed, then committing the new and existing blocks together. You can do this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded version of the block, whichever list it may belong to. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="blocks"> The BlockLookupList to use. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -926,13 +887,9 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="blocks"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobCommitBlockListHeaders> CommitBlockList(string containerName, string blob, BlockLookupList blocks, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="blocks"/> is null. </exception>
+        public ResponseWithHeaders<BlockBlobCommitBlockListHeaders> CommitBlockList(string blob, BlockLookupList blocks, int? timeout = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -942,7 +899,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(blocks));
             }
 
-            using var message = CreateCommitBlockListRequest(containerName, blob, blocks, timeout, transactionalContentMD5, transactionalContentCrc64, metadata, tier, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateCommitBlockListRequest(blob, blocks, timeout, transactionalContentMD5, transactionalContentCrc64, metadata, tier, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobCommitBlockListHeaders(message.Response);
             switch (message.Response.Status)
@@ -954,7 +911,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetBlockListRequest(string containerName, string blob, BlockListType listType, string snapshot, int? timeout, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateGetBlockListRequest(string blob, BlockListType listType, string snapshot, int? timeout, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -990,7 +947,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="listType"> Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
@@ -998,19 +954,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders>> GetBlockListAsync(string containerName, string blob, BlockListType listType, string snapshot = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders>> GetBlockListAsync(string blob, BlockListType listType, string snapshot = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetBlockListRequest(containerName, blob, listType, snapshot, timeout, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetBlockListRequest(blob, listType, snapshot, timeout, leaseAccessConditions, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobGetBlockListHeaders(message.Response);
             switch (message.Response.Status)
@@ -1031,7 +983,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="listType"> Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
@@ -1039,19 +990,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> GetBlockList(string containerName, string blob, BlockListType listType, string snapshot = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> GetBlockList(string blob, BlockListType listType, string snapshot = null, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetBlockListRequest(containerName, blob, listType, snapshot, timeout, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetBlockListRequest(blob, listType, snapshot, timeout, leaseAccessConditions, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobGetBlockListHeaders(message.Response);
             switch (message.Response.Status)

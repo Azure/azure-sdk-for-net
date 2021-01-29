@@ -20,6 +20,7 @@ namespace Azure.Storage.Blobs
     internal partial class PageBlobRestClient
     {
         private string url;
+        private string containerName;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -28,13 +29,18 @@ namespace Azure.Storage.Blobs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
+        /// <param name="containerName"> The container name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public PageBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, or <paramref name="version"/> is null. </exception>
+        public PageBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string version = "2020-06-12")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
             }
             if (version == null)
             {
@@ -42,12 +48,13 @@ namespace Azure.Storage.Blobs
             }
 
             this.url = url;
+            this.containerName = containerName;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(string containerName, string blob, long contentLength, long blobContentLength, int? timeout, PremiumPageBlobAccessTier? tier, IDictionary<string, string> metadata, long? blobSequenceNumber, string blobTagsString, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateCreateRequest(string blob, long contentLength, long blobContentLength, int? timeout, PremiumPageBlobAccessTier? tier, IDictionary<string, string> metadata, long? blobSequenceNumber, string blobTagsString, BlobHttpHeaders blobHttpHeaders, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,7 +155,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Create operation creates a new page blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="blobContentLength"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
@@ -163,19 +169,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobCreateHeaders>> CreateAsync(string containerName, string blob, long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, IDictionary<string, string> metadata = null, long? blobSequenceNumber = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PageBlobCreateHeaders>> CreateAsync(string blob, long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, IDictionary<string, string> metadata = null, long? blobSequenceNumber = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateCreateRequest(containerName, blob, contentLength, blobContentLength, timeout, tier, metadata, blobSequenceNumber, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateCreateRequest(blob, contentLength, blobContentLength, timeout, tier, metadata, blobSequenceNumber, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -188,7 +190,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Create operation creates a new page blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="blobContentLength"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
@@ -203,19 +204,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobCreateHeaders> Create(string containerName, string blob, long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, IDictionary<string, string> metadata = null, long? blobSequenceNumber = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<PageBlobCreateHeaders> Create(string blob, long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, IDictionary<string, string> metadata = null, long? blobSequenceNumber = null, string blobTagsString = null, BlobHttpHeaders blobHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateCreateRequest(containerName, blob, contentLength, blobContentLength, timeout, tier, metadata, blobSequenceNumber, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateCreateRequest(blob, contentLength, blobContentLength, timeout, tier, metadata, blobSequenceNumber, blobTagsString, blobHttpHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -227,7 +224,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUploadPagesRequest(string containerName, string blob, long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string range, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, SequenceNumberAccessConditions sequenceNumberAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateUploadPagesRequest(string blob, long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string range, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, SequenceNumberAccessConditions sequenceNumberAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -315,7 +312,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Upload Pages operation writes a range of pages to a page blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
@@ -329,13 +325,9 @@ namespace Azure.Storage.Blobs
         /// <param name="sequenceNumberAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesHeaders>> UploadPagesAsync(string containerName, string blob, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PageBlobUploadPagesHeaders>> UploadPagesAsync(string blob, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -345,7 +337,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadPagesRequest(containerName, blob, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
+            using var message = CreateUploadPagesRequest(blob, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobUploadPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -358,7 +350,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Upload Pages operation writes a range of pages to a page blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> Initial data. </param>
@@ -372,13 +363,9 @@ namespace Azure.Storage.Blobs
         /// <param name="sequenceNumberAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesHeaders> UploadPages(string containerName, string blob, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<PageBlobUploadPagesHeaders> UploadPages(string blob, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -388,7 +375,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadPagesRequest(containerName, blob, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
+            using var message = CreateUploadPagesRequest(blob, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobUploadPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -400,7 +387,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateClearPagesRequest(string containerName, string blob, long contentLength, int? timeout, string range, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, SequenceNumberAccessConditions sequenceNumberAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateClearPagesRequest(string blob, long contentLength, int? timeout, string range, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, SequenceNumberAccessConditions sequenceNumberAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -477,7 +464,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Clear Pages operation clears a set of pages from a page blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -488,19 +474,15 @@ namespace Azure.Storage.Blobs
         /// <param name="sequenceNumberAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobClearPagesHeaders>> ClearPagesAsync(string containerName, string blob, long contentLength, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PageBlobClearPagesHeaders>> ClearPagesAsync(string blob, long contentLength, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateClearPagesRequest(containerName, blob, contentLength, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
+            using var message = CreateClearPagesRequest(blob, contentLength, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobClearPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -513,7 +495,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Clear Pages operation clears a set of pages from a page blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -524,19 +505,15 @@ namespace Azure.Storage.Blobs
         /// <param name="sequenceNumberAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobClearPagesHeaders> ClearPages(string containerName, string blob, long contentLength, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<PageBlobClearPagesHeaders> ClearPages(string blob, long contentLength, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateClearPagesRequest(containerName, blob, contentLength, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
+            using var message = CreateClearPagesRequest(blob, contentLength, timeout, range, leaseAccessConditions, cpkInfo, cpkScopeInfo, sequenceNumberAccessConditions, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobClearPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -548,7 +525,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUploadPagesFromURLRequest(string containerName, string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, LeaseAccessConditions leaseAccessConditions, SequenceNumberAccessConditions sequenceNumberAccessConditions, ModifiedAccessConditions modifiedAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
+        internal HttpMessage CreateUploadPagesFromURLRequest(string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, LeaseAccessConditions leaseAccessConditions, SequenceNumberAccessConditions sequenceNumberAccessConditions, ModifiedAccessConditions modifiedAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -648,7 +625,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. The length of this range should match the ContentLength header and x-ms-range/Range destination range header. </param>
@@ -664,13 +640,9 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string containerName, string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/>, <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -688,7 +660,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateUploadPagesFromURLRequest(containerName, blob, sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateUploadPagesFromURLRequest(blob, sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobUploadPagesFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -701,7 +673,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. The length of this range should match the ContentLength header and x-ms-range/Range destination range header. </param>
@@ -717,13 +688,9 @@ namespace Azure.Storage.Blobs
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string containerName, string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/>, <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
+        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string blob, Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, LeaseAccessConditions leaseAccessConditions = null, SequenceNumberAccessConditions sequenceNumberAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -741,7 +708,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateUploadPagesFromURLRequest(containerName, blob, sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateUploadPagesFromURLRequest(blob, sourceUrl, sourceRange, contentLength, range, sourceContentMD5, sourceContentcrc64, timeout, cpkInfo, cpkScopeInfo, leaseAccessConditions, sequenceNumberAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobUploadPagesFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -753,7 +720,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPageRangesRequest(string containerName, string blob, string snapshot, int? timeout, string range, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateGetPageRangesRequest(string blob, string snapshot, int? timeout, string range, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -808,7 +775,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -816,19 +782,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesAsync(string containerName, string blob, string snapshot = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesAsync(string blob, string snapshot = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetPageRangesRequest(containerName, blob, snapshot, timeout, range, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetPageRangesRequest(blob, snapshot, timeout, range, leaseAccessConditions, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobGetPageRangesHeaders(message.Response);
             switch (message.Response.Status)
@@ -849,7 +811,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -857,19 +818,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRanges(string containerName, string blob, string snapshot = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRanges(string blob, string snapshot = null, int? timeout = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetPageRangesRequest(containerName, blob, snapshot, timeout, range, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetPageRangesRequest(blob, snapshot, timeout, range, leaseAccessConditions, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobGetPageRangesHeaders(message.Response);
             switch (message.Response.Status)
@@ -889,7 +846,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPageRangesDiffRequest(string containerName, string blob, string snapshot, int? timeout, string prevsnapshot, Uri prevSnapshotUrl, string range, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateGetPageRangesDiffRequest(string blob, string snapshot, int? timeout, string prevsnapshot, Uri prevSnapshotUrl, string range, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -952,7 +909,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were changed between target blob and previous snapshot. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -962,19 +918,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffAsync(string containerName, string blob, string snapshot = null, int? timeout = null, string prevsnapshot = null, Uri prevSnapshotUrl = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffAsync(string blob, string snapshot = null, int? timeout = null, string prevsnapshot = null, Uri prevSnapshotUrl = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetPageRangesDiffRequest(containerName, blob, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetPageRangesDiffRequest(blob, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseAccessConditions, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobGetPageRangesDiffHeaders(message.Response);
             switch (message.Response.Status)
@@ -995,7 +947,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were changed between target blob and previous snapshot. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1005,19 +956,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiff(string containerName, string blob, string snapshot = null, int? timeout = null, string prevsnapshot = null, Uri prevSnapshotUrl = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiff(string blob, string snapshot = null, int? timeout = null, string prevsnapshot = null, Uri prevSnapshotUrl = null, string range = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateGetPageRangesDiffRequest(containerName, blob, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetPageRangesDiffRequest(blob, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseAccessConditions, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobGetPageRangesDiffHeaders(message.Response);
             switch (message.Response.Status)
@@ -1037,7 +984,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateResizeRequest(string containerName, string blob, long blobContentLength, int? timeout, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateResizeRequest(string blob, long blobContentLength, int? timeout, LeaseAccessConditions leaseAccessConditions, CpkInfo cpkInfo, CpkScopeInfo cpkScopeInfo, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1098,7 +1045,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Resize the Blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="blobContentLength"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1107,19 +1053,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobResizeHeaders>> ResizeAsync(string containerName, string blob, long blobContentLength, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PageBlobResizeHeaders>> ResizeAsync(string blob, long blobContentLength, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateResizeRequest(containerName, blob, blobContentLength, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateResizeRequest(blob, blobContentLength, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobResizeHeaders(message.Response);
             switch (message.Response.Status)
@@ -1132,7 +1074,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Resize the Blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="blobContentLength"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1141,19 +1082,15 @@ namespace Azure.Storage.Blobs
         /// <param name="cpkScopeInfo"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobResizeHeaders> Resize(string containerName, string blob, long blobContentLength, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<PageBlobResizeHeaders> Resize(string blob, long blobContentLength, int? timeout = null, LeaseAccessConditions leaseAccessConditions = null, CpkInfo cpkInfo = null, CpkScopeInfo cpkScopeInfo = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateResizeRequest(containerName, blob, blobContentLength, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
+            using var message = CreateResizeRequest(blob, blobContentLength, timeout, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobResizeHeaders(message.Response);
             switch (message.Response.Status)
@@ -1165,7 +1102,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUpdateSequenceNumberRequest(string containerName, string blob, SequenceNumberActionType sequenceNumberAction, int? timeout, long? blobSequenceNumber, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateUpdateSequenceNumberRequest(string blob, SequenceNumberActionType sequenceNumberAction, int? timeout, long? blobSequenceNumber, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1217,7 +1154,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Update the sequence number of the blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="sequenceNumberAction"> Required if the x-ms-blob-sequence-number header is set for the request. This property applies to page blobs only. This property indicates how the service should modify the blob&apos;s sequence number. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1225,19 +1161,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders>> UpdateSequenceNumberAsync(string containerName, string blob, SequenceNumberActionType sequenceNumberAction, int? timeout = null, long? blobSequenceNumber = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders>> UpdateSequenceNumberAsync(string blob, SequenceNumberActionType sequenceNumberAction, int? timeout = null, long? blobSequenceNumber = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateUpdateSequenceNumberRequest(containerName, blob, sequenceNumberAction, timeout, blobSequenceNumber, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateUpdateSequenceNumberRequest(blob, sequenceNumberAction, timeout, blobSequenceNumber, leaseAccessConditions, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobUpdateSequenceNumberHeaders(message.Response);
             switch (message.Response.Status)
@@ -1250,7 +1182,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Update the sequence number of the blob. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="sequenceNumberAction"> Required if the x-ms-blob-sequence-number header is set for the request. This property applies to page blobs only. This property indicates how the service should modify the blob&apos;s sequence number. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -1258,19 +1189,15 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> UpdateSequenceNumber(string containerName, string blob, SequenceNumberActionType sequenceNumberAction, int? timeout = null, long? blobSequenceNumber = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> is null. </exception>
+        public ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> UpdateSequenceNumber(string blob, SequenceNumberActionType sequenceNumberAction, int? timeout = null, long? blobSequenceNumber = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateUpdateSequenceNumberRequest(containerName, blob, sequenceNumberAction, timeout, blobSequenceNumber, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateUpdateSequenceNumberRequest(blob, sequenceNumberAction, timeout, blobSequenceNumber, leaseAccessConditions, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobUpdateSequenceNumberHeaders(message.Response);
             switch (message.Response.Status)
@@ -1282,7 +1209,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCopyIncrementalRequest(string containerName, string blob, Uri copySource, int? timeout, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateCopyIncrementalRequest(string blob, Uri copySource, int? timeout, ModifiedAccessConditions modifiedAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1326,19 +1253,14 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual. This API is supported since REST version 2016-05-31. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobCopyIncrementalHeaders>> CopyIncrementalAsync(string containerName, string blob, Uri copySource, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copySource"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PageBlobCopyIncrementalHeaders>> CopyIncrementalAsync(string blob, Uri copySource, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1348,7 +1270,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateCopyIncrementalRequest(containerName, blob, copySource, timeout, modifiedAccessConditions);
+            using var message = CreateCopyIncrementalRequest(blob, copySource, timeout, modifiedAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobCopyIncrementalHeaders(message.Response);
             switch (message.Response.Status)
@@ -1361,19 +1283,14 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual. This API is supported since REST version 2016-05-31. </summary>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="modifiedAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobCopyIncrementalHeaders> CopyIncremental(string containerName, string blob, Uri copySource, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="blob"/> or <paramref name="copySource"/> is null. </exception>
+        public ResponseWithHeaders<PageBlobCopyIncrementalHeaders> CopyIncremental(string blob, Uri copySource, int? timeout = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
@@ -1383,7 +1300,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateCopyIncrementalRequest(containerName, blob, copySource, timeout, modifiedAccessConditions);
+            using var message = CreateCopyIncrementalRequest(blob, copySource, timeout, modifiedAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobCopyIncrementalHeaders(message.Response);
             switch (message.Response.Status)

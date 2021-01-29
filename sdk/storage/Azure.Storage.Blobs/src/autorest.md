@@ -7,6 +7,15 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/011761be1285d14feb41796b5d97df1126495c5c/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json
 ```
 
+### Move path parameters to constructor.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.ContainerName["x-ms-parameter-location"];
+```
+
 ### Add containerName and blob as a parameter
 ``` yaml
 directive:

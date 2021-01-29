@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -434,6 +435,7 @@ namespace Azure.Storage.Blobs
                 storageSharedKeyCredential: null);
         }
 
+        // TODO this might not works.
         private ServiceRestClient BuildServiceRestClient(Uri uri)
             => new ServiceRestClient(
                 clientDiagnostics: _clientDiagnostics,
@@ -1402,18 +1404,30 @@ namespace Azure.Storage.Blobs
                         throw BlobErrors.InvalidDateTimeUtc(nameof(expiresOn));
                     }
 
-                    var keyInfo = new KeyInfo { StartsOn = startsOn, ExpiresOn = expiresOn };
+                    // TODO this probably doesn't work.
+                    KeyInfo keyInfo = new KeyInfo(
+                        startsOn.ToString(),
+                        expiresOn.ToString(CultureInfo.InvariantCulture));
 
-                    return await BlobRestClient.Service.GetUserDelegationKeyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        keyInfo: keyInfo,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetUserDelegationKey)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ServiceRestClient.GetUserDelegationKeyAsync(
+                            keyInfo: keyInfo,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ServiceRestClient.GetUserDelegationKey(
+                            keyInfo: keyInfo,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1748,17 +1762,23 @@ namespace Azure.Storage.Blobs
                         containerClient = GetBlobContainerClient(deletedContainerName);
                     }
 
-                    Response response = await BlobRestClient.Container.RestoreAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        containerClient.Uri,
-                        Version.ToVersionString(),
-                        deletedContainerName: deletedContainerName,
-                        deletedContainerVersion: deletedContainerVersion,
-                        async: async,
-                        operationName: $"{nameof(BlobServiceClient)}.{nameof(UndeleteBlobContainer)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerRestoreHeaders> response;
+
+                    if (async)
+                    {
+                        response = await containerClient.ContainerRestClient.RestoreAsync(
+                            deletedContainerName: deletedContainerName,
+                            deletedContainerVersion: deletedContainerVersion,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = containerClient.ContainerRestClient.Restore(
+                            deletedContainerName: deletedContainerName,
+                            deletedContainerVersion: deletedContainerVersion,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return Response.FromValue(containerClient, response);
                 }
@@ -1900,17 +1920,23 @@ namespace Azure.Storage.Blobs
                 {
                     BlobContainerClient containerClient = GetBlobContainerClient(destinationContainerName);
 
-                    Response response = await BlobRestClient.Container.RenameAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: containerClient.Uri,
-                        version: Version.ToVersionString(),
-                        sourceContainerName: sourceContainerName,
-                        sourceLeaseId: sourceConditions?.LeaseId,
-                        async: async,
-                        operationName: $"{nameof(BlobServiceClient)}.{nameof(RenameBlobContainer)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerRenameHeaders> response;
+
+                    if (async)
+                    {
+                        response = await containerClient.ContainerRestClient.RenameAsync(
+                            sourceContainerName: sourceContainerName,
+                            sourceLeaseId: sourceConditions?.LeaseId,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = containerClient.ContainerRestClient.Rename(
+                            sourceContainerName: sourceContainerName,
+                            sourceLeaseId: sourceConditions?.LeaseId,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return Response.FromValue(
                         containerClient,
@@ -2011,18 +2037,29 @@ namespace Azure.Storage.Blobs
 
                 try
                 {
-                    return await BlobRestClient.Service.FilterBlobsAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: Uri,
-                        version: Version.ToVersionString(),
-                        where: expression,
-                        marker: marker,
-                        maxresults: pageSizeHint,
-                        async: async,
-                        operationName: $"{nameof(BlobServiceClient)}.{nameof(FindBlobsByTags)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ServiceRestClient.FilterBlobsAsync(
+                            where: expression,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ServiceRestClient.FilterBlobs(
+                            where: expression,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
