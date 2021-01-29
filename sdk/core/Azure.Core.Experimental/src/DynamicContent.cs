@@ -1,68 +1,58 @@
-﻿using System.IO;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core
 {
+    /// <summary>
+    /// Represents the <see cref="DynamicJson"/> sent as part of the Azure.Core.Request.
+    /// </summary>
     public class DynamicContent : RequestContent
     {
-        private DynamicJson _body;
-        private readonly Encoding Utf8NoBom = new UTF8Encoding(false);
+        private readonly DynamicJson _body;
 
         internal DynamicContent(DynamicJson body)
         {
             _body = body;
         }
 
-        internal static RequestContent Create(DynamicJson body)
-            => new DynamicContent(body);
+        internal static RequestContent Create(DynamicJson body) => new DynamicContent(body);
 
-        /// <summary>
-        /// TBD
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="cancellation"></param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
-            // TODO: this method must be optimized, i.e. DynamicJson writes directly to stream
-            var json = _body.ToString();
-            var utf8 = Utf8NoBom.GetBytes(json);
-            await stream.WriteAsync(utf8, 0, utf8.Length).ConfigureAwait(false);
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            _body.WriteTo(writer);
+            await writer.FlushAsync(cancellation).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// TBD
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="cancellation"></param>
+        /// <inheritdoc />
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
-            // TODO: this method must be optimized, i.e. DynamicJson writes directly to stream
-            var json = _body.ToString();
-            var utf8 = Utf8NoBom.GetBytes(json);
-            stream.Write(utf8, 0, utf8.Length);
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            _body.WriteTo(writer);
+            writer.Flush();
         }
 
-        /// <summary>
-        /// TBD
-        /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public override bool TryComputeLength(out long length)
         {
-            // TODO: This is quite bad, but we need to return a value here so we don't get chunked encoding, which was breaking Anomaly Detector?
-            var json = _body.ToString();
-            length = Utf8NoBom.GetBytes(json).Length;
+            using MemoryStream stream = new MemoryStream();
+            WriteTo(stream, CancellationToken.None);
+            length = Encoding.UTF8.GetString(stream.ToArray()).Length;
             return true;
         }
 
-        /// <summary>
-        /// TBD
-        /// </summary>
+        /// <inheritdoc />
         public override void Dispose()
         {
+            GC.SuppressFinalize(this);
         }
     }
 }
