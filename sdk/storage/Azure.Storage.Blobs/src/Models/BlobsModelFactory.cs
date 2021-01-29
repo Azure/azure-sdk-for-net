@@ -780,6 +780,24 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlockInfo instance for mocking.
         /// </summary>
+        public static BlockInfo BlockInfo(
+            byte[] contentHash,
+            byte[] contentCrc64,
+            string encryptionKeySha256,
+            string encryptionScope)
+        {
+            return new BlockInfo()
+            {
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlockInfo instance for mocking.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlockInfo BlockInfo(
             byte[] contentHash,
@@ -791,6 +809,30 @@ namespace Azure.Storage.Blobs.Models
                     ContentCrc64 = contentCrc64,
                     EncryptionKeySha256 = encryptionKeySha256,
                 };
+
+        /// <summary>
+        /// Creates a new PageInfo instance for mocking.
+        /// </summary>
+        public static PageInfo PageInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            byte[] contentHash,
+            byte[] contentCrc64,
+            long blobSequenceNumber,
+            string encryptionKeySha256,
+            string encryptionScope)
+        {
+            return new PageInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                BlobSequenceNumber = blobSequenceNumber,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+            };
+        }
 
         /// <summary>
         /// Creates a new PageInfo instance for mocking.
@@ -812,6 +854,42 @@ namespace Azure.Storage.Blobs.Models
                     BlobSequenceNumber = blobSequenceNumber,
                     EncryptionKeySha256 = encryptionKeySha256,
                 };
+
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance for mocking.
+        /// </summary>
+        public static BlobContainerProperties BlobContainerProperties(
+            DateTimeOffset lastModified,
+            ETag eTag,
+            LeaseState? leaseState = default,
+            LeaseDurationType? leaseDuration = default,
+            PublicAccessType? publicAccess = default,
+            bool? hasImmutabilityPolicy = default,
+            LeaseStatus? leaseStatus = default,
+            string defaultEncryptionScope = default,
+            bool? preventEncryptionScopeOverride = default,
+            DateTimeOffset? deletedOn = default,
+            int? remainingRetentionDays = default,
+            IDictionary<string, string> metadata = default,
+            bool? hasLegalHold = default)
+        {
+            return new BlobContainerProperties()
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                PublicAccess = publicAccess,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                LeaseStatus = leaseStatus,
+                DefaultEncryptionScope = defaultEncryptionScope,
+                PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
+                Metadata = metadata,
+                HasLegalHold = hasLegalHold,
+            };
+        }
 
         /// <summary>
         /// Creates a new BlobContainerProperties instance for mocking.
@@ -839,6 +917,26 @@ namespace Azure.Storage.Blobs.Models
                     Metadata = metadata,
                     HasImmutabilityPolicy = hasImmutabilityPolicy,
                 };
+
+        /// <summary>
+        /// Creates a new BlobCopyInfo instance for mocking.
+        /// </summary>
+        public static BlobCopyInfo BlobCopyInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            string versionId,
+            string copyId,
+            CopyStatus copyStatus)
+        {
+            return new BlobCopyInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                VersionId = versionId,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
+            };
+        }
 
         /// <summary>
         /// Creates a new BlobCopyInfo instance for mocking.
@@ -907,6 +1005,26 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobSnapshotInfo instance for mocking.
         /// </summary>
+        public static BlobSnapshotInfo BlobSnapshotInfo(
+            string snapshot,
+            ETag eTag,
+            DateTimeOffset lastModified,
+            string versionId,
+            bool isServerEncrypted)
+        {
+            return new BlobSnapshotInfo()
+            {
+                Snapshot = snapshot,
+                ETag = eTag,
+                LastModified = lastModified,
+                VersionId = versionId,
+                IsServerEncrypted = isServerEncrypted,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobSnapshotInfo instance for mocking.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobSnapshotInfo BlobSnapshotInfo(
             string snapshot,
@@ -936,6 +1054,24 @@ namespace Azure.Storage.Blobs.Models
                 BlobSequenceNumber = blobSequenceNumber,
                 VersionId = versionId
             };
+
+        /// <summary>
+        /// Creates a new BlobContainerItem instance for mocking.
+        /// </summary>
+        public static BlobContainerItem BlobContainerItem(
+            string name,
+            BlobContainerProperties properties,
+            bool? isDeleted = default,
+            string versionId = default)
+        {
+            return new BlobContainerItem()
+            {
+                Name = name,
+                Properties = properties,
+                IsDeleted = isDeleted,
+                VersionId = versionId,
+            };
+        }
 
         /// <summary>
         /// Creates a new BlobContainerItem instance for mocking.
@@ -1157,10 +1293,26 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new AccountInfo instance for mocking.
         /// </summary>
+        public static AccountInfo AccountInfo(
+            SkuName skuName,
+            AccountKind accountKind,
+            bool isHierarchicalNamespaceEnabled)
+        {
+            return new AccountInfo()
+            {
+                SkuName = skuName,
+                AccountKind = accountKind,
+                IsHierarchicalNamespaceEnabled = isHierarchicalNamespaceEnabled,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new AccountInfo instance for mocking.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AccountInfo AccountInfo(
-            Azure.Storage.Blobs.Models.SkuName skuName,
-            Azure.Storage.Blobs.Models.AccountKind accountKind)
+            SkuName skuName,
+            AccountKind accountKind)
         {
             return new AccountInfo()
             {
