@@ -38,10 +38,10 @@ Note on `EventGridEvent`: each `EventGridEvent` has a set of required, non-nulla
 List<EventGridEvent> eventsList = new List<EventGridEvent>
 {
     new EventGridEvent(
-        "This is the event data",
         "ExampleEventSubject",
         "Example.EventType",
-        "1.0")
+        "1.0",
+        "This is the event data")
 };
 
 // Send the events
