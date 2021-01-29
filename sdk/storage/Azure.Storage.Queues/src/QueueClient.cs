@@ -2248,15 +2248,11 @@ namespace Azure.Storage.Queues
                 catch (FormatException) when (ClientConfiguration.QueueMessageDecodingFailedHandlers != null)
                 {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    await ClientConfiguration.QueueMessageDecodingFailedHandlers.RaiseAsync(
-                        new QueueMessageDecodingFailedEventArgs(
-                            queueClient: this,
-                            message: QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
-                            runSynchronously: !async,
-                            cancellationToken: cancellationToken),
-                        nameof(QueueClientOptions),
-                        nameof(QueueClientOptions.MessageDecodingFailed),
-                        ClientConfiguration.ClientDiagnostics).ConfigureAwait(false);
+                    await OnMessageDecodingFailedAsync(
+                        QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
+                        null,
+                        !async,
+                        cancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 }
             }
@@ -2600,15 +2596,11 @@ namespace Azure.Storage.Queues
                 catch (FormatException) when (ClientConfiguration.QueueMessageDecodingFailedHandlers != null)
                 {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    await ClientConfiguration.QueueMessageDecodingFailedHandlers.RaiseAsync(
-                        new QueueMessageDecodingFailedEventArgs(
-                            queueClient: this,
-                            message: PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
-                            runSynchronously: !async,
-                            cancellationToken: cancellationToken),
-                        nameof(QueueClientOptions),
-                        nameof(QueueClientOptions.MessageDecodingFailed),
-                        ClientConfiguration.ClientDiagnostics).ConfigureAwait(false);
+                    await OnMessageDecodingFailedAsync(
+                        null,
+                        PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
+                        !async,
+                        cancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 }
             }
@@ -3165,6 +3157,31 @@ namespace Azure.Storage.Queues
                     $" if {nameof(SpecializedQueueClientOptions.ClientSideEncryption)} is enabled as encrypted payload is already Base64 encoded.");
             }
         }
+
+        /// <summary>
+        /// Raises <see cref="QueueClientOptions.MessageDecodingFailed"/> event.
+        /// </summary>
+        /// <param name="receivedMessage">The <see cref="QueueMessage"/> with raw body, if present.</param>
+        /// <param name="peekedMessage">The <see cref="PeekedMessage"/> with raw body, if present.</param>
+        /// <param name="runSynchronously">A value indicating whether the event handler was invoked
+        /// synchronously or asynchronously.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns></returns>
+        protected virtual async Task OnMessageDecodingFailedAsync(QueueMessage receivedMessage, PeekedMessage peekedMessage,
+            bool runSynchronously, CancellationToken cancellationToken)
+        {
+            await ClientConfiguration.QueueMessageDecodingFailedHandlers.RaiseAsync(
+                new QueueMessageDecodingFailedEventArgs(
+                    queueClient: this,
+                    receivedMessage: receivedMessage,
+                    peekedMessage: peekedMessage,
+                    runSynchronously: runSynchronously,
+                    cancellationToken: cancellationToken),
+                nameof(QueueClientOptions),
+                nameof(QueueClientOptions.MessageDecodingFailed),
+                ClientConfiguration.ClientDiagnostics).ConfigureAwait(false);
+        }
+
         #endregion Encoding
 
         #region GetParentQueueServiceClientCore

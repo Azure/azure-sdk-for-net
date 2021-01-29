@@ -34,7 +34,8 @@ namespace Azure.Storage.Queues
         /// Initializes a new instance of the <see cref="QueueMessageDecodingFailedEventArgs"/>.
         /// </summary>
         /// <param name="queueClient">The <see cref="QueueClient"/> that has received invalid message.</param>
-        /// <param name="message">The invalid message.</param>
+        /// <param name="receivedMessage">The received <see cref="QueueMessage"/> message.</param>
+        /// <param name="peekedMessage">The peeked <see cref="PeekedMessage"/> message.</param>
         /// <param name="runSynchronously">
         /// A value indicating whether the event handler was invoked
         /// synchronously or asynchronously.  Please see
@@ -48,54 +49,20 @@ namespace Azure.Storage.Queues
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
-        /// Thrown if <paramref name="queueClient"/> or <paramref name="message"/>
-        /// are null.
+        /// Thrown if <paramref name="queueClient"/> is null.
         /// </exception>
         public QueueMessageDecodingFailedEventArgs(
             QueueClient queueClient,
-            QueueMessage message,
+            QueueMessage receivedMessage,
+            PeekedMessage peekedMessage,
             bool runSynchronously,
             CancellationToken cancellationToken)
             : base(runSynchronously, cancellationToken)
         {
             Argument.AssertNotNull(queueClient, nameof(queueClient));
-            Argument.AssertNotNull(message, nameof(message));
             Queue = queueClient;
-            ReceivedMessage = message;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="QueueMessageDecodingFailedEventArgs"/>.
-        /// </summary>
-        /// <param name="queueClient">The <see cref="QueueClient"/> that has received invalid message.</param>
-        /// <param name="message">The invalid message.</param>
-        /// <param name="runSynchronously">
-        /// A value indicating whether the event handler was invoked
-        /// synchronously or asynchronously.  Please see
-        /// <see cref="Azure.Core.SyncAsyncEventHandler{T}"/> for more details.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// A cancellation token related to the original operation that raised
-        /// the event.  It's important for your handler to pass this token
-        /// along to any asynchronous or long-running synchronous operations
-        /// that take a token so cancellation will correctly propagate.  The
-        /// default value is <see cref="CancellationToken.None"/>.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown if <paramref name="queueClient"/> or <paramref name="message"/>
-        /// are null.
-        /// </exception>
-        public QueueMessageDecodingFailedEventArgs(
-            QueueClient queueClient,
-            PeekedMessage message,
-            bool runSynchronously,
-            CancellationToken cancellationToken)
-            : base(runSynchronously, cancellationToken)
-        {
-            Argument.AssertNotNull(queueClient, nameof(queueClient));
-            Argument.AssertNotNull(message, nameof(message));
-            Queue = queueClient;
-            PeekedMessage = message;
+            ReceivedMessage = receivedMessage;
+            PeekedMessage = peekedMessage;
         }
     }
 }
