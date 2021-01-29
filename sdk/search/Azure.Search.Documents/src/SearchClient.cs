@@ -729,7 +729,7 @@ namespace Azure.Search.Documents
         /// the <see cref="AsyncPageable{T}.AsPages(string, int?)"/> method.
         /// </para>
         /// </remarks>
-        public async virtual Task<Response<SearchResults<T>>> SearchAsync<T>(
+        public virtual async Task<Response<SearchResults<T>>> SearchAsync<T>(
             string searchText,
             SearchOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1194,7 +1194,7 @@ namespace Azure.Search.Documents
         /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
         /// </remarks>>
-        public async virtual Task<Response<IndexDocumentsResult>> IndexDocumentsAsync<T>(
+        public virtual async Task<Response<IndexDocumentsResult>> IndexDocumentsAsync<T>(
             IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1899,26 +1899,5 @@ namespace Azure.Search.Documents
             }
         }
         #endregion Index Documents Conveniences
-
-        /// <summary>
-        /// Creates a new <see cref="SearchIndexingBufferedSender{T}"/> that
-        /// can be used to index search documents with intelligent batching,
-        /// automatic flushing, and retries for failed indexing actions.
-        /// </summary>
-        /// <typeparam name="T">
-        /// The .NET type that maps to the index schema.  Instances of this
-        /// type can be retrieved as documents from the index. You can use
-        /// <see cref="SearchDocument"/> for dynamic documents.
-        /// </typeparam>
-        /// <param name="options">
-        /// The <see cref="SearchIndexingBufferedSenderOptions{T}"/> to
-        /// customize the sender's behavior.
-        /// </param>
-        /// <returns>
-        /// A new <see cref="SearchIndexingBufferedSender{T}"/>.
-        /// </returns>
-        public virtual SearchIndexingBufferedSender<T> CreateIndexingBufferedSender<T>(
-            SearchIndexingBufferedSenderOptions<T> options = null) =>
-            new SearchIndexingBufferedSender<T>(this, options);
     }
 }
