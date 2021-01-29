@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Blob info from a Filter Blobs API call. </summary>
-    public partial class FilterBlobItem
+    internal partial class FilterBlobItem
     {
         /// <summary> Initializes a new instance of FilterBlobItem. </summary>
         /// <param name="name"> . </param>

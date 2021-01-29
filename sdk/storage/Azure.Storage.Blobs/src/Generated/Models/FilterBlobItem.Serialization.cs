@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class FilterBlobItem
+    internal partial class FilterBlobItem
     {
         internal static FilterBlobItem DeserializeFilterBlobItem(XElement element)
         {

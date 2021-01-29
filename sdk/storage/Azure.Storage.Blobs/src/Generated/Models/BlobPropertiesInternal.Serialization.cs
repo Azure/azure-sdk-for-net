@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobPropertiesInternal
+    internal partial class BlobPropertiesInternal
     {
         internal static BlobPropertiesInternal DeserializeBlobPropertiesInternal(XElement element)
         {

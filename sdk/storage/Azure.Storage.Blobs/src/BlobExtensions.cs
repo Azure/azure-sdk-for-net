@@ -32,56 +32,12 @@ namespace Azure.Storage.Blobs
 
         internal static BlobTags ToBlobTags(this Tags tags)
         {
-            BlobTags blobTags = new BlobTags();
-            foreach (KeyValuePair<string, string> tag in tags)
-            {
-                blobTags.BlobTagSet.Add(new BlobTag
-                {
-                    Key = tag.Key,
-                    Value = tag.Value
-                });
-            }
-            return blobTags;
-        }
-
-        internal static BlobItem ToBlobItem(this BlobItemInternal blobItemInternal)
-        {
-            if (blobItemInternal == null)
+            if (tags == null)
             {
                 return null;
             }
-
-            return new BlobItem
-            {
-                Name = blobItemInternal.Name,
-                Deleted = blobItemInternal.Deleted,
-                Snapshot = blobItemInternal.Snapshot,
-                Properties = blobItemInternal.Properties,
-                VersionId = blobItemInternal.VersionId,
-                IsLatestVersion = blobItemInternal.IsCurrentVersion,
-                Metadata = blobItemInternal.Metadata?.Count > 0
-                    ? blobItemInternal.Metadata
-                    : new Dictionary<string, string>(),
-                Tags = blobItemInternal.BlobTags.ToTagDictionary(),
-                ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
-                    ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)
-                    : null
-            };
-        }
-
-        internal static IEnumerable<BlobItem> ToBlobItems(this IEnumerable<BlobItemInternal> blobItemInternals)
-        {
-            if (blobItemInternals == null)
-            {
-                return null;
-            }
-
-            List<BlobItem> blobItems = new List<BlobItem>();
-            foreach (BlobItemInternal blobItemInternal in blobItemInternals)
-            {
-                blobItems.Add(blobItemInternal.ToBlobItem());
-            }
-            return blobItems;
+            IEnumerable<BlobTag> blobTags = tags.Select(tag => new BlobTag(tag.Key, tag.Value));
+            return new BlobTags(blobTags);
         }
 
         internal static string ToTagsString(this Tags tags)
@@ -98,62 +54,6 @@ namespace Azure.Storage.Blobs
             }
             return string.Join("&", encodedTags);
         }
-
-        /// <summary>
-        /// Creates a new BlobProperties object backed by BlobPropertiesInternal.
-        /// </summary>
-        /// <param name="properties">
-        /// The BlobPropertiesInternal returned with the request.
-        /// </param>
-        internal static BlobProperties ToBlobProperties(this BlobPropertiesInternal properties) =>
-            new BlobProperties()
-            {
-                LastModified = properties.LastModified,
-                CreatedOn = properties.CreatedOn,
-                Metadata = properties.Metadata,
-                ObjectReplicationDestinationPolicyId = properties.ObjectReplicationPolicyId,
-                ObjectReplicationSourceProperties =
-                    properties.ObjectReplicationRules?.Count > 0
-                    ? BlobExtensions.ParseObjectReplicationIds(properties.ObjectReplicationRules)
-                    : null,
-                BlobType = properties.BlobType,
-                CopyCompletedOn = properties.CopyCompletedOn,
-                CopyStatusDescription = properties.CopyStatusDescription,
-                CopyId = properties.CopyId,
-                CopyProgress = properties.CopyProgress,
-                CopySource = properties.CopySource,
-                CopyStatus = properties.CopyStatus,
-                IsIncrementalCopy = properties.IsIncrementalCopy,
-                DestinationSnapshot = properties.DestinationSnapshot,
-                LeaseDuration = properties.LeaseDuration,
-                LeaseState = properties.LeaseState,
-                LeaseStatus = properties.LeaseStatus,
-                ContentLength = properties.ContentLength,
-                ContentType = properties.ContentType,
-                ETag = properties.ETag,
-                ContentHash = properties.ContentHash,
-                ContentEncoding = properties.ContentEncoding,
-                ContentDisposition = properties.ContentDisposition,
-                ContentLanguage = properties.ContentLanguage,
-                CacheControl = properties.CacheControl,
-                BlobSequenceNumber = properties.BlobSequenceNumber,
-                AcceptRanges = properties.AcceptRanges,
-                BlobCommittedBlockCount = properties.BlobCommittedBlockCount,
-                IsServerEncrypted = properties.IsServerEncrypted,
-                EncryptionKeySha256 = properties.EncryptionKeySha256,
-                EncryptionScope = properties.EncryptionScope,
-                AccessTier = properties.AccessTier,
-                AccessTierInferred = properties.AccessTierInferred,
-                ArchiveStatus = properties.ArchiveStatus,
-                AccessTierChangedOn = properties.AccessTierChangedOn,
-                VersionId = properties.VersionId,
-                IsLatestVersion = properties.IsCurrentVersion,
-                TagCount = properties.TagCount,
-                ExpiresOn = properties.ExpiresOn,
-                IsSealed = properties.IsSealed,
-                RehydratePriority = properties.RehydratePriority,
-                LastAccessed = properties.LastAccessed
-            };
 
         /// <summary>
         /// Internal. Parses Object Replication Policy ID from Rule ID and sets the Policy ID for source blobs.
@@ -279,8 +179,8 @@ namespace Azure.Storage.Blobs
 
             return new TaggedBlobItem
             {
-                BlobName = filterBlobItem.BlobName,
-                BlobContainerName = filterBlobItem.BlobContainerName,
+                BlobName = filterBlobItem.Name,
+                BlobContainerName = filterBlobItem.ContainerName,
                 Tags = filterBlobItem.Tags.ToTagDictionary()
             };
         }

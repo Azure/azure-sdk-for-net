@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> An Azure Storage blob. </summary>
-    public partial class BlobItemInternal
+    internal partial class BlobItemInternal
     {
         /// <summary> Initializes a new instance of BlobItemInternal. </summary>
         /// <param name="name"> . </param>

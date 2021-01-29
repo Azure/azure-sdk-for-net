@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The BlobTag. </summary>
-    public partial class BlobTag
+    internal partial class BlobTag
     {
         /// <summary> Initializes a new instance of BlobTag. </summary>
         /// <param name="key"> . </param>

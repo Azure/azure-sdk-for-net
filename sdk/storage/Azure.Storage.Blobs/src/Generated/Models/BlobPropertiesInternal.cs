@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Properties of a blob. </summary>
-    public partial class BlobPropertiesInternal
+    internal partial class BlobPropertiesInternal
     {
         /// <summary> Initializes a new instance of BlobPropertiesInternal. </summary>
         /// <param name="lastModified"> . </param>
