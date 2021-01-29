@@ -1352,5 +1352,21 @@ namespace Azure.Storage.Blobs.Models
                 SignedIdentifiers = signedIdentifiers,
             };
         }
+
+        /// <summary>
+        /// Creates a new PageBlobInfo instance for mocking.
+        /// </summary>
+        public static PageBlobInfo PageBlobInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            long blobSequenceNumber)
+        {
+            return new PageBlobInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                BlobSequenceNumber = blobSequenceNumber,
+            };
+        }
     }
 }

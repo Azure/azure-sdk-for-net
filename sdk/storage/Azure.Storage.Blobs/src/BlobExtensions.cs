@@ -378,5 +378,47 @@ namespace Azure.Storage.Blobs
         {
             return null;
         }
+
+        // TODO
+        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<PageBlobCreateHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobUploadPagesHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobClearPagesHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageRangesInfo ToPageRangesInfo(this ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageRangesInfo ToPageRangesInfo(this ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageBlobInfo ToPageBlobInfo(this ResponseWithHeaders<PageBlobResizeHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageBlobInfo ToPageBlobInfo(this ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> response)
+        {
+            return null;
+        }
     }
 }

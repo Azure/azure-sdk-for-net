@@ -54,6 +54,9 @@ directive:
     delete $.SourceIfMatch["x-ms-parameter-grouping"];
     delete $.SourceIfNoneMatch["x-ms-parameter-grouping"];
     delete $.SourceIfTags["x-ms-parameter-grouping"];
+    delete $.IfSequenceNumberLessThanOrEqualTo["x-ms-parameter-grouping"];
+    delete $.IfSequenceNumberLessThan["x-ms-parameter-grouping"];
+    delete $.IfSequenceNumberEqualTo["x-ms-parameter-grouping"];
 ```
 
 ### Remove CPK and encryption scope parameter grouping

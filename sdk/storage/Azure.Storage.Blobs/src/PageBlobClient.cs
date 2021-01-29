@@ -44,6 +44,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public virtual int PageBlobMaxUploadPagesBytes => 4 * Constants.MB; // 4MB
 
+        /// <summary>
+        /// PageBlobRestClient.
+        /// </summary>
+        private readonly PageBlobRestClient _pageBlobRestClient;
+
+        /// <summary>
+        /// PageBlobRestClient.
+        /// </summary>
+        internal virtual PageBlobRestClient PageBlobRestClient => _pageBlobRestClient;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="PageBlobClient"/>
@@ -75,6 +85,10 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(string connectionString, string blobContainerName, string blobName)
             : base(connectionString, blobContainerName, blobName)
         {
+            _pageBlobRestClient = BuildPageBlobRestClient(
+                connectionString,
+                blobContainerName,
+                blobName);
         }
 
         /// <summary>
@@ -124,6 +138,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, BlobClientOptions options = default)
             : base(blobUri, options)
         {
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -147,6 +162,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -174,6 +190,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -197,6 +214,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -239,6 +257,7 @@ namespace Azure.Storage.Blobs.Specialized
                   clientSideEncryption: default,
                   encryptionScope)
         {
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -247,6 +266,41 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
             }
+        }
+
+        private PageBlobRestClient BuildPageBlobRestClient(
+            string connectionString,
+            string blobContainerName,
+            string blobName)
+        {
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
+            {
+                BlobContainerName = blobContainerName,
+                BlobName = blobName
+            };
+            return BuildPageBlobRestClient(uriBuilder);
+        }
+
+        private PageBlobRestClient BuildPageBlobRestClient(Uri uri)
+            => BuildPageBlobRestClient(new BlobUriBuilder(uri));
+
+        private PageBlobRestClient BuildPageBlobRestClient(BlobUriBuilder uriBuilder)
+        {
+            string containerName = uriBuilder.BlobContainerName;
+            // TODO what if blobName has special characters or is encode?
+            string blobName = uriBuilder.BlobName;
+            uriBuilder.BlobContainerName = null;
+            uriBuilder.BlobName = null;
+            // TODO we need to be able to access the underlying readonly private properties here,
+            // or The AppendBlobClient won't be mockable
+            return new PageBlobRestClient(
+                clientDiagnostics: ClientDiagnostics,
+                pipeline: Pipeline,
+                url: uriBuilder.ToUri().ToString(),
+                containerName: containerName,
+                blob: blobName,
+                version: Version.ToVersionString());
         }
         #endregion ctors
 
@@ -866,7 +920,9 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName = null)
+#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -879,36 +935,57 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    return await BlobRestClient.PageBlob.CreateAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        contentLength: default,
-                        blobContentType: httpHeaders?.ContentType,
-                        blobContentEncoding: httpHeaders?.ContentEncoding,
-                        blobContentLanguage: httpHeaders?.ContentLanguage,
-                        blobContentHash: httpHeaders?.ContentHash,
-                        blobCacheControl: httpHeaders?.CacheControl,
-                        metadata: metadata,
-                        leaseId: conditions?.LeaseId,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        blobContentDisposition: httpHeaders?.ContentDisposition,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        blobContentLength: size,
-                        blobSequenceNumber: sequenceNumber,
-                        blobTagsString: tags?.ToTagsString(),
-                        async: async,
-                        operationName: operationName ?? $"{nameof(PageBlobClient)}.{nameof(Create)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<PageBlobCreateHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PageBlobRestClient.CreateAsync(
+                            contentLength: 0,
+                            blobContentLength: size,
+                            // TODO?
+                            tier: null,
+                            metadata: metadata,
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobSequenceNumber: sequenceNumber,
+                            blobTagsString: tags?.ToTagsString(),
+                            blobHttpHeaders: httpHeaders,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PageBlobRestClient.Create(
+                            contentLength: 0,
+                            blobContentLength: size,
+                            // TODO?
+                            tier: null,
+                            metadata: metadata,
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobSequenceNumber: sequenceNumber,
+                            blobTagsString: tags?.ToTagsString(),
+                            blobHttpHeaders: httpHeaders,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobContentInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1122,32 +1199,55 @@ namespace Azure.Storage.Blobs.Specialized
                     content = content?.WithNoDispose().WithProgress(progressHandler);
                     var range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
 
-                    return await BlobRestClient.PageBlob.UploadPagesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        body: content,
-                        contentLength: (content?.Length - content?.Position) ?? 0,
-                        version: Version.ToVersionString(),
-                        transactionalContentHash: transactionalContentHash,
-                        timeout: default,
-                        range: range.ToString(),
-                        leaseId: conditions?.LeaseId,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
-                        ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
-                        ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: $"{nameof(PageBlobClient)}.{nameof(UploadPages)}",
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<PageBlobUploadPagesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PageBlobRestClient.UploadPagesAsync(
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            body: content,
+                            transactionalContentMD5: transactionalContentHash,
+                            range: range.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
+                            ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
+                            ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PageBlobRestClient.UploadPages(
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            body: content,
+                            transactionalContentMD5: transactionalContentHash,
+                            range: range.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
+                            ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
+                            ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToPageInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1302,30 +1402,51 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await BlobRestClient.PageBlob.ClearPagesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        contentLength: default,
-                        version: Version.ToVersionString(),
-                        range: range.ToString(),
-                        leaseId: conditions?.LeaseId,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
-                        ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
-                        ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: $"{nameof(PageBlobClient)}.{nameof(ClearPages)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<PageBlobClearPagesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PageBlobRestClient.ClearPagesAsync(
+                            contentLength: 0,
+                            range: range.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
+                            ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
+                            ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PageBlobRestClient.ClearPages(
+                            contentLength: 0,
+                            range: range.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: EncryptionScope,
+                            ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
+                            ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
+                            ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToPageInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1489,28 +1610,45 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    Response<PageRangesInfoInternal> response = await BlobRestClient.PageBlob.GetPageRangesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        snapshot: snapshot,
-                        range: range?.ToString(),
-                        leaseId: conditions?.LeaseId,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response;
 
-                    // Return an exploding Response on 304
-                    return response.IsUnavailable() ?
-                        response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>() :
-                        Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
+                    if (async)
+                    {
+                        response = await PageBlobRestClient.GetPageRangesAsync(
+                            snapshot: snapshot,
+                            range: range?.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PageBlobRestClient.GetPageRanges(
+                            snapshot: snapshot,
+                            range: range?.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    // TODO
+                    //// Return an exploding Response on 304
+                    //return response.IsUnavailable() ?
+                    //    response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>() :
+                    //    Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
+
+                    return Response.FromValue(
+                        response.ToPageRangesInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1710,7 +1848,9 @@ namespace Azure.Storage.Blobs.Specialized
             Uri previousSnapshotUri,
             PageBlobRequestConditions conditions,
             bool async,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName,
+#pragma warning restore CA1801 // Review unused parameters
             CancellationToken cancellationToken)
         {
             using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
@@ -1725,30 +1865,49 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    Response<PageRangesInfoInternal> response = await BlobRestClient.PageBlob.GetPageRangesDiffAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        snapshot: snapshot,
-                        prevsnapshot: previousSnapshot,
-                        prevSnapshotUrl: previousSnapshotUri,
-                        range: range?.ToString(),
-                        leaseId: conditions?.LeaseId,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: operationName,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response;
 
-                    // Return an exploding Response on 304
-                    return response.IsUnavailable() ?
-                        response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>() :
-                        Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
+                    if (async)
+                    {
+                        response = await PageBlobRestClient.GetPageRangesDiffAsync(
+                            snapshot: snapshot,
+                            prevsnapshot: previousSnapshot,
+                            prevSnapshotUrl: previousSnapshotUri,
+                            range: range?.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PageBlobRestClient.GetPageRangesDiff(
+                            snapshot: snapshot,
+                            prevsnapshot: previousSnapshot,
+                            prevSnapshotUrl: previousSnapshotUri,
+                            range: range?.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    // TODO
+                    //// Return an exploding Response on 304
+                    //return response.IsUnavailable() ?
+                    //    response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>() :
+                    //    Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
+
+                    return Response.FromValue(
+                        response.ToPageRangesInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2028,26 +2187,41 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await BlobRestClient.PageBlob.ResizeAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        blobContentLength: size,
-                        version: Version.ToVersionString(),
-                        leaseId: conditions?.LeaseId,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: $"{nameof(PageBlobClient)}.{nameof(Resize)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<PageBlobResizeHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PageBlobRestClient.ResizeAsync(
+                            blobContentLength: size,
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PageBlobRestClient.Resize(
+                            blobContentLength: size,
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToPageBlobInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2248,23 +2422,39 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await BlobRestClient.PageBlob.UpdateSequenceNumberAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        sequenceNumberAction: action,
-                        version: Version.ToVersionString(),
-                        blobSequenceNumber: sequenceNumber,
-                        leaseId: conditions?.LeaseId,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        operationName: $"{nameof(PageBlobClient)}.{nameof(UpdateSequenceNumber)}",
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PageBlobRestClient.UpdateSequenceNumberAsync(
+                            sequenceNumberAction: action,
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobSequenceNumber: sequenceNumber,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PageBlobRestClient.UpdateSequenceNumber(
+                            sequenceNumberAction: action,
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobSequenceNumber: sequenceNumber,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToPageBlobInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
