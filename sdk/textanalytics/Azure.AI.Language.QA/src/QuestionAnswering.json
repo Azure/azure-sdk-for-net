@@ -1,0 +1,611 @@
+﻿{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1.0-preview.1",
+        "title": "QnAMaker Client",
+        "description": "An API for Unified Language Service Custom Skill QnAMaker - Prediction"
+    },
+    "securityDefinitions": {
+        "apim_key": {
+            "type": "apiKey",
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header"
+        }
+    },
+    "security": [
+        {
+            "apim_key": []
+        }
+    ],
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{Endpoint}/qnamaker/v5.0-preview.1",
+        "useSchemePrefix": false,
+        "parameters": [
+            {
+                "$ref": "#/parameters/Endpoint"
+            }
+        ]
+    },
+    "paths": {
+        "/knowledgebases/{kbId}/generateAnswer": {
+            "post": {
+                "tags": [
+                    "Knowledgebases"
+                ],
+                "summary": "GenerateAnswer call to query knowledgebase (QnA Maker Managed).",
+                "operationId": "Knowledgebase_GenerateAnswer",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/KbId"
+                    },
+                    {
+                        "$ref": "#/parameters/GenerateAnswerPayload"
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GenerateAnswer call response.",
+                        "schema": {
+                            "$ref": "#/definitions/QnASearchResultList"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful query": {
+                        "$ref": "./examples/SuccessfulGenAns.json"
+                    }
+                }
+            }
+        },
+        "/knowledgebases/{kbId}/train": {
+            "post": {
+                "tags": [
+                    "Knowledgebases"
+                ],
+                "summary": "Train call to add suggestions to knowledgebase (QnAMaker Managed).",
+                "operationId": "Knowledgebase_Train",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/KbId"
+                    },
+                    {
+                        "$ref": "#/parameters/TrainPayload"
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "HTTP 204 No Content."
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Successful query": {
+                        "$ref": "./examples/SuccessfulTrain.json"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "QnA": {
+            "type": "object",
+            "description": "Q-A object.",
+            "additionalProperties": false,
+            "required": [
+                "answer",
+                "questions"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique id for the Q-A.",
+                    "format": "int32"
+                },
+                "answer": {
+                    "type": "string",
+                    "description": "Answer text",
+                    "maxLength": 25000,
+                    "minLength": 1
+                },
+                "source": {
+                    "type": "string",
+                    "description": "Source from which Q-A was indexed. eg. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs",
+                    "maxLength": 300
+                },
+                "questions": {
+                    "type": "array",
+                    "description": "List of questions associated with the answer.",
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "metadata": {
+                    "type": "array",
+                    "description": "List of metadata associated with the answer.",
+                    "maxLength": 10,
+                    "items": {
+                        "$ref": "#/definitions/Metadata"
+                    }
+                },
+                "context": {
+                    "description": "Context of a QnA",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/Context"
+                        }
+                    ]
+                },
+                "lastUpdatedTimestamp": {
+                    "type": "string",
+                    "description": "Timestamp when the QnA was last updated.",
+                    "maxLength": 300
+                }
+            }
+        },
+        "Context": {
+            "type": "object",
+            "description": "Context associated with Qna.",
+            "properties": {
+                "isContextOnly": {
+                    "type": "boolean",
+                    "description": "To mark if a prompt is relevant only with a previous question or not.\ntrue - Do not include this QnA as search result for queries without context\nfalse - ignores context and includes this QnA in search result"
+                },
+                "prompts": {
+                    "type": "array",
+                    "description": "List of prompts associated with the answer.",
+                    "maxItems": 20,
+                    "items": {
+                        "$ref": "#/definitions/Prompt"
+                    }
+                }
+            }
+        },
+        "Prompt": {
+            "type": "object",
+            "description": "Prompt for an answer.",
+            "properties": {
+                "displayOrder": {
+                    "type": "integer",
+                    "description": "Index of the prompt - used in ordering of the prompts",
+                    "format": "int32"
+                },
+                "qnaId": {
+                    "type": "integer",
+                    "description": "Qna id corresponding to the prompt - if QnaId is present, QnA object is ignored.",
+                    "format": "int32"
+                },
+                "qna": {
+                    "description": "QnA - Either QnaId or QnA needs to be present in a Prompt object",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/QnA"
+                        }
+                    ]
+                },
+                "displayText": {
+                    "type": "string",
+                    "description": "Text displayed to represent a follow up question prompt",
+                    "maxLength": 200
+                }
+            }
+        },
+        "Metadata": {
+            "type": "object",
+            "description": "Name - value pair of metadata.",
+            "additionalProperties": false,
+            "required": [
+                "name",
+                "value"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Metadata name.",
+                    "maxLength": 100,
+                    "minLength": 1
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Metadata value.",
+                    "maxLength": 500,
+                    "minLength": 1
+                }
+            }
+        },
+        "ErrorResponse": {
+            "type": "object",
+            "description": "Error response. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+            "additionalProperties": false,
+            "properties": {
+                "error": {
+                    "description": "The error object.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/Error"
+                        }
+                    ]
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "description": "The error object. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+            "additionalProperties": false,
+            "required": [
+                "code"
+            ],
+            "properties": {
+                "code": {
+                    "description": "One of a server-defined set of error codes.",
+                    "$ref": "#/definitions/ErrorCode"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "A human-readable representation of the error."
+                },
+                "target": {
+                    "type": "string",
+                    "description": "The target of the error."
+                },
+                "details": {
+                    "type": "array",
+                    "description": "An array of details about specific errors that led to this reported error.",
+                    "items": {
+                        "$ref": "#/definitions/Error"
+                    }
+                },
+                "innerError": {
+                    "description": "An object containing more specific information than the current object about the error.",
+                    "$ref": "#/definitions/InnerErrorModel"
+                }
+            }
+        },
+        "ErrorCode": {
+            "type": "string",
+            "description": "Human readable error code.",
+            "x-ms-enum": {
+                "name": "ErrorCodeType",
+                "modelAsString": true
+            },
+            "enum": [
+                "BadArgument",
+                "Forbidden",
+                "NotFound",
+                "KbNotFound",
+                "Unauthorized",
+                "Unspecified",
+                "EndpointKeysError",
+                "QuotaExceeded",
+                "QnaRuntimeError",
+                "SKULimitExceeded",
+                "OperationNotFound",
+                "ServiceError",
+                "ValidationFailure",
+                "ExtractionFailure"
+            ]
+        },
+        "InnerErrorModel": {
+            "type": "object",
+            "description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+            "additionalProperties": false,
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "A more specific error code than was provided by the containing error."
+                },
+                "innerError": {
+                    "description": "An object containing more specific information than the current object about the error.",
+                    "$ref": "#/definitions/InnerErrorModel"
+                }
+            }
+        },
+        "Query": {
+            "type": "object",
+            "description": "POST body schema to query the knowledgebase.",
+            "additionalProperties": false,
+            "properties": {
+                "qnaId": {
+                    "type": "string",
+                    "description": "Exact qnaId to fetch from the knowledgebase, this field takes priority over question."
+                },
+                "question": {
+                    "type": "string",
+                    "description": "User question to query against the knowledge base."
+                },
+                "top": {
+                    "type": "integer",
+                    "description": "Max number of answers to be returned for the question.",
+                    "format": "int32"
+                },
+                "userId": {
+                    "type": "string",
+                    "description": "Unique identifier for the user."
+                },
+                "isTest": {
+                    "type": "boolean",
+                    "description": "Query against the test index."
+                },
+                "scoreThreshold": {
+                    "type": "number",
+                    "description": "Minimum threshold score for answers."
+                },
+                "context": {
+                    "description": "Context object with previous QnA's information.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/QueryContext"
+                        }
+                    ]
+                },
+                "rankerType": {
+                    "type": "string",
+                    "description": "Optional field. Set to 'QuestionOnly' for using a question only Ranker."
+                },
+                "strictFilters": {
+                    "type": "array",
+                    "description": "Find QnAs that are associated with the given list of metadata.",
+                    "items": {
+                        "$ref": "#/definitions/Metadata"
+                    }
+                },
+                "strictFiltersCompoundOperationType": {
+                    "type": "string",
+                    "description": "Optional field. Set to 'OR' for using OR operation for strict filters.",
+                    "x-ms-enum": {
+                        "name": "StrictFiltersCompoundOperationType",
+                        "modelAsString": true
+                    },
+                    "enum": [
+                        "AND",
+                        "OR"
+                    ]
+                },
+                "answerSpanRequest": {
+                    "description": "To configure Answer span prediction feature.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AnswerSpanRequest"
+                        }
+                    ]
+                }
+            }
+        },
+        "QueryContext": {
+            "type": "object",
+            "description": "Context object with previous QnA's information.",
+            "additionalProperties": false,
+            "properties": {
+                "previousQnaId": {
+                    "type": "integer",
+                    "description": "Previous QnA Id - qnaId of the top result."
+                },
+                "previousUserQuery": {
+                    "type": "string",
+                    "description": "Previous user query."
+                }
+            }
+        },
+        "QnASearchResultList": {
+            "type": "object",
+            "description": "Represents List of Question Answers.",
+            "additionalProperties": false,
+            "properties": {
+                "answers": {
+                    "type": "array",
+                    "description": "Represents Search Result list.",
+                    "items": {
+                        "$ref": "#/definitions/QnASearchResult"
+                    }
+                }
+            }
+        },
+        "QnASearchResult": {
+            "type": "object",
+            "description": "Represents Search Result.",
+            "additionalProperties": false,
+            "properties": {
+                "questions": {
+                    "type": "array",
+                    "description": "List of questions.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "answer": {
+                    "type": "string",
+                    "description": "Answer."
+                },
+                "score": {
+                    "type": "number",
+                    "description": "Search result score."
+                },
+                "id": {
+                    "type": "integer",
+                    "description": "Id of the QnA result.",
+                    "format": "int32"
+                },
+                "source": {
+                    "type": "string",
+                    "description": "Source of QnA result."
+                },
+                "metadata": {
+                    "type": "array",
+                    "description": "List of metadata.",
+                    "items": {
+                        "$ref": "#/definitions/Metadata"
+                    }
+                },
+                "context": {
+                    "type": "object",
+                    "description": "Context object of the QnA",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/Context"
+                        }
+                    ]
+                },
+                "answerSpan": {
+                    "type": "object",
+                    "description": "Answer span object of QnA with respect to user's question.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AnswerSpanResponse"
+                        }
+                    ]
+                }
+            }
+        },
+        "FeedbackRecords": {
+            "type": "object",
+            "description": "Active learning feedback records.",
+            "additionalProperties": false,
+            "properties": {
+                "feedbackRecords": {
+                    "type": "array",
+                    "description": "List of feedback records.",
+                    "maxLength": 1000,
+                    "items": {
+                        "$ref": "#/definitions/FeedbackRecord"
+                    }
+                }
+            }
+        },
+        "FeedbackRecord": {
+            "type": "object",
+            "description": "Active learning feedback record.",
+            "additionalProperties": false,
+            "properties": {
+                "userId": {
+                    "type": "string",
+                    "description": "Unique identifier for the user."
+                },
+                "userQuestion": {
+                    "type": "string",
+                    "description": "The suggested question being provided as feedback.",
+                    "maxLength": 1000
+                },
+                "qnaId": {
+                    "type": "integer",
+                    "description": "The qnaId for which the suggested question is provided as feedback.",
+                    "format": "int32"
+                }
+            }
+        },
+        "AnswerSpanRequest": {
+            "type": "object",
+            "description": "To configure Answer span prediction feature.",
+            "additionalProperties": false,
+            "properties": {
+                "enable": {
+                    "type": "boolean",
+                    "description": "Enable or Disable Answer Span prediction."
+                },
+                "scoreThreshold": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Minimum threshold score required to include an answer span."
+                },
+                "topAnswersWithSpan": {
+                    "type": "integer",
+                    "description": "Number of Top answers to be considered for span prediction.",
+                    "format": "int32",
+                    "maximum": 10,
+                    "minimum": 1
+                }
+            }
+        },
+        "AnswerSpanResponse": {
+            "type": "object",
+            "description": "Answer span object of QnA.",
+            "additionalProperties": false,
+            "properties": {
+                "text": {
+                    "type": "string",
+                    "description": "Predicted text of answer span."
+                },
+                "score": {
+                    "type": "number",
+                    "description": "Predicted score of answer span.",
+                    "format": "double"
+                },
+                "startIndex": {
+                    "type": "integer",
+                    "description": "Start index of answer span in answer.",
+                    "format": "int32"
+                },
+                "endIndex": {
+                    "type": "integer",
+                    "description": "End index of answer span in answer.",
+                    "format": "int32"
+                }
+            }
+        }
+    },
+    "parameters": {
+        "KbId": {
+            "type": "string",
+            "name": "kbId",
+            "in": "path",
+            "required": true,
+            "x-nullable": false,
+            "description": "Knowledgebase id.",
+            "x-ms-parameter-location": "method"
+        },
+        "GenerateAnswerPayload": {
+            "name": "generateAnswerPayload",
+            "in": "body",
+            "required": true,
+            "schema": {
+                "$ref": "#/definitions/Query"
+            },
+            "x-nullable": true,
+            "description": "Post body of the request.",
+            "x-ms-parameter-location": "method"
+        },
+        "TrainPayload": {
+            "name": "trainPayload",
+            "in": "body",
+            "required": true,
+            "schema": {
+                "$ref": "#/definitions/FeedbackRecords"
+            },
+            "x-nullable": true,
+            "description": "Post body of the request.",
+            "x-ms-parameter-location": "method"
+        },
+        "Endpoint": {
+            "name": "Endpoint",
+            "description": "Supported Cognitive Services endpoint (e.g., https://< qnamaker-resource-name >.api.cognitiveservices.azure.com).",
+            "x-ms-parameter-location": "client",
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "x-ms-skip-url-encoding": true
+        }
+    }
+}

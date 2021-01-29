@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.QA", "src\Azure.AI.Language.QA.csproj", "{BCF1D063-E9D9-4784-A8DF-7C93ACDC74C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCF1D063-E9D9-4784-A8DF-7C93ACDC74C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCF1D063-E9D9-4784-A8DF-7C93ACDC74C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCF1D063-E9D9-4784-A8DF-7C93ACDC74C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCF1D063-E9D9-4784-A8DF-7C93ACDC74C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F49CCA00-3764-47A5-81A6-BD1C553DAA47}
+	EndGlobalSection
+EndGlobal
