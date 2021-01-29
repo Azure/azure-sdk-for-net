@@ -132,7 +132,7 @@ namespace Azure.Storage.Queues
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
-                invalidMessageHandler: options.GetInvalidMessageHandlers());
+                queueMessageDecodingFailedHandlers: options.GetMessageDecodingFailedHandlers());
 
             _serviceRestClient = BuildServiceRestClient();
         }
@@ -259,7 +259,7 @@ namespace Azure.Storage.Queues
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
-                invalidMessageHandler: options.GetInvalidMessageHandlers());
+                queueMessageDecodingFailedHandlers: options.GetMessageDecodingFailedHandlers());
 
             _serviceRestClient = BuildServiceRestClient();
         }

@@ -814,19 +814,19 @@ namespace Azure.Storage.Queues.Test
         {
             // Arrange
             await using DisposingQueue test = await GetTestQueueAsync();
-            object badMessage = null;
-            object badMessage2 = null;
+            PeekedMessage badMessage = null;
+            PeekedMessage badMessage2 = null;
             var encodingClient = GetEncodingClient(
                 test.Queue.Name,
                 QueueMessageEncoding.Base64,
                 arg =>
                 {
-                    badMessage = arg.Message;
+                    badMessage = arg.PeekedMessage;
                     return Task.CompletedTask;
                 },
                 arg =>
                 {
-                    badMessage2 = arg.Message;
+                    badMessage2 = arg.PeekedMessage;
                     return Task.CompletedTask;
                 });
             var nonEncodedContent = "test_content";
@@ -840,9 +840,9 @@ namespace Azure.Storage.Queues.Test
             // Assert
             Assert.AreEqual(1, peekedMessages.Count());
             Assert.NotNull(badMessage);
-            Assert.AreEqual(nonEncodedContent, ((PeekedMessage)badMessage).Body.ToString());
+            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
             Assert.NotNull(badMessage2);
-            Assert.AreEqual(nonEncodedContent, ((PeekedMessage)badMessage2).Body.ToString());
+            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
         }
 
         [Test]
@@ -922,19 +922,19 @@ namespace Azure.Storage.Queues.Test
         {
             // Arrange
             await using DisposingQueue test = await GetTestQueueAsync();
-            object badMessage = null;
-            object badMessage2 = null;
+            QueueMessage badMessage = null;
+            QueueMessage badMessage2 = null;
             var encodingClient = GetEncodingClient(
                 test.Queue.Name,
                 QueueMessageEncoding.Base64,
                 arg =>
                 {
-                    badMessage = arg.Message;
+                    badMessage = arg.ReceivedMessage;
                     return Task.CompletedTask;
                 },
                 arg =>
                 {
-                    badMessage2 = arg.Message;
+                    badMessage2 = arg.ReceivedMessage;
                     return Task.CompletedTask;
                 });
             var nonEncodedContent = "test_content";
@@ -948,9 +948,9 @@ namespace Azure.Storage.Queues.Test
             // Assert
             Assert.AreEqual(1, queueMessages.Count());
             Assert.NotNull(badMessage);
-            Assert.AreEqual(nonEncodedContent, ((QueueMessage)badMessage).Body.ToString());
+            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
             Assert.NotNull(badMessage2);
-            Assert.AreEqual(nonEncodedContent, ((QueueMessage)badMessage2).Body.ToString());
+            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
         }
 
         [Test]

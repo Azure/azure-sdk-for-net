@@ -8,24 +8,30 @@ using Azure.Storage.Queues.Models;
 namespace Azure.Storage.Queues
 {
     /// <summary>
-    /// Contains information about invalid message.
-    /// See also <see cref="QueueClientOptions.OnInvalidMessage"/>.
+    /// Contains information about message that could not be decoded.
+    /// See also <see cref="QueueClientOptions.MessageDecodingFailed"/>.
     /// </summary>
-    public class InvalidMessageEventArgs : SyncAsyncEventArgs
+    public class QueueMessageDecodingFailedEventArgs : SyncAsyncEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="QueueClient"/> that has received invalid message.
+        /// Gets the <see cref="QueueClient"/> that has received message.
         /// </summary>
-        public QueueClient QueueClient { get; }
+        public QueueClient Queue { get; }
 
         /// <summary>
-        /// Gets the invalid message which can be either <see cref="QueueMessage"/> or <see cref="PeekedMessage"/>.
+        /// Gets the <see cref="QueueMessage"/> that has been received and could not be decoded.
         /// The body of the message is as received, i.e. no decoding is attempted.
         /// </summary>
-        public object Message { get; }
+        public QueueMessage ReceivedMessage { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidMessageEventArgs"/>.
+        /// Gets the <see cref="PeekedMessage"/> that has been peeked and could not be decoded.
+        /// The body of the message is as received, i.e. no decoding is attempted.
+        /// </summary>
+        public PeekedMessage PeekedMessage { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueMessageDecodingFailedEventArgs"/>.
         /// </summary>
         /// <param name="queueClient">The <see cref="QueueClient"/> that has received invalid message.</param>
         /// <param name="message">The invalid message.</param>
@@ -45,7 +51,7 @@ namespace Azure.Storage.Queues
         /// Thrown if <paramref name="queueClient"/> or <paramref name="message"/>
         /// are null.
         /// </exception>
-        public InvalidMessageEventArgs(
+        public QueueMessageDecodingFailedEventArgs(
             QueueClient queueClient,
             QueueMessage message,
             bool runSynchronously,
@@ -54,12 +60,12 @@ namespace Azure.Storage.Queues
         {
             Argument.AssertNotNull(queueClient, nameof(queueClient));
             Argument.AssertNotNull(message, nameof(message));
-            QueueClient = queueClient;
-            Message = message;
+            Queue = queueClient;
+            ReceivedMessage = message;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidMessageEventArgs"/>.
+        /// Initializes a new instance of the <see cref="QueueMessageDecodingFailedEventArgs"/>.
         /// </summary>
         /// <param name="queueClient">The <see cref="QueueClient"/> that has received invalid message.</param>
         /// <param name="message">The invalid message.</param>
@@ -79,7 +85,7 @@ namespace Azure.Storage.Queues
         /// Thrown if <paramref name="queueClient"/> or <paramref name="message"/>
         /// are null.
         /// </exception>
-        public InvalidMessageEventArgs(
+        public QueueMessageDecodingFailedEventArgs(
             QueueClient queueClient,
             PeekedMessage message,
             bool runSynchronously,
@@ -88,8 +94,8 @@ namespace Azure.Storage.Queues
         {
             Argument.AssertNotNull(queueClient, nameof(queueClient));
             Argument.AssertNotNull(message, nameof(message));
-            QueueClient = queueClient;
-            Message = message;
+            Queue = queueClient;
+            PeekedMessage = message;
         }
     }
 }

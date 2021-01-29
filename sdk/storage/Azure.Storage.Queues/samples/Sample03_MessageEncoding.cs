@@ -26,34 +26,34 @@ namespace Azure.Storage.Queues.Samples.Tests
         }
 
         [Test]
-        public void InvalidMessageHandlerAsync()
+        public void MessageDecodingFailedHandlerAsync()
         {
             var connectionString = ConnectionString;
             var queueName = "foo";
-            #region Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_InvalidMessageHandlerAsync
+            #region Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_MessageDecodingFailedHandlerAsync
 
             QueueClientOptions queueClientOptions = new QueueClientOptions()
             {
                 MessageEncoding = QueueMessageEncoding.Base64
             };
 
-            queueClientOptions.OnInvalidMessage += async (InvalidMessageEventArgs args) =>
+            queueClientOptions.MessageDecodingFailed += async (QueueMessageDecodingFailedEventArgs args) =>
             {
-                if (args.Message is PeekedMessage peekedMessage)
+                if (args.PeekedMessage != null)
                 {
-                    Console.WriteLine($"Invalid message has been peeked, message id={peekedMessage.MessageId} body={peekedMessage.Body}");
+                    Console.WriteLine($"Invalid message has been peeked, message id={args.PeekedMessage.MessageId} body={args.PeekedMessage.Body}");
                 }
-                else if (args.Message is QueueMessage queueMessage)
+                else if (args.ReceivedMessage != null)
                 {
-                    Console.WriteLine($"Invalid message has been received, message id={queueMessage.MessageId} body={queueMessage.Body}");
+                    Console.WriteLine($"Invalid message has been received, message id={args.ReceivedMessage.MessageId} body={args.ReceivedMessage.Body}");
 
                     if (args.RunSynchronously)
                     {
-                        args.QueueClient.DeleteMessage(queueMessage.MessageId, queueMessage.PopReceipt);
+                        args.Queue.DeleteMessage(args.ReceivedMessage.MessageId, args.ReceivedMessage.PopReceipt);
                     }
                     else
                     {
-                        await args.QueueClient.DeleteMessageAsync(queueMessage.MessageId, queueMessage.PopReceipt);
+                        await args.Queue.DeleteMessageAsync(args.ReceivedMessage.MessageId, args.ReceivedMessage.PopReceipt);
                     }
                 }
             };

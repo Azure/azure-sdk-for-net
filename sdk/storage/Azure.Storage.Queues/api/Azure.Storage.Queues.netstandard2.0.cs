@@ -1,12 +1,5 @@
 namespace Azure.Storage.Queues
 {
-    public partial class InvalidMessageEventArgs : Azure.SyncAsyncEventArgs
-    {
-        public InvalidMessageEventArgs(Azure.Storage.Queues.QueueClient queueClient, Azure.Storage.Queues.Models.PeekedMessage message, bool runSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
-        public InvalidMessageEventArgs(Azure.Storage.Queues.QueueClient queueClient, Azure.Storage.Queues.Models.QueueMessage message, bool runSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
-        public object Message { get { throw null; } }
-        public Azure.Storage.Queues.QueueClient QueueClient { get { throw null; } }
-    }
     public partial class QueueClient
     {
         protected QueueClient() { }
@@ -80,7 +73,7 @@ namespace Azure.Storage.Queues
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueMessageEncoding MessageEncoding { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueClientOptions.ServiceVersion Version { get { throw null; } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.Queues.InvalidMessageEventArgs> OnInvalidMessage { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.Queues.QueueMessageDecodingFailedEventArgs> MessageDecodingFailed { add { } remove { } }
         public enum ServiceVersion
         {
             V2019_02_02 = 1,
@@ -89,6 +82,14 @@ namespace Azure.Storage.Queues
             V2020_02_10 = 4,
             V2020_04_08 = 5,
         }
+    }
+    public partial class QueueMessageDecodingFailedEventArgs : Azure.SyncAsyncEventArgs
+    {
+        public QueueMessageDecodingFailedEventArgs(Azure.Storage.Queues.QueueClient queueClient, Azure.Storage.Queues.Models.PeekedMessage message, bool runSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public QueueMessageDecodingFailedEventArgs(Azure.Storage.Queues.QueueClient queueClient, Azure.Storage.Queues.Models.QueueMessage message, bool runSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public Azure.Storage.Queues.Models.PeekedMessage PeekedMessage { get { throw null; } }
+        public Azure.Storage.Queues.QueueClient Queue { get { throw null; } }
+        public Azure.Storage.Queues.Models.QueueMessage ReceivedMessage { get { throw null; } }
     }
     public enum QueueMessageEncoding
     {

@@ -207,7 +207,7 @@ namespace Azure.Storage.Queues
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
-                invalidMessageHandler: options.GetInvalidMessageHandlers());
+                queueMessageDecodingFailedHandlers: options.GetMessageDecodingFailedHandlers());
 
             (QueueRestClient queueRestClient, MessagesRestClient messagesRestClient, MessageIdRestClient messageIdRestClient) = BuildRestClients();
             _queueRestClient = queueRestClient;
@@ -344,7 +344,7 @@ namespace Azure.Storage.Queues
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
-                invalidMessageHandler: options.GetInvalidMessageHandlers());
+                queueMessageDecodingFailedHandlers: options.GetMessageDecodingFailedHandlers());
 
             (QueueRestClient queueRestClient, MessagesRestClient messagesRestClient, MessageIdRestClient messageIdRestClient) = BuildRestClients();
             _queueRestClient = queueRestClient;
@@ -2245,17 +2245,17 @@ namespace Azure.Storage.Queues
                 {
                     queueMessages.Add(QueueMessage.ToQueueMessage(dequeuedMessageItem, ClientConfiguration.MessageEncoding));
                 }
-                catch (FormatException) when (ClientConfiguration.InvalidMessageHandler != null)
+                catch (FormatException) when (ClientConfiguration.QueueMessageDecodingFailedHandlers != null)
                 {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    await ClientConfiguration.InvalidMessageHandler.RaiseAsync(
-                        new InvalidMessageEventArgs(
+                    await ClientConfiguration.QueueMessageDecodingFailedHandlers.RaiseAsync(
+                        new QueueMessageDecodingFailedEventArgs(
                             queueClient: this,
                             message: QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
                             runSynchronously: !async,
                             cancellationToken: cancellationToken),
                         nameof(QueueClientOptions),
-                        nameof(QueueClientOptions.OnInvalidMessage),
+                        nameof(QueueClientOptions.MessageDecodingFailed),
                         ClientConfiguration.ClientDiagnostics).ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 }
@@ -2597,17 +2597,17 @@ namespace Azure.Storage.Queues
                 {
                     peekedMessages.Add(PeekedMessage.ToPeekedMessage(peekedMessageItem, ClientConfiguration.MessageEncoding));
                 }
-                catch (FormatException) when (ClientConfiguration.InvalidMessageHandler != null)
+                catch (FormatException) when (ClientConfiguration.QueueMessageDecodingFailedHandlers != null)
                 {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    await ClientConfiguration.InvalidMessageHandler.RaiseAsync(
-                        new InvalidMessageEventArgs(
+                    await ClientConfiguration.QueueMessageDecodingFailedHandlers.RaiseAsync(
+                        new QueueMessageDecodingFailedEventArgs(
                             queueClient: this,
                             message: PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
                             runSynchronously: !async,
                             cancellationToken: cancellationToken),
                         nameof(QueueClientOptions),
-                        nameof(QueueClientOptions.OnInvalidMessage),
+                        nameof(QueueClientOptions.MessageDecodingFailed),
                         ClientConfiguration.ClientDiagnostics).ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 }
