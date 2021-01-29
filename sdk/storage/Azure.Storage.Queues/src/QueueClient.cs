@@ -443,7 +443,8 @@ namespace Azure.Storage.Queues
                 ClientConfiguration.ClientDiagnostics,
                 ClientConfiguration.Version,
                 QueueClientSideEncryptionOptions.CloneFrom(clientSideEncryptionOptions),
-                ClientConfiguration.MessageEncoding);
+                ClientConfiguration.MessageEncoding,
+                ClientConfiguration.QueueMessageDecodingFailedHandlers);
 
             return new QueueClient(
                 Uri,
