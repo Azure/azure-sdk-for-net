@@ -9,8 +9,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights
 {
-    /// <summary> Client options for Insights. </summary>
-    public class InsightsManagementClientOptions : ClientOptions
+    /// <summary> Client options for MonitorClient. </summary>
+    public class MonitorClientManagementClientOptions : ClientOptions
     {
     }
 }

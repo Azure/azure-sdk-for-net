@@ -9,8 +9,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary> Client options for Communication. </summary>
-    public class CommunicationManagementClientOptions : ClientOptions
+    /// <summary> Client options for AzureCommunicationServicesManagementAPI. </summary>
+    public class AzureCommunicationServicesManagementAPIManagementClientOptions : ClientOptions
     {
     }
 }

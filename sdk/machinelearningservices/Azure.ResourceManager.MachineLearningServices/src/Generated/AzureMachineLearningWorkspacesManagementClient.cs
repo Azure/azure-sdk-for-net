@@ -12,33 +12,33 @@ using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> MachineLearningServices service management client. </summary>
-    public class MachineLearningServicesManagementClient
+    /// <summary> AzureMachineLearningWorkspaces service management client. </summary>
+    public class AzureMachineLearningWorkspacesManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _subscriptionId;
 
-        /// <summary> Initializes a new instance of MachineLearningServicesManagementClient for mocking. </summary>
-        protected MachineLearningServicesManagementClient()
+        /// <summary> Initializes a new instance of AzureMachineLearningWorkspacesManagementClient for mocking. </summary>
+        protected AzureMachineLearningWorkspacesManagementClient()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesManagementClient. </summary>
+        /// <summary> Initializes a new instance of AzureMachineLearningWorkspacesManagementClient. </summary>
         /// <param name="subscriptionId"> Azure subscription identifier. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MachineLearningServicesManagementClient(string subscriptionId, TokenCredential tokenCredential, MachineLearningServicesManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
+        public AzureMachineLearningWorkspacesManagementClient(string subscriptionId, TokenCredential tokenCredential, AzureMachineLearningWorkspacesManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
         {
         }
-        /// <summary> Initializes a new instance of MachineLearningServicesManagementClient. </summary>
+        /// <summary> Initializes a new instance of AzureMachineLearningWorkspacesManagementClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="subscriptionId"> Azure subscription identifier. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public MachineLearningServicesManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, MachineLearningServicesManagementClientOptions options = null)
+        public AzureMachineLearningWorkspacesManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, AzureMachineLearningWorkspacesManagementClientOptions options = null)
         {
             endpoint ??= new Uri("https://management.azure.com");
             if (subscriptionId == null)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            options ??= new MachineLearningServicesManagementClientOptions();
+            options ??= new AzureMachineLearningWorkspacesManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
             _endpoint = endpoint;
