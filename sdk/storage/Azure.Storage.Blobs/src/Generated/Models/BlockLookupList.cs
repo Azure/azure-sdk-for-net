@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The BlockLookupList. </summary>
-    public partial class BlockLookupList
+    internal partial class BlockLookupList
     {
         /// <summary> Initializes a new instance of BlockLookupList. </summary>
         public BlockLookupList()
@@ -20,9 +20,5 @@ namespace Azure.Storage.Blobs.Models
             Uncommitted = new ChangeTrackingList<string>();
             Latest = new ChangeTrackingList<string>();
         }
-
-        public IList<string> Committed { get; }
-        public IList<string> Uncommitted { get; }
-        public IList<string> Latest { get; }
     }
 }

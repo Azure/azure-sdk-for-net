@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> the quick query body. </summary>
-    public partial class QueryRequest
+    internal partial class QueryRequest
     {
         /// <summary> Initializes a new instance of QueryRequest. </summary>
         /// <param name="expression"> a query statement. </param>
@@ -25,11 +25,6 @@ namespace Azure.Storage.Blobs.Models
             QueryType = "SQL";
             Expression = expression;
         }
-
-        /// <summary> the query type. </summary>
-        public string QueryType { get; }
-        /// <summary> a query statement. </summary>
-        public string Expression { get; }
         public QuerySerialization InputSerialization { get; set; }
         public QuerySerialization OutputSerialization { get; set; }
     }

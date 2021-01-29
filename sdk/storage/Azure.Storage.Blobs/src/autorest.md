@@ -105,3 +105,21 @@ directive:
         }
     }
 ```
+
+### Metrics
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Metrics.type = "object";
+```
+
+## DataLakeStorageError
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.DataLakeStorageError;
+```
