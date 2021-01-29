@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.MixedReality.Authentication.Tests.Samples
 {
+    [Ignore("Don't run sample tests since they require extra curricular account setup.")]
     public class MixedRealityStsClientSamples : SamplesBase<MixedRealityTestEnvironment>
     {
         [Test]
