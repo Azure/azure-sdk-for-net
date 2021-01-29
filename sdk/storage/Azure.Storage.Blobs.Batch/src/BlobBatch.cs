@@ -185,9 +185,7 @@ namespace Azure.Storage.Blobs.Specialized
                 // TODO make timeout optional.
                 timeout: null,
                 leaseId: conditions?.LeaseId,
-                //TODO
-                //deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
-                deleteSnapshots: DeleteSnapshotsOptionType.Include,
+                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOptionType?)snapshotsOption,
                 ifModifiedSince: conditions?.IfModifiedSince,
                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                 ifMatch: conditions?.IfMatch.ToString(),
