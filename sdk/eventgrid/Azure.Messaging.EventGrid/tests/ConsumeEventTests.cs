@@ -407,6 +407,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             Assert.True(events[0].AsSystemEventData() is SubscriptionValidationEventData);
+            Assert.True(events[0].GetData<SubscriptionValidationEventData>() is SubscriptionValidationEventData);
             SubscriptionValidationEventData eventData = (SubscriptionValidationEventData)events[0].AsSystemEventData();
             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData.ValidationCode);
         }

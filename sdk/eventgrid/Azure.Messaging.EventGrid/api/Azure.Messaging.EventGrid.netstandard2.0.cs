@@ -20,9 +20,8 @@ namespace Azure.Messaging.EventGrid
         public object AsSystemEventData() { throw null; }
         public System.BinaryData GetData() { throw null; }
         public System.Threading.Tasks.Task<System.BinaryData> GetDataAsync() { throw null; }
-        public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Messaging.EventGrid.CloudEvent[] Parse(System.BinaryData requestContent) { throw null; }
         public static Azure.Messaging.EventGrid.CloudEvent[] Parse(string requestContent) { throw null; }
     }
@@ -39,9 +38,8 @@ namespace Azure.Messaging.EventGrid
         public object AsSystemEventData() { throw null; }
         public System.BinaryData GetData() { throw null; }
         public System.Threading.Tasks.Task<System.BinaryData> GetDataAsync() { throw null; }
-        public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(System.BinaryData requestContent) { throw null; }
         public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(string requestContent) { throw null; }
     }

@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventGrid
             uriBuilder.Reset(Endpoint);
             uriBuilder.AppendQuery("api-version", ApiVersion.GetVersionString(), true);
             string encodedResource = HttpUtility.UrlEncode(uriBuilder.ToString());
-            var encodedExpirationUtc = HttpUtility.UrlEncode(ExpiresOn.ToString(CultureInfo.InvariantCulture));
+            var encodedExpirationUtc = HttpUtility.UrlEncode(ExpiresOn.ToString(CultureInfo.CreateSpecificCulture("en-US")));
 
             string unsignedSas = $"{Resource}={encodedResource}&{Expiration}={encodedExpirationUtc}";
             using (var hmac = new HMACSHA256(Convert.FromBase64String(key.Key)))
