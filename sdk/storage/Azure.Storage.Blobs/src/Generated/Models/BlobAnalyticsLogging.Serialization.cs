@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class Logging : IXmlSerializable
+    public partial class BlobAnalyticsLogging : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -32,13 +32,13 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static Logging DeserializeLogging(XElement element)
+        internal static BlobAnalyticsLogging DeserializeBlobAnalyticsLogging(XElement element)
         {
             string version = default;
             bool delete = default;
             bool read = default;
             bool write = default;
-            RetentionPolicy retentionPolicy = default;
+            BlobRetentionPolicy retentionPolicy = default;
             if (element.Element("Version") is XElement versionElement)
             {
                 version = (string)versionElement;
@@ -57,9 +57,9 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
             {
-                retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
+                retentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(retentionPolicyElement);
             }
-            return new Logging(version, delete, read, write, retentionPolicy);
+            return new BlobAnalyticsLogging(version, delete, read, write, retentionPolicy);
         }
     }
 }

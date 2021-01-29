@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class CorsRule : IXmlSerializable
+    public partial class BlobCorsRule : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static CorsRule DeserializeCorsRule(XElement element)
+        internal static BlobCorsRule DeserializeBlobCorsRule(XElement element)
         {
             string allowedOrigins = default;
             string allowedMethods = default;
@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 maxAgeInSeconds = (int)maxAgeInSecondsElement;
             }
-            return new CorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
+            return new BlobCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
         }
     }
 }

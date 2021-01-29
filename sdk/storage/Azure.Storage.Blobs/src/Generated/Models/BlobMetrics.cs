@@ -8,21 +8,21 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </summary>
-    public partial class Metrics
+    public partial class BlobMetrics
     {
-        /// <summary> Initializes a new instance of Metrics. </summary>
+        /// <summary> Initializes a new instance of BlobMetrics. </summary>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Blob service. </param>
-        public Metrics(bool enabled)
+        public BlobMetrics(bool enabled)
         {
             Enabled = enabled;
         }
 
-        /// <summary> Initializes a new instance of Metrics. </summary>
+        /// <summary> Initializes a new instance of BlobMetrics. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Blob service. </param>
         /// <param name="includeAPIs"> Indicates whether metrics should generate summary statistics for called API operations. </param>
         /// <param name="retentionPolicy"> the retention policy which determines how long the associated data should persist. </param>
-        internal Metrics(string version, bool enabled, bool? includeAPIs, RetentionPolicy retentionPolicy)
+        internal BlobMetrics(string version, bool enabled, bool? includeAPIs, BlobRetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;
@@ -37,6 +37,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Indicates whether metrics should generate summary statistics for called API operations. </summary>
         public bool? IncludeAPIs { get; set; }
         /// <summary> the retention policy which determines how long the associated data should persist. </summary>
-        public RetentionPolicy RetentionPolicy { get; set; }
+        public BlobRetentionPolicy RetentionPolicy { get; set; }
     }
 }

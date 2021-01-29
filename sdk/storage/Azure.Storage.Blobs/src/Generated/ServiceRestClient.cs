@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(StorageServiceProperties storageServiceProperties, int? timeout)
+        internal HttpMessage CreateSetPropertiesRequest(BlobServiceProperties storageServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(StorageServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(BlobServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (storageServiceProperties == null)
             {
@@ -100,7 +100,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(StorageServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(BlobServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (storageServiceProperties == null)
             {
@@ -142,7 +142,7 @@ namespace Azure.Storage.Blobs
         /// <summary> gets the properties of a storage account&apos;s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<StorageServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -151,11 +151,11 @@ namespace Azure.Storage.Blobs
             {
                 case 200:
                     {
-                        StorageServiceProperties value = default;
+                        BlobServiceProperties value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
                         {
-                            value = StorageServiceProperties.DeserializeStorageServiceProperties(storageServicePropertiesElement);
+                            value = BlobServiceProperties.DeserializeBlobServiceProperties(storageServicePropertiesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -167,7 +167,7 @@ namespace Azure.Storage.Blobs
         /// <summary> gets the properties of a storage account&apos;s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<StorageServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -176,11 +176,11 @@ namespace Azure.Storage.Blobs
             {
                 case 200:
                     {
-                        StorageServiceProperties value = default;
+                        BlobServiceProperties value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
                         if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
                         {
-                            value = StorageServiceProperties.DeserializeStorageServiceProperties(storageServicePropertiesElement);
+                            value = BlobServiceProperties.DeserializeBlobServiceProperties(storageServicePropertiesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

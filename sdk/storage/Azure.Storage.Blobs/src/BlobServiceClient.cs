@@ -146,6 +146,16 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public bool CanGenerateAccountSasUri => SharedKeyCredential != null;
 
+        /// <summary>
+        /// <see cref="ServiceRestClient"/>.
+        /// </summary>
+        private readonly ServiceRestClient _serviceRestClient;
+
+        /// <summary>
+        /// <see cref="ServiceRestClient"/>.
+        /// </summary>
+        internal virtual ServiceRestClient ServiceRestClient => _serviceRestClient;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobServiceClient"/>
@@ -202,6 +212,7 @@ namespace Azure.Storage.Blobs
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            _serviceRestClient = BuildServiceRestClient(_uri);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -375,6 +386,7 @@ namespace Azure.Storage.Blobs
             _clientSideEncryption = clientSideEncryption?.Clone();
             _encryptionScope = encryptionScope;
             _storageSharedKeyCredential = storageSharedKeyCredential;
+            _serviceRestClient = BuildServiceRestClient(serviceUri);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
@@ -421,6 +433,13 @@ namespace Azure.Storage.Blobs
                 pipeline,
                 storageSharedKeyCredential: null);
         }
+
+        private ServiceRestClient BuildServiceRestClient(Uri uri)
+            => new ServiceRestClient(
+                clientDiagnostics: _clientDiagnostics,
+                pipeline: _pipeline,
+                url: uri.ToString(),
+                version: _version.ToVersionString());
         #endregion ctors
 
         /// <summary>
@@ -689,10 +708,12 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContainersSegment>> GetBlobContainersInternal(
+        internal async Task<ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> GetBlobContainersInternal(
             string continuationToken,
             BlobContainerTraits traits,
+#pragma warning disable CA1801 // Review unused parameters
             BlobContainerStates states,
+#pragma warning restore CA1801 // Review unused parameters
             string prefix,
             int? pageSizeHint,
             bool async,
@@ -708,27 +729,39 @@ namespace Azure.Storage.Blobs
                     $"{nameof(traits)}: {traits}");
                 try
                 {
-                    Response<BlobContainersSegment> response = await BlobRestClient.Service.ListBlobContainersSegmentAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        marker: continuationToken,
-                        prefix: prefix,
-                        maxresults: pageSizeHint,
-                        include: BlobExtensions.AsIncludeItems(traits, states),
-                        async: async,
-                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetBlobContainers)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                    if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
+                    ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> response;
+
+                    if (async)
                     {
-                        IEnumerable<BlobContainerItem> containerItems = response.Value.BlobContainerItems;
-                        foreach (BlobContainerItem containerItem in containerItems)
-                        {
-                            containerItem.Properties.Metadata = null;
-                        }
+                        response = await ServiceRestClient.ListContainersSegmentAsync(
+                            prefix: prefix,
+                            marker: continuationToken,
+                            maxresults: pageSizeHint,
+                            // TODO fix this.
+                            include: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
                     }
+                    else
+                    {
+                        response = ServiceRestClient.ListContainersSegment(
+                            prefix: prefix,
+                            marker: continuationToken,
+                            maxresults: pageSizeHint,
+                            // TODO fix this.
+                            include: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    // TODO fix this.
+                    //if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
+                    //{
+                    //    IEnumerable<BlobContainerItem> containerItems = response.Value.BlobContainerItems;
+                    //    foreach (BlobContainerItem containerItem in containerItems)
+                    //    {
+                    //        containerItem.Properties.Metadata = null;
+                    //    }
+                    //}
                     return response;
                 }
                 catch (Exception ex)
@@ -828,15 +861,23 @@ namespace Azure.Storage.Blobs
                 Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await BlobRestClient.Service.GetAccountInfoAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetAccountInfo)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<ServiceGetAccountInfoHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ServiceRestClient.GetAccountInfoAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ServiceRestClient.GetAccountInfo(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToAccountInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -941,15 +982,23 @@ namespace Azure.Storage.Blobs
                 Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await BlobRestClient.Service.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetProperties)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ServiceRestClient.GetPropertiesAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ServiceRestClient.GetProperties(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

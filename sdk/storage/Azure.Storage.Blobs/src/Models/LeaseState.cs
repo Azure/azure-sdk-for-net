@@ -36,3 +36,4 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         Broken
     }
+}

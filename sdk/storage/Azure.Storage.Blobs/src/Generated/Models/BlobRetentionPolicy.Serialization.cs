@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class RetentionPolicy : IXmlSerializable
+    public partial class BlobRetentionPolicy : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static RetentionPolicy DeserializeRetentionPolicy(XElement element)
+        internal static BlobRetentionPolicy DeserializeBlobRetentionPolicy(XElement element)
         {
             bool enabled = default;
             int? days = default;
@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 allowPermanentDelete = (bool?)allowPermanentDeleteElement;
             }
-            return new RetentionPolicy(enabled, days, allowPermanentDelete);
+            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete);
         }
     }
 }

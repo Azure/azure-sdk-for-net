@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs
 {
@@ -315,6 +316,12 @@ namespace Azure.Storage.Blobs
             {
                 return RehydratePriority.Standard;
             }
+        }
+
+        // TODO
+        internal static AccountInfo ToAccountInfo(this ResponseWithHeaders<ServiceGetAccountInfoHeaders> response)
+        {
+            return null;
         }
     }
 }

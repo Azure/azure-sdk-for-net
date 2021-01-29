@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class StaticWebsite : IXmlSerializable
+    public partial class BlobStaticWebsite : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static StaticWebsite DeserializeStaticWebsite(XElement element)
+        internal static BlobStaticWebsite DeserializeBlobStaticWebsite(XElement element)
         {
             bool enabled = default;
             string indexDocument = default;
@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 defaultIndexDocumentPath = (string)defaultIndexDocumentPathElement;
             }
-            return new StaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath);
+            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class Metrics : IXmlSerializable
+    public partial class BlobMetrics : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -38,12 +38,12 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static Metrics DeserializeMetrics(XElement element)
+        internal static BlobMetrics DeserializeBlobMetrics(XElement element)
         {
             string version = default;
             bool enabled = default;
             bool? includeAPIs = default;
-            RetentionPolicy retentionPolicy = default;
+            BlobRetentionPolicy retentionPolicy = default;
             if (element.Element("Version") is XElement versionElement)
             {
                 version = (string)versionElement;
@@ -58,9 +58,9 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
             {
-                retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
+                retentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(retentionPolicyElement);
             }
-            return new Metrics(version, enabled, includeAPIs, retentionPolicy);
+            return new BlobMetrics(version, enabled, includeAPIs, retentionPolicy);
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class StorageServiceProperties : IXmlSerializable
+    public partial class BlobServiceProperties : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -55,26 +55,26 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static StorageServiceProperties DeserializeStorageServiceProperties(XElement element)
+        internal static BlobServiceProperties DeserializeBlobServiceProperties(XElement element)
         {
-            Logging logging = default;
-            Metrics hourMetrics = default;
-            Metrics minuteMetrics = default;
+            BlobAnalyticsLogging logging = default;
+            BlobMetrics hourMetrics = default;
+            BlobMetrics minuteMetrics = default;
             string defaultServiceVersion = default;
-            RetentionPolicy deleteRetentionPolicy = default;
-            StaticWebsite staticWebsite = default;
-            IList<CorsRule> cors = default;
+            BlobRetentionPolicy deleteRetentionPolicy = default;
+            BlobStaticWebsite staticWebsite = default;
+            IList<BlobCorsRule> cors = default;
             if (element.Element("Logging") is XElement loggingElement)
             {
-                logging = Logging.DeserializeLogging(loggingElement);
+                logging = BlobAnalyticsLogging.DeserializeBlobAnalyticsLogging(loggingElement);
             }
             if (element.Element("HourMetrics") is XElement hourMetricsElement)
             {
-                hourMetrics = Metrics.DeserializeMetrics(hourMetricsElement);
+                hourMetrics = BlobMetrics.DeserializeBlobMetrics(hourMetricsElement);
             }
             if (element.Element("MinuteMetrics") is XElement minuteMetricsElement)
             {
-                minuteMetrics = Metrics.DeserializeMetrics(minuteMetricsElement);
+                minuteMetrics = BlobMetrics.DeserializeBlobMetrics(minuteMetricsElement);
             }
             if (element.Element("DefaultServiceVersion") is XElement defaultServiceVersionElement)
             {
@@ -82,22 +82,22 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("DeleteRetentionPolicy") is XElement deleteRetentionPolicyElement)
             {
-                deleteRetentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(deleteRetentionPolicyElement);
+                deleteRetentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(deleteRetentionPolicyElement);
             }
             if (element.Element("StaticWebsite") is XElement staticWebsiteElement)
             {
-                staticWebsite = StaticWebsite.DeserializeStaticWebsite(staticWebsiteElement);
+                staticWebsite = BlobStaticWebsite.DeserializeBlobStaticWebsite(staticWebsiteElement);
             }
             if (element.Element("Cors") is XElement corsElement)
             {
-                var array = new List<CorsRule>();
+                var array = new List<BlobCorsRule>();
                 foreach (var e in corsElement.Elements("CorsRule"))
                 {
-                    array.Add(CorsRule.DeserializeCorsRule(e));
+                    array.Add(BlobCorsRule.DeserializeBlobCorsRule(e));
                 }
                 cors = array;
             }
-            return new StorageServiceProperties(logging, hourMetrics, minuteMetrics, cors, defaultServiceVersion, deleteRetentionPolicy, staticWebsite);
+            return new BlobServiceProperties(logging, hourMetrics, minuteMetrics, cors, defaultServiceVersion, deleteRetentionPolicy, staticWebsite);
         }
     }
 }

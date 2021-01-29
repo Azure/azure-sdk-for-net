@@ -6,7 +6,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// AccountInfo.
     /// </summary>
-    public class AccountInfo
+    public partial class AccountInfo
     {
         /// <summary>
         /// Identifies the sku name of the account.
@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
         public SkuName SkuName { get; internal set; }
 
         /// <summary>
-        /// Identifies the account kind
+        /// Identifies the account kind.
         /// </summary>
         public AccountKind AccountKind { get; internal set; }
 
