@@ -1,0 +1,23 @@
+steps:
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    - pwsh: |
+        $PrSHA = "$(Build.SourceVersion)"
+        $masterSHA = git rev-parse origin/master
+        $diff = git diff --name-only $PrSHA $masterSHA
+        $PrSourceBranch = "$(System.PullRequest.SourceBranch)"
+        $filesInCommonDir = @()
+        foreach($line in $diff)
+        {
+          if ($line -match "eng/common")
+          {
+            $filesInCommonDir += $line
+          }
+        }
+
+        if ((-not $PrSourceBranch.StartsWith("sync-eng/common")) -and ($filesInCommonDir.Count -gt 0))
+        {
+          Write-Host "##vso[task.LogIssue type=warning;]Changes to the files below (files in eng/common directory) should not be made on this Repo`n${filesInCommonDir}"
+          Write-Host "##vso[task.LogIssue type=warning;]Please follow workflow at https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md"
+          exit 1
+        }
+      displayName: Prevent eng/common Changes from non Sync Prs
