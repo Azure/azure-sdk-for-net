@@ -3,6 +3,8 @@
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.FunctionalTests
 {
+    using System;
+    using System.Net.Http;
     using System.Threading.Tasks;
 
     using Azure.Core.TestFramework;
@@ -20,6 +22,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
         public AzureMonitorLogExporterLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
+
+        private static readonly HttpClient client = new HttpClient();
 
         /// <summary>
         /// We need to have one TEST in this class for NUnit to discover this class.
@@ -58,6 +62,26 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
             // VERIFY
             // TODO: Query logs from Kusto https://dev.applicationinsights.io/quickstart
             // TODO: FETCH TELEMETRY FROM AZURE MONITOR
+
+            // TODO: PROGRAMATICALLY FETCH API KEY
+            // https://dev.applicationinsights.io/documentation/Authorization/API-key-and-App-ID
+            // https://docs.microsoft.com/en-us/cli/azure/ext/application-insights/monitor/app-insights/api-key?view=azure-cli-latest
+
+            // TODO: Might be able to use this instead
+            // https://dev.applicationinsights.io/documentation/Tools/CSharp-Sdk
+            // https://www.nuget.org/packages/Microsoft.Azure.ApplicationInsights.Query
+            // https://github.com/Azure/azure-sdk-for-net/tree/Microsoft.Azure.ApplicationInsights.Query_1.0.0/sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query
+
+            client.DefaultRequestHeaders.Add("x-api-key", "");
+            string appId = TestEnvironment.ApplicationId;
+            var path = $"https://api.applicationinsights.io/v1/apps/{appId}/query?query=traces%7C%20where%20message%20%3D%3D%20%22Hello%20World!%22";
+            HttpResponseMessage response = await client.GetAsync(path);
+            Assert.IsTrue(response.IsSuccessStatusCode);
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            //var product = await response.Content.ReadAsAsync<Product>();
+
             Assert.Inconclusive();
         }
     }

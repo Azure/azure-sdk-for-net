@@ -15,10 +15,13 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
 
         public string InstrumentationKey => GetRecordedVariable(EnvironmentVariableNames.InstrumentationKey);
 
+        public string ApplicationId => GetRecordedVariable(EnvironmentVariableNames.ApplicationId);
+
         internal static class EnvironmentVariableNames
         {
             public const string ConnectionString = "CONNECTION_STRING";
             public const string InstrumentationKey = "INSTRUMENTATION_KEY";
+            public const string ApplicationId = "APPLICATION_ID";
         }
     }
 }

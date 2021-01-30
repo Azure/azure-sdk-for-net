@@ -37,7 +37,7 @@
     "resources": [
         {
             "name": "[parameters('baseName')]",
-            "type": "microsoft.insights/components",
+            "type": "Microsoft.Insights/components",
             "location": "[parameters('location')]",
             "apiVersion": "2015-05-01",
             "properties": {
@@ -52,6 +52,10 @@
         },
 		"CONNECTION_STRING": {
             "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').ConnectionString]",
+            "type": "string"
+        },
+		"APPLICATION_ID": {
+            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').AppId]",
             "type": "string"
         }
     }
