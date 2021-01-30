@@ -33,9 +33,8 @@ namespace Azure.AI.FormRecognizer
         /// Recognize Content supports auto language identification and multi language documents, so only
         /// provide a language code if you would like to force the documented to be processed as
         /// that specific language.
-        /// <para>See supported language codes <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/language-support">here</a>.</para>
         /// </summary>
-        public string Language { get; set; }
+        public FormRecognizerLanguage? Language { get; set; }
 
         /// <summary>
         /// <para>

@@ -3,10 +3,10 @@
 
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
     [CodeGenModel("Locale")]
-    internal readonly partial struct Locale
+    public readonly partial struct FormRecognizerLocale
     {
     }
 }
