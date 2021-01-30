@@ -527,7 +527,6 @@ namespace Azure.Identity.Tests
                 };
             };
 
-
             credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
             {
                 ((MockTokenCredential)c).TokenFactory = (context, cancel) =>

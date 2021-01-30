@@ -36,7 +36,6 @@ namespace Azure.Identity
         private const string DefaultWorkingDirNonWindows = "/bin/";
         private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
 
-
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePowerShellCredential"/>.
         /// </summary>
@@ -119,7 +118,6 @@ namespace Azure.Identity
             }
             catch (InvalidOperationException exception)
             {
-
                 bool noPowerShell = exception.Message.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 || exception.Message.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (noPowerShell)
