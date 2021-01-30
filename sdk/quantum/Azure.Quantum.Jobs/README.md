@@ -46,12 +46,12 @@ TODO The *Key concepts* section should describe the functionality of the main cl
 ### Create the client
 
 Create an instance of the QuantumJobClient by passing in these parameters:
-- Subscription Id - looks like XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX and can be found in your list of subscriptions [subscriptions]
-- Resource Group Name - a container that holds related resources for an Azure solution [resource-groups]
-- Workspace Name - a collection of assets associated with running quantum or optimization applications [workspaces]
-- Location - choose the best data center by geographical region [location]
-- StorageContainerName - your blob storage [blob-storage]
-- Credential - use to authenticate [credentials]
+- [Subscription][subscriptions] - looks like XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX and can be found in your list of subscriptions on azure
+- [Resource Group][resource-groups] - a container that holds related resources for an Azure solution 
+- [Workspace][workspaces] - a collection of assets associated with running quantum or optimization applications
+- [Location][location] - choose the best data center by geographical region 
+- [StorageContainerName][blob-storage] - your blob storage 
+- [Credential][credentials] - used to authenticate 
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateClient
 // Create a QuantumJobClient
@@ -104,6 +104,8 @@ blobClient.Upload(problemFilename, overwrite: true);
 ### Create The Job
 
 Now that you have the blob input data initialized, fill in the job fields and pass it to the CreateJob() function.
+
+[Quantum Inspired Optimizations](https://github.com/MicrosoftDocs/quantum-docs-private/wiki/Optimization-quickstart-for-Azure-Quantum) 
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateJob
 // Submit job
