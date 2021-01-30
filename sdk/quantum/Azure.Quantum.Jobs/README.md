@@ -138,7 +138,7 @@ To enumerate all the jobs in the workspace, use the GetJobs() function.
 ```C# Snippet:Azure_Quantum_Jobs_GetJobs
 foreach (JobDetails job in quantumJobClient.GetJobs())
 {
-    Console.WriteLine($"  {job.Name}");
+    Console.WriteLine($"{job.Name}");
 }
 ```
 
