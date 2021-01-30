@@ -33,10 +33,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         /// <param name="exchange">Exchange data type connection.</param>
         /// <param name="sharePoint">SharePoint data type connection.</param>
-        public OfficeDataConnectorDataTypes(OfficeDataConnectorDataTypesExchange exchange = default(OfficeDataConnectorDataTypesExchange), OfficeDataConnectorDataTypesSharePoint sharePoint = default(OfficeDataConnectorDataTypesSharePoint))
+        /// <param name="teams">Teams data type connection.</param>
+        public OfficeDataConnectorDataTypes(OfficeDataConnectorDataTypesExchange exchange = default(OfficeDataConnectorDataTypesExchange), OfficeDataConnectorDataTypesSharePoint sharePoint = default(OfficeDataConnectorDataTypesSharePoint), OfficeDataConnectorDataTypesTeams teams = default(OfficeDataConnectorDataTypesTeams))
         {
             Exchange = exchange;
             SharePoint = sharePoint;
+            Teams = teams;
             CustomInit();
         }
 
@@ -56,6 +58,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "sharePoint")]
         public OfficeDataConnectorDataTypesSharePoint SharePoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets teams data type connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "teams")]
+        public OfficeDataConnectorDataTypesTeams Teams { get; set; }
 
     }
 }

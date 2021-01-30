@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Initializes a new instance of <see cref="EventHubsTestEnvironment"/>.
         /// </summary>
         ///
-        private EventHubsTestEnvironment() : base("eventhub")
+        public EventHubsTestEnvironment()
         {
             ParsedConnectionString = new Lazy<EventHubsConnectionStringProperties>(() => EventHubsConnectionStringProperties.Parse(EventHubsConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
             ActiveEventHubsNamespace = new Lazy<NamespaceProperties>(EnsureEventHubsNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
@@ -152,7 +152,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 return TimeSpan.FromMinutes(interval);
-
             }, LazyThreadSafetyMode.PublicationOnly);
         }
 
@@ -166,25 +165,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <return>The Event Hub-level connection string.</return>
         ///
         public string BuildConnectionStringForEventHub(string eventHubName) => $"{ EventHubsConnectionString };EntityPath={ eventHubName }";
-
-        /// <summary>
-        ///   Builds a connection string for the Event Hubs namespace used for Live tests, creating a shared access signature
-        ///   in place of the shared key.
-        /// </summary>
-        ///
-        /// <param name="eventHubName">The name of the Event Hub to base the connection string on.</param>
-        /// <param name="signatureAudience">The audience to use for the shared access signature.</param>
-        /// <param name="validDurationMinutes">The duration, in minutes, that the signature should be considered valid for.</param>
-        ///
-        /// <returns>The namespace connection string with a shared access signature based on the shared key of the current scope.</value>
-        ///
-        public string BuildConnectionStringWithSharedAccessSignature(string eventHubName,
-                                                                     string signatureAudience,
-                                                                     int validDurationMinutes = 30)
-        {
-            var signature = new SharedAccessSignature(signatureAudience, SharedAccessKeyName, SharedAccessKey, TimeSpan.FromMinutes(validDurationMinutes));
-            return $"Endpoint=sb://{ ParsedConnectionString.Value.FullyQualifiedNamespace };EntityPath={ eventHubName };SharedAccessSignature={ signature.Value }";
-        }
 
         /// <summary>
         ///   Ensures that an Event Hubs namespace is available for the test run, using one if provided by the

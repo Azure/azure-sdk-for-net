@@ -38,7 +38,6 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-
             Response<BlobContainersSegment> response = await _client.GetBlobContainersInternal(
                     continuationToken,
                     _traits,

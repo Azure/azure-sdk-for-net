@@ -54,6 +54,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   successfully.
         /// </summary>
         ///
+        /// <value>
+        ///   The sequence number will be in the range of <c>0</c> - <see cref="int.MaxValue"/> (inclusive) and will
+        ///   increase as events are published.  When more than <see cref="int.MaxValue" /> events have been published,
+        ///   the sequence number will roll over to <c>0</c>.
+        /// </value>
+        ///
         public int? LastPublishedSequenceNumber { get; set; }
 
         /// <summary>

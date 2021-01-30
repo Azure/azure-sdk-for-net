@@ -13,15 +13,15 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
 ### Install the package
-Install the Azure Synapse Analytics monitoring client library for .NET with [NuGet][nuget]:
+Install the Azure Synapse Analytics monitoring client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Monitoring/):
 
 ```PowerShell
 dotnet add package Azure.Analytics.Synapse.Monitoring --version 1.0.0-preview.1
 ```
 
 ### Prerequisites
-* An [Azure subscription][azure_sub].
-* An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the Azure Portal or [Azure CLI][azure_cli].
+- **Azure Subscription:**  To use Azure services, including Azure Synapse, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the [Azure Portal](https://portal.azure.com/) or [Azure CLI](https://docs.microsoft.com/cli/azure).
 
 If you use the Azure CLI, the command looks like below:
 
@@ -37,10 +37,10 @@ az synapse workspace create \
 ```
 
 ### Authenticate the client
-In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [MonitoringClient][monitoring_client_class] class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
+In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [MonitoringClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Monitoring/src/Customization/MonitoringClient.cs) class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
-Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
+Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity). To use the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential) provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
@@ -65,6 +65,17 @@ The Azure.Analytics.Synapse.Monitoring package supports synchronous and asynchro
 
 ```C# Snippet:GetSparkJobList
 SparkJobListViewResponse sparkJobList = client.GetSparkJobList();
+foreach (var sparkJob in sparkJobList.SparkJobs)
+{
+    if (sparkJob.State == "Running")
+    {
+        Console.WriteLine ($"{sparkJob.Name} has been running for {sparkJob.RunningDuration}");
+    }
+    else
+    {
+        Console.WriteLine ($"{sparkJob.Name} has been in {sparkJob.State} for {sparkJob.QueuedDuration}");
+    }
+}
 ```
 
 ### Get SQl query

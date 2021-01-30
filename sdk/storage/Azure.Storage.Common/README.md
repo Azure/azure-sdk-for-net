@@ -1,6 +1,6 @@
 # Azure Storage Common client library for .NET
 
-> Server Version: 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
+> Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
 
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage

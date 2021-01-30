@@ -73,7 +73,6 @@ namespace Azure.Storage.Blobs
         public new async Task<int> ReadAsync(byte[] buffer, int offset, int count)
             => await ReadInternal(async: true, buffer, offset, count).ConfigureAwait(false);
 
-
         // Note - offset is with respect to buffer.
         private async Task<int> ReadInternal(bool async, byte[] buffer, int offset, int count)
         {
@@ -210,7 +209,6 @@ namespace Azure.Storage.Blobs
             _bufferOffset += length;
             return length;
         }
-
 
         internal static void ValidateReadParameters(byte[] buffer, int offset, int count)
         {

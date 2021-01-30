@@ -152,38 +152,29 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StorageLocation");
             }
-            if (BytesToCapturePerPacket != null)
+            if (BytesToCapturePerPacket > 4294967295)
             {
-                if (BytesToCapturePerPacket > 4294967295)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "BytesToCapturePerPacket", 4294967295);
-                }
-                if (BytesToCapturePerPacket < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "BytesToCapturePerPacket", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "BytesToCapturePerPacket", 4294967295);
             }
-            if (TotalBytesPerSession != null)
+            if (BytesToCapturePerPacket < 0)
             {
-                if (TotalBytesPerSession > 4294967295)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "TotalBytesPerSession", 4294967295);
-                }
-                if (TotalBytesPerSession < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalBytesPerSession", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "BytesToCapturePerPacket", 0);
             }
-            if (TimeLimitInSeconds != null)
+            if (TotalBytesPerSession > 4294967295)
             {
-                if (TimeLimitInSeconds > 18000)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "TimeLimitInSeconds", 18000);
-                }
-                if (TimeLimitInSeconds < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TimeLimitInSeconds", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "TotalBytesPerSession", 4294967295);
+            }
+            if (TotalBytesPerSession < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalBytesPerSession", 0);
+            }
+            if (TimeLimitInSeconds > 18000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "TimeLimitInSeconds", 18000);
+            }
+            if (TimeLimitInSeconds < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "TimeLimitInSeconds", 0);
             }
         }
     }

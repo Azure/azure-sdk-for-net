@@ -29,7 +29,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         private const string Secondary = "SecondaryStorage";
         private static TestFixture _fixture;
 
-
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
@@ -159,7 +158,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         {
             output = input;
         }
-
 
         public static void QueueToQueue_DifferentAccounts_PrimaryToSecondary(
             [QueueTrigger(Input)] string input,

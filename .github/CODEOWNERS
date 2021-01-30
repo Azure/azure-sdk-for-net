@@ -137,7 +137,7 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                             @annelo-msft @maririos
+/sdk/textanalytics/                             @annelo-msft @maririos @suhas92
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/            @assafi
@@ -262,7 +262,7 @@
 /sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
 
 # PRLabel: %TimeSeriesInsights
-# ServiceLabel: %Time Series Insights %Service Attention
+# ServiceLabel: %TimeSeriesInsights %Service Attention
 /sdk/timeseriesinsights/                        @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi @yeskarthik @rasidhan @dmdenmsft
 
 # ServiceLabel: %Event Grid %Service Attention
@@ -345,7 +345,7 @@ sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamat
 /sdk/marketplaceordering/Microsoft.Azure.Management.MarketplaceOrdering/            @prbansa
 
 # ServiceLabel: %Media Services %Service Attention
-/sdk/mediaservices/            @akucer
+/sdk/mediaservices/            @akucer @naiteeks @bennage @giakas
 
 # ServiceLabel: %Migrate %Service Attention
 /sdk/resourcemover/Microsoft.Azure.Management.Migrate/            @shijojoy
@@ -489,7 +489,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @chlahav
 
 # PRLabel: %Search
-/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
+/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @Mohit-Chakraborty @tg-msft @heaths
 
 # ServiceLabel: %Search %Service Attention
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy @tjacobhi @markheff @miwelsh
@@ -562,7 +562,8 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/support/Microsoft.Azure.Management.Support/           @shahbj79 @mit2nil @aygoya @ganganarayanan
 
 # ServiceLabel: %Synapse %Service Attention
-/sdk/synapse/            @aim-for-better @idear1203
+# PRLabel: %Synapse
+/sdk/synapse/            @aim-for-better @idear1203 @chamons
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes

@@ -12,7 +12,6 @@ namespace Azure.Identity
 {
     internal class AzureArcManagedIdentitySource : ManagedIdentitySource
     {
-
         private const string IdentityEndpointInvalidUriError = "The environment variable IDENTITY_ENDPOINT contains an invalid Uri.";
         private const string NoChallengeErrorMessage = "Did not receive expected WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint.";
         private const string InvalidChallangeErrorMessage = "The WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint did not match the expected format.";
@@ -65,7 +64,6 @@ namespace Azure.Identity
             request.Uri.AppendQuery("api-version", ArcApiVersion);
 
             request.Uri.AppendQuery("resource", resource);
-
 
             return request;
         }

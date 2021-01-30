@@ -23,12 +23,12 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// The Session Id associated with the receiver.
         /// </summary>
-        public string SessionId => InnerReceiver.SessionId;
+        public virtual string SessionId => InnerReceiver.SessionId;
 
         /// <summary>
         /// Gets the <see cref="DateTimeOffset"/> that the receiver's session is locked until.
         /// </summary>
-        public DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
+        public virtual DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
 
         /// <summary>
         /// Creates a session receiver which can be used to interact with all messages with the same sessionId.
@@ -38,6 +38,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the receiver.</param>
+        /// <param name="sessionId">The Session Id to receive from or null to receive from the next available session.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         ///<returns>Returns a new instance of the <see cref="ServiceBusSessionReceiver"/> class.</returns>
@@ -45,14 +46,16 @@ namespace Azure.Messaging.ServiceBus
             string entityPath,
             ServiceBusConnection connection,
             IList<ServiceBusPlugin> plugins,
-            ServiceBusSessionReceiverOptions options = default,
-            CancellationToken cancellationToken = default)
+            ServiceBusSessionReceiverOptions options,
+            string sessionId,
+            CancellationToken cancellationToken)
         {
             var receiver = new ServiceBusSessionReceiver(
                 connection: connection,
                 entityPath: entityPath,
                 plugins: plugins,
-                options: options);
+                options: options,
+                sessionId: sessionId);
             try
             {
                 await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
@@ -74,12 +77,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="entityPath"></param>
         /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
+        /// <param name="sessionId">An optional session Id to receive from.</param>
         internal ServiceBusSessionReceiver(
             ServiceBusConnection connection,
             string entityPath,
             IList<ServiceBusPlugin> plugins,
-            ServiceBusSessionReceiverOptions options) :
-            base(connection, entityPath, true, plugins, options?.ToReceiverOptions(), options?.SessionId)
+            ServiceBusSessionReceiverOptions options,
+            string sessionId = default) :
+            base(connection, entityPath, true, plugins, options?.ToReceiverOptions(), sessionId)
         {
         }
 

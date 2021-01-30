@@ -12,7 +12,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFr
 {
     internal static class VerifyTelemetryItem
     {
-
         public static void Verify(TelemetryItem telemetryItem, ActivityKind activityKind, ExpectedTelemetryItemValues expectedVars)
         {
             switch (activityKind)
@@ -49,6 +48,18 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFr
             var data = (RemoteDependencyData)telemetryItem.Data.BaseData;
             Assert.Equal(expectedVars.Name, data.Name);
             Assert.Equal(expectedVars.CustomProperties, data.Properties);
+        }
+
+        public static void VerifyEvent(TelemetryItem telemetryItem, ExpectedTelemetryItemValues expectedVars)
+        {
+            Assert.Equal("Message", telemetryItem.Name);
+            Assert.Equal(nameof(MessageData), telemetryItem.Data.BaseType);
+
+            var data = (MessageData)telemetryItem.Data.BaseData;
+            Assert.Equal(expectedVars.Message, data.Message);
+            Assert.Equal(expectedVars.SeverityLevel, data.SeverityLevel);
+            Assert.Equal(expectedVars.SpanId, telemetryItem.Tags["ai.operation.parentId"]);
+            Assert.Equal(expectedVars.TraceId, telemetryItem.Tags["ai.operation.id"]);
         }
     }
 }

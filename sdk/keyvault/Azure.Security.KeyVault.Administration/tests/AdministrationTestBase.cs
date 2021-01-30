@@ -48,7 +48,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
             ? TimeSpan.Zero
             : TimeSpan.FromSeconds(2);
 
-
         [TearDown]
         public virtual async Task Cleanup()
         {
@@ -110,7 +109,16 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 new KeyClient(
                     Uri,
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new KeyClientOptions())));
+                    InstrumentClientOptions(new KeyClientOptions
+                    {
+                        Diagnostics =
+                        {
+                            LoggedHeaderNames =
+                            {
+                                "x-ms-request-id",
+                            },
+                        },
+                    })));
 
             Start();
         }

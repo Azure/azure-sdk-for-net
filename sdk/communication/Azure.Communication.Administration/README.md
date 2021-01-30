@@ -1,17 +1,17 @@
 # Azure Communication Administration client library for .NET
 
 > Server Version:
-Identity client: 2020-07-20-preview2
 
 > Phone number administration client: 2020-07-20-preview1
 
-Azure Communication Administration is managing tokens and phone numbers for Azure Communication Services.
+Azure Communication Administration is managing phone numbers for Azure Communication Services.
 
-[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs] | [Samples][source_samples]
 
 ## Getting started
 
 ### Install the package
+
 Install the Azure Communication Administration client library for .NET with [NuGet][nuget]:
 
 ```Powershell
@@ -19,9 +19,10 @@ dotnet add package Azure.Communication.Administration --version 1.0.0-beta.3
 ```
 
 ### Prerequisites
+
 You need an [Azure subscription][azure_sub] and a [Communication Service Resource][communication_resource_docs] to use this package.
 
-To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal] or the [.NET management client library][communication_resource_create_net].
+To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 <!--
 Here's an example using the Azure CLI:
@@ -31,75 +32,30 @@ Here's an example using the Azure CLI:
 ```
 -->
 
-### Authenticate the client
-
-Administration clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
-
-```C# Snippet:CreateCommunicationIdentityClient
-// Get a connection string to our Azure Communication resource.
-var connectionString = "<connection_string>";
-var client = new CommunicationIdentityClient(connectionString);
-```
-
 ### Key concepts
-`CommunicationIdentityClient` provides the functionalities to manage user access tokens: creating new ones, renewing and revoking them.
-
-## Examples
-
-### Create a new identity
-```C# Snippet:CreateCommunicationUserAsync
-Response<CommunicationUser> userResponse = await client.CreateUserAsync();
-CommunicationUser user = userResponse.Value;
-Console.WriteLine($"User id: {user.Id}");
-```
-
-### Issuing or Refreshing a token for an existing identity
-```C# Snippet:CreateCommunicationTokenAsync
-Response<CommunicationUserToken> tokenResponse = await client.IssueTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
-string token = tokenResponse.Value.Token;
-DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
-Console.WriteLine($"Token: {token}");
-Console.WriteLine($"Expires On: {expiresOn}");
-```
-
-### Revoking a user's tokens
-In case a user's tokens are compromised or need to be revoked:
-```C# Snippet:RevokeCommunicationUserToken
-Response revokeResponse = client.RevokeTokens(
-    user,
-    issuedBefore: DateTimeOffset.UtcNow.AddDays(-1) /* optional */);
-```
-
-### Deleting a user
-```C# Snippet:DeleteACommunicationUser
-Response deleteResponse = client.DeleteUser(user);
-```
-
-## Troubleshooting
-All User token service operations will throw a RequestFailedException on failure.
-
-```C# Snippet:CommunicationIdentityClient_Troubleshooting
-// Get a connection string to our Azure Communication resource.
-var connectionString = "<connection_string>";
-var client = new CommunicationIdentityClient(connectionString);
-
-try
-{
-    Response<CommunicationUser> response = await client.CreateUserAsync();
-}
-catch (RequestFailedException ex)
-{
-    Console.WriteLine(ex.Message);
-}
-```
-
-
-
-### Phone plans overview
 
 Phone plans come in two types; Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
 
 All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
+
+### Authenticate the client
+
+Phone Number Administration clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
+
+```C# Snippet:CreatePhoneNumberAdministrationClient
+// Get a connection string to our Azure Communication resource.
+var connectionString = "<connection_string>";
+var client = new PhoneNumberAdministrationClient(connectionString);
+```
+
+Phone Number Administration clients also have the option to authenticate with Azure Active Directory Authentication. With this option,
+`AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication.
+
+```C# Snippet:CreatePhoneNumberWithTokenCredential
+var endpoint = "<endpoint_url>";
+TokenCredential tokenCredential = new DefaultAzureCredential();
+var client = new PhoneNumberAdministrationClient(new Uri(endpoint), tokenCredential);
+```
 
 ### Reserving and acquiring numbers
 
@@ -174,7 +130,6 @@ foreach(var locationOption in locationOprions.Options)
 
 Fetching area codes for geographic phone plans will require the the location options queries set. You must include the chain of geographic locations traversing down the location options object returned by the GetLocationOptions API.
 
-
 ```C#
 var areaCodesResponse = client.GetAllAreaCodes(locationType, countryCode, planId, locationOptionsQueries);
 var areaCodes = areaCodesResponse.Value;
@@ -205,19 +160,6 @@ Console.WriteLine($"ReservationId: {reservationResponse.Value.ReservationId}, St
 ```C#
 var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId).ConfigureAwait(false);
 await reservationPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
-
-// Ensure purchase has completed successfuly
-try
-{
-    var reservationStatus = reservationPurchaseOperation.Value;
-    // ...
-}
-catch (Exception ex)
-{
-    Console.WriteLine("Purchase failed");
-    Console.WriteLine(ex.Message);
-}
-
 ```
 
 ### Configure phone number
@@ -236,19 +178,24 @@ await releasePhoneNumberOperation.WaitForCompletionAsync().ConfigureAwait(false)
 
 Console.WriteLine($"ReleaseId: {releasePhoneNumberOperation.Value.ReleaseId}, Status: {releasePhoneNumberOperation.Value.Status}");
 ```
+## Troubleshooting
 
 ## Next steps
+
 [Read more about Communication user access tokens][user_access_token]
 
 ## Contributing
+
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
 This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
+
 [azure_sub]: https://azure.microsoft.com/free/
 [azure_portal]: https://portal.azure.com
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Administration/src
+[source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Administration/samples
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
@@ -256,7 +203,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [package]: https://www.nuget.org/packages/Azure.Communication.Administration
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
-[user_access_token]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
 [communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_portal]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net

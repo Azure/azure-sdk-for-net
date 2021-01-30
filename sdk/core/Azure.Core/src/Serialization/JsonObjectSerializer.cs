@@ -54,7 +54,7 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
-        public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override object? Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
             using var memoryStream = new MemoryStream();
             stream.CopyTo(memoryStream);
@@ -62,9 +62,9 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
-        public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override ValueTask<object?> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
-            return await JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken).ConfigureAwait(false);
+            return JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -117,7 +117,7 @@ namespace Azure.Core.Serialization
             // Mimics property name determination based on
             // https://github.com/dotnet/runtime/blob/dc8b6f90/src/libraries/System.Text.Json/src/System/Text/Json/Serialization/JsonPropertyInfo.cs#L53-L90
 
-            JsonPropertyNameAttribute nameAttribute = memberInfo.GetCustomAttribute<JsonPropertyNameAttribute>(false);
+            JsonPropertyNameAttribute? nameAttribute = memberInfo.GetCustomAttribute<JsonPropertyNameAttribute>(false);
             if (nameAttribute != null)
             {
                 return nameAttribute.Name

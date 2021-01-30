@@ -374,12 +374,18 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the date and time in UTC at which the message will be enqueued. This
-        /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.</summary>
-        /// <value>The scheduled enqueue time in UTC. This value is for delayed message sending.
-        /// It is utilized to delay messages sending to a specific time in the future.</value>
-        /// <remarks> Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
-        /// depends on the queue's workload and its state.</remarks>
+        /// <summary>
+        ///   Gets or sets the date and time in UTC at which the message will be enqueued. This
+        ///   property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.
+        /// </summary>
+        /// <value>
+        ///   The scheduled enqueue time in UTC. This value is for delayed message sending.
+        ///   It is utilized to delay messages sending to a specific time in the future.
+        /// </value>
+        /// <remarks>
+        ///   Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
+        ///   depends on the queue's workload and its state.
+        /// </remarks>
         public DateTimeOffset ScheduledEnqueueTime
         {
             get

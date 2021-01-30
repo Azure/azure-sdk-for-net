@@ -17,6 +17,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         internal string SasToken { get; private set; }
         internal string BlobContainerName = "backup";
+        internal string BlobContainerNameMultiPart = "backup/some/folder/name";
 
         public BackupRestoreTestBase(bool isAsync, RecordedTestMode? mode)
             : base(isAsync, mode)
@@ -29,7 +30,16 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var client = new KeyVaultBackupClient(
                 Uri,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new KeyVaultAdministrationClientOptions()));
+                InstrumentClientOptions(new KeyVaultAdministrationClientOptions
+                {
+                    Diagnostics =
+                        {
+                            LoggedHeaderNames =
+                            {
+                                "x-ms-request-id",
+                            },
+                        },
+                }));
             return isInstrumented ? InstrumentClient(client) : client;
         }
 

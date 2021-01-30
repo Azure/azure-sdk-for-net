@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Samples
                                 minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                                 increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-            HealthcareOperation healthOperation = await client.StartHealthcareAsync(document);
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartHealthcareAsync(document);
 
             await healthOperation.WaitForCompletionAsync();
 
@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 foreach (HealthcareEntity entity in result.Entities)
                 {
                     Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+                    Console.WriteLine($"    Category: {entity.Category}");
                     Console.WriteLine($"    Offset: {entity.Offset}");
                     Console.WriteLine($"    Length: {entity.Length}");
                     Console.WriteLine($"    IsNegated: {entity.IsNegated}");

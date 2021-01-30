@@ -1,0 +1,101 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/linking?stringIndexType=Utf16CodeUnit",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "103",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201202.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "53ef8655a9a359cd56891afb97313ae8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "90bf36ea-0b62-4e7e-b65c-ec421130e1f8",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
+        "Date": "Wed, 02 Dec 2020 22:53:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "40"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "id": "0",
+            "entities": [
+              {
+                "bingId": "a093e9b9-90f5-a3d5-c4b8-5855e1b01f85",
+                "name": "Microsoft",
+                "matches": [
+                  {
+                    "text": "Microsoft",
+                    "offset": 0,
+                    "length": 9,
+                    "confidenceScore": 0.49
+                  }
+                ],
+                "language": "en",
+                "id": "Microsoft",
+                "url": "https://en.wikipedia.org/wiki/Microsoft",
+                "dataSource": "Wikipedia"
+              },
+              {
+                "bingId": "0d47c987-0042-5576-15e8-97af601614fa",
+                "name": "Bill Gates",
+                "matches": [
+                  {
+                    "text": "Bill Gates",
+                    "offset": 25,
+                    "length": 10,
+                    "confidenceScore": 0.52
+                  }
+                ],
+                "language": "en",
+                "id": "Bill Gates",
+                "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                "dataSource": "Wikipedia"
+              },
+              {
+                "bingId": "df2c4376-9923-6a54-893f-2ee5a5badbc7",
+                "name": "Paul Allen",
+                "matches": [
+                  {
+                    "text": "Paul Allen",
+                    "offset": 40,
+                    "length": 10,
+                    "confidenceScore": 0.54
+                  }
+                ],
+                "language": "en",
+                "id": "Paul Allen",
+                "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                "dataSource": "Wikipedia"
+              }
+            ],
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2020-02-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1023607557",
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
+  }
+}

@@ -17,7 +17,7 @@ namespace Azure.Communication.Pipeline
         public async Task TestHMACPolicyProcess()
         {
             var expectedShaValue = "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=";
-            var authPolicy = new HMACAuthenticationPolicy(SecretKey);
+            var authPolicy = new HMACAuthenticationPolicy(new AzureKeyCredential(SecretKey));
             var transport = new MockTransport(new MockResponse(200));
             await SendGetRequest(transport, authPolicy);
             var headers = transport.SingleRequest.Headers;
@@ -30,8 +30,8 @@ namespace Azure.Communication.Pipeline
 
             var expectedAuthHeader = "HMAC-SHA256 SignedHeaders=date;host;x-ms-content-sha256";
             Assert.True(headers.TryGetValue("Authorization", out var authValue));
-            authValue = (authValue == null) ? "" : authValue;
-            Assert.True(authValue.Contains(expectedAuthHeader));
+            Assert.NotNull(authValue);
+            Assert.True(authValue!.Contains(expectedAuthHeader));
         }
     }
 }

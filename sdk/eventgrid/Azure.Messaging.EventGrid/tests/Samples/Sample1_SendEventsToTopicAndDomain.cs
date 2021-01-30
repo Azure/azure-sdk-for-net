@@ -36,10 +36,10 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             List<EventGridEvent> eventsList = new List<EventGridEvent>
             {
                 new EventGridEvent(
-                    "This is the event data",
                     "ExampleEventSubject",
                     "Example.EventType",
-                    "1.0")
+                    "1.0",
+                    "This is the event data")
             };
 
             // Send the events
@@ -118,10 +118,10 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             List<EventGridEvent> eventsList = new List<EventGridEvent>
             {
                 new EventGridEvent(
-                    "This is the event data",
                     "ExampleEventSubject",
                     "Example.EventType",
-                    "1.0")
+                    "1.0",
+                    "This is the event data")
                 {
                     Topic = "MyTopic"
                 }

@@ -2,6 +2,16 @@
 
 ## 1.0.0-beta.3 (Unreleased)
 
+### New Features
+- Added support for AAD authentication in `MetricsAdvisorClient` and `MetricsAdvisorAdministrationClient`.
+
+### Breaking Changes
+- In `MetricsAdvisorKeyCredential`, renamed the parameter `key` to `subscriptionKey` in the method `UpdateSubscriptionKey`.
+- In `MetricsAdvisorKeyCredential`, renamed the parameter `key` to `apiKey` in the method `UpdateApiKey`.
+
+### Key Bug Fixes
+- Fixed a bug in which setting `WebNotificationHook.CertificatePassword` would actually set the property `Username` instead.
+- Fixed a bug in which an `ArgumentNullException` was thrown when getting a `DataFeed` from the service as a Viewer.
 
 ## 1.0.0-beta.2 (2020-11-10)
 

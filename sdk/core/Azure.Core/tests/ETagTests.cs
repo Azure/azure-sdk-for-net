@@ -69,7 +69,6 @@ namespace Azure.Core.Tests
             Assert.False(eTag.Equals((object)new ETag("A")));
         }
 
-
         [Test]
         public void EqualityMembersDefault()
         {

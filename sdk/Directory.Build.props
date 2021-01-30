@@ -3,10 +3,10 @@
     <IsMgmtProject Condition="'$(IsMgmtProject)' == '' and $(MSBuildProjectName.Contains('.Management.'))">true</IsMgmtProject>
     <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.')) and '$(IsMgmtProject)' != 'true'">true</IsDataPlaneProject>
   </PropertyGroup>  
-  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
-    <_Parameter1>SourcePath</_Parameter1>
-    <_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>       
+      <_Parameter1>SourcePath</_Parameter1>
+      <_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
     </AssemblyAttribute>
   </ItemGroup>
   <Import Project="..\Directory.Build.props" />

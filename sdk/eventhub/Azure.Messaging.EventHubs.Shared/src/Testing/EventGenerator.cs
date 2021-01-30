@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
@@ -37,6 +38,28 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             const int minimumBodySize = 15;
             const int maximumBodySize = 83886;
+
+            for (var index = 0; index < numberOfEvents; ++index)
+            {
+                var buffer = new byte[RandomNumberGenerator.Value.Next(minimumBodySize, maximumBodySize)];
+                RandomNumberGenerator.Value.NextBytes(buffer);
+
+                yield return CreateEventFromBody(buffer);
+            }
+        }
+
+        /// <summary>
+        ///   Creates a set of events with random data and a small body size.
+        /// </summary>
+        ///
+        /// <param name="numberOfEvents">The number of events to create.</param>
+        ///
+        /// <returns>The requested set of events.</returns>
+        ///
+        public static IEnumerable<EventData> CreateSmallEvents(int numberOfEvents)
+        {
+            const int minimumBodySize = 5;
+            const int maximumBodySize = 25;
 
             for (var index = 0; index < numberOfEvents; ++index)
             {

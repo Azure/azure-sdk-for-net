@@ -3,7 +3,7 @@ namespace Azure.Communication.Chat
     public partial class ChatClient
     {
         protected ChatClient() { }
-        public ChatClient(System.Uri endpointUrl, Azure.Communication.Identity.CommunicationUserCredential communicationUserCredential, Azure.Communication.Chat.ChatClientOptions? options = null) { }
+        public ChatClient(System.Uri endpointUrl, Azure.Communication.CommunicationTokenCredential communicationTokenCredential, Azure.Communication.Chat.ChatClientOptions? options = null) { }
         public virtual Azure.Communication.Chat.ChatThreadClient CreateChatThread(string topic, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatThreadMember> members, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.Chat.ChatThreadClient> CreateChatThreadAsync(string topic, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatThreadMember> members, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteChatThread(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -32,7 +32,7 @@ namespace Azure.Communication.Chat
         public System.DateTimeOffset? EditedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Communication.Chat.ChatMessagePriority? Priority { get { throw null; } }
-        public Azure.Communication.CommunicationUser Sender { get { throw null; } }
+        public Azure.Communication.CommunicationUserIdentifier Sender { get { throw null; } }
         public string SenderDisplayName { get { throw null; } }
         public string Type { get { throw null; } }
         public string Version { get { throw null; } }
@@ -58,7 +58,7 @@ namespace Azure.Communication.Chat
     public partial class ChatThread
     {
         internal ChatThread() { }
-        public Azure.Communication.CommunicationUser CreatedBy { get { throw null; } }
+        public Azure.Communication.CommunicationUserIdentifier CreatedBy { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatThreadMember> Members { get { throw null; } }
@@ -80,8 +80,8 @@ namespace Azure.Communication.Chat
         public virtual Azure.AsyncPageable<Azure.Communication.Chat.ChatMessage> GetMessagesAsync(System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.Chat.ReadReceipt> GetReadReceipts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.Chat.ReadReceipt> GetReadReceiptsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RemoveMember(Azure.Communication.CommunicationUser user, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveMemberAsync(Azure.Communication.CommunicationUser user, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RemoveMember(Azure.Communication.CommunicationUserIdentifier user, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveMemberAsync(Azure.Communication.CommunicationUserIdentifier user, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Chat.SendChatMessageResult> SendMessage(string content, Azure.Communication.Chat.ChatMessagePriority? priority = default(Azure.Communication.Chat.ChatMessagePriority?), string senderDisplayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Chat.SendChatMessageResult>> SendMessageAsync(string content, Azure.Communication.Chat.ChatMessagePriority? priority = default(Azure.Communication.Chat.ChatMessagePriority?), string senderDisplayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendReadReceipt(string messageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -103,17 +103,17 @@ namespace Azure.Communication.Chat
     }
     public partial class ChatThreadMember
     {
-        public ChatThreadMember(Azure.Communication.CommunicationUser communicationUser) { }
+        public ChatThreadMember(Azure.Communication.CommunicationUserIdentifier communicationUser) { }
         public string? DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? ShareHistoryTime { get { throw null; } set { } }
-        public Azure.Communication.CommunicationUser User { get { throw null; } set { } }
+        public Azure.Communication.CommunicationUserIdentifier User { get { throw null; } set { } }
     }
     public partial class ReadReceipt
     {
         internal ReadReceipt() { }
         public string ChatMessageId { get { throw null; } }
         public System.DateTimeOffset? ReadOn { get { throw null; } }
-        public Azure.Communication.CommunicationUser Sender { get { throw null; } }
+        public Azure.Communication.CommunicationUserIdentifier Sender { get { throw null; } }
     }
     public partial class SendChatMessageResult
     {

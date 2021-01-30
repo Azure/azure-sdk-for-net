@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Samples
         /// For this sample, you can use the training forms found in the `trainingFiles` folder.
         /// Upload the forms to your storage container and then generate a container SAS URL.
 
-        /// For more information see https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/overview#custom-models
+        /// For more information see https://docs.microsoft.com/azure/cognitive-services/form-recognizer/overview#custom-models
 
         [Test]
         public async Task OutputModelsTrainedWithLabels()

@@ -7,7 +7,9 @@ To create a new `TextAnalyticsClient` to recognize healthcare entities in a docu
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
-```C# Snippet:TextAnalyticsSample4CreateClient
+```C# Snippet:CreateTextAnalyticsClient
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
 var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
@@ -26,7 +28,7 @@ To recognize healthcare entities in a document, use the `StarthealthcareAsyc` me
                         minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                         increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-    HealthcareOperation healthOperation = client.StartHealthcare(document);
+    AnalyzeHealthcareEntitiesOperation healthOperation = client.StartHealthcare(document);
 
     await healthOperation.WaitForCompletionAsync();
 
@@ -42,7 +44,7 @@ To recognize healthcare entities in a document, use the `StarthealthcareAsyc` me
             foreach (HealthcareEntity entity in result.Entities)
             {
                 Console.WriteLine($"    Entity: {entity.Text}");
-                Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+                Console.WriteLine($"    Category: {entity.Category}");
                 Console.WriteLine($"    Offset: {entity.Offset}");
                 Console.WriteLine($"    Length: {entity.Length}");
                 Console.WriteLine($"    IsNegated: {entity.IsNegated}");
@@ -79,7 +81,7 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
         document,
     };
 
-    HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(batchInput, "en");
+    AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartHealthcareBatchAsync(batchInput, "en");
 
     await healthOperation.WaitForCompletionAsync();
 
@@ -95,7 +97,7 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
         foreach (HealthcareEntity entity in result.Entities)
         {
             Console.WriteLine($"    Entity: {entity.Text}");
-            Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+            Console.WriteLine($"    Category: {entity.Category}");
             Console.WriteLine($"    Offset: {entity.Offset}");
             Console.WriteLine($"    Length: {entity.Length}");
             Console.WriteLine($"    IsNegated: {entity.IsNegated}");
@@ -120,6 +122,8 @@ To see the full example source files, see:
 * [Asynchronously RecognizeHealthcareBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareBatchAsync.cs)
 * [Synchronously RecognizeHealthcare Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_Healthcare_Cancellation.cs)
 * [Asynchronously RecognizeHealthcare Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareAsync_Cancellation.cs)
+* [Automatic Polling HealthcareOperation ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareAsync_AutomaticPolling.cs)
+* [Manual Polling HealthcareOperation ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareAsync_ManualPolling.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

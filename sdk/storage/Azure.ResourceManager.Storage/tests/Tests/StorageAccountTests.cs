@@ -1327,7 +1327,6 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             };
             rules.Add(rule1);
 
-
             ManagementPolicyAction Actions2 = new ManagementPolicyAction()
             {
                 BaseBlob = new ManagementPolicyBaseBlob()

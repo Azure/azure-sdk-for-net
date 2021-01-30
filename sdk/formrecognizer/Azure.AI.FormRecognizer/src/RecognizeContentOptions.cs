@@ -6,13 +6,17 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer
 {
     /// <summary>
-    /// The set of options that can be specified when calling a recognize content method
-    /// to configure the behavior of the request.
+    /// The set of options that can be specified when calling a Recognize Content method
+    /// to configure the behavior of the request. For example, specify the content type of the
+    /// form, the language of the form, and which pages in a multi-page document to analyze.
     /// </summary>
     public class RecognizeContentOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeContentOptions"/> class.
+        /// Initializes a new instance of the <see cref="RecognizeContentOptions"/> class which
+        /// allows to set options that can be specified when calling a Recognize Content method
+        /// to configure the behavior of the request. For example, specify the content type of the
+        /// form, the language of the form, and which pages in a multi-page document to analyze.
         /// </summary>
         public RecognizeContentOptions()
         {
@@ -29,15 +33,20 @@ namespace Azure.AI.FormRecognizer
         /// Recognize Content supports auto language identification and multi language documents, so only
         /// provide a language code if you would like to force the documented to be processed as
         /// that specific language.
-        /// <para>See supported language codes <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/language-support">here</a>.</para>
         /// </summary>
-        public string Language { get; set; }
+        public FormRecognizerLanguage? Language { get; set; }
 
         /// <summary>
-        /// Custom page numbers for multi-page documents(PDF/TIFF). Input the number of the
-        /// pages you want to get OCR result. For a range of pages, use a hyphen.
-        /// Separate each page or range with a comma.
+        /// <para>
+        /// Custom page numbers for multi-page documents(PDF/TIFF). Input the page numbers
+        /// and/or ranges of pages you want to get in the result. For a range of pages, use a hyphen, like
+        /// `Pages = { "1-3", "5-6" }`. Separate each page number or range with a comma.
+        /// </para>
+        /// <para>
+        /// Although this collection cannot be set, it can be modified.
+        /// See <a href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#collection-initializers">collection initializer</a>.
+        /// </para>
         /// </summary>
-        public IEnumerable<string> Pages { get; set; }
+        public IList<string> Pages { get; } = new List<string>();
     }
 }

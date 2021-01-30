@@ -121,7 +121,6 @@ namespace Azure.AI.TextAnalytics
             Id = operationLocation.Split('/').Last();
         }
 
-
         /// <summary>
         /// The last HTTP response received from the server.
         /// </summary>
@@ -202,7 +201,7 @@ namespace Azure.AI.TextAnalytics
 
                     _response = update.GetRawResponse();
 
-                    if (update.Value.Status == JobStatus.Succeeded)
+                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded)
                     {
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
                         _value = Transforms.ConvertToAnalyzeOperationResult(update.Value, _idToIndexMap);
@@ -210,7 +209,7 @@ namespace Azure.AI.TextAnalytics
                         NextLink = update.Value.NextLink;
                         _hasCompleted = true;
                     }
-                    else if (update.Value.Status == JobStatus.Failed)
+                    else if (update.Value.Status == TextAnalyticsOperationStatus.Failed)
                     {
                         _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors).ConfigureAwait(false);
                         _hasCompleted = true;

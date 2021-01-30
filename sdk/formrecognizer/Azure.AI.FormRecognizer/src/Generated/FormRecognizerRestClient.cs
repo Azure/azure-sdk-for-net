@@ -51,8 +51,8 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(trainRequest);
             request.Content = content;
@@ -231,8 +231,8 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -305,10 +305,10 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
@@ -427,8 +427,8 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copy", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(copyRequest);
             request.Content = content;
@@ -610,8 +610,8 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/compose", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(composeRequest);
             request.Content = content;
@@ -676,7 +676,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(ContentType1 contentType, Stream fileStream, bool? includeTextDetails, Locale? locale)
+        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(ContentType1 contentType, Stream fileStream, bool? includeTextDetails, FormRecognizerLocale? locale)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -694,8 +694,8 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -707,7 +707,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, Locale? locale = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -733,7 +733,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, Locale? locale = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -752,7 +752,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(bool? includeTextDetails, Locale? locale, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(bool? includeTextDetails, FormRecognizerLocale? locale, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -770,10 +770,10 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
@@ -786,7 +786,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(bool? includeTextDetails = null, Locale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeBusinessCardAsyncRequest(includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -805,7 +805,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(bool? includeTextDetails = null, Locale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeBusinessCardAsyncRequest(includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -876,7 +876,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(ContentType1 contentType, Stream fileStream, bool? includeTextDetails, Locale? locale)
+        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(ContentType1 contentType, Stream fileStream, bool? includeTextDetails, FormRecognizerLocale? locale)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -894,8 +894,8 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -907,7 +907,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, Locale? locale = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -933,7 +933,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, Locale? locale = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -952,7 +952,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(bool? includeTextDetails, Locale? locale, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(bool? includeTextDetails, FormRecognizerLocale? locale, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -970,10 +970,10 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
@@ -986,7 +986,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(bool? includeTextDetails = null, Locale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeInvoiceAsyncRequest(includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1005,7 +1005,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(bool? includeTextDetails = null, Locale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeInvoiceAsyncRequest(includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -1076,7 +1076,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(ContentType1 contentType, Stream fileStream, bool? includeTextDetails, Locale? locale)
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(ContentType1 contentType, Stream fileStream, bool? includeTextDetails, FormRecognizerLocale? locale)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1094,8 +1094,8 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -1107,7 +1107,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, Locale? locale = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -1133,7 +1133,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, Locale? locale = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(ContentType1 contentType, Stream fileStream, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -1152,7 +1152,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, Locale? locale, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, FormRecognizerLocale? locale, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1170,10 +1170,10 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
@@ -1186,7 +1186,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, Locale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1205,7 +1205,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, Locale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -1276,7 +1276,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(ContentType1 contentType, Stream fileStream, Language? language, IEnumerable<string> pages)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(ContentType1 contentType, Stream fileStream, FormRecognizerLanguage? language, IEnumerable<string> pages)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1294,8 +1294,8 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQueryDelimited("Pages", pages, ",", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -1307,7 +1307,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(ContentType1 contentType, Stream fileStream, Language? language = null, IEnumerable<string> pages = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(ContentType1 contentType, Stream fileStream, FormRecognizerLanguage? language = null, IEnumerable<string> pages = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -1333,7 +1333,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(ContentType1 contentType, Stream fileStream, Language? language = null, IEnumerable<string> pages = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(ContentType1 contentType, Stream fileStream, FormRecognizerLanguage? language = null, IEnumerable<string> pages = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -1352,7 +1352,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(Language? language, IEnumerable<string> pages, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(FormRecognizerLanguage? language, IEnumerable<string> pages, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1370,10 +1370,10 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQueryDelimited("Pages", pages, ",", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
@@ -1386,7 +1386,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(Language? language = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormRecognizerLanguage? language = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(language, pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1405,7 +1405,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(Language? language = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormRecognizerLanguage? language = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(language, pages, fileStream);
             _pipeline.Send(message, cancellationToken);

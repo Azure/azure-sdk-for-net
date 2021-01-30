@@ -91,5 +91,4 @@ namespace Azure.Identity.Tests.Mock
             return cred;
         }
     }
-
 }

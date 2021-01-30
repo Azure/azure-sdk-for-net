@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
 using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Identity
 {
@@ -32,20 +33,18 @@ namespace Azure.Identity
                 }
             }
 
+            if (request.Content != null)
+            {
+                foreach (System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>> header in request.Content.Headers)
+                {
+                    foreach (var value in header.Value)
+                    {
+                        pipelineRequest.Headers.Add(header.Key, value);
+                    }
+                }
+            }
+
             return pipelineRequest;
-        }
-
-        private static void AddHeader(HttpResponseMessage request, HttpHeader header)
-        {
-            if (request.Headers.TryAddWithoutValidation(header.Name, header.Value))
-            {
-                return;
-            }
-
-            if (!request.Content.Headers.TryAddWithoutValidation(header.Name, header.Value))
-            {
-                throw new InvalidOperationException("Unable to add header to request or content");
-            }
         }
 
         public static HttpResponseMessage ToHttpResponseMessage(this Response response)
@@ -59,11 +58,14 @@ namespace Azure.Identity
 
             foreach (HttpHeader header in response.Headers)
             {
-                if (!responseMessage.Headers.TryAddWithoutValidation(header.Name, header.Value))
+                if (response.Headers.TryGetValues(header.Name, out IEnumerable<string> values))
                 {
-                    if (!responseMessage.Content.Headers.TryAddWithoutValidation(header.Name, header.Value))
+                    if (!responseMessage.Headers.TryAddWithoutValidation(header.Name, values))
                     {
-                        throw new InvalidOperationException("Unable to add header to request or content");
+                        if ((responseMessage.Content == null) || !responseMessage.Content.Headers.TryAddWithoutValidation(header.Name, values))
+                        {
+                            throw new InvalidOperationException("Unable to add header to response or content");
+                        }
                     }
                 }
             }
@@ -80,6 +82,5 @@ namespace Azure.Identity
 
             return null;
         }
-
     }
 }

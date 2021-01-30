@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
-
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     public class BlobTriggerTests

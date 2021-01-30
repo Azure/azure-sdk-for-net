@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -21,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   A storage blob service that keeps track of checkpoints and ownership.
     /// </summary>
     ///
-    internal sealed partial class BlobsCheckpointStore : StorageManager
+    internal partial class BlobsCheckpointStore : StorageManager
     {
 #pragma warning disable CA1802 // Use a constant field
         /// <summary>A message to use when throwing exception when checkpoint container or blob does not exists.</summary>
@@ -40,6 +43,13 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         private const string CheckpointPrefix = "{0}/{1}/{2}/checkpoint/";
+
+        /// <summary>
+        ///   Specifies a string that filters the results to return only legacy checkpoint blobs whose name begins
+        ///   with the specified prefix.
+        /// </summary>
+        ///
+        private const string LegacyCheckpointPrefix = "{0}/{1}/{2}/";
 
         /// <summary>
         ///   Specifies a string that filters the results to return only ownership blobs whose name begins
@@ -62,20 +72,29 @@ namespace Azure.Messaging.EventHubs.Processor
         private EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
+        ///   Indicates whether to read legacy checkpoints when no current version checkpoints are available.
+        /// </summary>
+        ///
+        private bool InitializeWithLegacyCheckpoints { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="BlobsCheckpointStore" /> class.
         /// </summary>
         ///
         /// <param name="blobContainerClient">The client used to interact with the Azure Blob Storage service.</param>
         /// <param name="retryPolicy">The retry policy to use as the basis for interacting with the Storage Blobs service.</param>
+        /// <param name="initializeWithLegacyCheckpoints">Indicates whether to read legacy checkpoint when no current version checkpoint is available for a partition.</param>
         ///
         public BlobsCheckpointStore(BlobContainerClient blobContainerClient,
-                                    EventHubsRetryPolicy retryPolicy)
+                                    EventHubsRetryPolicy retryPolicy,
+                                    bool initializeWithLegacyCheckpoints = false)
         {
             Argument.AssertNotNull(blobContainerClient, nameof(blobContainerClient));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             ContainerClient = blobContainerClient;
             RetryPolicy = retryPolicy;
+            InitializeWithLegacyCheckpoints = initializeWithLegacyCheckpoints;
             BlobsCheckpointStoreCreated(nameof(BlobsCheckpointStore), blobContainerClient.AccountName, blobContainerClient.Name);
         }
 
@@ -98,44 +117,36 @@ namespace Azure.Messaging.EventHubs.Processor
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ListOwnershipStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
-            List<EventProcessorPartitionOwnership> result = null;
+            List<EventProcessorPartitionOwnership> result = new List<EventProcessorPartitionOwnership>();
 
             try
             {
                 var prefix = string.Format(CultureInfo.InvariantCulture, OwnershipPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
 
-                async Task<List<EventProcessorPartitionOwnership>> listOwnershipAsync(CancellationToken listOwnershipToken)
+                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    var ownershipList = new List<EventProcessorPartitionOwnership>();
+                    // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
+                    // to throw an exception.
 
-                    await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: listOwnershipToken).ConfigureAwait(false))
+                    blob.Metadata.TryGetValue(BlobMetadataKey.OwnerIdentifier, out var ownerIdentifier);
+
+                    result.Add(new EventProcessorPartitionOwnership
                     {
-                        // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
-                        // to throw an exception.
+                        FullyQualifiedNamespace = fullyQualifiedNamespace,
+                        EventHubName = eventHubName,
+                        ConsumerGroup = consumerGroup,
+                        OwnerIdentifier = ownerIdentifier,
+                        PartitionId = blob.Name.Substring(prefix.Length),
+                        LastModifiedTime = blob.Properties.LastModified.GetValueOrDefault(),
+                        Version = blob.Properties.ETag.ToString()
+                    });
+                }
 
-                        blob.Metadata.TryGetValue(BlobMetadataKey.OwnerIdentifier, out var ownerIdentifier);
-
-                        ownershipList.Add(new EventProcessorPartitionOwnership
-                        {
-                            FullyQualifiedNamespace = fullyQualifiedNamespace,
-                            EventHubName = eventHubName,
-                            ConsumerGroup = consumerGroup,
-                            OwnerIdentifier = ownerIdentifier,
-                            PartitionId = blob.Name.Substring(prefix.Length),
-                            LastModifiedTime = blob.Properties.LastModified.GetValueOrDefault(),
-                            Version = blob.Properties.ETag.ToString()
-                        });
-                    }
-
-                    return ownershipList;
-                };
-
-                result = await ApplyRetryPolicy(listOwnershipAsync, cancellationToken).ConfigureAwait(false);
                 return result;
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                ListOwnershipError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex.Message);
+                ListOwnershipError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist);
             }
             finally
@@ -183,28 +194,18 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         blobRequestConditions.IfNoneMatch = IfNoneMatchAllTag;
 
-                        async Task<Response<BlobContentInfo>> uploadBlobAsync(CancellationToken uploadToken)
+                        using var blobContent = new MemoryStream(Array.Empty<byte>());
+
+                        try
                         {
-                            using var blobContent = new MemoryStream(Array.Empty<byte>());
-
-                            try
-                            {
-                                return await blobClient.UploadAsync(blobContent, metadata: metadata, conditions: blobRequestConditions, cancellationToken: uploadToken).ConfigureAwait(false);
-                            }
-                            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
-                            {
-                                // A blob could have just been created by another Event Processor that claimed ownership of this
-                                // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
-
-                                OwnershipNotClaimable(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex.Message);
-                                return null;
-                            }
-                        };
-
-                        contentInfoResponse = await ApplyRetryPolicy(uploadBlobAsync, cancellationToken).ConfigureAwait(false);
-
-                        if (contentInfoResponse == null)
+                            contentInfoResponse = await blobClient.UploadAsync(blobContent, metadata: metadata, conditions: blobRequestConditions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        }
+                        catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
                         {
+                            // A blob could have just been created by another Event Processor that claimed ownership of this
+                            // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
+
+                            OwnershipNotClaimable(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex.Message);
                             continue;
                         }
 
@@ -214,7 +215,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     else
                     {
                         blobRequestConditions.IfMatch = new ETag(ownership.Version);
-                        infoResponse = await ApplyRetryPolicy(uploadToken => blobClient.SetMetadataAsync(metadata, blobRequestConditions, uploadToken), cancellationToken).ConfigureAwait(false);
+                        infoResponse = await blobClient.SetMetadataAsync(metadata, blobRequestConditions, cancellationToken).ConfigureAwait(false);
 
                         ownership.LastModifiedTime = infoResponse.Value.LastModified;
                         ownership.Version = infoResponse.Value.ETag.ToString();
@@ -239,12 +240,12 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
-                    ClaimOwnershipError(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex.Message);
+                    ClaimOwnershipError(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex);
                     throw new RequestFailedException(BlobsResourceDoesNotExist);
                 }
                 catch (Exception ex)
                 {
-                    ClaimOwnershipError(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex.Message);
+                    ClaimOwnershipError(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex);
                     throw;
                 }
                 finally
@@ -275,69 +276,241 @@ namespace Azure.Messaging.EventHubs.Processor
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ListCheckpointsStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
-            var prefix = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
-            var checkpointCount = 0;
-
-            async Task<IEnumerable<EventProcessorCheckpoint>> listCheckpointsAsync(CancellationToken listCheckpointsToken)
+            List<EventProcessorCheckpoint> checkpoints = new List<EventProcessorCheckpoint>();
+            try
             {
-                var checkpoints = new List<EventProcessorCheckpoint>();
+                var prefix = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
 
-                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: listCheckpointsToken).ConfigureAwait(false))
+                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
                     var partitionId = blob.Name.Substring(prefix.Length);
-                    var startingPosition = default(EventPosition?);
+                    EventProcessorCheckpoint checkpoint = CreateCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, blob.Metadata);
 
-                    if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
+                    if (checkpoint != null)
                     {
-                        startingPosition = EventPosition.FromOffset(result, false);
-                    }
-                    else if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
-                    {
-                        startingPosition = EventPosition.FromSequenceNumber(result, false);
-                    }
-
-                    // If either the offset or the sequence number was not populated,
-                    // this is not a valid checkpoint.
-
-                    if (startingPosition.HasValue)
-                    {
-                        checkpoints.Add(new EventProcessorCheckpoint
-                        {
-                            FullyQualifiedNamespace = fullyQualifiedNamespace,
-                            EventHubName = eventHubName,
-                            ConsumerGroup = consumerGroup,
-                            PartitionId = partitionId,
-                            StartingPosition = startingPosition.Value
-                        });
-                    }
-                    else
-                    {
-                        InvalidCheckpointFound(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+                        checkpoints.Add(checkpoint);
                     }
                 }
 
-                checkpointCount = checkpoints.Count;
-                return checkpoints;
-            };
+                if (InitializeWithLegacyCheckpoints)
+                {
+                    // Legacy checkpoints are not normalized to lowercase
+                    var legacyPrefix = string.Format(CultureInfo.InvariantCulture, LegacyCheckpointPrefix, fullyQualifiedNamespace, eventHubName, consumerGroup);
 
-            try
-            {
-                return await ApplyRetryPolicy(listCheckpointsAsync, cancellationToken).ConfigureAwait(false);
+                    await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(prefix: legacyPrefix, cancellationToken: cancellationToken).ConfigureAwait(false))
+                    {
+                        // Skip new checkpoints and empty blobs
+                        if (blob.Properties.ContentLength == 0)
+                        {
+                            continue;
+                        }
+
+                        var partitionId = blob.Name.Substring(legacyPrefix.Length);
+
+                        // Check whether there is already a checkpoint for this partition id
+                        if (checkpoints.Any(existingCheckpoint => string.Equals(existingCheckpoint.PartitionId, partitionId, StringComparison.Ordinal)))
+                        {
+                            continue;
+                        }
+
+                        var checkpoint = await CreateLegacyCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, blob.Name, partitionId, cancellationToken).ConfigureAwait(false);
+
+                        if (checkpoint != null)
+                        {
+                            checkpoints.Add(checkpoint);
+                        }
+                    }
+                }
+                return checkpoints;
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                ListCheckpointsError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex.Message);
+                ListCheckpointsError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist);
             }
             catch (Exception ex)
             {
-                ListCheckpointsError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex.Message);
+                ListCheckpointsError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex);
                 throw;
             }
             finally
             {
-                ListCheckpointsComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, checkpointCount);
+                ListCheckpointsComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, checkpoints?.Count ?? 0);
             }
+        }
+
+        /// <summary>
+        ///   Retrieves a checkpoints in a data store for a given namespace, Event Hub, consumer group and partition ID.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A <see cref="EventProcessorCheckpoint"/> initialized with checkpoint properties if the checkpoint exists, otherwise <code>null</code>.</returns>
+        ///
+        public override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                GetCheckpointStart(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+                try
+                {
+                    var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant()) + partitionId;
+                    var blob = await ContainerClient
+                        .GetBlobClient(blobName)
+                        .GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                    var checkpoint = CreateCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, blob.Value.Metadata);
+
+                    return checkpoint;
+                }
+                catch (RequestFailedException e) when (e.Status == 404)
+                {
+                    // ignore
+                }
+
+                try
+                {
+                    if (InitializeWithLegacyCheckpoints)
+                    {
+                        var legacyPrefix = string.Format(CultureInfo.InvariantCulture, LegacyCheckpointPrefix, fullyQualifiedNamespace, eventHubName, consumerGroup) + partitionId;
+                        return await CreateLegacyCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, legacyPrefix, partitionId, cancellationToken).ConfigureAwait(false);
+                    }
+                }
+                catch (RequestFailedException e) when (e.Status == 404)
+                {
+                    // ignore
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                GetCheckpointError(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, ex);
+                throw;
+            }
+            finally
+            {
+                GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+            }
+        }
+
+        /// <summary>
+        ///   Creates a checkpoint instance based on the blob metadata.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        /// <param name="metadata">The metadata of the blob that represents the checkpoint.</param>
+        ///
+        /// <returns>A <see cref="EventProcessorCheckpoint"/> initialized with checkpoint properties if the checkpoint exists, otherwise <code>null</code>.</returns>
+        ///
+        private EventProcessorCheckpoint CreateCheckpoint(string fullyQualifiedNamespace,
+                                                          string eventHubName,
+                                                          string consumerGroup,
+                                                          string partitionId,
+                                                          IDictionary<string, string> metadata)
+        {
+            var startingPosition = default(EventPosition?);
+            var offset = default(long?);
+            var sequenceNumber = default(long?);
+
+            if (metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
+            {
+                offset = result;
+                startingPosition = EventPosition.FromOffset(result, false);
+            }
+            else if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
+            {
+                sequenceNumber = result;
+                startingPosition = EventPosition.FromSequenceNumber(result, false);
+            }
+
+            // If either the offset or the sequence number was not populated,
+            // this is not a valid checkpoint.
+
+            if (!startingPosition.HasValue)
+            {
+                InvalidCheckpointFound(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+                return null;
+            }
+
+            return new BlobStorageCheckpoint()
+            {
+                FullyQualifiedNamespace = fullyQualifiedNamespace,
+                EventHubName = eventHubName,
+                ConsumerGroup = consumerGroup,
+                PartitionId = partitionId,
+                StartingPosition = startingPosition.Value,
+                Offset = offset,
+                SequenceNumber = sequenceNumber
+            };
+        }
+
+        /// <summary>
+        ///   Creates a checkpoint instance based on the blob name for a legacy checkpoint format.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        /// <param name="blobName">The name of the blob that represents the checkpoint.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A <see cref="EventProcessorCheckpoint"/> initialized with checkpoint properties if the checkpoint exists, otherwise <code>null</code>.</returns>
+        ///
+        private async Task<EventProcessorCheckpoint> CreateLegacyCheckpoint(string fullyQualifiedNamespace,
+                                                                            string eventHubName,
+                                                                            string consumerGroup,
+                                                                            string blobName,
+                                                                            string partitionId,
+                                                                            CancellationToken cancellationToken)
+        {
+            var startingPosition = default(EventPosition?);
+
+            BlobBaseClient blobClient = ContainerClient.GetBlobClient(blobName);
+            using var memoryStream = new MemoryStream();
+            await blobClient.DownloadToAsync(memoryStream, cancellationToken).ConfigureAwait(false);
+
+            if (TryReadLegacyCheckpoint(
+                memoryStream.GetBuffer().AsSpan(0, (int) memoryStream.Length),
+                out long? offset,
+                out long? sequenceNumber))
+            {
+                if (offset.HasValue)
+                {
+                    startingPosition = EventPosition.FromOffset(offset.Value, false);
+                }
+                else
+                {
+                    // Skip checkpoints without an offset without logging an error
+                    return null;
+                }
+            }
+
+            if (!startingPosition.HasValue)
+            {
+                InvalidCheckpointFound(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+
+                return null;
+            }
+
+            return new BlobStorageCheckpoint
+            {
+                FullyQualifiedNamespace = fullyQualifiedNamespace,
+                EventHubName = eventHubName,
+                ConsumerGroup = consumerGroup,
+                PartitionId = partitionId,
+                StartingPosition = startingPosition.Value,
+                Offset = offset,
+                SequenceNumber = sequenceNumber
+            };
         }
 
         /// <summary>
@@ -372,28 +545,23 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     // Assume the blob is present and attempt to set the metadata.
 
-                    await ApplyRetryPolicy(token => blobClient.SetMetadataAsync(metadata, cancellationToken: token), cancellationToken).ConfigureAwait(false);
+                    await blobClient.SetMetadataAsync(metadata, cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 catch (RequestFailedException ex) when ((ex.ErrorCode == BlobErrorCode.BlobNotFound) || (ex.ErrorCode == BlobErrorCode.ContainerNotFound))
                 {
                     // If the blob wasn't present, fall-back to trying to create a new one.
-
-                    await ApplyRetryPolicy(async token =>
-                    {
-                        using var blobContent = new MemoryStream(Array.Empty<byte>());
-                        await blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: token).ConfigureAwait(false);
-
-                    }, cancellationToken).ConfigureAwait(false);
+                    using var blobContent = new MemoryStream(Array.Empty<byte>());
+                    await blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, ex.Message);
+                UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, ex.Message);
+                UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, ex);
                 throw;
             }
             finally
@@ -403,89 +571,86 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Applies the checkpoint store's <see cref="RetryPolicy" /> to a specified function.
+        ///   Attempts to read a legacy checkpoint JSON format and extract an offset and a sequence number
         /// </summary>
         ///
-        /// <param name="functionToRetry">The function to which the retry policy should be applied.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        /// <param name="data">The binary representation of the checkpoint JSON.</param>
+        /// <param name="offset">The parsed offset. null if not found.</param>
+        /// <param name="sequenceNumber">The parsed sequence number. null if not found.</param>
         ///
-        /// <returns>The value returned by the function to which the retry policy has been applied.</returns>
-        ///
-        private async Task ApplyRetryPolicy(Func<CancellationToken, Task> functionToRetry,
-                                            CancellationToken cancellationToken)
+        /// <remarks>
+        ///   Sample checkpoint JSON:
+        ///   {
+        ///       "PartitionId":"0",
+        ///       "Owner":"681d365b-de1b-4288-9733-76294e17daf0",
+        ///       "Token":"2d0c4276-827d-4ca4-a345-729caeca3b82",
+        ///       "Epoch":386,
+        ///       "Offset":"8591964920",
+        ///       "SequenceNumber":960180
+        ///   }
+        /// /// </remarks>
+        private static bool TryReadLegacyCheckpoint(Span<byte> data, out long? offset, out long? sequenceNumber)
         {
-            TimeSpan? retryDelay;
+            offset = null;
+            sequenceNumber = null;
 
-            var failedAttemptCount = 0;
-            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
-            var timeoutTokenSource = default(CancellationTokenSource);
-            var linkedTokenSource = default(CancellationTokenSource);
+            var hadOffset = false;
+            var jsonReader = new Utf8JsonReader(data);
 
-            while (!cancellationToken.IsCancellationRequested)
+            try
             {
-                try
+                if (!jsonReader.Read() || jsonReader.TokenType != JsonTokenType.StartObject)
+                    return false;
+
+                while (jsonReader.Read() && jsonReader.TokenType == JsonTokenType.PropertyName)
                 {
-                    timeoutTokenSource = new CancellationTokenSource(tryTimeout);
-                    linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutTokenSource.Token);
-
-                    await functionToRetry(linkedTokenSource.Token).ConfigureAwait(false);
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
-                    // Otherwise, mark the exception as active and break out of the loop.
-
-                    ++failedAttemptCount;
-                    retryDelay = RetryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
-
-                    if ((retryDelay.HasValue) && (!cancellationToken.IsCancellationRequested))
+                    switch (jsonReader.GetString())
                     {
-                        await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
-                        tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
+                        case "Offset":
+
+                            if (!jsonReader.Read())
+                            {
+                                return false;
+                            }
+
+                            hadOffset = true;
+
+                            var offsetString = jsonReader.GetString();
+                            if (!string.IsNullOrEmpty(offsetString))
+                            {
+                                if (long.TryParse(offsetString, out long offsetValue))
+                                {
+                                    offset = offsetValue;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+
+                            break;
+                        case "SequenceNumber":
+                            if (!jsonReader.Read() ||
+                                !jsonReader.TryGetInt64(out long sequenceNumberValue))
+                            {
+                                return false;
+                            }
+
+                            sequenceNumber = sequenceNumberValue;
+                            break;
+                        default:
+                            jsonReader.Skip();
+                            break;
                     }
-                    else
-                    {
-                        timeoutTokenSource?.Token.ThrowIfCancellationRequested<TimeoutException>();
-                        throw;
-                    }
-                }
-                finally
-                {
-                    timeoutTokenSource?.Dispose();
-                    linkedTokenSource?.Dispose();
                 }
             }
-
-            // If no value has been returned nor exception thrown by this point,
-            // then cancellation has been requested.
-
-            throw new TaskCanceledException();
-        }
-
-        /// <summary>
-        ///   Applies the checkpoint store's <see cref="RetryPolicy" /> to a specified function.
-        /// </summary>
-        ///
-        /// <param name="functionToRetry">The function to which the retry policy should be applied.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <typeparam name="T">The type returned by the function to be executed.</typeparam>
-        ///
-        /// <returns>The value returned by the function to which the retry policy has been applied.</returns>
-        ///
-        private async Task<T> ApplyRetryPolicy<T>(Func<CancellationToken, Task<T>> functionToRetry,
-                                                  CancellationToken cancellationToken)
-        {
-            var result = default(T);
-
-            async Task wrapper(CancellationToken token)
+            catch (JsonException)
             {
-                result = await functionToRetry(token).ConfigureAwait(false);
-            };
+                // Ignore this because if the data is malformed, it will be treated as if the checkpoint didn't exist.
+                return false;
+            }
 
-            await ApplyRetryPolicy(wrapper, cancellationToken).ConfigureAwait(false);
-            return result;
+            return hadOffset && sequenceNumber != null;
         }
 
         /// <summary>
@@ -506,9 +671,9 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="exception">The message for the exception that occurred.</param>
         ///
-        partial void ListOwnershipError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string errorMessage);
+        partial void ListOwnershipError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, Exception exception);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve a list of ownership has started.
@@ -538,9 +703,43 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoints are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoints are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="exception">The message for the exception that occurred.</param>
         ///
-        partial void ListCheckpointsError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string errorMessage);
+        partial void ListCheckpointsError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, Exception exception);
+
+        /// <summary>
+        ///   Indicates that an attempt to retrieve a checkpoint has started.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        ///
+        partial void GetCheckpointStart(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId);
+
+        /// <summary>
+        ///   Indicates that an attempt to retrieve a checkpoint has completed.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        ///
+        partial void GetCheckpointComplete(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId);
+
+        /// <summary>
+        ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        /// <param name="exception">The message for the exception that occurred.</param>
+        ///
+        partial void GetCheckpointError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, Exception exception);
 
         /// <summary>
         ///   Indicates that invalid checkpoint data was found during an attempt to retrieve a list of checkpoints.
@@ -571,9 +770,9 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="exception">The message for the exception that occurred.</param>
         ///
-        partial void UpdateCheckpointError(string partitionId, string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string errorMessage);
+        partial void UpdateCheckpointError(string partitionId, string fullyQualifiedNamespace, string eventHubName, string consumerGroup, Exception exception);
 
         /// <summary>
         ///   Indicates that an attempt to update a checkpoint has completed.
@@ -618,9 +817,9 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubName">The name of the specific Event Hub the ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership is associated with.</param>
         /// <param name="ownerIdentifier">The identifier of the processor that attempted to claim the ownership for.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="exception">The message for the exception that occurred.</param>
         ///
-        partial void ClaimOwnershipError(string partitionId, string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string ownerIdentifier, string errorMessage);
+        partial void ClaimOwnershipError(string partitionId, string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string ownerIdentifier, Exception exception);
 
         /// <summary>
         ///   Indicates that ownership was unable to be claimed.
@@ -668,5 +867,15 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="containerName">The name of the associated container client.</param>
         ///
         partial void BlobsCheckpointStoreCreated(string typeName, string accountName, string containerName);
+
+        /// <summary>
+        ///   Contains the information to reflect the state of event processing for a given Event Hub partition.
+        ///   Provides access to the offset and the sequence number retrieved from the blob.
+        /// </summary>
+        public class BlobStorageCheckpoint : EventProcessorCheckpoint
+        {
+            public long? Offset { get; set; }
+            public long? SequenceNumber { get; set; }
+        }
     }
 }

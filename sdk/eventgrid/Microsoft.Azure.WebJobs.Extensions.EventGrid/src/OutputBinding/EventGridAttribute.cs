@@ -6,7 +6,7 @@ using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 {
-    /// <summary>Attribute to specify parameters for the Event Grid output binding</summary>
+    /// <summary>Attribute to specify parameters for the Event Grid output binding.</summary>
     /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.ReturnValue)]
     [Binding]

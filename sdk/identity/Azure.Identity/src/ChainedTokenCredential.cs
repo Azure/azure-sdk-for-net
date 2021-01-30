@@ -49,7 +49,6 @@ namespace Azure.Identity
                 {
                     throw new ArgumentException("sources must not contain null", nameof(sources));
                 }
-
             }
             _sources = sources;
         }

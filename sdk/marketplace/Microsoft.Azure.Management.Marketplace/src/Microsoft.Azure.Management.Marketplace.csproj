@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Marketplace</PackageId>
     <Description>Microsoft Azure Marketplace Library</Description>
-    <Version>1.2.0</Version>
+    <Version>2.0.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.Marketplace</AssemblyName>
     <PackageTags>management;marketplace;privatestore</PackageTags>
     <PackageReleaseNotes>

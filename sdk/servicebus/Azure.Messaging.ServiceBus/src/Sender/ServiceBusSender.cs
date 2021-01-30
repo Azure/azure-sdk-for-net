@@ -33,14 +33,14 @@ namespace Azure.Messaging.ServiceBus
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
+        public virtual string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
         ///   The path of the entity that the sender is connected to, specific to the
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
-        public string EntityPath { get; }
+        public virtual string EntityPath { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been closed.
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the sender is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed
+        public virtual bool IsClosed
         {
             get => _closed;
             private set => _closed = value;
@@ -410,8 +410,6 @@ namespace Azure.Messaging.ServiceBus
             // exception should have been thrown by this point.
             return sequenceNumbers[0];
         }
-
-
 
         /// <summary>
         /// Schedules a set of messages to appear on Service Bus at a later time.

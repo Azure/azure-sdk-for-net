@@ -104,12 +104,14 @@ namespace Azure.Core.Tests
 
         public void OnNext(DiagnosticListener value)
         {
-            List<IDisposable> subscriptions = _subscriptions;
-            if (_sourceNameFilter(value.Name) && subscriptions != null)
+            if (_sourceNameFilter(value.Name) && _subscriptions != null)
             {
                 lock (Scopes)
                 {
-                    subscriptions.Add(value.Subscribe(this));
+                    if (_subscriptions != null)
+                    {
+                        _subscriptions.Add(value.Subscribe(this));
+                    }
                 }
             }
         }

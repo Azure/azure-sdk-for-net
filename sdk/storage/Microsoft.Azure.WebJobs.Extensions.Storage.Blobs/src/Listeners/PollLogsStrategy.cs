@@ -183,7 +183,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 {
                     Blob = blob,
                     PollId = pollId,
-                    TriggerSource = BlobTriggerSource.LogScan
+                    TriggerSource = BlobTriggerScanSource.LogScan
                 };
 
                 FunctionResult result = await registration.ExecuteAsync(context, cancellationToken).ConfigureAwait(false);
