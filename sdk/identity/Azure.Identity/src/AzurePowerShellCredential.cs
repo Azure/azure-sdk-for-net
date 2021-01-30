@@ -3,10 +3,11 @@
 
 using System;
 using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -27,10 +28,9 @@ namespace Azure.Identity
         private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
         private const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
-        private const string AzurePowerShellModuleNotInstalledError = "Az.Accounts module is not installed.";
+        private const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
         private const string PowerShellNotInstalledError = "PowerShell is not installed.";
 
-        private const string AzurePowerShellNoContext = "NoContext";
         private const string AzurePowerShellNoAzAccountModule = "NoAzAccountModule";
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
         private const string DefaultWorkingDirNonWindows = "/bin/";
@@ -127,19 +127,23 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(PowerShellNotInstalledError);
                 }
 
+                bool noLogin =
+                    exception.Message.IndexOf("Run Connect-AzAccount to login", StringComparison.OrdinalIgnoreCase) !=
+                    -1;
+
+                if (noLogin)
+                {
+                    throw new CredentialUnavailableException(AzurePowerShellNotLogInError);
+                }
+
                 throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
             }
 
-            return GetTokenWithExpirationDateTimeUtc(output);
+            return DeserializeOutput(output);
         }
 
         private static void CheckForErrors(string output)
         {
-            if (output.IndexOf(AzurePowerShellNoContext, StringComparison.OrdinalIgnoreCase) != -1)
-            {
-                throw new CredentialUnavailableException(AzurePowerShellNotLogInError);
-            }
-
             if (output.IndexOf(AzurePowerShellNoAzAccountModule, StringComparison.OrdinalIgnoreCase) != -1)
             {
                 throw new CredentialUnavailableException(AzurePowerShellModuleNotInstalledError);
@@ -166,7 +170,21 @@ namespace Azure.Identity
                 powershellExe = "powershell -EncodedCommand";
             }
 
-            string command = $"$ErrorActionPreference = 'Stop'; $skip = $false; $m = Get-Module Az.Accounts -ListAvailable; if (! $m) {{$skip = $true; Write-Output '{AzurePowerShellNoAzAccountModule}'}}; if (! $skip) {{ $c = Get-AzContext ; if (! $c) {{$skip = $true; Write-Output '{AzurePowerShellNoContext}'}}}} ; if (! $skip) {{$token = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($c.Account, $c.Environment, $c.Tenant.Id, $null, $null, $null, '{resource}'); return $token.AccessToken}}";
+            string command = @$"
+$ErrorActionPreference = 'Stop'
+[version]$minimumVersion = '2.2.0'
+
+$m = Import-Module Az.Accounts -MinimumVersion $minimumVersion -PassThru -ErrorAction SilentlyContinue
+
+if (! $m) {{
+    Write-Output '{AzurePowerShellNoAzAccountModule}'
+    exit
+}}
+
+$token = Get-AzAccessToken -ResourceUrl '{resource}'
+
+return $token | ConvertTo-Json
+";
 
             string commandBase64 = Base64Encode(command);
 
@@ -182,16 +200,21 @@ namespace Azure.Identity
             }
         }
 
-        private static AccessToken GetTokenWithExpirationDateTimeUtc(string token)
+        private static AccessToken DeserializeOutput(string output)
         {
-            var jwtSecurityToken = new JwtSecurityToken(token);
-            return new AccessToken(token, jwtSecurityToken.ValidTo);
+            using JsonDocument document = JsonDocument.Parse(output);
+
+            JsonElement root = document.RootElement;
+            string accessToken = root.GetProperty("Token").GetString();
+            DateTimeOffset expiresOn = DateTimeOffset.ParseExact(root.GetProperty("ExpiresOn").GetString(), "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+
+            return new AccessToken(accessToken, expiresOn);
         }
 
         private static string Base64Encode(string text)
         {
             var plainTextBytes = Encoding.Unicode.GetBytes(text);
-            return System.Convert.ToBase64String(plainTextBytes);
+            return Convert.ToBase64String(plainTextBytes);
         }
     }
 }

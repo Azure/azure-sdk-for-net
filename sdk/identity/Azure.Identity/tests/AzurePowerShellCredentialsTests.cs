@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
+using System.Runtime.InteropServices;
 
 namespace Azure.Identity.Tests
 {
@@ -22,9 +23,9 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithAzurePowerShellCredential()
         {
-            var (expectedToken, expectedExpiresOn) = CredentialTestHelpers.CreateTokenForAzurePowerShell(new TimeSpan(30));
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
 
-            var testProcess = new TestProcess { Output = expectedToken };
+            var testProcess = new TestProcess { Output = processOutput };
             AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential
                 (new AzurePowerShellCredentialOptions() ,CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
@@ -55,19 +56,20 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void AuthenticateWithAzurePowerShellCredential_AzurePowerShellModuleNotInstalled([Values("NoAzAccountModule")] string message)
+        [RunOnlyOnPlatforms(Linux = true, OSX = true)]
+        public void AuthenticateWithAzurePowerShellCredential_UseLegacyPowerShellNotWindows()
         {
-            string expectedMessage = "Az.Accounts module is not installed.";
-            var testProcess = new TestProcess { Output = message };
-            AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            string expectedMessage = "PowerShell Legacy is only supported in Windows.";
+
+            var ex = Assert.Throws<ArgumentException>(() => new AzurePowerShellCredentialOptions() { UseLegacyPowerShell = true });
             Assert.AreEqual(expectedMessage, ex.Message);
         }
 
+
         [Test]
-        public void AuthenticateWithAzurePowerShellCredential_AzurePowerShellNoContext([Values("NoContext")] string message)
+        public void AuthenticateWithAzurePowerShellCredential_AzurePowerShellModuleNotInstalled([Values("NoAzAccountModule")] string message)
         {
-            string expectedMessage = "Please run 'Connect-AzAccount' to set up account.";
+            string expectedMessage = "Az.Account module >= 2.2.0 is not installed.";
             var testProcess = new TestProcess { Output = message };
             AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
@@ -106,7 +108,7 @@ namespace Azure.Identity.Tests
             AssertOptionsHonored(new AzurePowerShellCredentialOptions(), credential);
 
             // with options
-            var options = new AzurePowerShellCredentialOptions() {UseLegacyPowerShell = true};
+            var options = new AzurePowerShellCredentialOptions() {UseLegacyPowerShell = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? true : false};
 
             credential = new AzurePowerShellCredential(options);
 
