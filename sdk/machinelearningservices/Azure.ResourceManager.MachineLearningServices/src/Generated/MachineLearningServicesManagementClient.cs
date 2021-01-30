@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Returns an instance of MachineLearningComputeOperations. </summary>
         public virtual MachineLearningComputeOperations MachineLearningCompute => new MachineLearningComputeOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of MachineLearningServicesOperations. </summary>
-        public virtual MachineLearningServicesOperations MachineLearningServices => new MachineLearningServicesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of AzureMachineLearningWorkspacesOperations. </summary>
+        public virtual AzureMachineLearningWorkspacesOperations AzureMachineLearningWorkspaces => new AzureMachineLearningWorkspacesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of PrivateEndpointConnectionsOperations. </summary>
         public virtual PrivateEndpointConnectionsOperations PrivateEndpointConnections => new PrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
