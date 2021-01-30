@@ -33,7 +33,13 @@ In case the user already has an access token (using MSAL manually or even an ext
 
 ## Key concepts
 
-TODO The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+'QuantumJobClient' is the root class to be used to authenticate and create, enumerate, and cancel jobs.
+
+'JobDetails' contains all the properties of a job.
+
+'ProviderStatus' contains status information for a provider.
+
+'QuantumJobQuota' contains quota properties.
 
 ## Examples
 
@@ -84,7 +90,8 @@ var containerUri = (quantumJobClient.GetStorageSasUri(
 ### Upload Input Data
 
 Using the SAS URI, upload the json input data to the blob client.
-TODO - describe what is contains
+This contains the parameters to be used with [Quantum Inspired Optimizations](https://github.com/MicrosoftDocs/quantum-docs-private/wiki/Optimization-quickstart-for-Azure-Quantum)
+Learn more about QIO at [Quantum Inspired Optimizations](https://github.com/MicrosoftDocs/quantum-docs-private/wiki/Optimization-quickstart-for-Azure-Quantum) 
 
 ```C# Snippet:Azure_Quantum_Jobs_UploadInputData
 // Get input data blob Uri with SAS key
