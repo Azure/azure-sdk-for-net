@@ -199,10 +199,7 @@
     <PackageReference Update="Portable.BouncyCastle" Version="1.8.5" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
-    <!-- TODO: Update to 5.0 when the opentelemetry dependency updates to 1.0.0 -->
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="5.0.0-rc.2.20475.5" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
-    <PackageReference Update="System.Memory" Version="4.5.4" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />

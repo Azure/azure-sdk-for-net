@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 namespace Azure.Core.Tests
 {
+#if NET5_0
     public class TestActivitySourceListener: IDisposable
     {
         private readonly ActivityListener _listener;
@@ -41,4 +42,5 @@ namespace Azure.Core.Tests
             _listener?.Dispose();
         }
     }
+#endif
 }

@@ -222,6 +222,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(0, testListener.Events.Count);
         }
 
+#if NET5_0
         [Test]
         [NonParallelizable]
         public async Task ActivitySourceActivityStartedOnRequest()
@@ -259,7 +260,6 @@ namespace Azure.Core.Tests
                 CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
                 CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", clientRequestId));
                 CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("kind", "client"));
                 CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
             }
             finally
@@ -267,5 +267,6 @@ namespace Azure.Core.Tests
                 Activity.DefaultIdFormat = previousFormat;
             }
         }
+#endif
     }
 }
