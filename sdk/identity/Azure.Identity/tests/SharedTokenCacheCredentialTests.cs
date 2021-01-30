@@ -198,7 +198,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(SharedTokenCacheCredential.NoAccountsInCacheMessage, ex3.Message);
 
             // with tenantId and username
-            var credential4= InstrumentClient(new SharedTokenCacheCredential(Guid.NewGuid().ToString(), "mockuser@mockdomain.com", null, null, mockMsalClient));
+            var credential4 = InstrumentClient(new SharedTokenCacheCredential(Guid.NewGuid().ToString(), "mockuser@mockdomain.com", null, null, mockMsalClient));
 
             var ex4 = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential4.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -374,6 +374,31 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(ex.Message, $"SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified username: mockuser@mockdomain.com tenantId: {mockuserTenantId} were found in the cache.");
 
             await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task MultipleMatchingAccountsUsernameAndTenantIdWithEnableGuestTenantAuthentication()
+        {
+            string expToken = Guid.NewGuid().ToString();
+            DateTimeOffset expExpiresOn = DateTimeOffset.UtcNow.AddMinutes(5);
+            string fakeuserTenantId = Guid.NewGuid().ToString();
+            string mockuserTenantId1 = Guid.NewGuid().ToString();
+            string mockuserTenantId2 = Guid.NewGuid().ToString();
+            string mockuserGuestTenantId = fakeuserTenantId;
+
+            var mockMsalClient = new MockMsalPublicClient
+            {
+                Accounts = new List<IAccount> { new MockAccount("fakeuser@fakedomain.com", fakeuserTenantId), new MockAccount("mockuser@mockdomain.com", mockuserTenantId1), new MockAccount("mockuser@mockdomain.com", mockuserTenantId2) },
+                SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
+            };
+
+            var credential = InstrumentClient(new SharedTokenCacheCredential(mockuserTenantId1, "mockuser@mockdomain.com", new SharedTokenCacheCredentialOptions { EnableGuestTenantAuthentication = true }, null, mockMsalClient));
+
+            var token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(expToken, token.Token);
+
+            Assert.AreEqual(expExpiresOn, token.ExpiresOn);
         }
 
         [Test]
