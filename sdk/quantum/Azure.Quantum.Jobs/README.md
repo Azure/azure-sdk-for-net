@@ -47,10 +47,11 @@ TODO The *Key concepts* section should describe the functionality of the main cl
 
 Create an instance of the QuantumJobClient by passing in these parameters:
 - Subscription Id - looks like XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX and can be found in your list of subscriptions [subscriptions]
-- Resource Group Name - TODO
-- Location - TODO
-- StorageContainerName - TODO
-- Credential - TODO
+- Resource Group Name - a container that holds related resources for an Azure solution [resource-groups]
+- Workspace Name - a collection of assets associated with running quantum or optimization applications [workspaces]
+- Location - choose the best data center by geographical region [location]
+- StorageContainerName - your blob storage [blob-storage]
+- Credential - use to authenticate [credentials]
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateClient
 // Create a QuantumJobClient
@@ -167,8 +168,13 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/quantum/Azure.Quantum.Jobs/src
 [package]: https://www.nuget.org/packages/Azure.Quantum.Jobs/
+[resource-groups]: https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal
+[workspaces]: https://github.com/MicrosoftDocs/quantum-docs-private/wiki/Create-quantum-workspaces-with-the-Azure-portal
+[location]: https://azure.microsoft.com/en-us/global-infrastructure/services/?products=quantum
+[blob-storage]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction
 [contributing]: https://github.com/Azure/azure-sdk-for-net/tree/master/CONTRIBUTING.md
 [subscriptions]: https://ms.portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade
+[credentials]: https://docs.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme#credentials
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
