@@ -12,33 +12,33 @@ using Azure.ResourceManager.Insights;
 
 namespace Azure.ResourceManager.Insights
 {
-    /// <summary> MonitorClient service management client. </summary>
-    public class MonitorClientManagementClient
+    /// <summary> Insights service management client. </summary>
+    public class InsightsManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly string _subscriptionId;
         private readonly Uri _endpoint;
 
-        /// <summary> Initializes a new instance of MonitorClientManagementClient for mocking. </summary>
-        protected MonitorClientManagementClient()
+        /// <summary> Initializes a new instance of InsightsManagementClient for mocking. </summary>
+        protected InsightsManagementClient()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorClientManagementClient. </summary>
+        /// <summary> Initializes a new instance of InsightsManagementClient. </summary>
         /// <param name="subscriptionId"> The Azure subscription Id. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MonitorClientManagementClient(string subscriptionId, TokenCredential tokenCredential, MonitorClientManagementClientOptions options = null) : this(subscriptionId, null, tokenCredential, options)
+        public InsightsManagementClient(string subscriptionId, TokenCredential tokenCredential, InsightsManagementClientOptions options = null) : this(subscriptionId, null, tokenCredential, options)
         {
         }
-        /// <summary> Initializes a new instance of MonitorClientManagementClient. </summary>
+        /// <summary> Initializes a new instance of InsightsManagementClient. </summary>
         /// <param name="subscriptionId"> The Azure subscription Id. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public MonitorClientManagementClient(string subscriptionId, Uri endpoint, TokenCredential tokenCredential, MonitorClientManagementClientOptions options = null)
+        public InsightsManagementClient(string subscriptionId, Uri endpoint, TokenCredential tokenCredential, InsightsManagementClientOptions options = null)
         {
             if (subscriptionId == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Insights
             }
             endpoint ??= new Uri("https://management.azure.com");
 
-            options ??= new MonitorClientManagementClientOptions();
+            options ??= new InsightsManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
             _subscriptionId = subscriptionId;

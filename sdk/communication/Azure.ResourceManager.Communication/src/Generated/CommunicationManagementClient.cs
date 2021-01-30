@@ -12,33 +12,33 @@ using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary> AzureCommunicationServicesManagementAPI service management client. </summary>
-    public class AzureCommunicationServicesManagementAPIManagementClient
+    /// <summary> Communication service management client. </summary>
+    public class CommunicationManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _subscriptionId;
 
-        /// <summary> Initializes a new instance of AzureCommunicationServicesManagementAPIManagementClient for mocking. </summary>
-        protected AzureCommunicationServicesManagementAPIManagementClient()
+        /// <summary> Initializes a new instance of CommunicationManagementClient for mocking. </summary>
+        protected CommunicationManagementClient()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureCommunicationServicesManagementAPIManagementClient. </summary>
+        /// <summary> Initializes a new instance of CommunicationManagementClient. </summary>
         /// <param name="subscriptionId"> Gets subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AzureCommunicationServicesManagementAPIManagementClient(string subscriptionId, TokenCredential tokenCredential, AzureCommunicationServicesManagementAPIManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
+        public CommunicationManagementClient(string subscriptionId, TokenCredential tokenCredential, CommunicationManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
         {
         }
-        /// <summary> Initializes a new instance of AzureCommunicationServicesManagementAPIManagementClient. </summary>
+        /// <summary> Initializes a new instance of CommunicationManagementClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="subscriptionId"> Gets subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public AzureCommunicationServicesManagementAPIManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, AzureCommunicationServicesManagementAPIManagementClientOptions options = null)
+        public CommunicationManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, CommunicationManagementClientOptions options = null)
         {
             endpoint ??= new Uri("https://management.azure.com");
             if (subscriptionId == null)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            options ??= new AzureCommunicationServicesManagementAPIManagementClientOptions();
+            options ??= new CommunicationManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
             _endpoint = endpoint;

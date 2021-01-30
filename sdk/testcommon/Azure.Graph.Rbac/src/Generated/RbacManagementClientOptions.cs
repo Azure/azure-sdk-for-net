@@ -9,8 +9,8 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac
 {
-    /// <summary> Client options for GraphRbac. </summary>
-    public class GraphRbacManagementClientOptions : ClientOptions
+    /// <summary> Client options for Rbac. </summary>
+    public class RbacManagementClientOptions : ClientOptions
     {
     }
 }

@@ -12,33 +12,33 @@ using Azure.Graph.Rbac;
 
 namespace Azure.Graph.Rbac
 {
-    /// <summary> GraphRbac service management client. </summary>
-    public class GraphRbacManagementClient
+    /// <summary> Rbac service management client. </summary>
+    public class RbacManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly string _tenantID;
         private readonly Uri _endpoint;
 
-        /// <summary> Initializes a new instance of GraphRbacManagementClient for mocking. </summary>
-        protected GraphRbacManagementClient()
+        /// <summary> Initializes a new instance of RbacManagementClient for mocking. </summary>
+        protected RbacManagementClient()
         {
         }
 
-        /// <summary> Initializes a new instance of GraphRbacManagementClient. </summary>
+        /// <summary> Initializes a new instance of RbacManagementClient. </summary>
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public GraphRbacManagementClient(string tenantID, TokenCredential tokenCredential, GraphRbacManagementClientOptions options = null) : this(tenantID, null, tokenCredential, options)
+        public RbacManagementClient(string tenantID, TokenCredential tokenCredential, RbacManagementClientOptions options = null) : this(tenantID, null, tokenCredential, options)
         {
         }
-        /// <summary> Initializes a new instance of GraphRbacManagementClient. </summary>
+        /// <summary> Initializes a new instance of RbacManagementClient. </summary>
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> is null. </exception>
-        public GraphRbacManagementClient(string tenantID, Uri endpoint, TokenCredential tokenCredential, GraphRbacManagementClientOptions options = null)
+        public RbacManagementClient(string tenantID, Uri endpoint, TokenCredential tokenCredential, RbacManagementClientOptions options = null)
         {
             if (tenantID == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.Graph.Rbac
             }
             endpoint ??= new Uri("https://graph.windows.net");
 
-            options ??= new GraphRbacManagementClientOptions();
+            options ??= new RbacManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
             _tenantID = tenantID;

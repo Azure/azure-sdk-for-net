@@ -12,33 +12,33 @@ using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> AzureMachineLearningWorkspaces service management client. </summary>
-    public class AzureMachineLearningWorkspacesManagementClient
+    /// <summary> MachineLearningServices service management client. </summary>
+    public class MachineLearningServicesManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _subscriptionId;
 
-        /// <summary> Initializes a new instance of AzureMachineLearningWorkspacesManagementClient for mocking. </summary>
-        protected AzureMachineLearningWorkspacesManagementClient()
+        /// <summary> Initializes a new instance of MachineLearningServicesManagementClient for mocking. </summary>
+        protected MachineLearningServicesManagementClient()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureMachineLearningWorkspacesManagementClient. </summary>
+        /// <summary> Initializes a new instance of MachineLearningServicesManagementClient. </summary>
         /// <param name="subscriptionId"> Azure subscription identifier. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AzureMachineLearningWorkspacesManagementClient(string subscriptionId, TokenCredential tokenCredential, AzureMachineLearningWorkspacesManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
+        public MachineLearningServicesManagementClient(string subscriptionId, TokenCredential tokenCredential, MachineLearningServicesManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
         {
         }
-        /// <summary> Initializes a new instance of AzureMachineLearningWorkspacesManagementClient. </summary>
+        /// <summary> Initializes a new instance of MachineLearningServicesManagementClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="subscriptionId"> Azure subscription identifier. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public AzureMachineLearningWorkspacesManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, AzureMachineLearningWorkspacesManagementClientOptions options = null)
+        public MachineLearningServicesManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, MachineLearningServicesManagementClientOptions options = null)
         {
             endpoint ??= new Uri("https://management.azure.com");
             if (subscriptionId == null)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            options ??= new AzureMachineLearningWorkspacesManagementClientOptions();
+            options ??= new MachineLearningServicesManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
             _endpoint = endpoint;
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Returns an instance of MachineLearningComputeOperations. </summary>
         public virtual MachineLearningComputeOperations MachineLearningCompute => new MachineLearningComputeOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of AzureMachineLearningWorkspacesOperations. </summary>
-        public virtual AzureMachineLearningWorkspacesOperations AzureMachineLearningWorkspaces => new AzureMachineLearningWorkspacesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of MachineLearningServicesOperations. </summary>
+        public virtual MachineLearningServicesOperations MachineLearningServices => new MachineLearningServicesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of PrivateEndpointConnectionsOperations. </summary>
         public virtual PrivateEndpointConnectionsOperations PrivateEndpointConnections => new PrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
