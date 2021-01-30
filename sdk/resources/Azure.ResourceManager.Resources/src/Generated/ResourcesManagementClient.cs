@@ -12,33 +12,33 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> Resource service management client. </summary>
-    public class ResourceManagementClient
+    /// <summary> Resources service management client. </summary>
+    public class ResourcesManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _subscriptionId;
 
-        /// <summary> Initializes a new instance of ResourceManagementClient for mocking. </summary>
-        protected ResourceManagementClient()
+        /// <summary> Initializes a new instance of ResourcesManagementClient for mocking. </summary>
+        protected ResourcesManagementClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceManagementClient. </summary>
+        /// <summary> Initializes a new instance of ResourcesManagementClient. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ResourceManagementClient(string subscriptionId, TokenCredential tokenCredential, ResourceManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
+        public ResourcesManagementClient(string subscriptionId, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
         {
         }
-        /// <summary> Initializes a new instance of ResourceManagementClient. </summary>
+        /// <summary> Initializes a new instance of ResourcesManagementClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public ResourceManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, ResourceManagementClientOptions options = null)
+        public ResourcesManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
         {
             endpoint ??= new Uri("https://management.azure.com");
             if (subscriptionId == null)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            options ??= new ResourceManagementClientOptions();
+            options ??= new ResourcesManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
             _endpoint = endpoint;
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Returns an instance of DeploymentScriptsOperations. </summary>
         public virtual DeploymentScriptsOperations DeploymentScripts => new DeploymentScriptsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of ResourceManagementOperations. </summary>
-        public virtual ResourceManagementOperations ResourceManagement => new ResourceManagementOperations(_clientDiagnostics, _pipeline, _endpoint);
+        /// <summary> Returns an instance of ResourcesManagementOperations. </summary>
+        public virtual ResourcesManagementOperations ResourcesManagement => new ResourcesManagementOperations(_clientDiagnostics, _pipeline, _endpoint);
 
         /// <summary> Returns an instance of FeaturesOperations. </summary>
         public virtual FeaturesOperations Features => new FeaturesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
