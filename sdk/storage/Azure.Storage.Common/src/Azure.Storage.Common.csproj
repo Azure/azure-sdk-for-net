@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -16,6 +16,10 @@
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
     </Description>
     <RootNamespace>Azure.Storage</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- Force a project reference until SyncAsyncEventHandler has shipped -->
+    <UseProjectReferenceToAzureClients>true</UseProjectReferenceToAzureClients>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />

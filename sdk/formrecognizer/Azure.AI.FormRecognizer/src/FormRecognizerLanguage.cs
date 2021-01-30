@@ -3,10 +3,10 @@
 
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
     [CodeGenModel("Language")]
-    internal readonly partial struct Language
+    public readonly partial struct FormRecognizerLanguage
     {
     }
 }
