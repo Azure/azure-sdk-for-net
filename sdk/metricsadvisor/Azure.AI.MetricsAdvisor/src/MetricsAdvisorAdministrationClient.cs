@@ -275,10 +275,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/>, <paramref name="dataFeed"/>.Name, <paramref name="dataFeed"/>.DataSource, <paramref name="dataFeed"/>.Granularity, <paramref name="dataFeed"/>.Schema, or <paramref name="dataFeed"/>.IngestionSettings is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeed"/>.Name is empty.</exception>
         public virtual async Task<Response<string>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            Argument.AssertNotNullOrEmpty(dataFeed.Name, $"{nameof(dataFeed)}.{nameof(dataFeed.Name)}");
+            Argument.AssertNotNull(dataFeed.DataSource, $"{nameof(dataFeed)}.{nameof(dataFeed.DataSource)}");
+            Argument.AssertNotNull(dataFeed.Granularity, $"{nameof(dataFeed)}.{nameof(dataFeed.Granularity)}");
+            Argument.AssertNotNull(dataFeed.Schema, $"{nameof(dataFeed)}.{nameof(dataFeed.Schema)}");
+            Argument.AssertNotNull(dataFeed.IngestionSettings, $"{nameof(dataFeed)}.{nameof(dataFeed.IngestionSettings)}");
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
@@ -306,10 +312,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c> instance
         /// containing the ID of the newly created feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/>, <paramref name="dataFeed"/>.Name, <paramref name="dataFeed"/>.DataSource, <paramref name="dataFeed"/>.Granularity, <paramref name="dataFeed"/>.Schema, or <paramref name="dataFeed"/>.IngestionSettings is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeed"/>.Name is empty.</exception>
         public virtual Response<string> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            Argument.AssertNotNullOrEmpty(dataFeed.Name, $"{nameof(dataFeed)}.{nameof(dataFeed.Name)}");
+            Argument.AssertNotNull(dataFeed.DataSource, $"{nameof(dataFeed)}.{nameof(dataFeed.DataSource)}");
+            Argument.AssertNotNull(dataFeed.Granularity, $"{nameof(dataFeed)}.{nameof(dataFeed.Granularity)}");
+            Argument.AssertNotNull(dataFeed.Schema, $"{nameof(dataFeed)}.{nameof(dataFeed.Schema)}");
+            Argument.AssertNotNull(dataFeed.IngestionSettings, $"{nameof(dataFeed)}.{nameof(dataFeed.IngestionSettings)}");
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
