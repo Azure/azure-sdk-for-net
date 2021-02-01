@@ -12,7 +12,10 @@ Most often authenticating users requires some user interaction. Properly handlin
 For clients which have a default browser available, the `InteractiveBrowserCredential` provides the most simple user authentication experience. In the sample below an application authenticates a `SecretClient` using the `InteractiveBrowserCredential`.
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_SimpleInteractiveBrowser
-var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), new InteractiveBrowserCredential());
+var client = new SecretClient(
+    new Uri("https://myvault.azure.vaults.net/"), 
+    new InteractiveBrowserCredential()
+);
 ```
 As code uses the `SecretClient` in the above sample, the `InteractiveBrowserCredential` will automatically authenticate the user by launching the default system browser prompting the user to login. In this case the user interaction happens on demand as is necessary to authenticate calls from the client.
 
@@ -24,7 +27,10 @@ For terminal clients without an available web browser, or clients with limited U
 ```C# Snippet:Identity_ClientSideUserAuthentication_SimpleDeviceCode
 var credential = new DeviceCodeCredential();
 
-var client = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
+var client = new BlobClient(
+    new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), 
+    credential
+);
 ```
 Similarly to the `InteractiveBrowserCredential` the `DeviceCodeCredential` will also initiate the user interaction automatically as needed. To instantiate the `DeviceCodeCredential` the application must provide a callback which is called to display the device code along with details on how to authenticate to the user. In the above sample a lambda is provided which prints the full device code message to the console.
 
@@ -34,7 +40,10 @@ Similarly to the `InteractiveBrowserCredential` the `DeviceCodeCredential` will 
 In many cases applications require tight control over user interaction. In these applications automatically blocking on required user interaction is often undesired or impractical. For this reason, credentials in the `Azure.Identity` library which interact with the user offer mechanisms to fully control user interaction.
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_DisableAutomaticAuthentication
-var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { DisableAutomaticAuthentication = true });
+var credential = new InteractiveBrowserCredential(
+    new InteractiveBrowserCredentialOptions { 
+        DisableAutomaticAuthentication = true 
+    });
 
 await credential.AuthenticateAsync();
 
@@ -72,7 +81,10 @@ The `TokenCache` contains all the data needed to silently authenticate, one or m
 To use the `PersistentTokenCache` to persist the cache of any credential simply set the `TokenCache` option.
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache
-var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = new PersistentTokenCache() });
+var credential = new InteractiveBrowserCredential(
+    new InteractiveBrowserCredentialOptions { 
+        TokenCache = new PersistentTokenCache() 
+    });
 ```
 
 ### Persisting the AuthenticationRecord
@@ -81,25 +93,35 @@ The `AuthenticationRecord` which is returned from the `Authenticate` and `Authen
 
 Here is an example of an application storing the `AuthenticationRecord` to the local file system after authenticating the user.
 
+```C# Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache_AuthRecordPath
+private const string AUTH_RECORD_PATH = @".\Data\authrecord.bin";
+```
+
 ```C# Snippet:Identity_ClientSideUserAuthentication_Persist_AuthRecord
 AuthenticationRecord authRecord = await credential.AuthenticateAsync();
 
-using var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, FileAccess.Write);
-
-await authRecord.SerializeAsync(authRecordStream);
-
-await authRecordStream.FlushAsync();
+using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, FileAccess.Write))
+{
+    await authRecord.SerializeAsync(authRecordStream);
+}
 ```
 ### Silent authentication with AuthenticationRecord and PersistentTokenCache
 
 Once an application has persisted both the `TokenCache` and the `AuthenticationRecord` this data can be used to silently authenticate. This example demonstrates an application using the `PersistentTokenCache` and retrieving an `AuthenticationRecord` from the local file system to create an `InteractiveBrowserCredential` capable of silent authentication.
 
 ```C# Snippet:Identity_ClientSideUserAuthentication_Persist_SilentAuth
-using var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, FileAccess.Read);
+AuthenticationRecord authRecord;
 
-AuthenticationRecord authRecord = await AuthenticationRecord.DeserializeAsync(authRecordStream);
+using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, FileAccess.Read))
+{
+    authRecord = await AuthenticationRecord.DeserializeAsync(authRecordStream);
+}
 
-var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TokenCache = new PersistentTokenCache(), AuthenticationRecord = authRecord });
+var credential = new InteractiveBrowserCredential(
+    new InteractiveBrowserCredentialOptions { 
+        TokenCache = new PersistentTokenCache(), 
+        AuthenticationRecord = authRecord }
+    );
 ```
 
 The credential created in this example will silently authenticate given that a valid token for corresponding to the `AuthenticationRecord` still exists in the `TokenCache`. There are some cases where interaction will still be required such as on token expiry, or when additional authentication is required for a particular resource.
