@@ -34,13 +34,13 @@ Workspace will also allow the user to override the above behavior by passing the
 
 ## Key concepts
 
-'QuantumJobClient' is the root class to be used to authenticate and create, enumerate, and cancel jobs.
+`QuantumJobClient` is the root class to be used to authenticate and create, enumerate, and cancel jobs.
 
-'JobDetails' contains all the properties of a job.
+`JobDetails` contains all the properties of a job.
 
-'ProviderStatus' contains status information for a provider.
+`ProviderStatus` contains status information for a provider.
 
-'QuantumJobQuota' contains quota properties.
+`QuantumJobQuota` contains quota properties.
 
 ## Examples
 
