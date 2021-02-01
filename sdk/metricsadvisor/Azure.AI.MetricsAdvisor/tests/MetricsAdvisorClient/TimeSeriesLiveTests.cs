@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class TimeSeriesLiveTests : MetricsAdvisorLiveTestBase
     {
-        public TimeSeriesLiveTests(bool isAsync) : base(isAsync)
+        public TimeSeriesLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
@@ -99,8 +99,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         public async Task GetMetricSeriesDefinitionsWithOptionalDimensionFilter()
         {
-            var cityFilter = new List<string>() { "Belo Horizonte", "Los Angeles", "Osaka" };
-            var categoryFilter = new List<string>() { "__SUM__", "Shoes Handbags & Sunglasses" };
+            var cityFilter = new List<string>() { "Belo Horizonte", "Chennai", "Hong Kong" };
+            var categoryFilter = new List<string>() { "__SUM__", "Outdoors" };
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
