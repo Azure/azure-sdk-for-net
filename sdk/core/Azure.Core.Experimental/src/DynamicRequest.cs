@@ -76,10 +76,8 @@ namespace Azure.Core
 
             if (res.ContentStream != null)
             {
-                using (StreamReader sr = new StreamReader(res.ContentStream, encoding: Utf8NoBom, detectEncodingFromByteOrderMarks:true, bufferSize: 1024, leaveOpen: true))
-                {
-                    dynamicContent = new DynamicJson(await sr.ReadToEndAsync().ConfigureAwait(false));
-                }
+                JsonDocument doc = await JsonDocument.ParseAsync(res.ContentStream, new JsonDocumentOptions(), cancellationToken).ConfigureAwait(false);
+                dynamicContent = new DynamicJson(doc.RootElement);
             }
             else
             {

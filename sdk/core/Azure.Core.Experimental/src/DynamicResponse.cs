@@ -17,11 +17,6 @@ namespace Azure.Core
         /// <inheritdoc />>
         public override DynamicJson Value { get; }
 
-        /// <summary>
-        /// The value returned by the service.
-        /// </summary>
-        public DynamicJson Content => Value;
-
         /// <inheritdoc />
         public override Response GetRawResponse() => Response;
 
