@@ -33,6 +33,14 @@ namespace Azure.Communication.Sms
 
         /// <summary> Initializes a new instance of <see cref="SmsClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        public SmsClient(string connectionString)
+            : this(
+                  new SmsClientOptions(),
+                  ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))))
+        { }
+
+        /// <summary> Initializes a new instance of <see cref="SmsClient"/>.</summary>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public SmsClient(string connectionString, SmsClientOptions options = default)
             : this(
