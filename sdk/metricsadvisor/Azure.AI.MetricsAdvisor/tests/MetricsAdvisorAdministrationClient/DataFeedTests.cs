@@ -114,7 +114,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataFeed = new DataFeed();
+            var dataFeed = new DataFeed()
+            {
+                SourceType = DataFeedSourceType.AzureApplicationInsights
+            };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
