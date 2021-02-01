@@ -2,6 +2,12 @@
 
 ## 5.1.0-beta.4 (Unreleased)
 
+### Breaking changes
+- Renamed `RecognizeHealthcareEntitiesResultCollection` to `RecognizeHealthcareEntitiesResultCollection`.
+- Renamed `DocumentHealthcareResult` to `AnalyzeHealthcareEntitiesResult`.
+- Removed `StartHealthcare` and `StartHealthcareAsync` methods.
+- Renamed `StartHealthcareBatch` and `StartHealthcareBatchAsync` to `StartAnalyzeHealthcareEntities` and `StartAnalyzeHealthcareEntitiesAsync` respectively.
+- Renamed `HealthcareOptions` to `AnalyzeHealthcareEntitiesOptions`.
 
 ## 5.1.0-beta.3 (2020-11-19)
 ### New Features

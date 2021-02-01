@@ -4,12 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// DocumentHealthcareEntities.
+    /// AnalyzeHealthcareEntitiesResult.
     /// </summary>
     public partial class AnalyzeHealthcareEntitiesResult : TextAnalyticsResult
     {
