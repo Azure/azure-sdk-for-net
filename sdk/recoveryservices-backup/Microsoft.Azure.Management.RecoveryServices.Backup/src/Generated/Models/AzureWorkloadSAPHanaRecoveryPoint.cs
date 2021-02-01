@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -19,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// SAPHana specific recoverypoint, specifically encapsulates full/diff
     /// recoverypoints
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureWorkloadSAPHanaRecoveryPoint")]
     public partial class AzureWorkloadSAPHanaRecoveryPoint : AzureWorkloadRecoveryPoint
     {
         /// <summary>

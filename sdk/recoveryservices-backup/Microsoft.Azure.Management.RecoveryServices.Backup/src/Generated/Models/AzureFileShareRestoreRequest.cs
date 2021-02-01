@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// AzureFileShare Restore Request
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureFileShareRestoreRequest")]
     public partial class AzureFileShareRestoreRequest : RestoreRequest
     {
         /// <summary>

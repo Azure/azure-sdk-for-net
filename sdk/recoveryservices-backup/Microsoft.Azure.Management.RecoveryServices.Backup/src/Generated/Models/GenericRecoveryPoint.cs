@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Generic backup copy.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("GenericRecoveryPoint")]
     public partial class GenericRecoveryPoint : RecoveryPoint
     {
         /// <summary>

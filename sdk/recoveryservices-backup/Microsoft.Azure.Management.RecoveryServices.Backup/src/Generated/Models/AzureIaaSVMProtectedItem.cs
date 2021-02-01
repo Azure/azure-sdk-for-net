@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// IaaS VM workload-specific backup item.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureIaaSVMProtectedItem")]
     public partial class AzureIaaSVMProtectedItem : ProtectedItem
     {
         /// <summary>

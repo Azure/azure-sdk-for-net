@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// AzureWorkload SAP Hana-specific restore with integrated rehydration of
     /// recovery point.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest")]
     public partial class AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest : AzureWorkloadSAPHanaPointInTimeRestoreRequest
     {
         /// <summary>

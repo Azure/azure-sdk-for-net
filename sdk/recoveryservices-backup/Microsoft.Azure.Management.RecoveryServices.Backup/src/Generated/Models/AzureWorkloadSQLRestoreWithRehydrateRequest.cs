@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// AzureWorkload SQL-specific restore with integrated rehydration of
     /// recovery point
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureWorkloadSQLRestoreWithRehydrateRequest")]
     public partial class AzureWorkloadSQLRestoreWithRehydrateRequest : AzureWorkloadSQLRestoreRequest
     {
         /// <summary>

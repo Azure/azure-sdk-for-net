@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Additional information on Backup engine specific backup item.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DPMProtectedItem")]
     public partial class DPMProtectedItem : ProtectedItem
     {
         /// <summary>

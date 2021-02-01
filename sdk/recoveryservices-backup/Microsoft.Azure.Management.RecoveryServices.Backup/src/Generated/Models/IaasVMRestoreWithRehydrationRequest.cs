@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// IaaS VM workload-specific restore with integrated rehydration of
     /// recovery point.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("IaasVMRestoreWithRehydrationRequest")]
     public partial class IaasVMRestoreWithRehydrationRequest : IaasVMRestoreRequest
     {
         /// <summary>
