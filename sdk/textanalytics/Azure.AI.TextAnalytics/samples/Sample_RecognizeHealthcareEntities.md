@@ -137,8 +137,6 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
 
 To see the full example source files, see:
 
-* [Synchronously RecognizeHealthcare ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_Healthcare.cs)
-* [Asynchronously RecognizeHealthcare ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareAsync.cs)
 * [Synchronously RecognizeHealthcareBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareBatch.cs)
 * [Asynchronously RecognizeHealthcareBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_HealthcareBatchAsync.cs)
 * [Synchronously RecognizeHealthcare Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_Healthcare_Cancellation.cs)
