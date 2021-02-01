@@ -21,11 +21,13 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// include
         /// </summary>
+        [CodeGenMember("Include")]
         IncludeSnapshots,
 
         /// <summary>
         /// only
         /// </summary>
+        [CodeGenMember("Only")]
         OnlySnapshots
     }
 }

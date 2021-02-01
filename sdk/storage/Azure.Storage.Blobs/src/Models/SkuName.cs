@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
@@ -11,11 +13,13 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Standard_LRS
         /// </summary>
+        [CodeGenMember("StandardLRS")]
         StandardLrs,
 
         /// <summary>
         /// Standard_GRS
         /// </summary>
+        [CodeGenMember("StandardGRS")]
         StandardGrs,
 
         /// <summary>
@@ -26,11 +30,13 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Standard_ZRS
         /// </summary>
+        [CodeGenMember("StandardZRS")]
         StandardZrs,
 
         /// <summary>
         /// Premium_LRS
         /// </summary>
+        [CodeGenMember("PremiumLRS")]
         PremiumLrs
     }
 }

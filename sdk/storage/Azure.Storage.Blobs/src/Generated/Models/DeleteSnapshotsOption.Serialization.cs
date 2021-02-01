@@ -13,15 +13,15 @@ namespace Azure.Storage.Blobs.Models
     {
         public static string ToSerialString(this DeleteSnapshotsOption value) => value switch
         {
-            DeleteSnapshotsOption.Include => "include",
-            DeleteSnapshotsOption.Only => "only",
+            DeleteSnapshotsOption.IncludeSnapshots => "include",
+            DeleteSnapshotsOption.OnlySnapshots => "only",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeleteSnapshotsOption value.")
         };
 
         public static DeleteSnapshotsOption ToDeleteSnapshotsOption(this string value)
         {
-            if (string.Equals(value, "include", StringComparison.InvariantCultureIgnoreCase)) return DeleteSnapshotsOption.Include;
-            if (string.Equals(value, "only", StringComparison.InvariantCultureIgnoreCase)) return DeleteSnapshotsOption.Only;
+            if (string.Equals(value, "include", StringComparison.InvariantCultureIgnoreCase)) return DeleteSnapshotsOption.IncludeSnapshots;
+            if (string.Equals(value, "only", StringComparison.InvariantCultureIgnoreCase)) return DeleteSnapshotsOption.OnlySnapshots;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeleteSnapshotsOption value.");
         }
     }

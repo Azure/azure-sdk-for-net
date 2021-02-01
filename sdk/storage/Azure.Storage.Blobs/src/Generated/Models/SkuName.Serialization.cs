@@ -13,21 +13,21 @@ namespace Azure.Storage.Blobs.Models
     {
         public static string ToSerialString(this SkuName value) => value switch
         {
-            SkuName.StandardLRS => "Standard_LRS",
-            SkuName.StandardGRS => "Standard_GRS",
+            SkuName.StandardLrs => "Standard_LRS",
+            SkuName.StandardGrs => "Standard_GRS",
             SkuName.StandardRagrs => "Standard_RAGRS",
-            SkuName.StandardZRS => "Standard_ZRS",
-            SkuName.PremiumLRS => "Premium_LRS",
+            SkuName.StandardZrs => "Standard_ZRS",
+            SkuName.PremiumLrs => "Premium_LRS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SkuName value.")
         };
 
         public static SkuName ToSkuName(this string value)
         {
-            if (string.Equals(value, "Standard_LRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardLRS;
-            if (string.Equals(value, "Standard_GRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardGRS;
+            if (string.Equals(value, "Standard_LRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardLrs;
+            if (string.Equals(value, "Standard_GRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardGrs;
             if (string.Equals(value, "Standard_RAGRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardRagrs;
-            if (string.Equals(value, "Standard_ZRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardZRS;
-            if (string.Equals(value, "Premium_LRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.PremiumLRS;
+            if (string.Equals(value, "Standard_ZRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardZrs;
+            if (string.Equals(value, "Premium_LRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.PremiumLrs;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SkuName value.");
         }
     }
