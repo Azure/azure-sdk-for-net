@@ -34,11 +34,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataSource = new AzureTableDataFeedSource("connectionString", "table", "query");
-            var granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
-            var schema = new DataFeedSchema(new List<DataFeedMetric>() { new DataFeedMetric("metricName") });
-            var ingestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow);
-            var dataFeed = new DataFeed("dataFeedName", dataSource, granularity, schema, ingestionSettings);
+            var dataFeed = new DataFeed()
+            {
+                Name = "dataFeedName",
+                DataSource = new AzureTableDataFeedSource("connectionString", "table", "query"),
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
+                Schema = new DataFeedSchema(new List<DataFeedMetric>() { new DataFeedMetric("metricName") }),
+                IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow)
+            };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
@@ -52,11 +55,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataSource = new AzureTableDataFeedSource("connectionString", "table", "query");
-            var granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
-            var schema = new DataFeedSchema(new List<DataFeedMetric>() { new DataFeedMetric("metricName") });
-            var ingestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow);
-            var dataFeed = new DataFeed("dataFeedName", dataSource, granularity, schema, ingestionSettings);
+            var dataFeed = new DataFeed()
+            {
+                Name = "dataFeedName",
+                DataSource = new AzureTableDataFeedSource("connectionString", "table", "query"),
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
+                Schema = new DataFeedSchema(new List<DataFeedMetric>() { new DataFeedMetric("metricName") }),
+                IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow)
+            };
 
             Assert.That(() => adminClient.UpdateDataFeedAsync(null, dataFeed), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.UpdateDataFeedAsync("", dataFeed), Throws.InstanceOf<ArgumentException>());
@@ -74,11 +80,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataSource = new AzureTableDataFeedSource("connectionString", "table", "query");
-            var granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
-            var schema = new DataFeedSchema(new List<DataFeedMetric>() { new DataFeedMetric("metricName") });
-            var ingestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow);
-            var dataFeed = new DataFeed("dataFeedName", dataSource, granularity, schema, ingestionSettings);
+            var dataFeed = new DataFeed()
+            {
+                Name = "dataFeedName",
+                DataSource = new AzureTableDataFeedSource("connectionString", "table", "query"),
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
+                Schema = new DataFeedSchema(new List<DataFeedMetric>() { new DataFeedMetric("metricName") }),
+                IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow)
+            };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();

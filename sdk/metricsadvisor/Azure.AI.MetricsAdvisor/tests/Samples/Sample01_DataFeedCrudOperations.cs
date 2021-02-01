@@ -32,9 +32,11 @@ namespace Azure.AI.MetricsAdvisor.Samples
             //@@ string sqlServerConnectionString = "<connectionString>";
             //@@ string sqlServerQuery = "<query>";
 
-            var dataFeedName = "Sample data feed";
-            var dataFeedSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
-            var dataFeedGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
+            var dataFeed = new DataFeed();
+
+            dataFeed.Name = "Sample data feed";
+            dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
+            dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
             var dataFeedMetrics = new List<DataFeedMetric>()
             {
@@ -46,15 +48,15 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 new DataFeedDimension("category"),
                 new DataFeedDimension("city")
             };
-            var dataFeedSchema = new DataFeedSchema(dataFeedMetrics)
+
+            dataFeed.Schema = new DataFeedSchema(dataFeedMetrics)
             {
                 DimensionColumns = dataFeedDimensions
             };
 
             var ingestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var dataFeedIngestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
 
-            var dataFeed = new DataFeed(dataFeedName, dataFeedSource, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
+            dataFeed.IngestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
 
             Response<string> response = await adminClient.CreateDataFeedAsync(dataFeed);
 

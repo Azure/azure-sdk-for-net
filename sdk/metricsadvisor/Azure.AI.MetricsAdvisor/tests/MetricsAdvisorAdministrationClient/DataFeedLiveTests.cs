@@ -2073,11 +2073,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var metrics = new List<DataFeedMetric>() { new ("cost") };
             var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
 
-            var granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
-            var schema = new DataFeedSchema(metrics);
-            var ingestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
-
-            return new DataFeed(name, dataSource, granularity, schema, ingestionSettings);
+            return new DataFeed()
+            {
+                Name = name,
+                DataSource = dataSource,
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
+                Schema = new DataFeedSchema(metrics),
+                IngestionSettings = new DataFeedIngestionSettings(ingestionStartTime)
+            };
         }
 
         private DataFeed GetDataFeedWithOptionalMembersSet(string name, DataFeedSource dataSource)
@@ -2094,8 +2097,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             };
             var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
 
-            var granularity = new DataFeedGranularity(DataFeedGranularityType.Custom) { CustomGranularityValue = 1360 };
-            var schema = new DataFeedSchema(metrics) { DimensionColumns = dimensionColumns, TimestampColumn = "timestamp" };
             var ingestionSettings = new DataFeedIngestionSettings(ingestionStartTime)
             {
                 IngestionStartOffset = TimeSpan.FromMinutes(30),
@@ -2104,8 +2105,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 DataSourceRequestConcurrency = 5
             };
 
-            return new DataFeed(name, dataSource, granularity, schema, ingestionSettings)
+            return new DataFeed()
             {
+                Name = name,
+                DataSource = dataSource,
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Custom) { CustomGranularityValue = 1360 },
+                Schema = new DataFeedSchema(metrics) { DimensionColumns = dimensionColumns, TimestampColumn = "timestamp" },
+                IngestionSettings = ingestionSettings,
                 Description = "This data feed was created to test the .NET client.",
                 AccessMode = DataFeedAccessMode.Public,
                 ActionLinkTemplate = "https://fakeurl.com/%metric/%datafeed",
@@ -2440,7 +2446,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
-        private void ValidateGenericDataSource(DataFeedSource dataSource, DataFeedSourceType sourceType, bool isAdmin)
+        private void ValidateGenericDataSource(DataFeedSource dataSource, DataFeedSourceType? sourceType, bool isAdmin)
         {
             if (sourceType == DataFeedSourceType.AzureApplicationInsights)
             {
