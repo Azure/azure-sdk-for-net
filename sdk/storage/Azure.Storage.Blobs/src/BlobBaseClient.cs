@@ -909,7 +909,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     // Start downloading the blob
-                    (Response<FlattenedDownloadProperties> response, Stream stream) = await StartDownloadAsync(
+                    Response<BlobDownloadInfo> response = await StartDownloadAsync(
                         range,
                         conditions,
                         rangeGetContentHash,
@@ -926,9 +926,9 @@ namespace Azure.Storage.Blobs.Specialized
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    stream = RetriableStream.Create(
-                        stream,
-                         startOffset =>
+                    Stream stream = RetriableStream.Create(
+                        response.Value.Content,
+                        startOffset =>
                             StartDownloadAsync(
                                     range,
                                     conditions,
@@ -937,7 +937,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     async,
                                     cancellationToken)
                                 .EnsureCompleted()
-                            .Item2,
+                            .Value.Content,
                         async startOffset =>
                             (await StartDownloadAsync(
                                 range,
@@ -947,7 +947,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 async,
                                 cancellationToken)
                                 .ConfigureAwait(false))
-                            .Item2,
+                            .Value.Content,
                         Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
@@ -955,15 +955,18 @@ namespace Azure.Storage.Blobs.Specialized
                     // we already return a nonseekable stream; returning a crypto stream is fine
                     if (UsingClientSideEncryption)
                     {
-                        stream = await new BlobClientSideDecryptor(new ClientSideDecryptor(ClientSideEncryption))
-                            .DecryptInternal(stream, response.Value.Metadata, requestedRange, response.Value.ContentRange, async, cancellationToken).ConfigureAwait(false);
+                        stream = await new BlobClientSideDecryptor(
+                            new ClientSideDecryptor(ClientSideEncryption)).DecryptInternal(
+                                stream,
+                                response.Value.Details.Metadata,
+                                requestedRange,
+                                response.Value.Details.ContentRange,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
                     }
 
                     response.Value.Content = stream;
-
-                    // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation
-                    // to make the Content easier to find
-                    return Response.FromValue(new BlobDownloadInfo(response.Value), response.GetRawResponse());
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -1016,7 +1019,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<(Response<FlattenedDownloadProperties>, Stream)> StartDownloadAsync(
+        private async Task<Response<BlobDownloadInfo>> StartDownloadAsync(
             HttpRange range = default,
             BlobRequestConditions conditions = default,
             bool rangeGetContentHash = default,
@@ -1036,33 +1039,47 @@ namespace Azure.Storage.Blobs.Specialized
 
             Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
 
-            (Response<FlattenedDownloadProperties> response, Stream stream) =
-                await BlobRestClient.Blob.DownloadAsync(
-                    ClientDiagnostics,
-                    Pipeline,
-                    Uri,
-                    version: Version.ToVersionString(),
+            ResponseWithHeaders<Stream, BlobDownloadHeaders> response;
+
+            if (async)
+            {
+                response = await BlobRestClient.DownloadAsync(
                     range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
-                    rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
+                    rangeGetContentMD5: rangeGetContentHash ? (bool?)true : null,
                     encryptionKey: CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                    encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                     ifModifiedSince: conditions?.IfModifiedSince,
                     ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                    ifMatch: conditions?.IfMatch,
-                    ifNoneMatch: conditions?.IfNoneMatch,
+                    ifMatch: conditions?.IfMatch?.ToString(),
+                    ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                     ifTags: conditions?.TagConditions,
-                    async: async,
-                    operationName: "BlobBaseClient.Download",
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
+            }
+            else
+            {
+                response = BlobRestClient.Download(
+                    range: pageRange?.ToString(),
+                    leaseId: conditions?.LeaseId,
+                    rangeGetContentMD5: rangeGetContentHash ? (bool?)true : null,
+                    encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                    encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                    ifModifiedSince: conditions?.IfModifiedSince,
+                    ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                    ifMatch: conditions?.IfMatch?.ToString(),
+                    ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                    ifTags: conditions?.TagConditions,
+                    cancellationToken: cancellationToken);
+            }
 
             // Watch out for exploding Responses
-            long length = response.IsUnavailable() ? 0 : response.Value.ContentLength;
+            long length = response.IsUnavailable() ? 0 : response.Value.Length;
             Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
-            return (response, stream);
+            return Response.FromValue(
+                response.ToBlobDownloadInfo(),
+                response.GetRawResponse());
         }
         #endregion Download
 

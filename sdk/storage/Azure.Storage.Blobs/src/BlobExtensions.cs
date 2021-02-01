@@ -481,5 +481,11 @@ namespace Azure.Storage.Blobs
         {
             return null;
         }
+
+        // TODO
+        internal static BlobDownloadInfo ToBlobDownloadInfo(this ResponseWithHeaders<Stream, BlobDownloadHeaders> response)
+        {
+            return null;
+        }
     }
 }
