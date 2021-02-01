@@ -487,5 +487,17 @@ namespace Azure.Storage.Blobs
         {
             return null;
         }
+
+        // TODO
+        internal static BlobItem[] ToBlobItems(this IReadOnlyList<BlobItemInternal> BlobItemInternals)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobItem ToBlobItem(this BlobItemInternal blobItemInternal)
+        {
+            return null;
+        }
     }
 }

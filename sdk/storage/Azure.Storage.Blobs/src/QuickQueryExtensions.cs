@@ -54,10 +54,8 @@ namespace Azure.Storage.Blobs
                 }
 
                 serialization.Format.Type = QueryFormatType.Arrow;
-                serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal
-                {
-                    Schema = arrowConfiguration.Schema?.Select(ToArrowFieldInternal).ToList()
-                };
+                serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal(
+                    arrowConfiguration.Schema?.Select(ToArrowFieldInternal).ToList());
             }
             else
             {
@@ -108,9 +106,8 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
-            return new ArrowFieldInternal
+            return new ArrowFieldInternal(blobQueryArrowField.Type.ToArrowFiledInternalType())
             {
-                Type = blobQueryArrowField.Type.ToArrowFiledInternalType(),
                 Name = blobQueryArrowField.Name,
                 Precision = blobQueryArrowField.Precision,
                 Scale = blobQueryArrowField.Scale

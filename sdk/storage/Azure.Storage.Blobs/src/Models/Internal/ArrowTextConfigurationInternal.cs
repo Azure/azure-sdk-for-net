@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    [CodeGenModel("ArrowTextConfiguration")]
+    [CodeGenModel("ArrowConfiguration")]
     internal partial class ArrowTextConfigurationInternal
     {
     }

@@ -22,6 +22,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> json text configuration. </summary>
         public JsonTextConfigurationInternal JsonTextConfiguration { get; set; }
         /// <summary> arrow configuration. </summary>
-        public ArrowConfiguration ArrowConfiguration { get; set; }
+        public ArrowTextConfigurationInternal ArrowConfiguration { get; set; }
     }
 }

@@ -15,28 +15,28 @@ namespace Azure.Storage.Blobs.Models
     {
         internal static UserDelegationKey DeserializeUserDelegationKey(XElement element)
         {
-            string signedOid = default;
-            string signedTid = default;
-            DateTimeOffset signedStart = default;
-            DateTimeOffset signedExpiry = default;
+            string signedObjectId = default;
+            string signedTenantId = default;
+            DateTimeOffset signedStartsOn = default;
+            DateTimeOffset signedExpiresOn = default;
             string signedService = default;
             string signedVersion = default;
             string value = default;
             if (element.Element("SignedOid") is XElement signedOidElement)
             {
-                signedOid = (string)signedOidElement;
+                signedObjectId = (string)signedOidElement;
             }
             if (element.Element("SignedTid") is XElement signedTidElement)
             {
-                signedTid = (string)signedTidElement;
+                signedTenantId = (string)signedTidElement;
             }
             if (element.Element("SignedStart") is XElement signedStartElement)
             {
-                signedStart = signedStartElement.GetDateTimeOffsetValue("O");
+                signedStartsOn = signedStartElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("SignedExpiry") is XElement signedExpiryElement)
             {
-                signedExpiry = signedExpiryElement.GetDateTimeOffsetValue("O");
+                signedExpiresOn = signedExpiryElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("SignedService") is XElement signedServiceElement)
             {
@@ -50,7 +50,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 value = (string)valueElement;
             }
-            return new UserDelegationKey(signedOid, signedTid, signedStart, signedExpiry, signedService, signedVersion, value);
+            return new UserDelegationKey(signedObjectId, signedTenantId, signedStartsOn, signedExpiresOn, signedService, signedVersion, value);
         }
     }
 }
