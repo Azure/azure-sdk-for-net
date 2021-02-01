@@ -16,11 +16,11 @@ namespace Azure.AI.TextAnalytics
         private readonly IReadOnlyCollection<HealthcareEntity> _entities;
 
         internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics,
-            IReadOnlyList<HealthcareEntity> healthcareEntities,
+            IList<HealthcareEntity> healthcareEntities,
             IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
-            _entities = healthcareEntities;
+            _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 
