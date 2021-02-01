@@ -1,11 +1,10 @@
 # Azure Quantum Jobs client library for .NET
 
-Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in my cloud. Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.
-
+Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library t
 - Create, enumerate, and cancel quantum jobs
 - Enumerate provider status and quotas
 
-  [Source code][source] | [Package (NuGet)][package] | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/batch?view=azure-python) | [Product documentation](https://docs.microsoft.com/azure/batch/)
+  [Source code][source] | [API reference documentation](https://docs.microsoft.com/qsharp/api/) | [Product documentation](https://docs.microsoft.com/azure/quantum/)
 
 ## Getting started
 
@@ -13,7 +12,11 @@ This section should include everything a developer needs to do to install and cr
 
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `pip install package-name`, but should enable a developer to successfully install the package from NuGet, pip, npm, Maven, or even cloning a GitHub repository.
+Install the Azure Quantum Jobs client library for .NET with [NuGet][nuget]:
+
+```Powershell
+dotnet add package Azure.Quantum.Jobs --prerelease -v 1.0.0-beta.1
+```
 
 ### Prerequisites
 
@@ -21,13 +24,11 @@ Include a section after the install command that details any requirements that m
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
 
-### Authentication
+### Authenticate the client
 
-To authenticate with the service, the workspace will use [DefaultAzureCredential](https://docs.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) internally. This will try different authentication mechanisms based on the environment (e.g. Environment Variables, ManagedIdentity, CachedTokens) and finally it will fallback to [InteractiveBrowserCredential](https://docs.microsoft.com/en-us/dotnet/api/azure.identity.interactivebrowsercredential?view=azure-dotnet).
+To authenticate with the service, the workspace will use [DefaultAzureCredential](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) internally. This will try different authentication mechanisms based on the environment (e.g. Environment Variables, ManagedIdentity, CachedTokens) and finally it will fallback to [InteractiveBrowserCredential](https://docs.microsoft.com/dotnet/api/azure.identity.interactivebrowsercredential?view=azure-dotnet).
 
-Workspace will also allow the user to override the above behavior by passing their own [TokenCredential](https://docs.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
-
-In case the user already has an access token (using MSAL manually or even an external library), we will add an overload that accepts the access token string.
+Workspace will also allow the user to override the above behavior by passing their own [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
 
 `TokenCredential` is the default Authentication mechanism used by Azure SDKs.
 
@@ -90,8 +91,7 @@ var containerUri = (quantumJobClient.GetStorageSasUri(
 ### Upload Input Data
 
 Using the SAS URI, upload the json input data to the blob client.
-This contains the parameters to be used with [Quantum Inspired Optimizations](https://github.com/MicrosoftDocs/quantum-docs-private/wiki/Optimization-quickstart-for-Azure-Quantum)
-Learn more about QIO at [Quantum Inspired Optimizations](https://github.com/MicrosoftDocs/quantum-docs-private/wiki/Optimization-quickstart-for-Azure-Quantum) 
+This contains the parameters to be used with [Quantum Inspired Optimizations](https://docs.microsoft.com/azure/quantum/optimization-overview-introduction)
 
 ```C# Snippet:Azure_Quantum_Jobs_UploadInputData
 // Get input data blob Uri with SAS key
@@ -110,9 +110,7 @@ blobClient.Upload(problemFilename, overwrite: true);
 
 ### Create The Job
 
-Now that you have the blob input data initialized, fill in the job fields and pass it to the CreateJob() function.
-
-[Quantum Inspired Optimizations](https://github.com/MicrosoftDocs/quantum-docs-private/wiki/Optimization-quickstart-for-Azure-Quantum) 
+Now that you've uploaded your problem definition to Azure Storage, you can use `CreateJob` to define an Azure Quantum job.
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateJob
 // Submit job
@@ -134,7 +132,7 @@ JobDetails createdJob = (quantumJobClient.CreateJob(jobId, createJobDetails)).Va
 
 ### Get Job
 
-To retrieve a specific job by its job id, you can use this function.
+`GetJob` retrieves a specific job by its id.
 
 ```C# Snippet:Azure_Quantum_Jobs_GetJob
 // Get the job that we've just created based on its jobId
@@ -143,7 +141,7 @@ JobDetails myJob = (quantumJobClient.GetJob(jobId)).Value;
 
 ### Get Jobs
 
-To enumerate all the jobs in the workspace, use the GetJobs() function.
+To enumerate all the jobs in the workspace, use the `GetJobs` method.
 
 ```C# Snippet:Azure_Quantum_Jobs_GetJobs
 foreach (JobDetails job in quantumJobClient.GetJobs())
@@ -154,10 +152,7 @@ foreach (JobDetails job in quantumJobClient.GetJobs())
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
-
+*  Visit our [Product documentation](https://docs.microsoft.com/azure/quantum/) to learn more about Azure Quantum.
 ## Contributing
 
 See the [CONTRIBUTING.md][contributing] for details on building,
@@ -176,14 +171,13 @@ additional questions or comments.
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/quantum/Azure.Quantum.Jobs/src
-[package]: https://www.nuget.org/packages/Azure.Quantum.Jobs/
-[resource-groups]: https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal
-[workspaces]: https://github.com/MicrosoftDocs/quantum-docs-private/wiki/Create-quantum-workspaces-with-the-Azure-portal
-[location]: https://azure.microsoft.com/en-us/global-infrastructure/services/?products=quantum
-[blob-storage]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction
+[resource-groups]: https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal
+[workspaces]: https://docs.microsoft.com/azure/quantum/how-to-create-quantum-workspaces-with-the-azure-portal
+[location]: https://azure.microsoft.com/global-infrastructure/services/?products=quantum
+[blob-storage]: https://docs.microsoft.com/azure/storage/blobs/storage-blobs-introduction
 [contributing]: https://github.com/Azure/azure-sdk-for-net/tree/master/CONTRIBUTING.md
 [subscriptions]: https://ms.portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade
-[credentials]: https://docs.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme#credentials
+[credentials]: https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme#credentials
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
