@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Long term policy schedule.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("LongTermSchedulePolicy")]
     public partial class LongTermSchedulePolicy : SchedulePolicy
     {
         /// <summary>

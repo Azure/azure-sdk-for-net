@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Azure VM (Mercury) workload-specific backup policy.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("GenericProtectionPolicy")]
     public partial class GenericProtectionPolicy : ProtectionPolicy
     {
         /// <summary>

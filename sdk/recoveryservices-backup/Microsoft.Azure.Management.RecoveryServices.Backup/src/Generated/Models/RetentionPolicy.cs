@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for retention policy.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RetentionPolicy")]
     public partial class RetentionPolicy
     {
         /// <summary>

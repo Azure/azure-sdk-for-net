@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for restore request. Workload-specific restore requests are
     /// derived from this class.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RestoreRequest")]
     public partial class RestoreRequest
     {
         /// <summary>

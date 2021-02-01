@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Operation result info.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("OperationResultInfo")]
     public partial class OperationResultInfo : OperationResultInfoBase
     {
         /// <summary>

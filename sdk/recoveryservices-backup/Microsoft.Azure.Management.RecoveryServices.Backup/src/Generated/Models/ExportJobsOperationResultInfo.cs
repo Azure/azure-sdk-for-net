@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// This class is used to send blob details after exporting jobs.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ExportJobsOperationResultInfo")]
     public partial class ExportJobsOperationResultInfo : OperationResultInfoBase
     {
         /// <summary>

@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// AzureWorkload SAP Hana-specific restore.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureWorkloadSAPHanaRestoreRequest")]
     public partial class AzureWorkloadSAPHanaRestoreRequest : AzureWorkloadRestoreRequest
     {
         /// <summary>
