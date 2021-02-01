@@ -194,6 +194,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var pathClient = new Mock<DataLakePathClient>();
+            pathClient.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(pathClient.Object.CanGenerateSasUri);
+
+            // Act
+            pathClient.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(pathClient.Object.CanGenerateSasUri);
+        }
+
+        [Test]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
