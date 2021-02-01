@@ -88,7 +88,7 @@ namespace Azure.Search.Documents
     public partial class SearchIndexingBufferedSender<T> : System.IAsyncDisposable, System.IDisposable
     {
         protected SearchIndexingBufferedSender() { }
-        public SearchIndexingBufferedSender(SearchClient searchClient, SearchIndexingBufferedSenderOptions<T> options = null) { }
+        public SearchIndexingBufferedSender(Azure.Search.Documents.SearchClient searchClient, Azure.Search.Documents.SearchIndexingBufferedSenderOptions<T> options = null) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string IndexName { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
