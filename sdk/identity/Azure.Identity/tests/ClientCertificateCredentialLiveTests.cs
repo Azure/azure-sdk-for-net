@@ -36,7 +36,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, certPath, options));
 
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri($"{TestEnvironment.AuthorityHostUrl}/")) });
+            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
@@ -71,7 +71,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, cert, options));
 
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri($"{TestEnvironment.AuthorityHostUrl}/")) });
+            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
@@ -106,7 +106,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, certPath, options));
 
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri($"{TestEnvironment.AuthorityHostUrl}/")) });
+            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
@@ -125,7 +125,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, new X509Certificate2(certPath), options));
 
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
+            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 
             // ensure the incorrect client claim is rejected, handled and wrapped in AuthenticationFailedException
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext));
