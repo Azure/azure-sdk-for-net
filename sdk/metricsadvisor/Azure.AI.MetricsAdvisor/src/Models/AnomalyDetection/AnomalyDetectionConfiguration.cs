@@ -15,27 +15,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenModel("AnomalyDetectionConfiguration")]
     public partial class AnomalyDetectionConfiguration
     {
-        private string _name;
-
-        private MetricWholeSeriesDetectionCondition _wholeSeriesDetectionConditions;
-
         /// <summary>
         /// Creates a new instance of the <see cref="AnomalyDetectionConfiguration"/> class.
         /// </summary>
-        /// <param name="metricId">The identifier of the metric to which this configuration applies.</param>
-        /// <param name="name">A custom name for this <see cref="AnomalyDetectionConfiguration"/> to be displayed on the web portal.</param>
-        /// <param name="wholeSeriesDetectionConditions">The default anomaly detection conditions to be applied to all series associated with this configuration's <paramref name="metricId"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="metricId"/>, <paramref name="name"/>, or <paramref name="wholeSeriesDetectionConditions"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="name"/> is empty.</exception>
-        public AnomalyDetectionConfiguration(string metricId, string name, MetricWholeSeriesDetectionCondition wholeSeriesDetectionConditions)
+        public AnomalyDetectionConfiguration()
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(wholeSeriesDetectionConditions, nameof(wholeSeriesDetectionConditions));
-
-            MetricId = metricId;
-            Name = name;
-            WholeSeriesDetectionConditions = wholeSeriesDetectionConditions;
             SeriesDetectionConditions = new ChangeTrackingList<MetricSingleSeriesDetectionCondition>();
             SeriesGroupDetectionConditions = new ChangeTrackingList<MetricSeriesGroupDetectionCondition>();
         }
@@ -49,37 +33,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The identifier of the metric to which this configuration applies.
         /// </summary>
-        public string MetricId { get; }
+        public string MetricId { get; set; }
 
         /// <summary>
         /// A custom name for this <see cref="AnomalyDetectionConfiguration"/> to be displayed on the web portal.
         /// </summary>
-        /// <exception cref="ArgumentNullException">The value assigned to <see cref="Name"/> is null.</exception>
-        /// <exception cref="ArgumentException">The value assigned to <see cref="Name"/> is empty.</exception>
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                Argument.AssertNotNullOrEmpty(value, nameof(Name));
-                _name = value;
-            }
-        }
+        public string Name { get; set; }
 
         /// <summary>
         /// The default anomaly detection conditions to be applied to all series associated with this configuration's
         /// <see cref="MetricId"/>.
         /// </summary>
         [CodeGenMember("WholeMetricConfiguration")]
-        public MetricWholeSeriesDetectionCondition WholeSeriesDetectionConditions
-        {
-            get => _wholeSeriesDetectionConditions;
-            private set
-            {
-                Argument.AssertNotNull(value, nameof(WholeSeriesDetectionConditions));
-                _wholeSeriesDetectionConditions = value;
-            }
-        }
+        public MetricWholeSeriesDetectionCondition WholeSeriesDetectionConditions { get; set; }
 
         /// <summary>
         /// The anomaly detection conditions to be applied to the time series associated with this configuration's

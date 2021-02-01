@@ -36,8 +36,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 }
             };
 
-            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions)
+            var configToCreate = new AnomalyDetectionConfiguration()
             {
+                MetricId = MetricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = wholeConditions,
                 // This is the only test that validates description during creation. Please don't remove it!
                 Description = description
             };
@@ -77,7 +80,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new (23.0, AnomalyDetectorDirection.Down, new (3, 4.0))
             };
 
-            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = MetricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = wholeConditions
+            };
 
             await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
 
@@ -117,7 +125,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 }
             };
 
-            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = MetricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = wholeConditions
+            };
 
             // Set the series group conditions and create the configuration.
 
@@ -223,7 +236,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 }
             };
 
-            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = MetricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = wholeConditions
+            };
 
             // Set the series conditions and create the configuration.
 
@@ -334,7 +352,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new (60.0, AnomalyDetectorDirection.Up, new (5, 6.0))
             };
 
-            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = MetricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = wholeConditions
+            };
 
             // Set the series group conditions.
 
@@ -450,7 +473,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new (60.0, AnomalyDetectorDirection.Up, new (5, 6.0))
             };
 
-            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = MetricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = wholeConditions
+            };
 
             // Set the series group conditions.
 
@@ -479,8 +507,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created configuration.
 
-            var configToUpdate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+            var configToUpdate = new AnomalyDetectionConfiguration();
 
+            configToUpdate.WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+            {
+                HardThresholdCondition = wholeConditions.HardThresholdCondition
+            };
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
 
             await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
@@ -568,7 +600,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new (60.0, AnomalyDetectorDirection.Up, new (5, 6.0))
             };
 
-            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = MetricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = wholeConditions
+            };
 
             // Set the series group conditions.
 
@@ -705,7 +742,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new (60.0, AnomalyDetectorDirection.Up, new (5, 6.0))
             };
 
-            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = MetricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = wholeConditions
+            };
 
             // Set the series group conditions.
 
@@ -734,14 +776,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created configuration.
 
-            var configToUpdate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+            var configToUpdate = new AnomalyDetectionConfiguration();
 
             configToUpdate.Description = description;
 
-            configToUpdate.WholeSeriesDetectionConditions.CrossConditionsOperator = DetectionConditionsOperator.And;
-            configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition = new (AnomalyDetectorDirection.Up, new (11, 12.0)) { UpperBound = 9.0 };
-            configToUpdate.WholeSeriesDetectionConditions.ChangeThresholdCondition = null;
-            configToUpdate.WholeSeriesDetectionConditions.SmartDetectionCondition = new (75.0, AnomalyDetectorDirection.Both, new (15, 16.0));
+            configToUpdate.WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+            {
+                CrossConditionsOperator = DetectionConditionsOperator.And,
+                HardThresholdCondition = new (AnomalyDetectorDirection.Up, new (11, 12.0)) { UpperBound = 9.0 },
+                SmartDetectionCondition = new (75.0, AnomalyDetectorDirection.Both, new (15, 16.0))
+            };
 
             var newGroupConditions = new MetricSeriesGroupDetectionCondition()
             {
@@ -881,7 +925,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 }
             };
 
-            var configToCreate = new AnomalyDetectionConfiguration(MetricId, configName, wholeConditions);
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = MetricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = wholeConditions
+            };
 
             string configId = null;
 
