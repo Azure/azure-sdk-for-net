@@ -24,6 +24,15 @@ EventGridPublisherClient client = new EventGridPublisherClient(
     new AzureKeyCredential(topicAccessKey),
     clientOptions);
 ```
+Event Grid also supports authenticating with a shared access signature which allows for providing access to a resource that expires by a certain time without sharing your access key:
+```C# Snippet:CreateWithSas
+var builder = new EventGridSasBuilder(new Uri(topicEndpoint), DateTimeOffset.Now.AddHours(1));
+var keyCredential = new AzureKeyCredential(topicAccessKey);
+var sasCredential = new AzureSasCredential(builder.GenerateSas(keyCredential));
+EventGridPublisherClient client = new EventGridPublisherClient(
+    new Uri(topicEndpoint),
+    sasCredential);
+```
 
 ## Publishing Events to Azure Event Grid
 ### Using `EventGridEvent`
@@ -69,7 +78,7 @@ List<CloudEvent> eventsList = new List<CloudEvent>
     new CloudEvent(
         "/cloudevents/example/binarydata",
         "Example.EventType",
-        new BinaryData("This is binary data"),
+        Encoding.UTF8.GetBytes("This is binary data"),
         "example/binary")};
 
 // Send the events
