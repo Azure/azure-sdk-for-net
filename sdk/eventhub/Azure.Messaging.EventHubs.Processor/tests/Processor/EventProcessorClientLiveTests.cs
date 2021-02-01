@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-           cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -97,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-           cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -148,7 +148,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-           cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -180,7 +180,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -244,7 +244,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -288,7 +288,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var storageManager = new InMemoryStorageManager(_ => {});
+            var storageManager = new InMemoryStorageManager(_ => { });
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
             var processor = CreateProcessorWithIdentity(scope.ConsumerGroups.First(), scope.EventHubName, storageManager, options);
 
@@ -346,7 +346,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await using (var consumer = new EventHubConsumerClient(scope.ConsumerGroups.First(), connectionString))
             {
-                await foreach  (var partitionEvent in consumer.ReadEventsAsync(new ReadEventOptions { MaximumWaitTime = null }, cancellationSource.Token))
+                await foreach (var partitionEvent in consumer.ReadEventsAsync(new ReadEventOptions { MaximumWaitTime = null }, cancellationSource.Token))
                 {
                     if (partitionEvent.Data.IsEquivalentTo(lastSourceEvent))
                     {
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -438,7 +438,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var beforeCheckpointProcessHandler = CreateEventTrackingHandler(segmentEventCount, processedEvents, completionSource, cancellationSource.Token, processedEventCallback);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
-            var storageManager = new InMemoryStorageManager(_ => {});
+            var storageManager = new InMemoryStorageManager(_ => { });
             var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, storageManager, options);
 
             processor.ProcessErrorAsync += CreateAssertingErrorHandler();
@@ -476,7 +476,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in afterCheckpointEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -500,7 +500,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             EventHubConnection createConnection() => new EventHubConnection(connectionString);
 
-            storageManager ??= new InMemoryStorageManager(_=> {});
+            storageManager ??= new InMemoryStorageManager(_ => { });
             return new TestEventProcessorClient(storageManager, consumerGroup, "fakeNamespace", "fakeEventHub", Mock.Of<TokenCredential>(), createConnection, options);
         }
 
@@ -524,7 +524,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = EventHubsTestEnvironment.Instance.Credential;
             EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
 
-            storageManager ??= new InMemoryStorageManager(_=> {});
+            storageManager ??= new InMemoryStorageManager(_ => { });
             return new TestEventProcessorClient(storageManager, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
         }
 
@@ -548,7 +548,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = new EventHubsSharedAccessKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
             EventHubConnection createConnection() => null; //new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
 
-            storageManager ??= new InMemoryStorageManager(_=> {});
+            storageManager ??= new InMemoryStorageManager(_ => { });
             return new TestEventProcessorClient(storageManager, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
         }
 
@@ -621,7 +621,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         if (processedEvents.Count >= targetCount)
                         {
-                           completionSource.TrySetResult(true);
+                            completionSource.TrySetResult(true);
                         }
                     }
                 }
