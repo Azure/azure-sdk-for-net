@@ -123,7 +123,13 @@ function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseS
         Write-Host "Maybe a pkg version wasn't updated properly?"
         exit(1)
       }
-
+      $docsReadMeName = ""
+      if ($parsedPackage.DocsReadMeName) {
+        $docsReadMeName = $parsedPackage.DocsReadMeName
+      }
+      else {
+        $docsReadMeName = $parsedPackage.PackageId
+      }
       $pkgList += New-Object PSObject -Property @{
         PackageId      = $parsedPackage.PackageId
         PackageVersion = $parsedPackage.PackageVersion
@@ -131,6 +137,7 @@ function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseS
         Tag            = $parsedPackage.ReleaseTag
         ReleaseNotes   = $parsedPackage.ReleaseNotes
         ReadmeContent  = $parsedPackage.ReadmeContent
+        DocsReadMeName = $docsReadMeName
         IsPrerelease   = [AzureEngSemanticVersion]::ParseVersionString($parsedPackage.PackageVersion).IsPrerelease
       }
     }

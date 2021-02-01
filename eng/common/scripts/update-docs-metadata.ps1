@@ -103,16 +103,7 @@ foreach ($config in $targets) {
     Write-Host ($pkgsFiltered | % { $_.PackageId + " " + $_.PackageVersion })
   
     foreach ($packageInfo in $pkgsFiltered) {
-      $readmeName = ""
-      if ($NormalizePackageNameFn -and (Test-Path "function:$NormalizePackageNameFn")) 
-      {
-        $readmeName = "$(&$NormalizePackageNameFn -packageId $packageInfo.PackageId).ToLower())-readme${suffix}.md"
-      }
-      else 
-      {
-        $readmeName = "$($packageInfo.PackageId).ToLower())-readme${suffix}.md"
-      }
-      
+      $readmeName = $packageInfo.DocsReadMeName
       $readmeFolder = Join-Path $DocRepoLocation $config.content_folder
       $readmeLocation = Join-Path $readmeFolder $readmeName
 
