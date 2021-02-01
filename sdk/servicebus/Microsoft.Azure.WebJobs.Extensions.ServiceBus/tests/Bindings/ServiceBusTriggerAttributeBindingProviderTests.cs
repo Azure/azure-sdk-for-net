@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, config, _mockMessagingProvider.Object, _configuration, NullLoggerFactory.Instance, convertManager.Object);
         }
 
-        [Fact]
+        [Test]
         public async Task TryCreateAsync_AccountOverride_OverrideIsApplied()
         {
             ParameterInfo parameter = GetType().GetMethod("TestJob_AccountOverride", BindingFlags.NonPublic | BindingFlags.Static).GetParameters()[0];
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             Assert.NotNull(binding);
         }
 
-        [Fact]
+        [Test]
         public async Task TryCreateAsync_DefaultAccount()
         {
             ParameterInfo parameter = GetType().GetMethod("TestJob", BindingFlags.NonPublic | BindingFlags.Static).GetParameters()[0];

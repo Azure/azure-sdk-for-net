@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 document,
             };
 
-            HealthcareOperation healthOperation = client.StartHealthcareBatch(batchInput, "en");
+            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartHealthcareBatch(batchInput, "en");
 
             await healthOperation.WaitForCompletionAsync();
 

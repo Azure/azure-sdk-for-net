@@ -33,5 +33,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
         }
+
+        [Test]
+        public async Task TestGetWorkspace()
+        {
+            WorkspaceClient client = CreateClient();
+            Workspace space = await client.GetAsync();
+            Assert.NotNull(space.Name);
+            Assert.NotNull(space.WorkspaceUID);
+        }
     }
 }

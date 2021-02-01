@@ -403,12 +403,34 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [TestCase("http://localhost:10000/devstoreaccount1/container/%E6%96%91%E9%BB%9E")]
-        [TestCase("http://localhost:10000/devstoreaccount1/container/斑點")]
-        public void BlobUriBuilder_IPStyleUrl_PortTest_NonAsciiUri(string uriString)
+        public void BlobUriBuilder_PortTest_SlashUri()
         {
             // Arrange
-            var originalUri = new UriBuilder(uriString);
+            var originalUri = new UriBuilder("http://localhost:10000/devstoreaccount1/container/%E6%96%91%E9%BB%9E");
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", blobUriBuilder.Scheme);
+            Assert.AreEqual("localhost", blobUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("斑點", blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(10000, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void BlobUriBuilder_IPStyleUrl_NonAsciiUri()
+        {
+            // Arrange
+            var originalUri = new UriBuilder("http://localhost:10000/devstoreaccount1/container/斑點");
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);

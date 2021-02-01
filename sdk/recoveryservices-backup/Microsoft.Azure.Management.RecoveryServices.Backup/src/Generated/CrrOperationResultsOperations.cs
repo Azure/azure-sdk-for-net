@@ -50,7 +50,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         public RecoveryServicesBackupClient Client { get; private set; }
 
-
         /// <param name='azureRegion'>
         /// Azure region to hit Api
         /// </param>
@@ -74,7 +73,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginGetWithHttpMessagesAsync(string azureRegion, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> GetWithHttpMessagesAsync(string azureRegion, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (azureRegion == null)
             {
@@ -100,7 +99,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("operationId", operationId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginGet", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -215,9 +214,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             return _result;
         }
 
-        public Task<AzureOperationResponse> GetWithHttpMessagesAsync(string azureRegion, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

@@ -12,6 +12,7 @@ using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -2259,6 +2260,18 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<DataLakeFileSystemClient>(TestConfigDefault.ConnectionString, "name", new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileSystemClient>(TestConfigDefault.ConnectionString, "name").Object;
+            mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
+        }
 
         private IEnumerable<AccessConditionParameters> Conditions_Data
             => new[]

@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = singleEnglish;
 
-            HealthcareOperation operation = await client.StartHealthcareAsync(document);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareAsync(document);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -92,7 +92,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = singleEnglish;
 
-            HealthcareOperation operation = await client.StartHealthcareBatchAsync(new List<string>() { document }, "en");
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(new List<string>() { document }, "en");
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -115,7 +115,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Top = 1
             };
 
-            HealthcareOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, options);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -139,7 +139,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Skip = 1
             };
 
-            HealthcareOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, options);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -166,7 +166,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 "",
             };
 
-            HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(documents);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -184,7 +184,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             var documents = batchConvenienceDocuments;
 
-            HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(documents);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -204,7 +204,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true
             };
 
-            HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents, "en", options);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(documents, "en", options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -228,7 +228,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             List<TextDocumentInput> documents = batchDocuments;
 
-            HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(documents);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -248,7 +248,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true
             };
 
-            HealthcareOperation operation = await client.StartHealthcareBatchAsync(documents, options);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(documents, options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -259,6 +259,41 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, resultCollection.Statistics.DocumentCount);
             Assert.AreEqual(2, resultCollection.Statistics.TransactionCount);
             Assert.AreEqual(0, resultCollection.Statistics.InvalidDocumentCount);
+        }
+
+        [Test]
+        public async Task RecognizeHealthcareEntitiesBatchWithCancellation()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |";
+
+            var batchDocuments = new List<string>();
+
+            for (var i = 0; i < 10; i++)
+            {
+                batchDocuments.Add(document);
+            }
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, "en");
+
+            await operation.CancelAsync();
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async() => await operation.WaitForCompletionAsync());
+            Assert.IsTrue(ex.Message.Contains("The operation was canceled so no value is available."));
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.AreEqual(TextAnalyticsOperationStatus.Cancelled, operation.Status);
+
+            try
+            {
+                Assert.IsNull(operation.Value);
+            }
+            catch (RequestFailedException exception)
+            {
+                Assert.IsTrue(exception.Message.Contains("The operation was canceled so no value is available."));
+            }
         }
 
         [Test]
@@ -279,7 +314,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Top = 2
             };
 
-            HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(list, "en", options);
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartHealthcareBatchAsync(list, "en", options);
 
             AsyncPageable<DocumentHealthcareResult> results = client.GetHealthcareEntities(healthOperation);
 

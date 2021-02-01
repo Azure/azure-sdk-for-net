@@ -226,3 +226,15 @@ function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseD
   & "$EngDir/scripts/Update-PkgVersion.ps1" -ServiceDirectory $ServiceDirectory -PackageName $PackageName `
   -NewVersionString $Version -ReleaseDate $ReleaseDate
 }
+
+function GetExistingPackageVersions ($PackageName, $GroupId=$null)
+{
+  try {
+    $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
+    return $existingVersion.versions
+  }
+  catch {
+    LogError "Failed to retrieve package versions. `n$_"
+    return $null
+  }
+}

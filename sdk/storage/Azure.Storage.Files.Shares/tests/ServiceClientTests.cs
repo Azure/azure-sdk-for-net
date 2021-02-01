@@ -9,6 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
@@ -105,7 +106,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [Test]
         [NonParallelizable]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -600,5 +601,16 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<ShareServiceClient>(TestConfigDefault.ConnectionString, new ShareClientOptions()).Object;
+            mock = new Mock<ShareServiceClient>(TestConfigDefault.ConnectionString).Object;
+            mock = new Mock<ShareServiceClient>(new Uri("https://test/test/test"), new ShareClientOptions()).Object;
+            mock = new Mock<ShareServiceClient>(new Uri("https://test/test/test"), GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
+            mock = new Mock<ShareServiceClient>(new Uri("https://test/test/test"), new AzureSasCredential("foo"), new ShareClientOptions()).Object;
+        }
     }
 }

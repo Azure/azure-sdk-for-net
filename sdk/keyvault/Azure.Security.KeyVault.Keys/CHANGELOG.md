@@ -4,6 +4,7 @@
 
 ### Removed
 
+- Removed local cryptographic support for AES-GCM.
 - Removed `Export` and `ExportAsync` methods from `KeyClient`.
 - Removed `Exportable` property from `KeyProperties`'.
 - Removed `KeyReleasePolicy` class and associated properties.

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -20,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
             IReadOnlyList<float> boundingBox = default;
             Optional<Language> language = default;
             IReadOnlyList<TextWord> words = default;
-            Optional<Appearance> appearance = default;
+            Optional<TextAppearance> appearance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -65,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    appearance = Appearance.DeserializeAppearance(property.Value);
+                    appearance = TextAppearance.DeserializeTextAppearance(property.Value);
                     continue;
                 }
             }

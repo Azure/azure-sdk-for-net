@@ -1,17 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://amandadev2.file.core.windows.net/test-share-b23c68a8-bba0-ae2e-d360-e43da4d85b00/test-directory-98b260e1-9700-628d-9268-f1d770b9712e?restype=directory",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-b23c68a8-bba0-ae2e-d360-e43da4d85b00/test-directory-98b260e1-9700-628d-9268-f1d770b9712e?restype=directory",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-2f1136f420a95e4b8cd1668c258fe6df-ffdf54eef865ae43-00",
+        "traceparent": "00-e857aa7db93620478dfe1206004fb9be-0d0909d120bc974d-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200714.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210121.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "bf326bd6-316d-1130-dada-2038c9573e1a",
-        "x-ms-date": "Tue, 14 Jul 2020 19:41:11 GMT",
+        "x-ms-date": "Thu, 21 Jan 2021 20:37:04 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -20,25 +21,25 @@
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
-        "Date": "Tue, 14 Jul 2020 19:41:11 GMT",
+        "Date": "Thu, 21 Jan 2021 20:37:04 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "bf326bd6-316d-1130-dada-2038c9573e1a",
         "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "7955627f-101a-00ce-3a16-5af454000000",
+        "x-ms-request-id": "eacd582d-f01a-007d-2e35-f0abe1000000",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
-        "RequestId:7955627f-101a-00ce-3a16-5af454000000\n",
-        "Time:2020-07-14T19:41:12.0329715Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:eacd582d-f01a-007d-2e35-f0abe1000000\n",
+        "Time:2021-01-21T20:37:04.6474020Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
     "RandomSeed": "1037692074",
-    "Storage_TestConfigDefault": "ProductionTenant\namandadev2\nU2FuaXRpemVk\nhttps://amandadev2.blob.core.windows.net\nhttps://amandadev2.file.core.windows.net\nhttps://amandadev2.queue.core.windows.net\nhttps://amandadev2.table.core.windows.net\n\n\n\n\nhttps://amandadev2-secondary.blob.core.windows.net\nhttps://amandadev2-secondary.file.core.windows.net\nhttps://amandadev2-secondary.queue.core.windows.net\nhttps://amandadev2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://amandadev2.blob.core.windows.net/;QueueEndpoint=https://amandadev2.queue.core.windows.net/;FileEndpoint=https://amandadev2.file.core.windows.net/;BlobSecondaryEndpoint=https://amandadev2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://amandadev2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://amandadev2-secondary.file.core.windows.net/;AccountName=amandadev2;AccountKey=Kg==;\n"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
   }
 }

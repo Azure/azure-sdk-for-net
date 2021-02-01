@@ -224,5 +224,42 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         partial void BlobsCheckpointStoreCreated(string typeName, string accountName, string containerName) =>
             Logger.BlobsCheckpointStoreCreated(typeName, accountName, containerName);
+
+        /// <summary>
+        ///   Indicates that an attempt to retrieve a checkpoint has started.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        ///
+        partial void GetCheckpointStart(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId) =>
+            Logger.GetCheckpointStart(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+
+        /// <summary>
+        ///   Indicates that an attempt to retrieve a checkpoint has completed.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        ///
+        partial void GetCheckpointComplete(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId) =>
+            Logger.GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+
+        /// <summary>
+        ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        /// <param name="exception">The message for the exception that occurred.</param>
+        ///
+        partial void GetCheckpointError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, Exception exception) =>
+            Logger.GetCheckpointError(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, exception.Message);
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.Identity
     /// </summary>
     public class EnvironmentCredential : TokenCredential
     {
-        private const string UnavailbleErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
+        private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
         private readonly CredentialPipeline _pipeline;
 
         internal TokenCredential Credential { get; }
@@ -124,7 +124,7 @@ namespace Azure.Identity
 
             if (Credential is null)
             {
-                throw scope.FailWrapAndThrow(new CredentialUnavailableException(UnavailbleErrorMessage));
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException(UnavailableErrorMessage));
             }
 
             try
