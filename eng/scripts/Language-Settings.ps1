@@ -15,7 +15,7 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
     $projectData.load($projectPath)
     $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
     $sdkType = "client"
-    if ($pkgName -match ".ResourceManager." -or $pkgName -match ".Management.")
+    if ($pkgName -match "\.ResourceManager\." -or $pkgName -match "\.Management\.")
     {
       $sdkType = "mgmt"
     }
