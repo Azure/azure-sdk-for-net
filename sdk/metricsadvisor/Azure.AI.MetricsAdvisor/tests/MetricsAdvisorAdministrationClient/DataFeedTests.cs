@@ -96,7 +96,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataFeed = new DataFeed();
+            var dataFeed = new DataFeed() { SourceType = DataFeedSourceType.AzureApplicationInsights };
 
             Assert.That(() => adminClient.UpdateDataFeedAsync(null, dataFeed), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.UpdateDataFeedAsync("", dataFeed), Throws.InstanceOf<ArgumentException>());
@@ -107,6 +107,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(() => adminClient.UpdateDataFeed("", dataFeed), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => adminClient.UpdateDataFeed("dataFeedId", dataFeed), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
             Assert.That(() => adminClient.UpdateDataFeed(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+
+            dataFeed.SourceType = null;
+
+            Assert.That(() => adminClient.UpdateDataFeedAsync(FakeGuid, dataFeed), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDataFeed(FakeGuid, dataFeed), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
