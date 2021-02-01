@@ -2105,10 +2105,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Description = "This data feed was created to test the .NET client.",
                 AccessMode = DataFeedAccessMode.Public,
                 ActionLinkTemplate = "https://fakeurl.com/%metric/%datafeed",
-                Administrators = new List<string>() { "fake@admin.com" },
-                Viewers = new List<string>() { "fake@viewer.com" },
                 MissingDataPointFillSettings = new () { FillType = DataFeedMissingDataPointFillType.CustomValue, CustomFillValue = 45.0 }
             };
+
+            dataFeed.Administrators.Add("fake@admin.com");
+            dataFeed.Viewers.Add("fake@viewer.com");
 
             dataFeed.Schema.MetricColumns.Add(new ("cost") { MetricDisplayName = "costDisplayName", MetricDescription = "costDescription" });
             dataFeed.Schema.MetricColumns.Add(new ("revenue") { MetricDisplayName = "revenueDisplayName", MetricDescription = "revenueDescription" });

@@ -14,10 +14,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class DataFeed
     {
-        private IList<string> _administrators;
-
-        private IList<string> _viewers;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeed"/> class.
         /// </summary>
@@ -146,35 +142,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// data feed, being allowed to update, delete or pause them. They also have access to the
         /// credentials used to authenticate to the data source.
         /// </summary>
-        /// <exception cref="ArgumentNullException">The value assigned to <see cref="Administrators"/> is null.</exception>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IList<string> Administrators
-        {
-            get => _administrators;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(Administrators));
-                _administrators = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IList<string> Administrators { get; }
 
         /// <summary>
         /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
         /// do not have access to the credentials used to authenticate to the data source.
         /// </summary>
-        /// <exception cref="ArgumentNullException">The value assigned to <see cref="Viewers"/> is null.</exception>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IList<string> Viewers
-        {
-            get => _viewers;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(Viewers));
-                _viewers = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IList<string> Viewers { get; }
 
         internal DataFeedDetail GetDataFeedDetail()
         {
@@ -214,8 +188,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                 detail.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            Administrators = detail.Admins;
-            Viewers = detail.Viewers;
+            foreach (var admin in Administrators)
+            {
+                detail.Admins.Add(admin);
+            }
+
+            foreach (var viewer in Viewers)
+            {
+                detail.Viewers.Add(viewer);
+            }
 
             return detail;
         }
