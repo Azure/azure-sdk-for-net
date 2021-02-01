@@ -1,5 +1,14 @@
 namespace Azure.Core
 {
+    [System.Diagnostics.DebuggerDisplayAttribute("Content: {_body}")]
+    public partial class DynamicContent : Azure.Core.RequestContent
+    {
+        internal DynamicContent() { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
+    }
     public partial class DynamicJson : System.Dynamic.IDynamicMetaObjectProvider
     {
         public DynamicJson(string json) { }
@@ -55,6 +64,30 @@ namespace Azure.Core
         public System.Text.Json.JsonElement ToJsonElement() { throw null; }
         public override string ToString() { throw null; }
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
+    }
+    [System.Diagnostics.DebuggerDisplayAttribute("Body: {Body}")]
+    public partial class DynamicRequest : Azure.Core.Request
+    {
+        public DynamicRequest(Azure.Core.Request request, Azure.Core.Pipeline.HttpPipeline pipeline) { }
+        public Azure.Core.DynamicJson Body { get { throw null; } set { } }
+        public override string ClientRequestId { get { throw null; } set { } }
+        public override Azure.Core.RequestContent? Content { get { throw null; } set { } }
+        protected override void AddHeader(string name, string value) { }
+        protected override bool ContainsHeader(string name) { throw null; }
+        public override void Dispose() { }
+        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
+        protected override bool RemoveHeader(string name) { throw null; }
+        public Azure.Core.DynamicResponse Send(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Core.DynamicResponse> SendAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override bool TryGetHeader(string name, out string? value) { throw null; }
+        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+    }
+    [System.Diagnostics.DebuggerDisplayAttribute("Status: {Response.Status}, Value: {Value}")]
+    public partial class DynamicResponse : Azure.Response<Azure.Core.DynamicJson>
+    {
+        public DynamicResponse(Azure.Response response, Azure.Core.DynamicJson value) { }
+        public override Azure.Core.DynamicJson Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
     }
 }
 namespace Azure.Core.GeoJson
