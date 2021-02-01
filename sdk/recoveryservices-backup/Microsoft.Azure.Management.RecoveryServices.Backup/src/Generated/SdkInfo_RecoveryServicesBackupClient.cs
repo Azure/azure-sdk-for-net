@@ -53,6 +53,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 new Tuple<string, string, string>("RecoveryServices", "JobDetails", "2021-01-01"),
                 new Tuple<string, string, string>("RecoveryServices", "JobOperationResults", "2021-01-01"),
                 new Tuple<string, string, string>("RecoveryServices", "Jobs", "2021-01-01"),
+                new Tuple<string, string, string>("RecoveryServices", "MoveRecoveryPoint", "2021-01-01"),
                 new Tuple<string, string, string>("RecoveryServices", "Operation", "2021-01-01"),
                 new Tuple<string, string, string>("RecoveryServices", "Operations", "2016-08-10"),
                 new Tuple<string, string, string>("RecoveryServices", "PrivateEndpoint", "2021-01-01"),
@@ -71,10 +72,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 new Tuple<string, string, string>("RecoveryServices", "RecoveryPoints", "2018-12-20"),
                 new Tuple<string, string, string>("RecoveryServices", "RecoveryPoints", "2021-01-01"),
                 new Tuple<string, string, string>("RecoveryServices", "RecoveryPointsCrr", "2018-12-20"),
+                new Tuple<string, string, string>("RecoveryServices", "RecoveryPointsRecommendedForMove", "2021-01-01"),
                 new Tuple<string, string, string>("RecoveryServices", "Restores", "2021-01-01"),
                 new Tuple<string, string, string>("RecoveryServices", "SecurityPINs", "2021-01-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\Sources\\Repos\\Azure\\azure-sdk-for-net-anjorsh\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "0c90247ad2604b12457a43e7613bc07c709795ad";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+
