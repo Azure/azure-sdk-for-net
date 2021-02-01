@@ -8,7 +8,7 @@
 - Added managed identity support for authentication in Databricks linkedService
 - Added admin property in Custom Activity typeProperties
 - Added dualStandbyPairName property in IntegrationRuntimeSsisCatalogInfo to support SSISDB failover
-- add managedVirtualNetwork reference to IR
+- Added managedVirtualNetwork reference to IR
 
 ## Version 4.13.0
 ###  Feature Additions
