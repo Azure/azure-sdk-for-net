@@ -349,14 +349,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/>, <paramref name="dataFeed"/>, or <paramref name="dataFeed"/>.SourceType is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> or <paramref name="dataFeed"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> UpdateDataFeedAsync(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
-            Argument.AssertNotNull(dataFeed.SourceType, $"{nameof(dataFeed)}.{nameof(dataFeed.SourceType)}");
-
             if (!string.IsNullOrEmpty(dataFeed.Id) && !dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
@@ -385,14 +383,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/>, <paramref name="dataFeed"/>, or <paramref name="dataFeed"/>.SourceType is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> or <paramref name="dataFeed"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual Response UpdateDataFeed(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
-            Argument.AssertNotNull(dataFeed.SourceType, $"{nameof(dataFeed)}.{nameof(dataFeed.SourceType)}");
-
             if (!string.IsNullOrEmpty(dataFeed.Id) && !dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");

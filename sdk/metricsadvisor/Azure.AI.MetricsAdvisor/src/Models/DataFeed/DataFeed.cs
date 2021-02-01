@@ -256,7 +256,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal DataFeedDetailPatch GetPatchModel()
         {
             DataFeedDetailPatch patch = DataSource?.InstantiateDataFeedDetailPatch()
-                ?? InstantiateDataFeedDetailPatchFromSourceType();
+                ?? new AzureApplicationInsightsDataFeedPatch();
 
             patch.DataFeedName = Name;
             patch.Status = Status.HasValue ? new DataFeedDetailPatchStatus(Status.ToString()) : default(DataFeedDetailPatchStatus?);

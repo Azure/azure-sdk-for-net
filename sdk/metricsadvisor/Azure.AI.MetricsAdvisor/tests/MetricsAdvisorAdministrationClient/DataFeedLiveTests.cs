@@ -605,9 +605,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -713,9 +711,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -819,9 +815,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -925,9 +919,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -1031,9 +1023,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -1137,9 +1127,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -1243,9 +1231,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -1349,9 +1335,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -1453,9 +1437,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -1559,9 +1541,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -1665,9 +1645,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -1771,9 +1749,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
@@ -1877,9 +1853,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            dataFeedToUpdate.Description = description;
+            var dataFeedToUpdate = new DataFeed() { Description = description };
 
             await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
 
