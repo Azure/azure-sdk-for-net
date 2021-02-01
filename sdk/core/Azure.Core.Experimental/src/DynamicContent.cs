@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -13,6 +14,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents the <see cref="DynamicJson"/> sent as part of the Azure.Core.Request.
     /// </summary>
+    [DebuggerDisplay("Content: {_body}")]
     public class DynamicContent : RequestContent
     {
         private readonly DynamicJson _body;

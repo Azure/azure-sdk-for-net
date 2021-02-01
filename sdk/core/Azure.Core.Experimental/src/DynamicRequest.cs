@@ -5,9 +5,11 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +18,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents an HTTP request with <see cref="DynamicJson"/> content.
     /// </summary>
+    [DebuggerDisplay("Body: {Body}")]
     public class DynamicRequest : Request
     {
         private Request Request { get; }

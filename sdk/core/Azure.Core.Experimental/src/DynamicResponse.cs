@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Azure.Core
@@ -10,6 +11,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a result of Azure operation with a <see cref="DynamicJson"/> response.
     /// </summary>
+    [DebuggerDisplay("Status: {Response.Status}, Value: {Value}")]
     public class DynamicResponse : Response<DynamicJson>
     {
         private Response Response { get; }
