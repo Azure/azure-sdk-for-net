@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
@@ -2127,17 +2126,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
             dataFeed.AccessMode = DataFeedAccessMode.Public;
             dataFeed.ActionLinkTemplate = "https://fakeurl.com/%datafeed/%metric";
 
-            // If we're creating the data feed from scratch, we must be careful to not fully
-            // overwrite the admins list during the update, otherwise we can end up removing
-            // ourselves from the list. Doing so would cause permission errors during the next
-            // service calls.
+            // - If we're creating the data feed from scratch, currently the Administrators list has no elements.
+            //   If we add a fake admin and send it to the service, it will overwrite the current list of admins,
+            //   removing ourselves from the list. Doing so would cause permission errors during the next service
+            //   calls.
+            // - If we're updating a data feed obtained from a GetDataFeed operation, the Administrators list already
+            //   includes our email. Even if we add new admins, this will not remove our admin role.
+            //
+            // For this reason, we do a conditional validation in the ValidateUpdatedDataFeedWithOptionalMembersSet
+            // method.
 
-            if (dataFeed.Administrators.Count == 0)
+            if (dataFeed.Administrators.Count > 0)
             {
-                dataFeed.Administrators.Add(dataFeed.Creator);
+                dataFeed.Administrators.Add("fake@admin.com");
             }
 
-            dataFeed.Administrators.Add("fake@admin.com");
             dataFeed.Viewers.Add("fake@viewer.com");
 
             dataFeed.Schema = new DataFeedSchema();
@@ -2287,10 +2290,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%datafeed/%metric"));
             Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
 
+            // In the SetOptionalMembers method, we may or may not add a new admin (fake@admin.com) depending on whether
+            // the data feed instance used for the Update call was created from scratch or from a GetDataFeed operation:
+            // - If the data feed to update was created from scratch, we didn't update the admins list (count = 1).
+            // - If the data feed to update was created from a GetDataFeed operation, we added a new fake admin (count = 2).
+
             Assert.That(dataFeed.Administrators, Is.Not.Null);
-            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(2));
+            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(1).Or.EqualTo(2));
             Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
-            Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
+
+            if (dataFeed.Administrators.Count == 2)
+            {
+                Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
+            }
+
             Assert.That(dataFeed.Viewers, Is.Not.Null);
             Assert.That(dataFeed.Viewers.Count, Is.EqualTo(1));
             Assert.That(dataFeed.Viewers, Contains.Item("fake@viewer.com"));
