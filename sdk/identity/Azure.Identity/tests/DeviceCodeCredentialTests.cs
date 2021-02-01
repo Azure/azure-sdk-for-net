@@ -214,22 +214,22 @@ namespace Azure.Identity.Tests
             IdentityTestEnvironment testEnvironment = new IdentityTestEnvironment();
             string requestUrl = mockRequest.Uri.ToUri().AbsoluteUri;
 
-            if (requestUrl.StartsWith($"{testEnvironment.AuthorityHostUrl}/common/discovery/instance"))
+            if (requestUrl.StartsWith(new Uri(new Uri(testEnvironment.AuthorityHostUrl), "common/discovery/instance").ToString()))
             {
                 return DiscoveryInstanceResponse;
             }
 
-            if (requestUrl.StartsWith($"{testEnvironment.AuthorityHostUrl}/organizations/v2.0/.well-known/openid-configuration"))
+            if (requestUrl.StartsWith(new Uri(new Uri(testEnvironment.AuthorityHostUrl), "organizations/v2.0/.well-known/openid-configuration").ToString()))
             {
                 return OpenIdConfigurationResponse;
             }
 
-            if (requestUrl.StartsWith($"{testEnvironment.AuthorityHostUrl}/organizations/oauth2/v2.0/devicecode") || requestUrl.StartsWith("https://login.partner.microsoftonline.cn/organizations/oauth2/v2.0/devicecode"))
+            if (requestUrl.StartsWith(new Uri(new Uri(testEnvironment.AuthorityHostUrl), "organizations/oauth2/v2.0/devicecode").ToString()) || requestUrl.StartsWith("https://login.partner.microsoftonline.cn/organizations/oauth2/v2.0/devicecode"))
             {
                 return CreateDeviceCodeResponse(code);
             }
 
-            if (requestUrl.StartsWith($"{testEnvironment.AuthorityHostUrl}/organizations/oauth2/v2.0/token") || requestUrl.StartsWith($"https://login.partner.microsoftonline.cn/organizations/oauth2/v2.0/token"))
+            if (requestUrl.StartsWith(new Uri(new Uri(testEnvironment.AuthorityHostUrl), "organizations/oauth2/v2.0/token").ToString()) || requestUrl.StartsWith($"https://login.partner.microsoftonline.cn/organizations/oauth2/v2.0/token"))
             {
                 return CreateTokenResponse(code, token);
             }
