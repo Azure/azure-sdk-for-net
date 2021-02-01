@@ -30,7 +30,7 @@ Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
 eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory 'search'
 ```
 
-The `OutFile` switch would be set if you are running this for a .NET project on Windows. This will save test environment settings
+The `OutFile` switch will be set by default if you are running this for a .NET project on Windows. This will save test environment settings
 into a test-resources.json.env file next to test-resources.json. The file is protected via DPAPI.
 The environment file would be scoped to the current repository directory and avoids the need to
 set environment variables or restart your IDE to recognize them.
@@ -88,6 +88,12 @@ Remove-AzADServicePrincipal -ApplicationId $sp.ApplicationId -Force
 ```
 
 If you persisted environment variables, you should also remove those as well.
+
+Some test-resources.json templates utilize the `AdditionalParameters` parameter to control additional resource configuration options. For example:
+
+```powershell
+New-TestResources.ps1 keyvault -AdditionalParameters @{enableHsm = $true}
+```
 
 ## In CI
 
