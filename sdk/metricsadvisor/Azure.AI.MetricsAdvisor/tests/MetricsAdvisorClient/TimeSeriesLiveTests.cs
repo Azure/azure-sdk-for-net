@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class TimeSeriesLiveTests : MetricsAdvisorLiveTestBase
     {
-        public TimeSeriesLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        public TimeSeriesLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
