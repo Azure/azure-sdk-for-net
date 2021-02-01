@@ -2126,6 +2126,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
             dataFeed.Description = "This data feed was updated to test the .NET client.";
             dataFeed.AccessMode = DataFeedAccessMode.Public;
             dataFeed.ActionLinkTemplate = "https://fakeurl.com/%datafeed/%metric";
+
+            // If we're creating the data feed from scratch, we must be careful to not fully
+            // overwrite the admins list during the update, otherwise we can end up removing
+            // ourselves from the list. Doing so would cause permission errors during the next
+            // service calls.
+
+            if (dataFeed.Administrators.Count == 0)
+            {
+                dataFeed.Administrators.Add(dataFeed.Creator);
+            }
+
             dataFeed.Administrators.Add("fake@admin.com");
             dataFeed.Viewers.Add("fake@viewer.com");
 
@@ -2277,7 +2288,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
 
             Assert.That(dataFeed.Administrators, Is.Not.Null);
-            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(1).Or.EqualTo(2));
+            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(2));
+            Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
             Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
             Assert.That(dataFeed.Viewers, Is.Not.Null);
             Assert.That(dataFeed.Viewers.Count, Is.EqualTo(1));
