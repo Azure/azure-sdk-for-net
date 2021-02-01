@@ -23,6 +23,7 @@ namespace Azure.Core
     {
         private Request Request { get; }
         private HttpPipeline HttpPipeline { get; }
+        private bool _disposed;
 
         private static readonly Encoding Utf8NoBom = new UTF8Encoding(false, true);
 
@@ -84,8 +85,7 @@ namespace Azure.Core
             }
             else
             {
-                //TODO(chamons) - Is this correct?
-                dynamicContent = new DynamicJson("");
+                dynamicContent = new DynamicJson(JsonDocument.Parse("null").RootElement);
             }
 
             return new DynamicResponse(res, dynamicContent);
@@ -96,10 +96,26 @@ namespace Azure.Core
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The response dynamically typed in a <see cref="DynamicResponse"/>.</returns>
-#pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
-        //TODO(chamons) - Is this correct?
-        public DynamicResponse Send(CancellationToken cancellationToken = default) => SendAsync(cancellationToken).EnsureCompleted();
-#pragma warning restore AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+        public DynamicResponse Send(CancellationToken cancellationToken = default)
+        {
+            // Since we are sending the underlying request, we need to copy the Content on to it, or we'll lose the body.
+            Request.Content = Content;
+
+            Response res = HttpPipeline.SendRequest(Request, cancellationToken);
+            DynamicJson dynamicContent;
+
+            if (res.ContentStream != null)
+            {
+                JsonDocument doc = JsonDocument.Parse(res.ContentStream);
+                dynamicContent = new DynamicJson(doc.RootElement);
+            }
+            else
+            {
+                dynamicContent = new DynamicJson(JsonDocument.Parse("null").RootElement);
+            }
+
+            return new DynamicResponse(res, dynamicContent);
+        }
 
         /// <inheritdoc />
         public override string ClientRequestId { get => Request.ClientRequestId; set => Request.ClientRequestId = value; }
@@ -107,8 +123,22 @@ namespace Azure.Core
         /// <inheritdoc />
         public override void Dispose()
         {
+            Dispose(true);
             GC.SuppressFinalize(this);
-            Request.Dispose();
+        }
+
+        /// <inheritdoc />
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            if (disposing)
+            {
+                Request.Dispose();
+            }
+            _disposed = true;
         }
 
         /// <inheritdoc />
