@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var dataSource = new AzureTableDataFeedSource("connectionString", "table", "query");
             var granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
             var schema = new DataFeedSchema() { MetricColumns = { new ("metricName") } };
-            var ingestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow);
+            var ingestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = DateTimeOffset.UtcNow };
 
             var dataFeed = new DataFeed()
             {
@@ -81,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 DataSource = new AzureTableDataFeedSource("connectionString", "table", "query"),
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
                 Schema = new DataFeedSchema() { MetricColumns = { new ("metricName") } },
-                IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow)
+                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = DateTimeOffset.UtcNow }
             };
 
             using var cancellationSource = new CancellationTokenSource();

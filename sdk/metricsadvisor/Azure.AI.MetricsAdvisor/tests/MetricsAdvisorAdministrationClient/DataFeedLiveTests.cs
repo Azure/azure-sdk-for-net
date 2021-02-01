@@ -2078,7 +2078,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 DataSource = dataSource,
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
                 Schema = new DataFeedSchema() { MetricColumns = { new ("cost") } },
-                IngestionSettings = new DataFeedIngestionSettings(ingestionStartTime)
+                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = ingestionStartTime }
             };
         }
 
@@ -2086,8 +2086,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
 
-            var ingestionSettings = new DataFeedIngestionSettings(ingestionStartTime)
+            var ingestionSettings = new DataFeedIngestionSettings()
             {
+                IngestionStartTime = ingestionStartTime,
                 IngestionStartOffset = TimeSpan.FromMinutes(30),
                 IngestionRetryDelay = TimeSpan.FromSeconds(80),
                 StopRetryAfter = TimeSpan.FromMinutes(10),

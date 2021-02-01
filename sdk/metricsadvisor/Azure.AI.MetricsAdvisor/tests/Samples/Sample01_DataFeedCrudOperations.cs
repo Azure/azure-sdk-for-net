@@ -44,9 +44,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
             dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("category"));
             dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("city"));
 
-            var ingestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-
-            dataFeed.IngestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
+            dataFeed.IngestionSettings = new DataFeedIngestionSettings()
+            {
+                IngestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z")
+            };
 
             Response<string> response = await adminClient.CreateDataFeedAsync(dataFeed);
 
