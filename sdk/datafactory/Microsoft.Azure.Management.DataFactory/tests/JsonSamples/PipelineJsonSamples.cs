@@ -2117,7 +2117,8 @@ namespace DataFactory.Tests.JsonSamples
                         ""propertyBagPropertyName2"": ""PropertyBagValue2"",
                         ""dateTime1"": ""2015-04-12T12:13:14Z"",
                     },
-                    ""retentionTimeInDays"": 35
+                    ""retentionTimeInDays"": 35,
+                    ""autoUserSpecification"" : ""pooladmin""
                 }
             }
         ]
