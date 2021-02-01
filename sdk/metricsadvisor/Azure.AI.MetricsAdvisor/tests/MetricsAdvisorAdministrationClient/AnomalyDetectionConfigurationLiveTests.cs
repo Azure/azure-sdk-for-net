@@ -121,21 +121,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions and create the configuration.
 
-            var groupKey1 = new DimensionKey();
-            var groupKey2 = new DimensionKey();
-
-            groupKey1.AddDimensionColumn("city", "Delhi");
-            groupKey2.AddDimensionColumn("city", "Koltaka");
-
-            var groupConditions0 = new MetricSeriesGroupDetectionCondition(groupKey1)
+            var groupConditions0 = new MetricSeriesGroupDetectionCondition()
             {
                 SmartDetectionCondition = new (30.0, AnomalyDetectorDirection.Both, new (3, 4.0))
             };
 
-            var groupConditions1 = new MetricSeriesGroupDetectionCondition(groupKey2)
+            groupConditions0.SeriesGroupKey.AddDimensionColumn("city", "Delhi");
+
+            var groupConditions1 = new MetricSeriesGroupDetectionCondition()
             {
                 ChangeThresholdCondition = new (40.0, 12, false, AnomalyDetectorDirection.Up, new (5, 6.0))
             };
+
+            groupConditions1.SeriesGroupKey.AddDimensionColumn("city", "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions0);
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions1);
@@ -229,24 +227,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series conditions and create the configuration.
 
-            var seriesKey1 = new DimensionKey();
-            var seriesKey2 = new DimensionKey();
-
-            seriesKey1.AddDimensionColumn("city", "Delhi");
-            seriesKey1.AddDimensionColumn("category", "Handmade");
-
-            seriesKey2.AddDimensionColumn("city", "Koltaka");
-            seriesKey2.AddDimensionColumn("category", "Grocery & Gourmet Food");
-
-            var seriesConditions0 = new MetricSingleSeriesDetectionCondition(seriesKey1)
+            var seriesConditions0 = new MetricSingleSeriesDetectionCondition()
             {
                 SmartDetectionCondition = new (30.0, AnomalyDetectorDirection.Both, new (3, 4.0))
             };
 
-            var seriesConditions1 = new MetricSingleSeriesDetectionCondition(seriesKey2)
+            seriesConditions0.SeriesKey.AddDimensionColumn("city", "Delhi");
+            seriesConditions0.SeriesKey.AddDimensionColumn("category", "Handmade");
+
+            var seriesConditions1 = new MetricSingleSeriesDetectionCondition()
             {
                 ChangeThresholdCondition = new (40.0, 12, false, AnomalyDetectorDirection.Up, new (5, 6.0))
             };
+
+            seriesConditions1.SeriesKey.AddDimensionColumn("city", "Koltaka");
+            seriesConditions1.SeriesKey.AddDimensionColumn("category", "Grocery & Gourmet Food");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions0);
             configToCreate.SeriesDetectionConditions.Add(seriesConditions1);
@@ -343,28 +338,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions.
 
-            var groupKey = new DimensionKey();
-
-            groupKey.AddDimensionColumn("city", "Koltaka");
-
-            var groupConditions = new MetricSeriesGroupDetectionCondition(groupKey)
+            var groupConditions = new MetricSeriesGroupDetectionCondition()
             {
                 ChangeThresholdCondition = new (40.0, 12, false, AnomalyDetectorDirection.Up, new (5, 6.0))
             };
+
+            groupConditions.SeriesGroupKey.AddDimensionColumn("city", "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
             // Set the series conditions and create the configuration.
 
-            var seriesKey = new DimensionKey();
-
-            seriesKey.AddDimensionColumn("city", "Delhi");
-            seriesKey.AddDimensionColumn("category", "Handmade");
-
-            var seriesConditions = new MetricSingleSeriesDetectionCondition(seriesKey)
+            var seriesConditions = new MetricSingleSeriesDetectionCondition()
             {
                 SmartDetectionCondition = new (30.0, AnomalyDetectorDirection.Both, new (3, 4.0))
             };
+
+            seriesConditions.SeriesKey.AddDimensionColumn("city", "Delhi");
+            seriesConditions.SeriesKey.AddDimensionColumn("category", "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -463,28 +454,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions.
 
-            var groupKey = new DimensionKey();
-
-            groupKey.AddDimensionColumn("city", "Koltaka");
-
-            var groupConditions = new MetricSeriesGroupDetectionCondition(groupKey)
+            var groupConditions = new MetricSeriesGroupDetectionCondition()
             {
                 ChangeThresholdCondition = new (40.0, 12, false, AnomalyDetectorDirection.Up, new (5, 6.0))
             };
+
+            groupConditions.SeriesGroupKey.AddDimensionColumn("city", "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
             // Set the series conditions and create the configuration.
 
-            var seriesKey = new DimensionKey();
-
-            seriesKey.AddDimensionColumn("city", "Delhi");
-            seriesKey.AddDimensionColumn("category", "Handmade");
-
-            var seriesConditions = new MetricSingleSeriesDetectionCondition(seriesKey)
+            var seriesConditions = new MetricSingleSeriesDetectionCondition()
             {
                 SmartDetectionCondition = new (30.0, AnomalyDetectorDirection.Both, new (3, 4.0))
             };
+
+            seriesConditions.SeriesKey.AddDimensionColumn("city", "Delhi");
+            seriesConditions.SeriesKey.AddDimensionColumn("category", "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -585,28 +572,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions.
 
-            var groupKey = new DimensionKey();
-
-            groupKey.AddDimensionColumn("city", "Koltaka");
-
-            var groupConditions = new MetricSeriesGroupDetectionCondition(groupKey)
+            var groupConditions = new MetricSeriesGroupDetectionCondition()
             {
                 ChangeThresholdCondition = new (40.0, 12, false, AnomalyDetectorDirection.Up, new (5, 6.0))
             };
+
+            groupConditions.SeriesGroupKey.AddDimensionColumn("city", "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
             // Set the series conditions and create the configuration.
 
-            var seriesKey = new DimensionKey();
-
-            seriesKey.AddDimensionColumn("city", "Delhi");
-            seriesKey.AddDimensionColumn("category", "Handmade");
-
-            var seriesConditions = new MetricSingleSeriesDetectionCondition(seriesKey)
+            var seriesConditions = new MetricSingleSeriesDetectionCondition()
             {
                 SmartDetectionCondition = new (30.0, AnomalyDetectorDirection.Both, new (3, 4.0))
             };
+
+            seriesConditions.SeriesKey.AddDimensionColumn("city", "Delhi");
+            seriesConditions.SeriesKey.AddDimensionColumn("category", "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -623,14 +606,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             configToUpdate.WholeSeriesDetectionConditions.ChangeThresholdCondition = null;
             configToUpdate.WholeSeriesDetectionConditions.SmartDetectionCondition = new (75.0, AnomalyDetectorDirection.Both, new (15, 16.0));
 
-            var newGroupKey = new DimensionKey();
-
-            newGroupKey.AddDimensionColumn("city", "Delhi");
-
-            var newGroupConditions = new MetricSeriesGroupDetectionCondition(newGroupKey)
+            var newGroupConditions = new MetricSeriesGroupDetectionCondition()
             {
                 SmartDetectionCondition = new (95.0, AnomalyDetectorDirection.Both, new (25, 26.0))
             };
+
+            newGroupConditions.SeriesGroupKey.AddDimensionColumn("city", "Delhi");
 
             configToUpdate.SeriesGroupDetectionConditions.Add(newGroupConditions);
 
@@ -728,28 +709,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions.
 
-            var groupKey = new DimensionKey();
-
-            groupKey.AddDimensionColumn("city", "Koltaka");
-
-            var groupConditions = new MetricSeriesGroupDetectionCondition(groupKey)
+            var groupConditions = new MetricSeriesGroupDetectionCondition()
             {
                 ChangeThresholdCondition = new (40.0, 12, false, AnomalyDetectorDirection.Up, new (5, 6.0))
             };
+
+            groupConditions.SeriesGroupKey.AddDimensionColumn("city", "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
             // Set the series conditions and create the configuration.
 
-            var seriesKey = new DimensionKey();
-
-            seriesKey.AddDimensionColumn("city", "Delhi");
-            seriesKey.AddDimensionColumn("category", "Handmade");
-
-            var seriesConditions = new MetricSingleSeriesDetectionCondition(seriesKey)
+            var seriesConditions = new MetricSingleSeriesDetectionCondition()
             {
                 SmartDetectionCondition = new (30.0, AnomalyDetectorDirection.Both, new (3, 4.0))
             };
+
+            seriesConditions.SeriesKey.AddDimensionColumn("city", "Delhi");
+            seriesConditions.SeriesKey.AddDimensionColumn("category", "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -766,14 +743,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             configToUpdate.WholeSeriesDetectionConditions.ChangeThresholdCondition = null;
             configToUpdate.WholeSeriesDetectionConditions.SmartDetectionCondition = new (75.0, AnomalyDetectorDirection.Both, new (15, 16.0));
 
-            var newGroupKey = new DimensionKey();
-
-            newGroupKey.AddDimensionColumn("city", "Delhi");
-
-            var newGroupConditions = new MetricSeriesGroupDetectionCondition(newGroupKey)
+            var newGroupConditions = new MetricSeriesGroupDetectionCondition()
             {
                 SmartDetectionCondition = new (95.0, AnomalyDetectorDirection.Both, new (25, 26.0))
             };
+
+            newGroupConditions.SeriesGroupKey.AddDimensionColumn("city", "Delhi");
 
             configToUpdate.SeriesGroupDetectionConditions.Add(groupConditions);
             configToUpdate.SeriesGroupDetectionConditions.Add(newGroupConditions);

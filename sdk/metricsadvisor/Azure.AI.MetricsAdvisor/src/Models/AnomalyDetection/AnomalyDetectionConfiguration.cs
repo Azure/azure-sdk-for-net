@@ -19,10 +19,6 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private MetricWholeSeriesDetectionCondition _wholeSeriesDetectionConditions;
 
-        private IList<MetricSingleSeriesDetectionCondition> _seriesDetectionConditions;
-
-        private IList<MetricSeriesGroupDetectionCondition> _seriesGroupDetectionConditions;
-
         /// <summary>
         /// Creates a new instance of the <see cref="AnomalyDetectionConfiguration"/> class.
         /// </summary>
@@ -58,10 +54,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// A custom name for this <see cref="AnomalyDetectionConfiguration"/> to be displayed on the web portal.
         /// </summary>
+        /// <exception cref="ArgumentNullException">The value assigned to <see cref="Name"/> is null.</exception>
+        /// <exception cref="ArgumentException">The value assigned to <see cref="Name"/> is empty.</exception>
         public string Name
         {
             get => _name;
-            private set
+            set
             {
                 Argument.AssertNotNullOrEmpty(value, nameof(Name));
                 _name = value;
@@ -87,38 +85,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The anomaly detection conditions to be applied to the time series associated with this configuration's
         /// <see cref="MetricId"/>. These conditions overwrite the ones specified by <see cref="WholeSeriesDetectionConditions"/>.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><see cref="SeriesGroupDetectionConditions"/> is null.</exception>
         [CodeGenMember("DimensionGroupOverrideConfigurations")]
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IList<MetricSeriesGroupDetectionCondition> SeriesGroupDetectionConditions
-        {
-            get => _seriesGroupDetectionConditions;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(SeriesGroupDetectionConditions));
-                _seriesGroupDetectionConditions = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IList<MetricSeriesGroupDetectionCondition> SeriesGroupDetectionConditions { get; }
 
         /// <summary>
         /// The anomaly detection conditions to be applied to the time series associated with this configuration's
         /// <see cref="MetricId"/>. These conditions overwrite the ones specified by <see cref="WholeSeriesDetectionConditions"/>
         /// and <see cref="SeriesGroupDetectionConditions"/>.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><see cref="SeriesDetectionConditions"/> is null.</exception>
         [CodeGenMember("SeriesOverrideConfigurations")]
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IList<MetricSingleSeriesDetectionCondition> SeriesDetectionConditions
-        {
-            get => _seriesDetectionConditions;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(SeriesDetectionConditions));
-                _seriesDetectionConditions = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IList<MetricSingleSeriesDetectionCondition> SeriesDetectionConditions { get; }
 
         /// <summary>
         /// A description about the <see cref="AnomalyDetectionConfiguration"/>.
