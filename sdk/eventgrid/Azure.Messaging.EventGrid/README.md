@@ -121,7 +121,7 @@ List<CloudEvent> eventsList = new List<CloudEvent>
     new CloudEvent(
         "/cloudevents/example/binarydata",
         "Example.EventType",
-        new BinaryData("This is binary data"),
+        Encoding.UTF8.GetBytes("This is binary data"),
         "example/binary")};
 
 // Send the events
