@@ -657,7 +657,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -765,7 +765,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -871,7 +871,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -977,7 +977,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -1083,7 +1083,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -1189,7 +1189,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -1295,7 +1295,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -1401,7 +1401,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -1505,7 +1505,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -1611,7 +1611,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -1717,7 +1717,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -1823,7 +1823,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -1929,7 +1929,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+            var dataFeedToUpdate = new DataFeed();
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
@@ -2126,11 +2126,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             dataFeed.Description = "This data feed was updated to test the .NET client.";
             dataFeed.AccessMode = DataFeedAccessMode.Public;
             dataFeed.ActionLinkTemplate = "https://fakeurl.com/%datafeed/%metric";
-            // TODO: add administrator update validation. Related: https://github.com/Azure/azure-sdk-for-net/issues/17766
+            dataFeed.Administrators.Add("fake@admin.com");
             dataFeed.Viewers.Add("fake@viewer.com");
 
+            dataFeed.Schema = new DataFeedSchema();
             dataFeed.Schema.TimestampColumn = "updatedTimestampColumn";
 
+            dataFeed.IngestionSettings = new DataFeedIngestionSettings();
             dataFeed.IngestionSettings.IngestionStartTime = DateTimeOffset.Parse("2020-09-21T00:00:00Z");
             dataFeed.IngestionSettings.IngestionStartOffset = TimeSpan.FromMinutes(40);
             dataFeed.IngestionSettings.IngestionRetryDelay = TimeSpan.FromSeconds(90);
@@ -2204,11 +2206,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%metric/%datafeed"));
             Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
 
-            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/17719
             Assert.That(dataFeed.Administrators, Is.Not.Null);
-            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(1));
+            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(2));
             Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
-            Assert.That(dataFeed.Viewers, Is.Not.Null.And.Empty);
+            Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
+            Assert.That(dataFeed.Viewers, Is.Not.Null);
+            Assert.That(dataFeed.Viewers.Count, Is.EqualTo(1));
+            Assert.That(dataFeed.Viewers, Contains.Item("fake@viewer.com"));
             Assert.That(dataFeed.IsAdministrator, Is.True);
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
@@ -2273,9 +2277,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
 
             Assert.That(dataFeed.Administrators, Is.Not.Null);
-            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(1));
-            Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
-
+            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(1).Or.EqualTo(2));
+            Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
             Assert.That(dataFeed.Viewers, Is.Not.Null);
             Assert.That(dataFeed.Viewers.Count, Is.EqualTo(1));
             Assert.That(dataFeed.Viewers, Contains.Item("fake@viewer.com"));
