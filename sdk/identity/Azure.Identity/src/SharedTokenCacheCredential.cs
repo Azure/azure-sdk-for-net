@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using Azure.Core.Pipeline;
 using System.ComponentModel;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Azure.Identity
 {
