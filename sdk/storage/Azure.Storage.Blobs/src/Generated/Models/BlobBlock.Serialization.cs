@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class Block
+    public partial struct BlobBlock
     {
-        internal static Block DeserializeBlock(XElement element)
+        internal static BlobBlock DeserializeBlobBlock(XElement element)
         {
             string name = default;
             int size = default;
@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 size = (int)sizeElement;
             }
-            return new Block(name, size);
+            return new BlobBlock(name, size);
         }
     }
 }

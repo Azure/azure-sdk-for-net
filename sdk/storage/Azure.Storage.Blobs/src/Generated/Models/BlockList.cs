@@ -16,20 +16,20 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of BlockList. </summary>
         internal BlockList()
         {
-            CommittedBlocks = new ChangeTrackingList<Block>();
-            UncommittedBlocks = new ChangeTrackingList<Block>();
+            CommittedBlocks = new ChangeTrackingList<BlobBlock>();
+            UncommittedBlocks = new ChangeTrackingList<BlobBlock>();
         }
 
         /// <summary> Initializes a new instance of BlockList. </summary>
         /// <param name="committedBlocks"> . </param>
         /// <param name="uncommittedBlocks"> . </param>
-        internal BlockList(IReadOnlyList<Block> committedBlocks, IReadOnlyList<Block> uncommittedBlocks)
+        internal BlockList(IReadOnlyList<BlobBlock> committedBlocks, IReadOnlyList<BlobBlock> uncommittedBlocks)
         {
             CommittedBlocks = committedBlocks;
             UncommittedBlocks = uncommittedBlocks;
         }
 
-        public IReadOnlyList<Block> CommittedBlocks { get; }
-        public IReadOnlyList<Block> UncommittedBlocks { get; }
+        public IReadOnlyList<BlobBlock> CommittedBlocks { get; }
+        public IReadOnlyList<BlobBlock> UncommittedBlocks { get; }
     }
 }

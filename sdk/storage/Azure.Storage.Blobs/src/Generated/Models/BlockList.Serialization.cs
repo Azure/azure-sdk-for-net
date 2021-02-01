@@ -15,23 +15,23 @@ namespace Azure.Storage.Blobs.Models
     {
         internal static BlockList DeserializeBlockList(XElement element)
         {
-            IReadOnlyList<Block> committedBlocks = default;
-            IReadOnlyList<Block> uncommittedBlocks = default;
+            IReadOnlyList<BlobBlock> committedBlocks = default;
+            IReadOnlyList<BlobBlock> uncommittedBlocks = default;
             if (element.Element("CommittedBlocks") is XElement committedBlocksElement)
             {
-                var array = new List<Block>();
+                var array = new List<BlobBlock>();
                 foreach (var e in committedBlocksElement.Elements("Block"))
                 {
-                    array.Add(Block.DeserializeBlock(e));
+                    array.Add(BlobBlock.DeserializeBlobBlock(e));
                 }
                 committedBlocks = array;
             }
             if (element.Element("UncommittedBlocks") is XElement uncommittedBlocksElement)
             {
-                var array = new List<Block>();
+                var array = new List<BlobBlock>();
                 foreach (var e in uncommittedBlocksElement.Elements("Block"))
                 {
-                    array.Add(Block.DeserializeBlock(e));
+                    array.Add(BlobBlock.DeserializeBlobBlock(e));
                 }
                 uncommittedBlocks = array;
             }
