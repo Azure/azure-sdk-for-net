@@ -38,21 +38,11 @@ namespace Azure.AI.MetricsAdvisor.Samples
             dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
             dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
-            var dataFeedMetrics = new List<DataFeedMetric>()
-            {
-                new DataFeedMetric("cost"),
-                new DataFeedMetric("revenue")
-            };
-            var dataFeedDimensions = new List<DataFeedDimension>()
-            {
-                new DataFeedDimension("category"),
-                new DataFeedDimension("city")
-            };
-
-            dataFeed.Schema = new DataFeedSchema(dataFeedMetrics)
-            {
-                DimensionColumns = dataFeedDimensions
-            };
+            dataFeed.Schema = new DataFeedSchema();
+            dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("cost"));
+            dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("revenue"));
+            dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("category"));
+            dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("city"));
 
             var ingestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 

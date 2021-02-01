@@ -2070,7 +2070,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         private DataFeed GetDataFeedWithMinimumSetup(string name, DataFeedSource dataSource)
         {
-            var metrics = new List<DataFeedMetric>() { new ("cost") };
             var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
 
             return new DataFeed()
@@ -2078,23 +2077,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Name = name,
                 DataSource = dataSource,
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
-                Schema = new DataFeedSchema(metrics),
+                Schema = new DataFeedSchema() { MetricColumns = { new ("cost") } },
                 IngestionSettings = new DataFeedIngestionSettings(ingestionStartTime)
             };
         }
 
         private DataFeed GetDataFeedWithOptionalMembersSet(string name, DataFeedSource dataSource)
         {
-            var metrics = new List<DataFeedMetric>()
-            {
-                new ("cost") { MetricDisplayName = "costDisplayName", MetricDescription = "costDescription" },
-                new ("revenue") { MetricDisplayName = "revenueDisplayName", MetricDescription = "revenueDescription" }
-            };
-            var dimensionColumns = new List<DataFeedDimension>()
-            {
-                new ("city"),
-                new ("category") { DimensionDisplayName = "categoryDisplayName" }
-            };
             var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
 
             var ingestionSettings = new DataFeedIngestionSettings(ingestionStartTime)
@@ -2105,12 +2094,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 DataSourceRequestConcurrency = 5
             };
 
-            return new DataFeed()
+            var dataFeed = new DataFeed()
             {
                 Name = name,
                 DataSource = dataSource,
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Custom) { CustomGranularityValue = 1360 },
-                Schema = new DataFeedSchema(metrics) { DimensionColumns = dimensionColumns, TimestampColumn = "timestamp" },
+                Schema = new DataFeedSchema() { TimestampColumn = "timestamp" },
                 IngestionSettings = ingestionSettings,
                 Description = "This data feed was created to test the .NET client.",
                 AccessMode = DataFeedAccessMode.Public,
@@ -2119,6 +2108,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Viewers = new List<string>() { "fake@viewer.com" },
                 MissingDataPointFillSettings = new () { FillType = DataFeedMissingDataPointFillType.CustomValue, CustomFillValue = 45.0 }
             };
+
+            dataFeed.Schema.MetricColumns.Add(new ("cost") { MetricDisplayName = "costDisplayName", MetricDescription = "costDescription" });
+            dataFeed.Schema.MetricColumns.Add(new ("revenue") { MetricDisplayName = "revenueDisplayName", MetricDescription = "revenueDescription" });
+
+            dataFeed.Schema.DimensionColumns.Add(new ("city"));
+            dataFeed.Schema.DimensionColumns.Add(new ("category") { DimensionDisplayName = "categoryDisplayName" });
+
+            return dataFeed;
         }
 
         private void SetOptionalMembers(DataFeed dataFeed, string dataFeedName)

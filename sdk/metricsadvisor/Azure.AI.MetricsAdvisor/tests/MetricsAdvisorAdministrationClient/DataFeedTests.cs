@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var name = "dataFeedName";
             var dataSource = new AzureTableDataFeedSource("connectionString", "table", "query");
             var granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
-            var schema = new DataFeedSchema(new List<DataFeedMetric>() { new DataFeedMetric("metricName") });
+            var schema = new DataFeedSchema() { MetricColumns = { new ("metricName") } };
             var ingestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow);
 
             var dataFeed = new DataFeed()
@@ -80,7 +80,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Name = "dataFeedName",
                 DataSource = new AzureTableDataFeedSource("connectionString", "table", "query"),
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
-                Schema = new DataFeedSchema(new List<DataFeedMetric>() { new DataFeedMetric("metricName") }),
+                Schema = new DataFeedSchema() { MetricColumns = { new ("metricName") } },
                 IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow)
             };
 
@@ -96,7 +96,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataFeed = new DataFeed() { SourceType = DataFeedSourceType.AzureApplicationInsights };
+            var dataFeed = new DataFeed();
 
             Assert.That(() => adminClient.UpdateDataFeedAsync(null, dataFeed), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.UpdateDataFeedAsync("", dataFeed), Throws.InstanceOf<ArgumentException>());
@@ -107,11 +107,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(() => adminClient.UpdateDataFeed("", dataFeed), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => adminClient.UpdateDataFeed("dataFeedId", dataFeed), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
             Assert.That(() => adminClient.UpdateDataFeed(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
-
-            dataFeed.SourceType = null;
-
-            Assert.That(() => adminClient.UpdateDataFeedAsync(FakeGuid, dataFeed), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateDataFeed(FakeGuid, dataFeed), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -119,10 +114,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataFeed = new DataFeed()
-            {
-                SourceType = DataFeedSourceType.AzureApplicationInsights
-            };
+            var dataFeed = new DataFeed();
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
