@@ -52,8 +52,8 @@ foreach (CloudEvent cloudEvent in cloudEvents)
 }
 ```
 
-### Using `GetData()`
-If expecting mostly system events, it may be cleaner to switch on object `GetData()` and use pattern matching to deserialize events. In the case where there are unrecognized event types, one can use the returned `BinaryData` to deserialize the custom event data.
+### Using `AsSytemEventData()`
+If expecting mostly system events, it may be cleaner to switch on `AsSytemEventData()` and use pattern matching to act on the individual events. In the case where there are unrecognized event types, one can use the returned `BinaryData` to examine the event data.
 
 ```C# Snippet:DeserializePayloadUsingAsSystemEventData
 foreach (EventGridEvent egEvent in egEvents)
