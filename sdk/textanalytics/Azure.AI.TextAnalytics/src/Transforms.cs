@@ -249,7 +249,20 @@ namespace Azure.AI.TextAnalytics
 
         internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities, IEnumerable<HealthcareRelationInternal> healthcareRelations)
         {
-            return healthcareEntities.Select((entity) => new HealthcareEntity(entity, ResolveRelatedEntities(entity, healthcareEntities, healthcareRelations))).ToList();
+            var entities = healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
+            foreach (HealthcareRelationInternal relation in healthcareRelations) {
+                string relationType = relation.RelationType;
+                int sourceIndex = ParseHealthcareEntityIndex(relation.Source);
+                int targetIndex = ParseHealthcareEntityIndex(relation.Target);
+                HealthcareEntity sourceEntity = entities[sourceIndex];
+                HealthcareEntity targetEntity = entities[targetIndex];
+                sourceEntity.RelatedEntities.Add(targetEntity, relationType);
+                if (relation.Bidirectional)
+                {
+                    targetEntity.RelatedEntities.Add(sourceEntity, relationType);
+                }
+            }
+            return entities;
         }
 
         internal static AnalyzeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
@@ -277,69 +290,18 @@ namespace Azure.AI.TextAnalytics
             return new AnalyzeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
         }
 
-        private static Dictionary<HealthcareEntity, HealthcareEntityRelationType> ResolveRelatedEntities(HealthcareEntityInternal entity,
-            IEnumerable<HealthcareEntityInternal> healthcareEntities,
-            IEnumerable<HealthcareRelationInternal> healthcareRelations)
-        {
-            Dictionary<HealthcareEntity, HealthcareEntityRelationType> dictionary = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>();
-
-            if (!healthcareRelations.Any())
-            {
-                return dictionary;
-            }
-
-            foreach (HealthcareRelationInternal relation in healthcareRelations)
-            {
-                int entityIndex = healthcareEntities.ToList().FindIndex(e => e.Text.Equals(entity.Text));
-
-                if (IsEntitySource(relation, entityIndex))
-                {
-                    string targetRef = relation.Target;
-
-                    HealthcareEntityInternal relatedEntity = ResolveHealthcareEntity(healthcareEntities, targetRef);
-
-                    dictionary.Add(new HealthcareEntity(relatedEntity, ResolveRelatedEntities(relatedEntity, healthcareEntities, healthcareRelations)), relation.RelationType);
-                }
-            }
-
-            return dictionary;
-        }
-
-        private static HealthcareEntityInternal ResolveHealthcareEntity(IEnumerable<HealthcareEntityInternal> entities, string reference)
+        private static int ParseHealthcareEntityIndex(string reference)
         {
             Match healthcareEntityMatch = _healthcareEntityRegex.Match(reference);
             if (healthcareEntityMatch.Success)
             {
-                int entityIndex = int.Parse(healthcareEntityMatch.Groups["entityIndex"].Value, CultureInfo.InvariantCulture);
-
-                if (entityIndex < entities.Count())
-                {
-                    return entities.ElementAt(entityIndex);
-                }
+                return int.Parse(healthcareEntityMatch.Groups["entityIndex"].Value, CultureInfo.InvariantCulture);
             }
 
             throw new InvalidOperationException($"Failed to parse element reference: {reference}");
         }
 
         private static Regex _healthcareEntityRegex = new Regex(@"\#/results/documents\/(?<documentIndex>\d*)\/entities\/(?<entityIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
-
-        private static bool IsEntitySource(HealthcareRelationInternal healthcareRelation, int entityIndex)
-        {
-            string sourceRef = healthcareRelation.Source;
-
-            var healthcareEntityMatch = _healthcareEntityRegex.Match(sourceRef);
-
-            if (healthcareEntityMatch.Success)
-            {
-                int index = int.Parse(healthcareEntityMatch.Groups["entityIndex"].Value, CultureInfo.InvariantCulture);
-
-                if (index == entityIndex)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         #endregion
 

@@ -12,5 +12,9 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("HealthcareEntity")]
     internal partial class HealthcareEntityInternal
     {
+        /// <summary>
+        /// Gets the dictionary for related entity with mapped relation type for each.
+        /// </summary>
+        internal Dictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; } = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>();
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
@@ -16,11 +17,11 @@ namespace Azure.AI.TextAnalytics
 
         internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics,
             IReadOnlyList<HealthcareEntity> healthcareEntities,
-            IReadOnlyList<TextAnalyticsWarning> warnings)
+            IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _entities = healthcareEntities;
-            Warnings = warnings;
+            Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 
         internal AnalyzeHealthcareEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }

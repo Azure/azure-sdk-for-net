@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -14,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class HealthcareEntity
     {
-        internal HealthcareEntity(HealthcareEntityInternal entity, IReadOnlyDictionary<HealthcareEntity, HealthcareEntityRelationType> relatedEntities)
+        internal HealthcareEntity(HealthcareEntityInternal entity)
         {
             Category = entity.Category;
             Text = entity.Text;
@@ -22,7 +18,7 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScore = entity.ConfidenceScore;
             Offset = entity.Offset;
             DataSources = entity.Links;
-            RelatedEntities = relatedEntities;
+            RelatedEntities = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>(entity.RelatedEntities);
         }
         /// <summary>
         /// Gets the entity text as it appears in the input document.
@@ -33,7 +29,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the entity category inferred by the Text Analytics service's
         /// healthcare model.  The list of available categories is
         /// described at
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
         /// </summary>
         public string Category { get; }
 
@@ -42,7 +38,7 @@ namespace Azure.AI.TextAnalytics
         /// healthcare model.  This property may not have a value if
         /// a sub category doesn't exist for this entity.  The list of available categories and
         /// subcategories is described at
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
         /// </summary>
         public string SubCategory { get; }
 
@@ -58,7 +54,7 @@ namespace Azure.AI.TextAnalytics
         public int Offset { get; }
 
         /// <summary>
-        /// Gets the length of input document.
+        /// Gets the length for the matching entity in the input document.
         /// </summary>
         public int Length { get; }
 
@@ -68,8 +64,8 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<EntityDataSource> DataSources { get; }
 
         /// <summary>
-        /// Gets the dictionary for related entity with mapped relation type for each.
+        /// Gets the entities and the relationship between the entities.
         /// </summary>
-        public IReadOnlyDictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; }
+        public Dictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; }
     }
 }
