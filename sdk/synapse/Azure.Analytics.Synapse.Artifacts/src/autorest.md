@@ -26,6 +26,7 @@ input-file:
     - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/bigDataPools.json
     - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/gitintegration.json
     - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/integrationRuntimes.json
+    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/library.json
     - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/sqlPools.json
     - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/workspace.json
 ```
