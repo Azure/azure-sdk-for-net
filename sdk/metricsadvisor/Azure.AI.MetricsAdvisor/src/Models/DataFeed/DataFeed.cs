@@ -14,10 +14,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class DataFeed
     {
-        private DataFeedSource _dataSource;
-
-        private DataFeedSourceType? _sourceType;
-
         private IList<string> _administrators;
 
         private IList<string> _viewers;
@@ -93,38 +89,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The source from which data is consumed.
         /// </summary>
-        public DataFeedSource DataSource
-        {
-            get => _dataSource;
-            set
-            {
-                _dataSource = value;
-
-                if (value != null)
-                {
-                    _sourceType = value.Type;
-                }
-            }
-        }
+        public DataFeedSource DataSource { get; set; }
 
         /// <summary>
         /// The type of data source that ingests this <see cref="DataFeed"/> with data.
         /// </summary>
-        public DataFeedSourceType? SourceType
-        {
-            get => _sourceType;
-            set
-            {
-                var dataSource = _dataSource;
-
-                if (dataSource != null && dataSource.Type != value)
-                {
-                    throw new InvalidOperationException($"The source type cannot differ from the type of the set data source ({dataSource.Type}).");
-                }
-
-                _sourceType = value;
-            }
-        }
+        public DataFeedSourceType? SourceType => DataSource?.Type;
 
         /// <summary>
         /// Defines how this <see cref="DataFeed"/> structures the data ingested from the data source
@@ -297,71 +267,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             patch.Viewers = Viewers;
 
             return patch;
-        }
-
-        private DataFeedDetailPatch InstantiateDataFeedDetailPatchFromSourceType()
-        {
-            if (_sourceType == DataFeedSourceType.AzureApplicationInsights)
-            {
-                return new AzureApplicationInsightsDataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.AzureBlob)
-            {
-                return new AzureBlobDataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.AzureCosmosDb)
-            {
-                return new AzureCosmosDBDataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.AzureDataLakeStorageGen2)
-            {
-                return new AzureDataLakeStorageGen2DataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.AzureTable)
-            {
-                return new AzureTableDataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.Elasticsearch)
-            {
-                return new ElasticsearchDataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.HttpRequest)
-            {
-                return new HttpRequestDataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.InfluxDb)
-            {
-                return new InfluxDBDataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.AzureDataExplorer)
-            {
-                return new AzureDataExplorerDataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.MySql)
-            {
-                return new MySqlDataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.PostgreSql)
-            {
-                return new PostgreSqlDataFeedPatch();
-            }
-
-            if (_sourceType == DataFeedSourceType.SqlServer)
-            {
-                return new SQLServerDataFeedPatch();
-            }
-
-            throw new InvalidOperationException("Invalid source type.");
         }
     }
 }
