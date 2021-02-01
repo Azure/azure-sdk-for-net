@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var originalEncoding = options.MessageEncoding;
             options.MessageEncoding = QueueMessageEncoding.None;
             var nonEncodingClient = new QueueServiceClient(connectionString, options);
-            options.OnInvalidMessage += CreateInvalidMessageHandler(nonEncodingClient);
+            options.MessageDecodingFailed += CreateMessageDecodingFailedHandler(nonEncodingClient);
             options.MessageEncoding = originalEncoding;
             return new QueueServiceClient(connectionString, options);
         }
@@ -62,22 +62,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var originalEncoding = options.MessageEncoding;
             options.MessageEncoding = QueueMessageEncoding.None;
             var nonEncodingClient = new QueueServiceClient(endpointUri, tokenCredential, options);
-            options.OnInvalidMessage += CreateInvalidMessageHandler(nonEncodingClient);
+            options.MessageDecodingFailed += CreateMessageDecodingFailedHandler(nonEncodingClient);
             options.MessageEncoding = originalEncoding;
             return new QueueServiceClient(endpointUri, tokenCredential, options);
         }
 
-        private SyncAsyncEventHandler<InvalidMessageEventArgs> CreateInvalidMessageHandler(QueueServiceClient nonEncodingQueueServiceClient)
+        private SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs> CreateMessageDecodingFailedHandler(QueueServiceClient nonEncodingQueueServiceClient)
         {
-            return async (InvalidMessageEventArgs args) =>
+            return async (QueueMessageDecodingFailedEventArgs args) =>
             {
                 // This event is raised only in async paths hence args.RunSynchronously is ignored.
-                if (args.Message is QueueMessage queueMessage)
+                if (args.ReceivedMessage != null)
                 {
-                    var queueClient = args.QueueClient;
+                    var queueClient = args.Queue;
                     var poisonQueueClient = QueueListenerFactory.CreatePoisonQueueReference(nonEncodingQueueServiceClient, queueClient.Name);
                     var queueProcessor = QueueListenerFactory.CreateQueueProcessor(queueClient, poisonQueueClient, _loggerFactory, _queueProcessorFactory, _queuesOptions, _messageEnqueuedWatcher);
-                    await queueProcessor.HandlePoisonMessageAsync(queueMessage, args.CancellationToken).ConfigureAwait(false);
+                    await queueProcessor.HandlePoisonMessageAsync(args.ReceivedMessage, args.CancellationToken).ConfigureAwait(false);
                 }
             };
         }

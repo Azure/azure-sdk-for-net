@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         {
             var options = base.CreateClientOptions(configuration);
             options.MessageEncoding = _queuesOptions.MessageEncoding;
-            options.OnInvalidMessage += HandleInvalidMessage;
+            options.MessageDecodingFailed += HandleMessageDecodingFailed;
             return options;
         }
 
@@ -50,15 +50,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             return new QueueServiceClient(endpointUri, tokenCredential, options);
         }
 
-        private async Task HandleInvalidMessage(InvalidMessageEventArgs args)
+        private async Task HandleMessageDecodingFailed(QueueMessageDecodingFailedEventArgs args)
         {
             // SharedBlobQueueProcessor moves to poison queue only if message is parsable and has corresponding registration.
             // Therefore, we log and discard garbage here.
-            if (args.Message is QueueMessage queueMessage)
+            if (args.ReceivedMessage != null)
             {
                 _logger.LogWarning("Invalid message in blob trigger queue {QueueName}, messageId={messageId}, body={body}",
-                    args.QueueClient.Name, queueMessage.MessageId, queueMessage.Body.ToString());
-                await args.QueueClient.DeleteMessageAsync(queueMessage.MessageId, queueMessage.PopReceipt).ConfigureAwait(false);
+                    args.Queue.Name, args.ReceivedMessage.MessageId, args.ReceivedMessage.Body.ToString());
+                await args.Queue.DeleteMessageAsync(args.ReceivedMessage.MessageId, args.ReceivedMessage.PopReceipt).ConfigureAwait(false);
             }
         }
     }
