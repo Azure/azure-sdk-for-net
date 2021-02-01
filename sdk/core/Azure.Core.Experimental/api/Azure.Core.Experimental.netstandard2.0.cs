@@ -75,6 +75,7 @@ namespace Azure.Core
         protected override void AddHeader(string name, string value) { }
         protected override bool ContainsHeader(string name) { throw null; }
         public override void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
         protected override bool RemoveHeader(string name) { throw null; }
         public Azure.Core.DynamicResponse Send(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

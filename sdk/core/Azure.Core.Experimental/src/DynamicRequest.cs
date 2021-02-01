@@ -120,14 +120,19 @@ namespace Azure.Core
         /// <inheritdoc />
         public override string ClientRequestId { get => Request.ClientRequestId; set => Request.ClientRequestId = value; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Frees resources held by the <see cref="DynamicRequest"/> object.
+        /// </summary>
         public override void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Frees resources held by the <see cref="DynamicRequest"/> object.
+        /// </summary>
+        /// <param name="disposing">true if we should dispose, otherwise false</param>
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
