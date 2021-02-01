@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace Azure.Core.Pipeline
     {
         private const string AuthenticationChallengePattern = @"(\w+) ((?:\w+="".*?""(?:, )?)+)(?:, )?";
         private const string ChallengeParameterPattern = @"(?:(\w+)=""([^""]*)"")+";
-
+        private const string ChallengeHeader = "WWW-Authenticate";
         private static readonly Regex s_AuthenticationChallengeRegex = new Regex(AuthenticationChallengePattern, RegexOptions.Compiled);
         private static readonly Regex s_ChallengeParameterRegex = new Regex(ChallengeParameterPattern, RegexOptions.Compiled);
 
@@ -95,7 +96,7 @@ namespace Azure.Core.Pipeline
             TokenRequestContext context;
 
             // If the message already has a challenge response due to a sub-class pre-processing the request, get the context from the challenge.
-            if (message.HasResponse && message.Response.Status == 401 && message.Response.Headers.Contains("WWW-Authenticate"))
+            if (message.HasResponse && message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(ChallengeHeader))
             {
                 if (!TryGetTokenRequestContextFromChallenge(message, out context))
                 {
@@ -120,7 +121,7 @@ namespace Azure.Core.Pipeline
             }
 
             // Check if we have received a challenge or we have not yet issued the first request.
-            if (message.Response.Status == 401 && message.Response.Headers.Contains("WWW-Authenticate"))
+            if (message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(ChallengeHeader))
             {
                 // Attempt to get the TokenRequestContext based on the challenge.
                 // If we fail to get the context, the challenge was not present or invalid.
@@ -156,13 +157,12 @@ namespace Azure.Core.Pipeline
                 headerValue = _accessTokenCache.GetHeaderValueAsync(message, context, async).EnsureCompleted();
             }
 
-            //TODO: revert to Request.SetHeader if this migrates back to Azure.Core
-            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+            message.Request.SetHeader(HttpHeader.Names.Authorization, headerValue);
         }
 
         private static string? GetClaimsChallenge(Response response)
         {
-            if (response.Status == 401 && response.Headers.TryGetValue("WWW-Authenticate", out string? headerValue))
+            if (response.Status == (int)HttpStatusCode.Unauthorized && response.Headers.TryGetValue(ChallengeHeader, out string? headerValue))
             {
                 foreach (var (ChallengeKey, ChallengeParameters) in ParseChallenges(headerValue))
                 {
