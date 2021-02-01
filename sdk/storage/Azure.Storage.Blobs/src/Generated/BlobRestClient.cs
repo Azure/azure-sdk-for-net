@@ -1421,7 +1421,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateStartCopyFromURLRequest(Uri copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, RehydratePriority? rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, string blobTagsString, bool? sealBlob)
+        internal HttpMessage CreateStartCopyFromURLRequest(string copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, RehydratePriority? rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, string blobTagsString, bool? sealBlob)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1528,7 +1528,7 @@ namespace Azure.Storage.Blobs
         /// <param name="sealBlob"> Overrides the sealed state of the destination blob.  Service version 2019-12-12 and newer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobStartCopyFromURLHeaders>> StartCopyFromURLAsync(Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobStartCopyFromURLHeaders>> StartCopyFromURLAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
@@ -1568,7 +1568,7 @@ namespace Azure.Storage.Blobs
         /// <param name="sealBlob"> Overrides the sealed state of the destination blob.  Service version 2019-12-12 and newer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<BlobStartCopyFromURLHeaders> StartCopyFromURL(Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobStartCopyFromURLHeaders> StartCopyFromURL(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, RehydratePriority? rehydratePriority = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string sourceIfTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, string blobTagsString = null, bool? sealBlob = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
@@ -1587,7 +1587,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCopyFromURLRequest(Uri copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, byte[] sourceContentMD5, string blobTagsString)
+        internal HttpMessage CreateCopyFromURLRequest(string copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, byte[] sourceContentMD5, string blobTagsString)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1685,7 +1685,7 @@ namespace Azure.Storage.Blobs
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobCopyFromURLHeaders>> CopyFromURLAsync(Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobCopyFromURLHeaders>> CopyFromURLAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
@@ -1723,7 +1723,7 @@ namespace Azure.Storage.Blobs
         /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<BlobCopyFromURLHeaders> CopyFromURL(Uri copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobCopyFromURLHeaders> CopyFromURL(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {

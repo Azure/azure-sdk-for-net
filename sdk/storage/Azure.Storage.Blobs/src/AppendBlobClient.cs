@@ -1374,7 +1374,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = await AppendBlobRestClient.AppendBlockFromUrlAsync(
                             // TODO what about sourceUrls with special characters?
-                            sourceUrl: sourceUri,
+                            sourceUrl: sourceUri.ToString(),
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,
@@ -1401,7 +1401,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = AppendBlobRestClient.AppendBlockFromUrl(
                             // TODO what about sourceUrls with special characters?
-                            sourceUrl: sourceUri,
+                            sourceUrl: sourceUri.ToString(),
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,

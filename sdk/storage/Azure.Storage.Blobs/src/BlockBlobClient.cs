@@ -1387,7 +1387,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: 0,
                             // TODO what if the source Uri contains special characters?
-                            sourceUrl: sourceUri,
+                            sourceUrl: sourceUri.ToString(),
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
@@ -1407,7 +1407,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: 0,
                             // TODO what if the source Uri contains special characters?
-                            sourceUrl: sourceUri,
+                            sourceUrl: sourceUri.ToString(),
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
@@ -2597,7 +2597,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await BlockBlobRestClient.PutBlobFromUrlAsync(
                             contentLength: 0,
                             // TODO what if source URI has special characters?
-                            copySource: copySource,
+                            copySource: copySource.ToString(),
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
@@ -2631,7 +2631,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlockBlobRestClient.PutBlobFromUrl(
                             contentLength: 0,
                             // TODO what if source URI has special characters?
-                            copySource: copySource,
+                            copySource: copySource.ToString(),
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,

@@ -542,7 +542,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUploadPagesFromURLRequest(Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, string encryptionKey, string encryptionKeySha256, string encryptionScope, string leaseId, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch)
+        internal HttpMessage CreateUploadPagesFromURLRequest(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, string encryptionKey, string encryptionKeySha256, string encryptionScope, string leaseId, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -667,7 +667,7 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
@@ -720,7 +720,7 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/>, <paramref name="sourceRange"/>, or <paramref name="range"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(Uri sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
@@ -867,7 +867,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPageRangesDiffRequest(string snapshot, int? timeout, string prevsnapshot, Uri prevSnapshotUrl, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateGetPageRangesDiffRequest(string snapshot, int? timeout, string prevsnapshot, string prevSnapshotUrl, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -942,7 +942,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffAsync(string snapshot = null, int? timeout = null, string prevsnapshot = null, Uri prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffAsync(string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPageRangesDiffRequest(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -977,7 +977,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiff(string snapshot = null, int? timeout = null, string prevsnapshot = null, Uri prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiff(string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPageRangesDiffRequest(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
@@ -1214,7 +1214,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCopyIncrementalRequest(Uri copySource, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateCopyIncrementalRequest(string copySource, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1267,7 +1267,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobCopyIncrementalHeaders>> CopyIncrementalAsync(Uri copySource, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobCopyIncrementalHeaders>> CopyIncrementalAsync(string copySource, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
@@ -1296,7 +1296,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobCopyIncrementalHeaders> CopyIncremental(Uri copySource, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobCopyIncrementalHeaders> CopyIncremental(string copySource, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {

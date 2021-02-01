@@ -156,3 +156,14 @@ directive:
   transform: >
     delete $.BlobMetadata["properties"];
 ```
+
+### Fix SourceUrl, PrevSnapshotUrl, CopySource
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.SourceUrl.format;
+    delete $.PrevSnapshotUrl.format;
+    delete $.CopySource.format;
+```

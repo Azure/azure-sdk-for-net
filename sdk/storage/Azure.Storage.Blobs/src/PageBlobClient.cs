@@ -1882,7 +1882,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await PageBlobRestClient.GetPageRangesDiffAsync(
                             snapshot: snapshot,
                             prevsnapshot: previousSnapshot,
-                            prevSnapshotUrl: previousSnapshotUri,
+                            prevSnapshotUrl: previousSnapshotUri.ToString(),
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -1898,7 +1898,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = PageBlobRestClient.GetPageRangesDiff(
                             snapshot: snapshot,
                             prevsnapshot: previousSnapshot,
-                            prevSnapshotUrl: previousSnapshotUri,
+                            prevSnapshotUrl: previousSnapshotUri.ToString(),
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -2824,7 +2824,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.CopyIncrementalAsync(
-                            copySource: pageBlobUri.Uri,
+                            copySource: pageBlobUri.Uri.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
@@ -2836,7 +2836,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.CopyIncremental(
-                            copySource: pageBlobUri.Uri,
+                            copySource: pageBlobUri.Uri.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
@@ -3102,7 +3102,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.UploadPagesFromURLAsync(
-                            sourceUrl: sourceUri,
+                            sourceUrl: sourceUri.ToString(),
                             sourceRange: sourceRange.ToString(),
                             contentLength: 0,
                             range: range.ToString(),
@@ -3129,7 +3129,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.UploadPagesFromURL(
-                            sourceUrl: sourceUri,
+                            sourceUrl: sourceUri.ToString(),
                             sourceRange: sourceRange.ToString(),
                             contentLength: 0,
                             range: range.ToString(),

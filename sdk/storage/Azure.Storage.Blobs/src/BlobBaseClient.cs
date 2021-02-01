@@ -2212,7 +2212,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlobRestClient.StartCopyFromURLAsync(
-                            copySource: source,
+                            copySource: source.ToString(),
                             metadata: metadata,
                             tier: accessTier,
                             rehydratePriority: rehydratePriority,
@@ -2235,7 +2235,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlobRestClient.StartCopyFromURL(
-                            copySource: source,
+                            copySource: source.ToString(),
                             metadata: metadata,
                             tier: accessTier,
                             rehydratePriority: rehydratePriority,
@@ -2609,7 +2609,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlobRestClient.CopyFromURLAsync(
-                            copySource: source,
+                            copySource: source.ToString(),
                             metadata: metadata,
                             tier: accessTier,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
@@ -2629,7 +2629,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlobRestClient.CopyFromURL(
-                            copySource: source,
+                            copySource: source.ToString(),
                             metadata: metadata,
                             tier: accessTier,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
