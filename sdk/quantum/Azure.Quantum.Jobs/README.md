@@ -150,6 +150,11 @@ foreach (JobDetails job in quantumJobClient.GetJobs())
 }
 ```
 
+
+## Troubleshooting
+
+All Quantum Jobs service operations will throw a RequestFailedException on failure with helpful ErrorCodes. Many of these errors are recoverable.
+
 ## Next steps
 
 *  Visit our [Product documentation](https://docs.microsoft.com/azure/quantum/) to learn more about Azure Quantum.
