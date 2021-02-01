@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -62,7 +61,11 @@ namespace Azure.Identity
                                                     ServiceFabricManagedIdentitySource.TryCreate(_options) ??
                                                     await ImdsManagedIdentitySource.TryCreateAsync(_options, async, cancellationToken).ConfigureAwait(false);
 
-            asyncLock.SetValue(identitySource);
+            if (identitySource != default)
+            {
+                asyncLock.SetValue(identitySource);
+            }
+
             return identitySource;
         }
     }
