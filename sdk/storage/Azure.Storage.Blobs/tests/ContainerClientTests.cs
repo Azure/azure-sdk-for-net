@@ -2671,6 +2671,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var container = new Mock<BlobContainerClient>();
+            container.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(container.Object.CanGenerateSasUri);
+
+            // Act
+            container.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(container.Object.CanGenerateSasUri);
+        }
+
+        [Test]
         public void CanGenerateSas_GetBlobClient()
         {
             // Arrange

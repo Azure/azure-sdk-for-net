@@ -168,7 +168,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeFileSystemClient(System.Uri fileSystemUri, Azure.Storage.StorageSharedKeyCredential credential) { }
         public DataLakeFileSystemClient(System.Uri fileSystemUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public virtual string AccountName { get { throw null; } }
-        public bool CanGenerateSasUri { get { throw null; } }
+        public virtual bool CanGenerateSasUri { get { throw null; } }
         public virtual string Name { get { throw null; } }
         public virtual System.Uri Uri { get { throw null; } }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo> Create(Azure.Storage.Files.DataLake.Models.PublicAccessType publicAccessType = Azure.Storage.Files.DataLake.Models.PublicAccessType.None, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -243,7 +243,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakePathClient(System.Uri pathUri, Azure.Storage.StorageSharedKeyCredential credential) { }
         public DataLakePathClient(System.Uri pathUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public virtual string AccountName { get { throw null; } }
-        public bool CanGenerateSasUri { get { throw null; } }
+        public virtual bool CanGenerateSasUri { get { throw null; } }
         public virtual string FileSystemName { get { throw null; } }
         public virtual string Name { get { throw null; } }
         public virtual string Path { get { throw null; } }
@@ -295,7 +295,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeServiceClient(System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential credential) { }
         public DataLakeServiceClient(System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public virtual string AccountName { get { throw null; } }
-        public bool CanGenerateAccountSasUri { get { throw null; } }
+        public virtual bool CanGenerateAccountSasUri { get { throw null; } }
         public virtual System.Uri Uri { get { throw null; } }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileSystemClient> CreateFileSystem(string fileSystemName, Azure.Storage.Files.DataLake.Models.PublicAccessType publicAccessType = Azure.Storage.Files.DataLake.Models.PublicAccessType.None, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileSystemClient>> CreateFileSystemAsync(string fileSystemName, Azure.Storage.Files.DataLake.Models.PublicAccessType publicAccessType = Azure.Storage.Files.DataLake.Models.PublicAccessType.None, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
