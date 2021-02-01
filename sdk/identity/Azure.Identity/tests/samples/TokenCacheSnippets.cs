@@ -66,8 +66,9 @@ namespace Azure.Identity.Samples
 
         public async Task Identity_TokenCache_CustomPersistence_Write()
         {
-            #region Snippet:Identity_TokenCache_CustomPersistence_Write
             var tokenCache = new TokenCache();
+
+            #region Snippet:Identity_TokenCache_CustomPersistence_Write
             using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
             {
                 await tokenCache.SerializeAsync(cacheStream);
