@@ -9,6 +9,7 @@
 - Added admin property in Custom Activity typeProperties
 - Added dualStandbyPairName property in IntegrationRuntimeSsisCatalogInfo to support SSISDB failover
 - Added managedVirtualNetwork reference to IR
+- Set servicePrincipalId, servicePrincipalKey and tenant to be optional from AzureDataExplorerLinkedService
 
 ## Version 4.13.0
 ###  Feature Additions

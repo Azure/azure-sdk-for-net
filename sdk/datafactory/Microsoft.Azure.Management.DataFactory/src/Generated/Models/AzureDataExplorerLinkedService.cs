@@ -41,16 +41,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// engine's endpoint). URL will be in the format
         /// https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net.
         /// Type: string (or Expression with resultType string)</param>
-        /// <param name="servicePrincipalId">The ID of the service principal
-        /// used to authenticate against Azure Data Explorer. Type: string (or
-        /// Expression with resultType string).</param>
-        /// <param name="servicePrincipalKey">The key of the service principal
-        /// used to authenticate against Kusto.</param>
         /// <param name="database">Database name for connection. Type: string
         /// (or Expression with resultType string).</param>
-        /// <param name="tenant">The name or ID of the tenant to which the
-        /// service principal belongs. Type: string (or Expression with
-        /// resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -58,7 +50,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
-        public AzureDataExplorerLinkedService(object endpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object database, object tenant, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>))
+        /// <param name="servicePrincipalId">The ID of the service principal
+        /// used to authenticate against Azure Data Explorer. Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="servicePrincipalKey">The key of the service principal
+        /// used to authenticate against Kusto.</param>
+        /// <param name="tenant">The name or ID of the tenant to which the
+        /// service principal belongs. Type: string (or Expression with
+        /// resultType string).</param>
+        public AzureDataExplorerLinkedService(object endpoint, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Endpoint = endpoint;
@@ -126,21 +126,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Endpoint");
             }
-            if (ServicePrincipalId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServicePrincipalId");
-            }
-            if (ServicePrincipalKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServicePrincipalKey");
-            }
             if (Database == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Database");
-            }
-            if (Tenant == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Tenant");
             }
         }
     }
