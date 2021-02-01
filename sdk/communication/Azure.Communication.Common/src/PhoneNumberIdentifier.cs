@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -10,7 +9,7 @@ namespace Azure.Communication
     public class PhoneNumberIdentifier : CommunicationIdentifier
     {
         /// <summary>The full id of the phone number.</summary>
-        public string? Id { get; }
+        public string Id { get; }
 
         /// <summary>The phone number in E.164 format.</summary>
         public string PhoneNumber { get; }
@@ -24,7 +23,7 @@ namespace Azure.Communication
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="phoneNumber"/> is empty.
         /// </exception>
-        public PhoneNumberIdentifier(string phoneNumber, string? id = null)
+        public PhoneNumberIdentifier(string phoneNumber, string id = null)
         {
             Argument.AssertNotNullOrEmpty(phoneNumber, nameof(phoneNumber));
             PhoneNumber = phoneNumber;
