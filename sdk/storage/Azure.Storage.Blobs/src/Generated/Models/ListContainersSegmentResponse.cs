@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> An enumeration of containers. </summary>
-    public partial class ListContainersSegmentResponse
+    internal partial class ListContainersSegmentResponse
     {
         /// <summary> Initializes a new instance of ListContainersSegmentResponse. </summary>
         /// <param name="serviceEndpoint"> . </param>
         /// <param name="containerItems"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="containerItems"/> is null. </exception>
-        internal ListContainersSegmentResponse(string serviceEndpoint, IEnumerable<ContainerItem> containerItems)
+        internal ListContainersSegmentResponse(string serviceEndpoint, IEnumerable<ContainerItemInternal> containerItems)
         {
             if (serviceEndpoint == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="maxResults"> . </param>
         /// <param name="containerItems"> . </param>
         /// <param name="nextMarker"> . </param>
-        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IReadOnlyList<ContainerItem> containerItems, string nextMarker)
+        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IReadOnlyList<ContainerItemInternal> containerItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Models
         public string Prefix { get; }
         public string Marker { get; }
         public int? MaxResults { get; }
-        public IReadOnlyList<ContainerItem> ContainerItems { get; }
+        public IReadOnlyList<ContainerItemInternal> ContainerItems { get; }
         public string NextMarker { get; }
     }
 }

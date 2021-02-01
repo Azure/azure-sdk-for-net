@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> An Azure Storage container. </summary>
-    public partial class ContainerItem
+    internal partial class ContainerItemInternal
     {
-        /// <summary> Initializes a new instance of ContainerItem. </summary>
+        /// <summary> Initializes a new instance of ContainerItemInternal. </summary>
         /// <param name="name"> . </param>
         /// <param name="properties"> Properties of a container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        internal ContainerItem(string name, ContainerProperties properties)
+        internal ContainerItemInternal(string name, ContainerProperties properties)
         {
             if (name == null)
             {
@@ -34,13 +34,13 @@ namespace Azure.Storage.Blobs.Models
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerItem. </summary>
+        /// <summary> Initializes a new instance of ContainerItemInternal. </summary>
         /// <param name="name"> . </param>
         /// <param name="deleted"> . </param>
         /// <param name="version"> . </param>
         /// <param name="properties"> Properties of a container. </param>
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        internal ContainerItem(string name, bool? deleted, string version, ContainerProperties properties, IReadOnlyDictionary<string, string> metadata)
+        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerProperties properties, IReadOnlyDictionary<string, string> metadata)
         {
             Name = name;
             Deleted = deleted;

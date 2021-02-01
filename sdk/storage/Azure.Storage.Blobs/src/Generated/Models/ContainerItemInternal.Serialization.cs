@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class ContainerItem
+    internal partial class ContainerItemInternal
     {
-        internal static ContainerItem DeserializeContainerItem(XElement element)
+        internal static ContainerItemInternal DeserializeContainerItemInternal(XElement element)
         {
             string name = default;
             bool? deleted = default;
@@ -45,7 +45,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 metadata = dictionary;
             }
-            return new ContainerItem(name, deleted, version, properties, metadata);
+            return new ContainerItemInternal(name, deleted, version, properties, metadata);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class ListContainersSegmentResponse
+    internal partial class ListContainersSegmentResponse
     {
         internal static ListContainersSegmentResponse DeserializeListContainersSegmentResponse(XElement element)
         {
@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
             string marker = default;
             int? maxResults = default;
             string nextMarker = default;
-            IReadOnlyList<ContainerItem> containerItems = default;
+            IReadOnlyList<ContainerItemInternal> containerItems = default;
             if (element.Attribute("ServiceEndpoint") is XAttribute serviceEndpointAttribute)
             {
                 serviceEndpoint = (string)serviceEndpointAttribute;
@@ -43,10 +43,10 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("Containers") is XElement containersElement)
             {
-                var array = new List<ContainerItem>();
+                var array = new List<ContainerItemInternal>();
                 foreach (var e in containersElement.Elements("Container"))
                 {
-                    array.Add(ContainerItem.DeserializeContainerItem(e));
+                    array.Add(ContainerItemInternal.DeserializeContainerItemInternal(e));
                 }
                 containerItems = array;
             }
