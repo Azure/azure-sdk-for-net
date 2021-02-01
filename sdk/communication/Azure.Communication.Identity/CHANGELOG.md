@@ -10,7 +10,7 @@
 
 ### Breaking
 - CommunicationTokenScope.Pstn is removed.
-- CommunicationIdentityClient.RevokeTokens tokens now revoke all the currently issued tokens instead of revoking tokens issued prior to a given time.
+- CommunicationIdentityClient.RevokeTokens now revoke all the currently issued tokens instead of revoking tokens issued prior to a given time.
 - CommunicationIdentityClient.IssueToken returns an instance of `Azure.Core.AccessToken` instead of `CommunicationUserToken`.
 
 <!-- LINKS -->

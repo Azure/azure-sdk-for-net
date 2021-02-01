@@ -43,6 +43,9 @@ parameters:
   type: number
   default: 60
 
+variables:
+  - template: ../variables/globals.yml
+
 stages:
   - stage: Build
     jobs:

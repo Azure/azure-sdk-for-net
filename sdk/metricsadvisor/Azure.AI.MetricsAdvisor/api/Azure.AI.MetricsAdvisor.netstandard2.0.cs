@@ -216,8 +216,8 @@ namespace Azure.AI.MetricsAdvisor
     public partial class MetricsAdvisorKeyCredential
     {
         public MetricsAdvisorKeyCredential(string subscriptionKey, string apiKey) { }
-        public void UpdateApiKey(string key) { }
-        public void UpdateSubscriptionKey(string key) { }
+        public void UpdateApiKey(string apiKey) { }
+        public void UpdateSubscriptionKey(string subscriptionKey) { }
     }
 }
 namespace Azure.AI.MetricsAdvisor.Administration

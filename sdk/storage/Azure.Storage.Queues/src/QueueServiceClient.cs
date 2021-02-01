@@ -73,7 +73,7 @@ namespace Azure.Storage.Queues
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateAccountSasUri => ClientConfiguration.SharedKeyCredential != null;
+        public virtual bool CanGenerateAccountSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.Storage.Queues
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
-                invalidMessageHandler: options.GetInvalidMessageHandlers());
+                queueMessageDecodingFailedHandlers: options.GetMessageDecodingFailedHandlers());
 
             _serviceRestClient = BuildServiceRestClient();
         }
@@ -259,7 +259,7 @@ namespace Azure.Storage.Queues
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
-                invalidMessageHandler: options.GetInvalidMessageHandlers());
+                queueMessageDecodingFailedHandlers: options.GetMessageDecodingFailedHandlers());
 
             _serviceRestClient = BuildServiceRestClient();
         }

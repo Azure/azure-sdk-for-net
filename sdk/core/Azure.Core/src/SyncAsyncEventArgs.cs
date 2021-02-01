@@ -4,7 +4,6 @@
 using System;
 using System.Threading;
 
-// TODO (kasobol-msft) This is borrowed from https://github.com/Azure/azure-sdk-for-net/pull/18170.
 namespace Azure
 {
     /// <summary>

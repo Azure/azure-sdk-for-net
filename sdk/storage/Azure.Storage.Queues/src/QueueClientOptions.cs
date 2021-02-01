@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -58,7 +58,12 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// The 2020-04-08 service version.
             /// </summary>
-            V2020_04_08 = 5
+            V2020_04_08 = 5,
+
+            /// <summary>
+            /// The 2020-06-12 service version.
+            /// </summary>
+            V2020_06_12 = 6
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -114,21 +119,56 @@ namespace Azure.Storage.Queues
         public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.None;
 
         /// <summary>
-        /// Optional. Performs the tasks needed when an invalid message is received or peaked from the queue.
+        /// Optional. Performs the tasks needed when a message is received or peaked from the queue but cannot be decoded.
         ///
-        /// <para>Invalid message can be received or peaked when <see cref="QueueClient"/> is expecting certain <see cref="QueueMessageEncoding"/>
+        /// <para>Such message can be received or peaked when <see cref="QueueClient"/> is expecting certain <see cref="QueueMessageEncoding"/>
         /// but there's another producer that is not encoding messages in expected way. I.e. the queue contains messages with different encoding.</para>
         ///
-        /// <para><see cref="InvalidMessageEventArgs"/> contains <see cref="QueueClient"/> that has received invalid message as well as the message
-        /// which can be either <see cref="QueueMessage"/> or <see cref="PeekedMessage"/> with raw body, i.e. no decoding will be attempted so that
+        /// <para><see cref="QueueMessageDecodingFailedEventArgs"/> contains <see cref="QueueClient"/> that has received the message as well as
+        /// <see cref="QueueMessageDecodingFailedEventArgs.ReceivedMessage"/> or <see cref="QueueMessageDecodingFailedEventArgs.PeekedMessage"/>
+        /// with raw body, i.e. no decoding will be attempted so that
         /// body can be inspected as has been received from the queue.</para>
         ///
-        /// <para>The <see cref="QueueClient"/> won't attempt to remove invalid message from the queue. Therefore such handling should be included into
+        /// <para>The <see cref="QueueClient"/> won't attempt to remove the message from the queue. Therefore such handling should be included into
         /// the event handler itself.</para>
+        ///
+        /// <para>The handler is potentially invoked by both synchronous and asynchronous receive and peek APIs. Therefore implementation of the handler should align with
+        /// <see cref="QueueClient"/> APIs that are being used.
+        /// See <see cref="SyncAsyncEventHandler{T}"/> about how to implement handler correctly. The example below shows a handler with all possible cases explored.
+        /// <code snippet="Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_MessageDecodingFailedHandlerAsync">
+        /// QueueClientOptions queueClientOptions = new QueueClientOptions()
+        /// {
+        ///     MessageEncoding = QueueMessageEncoding.Base64
+        /// };
+        ///
+        /// queueClientOptions.MessageDecodingFailed += async (QueueMessageDecodingFailedEventArgs args) =&gt;
+        /// {
+        ///     if (args.PeekedMessage != null)
+        ///     {
+        ///         Console.WriteLine($&quot;Invalid message has been peeked, message id={args.PeekedMessage.MessageId} body={args.PeekedMessage.Body}&quot;);
+        ///     }
+        ///     else if (args.ReceivedMessage != null)
+        ///     {
+        ///         Console.WriteLine($&quot;Invalid message has been received, message id={args.ReceivedMessage.MessageId} body={args.ReceivedMessage.Body}&quot;);
+        ///
+        ///         if (args.RunSynchronously)
+        ///         {
+        ///             args.Queue.DeleteMessage(args.ReceivedMessage.MessageId, args.ReceivedMessage.PopReceipt);
+        ///         }
+        ///         else
+        ///         {
+        ///             await args.Queue.DeleteMessageAsync(args.ReceivedMessage.MessageId, args.ReceivedMessage.PopReceipt);
+        ///         }
+        ///     }
+        /// };
+        ///
+        /// QueueClient queueClient = new QueueClient(connectionString, queueName, queueClientOptions);
+        /// </code>
+        /// </para>
         /// </summary>
-        public event SyncAsyncEventHandler<InvalidMessageEventArgs> OnInvalidMessage;
+        public event SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs> MessageDecodingFailed;
 
-        internal SyncAsyncEventHandler<InvalidMessageEventArgs> GetInvalidMessageHandlers() => OnInvalidMessage;
+        internal SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs> GetMessageDecodingFailedHandlers() => MessageDecodingFailed;
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;

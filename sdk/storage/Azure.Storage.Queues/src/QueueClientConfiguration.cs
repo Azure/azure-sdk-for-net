@@ -16,7 +16,7 @@ namespace Azure.Storage.Queues
 
         public QueueMessageEncoding MessageEncoding { get; internal set; }
 
-        public SyncAsyncEventHandler<InvalidMessageEventArgs> InvalidMessageHandler { get; internal set; }
+        public SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs> QueueMessageDecodingFailedHandlers { get; internal set; }
 
         public QueueClientConfiguration(
             HttpPipeline pipeline,
@@ -25,13 +25,13 @@ namespace Azure.Storage.Queues
             QueueClientOptions.ServiceVersion version,
             QueueClientSideEncryptionOptions clientSideEncryption,
             QueueMessageEncoding messageEncoding,
-            SyncAsyncEventHandler<InvalidMessageEventArgs> invalidMessageHandler)
+            SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs> queueMessageDecodingFailedHandlers)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
             ClientSideEncryption = clientSideEncryption;
             MessageEncoding = messageEncoding;
-            InvalidMessageHandler = invalidMessageHandler;
+            QueueMessageDecodingFailedHandlers = queueMessageDecodingFailedHandlers;
         }
     }
 }

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,12 +19,12 @@ namespace Azure.Messaging.EventGrid
     {
         /// <summary> Initializes a new instance of <see cref="EventGridEvent"/>. </summary>
         /// <param name="subject"> A resource path relative to the topic path. </param>
-        /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="eventType"> The type of the event that occurred. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
+        /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="dataSerializationType">The type to use when serializing the data.
         /// If not specified, <see cref="object.GetType()"/> will be used on <paramref name="data"/>.</param>
-        public EventGridEvent(object data, string subject, string eventType, string dataVersion, Type dataSerializationType = default)
+        public EventGridEvent(string subject, string eventType, string dataVersion, object data, Type dataSerializationType = default)
         {
             Argument.AssertNotNull(subject, nameof(subject));
             Argument.AssertNotNull(data, nameof(data));
@@ -134,50 +133,41 @@ namespace Azure.Messaging.EventGrid
         /// Deserializes the event payload into a specified event type using the provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T"> Type of event to deserialize to. </typeparam>
-        /// <param name="serializer"> Custom serializer used to deserialize the payload. </param>
+        /// <param name="serializer"> A custom serializer used to deserialize the payload. If not provided, the
+        /// <see cref="JsonObjectSerializer"/> will be used.</param>
         /// <param name="cancellationToken"> The cancellation token to use during deserialization. </param>
         /// <exception cref="InvalidOperationException"> Event was not created from EventGridEvent.Parse() method. </exception>
         /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
         /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
-        public async Task<T> GetDataAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
+        public async Task<T> GetDataAsync<T>(ObjectSerializer serializer = default, CancellationToken cancellationToken = default)
         {
-            if (Data != null)
+            if (Data != null && serializer != null)
             {
                 throw new InvalidOperationException("Cannot pass in a custom deserializer if event was not created from EventGridEvent.Parse(), " +
                     "as event data should already be deserialized and the custom deserializer will not be used.");
             }
-            return await GetDataInternal<T>(serializer, true, cancellationToken).ConfigureAwait(false);
+            return await GetDataInternal<T>(serializer ?? s_jsonSerializer, true, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Deserializes the event payload into a specified event type using the provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T"> Type of event to deserialize to. </typeparam>
-        /// <param name="serializer"> Custom serializer used to deserialize the payload. </param>
+        /// <param name="serializer"> A custom serializer used to deserialize the payload. If not provided, the
+        /// <see cref="JsonObjectSerializer"/> will be used.</param>
         /// <param name="cancellationToken"> The cancellation token to use during deserialization. </param>
         /// <exception cref="InvalidOperationException"> Event was not created from EventGridEvent.Parse() method. </exception>
         /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
         /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
-        public T GetData<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default)
+        public T GetData<T>(ObjectSerializer serializer = default, CancellationToken cancellationToken = default)
         {
-            if (Data != null)
+            if (Data != null && serializer != null)
             {
                 throw new InvalidOperationException("Cannot pass in a custom deserializer if event was not created from EventGridEvent.Parse(), " +
                     "as event data should already be deserialized and the custom deserializer will not be used.");
             }
-            return GetDataInternal<T>(serializer, false, cancellationToken).EnsureCompleted();
+            return GetDataInternal<T>(serializer ?? s_jsonSerializer, false, cancellationToken).EnsureCompleted();
         }
-
-        /// <summary>
-        /// Deserializes the event payload into a specified event type using the provided <see cref="JsonObjectSerializer"/>.
-        /// </summary>
-        /// <typeparam name="T"> Type of event to deserialize to. </typeparam>
-        /// <param name="cancellationToken"> The cancellation token to use during deserialization. </param>
-        /// <exception cref="InvalidOperationException"> Event was not created from EventGridEvent.Parse() method. </exception>
-        /// <exception cref="InvalidCastException"> Event payload cannot be cast to the specified event type. </exception>
-        /// <returns> Deserialized payload of the event, cast to the specified type. </returns>
-        public T GetData<T>(CancellationToken cancellationToken = default)
-            => GetDataInternal<T>(s_jsonSerializer, false, cancellationToken).EnsureCompleted();
 
         private async Task<T> GetDataInternal<T>(ObjectSerializer serializer, bool async, CancellationToken cancellationToken = default)
         {
