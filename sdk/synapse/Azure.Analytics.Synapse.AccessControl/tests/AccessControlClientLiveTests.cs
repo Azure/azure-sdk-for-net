@@ -54,13 +54,11 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                     roleAssignmentId = Guid.NewGuid().ToString();
                 }
 
-                Console.WriteLine ($"{roleAssignmentId} {roleID.Value} {principalId}");
                 return await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, roleID.Value, principalId, scope);
             }
 
             public async ValueTask DisposeAsync()
             {
-                Console.WriteLine ($"Deleting {Assignment.Id}");
                 await _client.DeleteRoleAssignmentByIdAsync(Assignment.Id);
             }
         }
