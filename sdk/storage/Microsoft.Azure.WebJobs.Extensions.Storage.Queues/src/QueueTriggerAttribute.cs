@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Host;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -22,6 +23,17 @@ namespace Microsoft.Azure.WebJobs
     /// <item><description><see cref="BinaryData"/></description></item>
     /// <item><description>A user-defined type (serialized as JSON)</description></item>
     /// </list>
+    ///
+    /// By default messages received from the queue are expected to be Base64-encoded and are decoded before calling the function.
+    /// This behavior can be changed by setting <see cref="QueuesOptions.MessageEncoding"/>.
+    /// For example, to configure Azure Functions to perform no base64 encoding/decoding, specify the following in host.json.
+    /// <code>
+    /// "extensions": {
+    ///   "queues": {
+    ///     "messageEncoding": "none"
+    ///   }
+    /// }
+    /// </code>
     /// </remarks>
     [AttributeUsage(AttributeTargets.Parameter)]
 #pragma warning restore CA1200 // Avoid using cref tags with a prefix
