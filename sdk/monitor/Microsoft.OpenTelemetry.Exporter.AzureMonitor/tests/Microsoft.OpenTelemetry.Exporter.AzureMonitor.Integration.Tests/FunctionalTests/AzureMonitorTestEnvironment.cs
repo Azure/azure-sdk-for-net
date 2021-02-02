@@ -3,7 +3,7 @@
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.FunctionalTests
 {
-    using Azure.Core.TestFramework;
+    using global::Azure.Core.TestFramework;
 
     public class AzureMonitorTestEnvironment : TestEnvironment
     {
