@@ -103,7 +103,7 @@ foreach ($config in $targets) {
     Write-Host ($pkgsFiltered | % { $_.PackageId + " " + $_.PackageVersion })
   
     foreach ($packageInfo in $pkgsFiltered) {
-      $readmeName = "$($packageInfo.PackageId.Replace('azure-','').Replace('Azure.', '').Replace('@azure/', '').ToLower())-readme${suffix}.md"
+      $readmeName = "$($packageInfo.DocsReadMeName.ToLower())-readme${suffix}.md"
       $readmeFolder = Join-Path $DocRepoLocation $config.content_folder
       $readmeLocation = Join-Path $readmeFolder $readmeName
 
