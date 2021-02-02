@@ -9,7 +9,7 @@ Param (
   [Parameter(Mandatory=$True)]
   [string] $APILabel,
   [string] $PackageName,
-  [string] $ArtifactSubDir = ""
+  [string] $ConfigFileDir = ""
 )
 
 
@@ -57,12 +57,7 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
 $packages = @{}
 if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn"))
 {
-    $artifactLoc = $ArtifactPath
-    if ($ArtifactSubDir)
-    {
-        $artifactLoc = Join-Path -Path $artifactLoc $ArtifactSubDir
-    }
-    $packages = &$FindArtifactForApiReviewFn $artifactLoc $PackageName
+    $packages = &$FindArtifactForApiReviewFn $ArtifactPath $PackageName
 }
 else
 {
@@ -88,7 +83,12 @@ else
 }
 
 $FoundFailure = $False
-$pkgInfoPath = Join-Path -Path $ArtifactPath "PackageInfo"
+# Default config file path to artifact path to support backward compatibility until those scripts are modified
+if (-not $ConfigFileDir)
+{
+    $ConfigFileDir = $ArtifactPath
+}
+$pkgInfoPath = Join-Path -Path $ConfigFileDir "PackageInfo"
 foreach ($pkgName in $responses.Keys)
 {    
     $respCode = $responses[$pkgName]
