@@ -65,31 +65,36 @@ function Get-TocMapping {
     $orderServiceMapping = @{}
 
     foreach ($artifact in $artifacts) {
-        $packageInfo = $metadata | ? {$_.Package -eq $artifact}
-        
-        if ($packageInfo -and $packageInfo[0].Hide -eq 'true') {
-            LogDebug "The artifact $artifact set 'Hide' to 'true'."
-            continue
+        $packageInfo = $metadata | ? { $_.Package -eq $artifact }
+        $packageInfoCopy = @()
+        if ($packageInfo) {
+            foreach ($pkg in $packageInfo) {
+                if ($pkg.Hide -eq 'true') {
+                    LogDebug "The artifact $artifact set 'Hide' to 'true'."
+                    continue
+                }
+                $packageInfoCopy += $pkg
+            }
         }
         $serviceName = ""
         $displayName = ""
-        if (!$packageInfo) {
+        if (!$packageInfoCopy) {
             LogWarning "There is no artifact $artifact. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
             # If no service name retrieved, print out warning message, and put it into Other page.
             $serviceName = "Other"
         }
-        elseif (!$packageInfo[0].ServiceName) {
+        elseif (!$packageInfoCopy[0].ServiceName) {
             LogWarning "There is no service name for artifact $artifact. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
             # If no service name retrieved, print out warning message, and put it into Other page.
             $serviceName = "Other"
-            $displayName = $packageInfo[0].DisplayName.Trim()
+            $displayName = $packageInfoCopy[0].DisplayName.Trim()
         }
         else {
-            if ($packageInfo.Length -gt 1) {
+            if ($packageInfoCopy.Length -gt 1) {
                 LogWarning "There are more than 1 packages fetched out for artifact $artifact. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
             }
-            $serviceName = $packageInfo[0].ServiceName.Trim()
-            $displayName = $packageInfo[0].DisplayName.Trim()
+            $serviceName = $packageInfoCopy[0].ServiceName.Trim()
+            $displayName = $packageInfoCopy[0].DisplayName.Trim()
         }
         $orderServiceMapping[$artifact] = @($serviceName, $displayName)
     }
