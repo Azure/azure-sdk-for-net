@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Storage.Files.DataLake.Models
         {
             Optional<string> name = default;
             Optional<bool> isDirectory = default;
-            Optional<string> lastModified = default;
+            Optional<DateTimeOffset> lastModified = default;
             Optional<string> eTag = default;
             Optional<long> contentLength = default;
             Optional<string> owner = default;
@@ -41,7 +42,12 @@ namespace Azure.Storage.Files.DataLake.Models
                 }
                 if (property.NameEquals("lastModified"))
                 {
-                    lastModified = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastModified = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
                 if (property.NameEquals("eTag"))
@@ -75,7 +81,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new Path(name.Value, Optional.ToNullable(isDirectory), lastModified.Value, eTag.Value, Optional.ToNullable(contentLength), owner.Value, group.Value, permissions.Value);
+            return new Path(name.Value, Optional.ToNullable(isDirectory), Optional.ToNullable(lastModified), eTag.Value, Optional.ToNullable(contentLength), owner.Value, group.Value, permissions.Value);
         }
     }
 }

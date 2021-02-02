@@ -208,23 +208,6 @@ namespace Azure.Storage.Files.DataLake
             return pathItem;
         }
 
-        //internal static PathContentInfo ToPathContentInfo(this PathUpdateResult pathUpdateResult) =>
-        //    new PathContentInfo()
-        //    {
-        //        ContentHash = pathUpdateResult.ContentMD5,
-        //        ETag = pathUpdateResult.ETag,
-        //        LastModified = pathUpdateResult.LastModified,
-        //        AcceptRanges = pathUpdateResult.AcceptRanges,
-        //        CacheControl = pathUpdateResult.CacheControl,
-        //        ContentDisposition = pathUpdateResult.ContentDisposition,
-        //        ContentEncoding = pathUpdateResult.ContentEncoding,
-        //        ContentLanguage = pathUpdateResult.ContentLanguage,
-        //        ContentLength = pathUpdateResult.ContentLength,
-        //        ContentRange = pathUpdateResult.ContentRange,
-        //        ContentType = pathUpdateResult.ContentType,
-        //        Metadata = ToMetadata(pathUpdateResult.Properties)
-        //    };
-
         private static IDictionary<string, string> ToMetadata(string rawMetdata)
         {
             if (rawMetdata == null)
@@ -497,38 +480,78 @@ namespace Azure.Storage.Files.DataLake
 
         //TODO
         internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
+            => new PathSegment
+            {
+                Continuation = response.Headers.Continuation,
+                Paths = response.Value.ToPathItems()
+            };
+
+        internal static IEnumerable<PathItem> ToPathItems(this PathList pathList)
         {
-            return null;
+            if (pathList == null)
+            {
+                return null;
+            }
+
+            return pathList.Paths.Select(path => path.ToPathItem());
         }
 
-        // TODO
+        internal static PathItem ToPathItem(this Path path)
+        {
+            if (path == null)
+            {
+                return null;
+            }
+
+            return new PathItem
+            {
+                Name = path.Name,
+                IsDirectory = path.IsDirectory,
+                LastModified = path.LastModified.GetValueOrDefault(),
+                // TODO this might be brittle
+                ETag = new ETag(path.ETag),
+                ContentLength = path.ContentLength,
+                Owner = path.Owner,
+                Group = path.Group,
+                Permissions = path.Permissions
+            };
+        }
+
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
-        {
-            return null;
-        }
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
 
-        // TODO
         internal static PathAccessControl ToPathAccessControl(this ResponseWithHeaders<PathGetPropertiesHeaders> response)
-        {
-            return null;
-        }
+            => new PathAccessControl
+            {
+                Owner = response.Headers.Owner,
+                Group = response.Headers.Group,
+                Permissions = PathPermissions.ParseSymbolicPermissions(response.Headers.Permissions),
+                AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Headers.ACL)
+            };
 
-        // TODO
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetAccessControlHeaders> response)
-        {
-            return null;
-        }
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
 
-        // TODO
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathFlushDataHeaders> response)
-        {
-            return null;
-        }
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
 
-        // TODO
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetExpiryHeaders> response)
-        {
-            return null;
-        }
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
     }
 }

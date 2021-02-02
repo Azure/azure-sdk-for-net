@@ -54,3 +54,12 @@ directive:
     delete $.SourceIfUnmodifiedSince["x-ms-parameter-grouping"];
     delete $.SourceLeaseId["x-ms-parameter-grouping"];
 ```
+
+### Fix Path
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Path.properties.lastModified.format = "date-time-rfc1123";
+```

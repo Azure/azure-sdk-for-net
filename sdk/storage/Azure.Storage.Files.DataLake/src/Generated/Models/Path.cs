@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The Path. </summary>
@@ -24,7 +26,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="owner"> . </param>
         /// <param name="group"> . </param>
         /// <param name="permissions"> . </param>
-        internal Path(string name, bool? isDirectory, string lastModified, string eTag, long? contentLength, string owner, string group, string permissions)
+        internal Path(string name, bool? isDirectory, DateTimeOffset? lastModified, string eTag, long? contentLength, string owner, string group, string permissions)
         {
             Name = name;
             IsDirectory = isDirectory;
@@ -38,7 +40,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public string Name { get; }
         public bool? IsDirectory { get; }
-        public string LastModified { get; }
+        public DateTimeOffset? LastModified { get; }
         public string ETag { get; }
         public long? ContentLength { get; }
         public string Owner { get; }
