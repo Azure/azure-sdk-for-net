@@ -41,59 +41,60 @@ To run analyze operation in multiple documents, call `StartAnalyzeOperationBatch
 
     await operation.WaitForCompletionAsync();
 
-    AnalyzeOperationResult resultCollection = operation.Value;
-
-    RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
-
-    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
-
-    RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
-
-    Console.WriteLine("Recognized Entities");
-
-    foreach (RecognizeEntitiesResult result in entitiesResult)
+    foreach (AnalyzeOperationResult documentsInPage in operation.GetValues())
     {
-        Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+        RecognizeEntitiesResultCollection entitiesResult = documentsInPage.Tasks.EntityRecognitionTasks[0].Results;
 
-        foreach (CategorizedEntity entity in result.Entities)
+        ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.Tasks.KeyPhraseExtractionTasks[0].Results;
+
+        RecognizePiiEntitiesResultCollection piiResult = documentsInPage.Tasks.EntityRecognitionPiiTasks[0].Results;
+
+        Console.WriteLine("Recognized Entities");
+
+        foreach (RecognizeEntitiesResult result in entitiesResult)
         {
-            Console.WriteLine($"    Entity: {entity.Text}");
-            Console.WriteLine($"    Category: {entity.Category}");
-            Console.WriteLine($"    Offset: {entity.Offset}");
-            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+            Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+
+            foreach (CategorizedEntity entity in result.Entities)
+            {
+                Console.WriteLine($"    Entity: {entity.Text}");
+                Console.WriteLine($"    Category: {entity.Category}");
+                Console.WriteLine($"    Offset: {entity.Offset}");
+                Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+                Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+            }
+            Console.WriteLine("");
         }
-        Console.WriteLine("");
-    }
 
-    Console.WriteLine("Recognized PII Entities");
+        Console.WriteLine("Recognized PII Entities");
 
-    foreach (RecognizePiiEntitiesResult result in piiResult)
-    {
-        Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
-
-        foreach (PiiEntity entity in result.Entities)
+        foreach (RecognizePiiEntitiesResult result in piiResult)
         {
-            Console.WriteLine($"    Entity: {entity.Text}");
-            Console.WriteLine($"    Category: {entity.Category}");
-            Console.WriteLine($"    Offset: {entity.Offset}");
-            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+            Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
+
+            foreach (PiiEntity entity in result.Entities)
+            {
+                Console.WriteLine($"    Entity: {entity.Text}");
+                Console.WriteLine($"    Category: {entity.Category}");
+                Console.WriteLine($"    Offset: {entity.Offset}");
+                Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+                Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+            }
+            Console.WriteLine("");
         }
-        Console.WriteLine("");
-    }
 
-    Console.WriteLine("Key Phrases");
+        Console.WriteLine("Key Phrases");
 
-    foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
-    {
-        Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
-
-        foreach (string keyphrase in result.KeyPhrases)
+        foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
         {
-            Console.WriteLine($"    {keyphrase}");
+            Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+
+            foreach (string keyphrase in result.KeyPhrases)
+            {
+                Console.WriteLine($"    {keyphrase}");
+            }
+            Console.WriteLine("");
         }
-        Console.WriteLine("");
     }
 }
 ```
