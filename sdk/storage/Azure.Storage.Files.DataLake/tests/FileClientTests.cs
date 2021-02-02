@@ -1009,7 +1009,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.GetAccessControlAsync(),
-                e => Assert.AreEqual("404", e.ErrorCode));
+                e => Assert.AreEqual("PathNotFound", e.ErrorCode));
         }
 
         [Test]

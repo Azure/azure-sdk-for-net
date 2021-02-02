@@ -36,49 +36,52 @@ namespace Azure.Core.Pipeline
         {
             additionalInfo = new Dictionary<string, string>();
 
-            // XML body
-            if (responseHeaders.ContentType == Constants.ContentTypeApplicationXml)
+            if (content != null)
             {
-                XDocument xml = XDocument.Parse(content);
-                errorCode = xml.Root.Element(Constants.ErrorCode).Value;
-                message = xml.Root.Element(Constants.ErrorMessage).Value;
-
-                foreach (XElement element in xml.Root.Elements())
+                // XML body
+                if (responseHeaders.ContentType.Contains(Constants.ContentTypeApplicationXml))
                 {
-                    switch (element.Name.LocalName)
-                    {
-                        case Constants.ErrorCode:
-                        case Constants.ErrorMessage:
-                            continue;
-                        default:
-                            additionalInfo[element.Name.LocalName] = element.Value;
-                            break;
-                    }
-                }
-            }
+                    XDocument xml = XDocument.Parse(content);
+                    errorCode = xml.Root.Element(Constants.ErrorCode).Value;
+                    message = xml.Root.Element(Constants.ErrorMessage).Value;
 
-            // Json body
-            // TODO make everthing here constants.
-            else if (responseHeaders.ContentType == Constants.ContentTypeApplicationJson)
-            {
-                JsonDocument json = JsonDocument.Parse(content);
-                JsonElement error = json.RootElement.GetProperty("error");
-
-                IDictionary<string, string> details = default;
-                if (error.TryGetProperty("detail", out JsonElement detail))
-                {
-                    details = new Dictionary<string, string>();
-                    foreach (JsonProperty property in detail.EnumerateObject())
+                    foreach (XElement element in xml.Root.Elements())
                     {
-                        details[property.Name] = property.Value.GetString();
+                        switch (element.Name.LocalName)
+                        {
+                            case Constants.ErrorCode:
+                            case Constants.ErrorMessage:
+                                continue;
+                            default:
+                                additionalInfo[element.Name.LocalName] = element.Value;
+                                break;
+                        }
                     }
                 }
 
-                message = error.GetProperty("message").GetString();
-                errorCode = error.GetProperty("code").GetString();
-                additionalInfo = details;
+                // Json body
+                // TODO make everthing here constants.
+                else if (responseHeaders.ContentType.Contains(Constants.ContentTypeApplicationJson))
+                {
+                    JsonDocument json = JsonDocument.Parse(content);
+                    JsonElement error = json.RootElement.GetProperty("error");
+
+                    IDictionary<string, string> details = default;
+                    if (error.TryGetProperty("detail", out JsonElement detail))
+                    {
+                        details = new Dictionary<string, string>();
+                        foreach (JsonProperty property in detail.EnumerateObject())
+                        {
+                            details[property.Name] = property.Value.GetString();
+                        }
+                    }
+
+                    message = error.GetProperty("message").GetString();
+                    errorCode = error.GetProperty("code").GetString();
+                    additionalInfo = details;
+                }
             }
-            // No content body
+            // No response body.
             else
             {
                 // The other headers will appear in the "Headers" section of the Exception message.
