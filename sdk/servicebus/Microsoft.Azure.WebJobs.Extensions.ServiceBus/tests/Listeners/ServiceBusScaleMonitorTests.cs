@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var client = new ServiceBusClient(_testConnection);
             ServiceBusProcessorOptions processorOptions = new ServiceBusProcessorOptions();
             ServiceBusProcessor messageProcessor = client.CreateProcessor(_entityPath);
-            _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, messageProcessor, processorOptions);
+            _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, messageProcessor);
 
             _serviceBusOptions = new ServiceBusOptions();
             _mockMessagingProvider = new Mock<MessagingProvider>(MockBehavior.Strict, new OptionsWrapper<ServiceBusOptions>(_serviceBusOptions));

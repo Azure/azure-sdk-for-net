@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(123, options.PrefetchCount);
             Assert.AreEqual("TestConnectionString", options.ConnectionString);
             Assert.AreEqual(123, options.MaxConcurrentCalls);
-            Assert.True(options.AutoCompleteMessages);
+            Assert.False(options.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
         }
 
@@ -43,7 +43,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             ServiceBusOptions result = iObj.ToObject<ServiceBusOptions>();
 
             Assert.AreEqual(123, result.PrefetchCount);
-            Assert.AreEqual("TestConnectionString", result.ConnectionString);
+            // can't round trip the connection string
+            Assert.IsNull(result.ConnectionString);
             Assert.AreEqual(123, result.MaxConcurrentCalls);
             Assert.False(result.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), result.MaxAutoLockRenewalDuration);

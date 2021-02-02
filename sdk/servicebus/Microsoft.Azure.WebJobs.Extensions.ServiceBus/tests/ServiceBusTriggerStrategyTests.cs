@@ -38,8 +38,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(typeof(int[]), bindingDataContract["DeliveryCountArray"]);
             Assert.AreEqual(typeof(string[]), bindingDataContract["DeadLetterSourceArray"]);
             Assert.AreEqual(typeof(string[]), bindingDataContract["LockTokenArray"]);
-            Assert.AreEqual(typeof(DateTime[]), bindingDataContract["ExpiresAtArray"]);
-            Assert.AreEqual(typeof(DateTime[]), bindingDataContract["EnqueuedTimeArray"]);
+            Assert.AreEqual(typeof(DateTime[]), bindingDataContract["ExpiresAtUtcArray"]);
+            Assert.AreEqual(typeof(DateTime[]), bindingDataContract["EnqueuedTimeUtcArray"]);
             Assert.AreEqual(typeof(string[]), bindingDataContract["MessageIdArray"]);
             Assert.AreEqual(typeof(string[]), bindingDataContract["ContentTypeArray"]);
             Assert.AreEqual(typeof(string[]), bindingDataContract["ReplyToArray"]);
@@ -66,14 +66,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 
             Assert.AreEqual(15, bindingData.Count);
 
-            Assert.AreSame(input.Receiver, bindingData["Receiver"]);
-            Assert.AreSame(input.SessionReceiver, bindingData["SessionReceiver"]);
+            Assert.AreSame(input.Receiver, bindingData["MessageReceiver"]);
+            Assert.AreSame(input.SessionReceiver, bindingData["MessageSession"]);
             Assert.AreEqual(message.LockToken, bindingData["LockToken"]);
             Assert.AreEqual(message.SequenceNumber, bindingData["SequenceNumber"]);
             Assert.AreEqual(message.DeliveryCount, bindingData["DeliveryCount"]);
             Assert.AreSame(message.DeadLetterSource, bindingData["DeadLetterSource"]);
-            Assert.AreEqual(message.ExpiresAt, bindingData["ExpiresAt"]);
-            Assert.AreEqual(message.EnqueuedTime, bindingData["EnqueuedTime"]);
+            Assert.AreEqual(message.ExpiresAt, bindingData["ExpiresAtUtc"]);
+            Assert.AreEqual(message.EnqueuedTime, bindingData["EnqueuedTimeUtc"]);
             Assert.AreSame(message.MessageId, bindingData["MessageId"]);
             Assert.AreSame(message.ContentType, bindingData["ContentType"]);
             Assert.AreSame(message.ReplyTo, bindingData["ReplyTo"]);
@@ -102,15 +102,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var bindingData = strategy.GetBindingData(input);
 
             Assert.AreEqual(15, bindingData.Count);
-            Assert.AreSame(input.Receiver, bindingData["Receiver"]);
-            Assert.AreSame(input.SessionReceiver, bindingData["SessionReceiver"]);
+            Assert.AreSame(input.Receiver, bindingData["MessageReceiver"]);
+            Assert.AreSame(input.SessionReceiver, bindingData["MessageSession"]);
 
             // verify an array was created for each binding data type
             Assert.AreEqual(messages.Length, ((int[])bindingData["DeliveryCountArray"]).Length);
             Assert.AreEqual(messages.Length, ((string[])bindingData["DeadLetterSourceArray"]).Length);
             Assert.AreEqual(messages.Length, ((string[])bindingData["LockTokenArray"]).Length);
-            Assert.AreEqual(messages.Length, ((DateTime[])bindingData["ExpiresAtArray"]).Length);
-            Assert.AreEqual(messages.Length, ((DateTime[])bindingData["EnqueuedTimeArray"]).Length);
+            Assert.AreEqual(messages.Length, ((DateTime[])bindingData["ExpiresAtUtcArray"]).Length);
+            Assert.AreEqual(messages.Length, ((DateTime[])bindingData["EnqueuedTimeUtcArray"]).Length);
             Assert.AreEqual(messages.Length, ((string[])bindingData["MessageIdArray"]).Length);
             Assert.AreEqual(messages.Length, ((string[])bindingData["ContentTypeArray"]).Length);
             Assert.AreEqual(messages.Length, ((string[])bindingData["ReplyToArray"]).Length);
@@ -145,8 +145,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(typeof(int), bindingDataContract["DeliveryCount"]);
             Assert.AreEqual(typeof(string), bindingDataContract["DeadLetterSource"]);
             Assert.AreEqual(typeof(string), bindingDataContract["LockToken"]);
-            Assert.AreEqual(typeof(DateTime), bindingDataContract["ExpiresAt"]);
-            Assert.AreEqual(typeof(DateTime), bindingDataContract["EnqueuedTime"]);
+            Assert.AreEqual(typeof(DateTime), bindingDataContract["ExpiresAtUtc"]);
+            Assert.AreEqual(typeof(DateTime), bindingDataContract["EnqueuedTimeUtc"]);
             Assert.AreEqual(typeof(string), bindingDataContract["MessageId"]);
             Assert.AreEqual(typeof(string), bindingDataContract["ContentType"]);
             Assert.AreEqual(typeof(string), bindingDataContract["ReplyTo"]);

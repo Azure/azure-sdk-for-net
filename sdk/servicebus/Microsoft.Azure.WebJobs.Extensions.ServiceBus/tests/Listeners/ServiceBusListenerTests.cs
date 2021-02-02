@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             {
                 ExceptionHandler = ExceptionReceivedHandler
             };
-            _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor, new ServiceBusProcessorOptions());
+            _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor);
 
             _mockMessagingProvider = new Mock<MessagingProvider>(MockBehavior.Strict, new OptionsWrapper<ServiceBusOptions>(config));
 

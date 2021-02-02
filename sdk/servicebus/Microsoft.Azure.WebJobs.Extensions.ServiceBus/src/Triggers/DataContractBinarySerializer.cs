@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
     /// Returns a static <see cref="DataContractBinarySerializer"/> instance of type T.
     /// </summary>
 #pragma warning disable SA1402 // File may only contain a single type
-    public static class DataContractBinarySerializer<T>
+    internal static class DataContractBinarySerializer<T>
 #pragma warning restore SA1402 // File may only contain a single type
     {
         /// <summary>
