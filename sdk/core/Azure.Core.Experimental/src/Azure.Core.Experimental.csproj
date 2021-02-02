@@ -15,9 +15,8 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
-    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
-    <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>
 </Project>
