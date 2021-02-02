@@ -19,25 +19,26 @@ namespace Microsoft.Azure.Management.ResourceManager
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Authorization", "PolicyAssignments", "2020-03-01"),
-                new Tuple<string, string, string>("Authorization", "PolicyDefinitions", "2020-03-01"),
+                new Tuple<string, string, string>("Authorization", "DataPolicyManifests", "2020-09-01"),
+                new Tuple<string, string, string>("Authorization", "PolicyAssignments", "2020-09-01"),
+                new Tuple<string, string, string>("Authorization", "PolicyDefinitions", "2020-09-01"),
                 new Tuple<string, string, string>("Authorization", "PolicyExemptions", "2020-07-01-preview"),
-                new Tuple<string, string, string>("Authorization", "PolicySetDefinitions", "2020-03-01"),
-                new Tuple<string, string, string>("Management", "PolicyAssignments", "2020-03-01"),
-                new Tuple<string, string, string>("Management", "PolicyDefinitions", "2020-03-01"),
+                new Tuple<string, string, string>("Authorization", "PolicySetDefinitions", "2020-09-01"),
+                new Tuple<string, string, string>("Management", "PolicyAssignments", "2020-09-01"),
+                new Tuple<string, string, string>("Management", "PolicyDefinitions", "2020-09-01"),
                 new Tuple<string, string, string>("Management", "PolicyExemptions", "2020-07-01-preview"),
-                new Tuple<string, string, string>("Management", "PolicySetDefinitions", "2020-03-01"),
-                new Tuple<string, string, string>("PolicyClient", "PolicyAssignments", "2020-03-01"),
+                new Tuple<string, string, string>("Management", "PolicySetDefinitions", "2020-09-01"),
+                new Tuple<string, string, string>("PolicyClient", "PolicyAssignments", "2020-09-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.0.6322";
-      public static readonly String AutoRestCmdExecuted = @"cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resources/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-policy-2020-03 --csharp.output-folder=D:\GitHub\azure-sdk-for-net\sdk\resources\Microsoft.Azure.Management.Resource\src\GeneratedPolicy202003";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = @"cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resources/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-policy-2020-09 --csharp.output-folder=D:\GitHub\azure-sdk-for-net\sdk\resources\Microsoft.Azure.Management.Resource\src\GeneratedPolicy202009";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "f2683eb9de3d8306b412ec67d0a0ec0c771962d8";
+      public static readonly String GithubCommidId = "17981f382393ff46f39f2d5c1e6ec6abf790da88";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

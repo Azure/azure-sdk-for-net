@@ -21,10 +21,6 @@ namespace Microsoft.Azure.Management.ResourceManager
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// To manage and control access to your resources, you can define
-    /// customized policies and assign them at a scope.
-    /// </summary>
     public partial class PolicyClient : ServiceClient<PolicyClient>, IPolicyClient, IAzureClient
     {
         /// <summary>
@@ -69,6 +65,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IDataPolicyManifestsOperations.
+        /// </summary>
+        public virtual IDataPolicyManifestsOperations DataPolicyManifests { get; private set; }
 
         /// <summary>
         /// Gets the IPolicyAssignmentsOperations.
@@ -331,6 +332,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         private void Initialize()
         {
+            DataPolicyManifests = new DataPolicyManifestsOperations(this);
             PolicyAssignments = new PolicyAssignmentsOperations(this);
             PolicyDefinitions = new PolicyDefinitionsOperations(this);
             PolicySetDefinitions = new PolicySetDefinitionsOperations(this);

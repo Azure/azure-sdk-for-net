@@ -283,7 +283,6 @@ namespace Policy.Tests
                 {
                     DisplayName = $"{thisTestName} Policy Assignment ${LivePolicyTests.NameTag}",
                     PolicyDefinitionId = definitionResult.Id,
-                    Sku = LivePolicyTests.A0Free
                 };
 
                 var result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
@@ -313,7 +312,6 @@ namespace Policy.Tests
                 policyAssignment.Description = LivePolicyTests.BasicDescription;
                 policyAssignment.Metadata = LivePolicyTests.BasicMetadata;
                 policyAssignment.DisplayName = $"Updated {policyAssignment.DisplayName}";
-                policyAssignment.Sku = LivePolicyTests.A1Standard;
                 policyAssignment.Location = "eastus";
                 policyAssignment.Identity = new Identity(type: ResourceIdentityType.SystemAssigned);
                 policyAssignment.EnforcementMode = EnforcementMode.DoNotEnforce;
@@ -375,9 +373,7 @@ namespace Policy.Tests
                 var policyAssignment = new PolicyAssignment
                 {
                     DisplayName = $"{thisTestName} Policy Assignment",
-                    PolicyDefinitionId = policyDefinition.Id,
-                    Scope = assignmentScope,
-                    Sku = LivePolicyTests.A0Free
+                    PolicyDefinitionId = policyDefinition.Id
                 };
 
                 var assignment = client.PolicyAssignments.Create(assignmentScope, policyAssignmentName, policyAssignment);
@@ -425,9 +421,7 @@ namespace Policy.Tests
                 var policyAssignment = new PolicyAssignment
                 {
                     DisplayName = $"{thisTestName} Policy Assignment",
-                    PolicyDefinitionId = policyDefinition.Id,
-                    Scope = assignmentScope,
-                    Sku = LivePolicyTests.A0Free
+                    PolicyDefinitionId = policyDefinition.Id
                 };
 
                 var assignment = client.PolicyAssignments.Create(assignmentScope, policyAssignmentName, policyAssignment);
@@ -725,9 +719,7 @@ namespace Policy.Tests
                 var policyAssignment = new PolicyAssignment
                 {
                     DisplayName = $"{thisTestName} Policy Assignment",
-                    PolicyDefinitionId = policyDefinition.Id,
-                    Scope = assignmentScope,
-                    Sku = LivePolicyTests.A0Free
+                    PolicyDefinitionId = policyDefinition.Id
                 };
 
                 // assign at management group scope
@@ -766,8 +758,7 @@ namespace Policy.Tests
                 var policyAssignment = new PolicyAssignment
                 {
                     DisplayName = $"{thisTestName} Policy Assignment",
-                    PolicyDefinitionId = policyDefinition.Id,
-                    Scope = assignmentScope,
+                    PolicyDefinitionId = policyDefinition.Id
                 };
 
                 // create assignment at management group scope
@@ -825,8 +816,7 @@ namespace Policy.Tests
                 var assignmentScope = this.SubscriptionScope(client);
                 var policyAssignment = new PolicyAssignment
                 {
-                    DisplayName = $"{thisTestName} Bad Assignment - Missing Policy Definition Id {LivePolicyTests.NameTag}",
-                    Sku = LivePolicyTests.A0Free
+                    DisplayName = $"{thisTestName} Bad Assignment - Missing Policy Definition Id {LivePolicyTests.NameTag}"
                 };
 
                 this.AssertThrowsCloudException(() => client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment), "InvalidRequestContent");
@@ -835,21 +825,10 @@ namespace Policy.Tests
                 policyAssignment = new PolicyAssignment
                 {
                     DisplayName = $"{thisTestName} Bad Assignment - Bad Policy Definition Id {LivePolicyTests.NameTag}",
-                    Sku = LivePolicyTests.A0Free,
                     PolicyDefinitionId = definitionResult.Id.Replace(definitionName, TestUtilities.GenerateName())
                 };
 
                 this.AssertThrowsCloudException(() => client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment), "PolicyDefinitionNotFound");
-
-                // Invalid SKU
-                policyAssignment = new PolicyAssignment
-                {
-                    DisplayName = $"{thisTestName} Bad Assignment - Bad Policy Sku {LivePolicyTests.NameTag}",
-                    Sku = LivePolicyTests.A2FreeInvalid,
-                    PolicyDefinitionId = definitionResult.Id
-                };
-
-                this.AssertThrowsCloudException(() => client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment), "InvalidPolicySku");
 
                 // Delete policy definition and validate
                 this.DeleteDefinitionAndValidate(client, definitionName);
@@ -1175,9 +1154,6 @@ namespace Policy.Tests
         private const string BasicDescription = "Description text";
         private static readonly JToken BasicMetadata = JToken.Parse(@"{ 'category': 'sdk test' }");
         private static readonly IDictionary<string, ParameterDefinitionsValue> BasicParameters = new Dictionary<string, ParameterDefinitionsValue> { { "foo", new ParameterDefinitionsValue(ParameterType.String) } };
-        private static readonly PolicySku A0Free = new PolicySku("A0", "Free");
-        private static readonly PolicySku A1Standard = new PolicySku("A1", "Standard");
-        private static readonly PolicySku A2FreeInvalid = new PolicySku("A2", "Free");
 
         // create a minimal policy definition model
         private PolicyDefinition CreatePolicyDefinition(string displayName) => new PolicyDefinition
@@ -1529,8 +1505,6 @@ namespace Policy.Tests
             AssertMetadataValid(result.Metadata);
             Assert.Equal(model.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(model.PolicyDefinitionId, result.PolicyDefinitionId);
-            Assert.Equal(model.Sku.Name, result.Sku.Name);
-            Assert.Equal(model.Sku.Tier, result.Sku.Tier);
             Assert.Equal(model.Location, result.Location);
             Assert.Equal(model.EnforcementMode, result.EnforcementMode);
             if (model.Identity != null)
@@ -1571,7 +1545,6 @@ namespace Policy.Tests
             Assert.Equal(expected.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(expected.PolicyDefinitionId, result.PolicyDefinitionId);
             Assert.Equal(expected.Scope, result.Scope);
-            Assert.Equal(expected.Sku.ToString(), result.Sku.ToString());
             Assert.Equal(expected.Type, result.Type);
             Assert.Equal(expected.Location, result.Location);
             Assert.Equal(expected.Identity?.Type, result.Identity?.Type);

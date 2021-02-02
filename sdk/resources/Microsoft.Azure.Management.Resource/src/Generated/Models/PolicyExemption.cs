@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// The policy exemption.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PolicyExemption : ProxyResource
+    public partial class PolicyExemption : IResource
     {
         /// <summary>
         /// Initializes a new instance of the PolicyExemption class.
@@ -54,7 +54,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// pairs.</param>
         /// <param name="systemData">Azure Resource Manager metadata containing
         /// createdBy and modifiedBy information.</param>
-        public PolicyExemption(string policyAssignmentId, string exemptionCategory, IList<string> policyDefinitionReferenceIds = default(IList<string>), System.DateTime? expiresOn = default(System.DateTime?), string displayName = default(string), string description = default(string), object metadata = default(object), SystemData systemData = default(SystemData))
+        /// <param name="id">The ID of the policy exemption.</param>
+        /// <param name="name">The name of the policy exemption.</param>
+        /// <param name="type">The type of the resource
+        /// (Microsoft.Authorization/policyExemptions).</param>
+        public PolicyExemption(string policyAssignmentId, string exemptionCategory, IList<string> policyDefinitionReferenceIds = default(IList<string>), System.DateTime? expiresOn = default(System.DateTime?), string displayName = default(string), string description = default(string), object metadata = default(object), SystemData systemData = default(SystemData), string id = default(string), string name = default(string), string type = default(string))
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceIds = policyDefinitionReferenceIds;
@@ -64,6 +68,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Description = description;
             Metadata = metadata;
             SystemData = systemData;
+            Id = id;
+            Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -127,6 +134,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets the ID of the policy exemption.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the policy exemption.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource
+        /// (Microsoft.Authorization/policyExemptions).
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.
