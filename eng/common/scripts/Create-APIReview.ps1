@@ -8,7 +8,8 @@ Param (
   [string] $APIKey,
   [Parameter(Mandatory=$True)]
   [string] $APILabel,
-  [string] $PackageName = ""
+  [string] $PackageName,
+  [string] $ArtifactSubDir = ""
 )
 
 
@@ -56,7 +57,12 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
 $packages = @{}
 if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn"))
 {
-    $packages = &$FindArtifactForApiReviewFn $ArtifactPath $PackageName
+    $artifactLoc = $ArtifactPath
+    if ($ArtifactSubDir)
+    {
+        $artifactLoc = Join-Path -Path $artifactLoc $ArtifactSubDir
+    }
+    $packages = &$FindArtifactForApiReviewFn $artifactLoc $PackageName
 }
 else
 {
