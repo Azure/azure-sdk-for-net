@@ -72,6 +72,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
   Expand-Archive -Path $zipFileLocation -DestinationPath $workFolder
   [xml] $packageXML = Get-ChildItem -Path "$workFolder/*.nuspec" | Get-Content
   $pkgId = $packageXML.package.metadata.id
+  $docsReadMeName = $pkgId -replace "^Azure." , ""
   $pkgVersion = $packageXML.package.metadata.version
 
   $changeLogLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
@@ -95,6 +96,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
     Deployable     = $forceCreate -or !(IsNugetPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion)
     ReleaseNotes   = $releaseNotes
     ReadmeContent  = $readmeContent
+    DocsReadMeName = $docsReadMeName
   }
 }
 
