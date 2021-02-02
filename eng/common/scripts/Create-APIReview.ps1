@@ -98,7 +98,6 @@ foreach ($pkgName in $responses.Keys)
         if (-Not (Test-Path $pkgPropPath))
         {
             Write-Host " Package property file path $($pkgPropPath) is invalid."
-            $FoundFailure = $True
         }
         else
         {
