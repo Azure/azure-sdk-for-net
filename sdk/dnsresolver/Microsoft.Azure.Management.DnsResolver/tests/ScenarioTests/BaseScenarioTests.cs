@@ -78,6 +78,13 @@ namespace DnsResolver.Tests.ScenarioTests
             return createdDnsResolvers;
         }
 
+        protected static string ExtractArmResourceName(string armResourceId)
+        {
+            var pathDelimiter = "/";
+            var splitedArmResourceId = armResourceId.Split(pathDelimiter);
+            return splitedArmResourceId.Last();
+        }
+
         private static string GetTestName(ITestOutputHelper output)
         {
             // Reference: https://github.com/xunit/xunit/issues/416

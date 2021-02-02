@@ -32,17 +32,27 @@ namespace DnsResolver.Tests
 
         public static string GenerateResourceGroupName()
         {
-           return TestUtilities.GenerateName("dnsresolvertestrgt3");
+           return TestUtilities.GenerateName("dnsresolvertestrg");
         }
 
         public static string GenerateDnsResolverName()
         {
-            return TestUtilities.GenerateName("dnsresolvertestresolvert3");
+            return TestUtilities.GenerateName("dnsresolvertestresolver");
         }
 
         public static string GenerateVirtualNetworkName()
         {
-            return TestUtilities.GenerateName("dnsresolvertestvnett3");
+            return TestUtilities.GenerateName("dnsresolvertestvnet");
+        }
+
+        public static string GenerateSubnetName()
+        {
+            return TestUtilities.GenerateName("dnsresolvertestsubnet");
+        }
+
+        public static string GenerateInboundEndpointName()
+        {
+            return TestUtilities.GenerateName("dnsresolvertestinboundendpoint");
         }
 
         public static string GenerateVirtualNetworkArmId(string subscriptionId = null, string resourceGroupName = null, string virtualNetworkName = null)
@@ -62,6 +72,17 @@ namespace DnsResolver.Tests
 
             return $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}";
         }
+
+        public static string GenerateSubnetArmId(string subscriptionId = null, string resourceGroupName = null, string virtualNetworkName = null, string subnetName = null)
+        {
+            subscriptionId = subscriptionId ?? GenerateSubscriptionId();
+            resourceGroupName = resourceGroupName ?? GenerateResourceGroupName();
+            virtualNetworkName = virtualNetworkName ?? GenerateSubnetName();
+            subnetName = subnetName ?? GenerateSubnetName();
+
+            return $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}";
+        }
+
 
         public static ResourceGroup GenerateResourceGroup(string location = null)
         {
@@ -90,6 +111,32 @@ namespace DnsResolver.Tests
             };
         }
 
+
+        public static InboundEndpoint GenenerateInboundEndpoint(string subscriptionId = null, string resourceGroupName = null, string dnsResolverName = null, string inboundEndpointName = null, IDictionary<string, string> metadataTags = null)
+        {
+            return null;
+        }
+
+        public static List<IpConfiguration> GenerateRandomIpConfigurations(int count = 1, string subscriptionId = null, string resourceGroupName = null,  string virtualNetworkName = null) 
+        {
+            subscriptionId = subscriptionId ?? GenerateSubscriptionId();
+            resourceGroupName = resourceGroupName ?? GenerateResourceGroupName();
+            virtualNetworkName = virtualNetworkName ?? GenerateVirtualNetworkName();
+            var ipConfigurations = new List<IpConfiguration>();
+
+            for (var i = 0; i < count; i++)
+            {
+                ipConfigurations.Add(new IpConfiguration
+                {
+                    Subnet = GenerateRandomSubnetSubResource(subscriptionId: subscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: virtualNetworkName),
+                    PrivateIpAddress = null, 
+                    PrivateIpAllocationMethod = Constants.StaticPrivateIpAllocationMethod,
+                });
+            }
+
+            return ipConfigurations;
+        }
+
         public static int GenerateInteger(int minVal= 0, int maxVal = 10)
         {
             return Random.Next(minVal, maxVal);
@@ -113,6 +160,25 @@ namespace DnsResolver.Tests
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             return new string(Enumerable.Repeat(chars, length).Select(s => s[Random.Next(s.Length)]).ToArray());
+        }
+
+        public static string GetRandomIpAddress()
+        {
+            var random = new Random();
+            return $"{random.Next(1, 255)}.{random.Next(0, 255)}.{random.Next(0, 255)}.{random.Next(0, 255)}";
+        }
+
+        private static Microsoft.Azure.Management.DnsResolver.Models.SubResource GenerateRandomSubnetSubResource(string subscriptionId = null, string resourceGroupName = null, string virtualNetworkName = null)
+        {
+            subscriptionId = subscriptionId ?? GenerateSubscriptionId();
+            resourceGroupName = resourceGroupName ?? GenerateResourceGroupName();
+            virtualNetworkName = virtualNetworkName ?? GenerateVirtualNetworkName();
+            var subnetName = GenerateSubnetName();
+
+            return new Microsoft.Azure.Management.DnsResolver.Models.SubResource
+            {
+                Id = GenerateSubnetArmId(subscriptionId, resourceGroupName, virtualNetworkName, subnetName),
+            };
         }
     }
 }

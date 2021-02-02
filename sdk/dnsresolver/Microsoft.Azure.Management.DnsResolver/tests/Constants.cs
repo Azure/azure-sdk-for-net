@@ -13,5 +13,7 @@ namespace DnsResolver.Tests
         public const string DnsResolverResourceType = "Microsoft.Network/dnsResolvers";
 
         public const string ProvisioningStateSucceeded = "Succeeded";
+        public const string StaticPrivateIpAllocationMethod = "Static";
+        public const string DynamicPrivateIpAllocationMethod = "Dynamic";
     }
 }
