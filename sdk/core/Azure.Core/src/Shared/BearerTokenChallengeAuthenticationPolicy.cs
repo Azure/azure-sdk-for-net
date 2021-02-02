@@ -103,6 +103,7 @@ namespace Azure.Core.Pipeline
                     // We were unsuccessful in handling the challenge, so bail out now.
                     return;
                 }
+                _scopes = context.Scopes;
             }
             else
             {
