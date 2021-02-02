@@ -259,6 +259,10 @@ public static class Function_BindingToQueueClient
 }
 ```
 
+## Configuring the extension
+
+Please refer to [sample functions app](samples/functionapp).
+
 ## Troubleshooting
 
 Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
