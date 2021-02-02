@@ -259,7 +259,7 @@ public static class Function_BindingToQueueClient
 }
 ```
 
-## Configuring the extension
+### Configuring the extension
 
 Please refer to [sample functions app](samples/functionapp).
 
