@@ -81,12 +81,21 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// supported only for MongoDB API.</param>
         /// <param name="enableAnalyticalStorage">Flag to indicate whether to
         /// enable storage analytics.</param>
+        /// <param name="backupPolicy">The object representing the policy for
+        /// taking backups on an account.</param>
         /// <param name="cors">The CORS policy for the Cosmos DB database
         /// account.</param>
-        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), IList<CorsPolicy> cors = default(IList<CorsPolicy>))
+        /// <param name="networkAclBypass">Indicates what services are allowed
+        /// to bypass firewall checks. Possible values include: 'None',
+        /// 'AzureServices'</param>
+        /// <param name="networkAclBypassResourceIds">An array that contains
+        /// the Resource Ids for Network Acl Bypass for the Cosmos DB
+        /// account.</param>
+        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), string networkAclBypass = default(string), IList<string> networkAclBypassResourceIds = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             Kind = kind;
+            Identity = identity;
             ConsistencyPolicy = consistencyPolicy;
             Locations = locations;
             IpRules = ipRules;
@@ -103,7 +112,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             EnableFreeTier = enableFreeTier;
             ApiProperties = apiProperties;
             EnableAnalyticalStorage = enableAnalyticalStorage;
+            BackupPolicy = backupPolicy;
             Cors = cors;
+            NetworkAclBypass = networkAclBypass;
+            NetworkAclBypassResourceIds = networkAclBypassResourceIds;
             CustomInit();
         }
         /// <summary>
@@ -126,6 +138,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the consistency policy for the Cosmos DB account.
@@ -236,10 +253,31 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public bool? EnableAnalyticalStorage { get; set; }
 
         /// <summary>
+        /// Gets or sets the object representing the policy for taking backups
+        /// on an account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.backupPolicy")]
+        public BackupPolicy BackupPolicy { get; set; }
+
+        /// <summary>
         /// Gets or sets the CORS policy for the Cosmos DB database account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.cors")]
         public IList<CorsPolicy> Cors { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates what services are allowed to bypass firewall
+        /// checks. Possible values include: 'None', 'AzureServices'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAclBypass")]
+        public string NetworkAclBypass { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array that contains the Resource Ids for Network
+        /// Acl Bypass for the Cosmos DB account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAclBypassResourceIds")]
+        public IList<string> NetworkAclBypassResourceIds { get; set; }
 
         /// <summary>
         /// The offer type for the database

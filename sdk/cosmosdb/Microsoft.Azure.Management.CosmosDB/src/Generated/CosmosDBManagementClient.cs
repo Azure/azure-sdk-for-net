@@ -47,6 +47,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
@@ -437,6 +442,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2021-01-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -466,6 +472,8 @@ namespace Microsoft.Azure.Management.CosmosDB
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BackupPolicy>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BackupPolicy>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 {
 
     /// <summary>
-    /// Defines values for ServerVersion.
+    /// Defines values for NetworkAclBypass.
     /// </summary>
-    public static class ServerVersion
+    public static class NetworkAclBypass
     {
-        public const string ThreeFullStopTwo = "3.2";
-        public const string ThreeFullStopSix = "3.6";
-        public const string FourFullStopZero = "4.0";
+        public const string None = "None";
+        public const string AzureServices = "AzureServices";
     }
 }
