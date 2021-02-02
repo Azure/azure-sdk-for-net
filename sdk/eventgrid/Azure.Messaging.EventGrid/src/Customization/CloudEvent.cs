@@ -117,15 +117,15 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary>
         /// Gets whether or not the event is a System defined event and returns the deserialized
-        /// system event via out parameter.
+        /// system event data via out parameter.
         /// </summary>
-        /// <param name="systemEvent">If the event is a system event, this will be populated
-        /// with the deserialized system event. Otherwise, this will be null.</param>
+        /// <param name="eventData">If the event is a system event, this will be populated
+        /// with the deserialized system event data. Otherwise, this will be null.</param>
         /// <returns> Whether or not the event is a system event.</returns>
-        public bool TryGetSystemEvent(out object systemEvent)
+        public bool TryGetSystemEventData(out object eventData)
         {
-            systemEvent = SystemEventExtensions.AsSystemEventData(Type, SerializedData);
-            return systemEvent != null;
+            eventData = SystemEventExtensions.AsSystemEventData(Type, SerializedData);
+            return eventData != null;
         }
 
         /// <summary>

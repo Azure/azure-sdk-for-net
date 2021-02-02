@@ -1,10 +1,5 @@
 namespace Azure.Messaging.EventGrid
 {
-    public static partial class BinaryDataExtensions
-    {
-        public static Azure.Messaging.EventGrid.CloudEvent ToCloudEvent(this System.BinaryData binaryData) { throw null; }
-        public static Azure.Messaging.EventGrid.EventGridEvent ToEventGridEvent(this System.BinaryData binaryData) { throw null; }
-    }
     public partial class CloudEvent
     {
         public CloudEvent(string source, string type, object data, System.Type dataSerializationType = null) { }
@@ -20,7 +15,7 @@ namespace Azure.Messaging.EventGrid
         public System.BinaryData GetData() { throw null; }
         public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Messaging.EventGrid.CloudEvent[] Parse(string requestContent) { throw null; }
-        public bool TryGetSystemEvent(out object systemEvent) { throw null; }
+        public bool TryGetSystemEventData(out object eventData) { throw null; }
     }
     public partial class EventGridEvent
     {
@@ -35,6 +30,11 @@ namespace Azure.Messaging.EventGrid
         public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(string requestContent) { throw null; }
         public bool TryGetSystemEventData(out object eventData) { throw null; }
+    }
+    public static partial class EventGridExtensions
+    {
+        public static Azure.Messaging.EventGrid.CloudEvent ToCloudEvent(this System.BinaryData binaryData) { throw null; }
+        public static Azure.Messaging.EventGrid.EventGridEvent ToEventGridEvent(this System.BinaryData binaryData) { throw null; }
     }
     public partial class EventGridPublisherClient
     {

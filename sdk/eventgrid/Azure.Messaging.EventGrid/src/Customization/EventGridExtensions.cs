@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventGrid
     /// <summary>
     /// Extension methods for BinaryData to use for parsing JSON-encoded events.
     /// </summary>
-    public static class BinaryDataExtensions
+    public static class EventGridExtensions
     {
         /// <summary>
         /// Given a single JSON-encoded event, parses the event envelope and returns an EventGridEvent.

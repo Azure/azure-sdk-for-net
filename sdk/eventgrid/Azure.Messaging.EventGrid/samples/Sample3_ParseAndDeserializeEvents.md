@@ -58,7 +58,7 @@ If expecting mostly system events, it may be cleaner to switch on `TryGetSystemE
 ```C# Snippet:DeserializePayloadUsingAsSystemEventData
 foreach (EventGridEvent egEvent in egEvents)
 {
-    // If the event is a system event, AsSystemEventData() should return the correct system event type
+    // If the event is a system event, TryGetSystemEventData() will return the deserialized system event
     if (egEvent.TryGetSystemEventData(out object systemEvent))
     {
         switch (systemEvent)
