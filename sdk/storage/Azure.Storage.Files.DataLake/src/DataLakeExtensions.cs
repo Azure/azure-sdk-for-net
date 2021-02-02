@@ -506,7 +506,7 @@ namespace Azure.Storage.Files.DataLake
             return new PathItem
             {
                 Name = path.Name,
-                IsDirectory = bool.Parse(path.IsDirectory),
+                IsDirectory = path.IsDirectory != null && bool.Parse(path.IsDirectory),
                 LastModified = path.LastModified.GetValueOrDefault(),
                 ETag = new ETag(path.ETag),
                 ContentLength = long.Parse(path.ContentLength, CultureInfo.InvariantCulture),
