@@ -518,5 +518,17 @@ namespace Azure.Storage.Files.DataLake
         {
             return null;
         }
+
+        // TODO
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathFlushDataHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetExpiryHeaders> response)
+        {
+            return null;
+        }
     }
 }

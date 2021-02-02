@@ -1929,34 +1929,49 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(offset)}: {offset}\n" +
                     $"{nameof(leaseId)}: {leaseId}\n");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
+
                 try
                 {
+                    scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
+                    ResponseWithHeaders<PathAppendDataHeaders> response;
 
-                    Response<PathAppendDataResult> response = await DataLakeRestClient.Path.AppendDataAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: DfsUri,
-                        body: content,
-                        version: Version.ToVersionString(),
-                        position: offset,
-                        contentLength: content?.Length - content?.Position ?? 0,
-                        transactionalContentHash: contentHash,
-                        leaseId: leaseId,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    if (async)
+                    {
+                        response = await PathRestClient.AppendDataAsync(
+                            body: content,
+                            position: offset,
+                            contentLength: content?.Length - content?.Position ?? 0,
+                            transactionalContentHash: contentHash,
+                            leaseId: leaseId,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PathRestClient.AppendData(
+                            body: content,
+                            position: offset,
+                            contentLength: content?.Length - content?.Position ?? 0,
+                            transactionalContentHash: contentHash,
+                            leaseId: leaseId,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(DataLakeFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2193,48 +2208,70 @@ namespace Azure.Storage.Files.DataLake
                 message:
                 $"{nameof(Uri)}: {Uri}");
 
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Flush)}");
+
                 try
                 {
-                    Response<PathFlushDataResult> response = await DataLakeRestClient.Path.FlushDataAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: DfsUri,
-                        version: Version.ToVersionString(),
-                        position: position,
-                        retainUncommittedData: retainUncommittedData,
-                        close: close,
-                        contentLength: 0,
-                        contentHash: httpHeaders?.ContentHash,
-                        leaseId: conditions?.LeaseId,
-                        cacheControl: httpHeaders?.CacheControl,
-                        contentType: httpHeaders?.ContentType,
-                        contentDisposition: httpHeaders?.ContentDisposition,
-                        contentEncoding: httpHeaders?.ContentEncoding,
-                        contentLanguage: httpHeaders?.ContentLanguage,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<PathFlushDataHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PathRestClient.FlushDataAsync(
+                            position: position,
+                            retainUncommittedData: retainUncommittedData,
+                            close: close,
+                            contentLength: 0,
+                            contentMD5: httpHeaders?.ContentHash,
+                            leaseId: conditions?.LeaseId,
+                            cacheControl: httpHeaders?.CacheControl,
+                            contentType: httpHeaders?.ContentType,
+                            contentDisposition: httpHeaders?.ContentDisposition,
+                            contentEncoding: httpHeaders?.ContentEncoding,
+                            contentLanguage: httpHeaders?.ContentLanguage,
+                            // TODO figure out how to make these optional ETags
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PathRestClient.FlushData(
+                            position: position,
+                            retainUncommittedData: retainUncommittedData,
+                            close: close,
+                            contentLength: 0,
+                            contentMD5: httpHeaders?.ContentHash,
+                            leaseId: conditions?.LeaseId,
+                            cacheControl: httpHeaders?.CacheControl,
+                            contentType: httpHeaders?.ContentType,
+                            contentDisposition: httpHeaders?.ContentDisposition,
+                            contentEncoding: httpHeaders?.ContentEncoding,
+                            contentLanguage: httpHeaders?.ContentLanguage,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return Response.FromValue(
-                        new PathInfo()
-                        {
-                            ETag = response.Value.ETag,
-                            LastModified = response.Value.LastModified
-                        },
+                        response.ToPathInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(DataLakeFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3647,8 +3684,12 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(options.TimeToExpire)}: {options.TimeToExpire}\n" +
                     $"{nameof(options.SetExpiryRelativeTo)}: {options.SetExpiryRelativeTo}\n" +
                     $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}");
+
                 try
                 {
+                    scope.Start();
                     PathExpiryOptions blobExpiryOptions;
                     string expiresOn = null;
 
@@ -3679,33 +3720,38 @@ namespace Azure.Storage.Files.DataLake
                         }
                     }
 
-                    Response<PathSetExpiryInternal> response = await DataLakeRestClient.Path.SetExpiryAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        BlobUri,
-                        Version.ToVersionString(),
-                        blobExpiryOptions,
-                        expiresOn: expiresOn,
-                        async: async,
-                        operationName: $"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}",
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<PathSetExpiryHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PathRestClient.SetExpiryAsync(
+                            expiryOptions: blobExpiryOptions,
+                            expiresOn: expiresOn,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PathRestClient.SetExpiry(
+                            expiryOptions: blobExpiryOptions,
+                            expiresOn: expiresOn,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return Response.FromValue(
-                        new PathInfo
-                        {
-                            ETag = response.Value.ETag,
-                            LastModified = response.Value.LastModified
-                        },
+                        response.ToPathInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(DataLakeFileClient));
+                    scope.Dispose();
                 }
             }
         }
