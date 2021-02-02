@@ -94,6 +94,9 @@ namespace Azure.Storage
         public const string CommaString = ",";
         public const char CommaChar = ',';
 
+        public const string ContentTypeApplicationXml = "application/xml";
+        public const string ContentTypeApplicationJson = "application/json";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>

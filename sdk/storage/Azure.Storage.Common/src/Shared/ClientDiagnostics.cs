@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Storage;
@@ -35,7 +36,8 @@ namespace Azure.Core.Pipeline
         {
             additionalInfo = new Dictionary<string, string>();
 
-            if (content != null)
+            // XML body
+            if (responseHeaders.ContentType == Constants.ContentTypeApplicationXml)
             {
                 XDocument xml = XDocument.Parse(content);
                 errorCode = xml.Root.Element(Constants.ErrorCode).Value;
@@ -54,7 +56,29 @@ namespace Azure.Core.Pipeline
                     }
                 }
             }
-            // Error response does not have a content body.
+
+            // Json body
+            // TODO make everthing here constants.
+            else if (responseHeaders.ContentType == Constants.ContentTypeApplicationJson)
+            {
+                JsonDocument json = JsonDocument.Parse(content);
+                JsonElement error = json.RootElement.GetProperty("error");
+
+                IDictionary<string, string> details = default;
+                if (error.TryGetProperty("detail", out JsonElement detail))
+                {
+                    details = new Dictionary<string, string>();
+                    foreach (JsonProperty property in detail.EnumerateObject())
+                    {
+                        details[property.Name] = property.Value.GetString();
+                    }
+                }
+
+                message = error.GetProperty("message").GetString();
+                errorCode = error.GetProperty("code").GetString();
+                additionalInfo = details;
+            }
+            // No content body
             else
             {
                 // The other headers will appear in the "Headers" section of the Exception message.
