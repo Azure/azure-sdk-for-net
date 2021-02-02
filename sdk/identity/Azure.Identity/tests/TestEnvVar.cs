@@ -41,15 +41,6 @@ namespace Azure.Identity.Tests
             Environment.SetEnvironmentVariable(name, value);
         }
 
-        // clear the existing values so that the test needs only set up the values relevant to it.
-        private void CleanExistingEnvironmentVariables()
-        {
-            foreach (var kvp in _originalValues)
-            {
-                Environment.SetEnvironmentVariable(kvp.Key, null);
-            }
-        }
-
         public TestEnvVar(Dictionary<string, string> environmentVariables)
         {
             var acquired = _lock.Wait(TimeSpan.Zero);
@@ -78,6 +69,15 @@ namespace Azure.Identity.Tests
                 Environment.SetEnvironmentVariable(kvp.Key, kvp.Value);
             }
             _lock.Release();
+        }
+
+        // clear the existing values so that the test needs only set up the values relevant to it.
+        private void CleanExistingEnvironmentVariables()
+        {
+            foreach (var kvp in _originalValues)
+            {
+                Environment.SetEnvironmentVariable(kvp.Key, null);
+            }
         }
     }
 }

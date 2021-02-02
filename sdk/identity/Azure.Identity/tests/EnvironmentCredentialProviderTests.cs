@@ -58,11 +58,12 @@ namespace Azure.Identity.Tests
         [Test]
         public void CredentialConstructionClientCertificate()
         {
-            using (new TestEnvVar(new Dictionary<string, string>
+            using (new TestEnvVar(new ()
             {
-                {"AZURE_CLIENT_ID", "mockclientid"},
-                {"AZURE_TENANT_ID", "mocktenantid"},
-                {"AZURE_CLIENT_CERTIFICATE_PATH", "mockcertificatepath"}}))
+                { "AZURE_CLIENT_ID", "mockclientid" },
+                { "AZURE_TENANT_ID", "mocktenantid" },
+                { "AZURE_CLIENT_CERTIFICATE_PATH", "mockcertificatepath" }
+            }))
             {
                 var provider = new EnvironmentCredential();
                 var cred = provider.Credential as ClientCertificateCredential;
@@ -104,7 +105,7 @@ namespace Azure.Identity.Tests
             await Task.CompletedTask;
         }
 
-        public static IEnumerable<object[]> EnvironmentSettings()
+        public static IEnumerable<object[]> AssertCredentialUnavailableWhenEmptyStringEnvironmentSettings()
         {
             yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", string.Empty }, { "AZURE_CLIENT_SECRET", "mockclientsecret" }, { "AZURE_TENANT_ID", "mocktenantid" } } };
             yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_SECRET", string.Empty }, { "AZURE_TENANT_ID", "mocktenantid" } } };
@@ -120,7 +121,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        [TestCaseSource(nameof(EnvironmentSettings))]
+        [TestCaseSource(nameof(AssertCredentialUnavailableWhenEmptyStringEnvironmentSettings))]
         public void AssertCredentialUnavailableWhenEmptyString(Dictionary<string, string> environmentVars)
         {
             using (new TestEnvVar(environmentVars))
