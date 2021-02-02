@@ -2212,8 +2212,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(source)}: {source}\n" +
                     $"{nameof(sourceConditions)}: {sourceConditions}\n" +
                     $"{nameof(destinationConditions)}: {destinationConditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(StartCopyFromUri)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobStartCopyFromURLHeaders> response;
 
                     if (async)
@@ -2269,11 +2273,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2400,8 +2406,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(copyId)}: {copyId}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(AbortCopyFromUri)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobAbortCopyFromURLHeaders> response;
 
                     if (async)
@@ -2425,11 +2435,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2601,6 +2613,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SyncCopyFromUri)}");
+
                 try
                 {
                     Pipeline.LogMethodEnter(
@@ -2610,6 +2624,8 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(source)}: {source}\n" +
                     $"{nameof(sourceConditions)}: {sourceConditions}\n" +
                     $"{nameof(destinationConditions)}: {destinationConditions}");
+
+                    scope.Start();
 
                     ResponseWithHeaders<BlobCopyFromURLHeaders> response;
 
@@ -2660,11 +2676,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2889,6 +2907,10 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(snapshotsOption)}: {snapshotsOption}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                string operationName = $"{nameof(BlobBaseClient)}.{nameof(DeleteIfExists)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
                     Response response = await DeleteInternal(
@@ -2896,7 +2918,7 @@ namespace Azure.Storage.Blobs.Specialized
                         conditions,
                         async,
                         cancellationToken,
-                        $"{nameof(BlobBaseClient)}.{nameof(DeleteIfExists)}")
+                        operationName)
                         .ConfigureAwait(false);
                     return Response.FromValue(true, response);
                 }
@@ -2960,9 +2982,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName = null)
-#pragma warning restore CA1801 // Review unused parameters
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -2972,8 +2992,13 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(snapshotsOption)}: {snapshotsOption}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                operationName ??= $"{nameof(BlobBaseClient)}.{nameof(AbortCopyFromUri)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobDeleteHeaders> response;
 
                     if (async)
@@ -3007,11 +3032,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3093,13 +3120,16 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}");
 
+                string operationName = $"{nameof(BlobBaseClient)}.{nameof(Exists)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
                     Response<BlobProperties> response = await GetPropertiesInternal(
                         conditions: default,
                         async: async,
                         cancellationToken: cancellationToken,
-                        $"{nameof(BlobBaseClient)}.{nameof(Exists)}")
+                        operationName)
                         .ConfigureAwait(false);
 
                     return Response.FromValue(true, response.GetRawResponse());
@@ -3113,11 +3143,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3208,8 +3240,12 @@ namespace Azure.Storage.Blobs.Specialized
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(Undelete)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobUndeleteHeaders> response;
 
                     if (async)
@@ -3229,11 +3265,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3356,8 +3394,12 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(GetProperties)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobGetPropertiesHeaders> response;
 
                     if (async)
@@ -3395,11 +3437,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3527,8 +3571,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetHttpHeaders)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobSetHttpHeadersHeaders> response;
 
                     if (async)
@@ -3574,11 +3622,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3704,8 +3754,12 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetMetadata)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobSetMetadataHeaders> response;
 
                     if (async)
@@ -3747,11 +3801,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3877,8 +3933,12 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(CreateSnapshot)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobCreateSnapshotHeaders> response;
 
                     if (async)
@@ -3920,11 +3980,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -4092,8 +4154,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessTier)}: {accessTier}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetAccessTier)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobSetTierHeaders> response;
 
                     if (async)
@@ -4121,11 +4187,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -4234,8 +4302,11 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}");
 
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(GetTags)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobTags, BlobGetTagsHeaders> response;
 
                     if (async)
@@ -4266,11 +4337,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -4403,8 +4476,12 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(tags)}: {tags}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetTags)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<BlobSetTagsHeaders> response;
 
                     if (async)
@@ -4430,11 +4507,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }

@@ -286,8 +286,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(duration)}: {duration}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Acquire)}");
+
                 try
                 {
+                    scope.Start();
                     string tagCondition = null;
                     if (conditions is BlobLeaseRequestConditions leaseConditions)
                     {
@@ -367,11 +371,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -499,8 +505,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Renew)}");
+
                 try
                 {
+                    scope.Start();
                     string tagConditions = null;
                     if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
                     {
@@ -576,11 +586,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -712,8 +724,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Release)}");
+
                 try
                 {
+                    scope.Start();
                     string tagConditions = default;
 
                     if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
@@ -790,11 +806,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -929,8 +947,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(proposedId)}: {proposedId}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Change)}");
+
                 try
                 {
+                    scope.Start();
                     string tagCondition = null;
                     if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
                     {
@@ -1010,11 +1032,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1206,8 +1230,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(breakPeriod)}: {breakPeriod}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Break)}");
+
                 try
                 {
+                    scope.Start();
                     string tagConditions = null;
                     if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
                     {
@@ -1283,11 +1311,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
