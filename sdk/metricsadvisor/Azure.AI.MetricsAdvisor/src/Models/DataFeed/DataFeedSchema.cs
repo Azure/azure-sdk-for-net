@@ -14,18 +14,12 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class DataFeedSchema
     {
-        private IList<DataFeedDimension> _dimensionColumns;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeedSchema"/> class.
         /// </summary>
-        /// <param name="metricColumns">The metrics ingested from the data feed. The values of these metrics are monitored in search of anomalies. Cannot be empty.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="metricColumns"/> is null.</exception>
-        public DataFeedSchema(IList<DataFeedMetric> metricColumns)
+        public DataFeedSchema()
         {
-            Argument.AssertNotNull(metricColumns, nameof(metricColumns));
-
-            MetricColumns = metricColumns;
+            MetricColumns = new ChangeTrackingList<DataFeedMetric>();
             DimensionColumns = new ChangeTrackingList<DataFeedDimension>();
         }
 
@@ -47,18 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// values this set of dimensions can assume, one time series is generated and
         /// monitored in search of anomalies.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><see cref="DimensionColumns"/> is null.</exception>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IList<DataFeedDimension> DimensionColumns
-        {
-            get => _dimensionColumns;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(DimensionColumns));
-                _dimensionColumns = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IList<DataFeedDimension> DimensionColumns { get; }
 
         /// <summary>
         /// The name of the data source's column with date or string values to be used as timestamp.
