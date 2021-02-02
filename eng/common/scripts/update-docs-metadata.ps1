@@ -103,7 +103,7 @@ foreach ($config in $targets) {
     Write-Host ($pkgsFiltered | % { $_.PackageId + " " + $_.PackageVersion })
   
     foreach ($packageInfo in $pkgsFiltered) {
-      $readmeName = $packageInfo.DocsReadMeName
+      $readmeName = "$($packageInfo.DocsReadMeName.ToLower())-readme${suffix}.md"
       $readmeFolder = Join-Path $DocRepoLocation $config.content_folder
       $readmeLocation = Join-Path $readmeFolder $readmeName
 
