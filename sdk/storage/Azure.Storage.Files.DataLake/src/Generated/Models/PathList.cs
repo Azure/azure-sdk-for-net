@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The PathList. </summary>
-    public partial class PathList
+    internal partial class PathList
     {
         /// <summary> Initializes a new instance of PathList. </summary>
         internal PathList()

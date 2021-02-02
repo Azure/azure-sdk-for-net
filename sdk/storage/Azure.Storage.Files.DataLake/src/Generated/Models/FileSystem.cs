@@ -8,7 +8,7 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The FileSystem. </summary>
-    public partial class FileSystem
+    internal partial class FileSystem
     {
         /// <summary> Initializes a new instance of FileSystem. </summary>
         internal FileSystem()

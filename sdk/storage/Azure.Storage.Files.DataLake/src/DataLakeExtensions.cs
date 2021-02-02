@@ -208,22 +208,22 @@ namespace Azure.Storage.Files.DataLake
             return pathItem;
         }
 
-        internal static PathContentInfo ToPathContentInfo(this PathUpdateResult pathUpdateResult) =>
-            new PathContentInfo()
-            {
-                ContentHash = pathUpdateResult.ContentMD5,
-                ETag = pathUpdateResult.ETag,
-                LastModified = pathUpdateResult.LastModified,
-                AcceptRanges = pathUpdateResult.AcceptRanges,
-                CacheControl = pathUpdateResult.CacheControl,
-                ContentDisposition = pathUpdateResult.ContentDisposition,
-                ContentEncoding = pathUpdateResult.ContentEncoding,
-                ContentLanguage = pathUpdateResult.ContentLanguage,
-                ContentLength = pathUpdateResult.ContentLength,
-                ContentRange = pathUpdateResult.ContentRange,
-                ContentType = pathUpdateResult.ContentType,
-                Metadata = ToMetadata(pathUpdateResult.Properties)
-            };
+        //internal static PathContentInfo ToPathContentInfo(this PathUpdateResult pathUpdateResult) =>
+        //    new PathContentInfo()
+        //    {
+        //        ContentHash = pathUpdateResult.ContentMD5,
+        //        ETag = pathUpdateResult.ETag,
+        //        LastModified = pathUpdateResult.LastModified,
+        //        AcceptRanges = pathUpdateResult.AcceptRanges,
+        //        CacheControl = pathUpdateResult.CacheControl,
+        //        ContentDisposition = pathUpdateResult.ContentDisposition,
+        //        ContentEncoding = pathUpdateResult.ContentEncoding,
+        //        ContentLanguage = pathUpdateResult.ContentLanguage,
+        //        ContentLength = pathUpdateResult.ContentLength,
+        //        ContentRange = pathUpdateResult.ContentRange,
+        //        ContentType = pathUpdateResult.ContentType,
+        //        Metadata = ToMetadata(pathUpdateResult.Properties)
+        //    };
 
         private static IDictionary<string, string> ToMetadata(string rawMetdata)
         {

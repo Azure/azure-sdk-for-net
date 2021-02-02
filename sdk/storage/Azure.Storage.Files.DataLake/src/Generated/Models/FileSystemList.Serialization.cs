@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    public partial class FileSystemList
+    internal partial class FileSystemList
     {
         internal static FileSystemList DeserializeFileSystemList(JsonElement element)
         {

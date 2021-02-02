@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    public partial class SetAccessControlRecursiveResponse
+    internal partial class SetAccessControlRecursiveResponse
     {
         internal static SetAccessControlRecursiveResponse DeserializeSetAccessControlRecursiveResponse(JsonElement element)
         {

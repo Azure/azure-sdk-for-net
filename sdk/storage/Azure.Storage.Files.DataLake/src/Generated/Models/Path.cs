@@ -8,7 +8,7 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The Path. </summary>
-    public partial class Path
+    internal partial class Path
     {
         /// <summary> Initializes a new instance of Path. </summary>
         internal Path()

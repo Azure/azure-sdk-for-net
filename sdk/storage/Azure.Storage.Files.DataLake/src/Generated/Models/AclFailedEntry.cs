@@ -8,7 +8,7 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The AclFailedEntry. </summary>
-    public partial class AclFailedEntry
+    internal partial class AclFailedEntry
     {
         /// <summary> Initializes a new instance of AclFailedEntry. </summary>
         internal AclFailedEntry()
@@ -25,9 +25,5 @@ namespace Azure.Storage.Files.DataLake.Models
             Type = type;
             ErrorMessage = errorMessage;
         }
-
-        public string Name { get; }
-        public string Type { get; }
-        public string ErrorMessage { get; }
     }
 }

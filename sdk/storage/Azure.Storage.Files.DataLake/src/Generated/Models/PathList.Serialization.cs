@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    public partial class PathList
+    internal partial class PathList
     {
         internal static PathList DeserializePathList(JsonElement element)
         {

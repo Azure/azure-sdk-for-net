@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    public partial class Path
+    internal partial class Path
     {
         internal static Path DeserializePath(JsonElement element)
         {

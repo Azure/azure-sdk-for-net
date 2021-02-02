@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    public partial class AclFailedEntry
+    internal partial class AclFailedEntry
     {
         internal static AclFailedEntry DeserializeAclFailedEntry(JsonElement element)
         {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The FileSystemList. </summary>
-    public partial class FileSystemList
+    internal partial class FileSystemList
     {
         /// <summary> Initializes a new instance of FileSystemList. </summary>
         internal FileSystemList()
