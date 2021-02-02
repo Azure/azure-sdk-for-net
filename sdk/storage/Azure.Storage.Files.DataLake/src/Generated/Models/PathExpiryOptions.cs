@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The PathExpiryOptions. </summary>
-    public readonly partial struct PathExpiryOptions : IEquatable<PathExpiryOptions>
+    internal readonly partial struct PathExpiryOptions : IEquatable<PathExpiryOptions>
     {
         private readonly string _value;
 
