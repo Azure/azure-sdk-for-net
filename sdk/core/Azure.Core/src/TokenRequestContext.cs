@@ -44,7 +44,7 @@ namespace Azure.Core
         public string? ParentRequestId { get; }
 
         /// <summary>
-        /// Additional claims to be included in the token.
+        /// Additional claims to be included in the token. See <see cref="https://openid.net/specs/openid-connect-core-1_0-final.html#ClaimsParameter">https://openid.net/specs/openid-connect-core-1_0-final.html#ClaimsParameter</see> for more information on format and content.
         /// </summary>
         public string? Claims { get; }
     }
