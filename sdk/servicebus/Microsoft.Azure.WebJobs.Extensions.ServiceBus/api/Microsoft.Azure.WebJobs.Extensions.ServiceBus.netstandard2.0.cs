@@ -34,13 +34,6 @@ namespace Microsoft.Azure.WebJobs
         public string TopicName { get { throw null; } }
     }
 }
-namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
-{
-    public static partial class DataContractBinarySerializer<T>
-    {
-        public static readonly System.Runtime.Serialization.XmlObjectSerializer Instance;
-    }
-}
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
     public static partial class Constants
