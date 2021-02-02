@@ -783,7 +783,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected abstract Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken);
 
         /// <summary>
-         ///   Returns a checkpoint for the Event Hub, consumer group, and identifier of the partition associated with the
+        ///   Returns a checkpoint for the Event Hub, consumer group, and identifier of the partition associated with the
         ///   event processor instance, so that processing for a given partition can be properly initialized.
         ///   The default implementation calls the <see cref="ListCheckpointsAsync"/> and filters results by <see cref="EventProcessorCheckpoint.PartitionId"/>.
         ///   It's recommended that this method is overriden in <see cref="EventProcessor{TPartition}"/> implementations to achieve an optimal performance.

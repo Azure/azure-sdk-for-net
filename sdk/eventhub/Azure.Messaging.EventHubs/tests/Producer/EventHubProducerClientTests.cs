@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]")]
         public void ConstructorValidatesConnectionString(string connectionString)
         {
-            Assert.That(() =>new EventHubProducerClient(connectionString), Throws.ArgumentException.And.Message.StartsWith(Resources.MissingConnectionInformation));
+            Assert.That(() => new EventHubProducerClient(connectionString), Throws.ArgumentException.And.Message.StartsWith(Resources.MissingConnectionInformation));
         }
 
         /// <summary>
@@ -406,9 +406,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             clientOptions.PartitionOptions.Add(expectedPartition, new PartitionPublishingOptions
             {
-               ProducerGroupId = 999,
-               OwnerLevel = 999,
-               StartingSequenceNumber = 999
+                ProducerGroupId = 999,
+                OwnerLevel = 999,
+                StartingSequenceNumber = 999
             });
 
             var producer = new EventHubProducerClient(connection, clientOptions);
@@ -786,10 +786,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var events = EventGenerator.CreateEvents(5).Select(item =>
             {
-               item.PendingPublishSequenceNumber = 5;
-               item.CommitPublishingState();
+                item.PendingPublishSequenceNumber = 5;
+                item.CommitPublishingState();
 
-               return item;
+                return item;
             });
 
             var sendOptions = new SendEventOptions { PartitionId = "0" };
@@ -880,9 +880,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             clientOptions.PartitionOptions.Add(expectedPartition, new PartitionPublishingOptions
             {
-               ProducerGroupId = 999,
-               OwnerLevel = 999,
-               StartingSequenceNumber = 999
+                ProducerGroupId = 999,
+                OwnerLevel = 999,
+                StartingSequenceNumber = 999
             });
 
             var producer = new EventHubProducerClient(connection, clientOptions);
@@ -1295,7 +1295,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var batchOptions = new CreateBatchOptions { PartitionKey = "testKey" };
             batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", batchOptions);
-            Assert.That(async () => await producer.SendAsync(batch), Throws.InstanceOf<InvalidOperationException>(), "A partition key cannot be used with idempotent publishing.");;
+            Assert.That(async () => await producer.SendAsync(batch), Throws.InstanceOf<InvalidOperationException>(), "A partition key cannot be used with idempotent publishing.");
+            ;
         }
 
         /// <summary>
@@ -1340,10 +1341,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var events = EventGenerator.CreateEvents(5).Skip(4).Select(item =>
             {
-               item.PendingPublishSequenceNumber = 5;
-               item.CommitPublishingState();
+                item.PendingPublishSequenceNumber = 5;
+                item.CommitPublishingState();
 
-               return item;
+                return item;
             });
 
             var batch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", new CreateBatchOptions { PartitionId = "0" });
@@ -1434,9 +1435,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             clientOptions.PartitionOptions.Add(expectedPartition, new PartitionPublishingOptions
             {
-               ProducerGroupId = 999,
-               OwnerLevel = 999,
-               StartingSequenceNumber = 999
+                ProducerGroupId = 999,
+                OwnerLevel = 999,
+                StartingSequenceNumber = 999
             });
 
             var producer = new EventHubProducerClient(connection, clientOptions);
@@ -2749,7 +2750,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             public bool WasClosed { get; set; } = false;
 
-            public MockPooledProducer(TransportProducer transportProducer): base(transportProducer, (_) => Task.CompletedTask)
+            public MockPooledProducer(TransportProducer transportProducer) : base(transportProducer, (_) => Task.CompletedTask)
             {
             }
 
