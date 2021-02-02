@@ -901,8 +901,13 @@ namespace Azure.Storage.Blobs.Specialized
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(Download)}");
+
                 try
                 {
+                    scope.Start();
+
                     if (UsingClientSideEncryption)
                     {
                         range = BlobClientSideDecryptor.GetEncryptedBlobRange(range);
@@ -971,11 +976,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }

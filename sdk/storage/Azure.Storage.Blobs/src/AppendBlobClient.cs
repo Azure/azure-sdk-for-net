@@ -739,9 +739,16 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
-                var conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+
+                string operationName = $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
+                AppendBlobRequestConditions conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+
                 try
                 {
+                    scope.Start();
+
                     Response<BlobContentInfo> response = await CreateInternal(
                         httpHeaders,
                         metadata,
@@ -749,7 +756,7 @@ namespace Azure.Storage.Blobs.Specialized
                         conditions,
                         async,
                         cancellationToken,
-                        $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}")
+                        operationName)
                         .ConfigureAwait(false);
 
                     return response;
@@ -762,11 +769,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -832,8 +841,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Create)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<AppendBlobCreateHeaders> response;
 
                     if (async)
@@ -895,11 +908,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1083,8 +1098,12 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
+
                 try
                 {
+                    scope.Start();
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
                     Errors.VerifyStreamPosition(content, nameof(content));
 
@@ -1139,11 +1158,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1366,8 +1387,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlockFromUri)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> response;
 
                     if (async)
@@ -1431,11 +1456,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1530,8 +1557,11 @@ namespace Azure.Storage.Blobs.Specialized
         {
             using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Seal)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<AppendBlobSealHeaders> response;
 
                     if (async)
@@ -1565,11 +1595,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    scope.Dispose();
                 }
             }
         }

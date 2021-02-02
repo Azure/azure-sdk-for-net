@@ -829,9 +829,14 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(size)}: {size}\n" +
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
-                var conditions = new PageBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(CreateIfNotExists)}");
+
+                PageBlobRequestConditions conditions = new PageBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
                 try
                 {
+                    scope.Start();
+
                     return await CreateInternal(
                         size,
                         sequenceNumber,
@@ -852,11 +857,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -933,8 +940,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(size)}: {size}\n" +
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(Create)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<PageBlobCreateHeaders> response;
 
                     if (async)
@@ -1000,11 +1011,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1203,11 +1216,15 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(offset)}: {offset}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPages)}");
+
                 try
                 {
+                    scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
                     content = content?.WithNoDispose().WithProgress(progressHandler);
-                    var range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
+                    HttpRange range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
 
                     ResponseWithHeaders<PageBlobUploadPagesHeaders> response;
 
@@ -1262,11 +1279,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1410,8 +1429,12 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(ClearPages)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<PageBlobClearPagesHeaders> response;
 
                     if (async)
@@ -1461,11 +1484,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1618,8 +1643,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response;
 
                     if (async)
@@ -1663,11 +1692,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1858,9 +1889,7 @@ namespace Azure.Storage.Blobs.Specialized
             Uri previousSnapshotUri,
             PageBlobRequestConditions conditions,
             bool async,
-#pragma warning disable CA1801 // Review unused parameters
             string operationName,
-#pragma warning restore CA1801 // Review unused parameters
             CancellationToken cancellationToken)
         {
             using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
@@ -1873,8 +1902,13 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(previousSnapshot)}: {previousSnapshot}\n" +
                     $"{nameof(previousSnapshotUri)}: {previousSnapshotUri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                operationName ??= $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response;
 
                     if (async)
@@ -1922,11 +1956,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2195,8 +2231,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(size)}: {size}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(Resize)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<PageBlobResizeHeaders> response;
 
                     if (async)
@@ -2236,11 +2276,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2430,8 +2472,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(action)}: {action}\n" +
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UpdateSequenceNumber)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> response;
 
                     if (async)
@@ -2469,11 +2515,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2807,8 +2855,13 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(StartCopyIncremental)}");
+
                 try
                 {
+                    scope.Start();
+
                     // Create copySource Uri
                     PageBlobClient pageBlobUri = new PageBlobClient(
                         sourceUri,
@@ -2852,11 +2905,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -3095,8 +3150,12 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPagesFromUri)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> response;
 
                     if (async)
@@ -3160,11 +3219,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
                 }
             }
         }
