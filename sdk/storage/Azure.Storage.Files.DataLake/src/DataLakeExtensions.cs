@@ -506,5 +506,17 @@ namespace Azure.Storage.Files.DataLake
         {
             return null;
         }
+
+        // TODO
+        internal static PathAccessControl ToPathAccessControl(this ResponseWithHeaders<PathGetPropertiesHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetAccessControlHeaders> response)
+        {
+            return null;
+        }
     }
 }
