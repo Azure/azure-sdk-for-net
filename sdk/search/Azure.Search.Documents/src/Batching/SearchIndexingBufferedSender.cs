@@ -135,8 +135,8 @@ namespace Azure.Search.Documents
                 options.InitialBatchActionCount,
                 options.BatchPayloadSize,
                 options.MaxRetriesPerIndexAction,
-                options.ThrottlingRetryDelay,
-                options.MaxThrottlingRetryDelay,
+                options.ThrottlingDelay,
+                options.MaxThrottlingDelay,
                 options.FlushCancellationToken);
         }
 

@@ -82,8 +82,8 @@ namespace Azure.Search.Documents
         public int? InitialBatchActionCount { get { throw null; } set { } }
         public System.Func<T, string> KeyFieldAccessor { get { throw null; } set { } }
         public int MaxRetriesPerIndexAction { get { throw null; } set { } }
-        public System.TimeSpan MaxThrottlingRetryDelay { get { throw null; } set { } }
-        public System.TimeSpan ThrottlingRetryDelay { get { throw null; } set { } }
+        public System.TimeSpan MaxThrottlingDelay { get { throw null; } set { } }
+        public System.TimeSpan ThrottlingDelay { get { throw null; } set { } }
     }
     public partial class SearchIndexingBufferedSender<T> : System.IAsyncDisposable, System.IDisposable
     {

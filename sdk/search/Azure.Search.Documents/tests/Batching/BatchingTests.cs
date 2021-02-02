@@ -1105,7 +1105,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
                         MaxRetriesPerIndexAction = 5,
-                        MaxThrottlingRetryDelay = TimeSpan.FromSeconds(1)
+                        MaxThrottlingDelay = TimeSpan.FromSeconds(1)
                     });
 
             // Keep 503ing to count the retries
@@ -1134,7 +1134,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
                         MaxRetriesPerIndexAction = 1,
-                        ThrottlingRetryDelay = TimeSpan.FromSeconds(3)
+                        ThrottlingDelay = TimeSpan.FromSeconds(3)
                     });
 
             // Keep 503ing to trigger delays
@@ -1166,7 +1166,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
                         MaxRetriesPerIndexAction = 10,
-                        MaxThrottlingRetryDelay = TimeSpan.FromSeconds(1)
+                        MaxThrottlingDelay = TimeSpan.FromSeconds(1)
                     });
 
             // Keep 503ing to trigger delays
