@@ -2,6 +2,7 @@
 # Configuration for the code generation including target swagger file and code generation settings can be found here:
 # https://github.com/Azure/azure-rest-api-specs/tree/master/specification/digitaltwins/resource-manager
 
+
 try
 {
 	Start-AutoRestCodeGeneration -ResourceProvider "digitaltwins/resource-manager" -AutoRestVersion "v2"
