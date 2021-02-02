@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class HealthcareEntity
+    internal partial class HealthcareEntityInternal
     {
-        internal static HealthcareEntity DeserializeHealthcareEntity(JsonElement element)
+        internal static HealthcareEntityInternal DeserializeHealthcareEntityInternal(JsonElement element)
         {
             bool isNegated = default;
-            Optional<IReadOnlyList<HealthcareEntityLink>> links = default;
+            Optional<IReadOnlyList<EntityDataSource>> links = default;
             string text = default;
             string category = default;
             Optional<string> subcategory = default;
@@ -37,10 +37,10 @@ namespace Azure.AI.TextAnalytics
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HealthcareEntityLink> array = new List<HealthcareEntityLink>();
+                    List<EntityDataSource> array = new List<EntityDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareEntityLink.DeserializeHealthcareEntityLink(item));
+                        array.Add(EntityDataSource.DeserializeEntityDataSource(item));
                     }
                     links = array;
                     continue;
@@ -76,7 +76,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new HealthcareEntity(text, category, subcategory.Value, offset, length, confidenceScore, isNegated, Optional.ToList(links));
+            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, isNegated, Optional.ToList(links));
         }
     }
 }

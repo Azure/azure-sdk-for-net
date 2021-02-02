@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -38,16 +37,16 @@ namespace Azure.AI.TextAnalytics.Samples
                 document,
             };
 
-            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartHealthcareBatch(batchInput, "en");
+            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchInput, "en");
 
             await healthOperation.WaitForCompletionAsync();
 
-            RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+            AnalyzeHealthcareEntitiesResultCollection results = healthOperation.Value;
 
             Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{results.ModelVersion}\"");
             Console.WriteLine("");
 
-            foreach (DocumentHealthcareResult result in results)
+            foreach (AnalyzeHealthcareEntitiesResult result in results)
             {
                 Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
@@ -57,13 +56,12 @@ namespace Azure.AI.TextAnalytics.Samples
                     Console.WriteLine($"    Category: {entity.Category}");
                     Console.WriteLine($"    Offset: {entity.Offset}");
                     Console.WriteLine($"    Length: {entity.Length}");
-                    Console.WriteLine($"    IsNegated: {entity.IsNegated}");
                     Console.WriteLine($"    Links:");
 
-                    foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+                    foreach (EntityDataSource entityDataSource in entity.DataSources)
                     {
-                        Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-                        Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+                        Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
+                        Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                     }
                 }
                 Console.WriteLine("");
