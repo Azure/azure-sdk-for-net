@@ -651,7 +651,7 @@ namespace Azure.Core.Tests
             {
                 tokensRequested++;
 
-                Assert.AreEqual(currentClaimChallenge, r.ClaimsChallenge);
+                Assert.AreEqual(currentClaimChallenge, r.Claims);
 
                 return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow + TimeSpan.FromDays(1));
             }, IsAsync);

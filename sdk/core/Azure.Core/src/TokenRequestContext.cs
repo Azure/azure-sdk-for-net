@@ -39,11 +39,6 @@ namespace Azure.Core
         public string[] Scopes { get; }
 
         /// <summary>
-        /// A claims challenge returned from a failed authentication or authorization request.
-        /// </summary>
-        public string? ClaimsChallenge { get; }
-
-        /// <summary>
         /// The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.
         /// </summary>
         public string? ParentRequestId { get; }

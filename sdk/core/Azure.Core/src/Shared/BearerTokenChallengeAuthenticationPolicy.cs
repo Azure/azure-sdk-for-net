@@ -347,7 +347,7 @@ namespace Azure.Core.Pipeline
                     }
                 }
 
-                if ((context.ClaimsChallenge != null) && (context.ClaimsChallenge != _currentContext.Value.ClaimsChallenge))
+                if ((context.Claims != null) && (context.Claims != _currentContext.Value.Claims))
                 {
                     return true;
                 }
