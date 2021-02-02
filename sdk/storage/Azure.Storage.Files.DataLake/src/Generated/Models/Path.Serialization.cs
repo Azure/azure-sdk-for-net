@@ -16,28 +16,18 @@ namespace Azure.Storage.Files.DataLake.Models
         internal static Path DeserializePath(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<bool> isDirectory = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<string> eTag = default;
-            Optional<long> contentLength = default;
             Optional<string> owner = default;
             Optional<string> group = default;
             Optional<string> permissions = default;
+            Optional<string> contentLength = default;
+            Optional<string> isDirectory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isDirectory"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    isDirectory = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("lastModified"))
@@ -55,16 +45,6 @@ namespace Azure.Storage.Files.DataLake.Models
                     eTag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentLength"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    contentLength = property.Value.GetInt64();
-                    continue;
-                }
                 if (property.NameEquals("owner"))
                 {
                     owner = property.Value.GetString();
@@ -80,8 +60,18 @@ namespace Azure.Storage.Files.DataLake.Models
                     permissions = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("contentLength"))
+                {
+                    contentLength = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isDirectory"))
+                {
+                    isDirectory = property.Value.GetString();
+                    continue;
+                }
             }
-            return new Path(name.Value, Optional.ToNullable(isDirectory), Optional.ToNullable(lastModified), eTag.Value, Optional.ToNullable(contentLength), owner.Value, group.Value, permissions.Value);
+            return new Path(name.Value, Optional.ToNullable(lastModified), eTag.Value, owner.Value, group.Value, permissions.Value, contentLength.Value, isDirectory.Value);
         }
     }
 }

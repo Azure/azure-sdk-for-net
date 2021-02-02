@@ -62,4 +62,12 @@ directive:
   where: $.definitions
   transform: >
     $.Path.properties.lastModified.format = "date-time-rfc1123";
+    delete $.Path.properties.contentLength;
+    $.Path.properties.contentLength = {
+        "type": "string"
+    };
+    delete $.Path.properties.isDirectory;
+    $.Path.properties.isDirectory = {
+        "type": "string"
+    };
 ```

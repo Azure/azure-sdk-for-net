@@ -506,11 +506,10 @@ namespace Azure.Storage.Files.DataLake
             return new PathItem
             {
                 Name = path.Name,
-                IsDirectory = path.IsDirectory,
+                IsDirectory = bool.Parse(path.IsDirectory),
                 LastModified = path.LastModified.GetValueOrDefault(),
-                // TODO this might be brittle
                 ETag = new ETag(path.ETag),
-                ContentLength = path.ContentLength,
+                ContentLength = long.Parse(path.ContentLength, CultureInfo.InvariantCulture),
                 Owner = path.Owner,
                 Group = path.Group,
                 Permissions = path.Permissions
