@@ -70,7 +70,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -257,7 +257,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -486,7 +486,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -596,7 +596,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -701,7 +701,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -798,7 +798,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -895,7 +895,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             uri.AppendQuery("action", "setAccessControl", true);
             if (timeout != null)
             {
@@ -1005,7 +1005,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             uri.AppendQuery("action", "setAccessControlRecursive", true);
             if (timeout != null)
             {
@@ -1098,7 +1098,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             uri.AppendQuery("action", "flush", true);
             if (timeout != null)
             {
@@ -1240,7 +1240,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             uri.AppendQuery("action", "append", true);
             if (position != null)
             {
@@ -1342,7 +1342,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendPath("/", false);
             uri.AppendPath(fileSystem, true);
             uri.AppendPath("/", false);
-            uri.AppendPath(path, true);
+            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "expiry", true);
             if (timeout != null)
             {

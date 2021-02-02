@@ -593,7 +593,6 @@ namespace Azure.Storage.Files.DataLake
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(uri);
             string fileSystmeName = uriBuilder.FileSystemName;
-            // TODO what about special characters in path?
             string path = uriBuilder.DirectoryOrFilePath;
             uriBuilder.FileSystemName = null;
             uriBuilder.DirectoryOrFilePath = null;
@@ -603,7 +602,7 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: _clientConfiguration.Pipeline,
                 url: uriBuilder.ToDfsUri().ToString(),
                 fileSystem: fileSystmeName,
-                path: path,
+                path: path.EscapePath(),
                 version: _clientConfiguration.Version.ToVersionString());
         }
 

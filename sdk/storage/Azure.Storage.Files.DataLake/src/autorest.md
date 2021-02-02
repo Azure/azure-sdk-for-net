@@ -30,6 +30,15 @@ directive:
     }
 ```
 
+### Make sure Path is not encoded
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.Path["x-ms-skip-url-encoding"] = true;
+```
+
 ### Ungroup parameter groups
 ``` yaml
 directive:
