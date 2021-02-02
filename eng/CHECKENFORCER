@@ -56,3 +56,5 @@ message: >
   ```
   /azp run net - [service] - ci
   ```
+  
+  **Note: For new Microsoft.Azure.Management.\* SDKs, please apply `new service` label so reviewer can help set up the pipeline bootstrap.**
