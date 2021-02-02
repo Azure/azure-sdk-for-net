@@ -7,23 +7,20 @@ namespace Azure.Messaging.EventGrid
     }
     public partial class CloudEvent
     {
-        public CloudEvent(string source, string type, object data, string dataContentType = null, System.Type dataSerializationType = null) { }
+        public CloudEvent(string source, string type, object data, System.Type dataSerializationType = null) { }
+        public CloudEvent(string source, string type, System.ReadOnlyMemory<byte> data, string dataContentType) { }
         public string DataContentType { get { throw null; } set { } }
         public string DataSchema { get { throw null; } set { } }
         public System.Collections.Generic.Dictionary<string, object> ExtensionAttributes { get { throw null; } }
         public string Id { get { throw null; } set { } }
-        public bool IsSystemEvent { get { throw null; } }
         public string Source { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
-        public object AsSystemEventData() { throw null; }
         public System.BinaryData GetData() { throw null; }
-        public System.Threading.Tasks.Task<System.BinaryData> GetDataAsync() { throw null; }
-        public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Messaging.EventGrid.CloudEvent[] Parse(System.BinaryData requestContent) { throw null; }
+        public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Messaging.EventGrid.CloudEvent[] Parse(string requestContent) { throw null; }
+        public bool TryGetSystemEvent(out object systemEvent) { throw null; }
     }
     public partial class EventGridEvent
     {
@@ -32,16 +29,12 @@ namespace Azure.Messaging.EventGrid
         public System.DateTimeOffset EventTime { get { throw null; } set { } }
         public string EventType { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
-        public bool IsSystemEvent { get { throw null; } }
         public string Subject { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
-        public object AsSystemEventData() { throw null; }
         public System.BinaryData GetData() { throw null; }
-        public System.Threading.Tasks.Task<System.BinaryData> GetDataAsync() { throw null; }
-        public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(System.BinaryData requestContent) { throw null; }
+        public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(string requestContent) { throw null; }
+        public bool TryGetSystemEventData(out object eventData) { throw null; }
     }
     public partial class EventGridPublisherClient
     {

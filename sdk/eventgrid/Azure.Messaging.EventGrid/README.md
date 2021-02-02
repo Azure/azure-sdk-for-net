@@ -182,7 +182,7 @@ foreach (CloudEvent cloudEvent in cloudEvents)
             break;
         case "MyApp.Models.CustomEventType":
             // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-            TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
+            TestPayload testPayload = cloudEvent.GetData<TestPayload>();
             Console.WriteLine(testPayload.Name);
             break;
         case SystemEventNames.StorageBlobDeleted:
@@ -198,9 +198,9 @@ Below is an example using the `IsSystemEvent` property along with `AsSystemEvent
 foreach (EventGridEvent egEvent in egEvents)
 {
     // If the event is a system event, AsSystemEventData() should return the correct system event type
-    if (egEvent.IsSystemEvent)
+    if (egEvent.TryGetSystemEventData(out object systemEvent))
     {
-        switch (egEvent.AsSystemEventData())
+        switch (systemEvent)
         {
             case SubscriptionValidationEventData subscriptionValidated:
                 Console.WriteLine(subscriptionValidated.ValidationCode);
