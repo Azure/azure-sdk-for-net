@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// The definition of a parameter that can be provided to the policy.
+    /// </summary>
     public partial class ParameterDefinitionsValue
     {
         /// <summary>
