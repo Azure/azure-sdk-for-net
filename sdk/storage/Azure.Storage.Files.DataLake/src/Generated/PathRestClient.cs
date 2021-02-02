@@ -60,7 +60,7 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, PathRenameMode? mode, string renameSource, string sourceLeaseId, string properties, string permissions, string umask, PathHttpHeaders pathHttpHeaders, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions, SourceModifiedAccessConditions sourceModifiedAccessConditions)
+        internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -89,33 +89,33 @@ namespace Azure.Storage.Files.DataLake
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
-            if (pathHttpHeaders?.CacheControl != null)
+            if (cacheControl != null)
             {
-                request.Headers.Add("x-ms-cache-control", pathHttpHeaders.CacheControl);
+                request.Headers.Add("x-ms-cache-control", cacheControl);
             }
-            if (pathHttpHeaders?.ContentEncoding != null)
+            if (contentEncoding != null)
             {
-                request.Headers.Add("x-ms-content-encoding", pathHttpHeaders.ContentEncoding);
+                request.Headers.Add("x-ms-content-encoding", contentEncoding);
             }
-            if (pathHttpHeaders?.ContentLanguage != null)
+            if (contentLanguage != null)
             {
-                request.Headers.Add("x-ms-content-language", pathHttpHeaders.ContentLanguage);
+                request.Headers.Add("x-ms-content-language", contentLanguage);
             }
-            if (pathHttpHeaders?.ContentDisposition != null)
+            if (contentDisposition != null)
             {
-                request.Headers.Add("x-ms-content-disposition", pathHttpHeaders.ContentDisposition);
+                request.Headers.Add("x-ms-content-disposition", contentDisposition);
             }
-            if (pathHttpHeaders?.ContentType != null)
+            if (contentType != null)
             {
-                request.Headers.Add("x-ms-content-type", pathHttpHeaders.ContentType);
+                request.Headers.Add("x-ms-content-type", contentType);
             }
             if (renameSource != null)
             {
                 request.Headers.Add("x-ms-rename-source", renameSource);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
             if (sourceLeaseId != null)
             {
@@ -133,37 +133,37 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("x-ms-umask", umask);
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
-            if (sourceModifiedAccessConditions?.SourceIfMatch != null)
+            if (sourceIfMatch != null)
             {
-                request.Headers.Add("x-ms-source-if-match", sourceModifiedAccessConditions.SourceIfMatch);
+                request.Headers.Add("x-ms-source-if-match", sourceIfMatch);
             }
-            if (sourceModifiedAccessConditions?.SourceIfNoneMatch != null)
+            if (sourceIfNoneMatch != null)
             {
-                request.Headers.Add("x-ms-source-if-none-match", sourceModifiedAccessConditions.SourceIfNoneMatch);
+                request.Headers.Add("x-ms-source-if-none-match", sourceIfNoneMatch);
             }
-            if (sourceModifiedAccessConditions?.SourceIfModifiedSince != null)
+            if (sourceIfModifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-modified-since", sourceModifiedAccessConditions.SourceIfModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-modified-since", sourceIfModifiedSince.Value, "R");
             }
-            if (sourceModifiedAccessConditions?.SourceIfUnmodifiedSince != null)
+            if (sourceIfUnmodifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-unmodified-since", sourceModifiedAccessConditions.SourceIfUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "R");
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -174,19 +174,29 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="resource"> Required only for Create File and Create Directory. The value must be &quot;file&quot; or &quot;directory&quot;. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="mode"> Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be &quot;legacy&quot; or &quot;posix&quot;, and the default value will be &quot;posix&quot;. </param>
+        /// <param name="cacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentLanguage"> Optional. Set the blob&apos;s content language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
+        /// <param name="contentType"> Optional. Sets the blob&apos;s content type. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="renameSource"> An optional file or directory to be renamed.  The value must have the following format: &quot;/{filesystem}/{path}&quot;.  If &quot;x-ms-properties&quot; is specified, the properties will overwrite the existing properties; otherwise, the existing properties will be preserved. This value must be a URL percent-encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="sourceLeaseId"> A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match. </param>
         /// <param name="properties"> Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs &quot;n1=v1, n2=v2, ...&quot;, where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.  If the filesystem exists, any properties not included in the list will be removed.  All properties are removed if the header is omitted.  To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties. </param>
         /// <param name="permissions"> Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission.  The sticky bit is also supported.  Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported. </param>
         /// <param name="umask"> Optional and only valid if Hierarchical Namespace is enabled for the account. When creating a file or directory and the parent folder does not have a default ACL, the umask restricts the permissions of the file or directory to be created.  The resulting permission is given by p bitwise and not u, where p is the permission and u is the umask.  For example, if p is 0777 and u is 0057, then the resulting permission is 0720.  The default permission is 0777 for a directory and 0666 for a file.  The default umask is 0027.  The umask must be specified in 4-digit octal notation (e.g. 0766). </param>
-        /// <param name="pathHttpHeaders"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
-        /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string renameSource = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, PathHttpHeaders pathHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, resource, continuation, mode, renameSource, sourceLeaseId, properties, permissions, umask, pathHttpHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -203,19 +213,29 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="resource"> Required only for Create File and Create Directory. The value must be &quot;file&quot; or &quot;directory&quot;. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="mode"> Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be &quot;legacy&quot; or &quot;posix&quot;, and the default value will be &quot;posix&quot;. </param>
+        /// <param name="cacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentLanguage"> Optional. Set the blob&apos;s content language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
+        /// <param name="contentType"> Optional. Sets the blob&apos;s content type. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="renameSource"> An optional file or directory to be renamed.  The value must have the following format: &quot;/{filesystem}/{path}&quot;.  If &quot;x-ms-properties&quot; is specified, the properties will overwrite the existing properties; otherwise, the existing properties will be preserved. This value must be a URL percent-encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="sourceLeaseId"> A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match. </param>
         /// <param name="properties"> Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs &quot;n1=v1, n2=v2, ...&quot;, where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.  If the filesystem exists, any properties not included in the list will be removed.  All properties are removed if the header is omitted.  To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties. </param>
         /// <param name="permissions"> Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission.  The sticky bit is also supported.  Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported. </param>
         /// <param name="umask"> Optional and only valid if Hierarchical Namespace is enabled for the account. When creating a file or directory and the parent folder does not have a default ACL, the umask restricts the permissions of the file or directory to be created.  The resulting permission is given by p bitwise and not u, where p is the permission and u is the umask.  For example, if p is 0777 and u is 0057, then the resulting permission is 0720.  The default permission is 0777 for a directory and 0666 for a file.  The default umask is 0027.  The umask must be specified in 4-digit octal notation (e.g. 0766). </param>
-        /// <param name="pathHttpHeaders"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
-        /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string renameSource = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, PathHttpHeaders pathHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, resource, continuation, mode, renameSource, sourceLeaseId, properties, permissions, umask, pathHttpHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions);
+            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -227,7 +247,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout, int? maxRecords, string continuation, bool? forceFlag, long? position, bool? retainUncommittedData, bool? close, long? contentLength, string properties, string owner, string group, string permissions, string acl, PathHttpHeaders pathHttpHeaders, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateUpdateRequest(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout, int? maxRecords, string continuation, bool? forceFlag, long? position, bool? retainUncommittedData, bool? close, long? contentLength, byte[] contentMD5, string leaseId, string cacheControl, string contentType, string contentDisposition, string contentEncoding, string contentLanguage, string properties, string owner, string group, string permissions, string acl, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,33 +290,33 @@ namespace Azure.Storage.Files.DataLake
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
-            if (pathHttpHeaders?.ContentMD5 != null)
+            if (contentMD5 != null)
             {
-                request.Headers.Add("x-ms-content-md5", pathHttpHeaders.ContentMD5);
+                request.Headers.Add("x-ms-content-md5", contentMD5);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (pathHttpHeaders?.CacheControl != null)
+            if (cacheControl != null)
             {
-                request.Headers.Add("x-ms-cache-control", pathHttpHeaders.CacheControl);
+                request.Headers.Add("x-ms-cache-control", cacheControl);
             }
-            if (pathHttpHeaders?.ContentType != null)
+            if (contentType != null)
             {
-                request.Headers.Add("x-ms-content-type", pathHttpHeaders.ContentType);
+                request.Headers.Add("x-ms-content-type", contentType);
             }
-            if (pathHttpHeaders?.ContentDisposition != null)
+            if (contentDisposition != null)
             {
-                request.Headers.Add("x-ms-content-disposition", pathHttpHeaders.ContentDisposition);
+                request.Headers.Add("x-ms-content-disposition", contentDisposition);
             }
-            if (pathHttpHeaders?.ContentEncoding != null)
+            if (contentEncoding != null)
             {
-                request.Headers.Add("x-ms-content-encoding", pathHttpHeaders.ContentEncoding);
+                request.Headers.Add("x-ms-content-encoding", contentEncoding);
             }
-            if (pathHttpHeaders?.ContentLanguage != null)
+            if (contentLanguage != null)
             {
-                request.Headers.Add("x-ms-content-language", pathHttpHeaders.ContentLanguage);
+                request.Headers.Add("x-ms-content-language", contentLanguage);
             }
             if (properties != null)
             {
@@ -318,21 +338,21 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("x-ms-acl", acl);
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
             request.Headers.Add("Accept", "application/json");
             if (contentLength != null)
@@ -356,24 +376,32 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="retainUncommittedData"> Valid only for flush operations.  If &quot;true&quot;, uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation. </param>
         /// <param name="close"> Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is &quot;flush&quot; and change notifications are enabled. If the value of close is &quot;true&quot; and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If &quot;false&quot; a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed.&quot;. </param>
         /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
+        /// <param name="contentMD5"> Specify the transactional md5 for the body, to be validated by the service. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="cacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentType"> Optional. Sets the blob&apos;s content type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
+        /// <param name="contentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentLanguage"> Optional. Set the blob&apos;s content language. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="properties"> Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs &quot;n1=v1, n2=v2, ...&quot;, where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.  If the filesystem exists, any properties not included in the list will be removed.  All properties are removed if the header is omitted.  To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties. </param>
         /// <param name="owner"> Optional. The owner of the blob or directory. </param>
         /// <param name="group"> Optional. The owning group of the blob or directory. </param>
         /// <param name="permissions"> Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission.  The sticky bit is also supported.  Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported. </param>
         /// <param name="acl"> Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format &quot;[scope:][type]:[id]:[permissions]&quot;. </param>
-        /// <param name="pathHttpHeaders"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SetAccessControlRecursiveResponse, PathUpdateHeaders>> UpdateAsync(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout = null, int? maxRecords = null, string continuation = null, bool? forceFlag = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, string properties = null, string owner = null, string group = null, string permissions = null, string acl = null, PathHttpHeaders pathHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SetAccessControlRecursiveResponse, PathUpdateHeaders>> UpdateAsync(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout = null, int? maxRecords = null, string continuation = null, bool? forceFlag = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string properties = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUpdateRequest(action, mode, body, timeout, maxRecords, continuation, forceFlag, position, retainUncommittedData, close, contentLength, properties, owner, group, permissions, acl, pathHttpHeaders, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateUpdateRequest(action, mode, body, timeout, maxRecords, continuation, forceFlag, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, properties, owner, group, permissions, acl, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathUpdateHeaders(message.Response);
             switch (message.Response.Status)
@@ -404,24 +432,32 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="retainUncommittedData"> Valid only for flush operations.  If &quot;true&quot;, uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation. </param>
         /// <param name="close"> Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is &quot;flush&quot; and change notifications are enabled. If the value of close is &quot;true&quot; and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If &quot;false&quot; a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed.&quot;. </param>
         /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
+        /// <param name="contentMD5"> Specify the transactional md5 for the body, to be validated by the service. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="cacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentType"> Optional. Sets the blob&apos;s content type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
+        /// <param name="contentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentLanguage"> Optional. Set the blob&apos;s content language. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="properties"> Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs &quot;n1=v1, n2=v2, ...&quot;, where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.  If the filesystem exists, any properties not included in the list will be removed.  All properties are removed if the header is omitted.  To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties. </param>
         /// <param name="owner"> Optional. The owner of the blob or directory. </param>
         /// <param name="group"> Optional. The owning group of the blob or directory. </param>
         /// <param name="permissions"> Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission.  The sticky bit is also supported.  Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported. </param>
         /// <param name="acl"> Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format &quot;[scope:][type]:[id]:[permissions]&quot;. </param>
-        /// <param name="pathHttpHeaders"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<SetAccessControlRecursiveResponse, PathUpdateHeaders> Update(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout = null, int? maxRecords = null, string continuation = null, bool? forceFlag = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, string properties = null, string owner = null, string group = null, string permissions = null, string acl = null, PathHttpHeaders pathHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SetAccessControlRecursiveResponse, PathUpdateHeaders> Update(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout = null, int? maxRecords = null, string continuation = null, bool? forceFlag = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string properties = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUpdateRequest(action, mode, body, timeout, maxRecords, continuation, forceFlag, position, retainUncommittedData, close, contentLength, properties, owner, group, permissions, acl, pathHttpHeaders, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateUpdateRequest(action, mode, body, timeout, maxRecords, continuation, forceFlag, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, properties, owner, group, permissions, acl, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathUpdateHeaders(message.Response);
             switch (message.Response.Status)
@@ -440,7 +476,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateLeaseRequest(PathLeaseAction xMsLeaseAction, int? timeout, int? xMsLeaseDuration, int? xMsLeaseBreakPeriod, string proposedLeaseId, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateLeaseRequest(PathLeaseAction xMsLeaseAction, int? timeout, int? xMsLeaseDuration, int? xMsLeaseBreakPeriod, string leaseId, string proposedLeaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -466,29 +502,29 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("x-ms-lease-break-period", xMsLeaseBreakPeriod.Value);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
             if (proposedLeaseId != null)
             {
                 request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -499,13 +535,16 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="xMsLeaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <param name="xMsLeaseBreakPeriod"> The lease break period duration is optional to break a lease, and  specifies the break period of the lease in seconds.  The lease break  duration must be between 0 and 60 seconds. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathLeaseHeaders>> LeaseAsync(PathLeaseAction xMsLeaseAction, int? timeout = null, int? xMsLeaseDuration = null, int? xMsLeaseBreakPeriod = null, string proposedLeaseId = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathLeaseHeaders>> LeaseAsync(PathLeaseAction xMsLeaseAction, int? timeout = null, int? xMsLeaseDuration = null, int? xMsLeaseBreakPeriod = null, string leaseId = null, string proposedLeaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateLeaseRequest(xMsLeaseAction, timeout, xMsLeaseDuration, xMsLeaseBreakPeriod, proposedLeaseId, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateLeaseRequest(xMsLeaseAction, timeout, xMsLeaseDuration, xMsLeaseBreakPeriod, leaseId, proposedLeaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -524,13 +563,16 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="xMsLeaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <param name="xMsLeaseBreakPeriod"> The lease break period duration is optional to break a lease, and  specifies the break period of the lease in seconds.  The lease break  duration must be between 0 and 60 seconds. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathLeaseHeaders> Lease(PathLeaseAction xMsLeaseAction, int? timeout = null, int? xMsLeaseDuration = null, int? xMsLeaseBreakPeriod = null, string proposedLeaseId = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathLeaseHeaders> Lease(PathLeaseAction xMsLeaseAction, int? timeout = null, int? xMsLeaseDuration = null, int? xMsLeaseBreakPeriod = null, string leaseId = null, string proposedLeaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateLeaseRequest(xMsLeaseAction, timeout, xMsLeaseDuration, xMsLeaseBreakPeriod, proposedLeaseId, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateLeaseRequest(xMsLeaseAction, timeout, xMsLeaseDuration, xMsLeaseBreakPeriod, leaseId, proposedLeaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathLeaseHeaders(message.Response);
             switch (message.Response.Status)
@@ -544,7 +586,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateReadRequest(int? timeout, string range, bool? xMsRangeGetContentMd5, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateReadRequest(int? timeout, string range, string leaseId, bool? xMsRangeGetContentMd5, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -565,29 +607,29 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("Range", range);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
             if (xMsRangeGetContentMd5 != null)
             {
                 request.Headers.Add("x-ms-range-get-content-md5", xMsRangeGetContentMd5.Value);
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -596,13 +638,16 @@ namespace Azure.Storage.Files.DataLake
         /// <summary> Read the contents of a file.  For read operations, range requests are supported. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> The HTTP Range request header specifies one or more byte ranges of the resource to be retrieved. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="xMsRangeGetContentMd5"> Optional. When this header is set to &quot;true&quot; and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4MB in size. If this header is specified without the Range header, the service returns status code 400 (Bad Request). If this header is set to true when the range exceeds 4 MB in size, the service returns status code 400 (Bad Request). </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<Stream, PathReadHeaders>> ReadAsync(int? timeout = null, string range = null, bool? xMsRangeGetContentMd5 = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, PathReadHeaders>> ReadAsync(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateReadRequest(timeout, range, xMsRangeGetContentMd5, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateReadRequest(timeout, range, leaseId, xMsRangeGetContentMd5, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathReadHeaders(message.Response);
             switch (message.Response.Status)
@@ -621,13 +666,16 @@ namespace Azure.Storage.Files.DataLake
         /// <summary> Read the contents of a file.  For read operations, range requests are supported. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> The HTTP Range request header specifies one or more byte ranges of the resource to be retrieved. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="xMsRangeGetContentMd5"> Optional. When this header is set to &quot;true&quot; and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4MB in size. If this header is specified without the Range header, the service returns status code 400 (Bad Request). If this header is set to true when the range exceeds 4 MB in size, the service returns status code 400 (Bad Request). </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Stream, PathReadHeaders> Read(int? timeout = null, string range = null, bool? xMsRangeGetContentMd5 = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, PathReadHeaders> Read(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateReadRequest(timeout, range, xMsRangeGetContentMd5, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateReadRequest(timeout, range, leaseId, xMsRangeGetContentMd5, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathReadHeaders(message.Response);
             switch (message.Response.Status)
@@ -643,7 +691,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout, PathGetPropertiesAction? action, bool? upn, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateGetPropertiesRequest(int? timeout, PathGetPropertiesAction? action, bool? upn, string leaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -668,25 +716,25 @@ namespace Azure.Storage.Files.DataLake
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -696,12 +744,15 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="action"> Optional. If the value is &quot;getStatus&quot; only the system defined properties for the path are returned. If the value is &quot;getAccessControl&quot; the access control list is returned in the response headers (Hierarchical Namespace must be enabled for the account), otherwise the properties are returned. </param>
         /// <param name="upn"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If &quot;true&quot;, the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If &quot;false&quot;, the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -717,12 +768,15 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="action"> Optional. If the value is &quot;getStatus&quot; only the system defined properties for the path are returned. If the value is &quot;getAccessControl&quot; the access control list is returned in the response headers (Hierarchical Namespace must be enabled for the account), otherwise the properties are returned. </param>
         /// <param name="upn"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If &quot;true&quot;, the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If &quot;false&quot;, the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathGetPropertiesHeaders> GetProperties(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathGetPropertiesHeaders> GetProperties(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -734,7 +788,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(int? timeout, bool? recursive, string continuation, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateDeleteRequest(int? timeout, bool? recursive, string continuation, string leaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -759,25 +813,25 @@ namespace Azure.Storage.Files.DataLake
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -787,12 +841,15 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="recursive"> Required. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathDeleteHeaders>> DeleteAsync(int? timeout = null, bool? recursive = null, string continuation = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathDeleteHeaders>> DeleteAsync(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -808,12 +865,15 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="recursive"> Required. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathDeleteHeaders> Delete(int? timeout = null, bool? recursive = null, string continuation = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathDeleteHeaders> Delete(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -825,7 +885,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateSetAccessControlRequest(int? timeout, string owner, string group, string permissions, string acl, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateSetAccessControlRequest(int? timeout, string leaseId, string owner, string group, string permissions, string acl, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -842,9 +902,9 @@ namespace Azure.Storage.Files.DataLake
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
             if (owner != null)
             {
@@ -862,21 +922,21 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("x-ms-acl", acl);
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/json");
@@ -885,16 +945,19 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> Set the owner, group, permissions, or access control list for a path. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="owner"> Optional. The owner of the blob or directory. </param>
         /// <param name="group"> Optional. The owning group of the blob or directory. </param>
         /// <param name="permissions"> Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission.  The sticky bit is also supported.  Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported. </param>
         /// <param name="acl"> Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format &quot;[scope:][type]:[id]:[permissions]&quot;. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathSetAccessControlHeaders>> SetAccessControlAsync(int? timeout = null, string owner = null, string group = null, string permissions = null, string acl = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathSetAccessControlHeaders>> SetAccessControlAsync(int? timeout = null, string leaseId = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetAccessControlRequest(timeout, owner, group, permissions, acl, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateSetAccessControlRequest(timeout, leaseId, owner, group, permissions, acl, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathSetAccessControlHeaders(message.Response);
             switch (message.Response.Status)
@@ -908,16 +971,19 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> Set the owner, group, permissions, or access control list for a path. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="owner"> Optional. The owner of the blob or directory. </param>
         /// <param name="group"> Optional. The owning group of the blob or directory. </param>
         /// <param name="permissions"> Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission.  The sticky bit is also supported.  Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported. </param>
         /// <param name="acl"> Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format &quot;[scope:][type]:[id]:[permissions]&quot;. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathSetAccessControlHeaders> SetAccessControl(int? timeout = null, string owner = null, string group = null, string permissions = null, string acl = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathSetAccessControlHeaders> SetAccessControl(int? timeout = null, string leaseId = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetAccessControlRequest(timeout, owner, group, permissions, acl, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateSetAccessControlRequest(timeout, leaseId, owner, group, permissions, acl, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathSetAccessControlHeaders(message.Response);
             switch (message.Response.Status)
@@ -1022,7 +1088,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateFlushDataRequest(int? timeout, long? position, bool? retainUncommittedData, bool? close, long? contentLength, PathHttpHeaders pathHttpHeaders, LeaseAccessConditions leaseAccessConditions, ModifiedAccessConditions modifiedAccessConditions)
+        internal HttpMessage CreateFlushDataRequest(int? timeout, long? position, bool? retainUncommittedData, bool? close, long? contentLength, byte[] contentMD5, string leaseId, string cacheControl, string contentType, string contentDisposition, string contentEncoding, string contentLanguage, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1051,49 +1117,49 @@ namespace Azure.Storage.Files.DataLake
                 uri.AppendQuery("close", close.Value, true);
             }
             request.Uri = uri;
-            if (pathHttpHeaders?.ContentMD5 != null)
+            if (contentMD5 != null)
             {
-                request.Headers.Add("x-ms-content-md5", pathHttpHeaders.ContentMD5);
+                request.Headers.Add("x-ms-content-md5", contentMD5);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (pathHttpHeaders?.CacheControl != null)
+            if (cacheControl != null)
             {
-                request.Headers.Add("x-ms-cache-control", pathHttpHeaders.CacheControl);
+                request.Headers.Add("x-ms-cache-control", cacheControl);
             }
-            if (pathHttpHeaders?.ContentType != null)
+            if (contentType != null)
             {
-                request.Headers.Add("x-ms-content-type", pathHttpHeaders.ContentType);
+                request.Headers.Add("x-ms-content-type", contentType);
             }
-            if (pathHttpHeaders?.ContentDisposition != null)
+            if (contentDisposition != null)
             {
-                request.Headers.Add("x-ms-content-disposition", pathHttpHeaders.ContentDisposition);
+                request.Headers.Add("x-ms-content-disposition", contentDisposition);
             }
-            if (pathHttpHeaders?.ContentEncoding != null)
+            if (contentEncoding != null)
             {
-                request.Headers.Add("x-ms-content-encoding", pathHttpHeaders.ContentEncoding);
+                request.Headers.Add("x-ms-content-encoding", contentEncoding);
             }
-            if (pathHttpHeaders?.ContentLanguage != null)
+            if (contentLanguage != null)
             {
-                request.Headers.Add("x-ms-content-language", pathHttpHeaders.ContentLanguage);
+                request.Headers.Add("x-ms-content-language", contentLanguage);
             }
-            if (modifiedAccessConditions?.IfMatch != null)
+            if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", modifiedAccessConditions.IfMatch);
+                request.Headers.Add("If-Match", ifMatch);
             }
-            if (modifiedAccessConditions?.IfNoneMatch != null)
+            if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", modifiedAccessConditions.IfNoneMatch);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            if (modifiedAccessConditions?.IfModifiedSince != null)
+            if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
             }
-            if (modifiedAccessConditions?.IfUnmodifiedSince != null)
+            if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/json");
@@ -1106,13 +1172,21 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="retainUncommittedData"> Valid only for flush operations.  If &quot;true&quot;, uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation. </param>
         /// <param name="close"> Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is &quot;flush&quot; and change notifications are enabled. If the value of close is &quot;true&quot; and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If &quot;false&quot; a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed.&quot;. </param>
         /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
-        /// <param name="pathHttpHeaders"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="contentMD5"> Specify the transactional md5 for the body, to be validated by the service. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="cacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentType"> Optional. Sets the blob&apos;s content type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
+        /// <param name="contentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentLanguage"> Optional. Set the blob&apos;s content language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathFlushDataHeaders>> FlushDataAsync(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, PathHttpHeaders pathHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathFlushDataHeaders>> FlushDataAsync(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateFlushDataRequest(timeout, position, retainUncommittedData, close, contentLength, pathHttpHeaders, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateFlushDataRequest(timeout, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathFlushDataHeaders(message.Response);
             switch (message.Response.Status)
@@ -1130,13 +1204,21 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="retainUncommittedData"> Valid only for flush operations.  If &quot;true&quot;, uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation. </param>
         /// <param name="close"> Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is &quot;flush&quot; and change notifications are enabled. If the value of close is &quot;true&quot; and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If &quot;false&quot; a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed.&quot;. </param>
         /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
-        /// <param name="pathHttpHeaders"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
-        /// <param name="modifiedAccessConditions"> Parameter group. </param>
+        /// <param name="contentMD5"> Specify the transactional md5 for the body, to be validated by the service. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="cacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentType"> Optional. Sets the blob&apos;s content type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentDisposition"> Optional. Sets the blob&apos;s Content-Disposition header. </param>
+        /// <param name="contentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="contentLanguage"> Optional. Set the blob&apos;s content language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathFlushDataHeaders> FlushData(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, PathHttpHeaders pathHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, ModifiedAccessConditions modifiedAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathFlushDataHeaders> FlushData(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateFlushDataRequest(timeout, position, retainUncommittedData, close, contentLength, pathHttpHeaders, leaseAccessConditions, modifiedAccessConditions);
+            using var message = CreateFlushDataRequest(timeout, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathFlushDataHeaders(message.Response);
             switch (message.Response.Status)
@@ -1148,7 +1230,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateAppendDataRequest(Stream body, long? position, int? timeout, long? contentLength, byte[] transactionalContentCrc64, PathHttpHeaders pathHttpHeaders, LeaseAccessConditions leaseAccessConditions)
+        internal HttpMessage CreateAppendDataRequest(Stream body, long? position, int? timeout, long? contentLength, byte[] transactionalContentHash, byte[] transactionalContentCrc64, string leaseId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1173,9 +1255,9 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("x-ms-content-crc64", transactionalContentCrc64);
             }
-            if (leaseAccessConditions?.LeaseId != null)
+            if (leaseId != null)
             {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+                request.Headers.Add("x-ms-lease-id", leaseId);
             }
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/json");
@@ -1183,9 +1265,9 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("Content-Length", contentLength.Value);
             }
-            if (pathHttpHeaders?.TransactionalContentHash != null)
+            if (transactionalContentHash != null)
             {
-                request.Headers.Add("Content-MD5", pathHttpHeaders.TransactionalContentHash);
+                request.Headers.Add("Content-MD5", transactionalContentHash);
             }
             request.Headers.Add("Content-Type", "application/json");
             request.Content = RequestContent.Create(body);
@@ -1197,19 +1279,19 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
+        /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
-        /// <param name="pathHttpHeaders"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PathAppendDataHeaders>> AppendDataAsync(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentCrc64 = null, PathHttpHeaders pathHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathAppendDataHeaders>> AppendDataAsync(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentCrc64, pathHttpHeaders, leaseAccessConditions);
+            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathAppendDataHeaders(message.Response);
             switch (message.Response.Status)
@@ -1226,19 +1308,19 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
+        /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
-        /// <param name="pathHttpHeaders"> Parameter group. </param>
-        /// <param name="leaseAccessConditions"> Parameter group. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PathAppendDataHeaders> AppendData(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentCrc64 = null, PathHttpHeaders pathHttpHeaders = null, LeaseAccessConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathAppendDataHeaders> AppendData(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentCrc64, pathHttpHeaders, leaseAccessConditions);
+            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathAppendDataHeaders(message.Response);
             switch (message.Response.Status)

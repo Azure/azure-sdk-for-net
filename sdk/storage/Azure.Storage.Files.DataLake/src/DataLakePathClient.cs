@@ -192,6 +192,16 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         public virtual bool CanGenerateSasUri => SharedKeyCredential != null;
 
+        /// <summary>
+        /// PathRestClient.
+        /// </summary>
+        private readonly PathRestClient _pathRestClient;
+
+        /// <summary>
+        /// PathRestClient.
+        /// </summary>
+        internal virtual PathRestClient PathRestClient => _pathRestClient;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
@@ -302,7 +312,14 @@ namespace Azure.Storage.Files.DataLake
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = sharedKeyCredential;
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _version.AsBlobsVersion(), _clientDiagnostics);
+
+            _blockBlobClient = BlockBlobClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                _version.AsBlobsVersion(),
+                _clientDiagnostics);
+
+            _pathRestClient = BuildPathRestClient(_uri);
         }
 
         /// <summary>
@@ -485,12 +502,15 @@ namespace Azure.Storage.Files.DataLake
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _version.AsBlobsVersion(), _clientDiagnostics);
 
             uriBuilder.DirectoryOrFilePath = null;
+
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 _pipeline,
                 storageSharedKeyCredential,
                 _version,
                 _clientDiagnostics);
+
+            _pathRestClient = BuildPathRestClient(_uri);
         }
 
         /// <summary>
@@ -531,12 +551,15 @@ namespace Azure.Storage.Files.DataLake
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
 
             uriBuilder.DirectoryOrFilePath = null;
+
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 _pipeline,
                 storageSharedKeyCredential,
                 Version,
                 ClientDiagnostics);
+
+            _pathRestClient = BuildPathRestClient(_uri);
         }
 
         /// <summary>
@@ -578,12 +601,15 @@ namespace Azure.Storage.Files.DataLake
                 _clientDiagnostics);
 
             uriBuilder.DirectoryOrFilePath = null;
+
             _fileSystemClient = new DataLakeFileSystemClient(
                 uriBuilder.ToDfsUri(),
                 pipeline,
                 null,
                 version,
                 clientDiagnostics);
+
+            _pathRestClient = BuildPathRestClient(_uri);
         }
 
         internal DataLakePathClient(
@@ -605,6 +631,7 @@ namespace Azure.Storage.Files.DataLake
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
+
             _blockBlobClient = BlockBlobClientInternals.Create(
                 _blobUri,
                 _pipeline,
@@ -618,6 +645,26 @@ namespace Azure.Storage.Files.DataLake
                 storageSharedKeyCredential,
                 version,
                 clientDiagnostics);
+
+            _pathRestClient = BuildPathRestClient(_uri);
+        }
+
+        private PathRestClient BuildPathRestClient(Uri uri)
+        {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(uri);
+            string fileSystmeName = uriBuilder.FileSystemName;
+            // TODO what about special characters in path?
+            string path = uriBuilder.DirectoryOrFilePath;
+            uriBuilder.FileSystemName = null;
+            uriBuilder.DirectoryOrFilePath = null;
+
+            return new PathRestClient(
+                clientDiagnostics: _clientDiagnostics,
+                pipeline: _pipeline,
+                url: uriBuilder.ToDfsUri().ToString(),
+                fileSystem: fileSystmeName,
+                path: path,
+                version: _version.ToVersionString());
         }
 
         /// <summary>
@@ -919,47 +966,68 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(metadata)}: {metadata}\n" +
                     $"{nameof(permissions)}: {permissions}\n" +
                     $"{nameof(umask)}: {umask}\n");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Create)}");
+
                 try
                 {
-                    Response<PathCreateResult> createResponse = await DataLakeRestClient.Path.CreateAsync(
-                        clientDiagnostics: _clientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: _dfsUri,
-                        version: Version.ToVersionString(),
-                        resource: resourceType,
-                        cacheControl: httpHeaders?.CacheControl,
-                        contentEncoding: httpHeaders?.ContentEncoding,
-                        contentDisposition: httpHeaders?.ContentDisposition,
-                        contentType: httpHeaders?.ContentType,
-                        contentLanguage: httpHeaders?.ContentLanguage,
-                        leaseId: conditions?.LeaseId,
-                        properties: BuildMetadataString(metadata),
-                        permissions: permissions,
-                        umask: umask,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<PathCreateHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PathRestClient.CreateAsync(
+                            resource: resourceType,
+                            cacheControl: httpHeaders?.CacheControl,
+                            contentEncoding: httpHeaders?.ContentEncoding,
+                            contentLanguage: httpHeaders?.ContentLanguage,
+                            contentDisposition: httpHeaders?.ContentDisposition,
+                            contentType: httpHeaders?.ContentType,
+                            leaseId: conditions?.LeaseId,
+                            properties: BuildMetadataString(metadata),
+                            permissions: permissions,
+                            umask: umask,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PathRestClient.Create(
+                            resource: resourceType,
+                            cacheControl: httpHeaders?.CacheControl,
+                            contentEncoding: httpHeaders?.ContentEncoding,
+                            contentLanguage: httpHeaders?.ContentLanguage,
+                            contentDisposition: httpHeaders?.ContentDisposition,
+                            contentType: httpHeaders?.ContentType,
+                            leaseId: conditions?.LeaseId,
+                            properties: BuildMetadataString(metadata),
+                            permissions: permissions,
+                            umask: umask,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return Response.FromValue(
-                        new PathInfo()
-                        {
-                            ETag = createResponse.Value.ETag,
-                            LastModified = createResponse.Value.LastModified
-                        },
-                        createResponse.GetRawResponse());
+                        response.ToPathInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                    scope.Dispose();
                 }
             }
         }

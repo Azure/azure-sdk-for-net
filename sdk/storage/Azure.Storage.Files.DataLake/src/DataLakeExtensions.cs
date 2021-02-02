@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
 
@@ -492,6 +493,18 @@ namespace Azure.Storage.Files.DataLake
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position
             };
+        }
+
+        //TODO
+        internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
+        {
+            return null;
         }
     }
 }

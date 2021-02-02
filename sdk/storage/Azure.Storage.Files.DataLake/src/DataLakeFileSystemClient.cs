@@ -139,6 +139,16 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         public virtual bool CanGenerateSasUri => SharedKeyCredential != null;
 
+        /// <summary>
+        /// FileSystemRestClient.
+        /// </summary>
+        private readonly FileSystemRestClient _fileSystemRestClient;
+
+        /// <summary>
+        /// FileSystemRestClient.
+        /// </summary>
+        internal virtual FileSystemRestClient FileSystemRestClient => _fileSystemRestClient;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
@@ -238,7 +248,13 @@ namespace Azure.Storage.Files.DataLake
             _storageSharedKeyCredential = sharedKeyCredential;
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, _version.AsBlobsVersion(), _clientDiagnostics);
+            _containerClient = BlobContainerClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                _version.AsBlobsVersion(),
+                _clientDiagnostics);
+
+            _fileSystemRestClient = BuildFileSystemRestClient(_uri);
         }
 
         /// <summary>
@@ -397,7 +413,14 @@ namespace Azure.Storage.Files.DataLake
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _storageSharedKeyCredential = storageSharedKeyCredential;
-            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, _version.AsBlobsVersion(), _clientDiagnostics);
+
+            _containerClient = BlobContainerClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                _version.AsBlobsVersion(),
+                _clientDiagnostics);
+
+            _fileSystemRestClient = BuildFileSystemRestClient(fileSystemUri);
         }
 
         /// <summary>
@@ -436,7 +459,28 @@ namespace Azure.Storage.Files.DataLake
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
-            _containerClient = BlobContainerClientInternals.Create(_blobUri, pipeline, _version.AsBlobsVersion(), _clientDiagnostics);
+
+            _containerClient = BlobContainerClientInternals.Create(
+                _blobUri,
+                pipeline,
+                _version.AsBlobsVersion(),
+                _clientDiagnostics);
+
+            _fileSystemRestClient = BuildFileSystemRestClient(fileSystemUri);
+        }
+
+        private FileSystemRestClient BuildFileSystemRestClient(Uri uri)
+        {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(uri);
+            string fileSystemName = uriBuilder.FileSystemName;
+            uriBuilder.FileSystemName = null;
+            // TODO get rid of resource parameter on FileSystemRestClient constructor.
+            return new FileSystemRestClient(
+                clientDiagnostics: _clientDiagnostics,
+                pipeline: _pipeline,
+                url: uriBuilder.ToDfsUri().ToString(),
+                fileSystem: fileSystemName,
+                version: _version.ToVersionString());
         }
 
         /// <summary>
@@ -1526,49 +1570,70 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(continuation)}: {continuation}\n" +
                     $"{nameof(maxResults)}: {maxResults})");
+
+                operationName ??= $"{nameof(DataLakeFileClient)}.{nameof(GetPaths)}";
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
-                    Response<FileSystemListPathsResult> response = await DataLakeRestClient.FileSystem.ListPathsAsync(
-                        clientDiagnostics: _clientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: _dfsUri,
-                        version: Version.ToVersionString(),
-                        continuation: continuation,
-                        recursive: recursive,
-                        maxResults: maxResults,
-                        upn: userPrincipalName,
-                        path: path,
-                        async: async,
-                        operationName: operationName,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response;
 
-                    string jsonString;
-                    using (var reader = new System.IO.StreamReader(response.Value.Body))
+                    if (async)
                     {
-                        jsonString = reader.ReadToEnd();
+                        response = await FileSystemRestClient.ListPathsAsync(
+                            recursive: recursive,
+                            continuation: continuation,
+                            path: path,
+                            maxResults: maxResults,
+                            upn: userPrincipalName,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileSystemRestClient.ListPaths(
+                            recursive: recursive,
+                            continuation: continuation,
+                            path: path,
+                            maxResults: maxResults,
+                            upn: userPrincipalName,
+                            cancellationToken: cancellationToken);
                     }
 
-                    Dictionary<string, List<Dictionary<string, string>>> pathDictionary
-                        = JsonSerializer.Deserialize<Dictionary<string, List<Dictionary<string, string>>>>(jsonString);
-
                     return Response.FromValue(
-                        new PathSegment()
-                        {
-                            Continuation = response.Value.Continuation,
-                            Paths = pathDictionary["paths"].Select(path => path.ToPathItem())
-                        },
+                        response.ToPathSegment(),
                         response.GetRawResponse());
-                    ;
+
+                    // TODO figure this out.
+                    //string jsonString;
+                    //using (var reader = new System.IO.StreamReader(response.Value.Body))
+                    //{
+                    //    jsonString = reader.ReadToEnd();
+                    //}
+
+                    //Dictionary<string, List<Dictionary<string, string>>> pathDictionary
+                    //    = JsonSerializer.Deserialize<Dictionary<string, List<Dictionary<string, string>>>>(jsonString);
+
+                    //return Response.FromValue(
+                    //    new PathSegment()
+                    //    {
+                    //        Continuation = response.Value.Continuation,
+                    //        Paths = pathDictionary["paths"].Select(path => path.ToPathItem())
+                    //    },
+                    //    response.GetRawResponse());
+                    //;
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(DataLakeFileSystemClient));
+                    scope.Dispose();
                 }
             }
         }

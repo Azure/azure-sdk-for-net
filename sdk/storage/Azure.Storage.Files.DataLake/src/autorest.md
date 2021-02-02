@@ -29,3 +29,28 @@ directive:
         };
     }
 ```
+
+### Ungroup parameter groups
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.CacheControl["x-ms-parameter-grouping"];
+    delete $.ContentDisposition["x-ms-parameter-grouping"];
+    delete $.ContentEncoding["x-ms-parameter-grouping"];
+    delete $.ContentLanguage["x-ms-parameter-grouping"];
+    delete $.ContentType["x-ms-parameter-grouping"];
+    delete $.TransactionalContentMD5["x-ms-parameter-grouping"];
+    delete $.ContentMD5["x-ms-parameter-grouping"];
+    delete $.LeaseIdOptional["x-ms-parameter-grouping"];
+    delete $.IfMatch["x-ms-parameter-grouping"];
+    delete $.IfModifiedSince["x-ms-parameter-grouping"];
+    delete $.IfNoneMatch["x-ms-parameter-grouping"];
+    delete $.IfUnmodifiedSince["x-ms-parameter-grouping"];
+    delete $.SourceIfMatch["x-ms-parameter-grouping"];
+    delete $.SourceIfModifiedSince["x-ms-parameter-grouping"];
+    delete $.SourceIfNoneMatch["x-ms-parameter-grouping"];
+    delete $.SourceIfUnmodifiedSince["x-ms-parameter-grouping"];
+    delete $.SourceLeaseId["x-ms-parameter-grouping"];
+```
