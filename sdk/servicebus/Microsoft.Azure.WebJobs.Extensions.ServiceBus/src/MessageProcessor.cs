@@ -27,8 +27,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             Processor = processor ?? throw new ArgumentNullException(nameof(processor));
         }
 
-        public Func<ProcessErrorEventArgs, Task> ExceptionHandler { get; }
-
         /// <summary>
         /// Gets or sets the <see cref="Processor"/> that will be used by the <see cref="Processor"/>.
         /// </summary>

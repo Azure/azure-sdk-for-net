@@ -52,7 +52,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     public partial class MessageProcessor
     {
         public MessageProcessor(Azure.Messaging.ServiceBus.ServiceBusProcessor processor) { }
-        public System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ExceptionHandler { get { throw null; } }
         public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceiver receiver, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceiver receiver, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
