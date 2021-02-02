@@ -5,12 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core.TestFramework;
+using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Tests;
-using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -125,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                })
                .ConfigureDefaultTestHost<TJobClass>(b =>
                {
-                   b.AddServiceBus();
+                   b.AddServiceBus(options => options.ClientOptions.RetryOptions.TryTimeout = TimeSpan.FromSeconds(10));
                })
                .ConfigureServices(s =>
                {
@@ -144,16 +143,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         internal async Task WriteQueueMessage(string message, string sessionId = null, string connectionString = default, string queueName = default)
         {
-            QueueClient queueClient = new QueueClient(
-                connectionString ?? ServiceBusTestEnvironment.Instance.ServiceBusConnectionString,
-                queueName ?? _firstQueueScope.QueueName);
-            Message messageObj = new Message(Encoding.UTF8.GetBytes(message));
+            await using ServiceBusClient client = new ServiceBusClient(connectionString ?? ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            var sender = client.CreateSender(queueName ?? _firstQueueScope.QueueName);
+            ServiceBusMessage messageObj = new ServiceBusMessage(message);
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
             }
-            await queueClient.SendAsync(messageObj);
-            await queueClient.CloseAsync();
+            await sender.SendMessageAsync(messageObj);
         }
 
         internal async Task WriteQueueMessage(TestPoco obj, string sessionId = null)
@@ -170,26 +167,26 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 payload = memoryStream.ToArray();
             }
 
-            QueueClient queueClient = new QueueClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString, _firstQueueScope.QueueName);
-            Message messageObj = new Message(payload);
+            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            var sender = client.CreateSender(_firstQueueScope.QueueName);
+            ServiceBusMessage messageObj = new ServiceBusMessage(payload);
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
             }
-            await queueClient.SendAsync(messageObj);
-            await queueClient.CloseAsync();
+            await sender.SendMessageAsync(messageObj);
         }
 
         internal async Task WriteTopicMessage(string message, string sessionId = null)
         {
-            TopicClient client = new TopicClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString, _topicScope.TopicName);
-            Message messageObj = new Message(Encoding.UTF8.GetBytes(message));
+            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            var sender = client.CreateSender(_topicScope.TopicName);
+            ServiceBusMessage messageObj = new ServiceBusMessage(message);
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
             }
-            await client.SendAsync(messageObj);
-            await client.CloseAsync();
+            await sender.SendMessageAsync(messageObj);
         }
     }
 }
