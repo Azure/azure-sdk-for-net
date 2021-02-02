@@ -135,9 +135,10 @@ namespace Azure.Identity.Tests
             var clientId = "aebc6443-996d-45c2-90f0-388ff96faa56";
             var username = testEnvironment.Username;
             var password = testEnvironment.Password;
+            var authorityUri = new Uri(new Uri(testEnvironment.AuthorityHostUrl), testEnvironment.TestTenantId).ToString();
 
             var client = PublicClientApplicationBuilder.Create(clientId)
-                .WithAuthority($"{testEnvironment.AuthorityHostUrl}/{testEnvironment.TestTenantId}/")
+                .WithAuthority(authorityUri)
                 .WithTenantId(testEnvironment.TestTenantId)
                 .Build();
 
