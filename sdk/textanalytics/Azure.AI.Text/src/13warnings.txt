@@ -1,0 +1,58 @@
+Microsoft (R) Build Engine version 16.6.0+5ff7b0c9e for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  AutoRest code generation utility [cli version: 3.0.6236; node: v12.13.0, max-memory: 8192 gb]
+  (C) 2018 Microsoft Corporation.
+  https://aka.ms/autorest
+     Loading AutoRest core      'C:\Users\sakataka\.autorest\@autorest_core@3.0.6306\node_modules\@autorest\core\dist' (3.0.6306)
+     Loading local AutoRest extension '@autorest/csharp-v3' (C:/Users/sakataka/.nuget/packages/autorest.csharp.v3/1.0.0-alpha.20201013.3/build/../tools/netcoreapp3.0/any/)
+     Loading AutoRest extension '@autorest/modelerfour' (4.15.416->4.15.416)
+  
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'QnA.context' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'Prompt.qna' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'QAErrorResponse.error' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'Query.context' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'Query.answerSpanRequest' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'QnASearchResult.context' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'QnASearchResult.answerSpan' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/SchemaMissingType): The schema 'QnA-context' with an undefined type and 'allOf'/'anyOf'/'oneOf' is a bit ambigious. This has been auto-corrected to 'type:object' [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/SchemaMissingType): The schema 'Prompt-qna' with an undefined type and 'allOf'/'anyOf'/'oneOf' is a bit ambigious. This has been auto-corrected to 'type:object' [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/SchemaMissingType): The schema 'QAErrorResponse-error' with an undefined type and 'allOf'/'anyOf'/'oneOf' is a bit ambigious. This has been auto-corrected to 'type:object' [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/SchemaMissingType): The schema 'Query-context' with an undefined type and 'allOf'/'anyOf'/'oneOf' is a bit ambigious. This has been auto-corrected to 'type:object' [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/SchemaMissingType): The schema 'Query-answerSpanRequest' with an undefined type and 'allOf'/'anyOf'/'oneOf' is a bit ambigious. This has been auto-corrected to 'type:object' [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  
+EXEC : warning (PreCheck/CheckDuplicateSchemas): Checking for duplicate schemas, this could take a (long) while.  Run with --verbose for more detail. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+  [16.56 s] Generation Complete
+
+Build succeeded.
+
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'QnA.context' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'Prompt.qna' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'QAErrorResponse.error' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'Query.context' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'Query.answerSpanRequest' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'QnASearchResult.context' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/AllOfWhenYouMeantRef): An anonymous inline schema for property 'QnASearchResult.answerSpan' is using an 'allOf' instead of a $ref. This creates a wasteful anonymous type when generating code. Don't do that. - removing. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/SchemaMissingType): The schema 'QnA-context' with an undefined type and 'allOf'/'anyOf'/'oneOf' is a bit ambigious. This has been auto-corrected to 'type:object' [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/SchemaMissingType): The schema 'Prompt-qna' with an undefined type and 'allOf'/'anyOf'/'oneOf' is a bit ambigious. This has been auto-corrected to 'type:object' [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/SchemaMissingType): The schema 'QAErrorResponse-error' with an undefined type and 'allOf'/'anyOf'/'oneOf' is a bit ambigious. This has been auto-corrected to 'type:object' [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/SchemaMissingType): The schema 'Query-context' with an undefined type and 'allOf'/'anyOf'/'oneOf' is a bit ambigious. This has been auto-corrected to 'type:object' [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/SchemaMissingType): The schema 'Query-answerSpanRequest' with an undefined type and 'allOf'/'anyOf'/'oneOf' is a bit ambigious. This has been auto-corrected to 'type:object' [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+EXEC : warning (PreCheck/CheckDuplicateSchemas): Checking for duplicate schemas, this could take a (long) while.  Run with --verbose for more detail. [C:\code\sahithisskk\azure-sdk-for-net\sdk\textanalytics\Azure.AI.Text\src\Azure.AI.Text.csproj]
+    13 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:22.03
