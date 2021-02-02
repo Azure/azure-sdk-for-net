@@ -123,12 +123,9 @@ function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseS
         Write-Host "Maybe a pkg version wasn't updated properly?"
         exit(1)
       }
-      $docsReadMeName = ""
+      $docsReadMeName = $parsedPackage.PackageId
       if ($parsedPackage.DocsReadMeName) {
         $docsReadMeName = $parsedPackage.DocsReadMeName
-      }
-      else {
-        $docsReadMeName = $parsedPackage.PackageId
       }
       $pkgList += New-Object PSObject -Property @{
         PackageId      = $parsedPackage.PackageId
