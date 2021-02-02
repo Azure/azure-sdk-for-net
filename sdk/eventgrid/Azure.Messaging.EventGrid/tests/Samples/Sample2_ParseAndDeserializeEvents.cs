@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             #region Snippet:DeserializePayloadUsingAsSystemEventData
             foreach (EventGridEvent egEvent in egEvents)
             {
-                // If the event is a system event, AsSystemEventData() should return the correct system event type
+                // If the event is a system event, TryGetSystemEventData() will return the deserialized system event
                 if (egEvent.TryGetSystemEventData(out object systemEvent))
                 {
                     switch (systemEvent)
