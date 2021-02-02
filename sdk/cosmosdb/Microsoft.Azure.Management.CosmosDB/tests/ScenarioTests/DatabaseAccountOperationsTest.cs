@@ -56,7 +56,12 @@ namespace CosmosDB.Tests.ScenarioTests
                     EnableMultipleWriteLocations = true,
                     EnableCassandraConnector = true,
                     ConnectorOffer = "Small",
-                    DisableKeyBasedMetadataWriteAccess = false
+                    DisableKeyBasedMetadataWriteAccess = false,
+                    NetworkAclBypass = NetworkAclBypass.AzureServices,
+                    NetworkAclBypassResourceIds = new List<string>
+                    {
+                        "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName"
+                    }
                 };
 
                 DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -91,7 +96,13 @@ namespace CosmosDB.Tests.ScenarioTests
                     EnableAutomaticFailover = true,
                     EnableCassandraConnector = true,
                     ConnectorOffer = "Small",
-                    DisableKeyBasedMetadataWriteAccess = true
+                    DisableKeyBasedMetadataWriteAccess = true,
+                    NetworkAclBypass = NetworkAclBypass.AzureServices,
+                    NetworkAclBypassResourceIds = new List<string>
+                    {
+                        "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName",
+                        "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName2"
+                    }
                 };
 
                 DatabaseAccountGetResults updatedDatabaseAccount = cosmosDBManagementClient.DatabaseAccounts.UpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountUpdateParameters).GetAwaiter().GetResult().Body;
@@ -148,6 +159,8 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(databaseAccount.EnableCassandraConnector, parameters.EnableCassandraConnector);
             Assert.Equal(databaseAccount.ConnectorOffer, parameters.ConnectorOffer);
             Assert.Equal(databaseAccount.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
+            Assert.Equal(databaseAccount.NetworkAclBypass, parameters.NetworkAclBypass);
+            Assert.Equal(databaseAccount.NetworkAclBypassResourceIds.Count, parameters.NetworkAclBypassResourceIds.Count);
         }
 
         private static void VerifyCosmosDBAccount(DatabaseAccountGetResults databaseAccount, DatabaseAccountUpdateParameters parameters)
