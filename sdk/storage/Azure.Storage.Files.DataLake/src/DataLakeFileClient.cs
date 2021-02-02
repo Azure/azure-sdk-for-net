@@ -3705,7 +3705,7 @@ namespace Azure.Storage.Files.DataLake
 
                     if (async)
                     {
-                        response = await PathRestClient.SetExpiryAsync(
+                        response = await BlobPathRestClient.SetExpiryAsync(
                             expiryOptions: blobExpiryOptions,
                             expiresOn: expiresOn,
                             cancellationToken: cancellationToken)
@@ -3713,7 +3713,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     else
                     {
-                        response = PathRestClient.SetExpiry(
+                        response = BlobPathRestClient.SetExpiry(
                             expiryOptions: blobExpiryOptions,
                             expiresOn: expiresOn,
                             cancellationToken: cancellationToken);
