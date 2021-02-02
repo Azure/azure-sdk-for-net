@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
@@ -180,10 +181,18 @@ namespace Azure.Search.Documents.Tests
 
             public override Response<IndexDocumentsResult> IndexDocuments<T>(IndexDocumentsBatch<T> batch, IndexDocumentsOptions options = null, CancellationToken cancellationToken = default)
             {
+                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BatchingSearchClient)}.{nameof(IndexDocuments)}");
+                scope.Start();
+
                 try
                 {
                     SplitWhenRequested();
                     return ProcessResponse(base.IndexDocuments(batch, options, cancellationToken));
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
                 }
                 finally
                 {
@@ -193,10 +202,18 @@ namespace Azure.Search.Documents.Tests
 
             public override async Task<Response<IndexDocumentsResult>> IndexDocumentsAsync<T>(IndexDocumentsBatch<T> batch, IndexDocumentsOptions options = null, CancellationToken cancellationToken = default)
             {
+                using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BatchingSearchClient)}.{nameof(IndexDocuments)}");
+                scope.Start();
+
                 try
                 {
                     SplitWhenRequested();
                     return ProcessResponse(await base.IndexDocumentsAsync(batch, options, cancellationToken).ConfigureAwait(false));
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
                 }
                 finally
                 {
