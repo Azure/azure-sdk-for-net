@@ -16,7 +16,7 @@ namespace Azure.Communication
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumberIdentifier"/>.</summary>
         /// <param name="phoneNumber">The phone number in E.164 format.</param>
-        /// <param name="rawId">Full id of the phone number, optional.</param>
+        /// <param name="rawId">Raw id of the phone number, optional.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="phoneNumber"/> is null.
         /// </exception>

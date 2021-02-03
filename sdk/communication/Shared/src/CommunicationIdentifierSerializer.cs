@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.Communication
@@ -10,7 +11,9 @@ namespace Azure.Communication
     {
         public static CommunicationIdentifier Deserialize(CommunicationIdentifierModel identifier)
         {
-            string rawId = AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(CommunicationIdentifierModel));
+           string rawId = AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(CommunicationIdentifierModel));
+
+            AssertMaximumOneNestedModel(identifier);
 
             if (identifier.CommunicationUser is CommunicationUserIdentifierModel user)
                 return new CommunicationUserIdentifier(AssertNotNull(user.Id, nameof(user.Id), nameof(CommunicationUserIdentifierModel)));
@@ -32,6 +35,20 @@ namespace Azure.Communication
             }
 
             return new UnknownIdentifier(rawId);
+
+            static void AssertMaximumOneNestedModel(CommunicationIdentifierModel identifier)
+            {
+                List<string> presentProperties = new List<string>();
+                if (identifier.CommunicationUser is not null)
+                    presentProperties.Add(nameof(identifier.CommunicationUser));
+                if (identifier.PhoneNumber is not null)
+                    presentProperties.Add(nameof(identifier.PhoneNumber));
+                if (identifier.MicrosoftTeamsUser is not null)
+                    presentProperties.Add(nameof(identifier.MicrosoftTeamsUser));
+
+                if (presentProperties.Count > 1)
+                    throw new JsonException($"Only one of the properties in {{{string.Join(", ", presentProperties)}}} should be present.");
+            }
         }
 
         private static CommunicationCloudEnvironment Deserialize(CommunicationCloudEnvironmentModel cloud)

@@ -15,6 +15,35 @@ namespace Azure.Communication
         private const string TestTeamsCloud = "gcch";
 
         [Test]
+        public void MoreThanOneNestedObject_DeserializerThrows()
+        {
+            CommunicationIdentifierModel[] modelsWithTooManyNestedObjects = new[]
+            {
+                new CommunicationIdentifierModel
+                {
+                    RawId = TestRawId,
+                    CommunicationUser = new CommunicationUserIdentifierModel { Id = TestUserId },
+                    PhoneNumber = new PhoneNumberIdentifierModel { Value = TestPhoneNumber },
+                },
+                new CommunicationIdentifierModel
+                {
+                    RawId = TestRawId,
+                    CommunicationUser = new CommunicationUserIdentifierModel { Id = TestUserId },
+                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel { UserId = TestTeamsUserId, IsAnonymous = true, Cloud = CommunicationCloudEnvironmentModel.Public, }
+                },
+                new CommunicationIdentifierModel
+                {
+                    RawId = TestRawId,
+                    PhoneNumber = new PhoneNumberIdentifierModel { Value = TestPhoneNumber },
+                    MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel { UserId = TestTeamsUserId, IsAnonymous = true, Cloud = CommunicationCloudEnvironmentModel.Public, }
+                },
+            };
+
+            foreach (CommunicationIdentifierModel item in modelsWithTooManyNestedObjects)
+                Assert.Throws<JsonException>(() => CommunicationIdentifierSerializer.Deserialize(item));
+        }
+
+        [Test]
         public void MissingProperty_DeserializerThrows()
         {
             CommunicationIdentifierModel[] modelsWithMissingMandatoryProperty = new[]
