@@ -8,8 +8,8 @@ namespace Azure.Communication
     /// <summary>Represents a Microsoft Teams user.</summary>
     public class MicrosoftTeamsUserIdentifier : CommunicationIdentifier
     {
-        /// <summary>The full id of the Microsoft Teams User identifier.</summary>
-        public string Id { get; }
+        /// <summary>The optional raw id of the Microsoft Teams User identifier.</summary>
+        public string RawId { get; }
 
         /// <summary>The id of the Microsoft Teams user. If the user isn't anonymous, the id is the AAD object id of the user.</summary>
         public string UserId { get; }
@@ -25,21 +25,21 @@ namespace Azure.Communication
         /// </summary>
         /// <param name="userId">Id of the Microsoft Teams user. If the user isn't anonymous, the id is the AAD object id of the user.</param>
         /// <param name="isAnonymous">Set this to true if the user is anonymous, for example when joining a meeting with a share link.</param>
-        /// <param name="id">Full id of the Microsoft Teams user, optional.</param>
         /// <param name="cloud">The cloud that the Microsoft Team user belongs to. A null value translates to the Public cloud.</param>
+        /// <param name="rawId">Full id of the Microsoft Teams user, optional.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="userId"/> is null.
         /// </exception>
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="userId"/> is empty.
         /// </exception>
-        public MicrosoftTeamsUserIdentifier(string userId, bool isAnonymous = false, string id = null, CommunicationCloudEnvironment? cloud = null)
+        public MicrosoftTeamsUserIdentifier(string userId, bool isAnonymous = false, CommunicationCloudEnvironment? cloud = null, string rawId = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             UserId = userId;
             IsAnonymous = isAnonymous;
             Cloud = cloud ?? CommunicationCloudEnvironment.Public;
-            Id = id;
+            RawId = rawId;
         }
 
         /// <inheritdoc />
@@ -54,6 +54,6 @@ namespace Azure.Communication
             && otherId.UserId == UserId
             && otherId.IsAnonymous == IsAnonymous
             && otherId.Cloud == Cloud
-            && (Id is null || otherId.Id is null || Id == otherId.Id);
+            && (RawId is null || otherId.RawId is null || RawId == otherId.RawId);
     }
 }
