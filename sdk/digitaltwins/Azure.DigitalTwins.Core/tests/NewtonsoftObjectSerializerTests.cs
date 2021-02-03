@@ -14,6 +14,8 @@ namespace Azure.DigitalTwins.Core.Tests
     /// Tests for custom ObjectSerializer.
     /// Users can specify their own serializer/deserializer and not go with the default JsonObjectSerializer.
     /// SDK needs to make sure it can properly use different serializers and the behavior is seamless.
+    /// Specifically, we have a work around in the query code which requires use of a System.Text.Json serializer because it works on a JsonElement.
+    /// When the user initializes with a non-default serializer, we must not use that to do this work.
     /// </summary>
     public class NewtonsoftObjectSerializerTests : E2eTestBase
     {
