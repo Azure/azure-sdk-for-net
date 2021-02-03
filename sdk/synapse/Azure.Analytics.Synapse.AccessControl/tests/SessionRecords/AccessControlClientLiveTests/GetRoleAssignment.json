@@ -9,9 +9,9 @@
           "text/json"
         ],
         "Authorization": "Sanitized",
-        "traceparent": "00-3eee314689bb0f4eacf1e85dc7722077-8ccb4886a0c7e841-00",
+        "traceparent": "00-8acaed47c609d84c9464f854632df4c6-1996e1fb9e5a514d-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-alpha.20210201.1",
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-alpha.20210203.1",
           "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "ad464a9fe3cce13c6653808a02a783d7",
@@ -22,7 +22,7 @@
       "ResponseHeaders": {
         "Content-Length": "13543",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 01 Feb 2021 23:09:05 GMT",
+        "Date": "Wed, 03 Feb 2021 15:39:56 GMT",
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
@@ -30,14 +30,14 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "ad464a9fe3cce13c6653808a02a783d7",
         "x-ms-request-id": [
-          "b60e71bc-f5fd-49f4-b19b-cdf0b796ea84",
-          "b60e71bc-f5fd-49f4-b19b-cdf0b796ea84"
+          "497ba664-13e9-4a23-9230-f1180a1d433a",
+          "497ba664-13e9-4a23-9230-f1180a1d433a"
         ]
       },
       "ResponseBody": "[{\u0022name\u0022:\u0022Synapse Administrator\u0022,\u0022description\u0022:\u0022Full Synapse access to serverless SQL pools, Apache Spark pools and Integration runtimes.\u00A0 Includes create, read, update and delete access to all published code artifacts.\u00A0 Includes Compute Operator, Linked Data Manager, and Credential User permissions on the workspace system identity credential.\u00A0 Includes granting access.\u00A0 Azure permissions are required to create, delete, or manage compute resources.\u200B\u0022,\u0022id\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78\u0022,\u0022isBuiltIn\u0022:true,\u0022permissions\u0022:[{\u0022actions\u0022:[],\u0022notActions\u0022:[],\u0022dataActions\u0022:[\u0022Microsoft.Synapse/workspaces/read\u0022,\u0022Microsoft.Synapse/workspaces/roleAssignments/write\u0022,\u0022Microsoft.Synapse/workspaces/roleAssignments/delete\u0022,\u0022Microsoft.Synapse/workspaces/managedPrivateEndpoints/write\u0022,\u0022Microsoft.Synapse/workspaces/managedPrivateEndpoints/delete\u0022,\u0022Microsoft.Synapse/workspaces/bigDataPools/useCompute/action\u0022,\u0022Microsoft.Synapse/workspaces/bigDataPools/viewLogs/action\u0022,\u0022Microsoft.Synapse/workspaces/scopePools/useCompute/action\u0022,\u0022Microsoft.Synapse/workspaces/scopePools/viewLogs/action\u0022,\u0022Microsoft.Synapse/workspaces/integrationRuntimes/useCompute/action\u0022,\u0022Microsoft.Synapse/workspaces/integrationRuntimes/viewLogs/action\u0022,\u0022Microsoft.Synapse/workspaces/artifacts/read\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/write\u0022,\u0022Microsoft.Synapse/workspaces/sparkJobDefinitions/write\u0022,\u0022Microsoft.Synapse/workspaces/sqlScripts/write\u0022,\u0022Microsoft.Synapse/workspaces/dataFlows/write\u0022,\u0022Microsoft.Synapse/workspaces/pipelines/write\u0022,\u0022Microsoft.Synapse/workspaces/triggers/write\u0022,\u0022Microsoft.Synapse/workspaces/datasets/write\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/write\u0022,\u0022Microsoft.Synapse/workspaces/credentials/write\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/delete\u0022,\u0022Microsoft.Synapse/workspaces/sparkJobDefinitions/delete\u0022,\u0022Microsoft.Synapse/workspaces/sqlScripts/delete\u0022,\u0022Microsoft.Synapse/workspaces/dataFlows/delete\u0022,\u0022Microsoft.Synapse/workspaces/pipelines/delete\u0022,\u0022Microsoft.Synapse/workspaces/triggers/delete\u0022,\u0022Microsoft.Synapse/workspaces/datasets/delete\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/delete\u0022,\u0022Microsoft.Synapse/workspaces/credentials/delete\u0022,\u0022Microsoft.Synapse/workspaces/cancelPipelineRun/action\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/viewOutputs/action\u0022,\u0022Microsoft.Synapse/workspaces/pipelines/viewOutputs/action\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/useSecret/action\u0022,\u0022Microsoft.Synapse/workspaces/credentials/useSecret/action\u0022,\u0022Microsoft.Synapse/workspaces/libraries/delete\u0022,\u0022Microsoft.Synapse/workspaces/libraries/write\u0022],\u0022notDataActions\u0022:[]}],\u0022scopes\u0022:[\u0022workspaces/{workspaceName}\u0022,\u0022workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}\u0022,\u0022workspaces/{workspaceName}/scopePools/{scopePoolName}\u0022,\u0022workspaces/{workspaceName}/integrationRuntimes/{integrationRuntimeName}\u0022,\u0022workspaces/{workspaceName}/linkedServices/{linkedServiceName}\u0022,\u0022workspaces/{workspaceName}/credentials/{credentialName}\u0022],\u0022availabilityStatus\u0022:\u0022Available\u0022},{\u0022name\u0022:\u0022Synapse Linked Data Manager\u0022,\u0022description\u0022:\u0022Creation and management of managed private endpoints, linked services, and credentials.\u200B\u0022,\u0022id\u0022:\u0022dd665582-e433-40ca-b183-1b1b33e73375\u0022,\u0022isBuiltIn\u0022:true,\u0022permissions\u0022:[{\u0022actions\u0022:[],\u0022notActions\u0022:[],\u0022dataActions\u0022:[\u0022Microsoft.Synapse/workspaces/read\u0022,\u0022Microsoft.Synapse/workspaces/managedPrivateEndpoints/write\u0022,\u0022Microsoft.Synapse/workspaces/managedPrivateEndpoints/delete\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/write\u0022,\u0022Microsoft.Synapse/workspaces/credentials/write\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/delete\u0022,\u0022Microsoft.Synapse/workspaces/credentials/delete\u0022],\u0022notDataActions\u0022:[]}],\u0022scopes\u0022:[\u0022workspaces/{workspaceName}\u0022],\u0022availabilityStatus\u0022:\u0022Available\u0022},{\u0022name\u0022:\u0022Synapse Contributor\u0022,\u0022description\u0022:\u0022Full Synapse access to serverless SQL pools, Apache Spark pools, Integration runtimes.\u00A0 Includes create, read, update, and delete access to all published code artifacts and their outputs, including credentials and linked services.\u00A0 Includes compute operator permissions. Does not include permission to use credentials and run pipelines. Does not include granting access.\u200B\u0022,\u0022id\u0022:\u00227572bffe-f453-4b66-912a-46cc5ef38fda\u0022,\u0022isBuiltIn\u0022:true,\u0022permissions\u0022:[{\u0022actions\u0022:[],\u0022notActions\u0022:[],\u0022dataActions\u0022:[\u0022Microsoft.Synapse/workspaces/read\u0022,\u0022Microsoft.Synapse/workspaces/bigDataPools/useCompute/action\u0022,\u0022Microsoft.Synapse/workspaces/bigDataPools/viewLogs/action\u0022,\u0022Microsoft.Synapse/workspaces/scopePools/useCompute/action\u0022,\u0022Microsoft.Synapse/workspaces/scopePools/viewLogs/action\u0022,\u0022Microsoft.Synapse/workspaces/integrationRuntimes/useCompute/action\u0022,\u0022Microsoft.Synapse/workspaces/integrationRuntimes/viewLogs/action\u0022,\u0022Microsoft.Synapse/workspaces/artifacts/read\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/write\u0022,\u0022Microsoft.Synapse/workspaces/sparkJobDefinitions/write\u0022,\u0022Microsoft.Synapse/workspaces/sqlScripts/write\u0022,\u0022Microsoft.Synapse/workspaces/dataFlows/write\u0022,\u0022Microsoft.Synapse/workspaces/pipelines/write\u0022,\u0022Microsoft.Synapse/workspaces/triggers/write\u0022,\u0022Microsoft.Synapse/workspaces/datasets/write\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/write\u0022,\u0022Microsoft.Synapse/workspaces/credentials/write\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/delete\u0022,\u0022Microsoft.Synapse/workspaces/sparkJobDefinitions/delete\u0022,\u0022Microsoft.Synapse/workspaces/sqlScripts/delete\u0022,\u0022Microsoft.Synapse/workspaces/dataFlows/delete\u0022,\u0022Microsoft.Synapse/workspaces/pipelines/delete\u0022,\u0022Microsoft.Synapse/workspaces/triggers/delete\u0022,\u0022Microsoft.Synapse/workspaces/datasets/delete\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/delete\u0022,\u0022Microsoft.Synapse/workspaces/credentials/delete\u0022,\u0022Microsoft.Synapse/workspaces/cancelPipelineRun/action\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/viewOutputs/action\u0022,\u0022Microsoft.Synapse/workspaces/pipelines/viewOutputs/action\u0022,\u0022Microsoft.Synapse/workspaces/libraries/delete\u0022,\u0022Microsoft.Synapse/workspaces/libraries/write\u0022],\u0022notDataActions\u0022:[]}],\u0022scopes\u0022:[\u0022workspaces/{workspaceName}\u0022,\u0022workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}\u0022,\u0022workspaces/{workspaceName}/scopePools/{scopePoolName}\u0022,\u0022workspaces/{workspaceName}/integrationRuntimes/{integrationRuntimeName}\u0022],\u0022availabilityStatus\u0022:\u0022Available\u0022},{\u0022name\u0022:\u0022Synapse Artifact Publisher\u0022,\u0022description\u0022:\u0022Create, read, update, and delete access to published code artifacts and their outputs. Does not include permission to run code or pipelines, or to grant access.\u00A0\u200B\u0022,\u0022id\u0022:\u002205930f57-09a3-4c0d-9fa9-6d1eb91c178b\u0022,\u0022isBuiltIn\u0022:true,\u0022permissions\u0022:[{\u0022actions\u0022:[],\u0022notActions\u0022:[],\u0022dataActions\u0022:[\u0022Microsoft.Synapse/workspaces/read\u0022,\u0022Microsoft.Synapse/workspaces/artifacts/read\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/write\u0022,\u0022Microsoft.Synapse/workspaces/sparkJobDefinitions/write\u0022,\u0022Microsoft.Synapse/workspaces/sqlScripts/write\u0022,\u0022Microsoft.Synapse/workspaces/dataFlows/write\u0022,\u0022Microsoft.Synapse/workspaces/pipelines/write\u0022,\u0022Microsoft.Synapse/workspaces/triggers/write\u0022,\u0022Microsoft.Synapse/workspaces/datasets/write\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/write\u0022,\u0022Microsoft.Synapse/workspaces/credentials/write\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/delete\u0022,\u0022Microsoft.Synapse/workspaces/sparkJobDefinitions/delete\u0022,\u0022Microsoft.Synapse/workspaces/sqlScripts/delete\u0022,\u0022Microsoft.Synapse/workspaces/dataFlows/delete\u0022,\u0022Microsoft.Synapse/workspaces/pipelines/delete\u0022,\u0022Microsoft.Synapse/workspaces/triggers/delete\u0022,\u0022Microsoft.Synapse/workspaces/datasets/delete\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/delete\u0022,\u0022Microsoft.Synapse/workspaces/credentials/delete\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/viewOutputs/action\u0022,\u0022Microsoft.Synapse/workspaces/pipelines/viewOutputs/action\u0022,\u0022Microsoft.Synapse/workspaces/libraries/delete\u0022,\u0022Microsoft.Synapse/workspaces/libraries/write\u0022],\u0022notDataActions\u0022:[]}],\u0022scopes\u0022:[\u0022workspaces/{workspaceName}\u0022],\u0022availabilityStatus\u0022:\u0022Available\u0022},{\u0022name\u0022:\u0022Synapse Artifact User\u0022,\u0022description\u0022:\u0022Read access to published code artifacts and their outputs. Can create new artifacts but cannot publish changes or run code without additional permissions.\u200B\u0022,\u0022id\u0022:\u002253faaa0e-40b6-40c8-a2ff-e38f2d388875\u0022,\u0022isBuiltIn\u0022:true,\u0022permissions\u0022:[{\u0022actions\u0022:[],\u0022notActions\u0022:[],\u0022dataActions\u0022:[\u0022Microsoft.Synapse/workspaces/read\u0022,\u0022Microsoft.Synapse/workspaces/artifacts/read\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/viewOutputs/action\u0022,\u0022Microsoft.Synapse/workspaces/pipelines/viewOutputs/action\u0022],\u0022notDataActions\u0022:[]}],\u0022scopes\u0022:[\u0022workspaces/{workspaceName}\u0022],\u0022availabilityStatus\u0022:\u0022Available\u0022},{\u0022name\u0022:\u0022Synapse Compute Operator\u0022,\u0022description\u0022:\u0022Submit Spark jobs and notebooks and view logs.\u00A0 Includes canceling Spark jobs submitted by any user. Requires additional credential use permissions on the workspace system identity to run pipelines, view pipeline runs and outputs.\u200B\u0022,\u0022id\u0022:\u0022e3844cc7-4670-42cb-9349-9bdac1ee7881\u0022,\u0022isBuiltIn\u0022:true,\u0022permissions\u0022:[{\u0022actions\u0022:[],\u0022notActions\u0022:[],\u0022dataActions\u0022:[\u0022Microsoft.Synapse/workspaces/read\u0022,\u0022Microsoft.Synapse/workspaces/bigDataPools/useCompute/action\u0022,\u0022Microsoft.Synapse/workspaces/bigDataPools/viewLogs/action\u0022,\u0022Microsoft.Synapse/workspaces/scopePools/useCompute/action\u0022,\u0022Microsoft.Synapse/workspaces/scopePools/viewLogs/action\u0022,\u0022Microsoft.Synapse/workspaces/integrationRuntimes/useCompute/action\u0022,\u0022Microsoft.Synapse/workspaces/integrationRuntimes/viewLogs/action\u0022,\u0022Microsoft.Synapse/workspaces/cancelPipelineRun/action\u0022],\u0022notDataActions\u0022:[]}],\u0022scopes\u0022:[\u0022workspaces/{workspaceName}\u0022,\u0022workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}\u0022,\u0022workspaces/{workspaceName}/scopePools/{scopePoolName}\u0022,\u0022workspaces/{workspaceName}/integrationRuntimes/{integrationRuntimeName}\u0022],\u0022availabilityStatus\u0022:\u0022Available\u0022},{\u0022name\u0022:\u0022Synapse Credential User\u0022,\u0022description\u0022:\u0022Runtime and configuration-time use of secrets within credentials and linked services in activities like pipeline runs. To run pipelines, this role is required, scoped to the workspace system identity.\u200B\u0022,\u0022id\u0022:\u00225eb298b4-692c-4241-9cf0-f58a3b42bb25\u0022,\u0022isBuiltIn\u0022:true,\u0022permissions\u0022:[{\u0022actions\u0022:[],\u0022notActions\u0022:[],\u0022dataActions\u0022:[\u0022Microsoft.Synapse/workspaces/read\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/useSecret/action\u0022,\u0022Microsoft.Synapse/workspaces/credentials/useSecret/action\u0022],\u0022notDataActions\u0022:[]}],\u0022scopes\u0022:[\u0022workspaces/{workspaceName}\u0022,\u0022workspaces/{workspaceName}/linkedServices/{linkedServiceName}\u0022,\u0022workspaces/{workspaceName}/credentials/{credentialName}\u0022],\u0022availabilityStatus\u0022:\u0022Available\u0022},{\u0022name\u0022:\u0022Synapse User\u0022,\u0022description\u0022:\u0022List and view details of SQL pools, Apache Spark pools, Integration runtimes, and published linked services and credentials.\u00A0 Does not include other published code artifacts.\u00A0 Can create new artifacts but cannot run or publish without additional permissions.\u00A0\u00A0\u00A0\u200B\u0022,\u0022id\u0022:\u00222a385764-43e8-416c-9825-7b18d05a2c4b\u0022,\u0022isBuiltIn\u0022:true,\u0022permissions\u0022:[{\u0022actions\u0022:[],\u0022notActions\u0022:[],\u0022dataActions\u0022:[\u0022Microsoft.Synapse/workspaces/read\u0022],\u0022notDataActions\u0022:[]}],\u0022scopes\u0022:[\u0022workspaces/{workspaceName}\u0022,\u0022workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}\u0022,\u0022workspaces/{workspaceName}/scopePools/{scopePoolName}\u0022,\u0022workspaces/{workspaceName}/integrationRuntimes/{integrationRuntimeName}\u0022,\u0022workspaces/{workspaceName}/linkedServices/{linkedServiceName}\u0022,\u0022workspaces/{workspaceName}/credentials/{credentialName}\u0022],\u0022availabilityStatus\u0022:\u0022Available\u0022},{\u0022name\u0022:\u0022Apache Spark Administrator\u0022,\u0022description\u0022:\u0022Full Synapse access to Apache Spark Pools.\u00A0 Create, read, update, and delete access to published Spark job definitions, notebooks, and their outputs, and to libraries, linked services and credentials.\u00A0 Includes read access to all other published code artifacts. Does not include permission to use credentials and run pipelines. Does not include granting access.\u200B\u0022,\u0022id\u0022:\u0022c3a6d2f1-a26f-4810-9b0f-591308d5cbf1\u0022,\u0022isBuiltIn\u0022:true,\u0022permissions\u0022:[{\u0022actions\u0022:[],\u0022notActions\u0022:[],\u0022dataActions\u0022:[\u0022Microsoft.Synapse/workspaces/read\u0022,\u0022Microsoft.Synapse/workspaces/bigDataPools/useCompute/action\u0022,\u0022Microsoft.Synapse/workspaces/bigDataPools/viewLogs/action\u0022,\u0022Microsoft.Synapse/workspaces/artifacts/read\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/write\u0022,\u0022Microsoft.Synapse/workspaces/sparkJobDefinitions/write\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/write\u0022,\u0022Microsoft.Synapse/workspaces/credentials/write\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/delete\u0022,\u0022Microsoft.Synapse/workspaces/sparkJobDefinitions/delete\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/delete\u0022,\u0022Microsoft.Synapse/workspaces/credentials/delete\u0022,\u0022Microsoft.Synapse/workspaces/libraries/delete\u0022,\u0022Microsoft.Synapse/workspaces/libraries/write\u0022,\u0022Microsoft.Synapse/workspaces/notebooks/viewOutputs/action\u0022],\u0022notDataActions\u0022:[]}],\u0022scopes\u0022:[\u0022workspaces/{workspaceName}\u0022],\u0022availabilityStatus\u0022:\u0022Available\u0022},{\u0022name\u0022:\u0022Synapse SQL Administrator\u0022,\u0022description\u0022:\u0022Full Synapse access to serverless SQL pools.\u00A0 Create, read, update, and delete access to published SQL scripts, credentials and linked services.\u00A0 Includes read access to all other published code artifacts.\u00A0 Does not include permission to use credentials and run pipelines. Does not include granting access.\u0022,\u0022id\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa\u0022,\u0022isBuiltIn\u0022:true,\u0022permissions\u0022:[{\u0022actions\u0022:[],\u0022notActions\u0022:[],\u0022dataActions\u0022:[\u0022Microsoft.Synapse/workspaces/read\u0022,\u0022Microsoft.Synapse/workspaces/artifacts/read\u0022,\u0022Microsoft.Synapse/workspaces/sqlScripts/write\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/write\u0022,\u0022Microsoft.Synapse/workspaces/credentials/write\u0022,\u0022Microsoft.Synapse/workspaces/sqlScripts/delete\u0022,\u0022Microsoft.Synapse/workspaces/linkedServices/delete\u0022,\u0022Microsoft.Synapse/workspaces/credentials/delete\u0022],\u0022notDataActions\u0022:[]}],\u0022scopes\u0022:[\u0022workspaces/{workspaceName}\u0022],\u0022availabilityStatus\u0022:\u0022Available\u0022}]"
     },
     {
-      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/roleAssignments/81a08af3-36ad-46f5-855f-a1e1acf58c9f?api-version=2020-08-01-preview",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/roleAssignments/bd1cca52-6343-4c42-a80d-ef499bdfcda8?api-version=2020-08-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": [
@@ -47,9 +47,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "traceparent": "00-70dd38df871a42429f907fe3535fb9ca-e91cca6a84318e43-00",
+        "traceparent": "00-f57c146171d57a49936a4f37a364fe64-6c24620f9c268243-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-alpha.20210201.1",
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-alpha.20210203.1",
           "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "34d5fcd2cac485d24b6f5cf9d32261ef",
@@ -64,21 +64,21 @@
       "ResponseHeaders": {
         "Content-Length": "200",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 01 Feb 2021 23:09:05 GMT",
+        "Date": "Wed, 03 Feb 2021 15:39:56 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "34d5fcd2cac485d24b6f5cf9d32261ef",
-        "x-ms-request-id": "4e0e3f9e-81d6-4a37-a715-9312beefdd43"
+        "x-ms-request-id": "35758407-521a-4f3a-b94b-26522ba1117a"
       },
       "ResponseBody": {
-        "id": "81a08af3-36ad-46f5-855f-a1e1acf58c9f",
+        "id": "bd1cca52-6343-4c42-a80d-ef499bdfcda8",
         "roleDefinitionId": "6e4bf58a-b8e1-4cc3-bbf9-d73143322b78",
         "principalId": "4c74cf7e-b7a4-e259-13a7-4f37c684879f",
         "scope": "workspaces/workspacechhamosynapse"
       }
     },
     {
-      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/roleAssignments/81a08af3-36ad-46f5-855f-a1e1acf58c9f?api-version=2020-08-01-preview",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/roleAssignments/bd1cca52-6343-4c42-a80d-ef499bdfcda8?api-version=2020-08-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -86,9 +86,9 @@
           "text/json"
         ],
         "Authorization": "Sanitized",
-        "traceparent": "00-535adc1cae616a47a07e25199134a082-665870a4dbc5e44e-00",
+        "traceparent": "00-e74c46730b370d4eb17b1fc9bb65c2a6-0a886eb04862394c-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-alpha.20210201.1",
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-alpha.20210203.1",
           "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "859bf0417a56e763f063992593041ae2",
@@ -99,21 +99,21 @@
       "ResponseHeaders": {
         "Content-Length": "200",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 01 Feb 2021 23:09:06 GMT",
+        "Date": "Wed, 03 Feb 2021 15:39:56 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "859bf0417a56e763f063992593041ae2",
-        "x-ms-request-id": "9d9124e0-df89-4299-920b-5c277f6d62f8"
+        "x-ms-request-id": "a5b5e2ae-3d8f-4142-8203-56285d3a6e79"
       },
       "ResponseBody": {
-        "id": "81a08af3-36ad-46f5-855f-a1e1acf58c9f",
+        "id": "bd1cca52-6343-4c42-a80d-ef499bdfcda8",
         "roleDefinitionId": "6e4bf58a-b8e1-4cc3-bbf9-d73143322b78",
         "principalId": "4c74cf7e-b7a4-e259-13a7-4f37c684879f",
         "scope": "workspaces/workspacechhamosynapse"
       }
     },
     {
-      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/roleAssignments/81a08af3-36ad-46f5-855f-a1e1acf58c9f?api-version=2020-08-01-preview",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/roleAssignments/bd1cca52-6343-4c42-a80d-ef499bdfcda8?api-version=2020-08-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": [
@@ -121,9 +121,9 @@
           "text/json"
         ],
         "Authorization": "Sanitized",
-        "traceparent": "00-3875d3678b40354584495da93678a695-2efce7cae4b28845-00",
+        "traceparent": "00-01e3e1599f3e914abdd3eeaa8ce4a459-92917faad49a764d-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-alpha.20210201.1",
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-alpha.20210203.1",
           "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "05b8e0cc4fd1b313fcef01345a600ef0",
@@ -133,11 +133,11 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 01 Feb 2021 23:09:06 GMT",
+        "Date": "Wed, 03 Feb 2021 15:39:57 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "05b8e0cc4fd1b313fcef01345a600ef0",
-        "x-ms-request-id": "79b559a1-17d0-48b6-8015-6ab4c4a140c9"
+        "x-ms-request-id": "79e02f3a-d7a7-444f-9285-57bb8749a768"
       },
       "ResponseBody": []
     }
