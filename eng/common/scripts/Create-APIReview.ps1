@@ -84,11 +84,11 @@ else
 
 $FoundFailure = $False
 # Default config file path to artifact path to support backward compatibility until those scripts are modified
-if (-not $ConfigFileDir)
+$pkgInfoPath = Join-Path -Path $ArtifactPath "PackageInfo"
+if ($ConfigFileDir)
 {
-    $ConfigFileDir = $ArtifactPath
+    $pkgInfoPath = Join-Path -Path $ConfigFileDir "PackageInfo"
 }
-$pkgInfoPath = Join-Path -Path $ConfigFileDir "PackageInfo"
 foreach ($pkgName in $responses.Keys)
 {    
     $respCode = $responses[$pkgName]
