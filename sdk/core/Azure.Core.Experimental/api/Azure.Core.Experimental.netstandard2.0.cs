@@ -84,11 +84,20 @@ namespace Azure.Core
         protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("Status: {Response.Status}, Value: {Value}")]
-    public partial class DynamicResponse : Azure.Response<Azure.Core.DynamicJson>
+    public partial class DynamicResponse : Azure.Response
     {
-        public DynamicResponse(Azure.Response response, Azure.Core.DynamicJson value) { }
-        public override Azure.Core.DynamicJson Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
+        public DynamicResponse(Azure.Response response, Azure.Core.DynamicJson? body) { }
+        public Azure.Core.DynamicJson? Body { get { throw null; } }
+        public override string ClientRequestId { get { throw null; } set { } }
+        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
+        public override string ReasonPhrase { get { throw null; } }
+        public override int Status { get { throw null; } }
+        protected override bool ContainsHeader(string name) { throw null; }
+        public override void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
+        protected override bool TryGetHeader(string name, out string? value) { throw null; }
+        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
 }
 namespace Azure.Core.GeoJson
