@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Text;
 
 namespace Azure.Core
@@ -12,25 +14,69 @@ namespace Azure.Core
     /// Represents a result of Azure operation with a <see cref="DynamicJson"/> response.
     /// </summary>
     [DebuggerDisplay("Status: {Response.Status}, Value: {Value}")]
-    public class DynamicResponse : Response<DynamicJson>
+    public class DynamicResponse : Response
     {
+        private bool _disposed;
+
         private Response Response { get; }
 
-        /// <inheritdoc />>
-        public override DynamicJson Value { get; }
+        /// <summary>
+        /// The JSON body of the response.
+        /// </summary>
+        public DynamicJson? Body { get; }
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => Response;
+        public override int Status => Response.Status;
+        /// <inheritdoc />
+        public override string ReasonPhrase => Response.ReasonPhrase;
+        /// <inheritdoc />
+        public override Stream? ContentStream { get => Response.ContentStream; set => Response.ContentStream = value; }
+        /// <inheritdoc />
+        public override string ClientRequestId { get => Response.ClientRequestId; set => Response.ClientRequestId = value; }
+        /// <inheritdoc />
+        protected override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => Response.Headers.TryGetValue(name, out value);
+        /// <inheritdoc />
+        protected override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values) => Response.Headers.TryGetValues(name, out values);
+        /// <inheritdoc />
+        protected override bool ContainsHeader(string name) => Response.Headers.Contains(name);
+        /// <inheritdoc />
+        protected override IEnumerable<HttpHeader> EnumerateHeaders() => Response.Headers;
 
         /// <summary>
         /// Represents a result of Azure operation with a <see cref="DynamicJson"/> response.
         /// </summary>
         /// <param name="response">The response returned by the service.</param>
-        /// <param name="value">The value returned by the service.</param>
-        public DynamicResponse(Response response, DynamicJson value)
+        /// <param name="body">The body returned by the service.</param>
+        public DynamicResponse(Response response, DynamicJson? body)
         {
             Response = response;
-            Value = value;
+            Body = body;
+        }
+
+        /// <summary>
+        /// Frees resources held by the <see cref="DynamicResponse"/> object.
+        /// </summary>
+        public override void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Frees resources held by the <see cref="DynamicResponse"/> object.
+        /// </summary>
+        /// <param name="disposing">true if we should dispose, otherwise false</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            if (disposing)
+            {
+                Response.Dispose();
+            }
+            _disposed = true;
         }
     }
 }

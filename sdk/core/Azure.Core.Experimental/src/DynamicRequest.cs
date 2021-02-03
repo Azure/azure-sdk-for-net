@@ -76,16 +76,12 @@ namespace Azure.Core
             Request.Content = Content;
 
             Response res = await HttpPipeline.SendRequestAsync(Request, cancellationToken).ConfigureAwait(false);
-            DynamicJson dynamicContent;
+            DynamicJson? dynamicContent = null;
 
             if (res.ContentStream != null)
             {
                 JsonDocument doc = await JsonDocument.ParseAsync(res.ContentStream, new JsonDocumentOptions(), cancellationToken).ConfigureAwait(false);
                 dynamicContent = new DynamicJson(doc.RootElement);
-            }
-            else
-            {
-                dynamicContent = new DynamicJson(JsonDocument.Parse("null").RootElement);
             }
 
             return new DynamicResponse(res, dynamicContent);
@@ -102,16 +98,12 @@ namespace Azure.Core
             Request.Content = Content;
 
             Response res = HttpPipeline.SendRequest(Request, cancellationToken);
-            DynamicJson dynamicContent;
+            DynamicJson? dynamicContent = null;
 
             if (res.ContentStream != null)
             {
                 JsonDocument doc = JsonDocument.Parse(res.ContentStream);
                 dynamicContent = new DynamicJson(doc.RootElement);
-            }
-            else
-            {
-                dynamicContent = new DynamicJson(JsonDocument.Parse("null").RootElement);
             }
 
             return new DynamicResponse(res, dynamicContent);
