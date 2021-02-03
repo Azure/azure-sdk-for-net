@@ -33,7 +33,7 @@ namespace Azure.Core.TestFramework
 
         protected TestEnvironment()
         {
-        if (RepositoryRoot == null)
+            if (RepositoryRoot == null)
             {
                 throw new InvalidOperationException("Unexpected error, repository root not found");
             }
