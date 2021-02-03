@@ -61,7 +61,7 @@ namespace Azure.DigitalTwins.Core
                     foreach (JsonElement item in property.Value.EnumerateArray())
                     {
                         // defaultObjectSerializer of type JsonObjectSerializer needs to be used to serialize the JsonElement into a stream.
-                        // Using any other ObjectSerializer (ex: NewtonsoftJsonObjectSerializer) won't be able to deserialize the JsonElement into
+                        // Using any other ObjectSerializer (e.g. NewtonsoftJsonObjectSerializer) won't be able to deserialize the JsonElement into
                         // a MemoryStream correctly.
                         using MemoryStream streamedObject = StreamHelper.WriteToStream(item, defaultObjectSerializer, default);
 

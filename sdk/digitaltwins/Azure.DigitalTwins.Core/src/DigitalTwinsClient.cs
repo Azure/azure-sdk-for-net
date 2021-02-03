@@ -100,15 +100,11 @@ namespace Azure.DigitalTwins.Core
             _objectSerializer = options.Serializer ?? new JsonObjectSerializer();
 
             // If the objectSerializer is of type JsonObjectSerializer, we will re-use the same object and set it as the defaultObjectSerializer.
-            if (_objectSerializer is JsonObjectSerializer)
-            {
-                _defaultObjectSerializer = _objectSerializer;
-            }
             // Otherwise, we will instantiate it and re-use it in the future.
-            else
-            {
-                _defaultObjectSerializer = new JsonObjectSerializer();
-            }
+            _defaultObjectSerializer =
+                (_objectSerializer is JsonObjectSerializer)
+                    ? _objectSerializer
+                    : new JsonObjectSerializer();
 
             options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, GetAuthorizationScopes()), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
