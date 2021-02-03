@@ -3,7 +3,6 @@
 
 using System;
 using System.Reflection;
-using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using NUnit.Framework;
 

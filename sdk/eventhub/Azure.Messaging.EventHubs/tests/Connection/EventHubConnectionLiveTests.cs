@@ -9,7 +9,6 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Identity;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
