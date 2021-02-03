@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.CosmosDB.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The object representing the policy for taking backups on an account.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("BackupPolicy")]
     public partial class BackupPolicy
     {
         /// <summary>

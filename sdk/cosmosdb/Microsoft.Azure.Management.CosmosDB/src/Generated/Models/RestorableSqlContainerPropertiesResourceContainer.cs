@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Cosmos DB SQL container resource object
+    /// </summary>
     public partial class RestorableSqlContainerPropertiesResourceContainer
     {
         /// <summary>
