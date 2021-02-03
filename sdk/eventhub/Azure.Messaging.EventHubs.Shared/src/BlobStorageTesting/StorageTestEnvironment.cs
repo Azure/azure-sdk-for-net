@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
-namespace Azure.Messaging.EventHubs.Processor.Tests
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   Represents the ambient environment for Azure storage resource in which the test suite is
