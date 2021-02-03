@@ -16,6 +16,7 @@ namespace Azure.DigitalTwins.Core
             QuerySpecification querySpecification,
             QueryOptions queryTwinsOptions = null,
             ObjectSerializer objectSerializer = null,
+            ObjectSerializer defaultObjectSerializer = null,
             CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)
@@ -36,7 +37,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         using JsonDocument document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        QueryResult<T> value = QueryResult<T>.DeserializeQueryResult(document.RootElement, objectSerializer);
+                        QueryResult<T> value = QueryResult<T>.DeserializeQueryResult(document.RootElement, objectSerializer, defaultObjectSerializer);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -48,6 +49,7 @@ namespace Azure.DigitalTwins.Core
             QuerySpecification querySpecification,
             QueryOptions queryTwinsOptions = null,
             ObjectSerializer objectSerializer = null,
+            ObjectSerializer defaultObjectSerializer = null,
             CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)
@@ -68,7 +70,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        QueryResult<T> value = QueryResult<T>.DeserializeQueryResult(document.RootElement, objectSerializer);
+                        QueryResult<T> value = QueryResult<T>.DeserializeQueryResult(document.RootElement, objectSerializer, defaultObjectSerializer);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
