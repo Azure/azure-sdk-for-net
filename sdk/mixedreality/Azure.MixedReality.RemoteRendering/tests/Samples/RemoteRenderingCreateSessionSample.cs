@@ -104,7 +104,6 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             client.StartSession(sessionId, settings);
             Thread.Sleep(TimeSpan.FromSeconds(10));
 
-            // In this example, we don't list the sessions which have stopped or expired.
             #region Snippet:ListSessions
 
             foreach (var properties in client.GetSessions())
@@ -116,10 +115,6 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
                 else if (properties.Status == RenderingSessionStatus.Ready)
                 {
                     Console.WriteLine($"Session \"{properties.SessionId}\" is ready at host {properties.Host}");
-                }
-                else if (properties.Status == RenderingSessionStatus.Error)
-                {
-                    Console.WriteLine($"Session \"{properties.SessionId}\" failed with an error: {properties.Error.Code} {properties.Error.Message}");
                 }
             }
 

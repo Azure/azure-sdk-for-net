@@ -319,11 +319,10 @@ This example shows how to query the current properties and then extend the lease
     }
 ```
 
-### List the sessions
+### List sessions
 
 You can get information about your sessions using the `getSessions` method.
-This method may return sessions which have yet to start, sessions which are running and sessions which have finished.
-In this example, we skip sessions which have were stopped or have expired.
+This method may return sessions which have yet to start and sessions which are ready.
 
 ```csharp Snippet:ListSessions
     foreach (var properties in client.GetSessions())
@@ -335,10 +334,6 @@ In this example, we skip sessions which have were stopped or have expired.
         else if (properties.Status == RenderingSessionStatus.Ready)
         {
             Console.WriteLine($"Session \"{properties.SessionId}\" is ready at host {properties.Host}");
-        }
-        else if (properties.Status == RenderingSessionStatus.Error)
-        {
-            Console.WriteLine($"Session \"{properties.SessionId}\" failed with an error: {properties.Error.Code} {properties.Error.Message}");
         }
     }
 ```
