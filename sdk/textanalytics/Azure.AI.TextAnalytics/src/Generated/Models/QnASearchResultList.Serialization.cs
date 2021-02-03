@@ -6,22 +6,25 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class QnASearchResultList
+    internal partial class QnASearchResultList
     {
         internal static QnASearchResultList DeserializeQnASearchResultList(JsonElement element)
         {
-            IReadOnlyList<QnASearchResult> answers = default;
+            Optional<IReadOnlyList<QnASearchResult>> answers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("answers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<QnASearchResult> array = new List<QnASearchResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -31,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new QnASearchResultList(answers.ToList<QnASearchResult>());
+            return new QnASearchResultList(Optional.ToList(answers));
         }
     }
 }

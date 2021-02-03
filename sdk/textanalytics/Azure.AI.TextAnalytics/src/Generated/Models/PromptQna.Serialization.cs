@@ -11,50 +11,19 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class QnASearchResult
+    public partial class PromptQna
     {
-        internal static QnASearchResult DeserializeQnASearchResult(JsonElement element)
+        internal static PromptQna DeserializePromptQna(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> questions = default;
-            Optional<string> answer = default;
-            Optional<float> score = default;
             Optional<int> id = default;
+            string answer = default;
             Optional<string> source = default;
+            IReadOnlyList<string> questions = default;
             Optional<IReadOnlyList<Metadata>> metadata = default;
             Optional<Context> context = default;
-            Optional<AnswerSpanResponse> answerSpan = default;
+            Optional<string> lastUpdatedTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("questions"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    questions = array;
-                    continue;
-                }
-                if (property.NameEquals("answer"))
-                {
-                    answer = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("score"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    score = property.Value.GetSingle();
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -65,9 +34,24 @@ namespace Azure.AI.TextAnalytics.Models
                     id = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("answer"))
+                {
+                    answer = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("source"))
                 {
                     source = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("questions"))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    questions = array;
                     continue;
                 }
                 if (property.NameEquals("metadata"))
@@ -95,18 +79,13 @@ namespace Azure.AI.TextAnalytics.Models
                     context = Context.DeserializeContext(property.Value);
                     continue;
                 }
-                if (property.NameEquals("answerSpan"))
+                if (property.NameEquals("lastUpdatedTimestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    answerSpan = AnswerSpanResponse.DeserializeAnswerSpanResponse(property.Value);
+                    lastUpdatedTimestamp = property.Value.GetString();
                     continue;
                 }
             }
-            return new QnASearchResult(Optional.ToList(questions), answer.Value, Optional.ToNullable(score), Optional.ToNullable(id), source.Value, Optional.ToList(metadata), context.Value, answerSpan.Value);
+            return new PromptQna(Optional.ToNullable(id), answer, source.Value, questions, Optional.ToList(metadata), context.Value, lastUpdatedTimestamp.Value);
         }
     }
 }
