@@ -4,6 +4,7 @@ using Microsoft.Azure.Test.HttpRecorder;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Runtime.InteropServices;
 
 namespace Microsoft.Azure.Management.Quantum.Tests
 {
@@ -23,7 +24,7 @@ namespace Microsoft.Azure.Management.Quantum.Tests
         {
             Context = QuantumMockContext.Start(this.GetType(), methodName);
 
-            UseAccessTokenIfNeeded();
+            UseAzLoginCredentialsIfNeeded();
 
             CommonData = new CommonTestFixture();
             QuantumClient = Context.GetServiceClient<QuantumManagementClient>();
@@ -45,27 +46,62 @@ namespace Microsoft.Azure.Management.Quantum.Tests
             }
         }
 
-        private static void UseAccessTokenIfNeeded()
+        private static void UseAzLoginCredentialsIfNeeded()
         {
-            var testConnectionString = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
-            if (!string.IsNullOrEmpty(testConnectionString) && !testConnectionString.Contains("ServicePrincipal=") && IsRecordMode)
+            if (IsRecordMode)
             {
-                var azProcess = new Process()
+                var testConnectionString = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
+                AzLoginAccessTokenInfo accessTokenInfo = null;
+                if (string.IsNullOrEmpty(testConnectionString))
                 {
-                    StartInfo = new ProcessStartInfo("cmd.exe", "/c az account get-access-token")
-                    {
-                        CreateNoWindow = true,
-                        RedirectStandardError = true,
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true
-                    }
-                };
-                azProcess.Start();
-                azProcess.WaitForExit();
-                var output = azProcess.StandardOutput.ReadToEnd();
-                var accessToken = JObject.Parse(output)["accessToken"].Value<string>();
-                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", $"{testConnectionString}RawToken={accessToken};");
+                    accessTokenInfo = GetAzLoginAccessTokenInfo();
+                    if (accessTokenInfo == null) return;
+                    testConnectionString = $"SubscriptionId={accessTokenInfo.SubscriptionId};AADTenant={accessTokenInfo.TenantId};Environment=Prod;HttpRecorderMode=Record;";
+                    Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", testConnectionString);
+                }
+                if (!testConnectionString.Contains("ServicePrincipal="))
+                    accessTokenInfo = accessTokenInfo ?? GetAzLoginAccessTokenInfo();                {
+                    if (accessTokenInfo == null) return;
+                    Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", $"{testConnectionString};RawToken={accessTokenInfo.AccessToken};");
+                }
             }
+        }
+
+        private class AzLoginAccessTokenInfo
+        {
+            [JsonProperty("subscription")]
+            public string SubscriptionId { get; set; }
+
+            [JsonProperty("tenant")]
+            public string TenantId { get; set; }
+
+            [JsonProperty("accessToken")]
+            public string AccessToken { get; set; }
+        }
+
+        private static AzLoginAccessTokenInfo GetAzLoginAccessTokenInfo()
+        {
+            bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            if (!isWindows)
+            {
+                return null;
+            }
+
+            var azProcess = new Process()
+            {
+                StartInfo = new ProcessStartInfo("cmd.exe", "/c az account get-access-token")
+                {
+                    CreateNoWindow = true,
+                    RedirectStandardError = true,
+                    RedirectStandardInput = true,
+                    RedirectStandardOutput = true
+                }
+            };
+            azProcess.Start();
+            azProcess.WaitForExit();
+            var azProcessOutput = azProcess.StandardOutput.ReadToEnd();
+            var accessTokenInfo = JsonConvert.DeserializeObject<AzLoginAccessTokenInfo>(azProcessOutput);
+            return accessTokenInfo;
         }
 
         protected virtual void CreateResources()

@@ -140,9 +140,9 @@ namespace Azure.AI.FormRecognizer
 
                 Response response = ServiceClient.AnalyzeLayoutAsync(
                     formContentType.ConvertToContentType1(),
-                    form,
                     recognizeContentOptions.Language,
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
+                    form,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -179,9 +179,9 @@ namespace Azure.AI.FormRecognizer
 
                 Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
                     formContentType.ConvertToContentType1(),
-                    form,
                     recognizeContentOptions.Language,
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
+                    form,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -297,9 +297,9 @@ namespace Azure.AI.FormRecognizer
 
                 Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(
                     formContentType.ConvertToContentType1(),
-                    receipt,
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
+                    receipt,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -337,9 +337,9 @@ namespace Azure.AI.FormRecognizer
 
                 Response response = ServiceClient.AnalyzeReceiptAsync(
                     formContentType.ConvertToContentType1(),
-                    receipt,
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
+                    receipt,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -457,9 +457,9 @@ namespace Azure.AI.FormRecognizer
 
                 Response response = await ServiceClient.AnalyzeBusinessCardAsyncAsync(
                     formContentType.ConvertToContentType1(),
-                    businessCard,
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
+                    businessCard,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -497,9 +497,9 @@ namespace Azure.AI.FormRecognizer
 
                 Response response = ServiceClient.AnalyzeBusinessCardAsync(
                     formContentType.ConvertToContentType1(),
-                    businessCard,
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
+                    businessCard,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -617,9 +617,9 @@ namespace Azure.AI.FormRecognizer
 
                 Response response = await ServiceClient.AnalyzeInvoiceAsyncAsync(
                     formContentType.ConvertToContentType1(),
-                    invoice,
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
+                    invoice,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -657,9 +657,9 @@ namespace Azure.AI.FormRecognizer
 
                 Response response = ServiceClient.AnalyzeInvoiceAsync(
                     formContentType.ConvertToContentType1(),
-                    invoice,
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
+                    invoice,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -776,7 +776,7 @@ namespace Azure.AI.FormRecognizer
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
                 FormContentType formContentType = recognizeCustomFormsOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-                Response response = ServiceClient.AnalyzeWithCustomModel(guid, formContentType, form, includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements, cancellationToken);
+                Response response = ServiceClient.AnalyzeWithCustomModel(guid, formContentType, includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements, form, cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, location);
@@ -850,7 +850,7 @@ namespace Azure.AI.FormRecognizer
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
                 FormContentType formContentType = recognizeCustomFormsOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-                Response response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, formContentType, form, includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, formContentType, includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements, form, cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, location);

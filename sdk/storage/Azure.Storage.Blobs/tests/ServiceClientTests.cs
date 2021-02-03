@@ -973,6 +973,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void CanGenerateAccountSas_Mockable()
+        {
+            // Act
+            var serviceClient = new Mock<BlobServiceClient>();
+            serviceClient.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(serviceClient.Object.CanGenerateAccountSasUri);
+
+            // Act
+            serviceClient.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(serviceClient.Object.CanGenerateAccountSasUri);
+        }
+
+        [Test]
         public void GenerateAccountSas_RequiredParameters()
         {
             // Arrange
