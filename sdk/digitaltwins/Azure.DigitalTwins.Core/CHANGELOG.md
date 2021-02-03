@@ -1,7 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2021-02-03)
 
+### Fixes and improvements
+
+- Fixed an issue with Query APIs when `DigitalTwinsClient` has been initialized with a non-default `ObjectSerializer`.
 
 ## 1.2.0 (2020-11-16)
 
