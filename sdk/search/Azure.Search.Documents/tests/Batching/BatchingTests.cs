@@ -1094,7 +1094,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public async Task Behavior_MaxRetries()
+        public async Task Behavior_MaxRetriesPerIndexAction()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
             BatchingSearchClient client = GetBatchingSearchClient(resources);
@@ -1120,7 +1120,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public async Task Behavior_RetryDelay()
+        public async Task Behavior_ThrottlingDelay()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
             BatchingSearchClient client = GetBatchingSearchClient(resources);
@@ -1152,7 +1152,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public async Task Behavior_MaxRetryDelay()
+        public async Task Behavior_MaxThrottlingDelay()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
             BatchingSearchClient client = GetBatchingSearchClient(resources);
