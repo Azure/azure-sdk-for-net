@@ -26,10 +26,10 @@ namespace Azure.Communication.Sms
             writer.WriteEndArray();
             writer.WritePropertyName("message");
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(SendSmsOptions))
+            if (Optional.IsDefined(SmsSendOptions))
             {
-                writer.WritePropertyName("sendSmsOptions");
-                writer.WriteObjectValue(SendSmsOptions);
+                writer.WritePropertyName("smsSendOptions");
+                writer.WriteObjectValue(SmsSendOptions);
             }
             writer.WriteEndObject();
         }

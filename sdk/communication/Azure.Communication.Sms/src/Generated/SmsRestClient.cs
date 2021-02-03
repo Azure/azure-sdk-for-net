@@ -45,7 +45,7 @@ namespace Azure.Communication.Sms
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSendRequest(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId, string repeatabilityFirstSent, SmsSendOptions sendSmsOptions)
+        internal HttpMessage CreateSendRequest(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId, string repeatabilityFirstSent, SmsSendOptions smsSendOptions)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -67,7 +67,7 @@ namespace Azure.Communication.Sms
             request.Headers.Add("Content-Type", "application/json");
             var model = new SendMessageRequest(@from, to, message)
             {
-                SendSmsOptions = sendSmsOptions
+                SmsSendOptions = smsSendOptions
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -81,10 +81,10 @@ namespace Azure.Communication.Sms
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, 36-character hexadecimal case-insensitive encoding of a UUID (GUID), identifier for the request. </param>
         /// <param name="repeatabilityFirstSent"> MUST be sent by clients to specify that a request is repeatable. Repeatability-First-Sent is used to specify the date and time at which the request was first created.eg- Tue, 26 Mar 2019 16:06:51 GMT. </param>
-        /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
+        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/>, or <paramref name="message"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SendSmsResponse, SmsSendHeaders>> SendAsync(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SmsSendResponse, SmsSendHeaders>> SendAsync(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -99,16 +99,16 @@ namespace Azure.Communication.Sms
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendRequest(@from, to, message, repeatabilityRequestId, repeatabilityFirstSent, sendSmsOptions);
+            using var message0 = CreateSendRequest(@from, to, message, repeatabilityRequestId, repeatabilityFirstSent, smsSendOptions);
             await _pipeline.SendAsync(message0, cancellationToken).ConfigureAwait(false);
             var headers = new SmsSendHeaders(message0.Response);
             switch (message0.Response.Status)
             {
                 case 202:
                     {
-                        SendSmsResponse value = default;
+                        SmsSendResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message0.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SendSmsResponse.DeserializeSendSmsResponse(document.RootElement);
+                        value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message0.Response);
                     }
                 default:
@@ -122,10 +122,10 @@ namespace Azure.Communication.Sms
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, 36-character hexadecimal case-insensitive encoding of a UUID (GUID), identifier for the request. </param>
         /// <param name="repeatabilityFirstSent"> MUST be sent by clients to specify that a request is repeatable. Repeatability-First-Sent is used to specify the date and time at which the request was first created.eg- Tue, 26 Mar 2019 16:06:51 GMT. </param>
-        /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
+        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/>, or <paramref name="message"/> is null. </exception>
-        public ResponseWithHeaders<SendSmsResponse, SmsSendHeaders> Send(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SmsSendResponse, SmsSendHeaders> Send(string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -140,16 +140,16 @@ namespace Azure.Communication.Sms
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendRequest(@from, to, message, repeatabilityRequestId, repeatabilityFirstSent, sendSmsOptions);
+            using var message0 = CreateSendRequest(@from, to, message, repeatabilityRequestId, repeatabilityFirstSent, smsSendOptions);
             _pipeline.Send(message0, cancellationToken);
             var headers = new SmsSendHeaders(message0.Response);
             switch (message0.Response.Status)
             {
                 case 202:
                     {
-                        SendSmsResponse value = default;
+                        SmsSendResponse value = default;
                         using var document = JsonDocument.Parse(message0.Response.ContentStream);
-                        value = SendSmsResponse.DeserializeSendSmsResponse(document.RootElement);
+                        value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message0.Response);
                     }
                 default:
@@ -157,7 +157,7 @@ namespace Azure.Communication.Sms
             }
         }
 
-        internal HttpMessage CreateSendNextPageRequest(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId, string repeatabilityFirstSent, SmsSendOptions sendSmsOptions)
+        internal HttpMessage CreateSendNextPageRequest(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId, string repeatabilityFirstSent, SmsSendOptions smsSendOptions)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -185,10 +185,10 @@ namespace Azure.Communication.Sms
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, 36-character hexadecimal case-insensitive encoding of a UUID (GUID), identifier for the request. </param>
         /// <param name="repeatabilityFirstSent"> MUST be sent by clients to specify that a request is repeatable. Repeatability-First-Sent is used to specify the date and time at which the request was first created.eg- Tue, 26 Mar 2019 16:06:51 GMT. </param>
-        /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
+        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="from"/>, <paramref name="to"/>, or <paramref name="message"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SendSmsResponse, SmsSendHeaders>> SendNextPageAsync(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SmsSendResponse, SmsSendHeaders>> SendNextPageAsync(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -207,16 +207,16 @@ namespace Azure.Communication.Sms
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendNextPageRequest(nextLink, @from, to, message, repeatabilityRequestId, repeatabilityFirstSent, sendSmsOptions);
+            using var message0 = CreateSendNextPageRequest(nextLink, @from, to, message, repeatabilityRequestId, repeatabilityFirstSent, smsSendOptions);
             await _pipeline.SendAsync(message0, cancellationToken).ConfigureAwait(false);
             var headers = new SmsSendHeaders(message0.Response);
             switch (message0.Response.Status)
             {
                 case 202:
                     {
-                        SendSmsResponse value = default;
+                        SmsSendResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message0.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SendSmsResponse.DeserializeSendSmsResponse(document.RootElement);
+                        value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message0.Response);
                     }
                 default:
@@ -231,10 +231,10 @@ namespace Azure.Communication.Sms
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, 36-character hexadecimal case-insensitive encoding of a UUID (GUID), identifier for the request. </param>
         /// <param name="repeatabilityFirstSent"> MUST be sent by clients to specify that a request is repeatable. Repeatability-First-Sent is used to specify the date and time at which the request was first created.eg- Tue, 26 Mar 2019 16:06:51 GMT. </param>
-        /// <param name="sendSmsOptions"> Optional configuration for sending SMS messages. </param>
+        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="from"/>, <paramref name="to"/>, or <paramref name="message"/> is null. </exception>
-        public ResponseWithHeaders<SendSmsResponse, SmsSendHeaders> SendNextPage(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions sendSmsOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SmsSendResponse, SmsSendHeaders> SendNextPage(string nextLink, string @from, IEnumerable<string> to, string message, string repeatabilityRequestId = null, string repeatabilityFirstSent = null, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -253,16 +253,16 @@ namespace Azure.Communication.Sms
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendNextPageRequest(nextLink, @from, to, message, repeatabilityRequestId, repeatabilityFirstSent, sendSmsOptions);
+            using var message0 = CreateSendNextPageRequest(nextLink, @from, to, message, repeatabilityRequestId, repeatabilityFirstSent, smsSendOptions);
             _pipeline.Send(message0, cancellationToken);
             var headers = new SmsSendHeaders(message0.Response);
             switch (message0.Response.Status)
             {
                 case 202:
                     {
-                        SendSmsResponse value = default;
+                        SmsSendResponse value = default;
                         using var document = JsonDocument.Parse(message0.Response.ContentStream);
-                        value = SendSmsResponse.DeserializeSendSmsResponse(document.RootElement);
+                        value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message0.Response);
                     }
                 default:

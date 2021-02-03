@@ -17,6 +17,7 @@ namespace Azure.Communication.Sms
             string to = default;
             Optional<string> messageId = default;
             int httpStatusCode = default;
+            bool succeeded = default;
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,13 +36,18 @@ namespace Azure.Communication.Sms
                     httpStatusCode = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("succeeded"))
+                {
+                    succeeded = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("errorMessage"))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
             }
-            return new SmsSendResult(to, messageId.Value, httpStatusCode, errorMessage.Value);
+            return new SmsSendResult(to, messageId.Value, httpStatusCode, succeeded, errorMessage.Value);
         }
     }
 }

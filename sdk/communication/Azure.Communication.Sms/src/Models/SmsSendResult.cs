@@ -6,10 +6,8 @@ using Azure.Core;
 namespace Azure.Communication.Sms
 {
     /// <summary> Response for a single recipient. </summary>
-    [CodeGenModel("SendSmsResponseItem")]
+    [CodeGenModel("SmsSendResponseItem")]
     public partial class SmsSendResult
     {
-        /// <summary> This flag will be set if the request is successfully processed. </summary>
-        public bool? isSuccessful { get; set; }
     }
 }

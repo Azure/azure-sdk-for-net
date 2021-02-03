@@ -14,7 +14,7 @@ namespace Azure.Communication.Sms
         /// <summary>
         /// The latest version of the Sms service.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V2020_09_21;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_03_07;
 
         internal string ApiVersion { get; }
 
@@ -25,7 +25,7 @@ namespace Azure.Communication.Sms
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2020_09_21 => "2020-07-20-preview1",
+                ServiceVersion.V2021_03_07 => "2021-03-07",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -39,7 +39,7 @@ namespace Azure.Communication.Sms
             /// The V1 of the Sms service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-            V2020_09_21 = 1
+            V2021_03_07 = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

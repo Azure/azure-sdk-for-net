@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.Communication.Sms
 {
     /// <summary> Response for a successful or multi status send Sms request. </summary>
-    internal partial class SendSmsResponse
+    internal partial class SmsSendResponse
     {
-        /// <summary> Initializes a new instance of SendSmsResponse. </summary>
+        /// <summary> Initializes a new instance of SmsSendResponse. </summary>
         /// <param name="value"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SendSmsResponse(IEnumerable<SmsSendResult> value)
+        internal SmsSendResponse(IEnumerable<SmsSendResult> value)
         {
             if (value == null)
             {
@@ -27,10 +27,10 @@ namespace Azure.Communication.Sms
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SendSmsResponse. </summary>
+        /// <summary> Initializes a new instance of SmsSendResponse. </summary>
         /// <param name="value"> . </param>
         /// <param name="nextLink"> . </param>
-        internal SendSmsResponse(IReadOnlyList<SmsSendResult> value, string nextLink)
+        internal SmsSendResponse(IReadOnlyList<SmsSendResult> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

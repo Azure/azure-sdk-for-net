@@ -103,7 +103,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual async Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions? options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             await Task.Yield();
             throw new NotImplementedException();
@@ -121,7 +121,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Response<SmsSendResult> Send(string from, string to, string message, SmsSendOptions? options = default, CancellationToken cancellationToken = default)
+        public virtual Response<SmsSendResult> Send(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             /*Argument.AssertNotNullOrEmpty(from, nameof(from));
             Argument.AssertNotNullOrEmpty(to, nameof(to));
@@ -142,9 +142,9 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual AsyncPageable<SmsSendResult> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions? options = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SmsSendResult> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
+            /*return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
                 scope.Start();
@@ -161,7 +161,8 @@ namespace Azure.Communication.Sms
                     scope.Failed(ex);
                     throw;
                 }
-            });
+            });*/
+            throw new NotImplementedException();
         }
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
@@ -174,9 +175,9 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Pageable<SmsSendResult> Send(string from, IEnumerable<string> to, string message, SmsSendOptions? options = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SmsSendResult> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(nextLink =>
+            /*return PageResponseEnumerator.CreateEnumerable(nextLink =>
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
                 scope.Start();
@@ -193,7 +194,8 @@ namespace Azure.Communication.Sms
                     scope.Failed(ex);
                     throw;
                 }
-            });
+            });*/
+            throw new NotImplementedException();
         }
 
         private static T AssertNotNull<T>(T argument, string argumentName)

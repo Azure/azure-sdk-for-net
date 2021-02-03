@@ -18,7 +18,7 @@ namespace Azure.Communication.Sms
             if (Optional.IsDefined(EnableDeliveryReport))
             {
                 writer.WritePropertyName("enableDeliveryReport");
-                writer.WriteBooleanValue(EnableDeliveryReport);
+                writer.WriteBooleanValue(EnableDeliveryReport.Value);
             }
             if (Optional.IsDefined(Tag))
             {

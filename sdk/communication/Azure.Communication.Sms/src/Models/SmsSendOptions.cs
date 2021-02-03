@@ -10,11 +10,8 @@ using Azure.Core;
 namespace Azure.Communication.Sms
 {
     /// <summary> Optional configuration for sending SMS messages. </summary>
-    [CodeGenModel("SendSmsOptions")]
+    [CodeGenModel("SmsSendOptions")]
     public partial class SmsSendOptions
     {
-        /// <summary> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </summary>
-        [CodeGenMember("EnableDeliveryReport")]
-        public bool EnableDeliveryReport { get; set; }
     }
 }

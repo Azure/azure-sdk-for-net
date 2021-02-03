@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
-    internal partial class SendSmsResponse
+    internal partial class SmsSendResponse
     {
-        internal static SendSmsResponse DeserializeSendSmsResponse(JsonElement element)
+        internal static SmsSendResponse DeserializeSmsSendResponse(JsonElement element)
         {
             IReadOnlyList<SmsSendResult> value = default;
             Optional<string> nextLink = default;
@@ -35,7 +35,7 @@ namespace Azure.Communication.Sms
                     continue;
                 }
             }
-            return new SendSmsResponse(value, nextLink.Value);
+            return new SmsSendResponse(value, nextLink.Value);
         }
     }
 }
