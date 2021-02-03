@@ -9,7 +9,7 @@ namespace Azure.Communication
     public class MicrosoftTeamsUserIdentifier : CommunicationIdentifier
     {
         /// <summary>The full id of the Microsoft Teams User identifier.</summary>
-        public string? Id { get; }
+        public string Id { get; }
 
         /// <summary>The id of the Microsoft Teams user. If the user isn't anonymous, the id is the AAD object id of the user.</summary>
         public string UserId { get; }
@@ -33,7 +33,7 @@ namespace Azure.Communication
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="userId"/> is empty.
         /// </exception>
-        public MicrosoftTeamsUserIdentifier(string userId, bool isAnonymous = false, string? id = null, CommunicationCloudEnvironment? cloud = null)
+        public MicrosoftTeamsUserIdentifier(string userId, bool isAnonymous = false, string id = null, CommunicationCloudEnvironment? cloud = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             UserId = userId;

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -40,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 batchDocument.Add(document);
             }
 
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartHealthcareBatchAsync(batchDocument, "en");
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocument, "en");
 
             await healthOperation.CancelAsync();
         }

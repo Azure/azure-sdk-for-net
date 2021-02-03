@@ -2,28 +2,27 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// A cache for Tokens.
     /// </summary>
-    public class TokenCache : IDisposable
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable
+    // SemaphoreSlim only needs to be disposed when AvailableWaitHandle is called.
+    public class TokenCache
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private SemaphoreSlim _lock = new SemaphoreSlim(1,1);
         private byte[] _data;
         private DateTimeOffset _lastUpdated;
         private ConditionalWeakTable<object, CacheTimestamp> _cacheAccessMap;
-        private bool _disposedValue;
 
         private class CacheTimestamp
         {
@@ -172,11 +171,6 @@ namespace Azure.Identity
 
         private async Task OnBeforeCacheAccessAsync(TokenCacheNotificationArgs args)
         {
-            if (_disposedValue)
-            {
-                throw new ObjectDisposedException(nameof(TokenCache));
-            }
-
             await _lock.WaitAsync().ConfigureAwait(false);
 
             try
@@ -193,11 +187,6 @@ namespace Azure.Identity
 
         private async Task OnAfterCacheAccessAsync(TokenCacheNotificationArgs args)
         {
-            if (_disposedValue)
-            {
-                throw new ObjectDisposedException(nameof(TokenCache));
-            }
-
             if (args.HasStateChanged)
             {
                 await UpdateCacheDataAsync(args.TokenCache).ConfigureAwait(false);
@@ -254,37 +243,6 @@ namespace Azure.Identity
             await client.GetAccountsAsync().ConfigureAwait(false);
 
             return merged;
-        }
-
-        /// <summary>
-        /// Disposes of the <see cref="TokenCache"/>.
-        /// </summary>
-        /// <param name="disposing">Indicates whether managed resources should be disposed.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposedValue)
-            {
-                if (disposing)
-                {
-                    _lock.Dispose();
-                }
-
-                _cacheAccessMap = null;
-
-                _data = null;
-
-                _disposedValue = true;
-            }
-        }
-
-        /// <summary>
-        /// Disposes of the <see cref="TokenCache"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
     }
 }

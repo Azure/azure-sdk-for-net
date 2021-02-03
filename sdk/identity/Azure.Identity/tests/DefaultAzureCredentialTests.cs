@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateCtorIncludedInteractiveParam([Values(true, false)]bool includeInteractive)
+        public void ValidateCtorIncludedInteractiveParam([Values(true, false)] bool includeInteractive)
         {
             var cred = new DefaultAzureCredential(includeInteractive);
 
@@ -117,7 +117,7 @@ namespace Azure.Identity.Tests
 
         [Test]
         [NonParallelizable]
-        public void ValidateEnvironmentBasedOptionsPassedToCredentials([Values]bool clientIdSpecified, [Values]bool usernameSpecified, [Values]bool tenantIdSpecified)
+        public void ValidateEnvironmentBasedOptionsPassedToCredentials([Values] bool clientIdSpecified, [Values] bool usernameSpecified, [Values] bool tenantIdSpecified)
         {
             var expClientId = clientIdSpecified ? Guid.NewGuid().ToString() : null;
             var expUsername = usernameSpecified ? Guid.NewGuid().ToString() : null;
@@ -128,9 +128,11 @@ namespace Azure.Identity.Tests
             bool onCreateVsCalled = false;
             bool onCreateVsCodeCalled = false;
 
-            using (new TestEnvVar("AZURE_CLIENT_ID", expClientId))
-            using (new TestEnvVar("AZURE_USERNAME", expUsername))
-            using (new TestEnvVar("AZURE_TENANT_ID", expTenantId))
+            using (new TestEnvVar(new ()
+            {
+                { "AZURE_CLIENT_ID", expClientId },
+                { "AZURE_USERNAME", expUsername },
+                { "AZURE_TENANT_ID", expTenantId } }))
             {
                 var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
@@ -198,9 +200,11 @@ namespace Azure.Identity.Tests
             bool onCreateVsCalled = false;
             bool onCreateVsCodeCalled = false;
 
-            using (new TestEnvVar("AZURE_CLIENT_ID", expClientId))
-            using (new TestEnvVar("AZURE_USERNAME", expUsername))
-            using (new TestEnvVar("AZURE_TENANT_ID", expTenantId))
+            using (new TestEnvVar(new ()
+            {
+                    { "AZURE_CLIENT_ID", expClientId },
+                    { "AZURE_USERNAME", expUsername },
+                    { "AZURE_TENANT_ID", expTenantId } }))
             {
                 var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 

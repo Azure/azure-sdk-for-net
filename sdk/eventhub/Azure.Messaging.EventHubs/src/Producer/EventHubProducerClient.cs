@@ -624,8 +624,8 @@ namespace Azure.Messaging.EventHubs.Producer
 
             var events = eventBatch switch
             {
-               IReadOnlyList<EventData> eventList => eventList,
-               _ => eventBatch.ToList()
+                IReadOnlyList<EventData> eventList => eventList,
+                _ => eventBatch.ToList()
             };
 
             if (events.Count == 0)

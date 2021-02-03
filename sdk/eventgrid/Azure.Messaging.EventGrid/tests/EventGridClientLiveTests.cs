@@ -174,7 +174,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     "record",
                     "Microsoft.MockPublisher.TestEvent",
                     // testing IEnumerable<byte>
-                    Enumerable.Repeat((byte)1, 1),
+                    Enumerable.Repeat((byte)1, 1).ToArray(),
                     "test/binary")
                 {
                     Id = Recording.Random.NewGuid().ToString(),

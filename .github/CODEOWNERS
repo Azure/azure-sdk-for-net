@@ -14,7 +14,7 @@
 /sdk/core/                                      @pakrym @KrzysztofCwalina
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                  @schaabs @alexanderSher
+/sdk/identity/                                  @schaabs @christothes
 
 # Extensions
 /sdk/extensions/                                @pakrym
