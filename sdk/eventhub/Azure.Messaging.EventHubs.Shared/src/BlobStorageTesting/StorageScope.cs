@@ -5,13 +5,12 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Tests;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest;
 
-namespace Azure.Messaging.EventHubs.Processor.Tests
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///  Provides a dynamically created Azure blob container instance which exists only in the context
@@ -32,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         private static readonly Uri AzureResourceManagerUri = new Uri(EventHubsTestEnvironment.Instance.ResourceManagerUrl);
 
         /// <summary>Serves as a sentinel flag to denote when the instance has been disposed.</summary>
-        private bool _disposed = false;
+        private volatile bool _disposed = false;
 
         /// <summary>
         ///  The name of the blob storage container that was created.
@@ -64,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
             var storageAccount = StorageTestEnvironment.Instance.StorageAccountName;
-            var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
+            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
             var client = new StorageManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId };
 
             try
@@ -103,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
             var storageAccount = StorageTestEnvironment.Instance.StorageAccountName;
-            var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
+            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
@@ -125,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var subscription = EventHubsTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
-            var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
+            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
 
             static string CreateName() => $"neteventhubs{ Guid.NewGuid().ToString("N").Substring(0, 12) }";
 
@@ -152,7 +151,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var subscription = EventHubsTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
-            var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
+            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
 
             using (var client = new StorageManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = subscription })
             {

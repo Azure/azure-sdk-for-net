@@ -4,7 +4,7 @@
 using System;
 using Azure.Messaging.EventHubs.Primitives;
 
-namespace Azure.Messaging.EventHubs.Processor.Tests
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The set of extension methods for the <see cref="EventProcessorPartitionOwnership" />
