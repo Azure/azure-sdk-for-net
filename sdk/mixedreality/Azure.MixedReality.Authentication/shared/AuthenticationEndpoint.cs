@@ -17,7 +17,7 @@ namespace Azure.MixedReality.Authentication
         {
             Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
 
-            if (!Uri.TryCreate($"https://sts.{accountDomain}", UriKind.Absolute, out Uri result))
+            if (!Uri.TryCreate($"https://sts.{accountDomain}", UriKind.Absolute, out Uri? result))
             {
                 throw new ArgumentException("The value could not be used to construct a valid endpoint.", nameof(accountDomain));
             }

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Azure.MixedReality.Authentication", "shared\Shared.Azure.MixedReality.Authentication.csproj", "{BB9881FB-C892-4EFA-93F0-3A1B4DE018F6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Azure.MixedReality.Authentication.Tests", "tests\Shared.Azure.MixedReality.Authentication.Tests\Shared.Azure.MixedReality.Authentication.Tests.csproj", "{A128CD7B-EABC-48C7-BAD2-216007EF130D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BB9881FB-C892-4EFA-93F0-3A1B4DE018F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB9881FB-C892-4EFA-93F0-3A1B4DE018F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB9881FB-C892-4EFA-93F0-3A1B4DE018F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A128CD7B-EABC-48C7-BAD2-216007EF130D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A128CD7B-EABC-48C7-BAD2-216007EF130D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A128CD7B-EABC-48C7-BAD2-216007EF130D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A128CD7B-EABC-48C7-BAD2-216007EF130D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
