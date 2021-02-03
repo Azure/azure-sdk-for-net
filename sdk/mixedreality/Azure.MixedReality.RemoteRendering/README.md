@@ -62,13 +62,14 @@ Add a package reference:
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/) to use this package.
+You will need an [Azure subscription](https://azure.microsoft.com/free/) and an [Azure Remote Rendering account](https://docs.microsoft.com/en-us/azure/remote-rendering/how-tos/create-an-account) to use this package.
 
 ### Authenticate the client
 
 Constructing a remote rendering client requires an authenticated account, and a remote rendering endpoint.
-
-Azure Remote Rendering supports a few different forms of authentication:
+A RemoteRenderingAccount object is constructed from an accountId and an account domain.
+For an account created in the eastus region, the account domain will have the form "eastus.mixedreality.azure.com".
+There are several different forms of authentication:
 
 - Account Key authentication
   - Account keys enable you to get started quickly with using Azure Remote Rendering. But before you deploy your application

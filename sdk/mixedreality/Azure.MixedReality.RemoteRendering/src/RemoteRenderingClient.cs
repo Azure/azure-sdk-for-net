@@ -15,8 +15,6 @@ namespace Azure.MixedReality.RemoteRendering
     /// </summary>
     public class RemoteRenderingClient
     {
-        private readonly RemoteRenderingAccount _account;
-
         private readonly Guid _accountId;
 
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -62,7 +60,6 @@ namespace Azure.MixedReality.RemoteRendering
             Uri authenticationEndpoint = options.AuthenticationEndpoint ?? AuthenticationEndpoint.ConstructFromDomain(account.AccountDomain);
             TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(account.AccountId, authenticationEndpoint, credential);
 
-            _account = account;
             _accountId = account.AccountId;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(remoteRenderingEndpoint)));

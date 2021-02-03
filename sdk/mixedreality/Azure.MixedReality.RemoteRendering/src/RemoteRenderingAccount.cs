@@ -25,7 +25,9 @@ namespace Azure.MixedReality.RemoteRendering
         /// Initializes a new instance of the <see cref="RemoteRenderingAccount"/> class.
         /// </summary>
         /// <param name="accountId">The Azure Remote Rendering account identifier.</param>
-        /// <param name="accountDomain">The Azure Remote Rendering account domain.</param>
+        /// <param name="accountDomain">
+        /// The Azure Remote Rendering account domain. For example, for an account created in the eastus region, this will have the form "eastus.mixedreality.azure.com".
+        /// </param>
         /// <exception cref="ArgumentException"> <paramref name="accountId"/> cannot be parsed as a Guid. </exception>
         public RemoteRenderingAccount(string accountId, string accountDomain)
         {
