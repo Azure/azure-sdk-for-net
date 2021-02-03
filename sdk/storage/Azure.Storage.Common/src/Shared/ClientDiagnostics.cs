@@ -60,14 +60,13 @@ namespace Azure.Core.Pipeline
                 }
 
                 // Json body
-                // TODO make everthing here constants.
                 else if (responseHeaders.ContentType.Contains(Constants.ContentTypeApplicationJson))
                 {
                     JsonDocument json = JsonDocument.Parse(content);
-                    JsonElement error = json.RootElement.GetProperty("error");
+                    JsonElement error = json.RootElement.GetProperty(Constants.ErrorPropertyKey);
 
                     IDictionary<string, string> details = default;
-                    if (error.TryGetProperty("detail", out JsonElement detail))
+                    if (error.TryGetProperty(Constants.DetailPropertyKey, out JsonElement detail))
                     {
                         details = new Dictionary<string, string>();
                         foreach (JsonProperty property in detail.EnumerateObject())
@@ -76,8 +75,8 @@ namespace Azure.Core.Pipeline
                         }
                     }
 
-                    message = error.GetProperty("message").GetString();
-                    errorCode = error.GetProperty("code").GetString();
+                    message = error.GetProperty(Constants.MessagePropertyKey).GetString();
+                    errorCode = error.GetProperty(Constants.CodePropertyKey).GetString();
                     additionalInfo = details;
                 }
             }

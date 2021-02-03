@@ -2154,17 +2154,6 @@ namespace Azure.Storage.Files.DataLake
                     return Response.FromValue(
                         response.ToPathAccessControl(),
                         response.GetRawResponse());
-
-                    // TODO remove this.
-                    //return Response.FromValue(
-                    //    new PathAccessControl()
-                    //    {
-                    //        Owner = response.Value.Owner,
-                    //        Group = response.Value.Group,
-                    //        Permissions = PathPermissions.ParseSymbolicPermissions(response.Value.Permissions),
-                    //        AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Value.ACL)
-                    //    },
-                    //    response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2773,9 +2762,7 @@ namespace Azure.Storage.Files.DataLake
                         $"batchSize: {options.BatchSize}");
                     try
                     {
-                        // TODO remove all commented out stuff in this method.
                         ResponseWithHeaders<SetAccessControlRecursiveResponse, PathSetAccessControlRecursiveHeaders> response;
-                        //Response<PathSetAccessControlRecursiveResult> jsonResponse = null;
                         string lastContinuationToken = null;
 
                         int directoriesSuccessfulCount = 0;
@@ -2809,22 +2796,6 @@ namespace Azure.Storage.Files.DataLake
                                         acl: accessControlList,
                                         cancellationToken: cancellationToken);
                                 }
-
-                                // TODO remove this.
-                                //jsonResponse =
-                                //    await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
-                                //        clientDiagnostics: ClientDiagnostics,
-                                //        pipeline: Pipeline,
-                                //        resourceUri: DfsUri,
-                                //        mode: mode,
-                                //        maxRecords: options?.BatchSize,
-                                //        version: Version.ToVersionString(),
-                                //        acl: accessControlList,
-                                //        async: async,
-                                //        continuation: continuationToken,
-                                //        forceFlag: options?.ContinueOnFailure,
-                                //        cancellationToken: cancellationToken)
-                                //    .ConfigureAwait(false);
                             }
                             catch (RequestFailedException exception)
                             {
@@ -2835,67 +2806,61 @@ namespace Azure.Storage.Files.DataLake
                                 throw DataLakeErrors.ChangeAclFailed(exception, continuationToken);
                             }
                             continuationToken = response.Headers.Continuation;
-                            //continuationToken = jsonResponse.Value.Continuation;
 
                             if (!string.IsNullOrEmpty(continuationToken))
                             {
                                 lastContinuationToken = continuationToken;
                             }
 
-                            //using (JsonDocument document = JsonDocument.Parse(jsonResponse.Value.Body))
-                            //{
-                                //SetAccessControlRecursiveResponse response = document.RootElement.DeserializeSetAccessControlRecursiveResponse();
+                            int currentDirectoriesSuccessfulCount = response.Value.DirectoriesSuccessful ?? 0;
+                            int currentFilesSuccessfulCount = response.Value.FilesSuccessful ?? 0;
+                            int currentFailureCount = response.Value.FailureCount ?? 0;
 
-                                int currentDirectoriesSuccessfulCount = response.Value.DirectoriesSuccessful ?? 0;
-                                int currentFilesSuccessfulCount = response.Value.FilesSuccessful ?? 0;
-                                int currentFailureCount = response.Value.FailureCount ?? 0;
+                            directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
+                            filesSuccessfulCount += currentFilesSuccessfulCount;
+                            failureCount += currentFailureCount;
 
-                                directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
-                                filesSuccessfulCount += currentFilesSuccessfulCount;
-                                failureCount += currentFailureCount;
-
-                                if ((currentFailureCount > 0) && (batchFailures == default))
+                            if ((currentFailureCount > 0) && (batchFailures == default))
+                            {
+                                batchFailures = response.Value.FailedEntries
+                                .Select(failedEntry => new AccessControlChangeFailure()
                                 {
-                                    batchFailures = response.Value.FailedEntries
+                                    Name = failedEntry.Name,
+                                    IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
+                                    ErrorMessage = failedEntry.ErrorMessage,
+                                }).ToArray();
+                            }
+                            if (options?.ProgressHandler != null)
+                            {
+                                var failedEntries = response.Value.FailedEntries
                                     .Select(failedEntry => new AccessControlChangeFailure()
                                     {
                                         Name = failedEntry.Name,
                                         IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
                                         ErrorMessage = failedEntry.ErrorMessage,
-                                    }).ToArray();
-                                }
-                                if (options?.ProgressHandler != null)
-                                {
-                                    var failedEntries = response.Value.FailedEntries
-                                        .Select(failedEntry => new AccessControlChangeFailure()
-                                        {
-                                            Name = failedEntry.Name,
-                                            IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
-                                            ErrorMessage = failedEntry.ErrorMessage,
-                                        }).ToList();
+                                    }).ToList();
 
-                                    options.ProgressHandler.Report(
-                                        Response.FromValue(
-                                            new AccessControlChanges()
+                                options.ProgressHandler.Report(
+                                    Response.FromValue(
+                                        new AccessControlChanges()
+                                        {
+                                            BatchCounters = new AccessControlChangeCounters()
                                             {
-                                                BatchCounters = new AccessControlChangeCounters()
-                                                {
-                                                    ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
-                                                    ChangedFilesCount = currentFilesSuccessfulCount,
-                                                    FailedChangesCount = currentFailureCount,
-                                                },
-                                                AggregateCounters = new AccessControlChangeCounters()
-                                                {
-                                                    ChangedDirectoriesCount = directoriesSuccessfulCount,
-                                                    ChangedFilesCount = filesSuccessfulCount,
-                                                    FailedChangesCount = failureCount,
-                                                },
-                                                BatchFailures = failedEntries.ToArray(),
-                                                ContinuationToken = lastContinuationToken,
+                                                ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
+                                                ChangedFilesCount = currentFilesSuccessfulCount,
+                                                FailedChangesCount = currentFailureCount,
                                             },
-                                            response.GetRawResponse()));
-                                }
-                            //}
+                                            AggregateCounters = new AccessControlChangeCounters()
+                                            {
+                                                ChangedDirectoriesCount = directoriesSuccessfulCount,
+                                                ChangedFilesCount = filesSuccessfulCount,
+                                                FailedChangesCount = failureCount,
+                                            },
+                                            BatchFailures = failedEntries.ToArray(),
+                                            ContinuationToken = lastContinuationToken,
+                                        },
+                                        response.GetRawResponse()));
+                            }
                             batchesCount++;
                         } while (!string.IsNullOrEmpty(continuationToken)
                             && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));

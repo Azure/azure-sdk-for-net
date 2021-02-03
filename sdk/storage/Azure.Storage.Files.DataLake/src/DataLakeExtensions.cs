@@ -478,7 +478,6 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        //TODO
         internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
             => new PathSegment
             {

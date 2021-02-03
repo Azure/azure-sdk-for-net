@@ -1548,25 +1548,6 @@ namespace Azure.Storage.Files.DataLake
                     return Response.FromValue(
                         response.ToPathSegment(),
                         response.GetRawResponse());
-
-                    // TODO figure this out.
-                    //string jsonString;
-                    //using (var reader = new System.IO.StreamReader(response.Value.Body))
-                    //{
-                    //    jsonString = reader.ReadToEnd();
-                    //}
-
-                    //Dictionary<string, List<Dictionary<string, string>>> pathDictionary
-                    //    = JsonSerializer.Deserialize<Dictionary<string, List<Dictionary<string, string>>>>(jsonString);
-
-                    //return Response.FromValue(
-                    //    new PathSegment()
-                    //    {
-                    //        Continuation = response.Value.Continuation,
-                    //        Paths = pathDictionary["paths"].Select(path => path.ToPathItem())
-                    //    },
-                    //    response.GetRawResponse());
-                    //;
                 }
                 catch (Exception ex)
                 {

@@ -97,6 +97,11 @@ namespace Azure.Storage
         public const string ContentTypeApplicationXml = "application/xml";
         public const string ContentTypeApplicationJson = "application/json";
 
+        public const string ErrorPropertyKey = "error";
+        public const string DetailPropertyKey = "detail";
+        public const string MessagePropertyKey = "message";
+        public const string CodePropertyKey = "code";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>

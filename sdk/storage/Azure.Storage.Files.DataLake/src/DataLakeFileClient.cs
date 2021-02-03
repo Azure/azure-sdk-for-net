@@ -2210,7 +2210,6 @@ namespace Azure.Storage.Files.DataLake
                             contentDisposition: httpHeaders?.ContentDisposition,
                             contentEncoding: httpHeaders?.ContentEncoding,
                             contentLanguage: httpHeaders?.ContentLanguage,
-                            // TODO figure out how to make these optional ETags
                             ifMatch: conditions?.IfMatch?.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
