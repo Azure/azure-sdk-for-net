@@ -4,6 +4,9 @@ param(
     $Subscription
 )
 
+# README
+# Use this script to initialize a local test environment for running the Integration tests.
+
 # This script requires the AZ Powershell module from the PowerShellGallery
 # https://docs.microsoft.com/en-us/powershell/azure/install-az-ps
 # https://www.powershellgallery.com/packages/Az

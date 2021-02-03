@@ -50,11 +50,11 @@
             "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').InstrumentationKey]",
             "type": "string"
         },
-		"CONNECTION_STRING": {
+        "CONNECTION_STRING": {
             "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').ConnectionString]",
             "type": "string"
         },
-		"APPLICATION_ID": {
+        "APPLICATION_ID": {
             "value": "[reference(resourceId('Microsoft.Insights/components', parameters('baseName')), '2015-05-01').AppId]",
             "type": "string"
         }
