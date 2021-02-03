@@ -3,7 +3,6 @@
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.FunctionalTests
 {
-    using System.Net.Http;
     using System.Threading.Tasks;
 
     using global::Azure.Core.TestFramework;
@@ -23,24 +22,12 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
         {
         }
 
-        private static readonly HttpClient client = new HttpClient();
-
-        /// <summary>
-        /// We need to have one TEST in this class for NUnit to discover this class.
-        /// </summary>
-        [Test]
-        public void Dummy() { }
-
         [RecordedTest]
-        public async Task VerifyCanLog()
+        public async Task VerifyLogExporter()
         {
             // SETUP
-            var options = this.InstrumentClientOptions(new AzureMonitorExporterOptions
-            {
-                ConnectionString = TestEnvironment.ConnectionString,
-            });
-
-            var processor = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(options));
+            var exporter = this.GetAzureMonitorLogExporter();
+            var processor = new BatchExportProcessor<LogRecord>(exporter);
 
             var serviceCollection = new ServiceCollection().AddLogging(builder =>
             {
@@ -52,9 +39,12 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
             using var serviceProvider = serviceCollection.BuildServiceProvider();
             var logger = serviceProvider.GetRequiredService<ILogger<AzureMonitorLogExporterLiveTests>>();
 
+            // ACT
             var testMessage = "Hello World";
 
-            // ACT
+            // TODO: For proper test isolation, we should include a CustomProperty on telemetry items.
+            // CustomProperty should be unique per test method.
+            // This would allow us to run tests in parallel.
             logger.Log(logLevel: LogLevel.Information, message: testMessage);
 
             processor.ForceFlush();
@@ -62,6 +52,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
             await this.WaitForIgnestionAsync();
 
             // VERIFY
+            // TODO: NEED TO WORK WITH PAVEL TO MAKE THIS STUBBABLE SO IT CAN BE USED IN RECORDED TESTS
             var client = await this.GetApplicationInsightsDataClientAsync();
 
             var test = await client.Events.GetTraceEventsAsync(appId: TestEnvironment.ApplicationId, timespan: QueryDuration.TenMinutes);

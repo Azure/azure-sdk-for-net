@@ -11,16 +11,34 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
     using Microsoft.Azure.ApplicationInsights.Query;
     using Microsoft.Rest.Azure.Authentication;
 
+    using NUnit.Framework;
+
     public abstract class AzureMonitorTestBase : RecordedTestBase<AzureMonitorTestEnvironment>
     {
-        protected string QueryTimeSpan { get; set; }
+        public AzureMonitorTestBase(bool isAsync) : base(isAsync) { }
 
-        public AzureMonitorTestBase(bool isAsync) : base(isAsync)
-        {
-        }
+        public AzureMonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
 
-        public AzureMonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        /// <summary>
+        /// We need to have one TEST in this class for NUnit to discover this class.
+        /// </summary>
+        [Test]
+        public void Dummy() { }
+
+        /// <remarks>
+        /// TODO: The <see cref="AzureMonitorLogExporter" /> is currently INTERNAL while under development.
+        /// When this Exporter is finished, this method can be changed to PUBLIC.
+        /// </remarks>
+        internal AzureMonitorLogExporter GetAzureMonitorLogExporter()
         {
+            var exporterOptions = new AzureMonitorExporterOptions
+            {
+                ConnectionString = TestEnvironment.ConnectionString,
+            };
+
+            var clientOptions = this.InstrumentClientOptions(exporterOptions);
+
+            return new AzureMonitorLogExporter(clientOptions);
         }
 
         /// <summary>
@@ -57,6 +75,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
         /// <summary>
         /// Application Insights ingestion is not immediate.
         /// On a good day, this can take a few minutes.
+        /// Unit tests need to consider the <see cref="RecordedTestMode"/> and wait accordingly.
         /// </summary>
         protected async Task WaitForIgnestionAsync()
         {
@@ -79,12 +98,11 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
         }
 
         /// <summary>
-        /// ISO 8601 Format for Durations.
+        /// <see cref="ApplicationInsightsDataClient"/> uses ISO 8601 Format for Durations.
         /// (https://en.wikipedia.org/wiki/ISO_8601?oldformat=true#Durations).
         /// </summary>
         protected static class QueryDuration
         {
-            public static string OneHour = "PT1H";
             public static string TenMinutes = "PT10M";
         }
     }
