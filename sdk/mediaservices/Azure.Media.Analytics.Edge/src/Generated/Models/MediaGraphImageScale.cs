@@ -11,17 +11,15 @@ namespace Azure.Media.Analytics.Edge.Models
     public partial class MediaGraphImageScale
     {
         /// <summary> Initializes a new instance of MediaGraphImageScale. </summary>
-        /// <param name="mode"> Describes the modes for scaling an input video frame into an image, before it is sent to an inference engine. </param>
-        public MediaGraphImageScale(MediaGraphImageScaleMode mode)
+        public MediaGraphImageScale()
         {
-            Mode = mode;
         }
 
         /// <summary> Initializes a new instance of MediaGraphImageScale. </summary>
         /// <param name="mode"> Describes the modes for scaling an input video frame into an image, before it is sent to an inference engine. </param>
         /// <param name="width"> The desired output width of the image. </param>
         /// <param name="height"> The desired output height of the image. </param>
-        internal MediaGraphImageScale(MediaGraphImageScaleMode mode, string width, string height)
+        internal MediaGraphImageScale(MediaGraphImageScaleMode? mode, string width, string height)
         {
             Mode = mode;
             Width = width;
@@ -29,7 +27,7 @@ namespace Azure.Media.Analytics.Edge.Models
         }
 
         /// <summary> Describes the modes for scaling an input video frame into an image, before it is sent to an inference engine. </summary>
-        public MediaGraphImageScaleMode Mode { get; set; }
+        public MediaGraphImageScaleMode? Mode { get; set; }
         /// <summary> The desired output width of the image. </summary>
         public string Width { get; set; }
         /// <summary> The desired output height of the image. </summary>

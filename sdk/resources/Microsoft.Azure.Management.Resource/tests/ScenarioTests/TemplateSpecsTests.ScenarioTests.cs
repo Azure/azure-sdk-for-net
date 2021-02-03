@@ -15,6 +15,35 @@ namespace TemplateSpecs.Tests
         private const string TestLocation = "westus";
 
         [Fact]
+        public void ThrowsWhenTemplateSpecDoesNotExist()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var client = context.GetServiceClient<TemplateSpecsClient>();
+                var resourceGroupClient = context.GetServiceClient<ResourceManagementClient>();
+
+                // dummy template we will try to retrieve
+                var resourceGroupName = $"{TestUtilities.GenerateName("TS-SDKTest-")}-RG";
+                var templateSpecName = $"{TestUtilities.GenerateName("TS-SDKTest-")}";
+                var resourceGroup = resourceGroupClient.ResourceGroups.CreateOrUpdate(
+                    resourceGroupName,
+                    new ResourceGroup(TestLocation)
+                );
+                try
+                {
+                    Assert.Throws<TemplateSpecsErrorException>(() =>
+                    {
+                        client.TemplateSpecs.Get(resourceGroupName, templateSpecName);
+                    });
+                }
+                finally
+                {
+                    resourceGroupClient.ResourceGroups.Delete(resourceGroupName);
+                }
+            }
+        }
+
+        [Fact]
         public void CanCrudTemplateSpec()
         {
             using (var context = MockContext.Start(this.GetType()))

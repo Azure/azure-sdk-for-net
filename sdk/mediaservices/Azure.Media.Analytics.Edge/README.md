@@ -17,7 +17,7 @@ This is a models only sdk. All client operations are done using the [Microsoft A
 
 As mentioned above the client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: https://github.com/Azure/azure-iot-sdk-csharp. 
 ```C# Snippet:Azure_MediaServices_Samples_ConnectionString
-var connectionString = "connection-string";
+var connectionString = "connectionString";
 this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
 ```
 
@@ -87,10 +87,7 @@ private void SetSources(MediaGraphTopologyProperties graphProperties)
 {
     graphProperties.Sources.Add(new MediaGraphRtspSource("rtspSource", new MediaGraphUnsecuredEndpoint("${rtspUrl}")
         {
-            Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}")
-            {
-                Password = "${rtspPassword}"
-            }
+            Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
         })
     );
 }
@@ -100,7 +97,7 @@ private void SetSinks(MediaGraphTopologyProperties graphProperties)
 {
     var graphNodeInput = new List<MediaGraphNodeInput>
     {
-        { new MediaGraphNodeInput{NodeName = "rtspSource"} }
+        new MediaGraphNodeInput("rtspSource")
     };
     var cachePath = "/var/lib/azuremediaservices/tmp/";
     var cacheMaxSize = "2048";
@@ -141,7 +138,7 @@ private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
 
     graphInstanceProperties.Parameters.Add(new MediaGraphParameterDefinition("rtspUrl", "rtsp://sample.com"));
 
-    return new MediaGraphInstance("graphInstance1")
+    return new MediaGraphInstance("graphInstance")
     {
         Properties = graphInstanceProperties
     };
@@ -156,7 +153,7 @@ var setGraphRequest = new MediaGraphTopologySetRequest(graphTopology);
 var directMethod = new CloudToDeviceMethod(setGraphRequest.MethodName);
 directMethod.SetPayloadJson(setGraphRequest.GetPayloadAsJson());
 
-await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+var setGraphResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
 ```
 
 To try different media graph topologies with the SDK, please see the official [Samples][samples].

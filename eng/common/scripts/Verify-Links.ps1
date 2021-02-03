@@ -18,13 +18,18 @@ param (
   # the substitute branch name or SHA commit
   [string] $branchReplacementName = "",
   # flag to allow checking against azure sdk link guidance. Check link guidance here: https://aka.ms/azsdk/guideline/links
-  [bool] $checkLinkGuidance = $false
+  [bool] $checkLinkGuidance = $false,
+  # UserAgent to be configured for web request. Default to current Chrome version. 
+  [string] $userAgent
 )
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
 # Regex of the locale keywords.
 $locale = "/en-us/"
 $emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more information: https://aka.ms/azsdk/guideline/links"
+if (!$userAgent) {
+  $userAgent = "Chrome/87.0.4280.88"
+}
 function NormalizeUrl([string]$url){
   if (Test-Path $url) {
     $url = "file://" + (Resolve-Path $url).ToString();
@@ -162,14 +167,14 @@ function CheckLink ([System.Uri]$linkUri)
       $headRequestSucceeded = $true
       try {
         # Attempt HEAD request first
-        $response = Invoke-WebRequest -Uri $linkUri -Method HEAD
+        $response = Invoke-WebRequest -Uri $linkUri -Method HEAD -UserAgent $userAgent
       }
       catch {
         $headRequestSucceeded = $false
       }
       if (!$headRequestSucceeded) {
         # Attempt a GET request if the HEAD request failed.
-        $response = Invoke-WebRequest -Uri $linkUri -Method GET
+        $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent
       }
       $statusCode = $response.StatusCode
       if ($statusCode -ne 200) {
@@ -239,7 +244,7 @@ function GetLinks([System.Uri]$pageUri)
 {
   if ($pageUri.Scheme.StartsWith("http")) {
     try {
-      $response = Invoke-WebRequest -Uri $pageUri
+      $response = Invoke-WebRequest -Uri $pageUri -UserAgent $userAgent
       $content = $response.Content
     }
     catch {

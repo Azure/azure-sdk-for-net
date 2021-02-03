@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             string metadataVersion = "1";
 
             string api = "PutBlob";
-            Guid clientRequestId = Guid.NewGuid();
+            string clientRequestId = $"Azure-Storage-Powershell-{Guid.NewGuid()}";
             Guid requestId = Guid.NewGuid();
             ETag etag = new ETag("0x8D75EF45A3B8617");
             string contentType = "contentType";

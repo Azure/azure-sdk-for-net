@@ -64,6 +64,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 .AddConverter<EventData, string>(ConvertEventDataToString)
                 .AddConverter<byte[], EventData>(ConvertBytes2EventData)
                 .AddConverter<EventData, byte[]>(ConvertEventDataToBytes)
+                .AddConverter<BinaryData, EventData>(ConvertBinaryDataToEventData)
+                .AddConverter<EventData, BinaryData>(ConvertEventDataToBinaryData)
                 .AddOpenConverter<OpenType.Poco, EventData>(ConvertPocoToEventData);
 
             // register our trigger binding provider
@@ -114,5 +116,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         {
             return Task.FromResult<object>(ConvertStringToEventData(JsonConvert.SerializeObject(arg)));
         }
+
+        private static EventData ConvertBinaryDataToEventData(BinaryData input)
+            => new EventData(input);
+
+        private static BinaryData ConvertEventDataToBinaryData(EventData input)
+            => input.EventBody;
     }
 }

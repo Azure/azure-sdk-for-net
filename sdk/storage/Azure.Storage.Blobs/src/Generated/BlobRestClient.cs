@@ -1606,14 +1606,6 @@ namespace Azure.Storage.Blobs
 
                         // Get response headers
                         string _header;
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
                             _value.ETag = new Azure.ETag(_header);
@@ -1653,6 +1645,14 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-deny-encryption-scope-override", out _header))
                         {
                             _value.DenyEncryptionScopeOverride = bool.Parse(_header);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -2518,6 +2518,336 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion Container.RestoreAsync
+
+            #region Container.RenameAsync
+            /// <summary>
+            /// Renames an existing container.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="sourceContainerName">Required.  Specifies the name of the container to rename.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> RenameAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                string sourceContainerName,
+                int? timeout = default,
+                string requestId = default,
+                string sourceLeaseId = default,
+                bool async = true,
+                string operationName = "ContainerClient.Rename",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = RenameAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        sourceContainerName,
+                        timeout,
+                        requestId,
+                        sourceLeaseId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return RenameAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Container.RenameAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="sourceContainerName">Required.  Specifies the name of the container to rename.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
+            /// <returns>The Container.RenameAsync Message.</returns>
+            internal static Azure.Core.HttpMessage RenameAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                string sourceContainerName,
+                int? timeout = default,
+                string requestId = default,
+                string sourceLeaseId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+                if (sourceContainerName == null)
+                {
+                    throw new System.ArgumentNullException(nameof(sourceContainerName));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container", escapeValue: false);
+                _request.Uri.AppendQuery("comp", "rename", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                _request.Headers.SetValue("x-ms-source-container-name", sourceContainerName);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (sourceLeaseId != null) { _request.Headers.SetValue("x-ms-source-lease-id", sourceLeaseId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Container.RenameAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Container.RenameAsync Azure.Response.</returns>
+            internal static Azure.Response RenameAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        return response;
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Container.RenameAsync
+
+            #region Container.SubmitBatchAsync
+            /// <summary>
+            /// The Batch operation allows multiple API calls to be embedded into a single HTTP request.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="body">Initial data</param>
+            /// <param name="contentLength">The length of the request.</param>
+            /// <param name="multipartContentType">Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_{GUID}</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult>> SubmitBatchAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                System.IO.Stream body,
+                long contentLength,
+                string multipartContentType,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                bool async = true,
+                string operationName = "ContainerClient.SubmitBatch",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = SubmitBatchAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        body,
+                        contentLength,
+                        multipartContentType,
+                        version,
+                        timeout,
+                        requestId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SubmitBatchAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Container.SubmitBatchAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="body">Initial data</param>
+            /// <param name="contentLength">The length of the request.</param>
+            /// <param name="multipartContentType">Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_{GUID}</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <returns>The Container.SubmitBatchAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SubmitBatchAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                System.IO.Stream body,
+                long contentLength,
+                string multipartContentType,
+                string version,
+                int? timeout = default,
+                string requestId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (body == null)
+                {
+                    throw new System.ArgumentNullException(nameof(body));
+                }
+                if (multipartContentType == null)
+                {
+                    throw new System.ArgumentNullException(nameof(multipartContentType));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Post;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container", escapeValue: false);
+                _request.Uri.AppendQuery("comp", "batch", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("Content-Type", multipartContentType);
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                // Create the body
+                _request.Content = Azure.Core.RequestContent.Create(body);
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Container.SubmitBatchAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Container.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult> SubmitBatchAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 202:
+                    {
+                        // Create the result
+                        Azure.Storage.Blobs.Models.BlobBatchResult _value = new Azure.Storage.Blobs.Models.BlobBatchResult();
+                        _value.Content = response.ContentStream; // You should manually wrap with RetriableStream!
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("Content-Type", out _header))
+                        {
+                            _value.ContentType = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Container.SubmitBatchAsync
 
             #region Container.AcquireLeaseAsync
             /// <summary>
@@ -3997,25 +4327,9 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("x-ms-or-policy-id", out _header))
                         {
                             _value.ObjectReplicationPolicyId = _header;
-                        }
-                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
-                            }
                         }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
@@ -4101,6 +4415,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.VersionId = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-is-current-version", out _header))
+                        {
+                            _value.IsCurrentVersion = bool.Parse(_header);
+                        }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
                             _value.AcceptRanges = _header;
@@ -4137,6 +4455,19 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastAccessed = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
+                            else if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
+                            }
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -4153,25 +4484,9 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("x-ms-or-policy-id", out _header))
                         {
                             _value.ObjectReplicationPolicyId = _header;
-                        }
-                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
-                            }
                         }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
@@ -4257,6 +4572,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
                         }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-is-current-version", out _header))
+                        {
+                            _value.IsCurrentVersion = bool.Parse(_header);
+                        }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
                             _value.AcceptRanges = _header;
@@ -4292,6 +4615,19 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-last-access-time", out _header))
                         {
                             _value.LastAccessed = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
+                            else if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -4513,25 +4849,9 @@ namespace Azure.Storage.Blobs
                         {
                             _value.CreatedOn = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("x-ms-or-policy-id", out _header))
                         {
                             _value.ObjectReplicationPolicyId = _header;
-                        }
-                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
-                            }
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-type", out _header))
                         {
@@ -4680,6 +5000,19 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-last-access-time", out _header))
                         {
                             _value.LastAccessed = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
+                            else if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -8669,14 +9002,6 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
-                        }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
                             _value.ContentLength = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -8781,6 +9106,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.BlobContentMD5 = System.Convert.FromBase64String(_header);
                         }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -8796,14 +9129,6 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
-                        {
-                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
-                            {
-                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
-                            }
                         }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
                         {
@@ -8912,6 +9237,14 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-blob-content-md5", out _header))
                         {
                             _value.BlobContentMD5 = System.Convert.FromBase64String(_header);
+                        }
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
+                        {
+                            if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                _value.Metadata[_headerPair.Name.Substring(10)] = _headerPair.Value;
+                            }
                         }
 
                         // Create the response
@@ -21927,6 +22260,16 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.LeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
+        /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
+        /// </summary>
+        public string VersionId { get; internal set; }
+
+        /// <summary>
+        /// The value of this header indicates whether version of this blob is a current version, see also x-ms-version-id header.
+        /// </summary>
+        public bool IsCurrentVersion { get; internal set; }
+
+        /// <summary>
         /// Indicates that the service supports requests for partial blob content.
         /// </summary>
         public string AcceptRanges { get; internal set; }
@@ -21972,11 +22315,6 @@ namespace Azure.Storage.Blobs.Models
         /// UTC date/time value generated by the service that indicates the time at which the blob was last read or written to
         /// </summary>
         public System.DateTimeOffset LastAccessed { get; internal set; }
-
-        /// <summary>
-        /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
-        /// </summary>
-        public string VersionId { get; internal set; }
 
         /// <summary>
         /// Content

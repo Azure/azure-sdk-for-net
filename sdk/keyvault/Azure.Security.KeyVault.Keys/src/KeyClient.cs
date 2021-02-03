@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
-        /// If the named key already exists, Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// If the named key already exists, Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="name">The name of the key.</param>
         /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
-        /// If the named key already exists, Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// If the named key already exists, Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="name">The name of the key.</param>
         /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
@@ -144,7 +144,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new Elliptic Curve key in Key Vault. If the named key already exists,
-        /// Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="ecKeyOptions">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new Elliptic Curve key in Key Vault. If the named key already exists,
-        /// Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="ecKeyOptions">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -202,7 +202,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new RSA key in Key Vault. If the named key already exists, Azure Key Vault creates a new
-        /// version of the key. It requires the keys/create permission.
+        /// version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="rsaKeyOptions">The key options object containing information about the RSA key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -231,7 +231,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new RSA key in Key Vault. If the named key already exists, Azure Key Vault creates a new
-        /// version of the key. It requires the keys/create permission.
+        /// version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="rsaKeyOptions">The key options object containing information about the RSA key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -250,6 +250,64 @@ namespace Azure.Security.KeyVault.Keys
             try
             {
                 return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(rsaKeyOptions.Name), cancellationToken, KeysPath, rsaKeyOptions.Name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new AES key in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="octKeyOptions">The key options object containing information about the AES key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="octKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<KeyVaultKey> CreateOctKey(CreateOctKeyOptions octKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(octKeyOptions, nameof(octKeyOptions));
+
+            var parameters = new KeyRequestParameters(octKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOctKey)}");
+            scope.AddAttribute("key", octKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(octKeyOptions.Name), cancellationToken, KeysPath, octKeyOptions.Name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new AES key in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="octKeyOptions">The key options object containing information about the AES key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="octKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<KeyVaultKey>> CreateOctKeyAsync(CreateOctKeyOptions octKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(octKeyOptions, nameof(octKeyOptions));
+
+            var parameters = new KeyRequestParameters(octKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOctKey)}");
+            scope.AddAttribute("key", octKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(octKeyOptions.Name), cancellationToken, KeysPath, octKeyOptions.Name, "/create").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1103,110 +1161,6 @@ namespace Azure.Security.KeyVault.Keys
             try
             {
                 return await _pipeline.SendRequestAsync(RequestMethod.Put, importKeyOptions, () => new KeyVaultKey(importKeyOptions.Name), cancellationToken, KeysPath, importKeyOptions.Name).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Exports the latest version of a <see cref="KeyVaultKey"/> including the private key if originally created with <see cref="CreateKeyOptions.Exportable"/> set to true,
-        /// or imported with <see cref="KeyProperties.Exportable"/> in <see cref="ImportKeyOptions"/> set to true.
-        /// </summary>
-        /// <remarks>
-        /// Requires the <see cref="KeyOperation.Export"/> permission.
-        /// </remarks>
-        /// <param name="name">The name of the key to export.</param>
-        /// <param name="environment">The target environment assertion.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="KeyVaultKey"/> that was exported along with the private key if exportable.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="environment"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="environment"/> is null.</exception>
-        /// <seealso cref="ExportKey(string, string, string, CancellationToken)"/>
-        public virtual Response<KeyVaultKey> ExportKey(string name, string environment, CancellationToken cancellationToken = default) =>
-            ExportKey(name, null, environment, cancellationToken);
-
-        /// <summary>
-        /// Exports the latest version of a <see cref="KeyVaultKey"/> including the private key if originally created with <see cref="CreateKeyOptions.Exportable"/> set to true,
-        /// or imported with <see cref="KeyProperties.Exportable"/> in <see cref="ImportKeyOptions"/> set to true.
-        /// </summary>
-        /// <remarks>
-        /// Requires the <see cref="KeyOperation.Export"/> permission.
-        /// </remarks>
-        /// <param name="name">The name of the key to export.</param>
-        /// <param name="environment">The target environment assertion.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="KeyVaultKey"/> that was exported along with the private key if exportable.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="environment"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="environment"/> is null.</exception>
-        /// <seealso cref="ExportKeyAsync(string, string, string, CancellationToken)"/>
-        public virtual async Task<Response<KeyVaultKey>> ExportKeyAsync(string name, string environment, CancellationToken cancellationToken = default) =>
-            await ExportKeyAsync(name, null, environment, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Exports a specific version of a <see cref="KeyVaultKey"/> including the private key if originally created with <see cref="CreateKeyOptions.Exportable"/> set to true,
-        /// or imported with <see cref="KeyProperties.Exportable"/> in <see cref="ImportKeyOptions"/> set to true.
-        /// </summary>
-        /// <remarks>
-        /// Requires the <see cref="KeyOperation.Export"/> permission.
-        /// </remarks>
-        /// <param name="name">The name of the key to export.</param>
-        /// <param name="version">The optional version of the key to export.</param>
-        /// <param name="environment">The target environment assertion.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="KeyVaultKey"/> that was exported along with the private key if exportable.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="environment"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="environment"/> is null.</exception>
-        /// <seealso cref="ExportKey(string, string, CancellationToken)"/>
-        public virtual Response<KeyVaultKey> ExportKey(string name, string version, string environment, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(environment, nameof(environment));
-
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ExportKey)}");
-            scope.AddAttribute("key", name);
-            scope.Start();
-
-            try
-            {
-                return _pipeline.SendRequest(RequestMethod.Post, new KeyExportParameters(environment), () => new KeyVaultKey(name), cancellationToken, KeysPath, name, "/", version, "/export");
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Exports a specific version of a <see cref="KeyVaultKey"/> including the private key if originally created with <see cref="CreateKeyOptions.Exportable"/> set to true,
-        /// or imported with <see cref="KeyProperties.Exportable"/> in <see cref="ImportKeyOptions"/> set to true.
-        /// </summary>
-        /// <remarks>
-        /// Requires the <see cref="KeyOperation.Export"/> permission.
-        /// </remarks>
-        /// <param name="name">The name of the key to export.</param>
-        /// <param name="version">The optional version of the key to export.</param>
-        /// <param name="environment">The target environment assertion.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="KeyVaultKey"/> that was exported along with the private key if exportable.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="environment"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="environment"/> is null.</exception>
-        /// <seealso cref="ExportKeyAsync(string, string, CancellationToken)"/>
-        public virtual async Task<Response<KeyVaultKey>> ExportKeyAsync(string name, string version, string environment, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(environment, nameof(environment));
-
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ExportKey)}");
-            scope.AddAttribute("key", name);
-            scope.Start();
-
-            try
-            {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, new KeyExportParameters(environment), () => new KeyVaultKey(name), cancellationToken, KeysPath, name, "/", version, "/export").ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -166,6 +166,53 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Uri"/> referencing the directory that includes the
         /// name of the account, the name of the file system, and the path of the
         /// directory.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeDirectoryClient(Uri directoryUri, AzureSasCredential credential)
+            : this(directoryUri, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// directory.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeDirectoryClient(Uri directoryUri, AzureSasCredential credential, DataLakeClientOptions options)
+            : this(directoryUri, credential.AsPolicy<DataLakeUriBuilder>(directoryUri), options, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// directory.
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.

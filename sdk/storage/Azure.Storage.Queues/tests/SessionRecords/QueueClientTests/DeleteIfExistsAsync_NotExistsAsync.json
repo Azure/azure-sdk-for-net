@@ -1,17 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seandevtest.queue.core.windows.net/test-queue-adb6641f-2e66-1995-3781-09c44094dad8",
+      "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-adb6641f-2e66-1995-3781-09c44094dad8",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-027b20410e90384a8336e5f5ffeb0569-e2e3d88fe6de984f-00",
+        "traceparent": "00-9eff4df6fecea64eba342ac18ad28d39-5429c1a6bd70334b-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.3.0-dev.20200219.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Queues/12.6.0-alpha.20210105.1",
+          "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "042ce678-091f-6a49-b6e4-836135729ed2",
-        "x-ms-date": "Wed, 19 Feb 2020 23:38:20 GMT",
+        "x-ms-date": "Wed, 06 Jan 2021 02:04:04 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -20,24 +21,24 @@
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
-        "Date": "Wed, 19 Feb 2020 23:38:20 GMT",
+        "Date": "Wed, 06 Jan 2021 02:04:05 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-error-code": "QueueNotFound",
-        "x-ms-request-id": "dff3a7d5-c003-0052-3b7d-e717f8000000",
+        "x-ms-request-id": "5594f3d4-1003-005b-14d0-e30d76000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EQueueNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified queue does not exist.\n",
-        "RequestId:dff3a7d5-c003-0052-3b7d-e717f8000000\n",
-        "Time:2020-02-19T23:38:20.2881029Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:5594f3d4-1003-005b-14d0-e30d76000000\n",
+        "Time:2021-01-06T02:04:05.5460329Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
     "RandomSeed": "2029554925",
-    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttp://seandevtest.file.core.windows.net\nhttp://seandevtest.queue.core.windows.net\nhttp://seandevtest.table.core.windows.net\n\n\n\n\nhttp://seandevtest-secondary.blob.core.windows.net\nhttp://seandevtest-secondary.file.core.windows.net\nhttp://seandevtest-secondary.queue.core.windows.net\nhttp://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=http://seandevtest.queue.core.windows.net/;FileEndpoint=http://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttps://seandevtest.file.core.windows.net\nhttps://seandevtest.queue.core.windows.net\nhttps://seandevtest.table.core.windows.net\n\n\n\n\nhttps://seandevtest-secondary.blob.core.windows.net\nhttps://seandevtest-secondary.file.core.windows.net\nhttps://seandevtest-secondary.queue.core.windows.net\nhttps://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=https://seandevtest.queue.core.windows.net/;FileEndpoint=https://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=https://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Kg==;\nseanscope1"
   }
 }

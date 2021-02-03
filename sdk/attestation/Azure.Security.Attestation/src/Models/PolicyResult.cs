@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Azure.Core;
-using Azure.Security.Attestation.Common;
 using System.Runtime.CompilerServices;
 
 namespace Azure.Security.Attestation.Models

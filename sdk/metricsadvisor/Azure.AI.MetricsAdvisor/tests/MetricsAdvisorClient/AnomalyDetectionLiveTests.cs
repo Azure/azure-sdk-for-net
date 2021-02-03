@@ -18,9 +18,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetAnomaliesWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetAnomaliesWithMinimumSetup(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var options = new GetAnomaliesForDetectionConfigurationOptions(SamplingStartTime, SamplingEndTime);
 
@@ -102,9 +104,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetIncidentsWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetIncidentsWithMinimumSetup(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var options = new GetIncidentsForDetectionConfigurationOptions(SamplingStartTime, SamplingEndTime);
 
@@ -183,9 +187,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetIncidentRootCauses()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetIncidentRootCauses(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var rootCauseCount = 0;
 
@@ -286,11 +292,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         /// configuration and that the responses with <c>null</c> and <c>default</c> values can be parsed by the client.
         /// </param>
         [RecordedTest]
-        public async Task GetValuesOfDimensionWithAnomaliesWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetValuesOfDimensionWithAnomaliesWithMinimumSetup(bool useTokenCredential)
         {
             const string dimensionName = "city";
 
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var options = new GetValuesOfDimensionWithAnomaliesOptions(SamplingStartTime, SamplingEndTime);
 
@@ -339,9 +347,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetMetricEnrichedSeriesData()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricEnrichedSeriesData(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var seriesKey1 = new DimensionKey();
             seriesKey1.AddDimensionColumn("city", "Delhi");

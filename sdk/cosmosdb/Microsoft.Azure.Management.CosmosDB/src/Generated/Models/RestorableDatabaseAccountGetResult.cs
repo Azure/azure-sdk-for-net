@@ -48,12 +48,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// database account (ISO-8601 format).</param>
         /// <param name="deletionTime">The time at which the restorable
         /// database account has been deleted (ISO-8601 format).</param>
-        public RestorableDatabaseAccountGetResult(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string accountName = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? deletionTime = default(System.DateTime?))
+        /// <param name="apiType">The API type of the restorable database
+        /// account. Possible values include: 'MongoDB', 'Gremlin',
+        /// 'Cassandra', 'Table', 'Sql', 'GremlinV2'</param>
+        /// <param name="restorableLocations">List of regions where the of the
+        /// database account can be restored from.</param>
+        public RestorableDatabaseAccountGetResult(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string accountName = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? deletionTime = default(System.DateTime?), string apiType = default(string), IList<RestorableLocationResource> restorableLocations = default(IList<RestorableLocationResource>))
             : base(id, name, type, location, tags, identity)
         {
             AccountName = accountName;
             CreationTime = creationTime;
             DeletionTime = deletionTime;
+            ApiType = apiType;
+            RestorableLocations = restorableLocations;
             CustomInit();
         }
 
@@ -81,6 +88,21 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.deletionTime")]
         public System.DateTime? DeletionTime { get; set; }
+
+        /// <summary>
+        /// Gets the API type of the restorable database account. Possible
+        /// values include: 'MongoDB', 'Gremlin', 'Cassandra', 'Table', 'Sql',
+        /// 'GremlinV2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apiType")]
+        public string ApiType { get; private set; }
+
+        /// <summary>
+        /// Gets list of regions where the of the database account can be
+        /// restored from.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.restorableLocations")]
+        public IList<RestorableLocationResource> RestorableLocations { get; private set; }
 
     }
 }

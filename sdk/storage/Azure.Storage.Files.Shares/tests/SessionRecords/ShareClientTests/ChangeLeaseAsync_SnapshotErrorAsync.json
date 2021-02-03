@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-0a2f753f-bf76-e766-7cee-93f556fd6d19?restype=share",
@@ -13,14 +13,15 @@
         "x-ms-client-request-id": "02ce2c62-6f90-b05d-b7cc-acfd3d15687d",
         "x-ms-date": "Wed, 05 Aug 2020 22:26:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 05 Aug 2020 22:26:48 GMT",
-        "ETag": "\u00220x8D8398EA57DAC1A\u0022",
+        "ETag": "\"0x8D8398EA57DAC1A\"",
         "Last-Modified": "Wed, 05 Aug 2020 22:26:49 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -28,12 +29,12 @@
         ],
         "x-ms-client-request-id": "02ce2c62-6f90-b05d-b7cc-acfd3d15687d",
         "x-ms-request-id": "ba9018fe-c01a-0076-7877-6b508a000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-0a2f753f-bf76-e766-7cee-93f556fd6d19?sharesnapshot=2020-08-05T22:10:47.0000000Z\u0026comp=lease\u0026restype=share",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-0a2f753f-bf76-e766-7cee-93f556fd6d19?sharesnapshot=2020-08-05T22:10:47.0000000Z&comp=lease&restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -48,7 +49,8 @@
         "x-ms-lease-id": "8ea2f1f7-dad7-9876-83a8-a8c38d97a131",
         "x-ms-proposed-lease-id": "8ea2f1f7-dad7-9876-83a8-a8c38d97a131",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -63,12 +65,12 @@
         "x-ms-client-request-id": "54d6b44b-76a8-878f-b635-7ee8c79a231f",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "ba901902-c01a-0076-7977-6b508a000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",
         "RequestId:ba901902-c01a-0076-7977-6b508a000000\n",
-        "Time:2020-08-05T22:26:50.0112983Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2020-08-05T22:26:50.0112983Z</Message></Error>"
       ]
     },
     {
@@ -85,7 +87,8 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:51 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -98,7 +101,7 @@
         ],
         "x-ms-client-request-id": "d8775b5e-4dc1-7188-9c0b-73faec9f55d6",
         "x-ms-request-id": "ba901903-c01a-0076-7a77-6b508a000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     }

@@ -54,6 +54,37 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to the service.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientsOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new MetricsAdvisorClientsOptions();
+
+            _clientDiagnostics = new ClientDiagnostics(options);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+
+            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
@@ -244,10 +275,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/>, <paramref name="dataFeed"/>.Name, <paramref name="dataFeed"/>.DataSource, <paramref name="dataFeed"/>.Granularity, <paramref name="dataFeed"/>.Schema, <paramref name="dataFeed"/>.IngestionSettings, or <paramref name="dataFeed"/>.IngestionSettings.IngestionStartTime is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeed"/>.Name is empty.</exception>
         public virtual async Task<Response<string>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            ValidateDataFeedToCreate(dataFeed);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
@@ -275,10 +307,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c> instance
         /// containing the ID of the newly created feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/>, <paramref name="dataFeed"/>.Name, <paramref name="dataFeed"/>.DataSource, <paramref name="dataFeed"/>.Granularity, <paramref name="dataFeed"/>.Schema, <paramref name="dataFeed"/>.IngestionSettings, or <paramref name="dataFeed"/>.IngestionSettings.IngestionStartTime is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeed"/>.Name is empty.</exception>
         public virtual Response<string> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            ValidateDataFeedToCreate(dataFeed);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
@@ -645,6 +678,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
 
             return dataFeeds;
+        }
+
+        private static void ValidateDataFeedToCreate(DataFeed dataFeed)
+        {
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            Argument.AssertNotNullOrEmpty(dataFeed.Name, $"{nameof(dataFeed)}.{nameof(dataFeed.Name)}");
+            Argument.AssertNotNull(dataFeed.DataSource, $"{nameof(dataFeed)}.{nameof(dataFeed.DataSource)}");
+            Argument.AssertNotNull(dataFeed.Granularity, $"{nameof(dataFeed)}.{nameof(dataFeed.Granularity)}");
+            Argument.AssertNotNull(dataFeed.Schema, $"{nameof(dataFeed)}.{nameof(dataFeed.Schema)}");
+            Argument.AssertNotNull(dataFeed.IngestionSettings, $"{nameof(dataFeed)}.{nameof(dataFeed.IngestionSettings)}");
+            Argument.AssertNotNull(dataFeed.IngestionSettings.IngestionStartTime, $"{nameof(dataFeed)}.{nameof(dataFeed.IngestionSettings)}.{nameof(dataFeed.IngestionSettings.IngestionStartTime)}");
         }
 
         #endregion DataFeed

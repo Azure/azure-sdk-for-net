@@ -13,7 +13,9 @@ namespace Azure
     /// iterate over.
     /// </summary>
     /// <typeparam name="T">The type of the values.</typeparam>
+#pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Pageable<T> : IEnumerable<T> where T : notnull
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
         /// Gets a <see cref="CancellationToken"/> used for requests made while

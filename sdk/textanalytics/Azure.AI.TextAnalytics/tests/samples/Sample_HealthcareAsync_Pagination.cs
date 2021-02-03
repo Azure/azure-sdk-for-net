@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
@@ -32,20 +31,20 @@ namespace Azure.AI.TextAnalytics.Samples
                 list.Add(document);
             };
 
-            HealthcareOptions options = new HealthcareOptions()
+            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
             {
                 Top = 2
             };
 
-            HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(list, "en", options);
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(list, "en", options);
 
-            AsyncPageable<DocumentHealthcareResult> results = client.GetHealthcareEntities(healthOperation);
+            AsyncPageable<AnalyzeHealthcareEntitiesResult> results = client.GetHealthcareEntities(healthOperation);
 
             Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\"");
             Console.WriteLine("");
 
             int resultCount = 0;
-            await foreach (DocumentHealthcareResult result in results)
+            await foreach (AnalyzeHealthcareEntitiesResult result in results)
             {
                 resultCount += 1;
             }

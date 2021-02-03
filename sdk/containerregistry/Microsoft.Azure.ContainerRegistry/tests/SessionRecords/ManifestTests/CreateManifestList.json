@@ -1,0 +1,280 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittest?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGZiNjNjOGMtN2M4OS00ZWY4LWFmMTMtNzVjMWQ4NzNjODk1L3Jlc291cmNlR3JvdXBzL2VyZXlUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvcmVnaXN0cmllcy9henVyZXNka3VuaXR0ZXN0P2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "514b0726-f8b3-43b4-bbc9-2d04bb3eea4c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "ef4793b7-0985-4bc9-ac8f-9dd57d94ef7f"
+        ],
+        "x-ms-correlation-request-id": [
+          "ef4793b7-0985-4bc9-ac8f-9dd57d94ef7f"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHAFRICANORTH:20201207T102830Z:ef4793b7-0985-4bc9-ac8f-9dd57d94ef7f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 07 Dec 2020 10:28:29 GMT"
+        ],
+        "Content-Length": [
+          "459"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittest\",\r\n  \"name\": \"azuresdkunittest\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"loginServer\": \"azuresdkunittest.azurecr.io\",\r\n    \"creationDate\": \"2019-08-01T22:42:31.7178676Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": true\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittest/listCredentials?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGZiNjNjOGMtN2M4OS00ZWY4LWFmMTMtNzVjMWQ4NzNjODk1L3Jlc291cmNlR3JvdXBzL2VyZXlUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvcmVnaXN0cmllcy9henVyZXNka3VuaXR0ZXN0L2xpc3RDcmVkZW50aWFscz9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8a7fbb0a-aa0a-4117-a3e4-bd8ca3e3c947"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "1dfbabd0-87e9-4b93-9d2b-876e7627e18b"
+        ],
+        "x-ms-correlation-request-id": [
+          "1dfbabd0-87e9-4b93-9d2b-876e7627e18b"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHAFRICANORTH:20201207T102831Z:1dfbabd0-87e9-4b93-9d2b-876e7627e18b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 07 Dec 2020 10:28:31 GMT"
+        ],
+        "Content-Length": [
+          "172"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"username\": \"azuresdkunittest\",\r\n  \"passwords\": [\r\n    {\r\n      \"name\": \"password\",\r\n      \"value\": \"ccswPG/Y0OTXd3m8ZhBsnuZojLVSlql+\"\r\n    },\r\n    {\r\n      \"name\": \"password2\",\r\n      \"value\": \"9i/WBxz4VBOkFBq=2P8sTqC+hUG+5Oz7\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/v2/multi-hello-world/manifests/test-manifest-list",
+      "EncodedRequestUri": "L3YyL211bHRpLWhlbGxvLXdvcmxkL21hbmlmZXN0cy90ZXN0LW1hbmlmZXN0LWxpc3Q=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"mediaType\": \"application/vnd.docker.distribution.manifest.list.v2+json\",\r\n  \"manifests\": [\r\n    {\r\n      \"mediaType\": \"application/vnd.docker.distribution.manifest.v2+json\",\r\n      \"size\": 528,\r\n      \"digest\": \"sha256:4b36b0347b2c6b02adc54a3d8e8143299e7c733b4dcadb95c1d4c8b6da720172\",\r\n      \"platform\": {\r\n        \"architecture\": \"amd64\",\r\n        \"os\": \"linux\"\r\n      }\r\n    },\r\n    {\r\n      \"mediaType\": \"application/vnd.docker.distribution.manifest.v2+json\",\r\n      \"size\": 838,\r\n      \"digest\": \"sha256:2542c76d5ba87f9923ebcc6711677a2167dedf33e382f61a97772ae35106274d\",\r\n      \"platform\": {\r\n        \"architecture\": \"amd64\",\r\n        \"os\": \"windows\",\r\n        \"os.version\": \"10.0.18362.295\"\r\n      }\r\n    }\r\n  ],\r\n  \"schemaVersion\": 2\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "62b8060a-f822-4116-ace3-234f4b7cb567"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/vnd.docker.distribution.manifest.list.v2+json"
+        ],
+        "Content-Length": [
+          "749"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "openresty"
+        ],
+        "Date": [
+          "Mon, 07 Dec 2020 10:28:33 GMT"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Docker-Content-Digest": [
+          "sha256:8269f937dbe108d31d320a91a2dacac5da6cc83ce6af8e915830b8158c9775c2"
+        ],
+        "Docker-Distribution-Api-Version": [
+          "registry/2.0"
+        ],
+        "Location": [
+          "/v2/multi-hello-world/manifests/sha256:8269f937dbe108d31d320a91a2dacac5da6cc83ce6af8e915830b8158c9775c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Ms-Client-Request-Id": [
+          "62b8060a-f822-4116-ace3-234f4b7cb567"
+        ],
+        "X-Ms-Correlation-Request-Id": [
+          "61d7347b-ff86-48cb-ab80-3cadf29256a5"
+        ],
+        "X-Ms-Request-Id": [
+          "84b74dcc-85e3-4131-a816-83c0b92fdaed"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/v2/multi-hello-world/manifests/test-manifest-list",
+      "EncodedRequestUri": "L3YyL211bHRpLWhlbGxvLXdvcmxkL21hbmlmZXN0cy90ZXN0LW1hbmlmZXN0LWxpc3Q=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b54375a3-6618-4419-8d1e-8c1bf51c2da4"
+        ],
+        "Accept": [
+          "application/vnd.docker.distribution.manifest.list.v2+json"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "openresty"
+        ],
+        "Date": [
+          "Mon, 07 Dec 2020 10:28:33 GMT"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Docker-Content-Digest": [
+          "sha256:8269f937dbe108d31d320a91a2dacac5da6cc83ce6af8e915830b8158c9775c2"
+        ],
+        "Docker-Distribution-Api-Version": [
+          "registry/2.0"
+        ],
+        "ETag": [
+          "\"sha256:8269f937dbe108d31d320a91a2dacac5da6cc83ce6af8e915830b8158c9775c2\""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Ms-Client-Request-Id": [
+          "b54375a3-6618-4419-8d1e-8c1bf51c2da4"
+        ],
+        "X-Ms-Correlation-Request-Id": [
+          "08b49ae1-d4d6-4d30-b404-cb7ceccc9050"
+        ],
+        "X-Ms-Request-Id": [
+          "4349702b-f42f-4815-a0b1-7d3eacd1d448"
+        ],
+        "Content-Type": [
+          "application/vnd.docker.distribution.manifest.list.v2+json"
+        ],
+        "Content-Length": [
+          "749"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"mediaType\": \"application/vnd.docker.distribution.manifest.list.v2+json\",\r\n  \"manifests\": [\r\n    {\r\n      \"mediaType\": \"application/vnd.docker.distribution.manifest.v2+json\",\r\n      \"size\": 528,\r\n      \"digest\": \"sha256:4b36b0347b2c6b02adc54a3d8e8143299e7c733b4dcadb95c1d4c8b6da720172\",\r\n      \"platform\": {\r\n        \"architecture\": \"amd64\",\r\n        \"os\": \"linux\"\r\n      }\r\n    },\r\n    {\r\n      \"mediaType\": \"application/vnd.docker.distribution.manifest.v2+json\",\r\n      \"size\": 838,\r\n      \"digest\": \"sha256:2542c76d5ba87f9923ebcc6711677a2167dedf33e382f61a97772ae35106274d\",\r\n      \"platform\": {\r\n        \"architecture\": \"amd64\",\r\n        \"os\": \"windows\",\r\n        \"os.version\": \"10.0.18362.295\"\r\n      }\r\n    }\r\n  ],\r\n  \"schemaVersion\": 2\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "dfb63c8c-7c89-4ef8-af13-75c1d873c895"
+  }
+}

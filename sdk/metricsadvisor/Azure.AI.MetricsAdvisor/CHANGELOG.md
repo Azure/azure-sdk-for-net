@@ -2,8 +2,27 @@
 
 ## 1.0.0-beta.3 (Unreleased)
 
+### New Features
+- Added support for AAD authentication in `MetricsAdvisorClient` and `MetricsAdvisorAdministrationClient`.
+
+### Breaking Changes
+- The constructor of the `DataFeed` class is now parameterless. Required properties should be set via setters.
+- The constructor of the `DataFeedSchema` class is now parameterless. Metrics can be added directly to `MetricColumns`.
+- The constructor of the `DataFeedIngestionSettings` class is now parameterless. Required properties should be set via setters.
+- In `DataFeed`, added property setters to `Name`, `DataSource`, `Granularity`, `IngestionSettings`, and `Schema`.
+- In `DataFeedIngestionSettings`, added a property setter to `IngestionStartTime`.
+- In `DataFeed`, removed the setters of the properties `Administrators` and `Viewers`.
+- In `DataFeedSchema`, removed the setter of the property `DimensionColumns`.
+- In `DataFeedRollupSettings`, removed the setter of the property `AutoRollupGroupByColumnNames`.
+- `DataFeed.SourceType` is now nullable. It will be null whenever `DataFeed.DataSource` is null.
+- `DataFeed.IngestionStartTime` is now nullable.
+- In `MetricsAdvisorKeyCredential`, renamed the parameter `key` to `subscriptionKey` in the method `UpdateSubscriptionKey`.
+- In `MetricsAdvisorKeyCredential`, renamed the parameter `key` to `apiKey` in the method `UpdateApiKey`.
+
 ### Key Bug Fixes
 - Fixed a bug in which setting `WebNotificationHook.CertificatePassword` would actually set the property `Username` instead.
+- Fixed a bug in which an `ArgumentNullException` was thrown when getting a `DataFeed` from the service as a Viewer.
+- Fixed a bug in which a data feed's administrators and viewers could not be set during creation.
 
 ## 1.0.0-beta.2 (2020-11-10)
 

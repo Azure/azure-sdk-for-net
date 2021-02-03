@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var (jobHost, host) = BuildHost<EventHubTestSingleDispatchJobs>();
             using (host)
             {
-                await jobHost.CallAsync(nameof(EventHubTestSingleDispatchJobs.SendEvent_TestHub), new { input = _testId });
+                await jobHost.CallAsync(nameof(EventHubTestSingleDispatchJobs.SendEvent_TestHub), new { input = "data" });
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
             }
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var (jobHost, host) = BuildHost<EventHubTestMultipleDispatchJobs>();
             using (host)
             {
-                await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchJobs.SendEvents_TestHub), new { input = _testId });
+                await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchJobs.SendEvents_TestHub), new { input = "data" });
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
@@ -154,14 +154,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             // EventHub can batch events in a different ways
             foreach (var ehTriggerRequest in ehTriggerRequests)
             {
-               ValidateEventHubRequest(
-                    ehTriggerRequest,
-                    true,
-                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
-                    _eventHubScope.EventHubName,
-                    nameof(EventHubTestMultipleDispatchJobs.ProcessMultipleEvents),
-                    null,
-                    null);
+                ValidateEventHubRequest(
+                     ehTriggerRequest,
+                     true,
+                     EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
+                     _eventHubScope.EventHubName,
+                     nameof(EventHubTestMultipleDispatchJobs.ProcessMultipleEvents),
+                     null,
+                     null);
 
                 Assert.NotNull(ehTriggerRequest.Context.Operation.Id);
                 Assert.Null(ehTriggerRequest.Context.Operation.ParentId);
@@ -200,9 +200,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     id = spanId
                 };
 
-                messages[i] = new EventData(Encoding.UTF8.GetBytes(_testId + i))
+                messages[i] = new EventData(Encoding.UTF8.GetBytes(i.ToString()))
                 {
-                    Properties = {["Diagnostic-Id"] = $"00-{operationId}-{spanId}-01"}
+                    Properties = { ["Diagnostic-Id"] = $"00-{operationId}-{spanId}-01" }
                 };
             }
 
@@ -337,10 +337,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName)] string evt)
             {
-                if (evt.StartsWith(_testId))
-                {
-                    _eventWait.Set();
-                }
+                _eventWait.Set();
             }
         }
 
@@ -365,15 +362,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMultipleEvents([EventHubTrigger(TestHubName)] string[] events)
             {
-                var eventsFromCurrentTest = events.Where(e => e.StartsWith(_testId)).ToArray();
-                Activity.Current.AddTag("receivedMessages", eventsFromCurrentTest.Length.ToString());
+                Activity.Current.AddTag("receivedMessages", events.Length.ToString());
                 lock (MessageLock)
                 {
-                    MessagesCount += eventsFromCurrentTest.Length;
+                    MessagesCount += events.Length;
 
-                    if (eventsFromCurrentTest.Length > 0)
+                    if (events.Length > 0)
                     {
-                        LinksCount.Add(eventsFromCurrentTest.Length);
+                        LinksCount.Add(events.Length);
                     }
 
                     if (MessagesCount >= EventCount)

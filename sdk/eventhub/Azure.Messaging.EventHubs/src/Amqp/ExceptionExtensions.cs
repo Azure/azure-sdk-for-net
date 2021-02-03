@@ -33,16 +33,16 @@ namespace Azure.Messaging.EventHubs.Amqp
             switch (instance)
             {
                 case AmqpException amqpEx:
-                    return AmqpError.CreateExceptionForError(amqpEx.Error, eventHubName);
+                    return AmqpError.CreateExceptionForError(amqpEx.Error, eventHubName, amqpEx);
 
                 case OperationCanceledException operationEx when (operationEx.InnerException is AmqpException):
-                    return AmqpError.CreateExceptionForError(((AmqpException)operationEx.InnerException).Error, eventHubName);
+                    return AmqpError.CreateExceptionForError(((AmqpException)operationEx.InnerException).Error, eventHubName, operationEx.InnerException);
 
                 case OperationCanceledException operationEx when (operationEx.InnerException != null):
                     return operationEx.InnerException;
 
                 case OperationCanceledException operationEx when (!(operationEx is TaskCanceledException)):
-                    return new EventHubsException(eventHubName, operationEx.Message, EventHubsException.FailureReason.ServiceTimeout);
+                    return new EventHubsException(eventHubName, operationEx.Message, EventHubsException.FailureReason.ServiceTimeout, operationEx);
 
                 default:
                     return instance;

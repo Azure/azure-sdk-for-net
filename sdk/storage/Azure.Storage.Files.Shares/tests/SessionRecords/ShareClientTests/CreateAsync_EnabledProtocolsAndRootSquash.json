@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seancanarypremiumfile2.file.core.windows.net/test-share-e0dd0186-40a6-d8cf-fea1-3ede2cd8e8d3?restype=share",
@@ -15,13 +15,14 @@
         "x-ms-enabled-protocols": "NFS",
         "x-ms-return-client-request-id": "true",
         "x-ms-root-squash": "AllSquash",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Date": "Tue, 20 Oct 2020 19:03:48 GMT",
-        "ETag": "\u00220x8D8752AE09381ED\u0022",
+        "ETag": "\"0x8D8752AE09381ED\"",
         "Last-Modified": "Tue, 20 Oct 2020 19:03:48 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -30,7 +31,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "c3d2ee88-1fa9-c94c-3bfe-188959c75966",
         "x-ms-request-id": "f0507935-b01a-0032-0613-a7363b000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     },
@@ -47,13 +48,14 @@
         "x-ms-client-request-id": "3d5672be-2506-d129-2d48-4282ccec290b",
         "x-ms-date": "Tue, 20 Oct 2020 19:03:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Date": "Tue, 20 Oct 2020 19:03:48 GMT",
-        "ETag": "\u00220x8D8752AE09381ED\u0022",
+        "ETag": "\"0x8D8752AE09381ED\"",
         "Last-Modified": "Tue, 20 Oct 2020 19:03:48 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -72,7 +74,7 @@
         "x-ms-share-provisioned-ingress-mbps": "44",
         "x-ms-share-provisioned-iops": "500",
         "x-ms-share-quota": "100",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     },
@@ -89,7 +91,8 @@
         "x-ms-client-request-id": "e6cb7d26-1b71-3660-dbdf-26b6ae75d69f",
         "x-ms-date": "Tue, 20 Oct 2020 19:03:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -102,7 +105,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "e6cb7d26-1b71-3660-dbdf-26b6ae75d69f",
         "x-ms-request-id": "f0507939-b01a-0032-0813-a7363b000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     }

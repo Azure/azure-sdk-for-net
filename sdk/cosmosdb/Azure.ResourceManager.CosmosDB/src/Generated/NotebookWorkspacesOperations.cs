@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="notebookCreateUpdateParameters"> The notebook workspace to create for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="notebookCreateUpdateParameters"/> is null. </exception>
-        public virtual async Task<NotebookWorkspacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, ARMProxyResource notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<NotebookWorkspacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateUpdateParameters notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="notebookCreateUpdateParameters"> The notebook workspace to create for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="notebookCreateUpdateParameters"/> is null. </exception>
-        public virtual NotebookWorkspacesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, ARMProxyResource notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
+        public virtual NotebookWorkspacesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateUpdateParameters notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

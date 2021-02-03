@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Unique, non-empty document identifier. </summary>
         public string Id { get; }
         /// <summary> Healthcare entities. </summary>
-        public IReadOnlyList<HealthcareEntity> Entities { get; }
+        public IReadOnlyList<HealthcareEntityInternal> Entities { get; }
         /// <summary> Healthcare entity relations. </summary>
         public IReadOnlyList<HealthcareRelationInternal> Relations { get; }
         /// <summary> Warnings encountered while processing document. </summary>

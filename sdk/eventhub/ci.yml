@@ -8,7 +8,11 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/eventhub/
+    - sdk/eventhub/ci.yml
+    - sdk/eventhub/Azure.Messaging.EventHubs
+    - sdk/eventhub/Azure.Messaging.EventHubs.Processor
+    - sdk/eventhub/Azure.Messaging.EventHubs.Shared
+    - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
 
 pr:
   branches:
@@ -19,11 +23,16 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/eventhub/
+    - sdk/eventhub/ci.yml
+    - sdk/eventhub/Azure.Messaging.EventHubs
+    - sdk/eventhub/Azure.Messaging.EventHubs.Processor
+    - sdk/eventhub/Azure.Messaging.EventHubs.Shared
+    - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: eventhub
     ArtifactName: packages
     Artifacts:
@@ -31,13 +40,5 @@ extends:
       safeName: AzureMessagingEventHubs
     - name: Azure.Messaging.EventHubs.Processor
       safeName: AzureMessagingEventHubsProcessor
-    - name: Microsoft.Azure.EventHubs
-      safeName: MicrosoftAzureEventHubs
-    - name: Microsoft.Azure.EventHubs.Processor
-      safeName: MicrosoftAzureEventHubsProcessor
-    - name: Microsoft.Azure.EventHubs.ServiceFabricProcessor
-      safeName: MicrosoftAzureEventHubsServiceFabricProcessor
     - name: Microsoft.Azure.WebJobs.Extensions.EventHubs
       safeName: MicrosoftAzureWebJobsExtensionsEventHubs
-    - name: Azure.ResourceManager.EventHubs
-      safeName: AzureResourceManagerEventHubs

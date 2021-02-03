@@ -47,6 +47,12 @@ namespace Azure.Storage
         public static InvalidOperationException TokenCredentialsRequireHttps()
             => new InvalidOperationException("Use of token credentials requires HTTPS");
 
+        public static ArgumentException SasCredentialRequiresUriWithoutSas<TUriBuilder>(Uri uri)
+            => new ArgumentException(
+                $"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature: {uri}\n" +
+                $"You can remove the shared access signature by creating a {typeof(TUriBuilder).Name}, setting {typeof(TUriBuilder).Name}.Sas to null," +
+                $" and calling {typeof(TUriBuilder).Name}.ToUri.");
+
         public static InvalidOperationException SasMissingData(string paramName)
             => new InvalidOperationException($"SAS is missing required parameter: {paramName}");
 

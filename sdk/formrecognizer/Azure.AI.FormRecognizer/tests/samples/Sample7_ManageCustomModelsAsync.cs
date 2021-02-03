@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             #region Snippet:FormRecognizerSampleManageCustomModelsAsync
 
@@ -34,16 +34,19 @@ namespace Azure.AI.FormRecognizer.Samples
             await foreach (CustomFormModelInfo modelInfo in models)
             {
                 Console.WriteLine($"Custom Model Info:");
-                Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-                Console.WriteLine($"    Model name: {modelInfo.ModelName}");
-                Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
-                Console.WriteLine($"    Model Status: {modelInfo.Status}");
-                Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
-                Console.WriteLine($"    Training model completed on: : {modelInfo.TrainingCompletedOn}");
+                Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
+                Console.WriteLine($"  Model name: {modelInfo.ModelName}");
+                Console.WriteLine($"  Is composed model: {modelInfo.Properties.IsComposedModel}");
+                Console.WriteLine($"  Model Status: {modelInfo.Status}");
+                Console.WriteLine($"  Training model started on: {modelInfo.TrainingStartedOn}");
+                Console.WriteLine($"  Training model completed on: : {modelInfo.TrainingCompletedOn}");
             }
 
             // Create a new model to store in the account
-            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My new model").WaitForCompletionAsync();
+            //@@ Uri trainingFileUri = <trainingFileUri>;
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My new model");
+            Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+            CustomFormModel model = operationResponse.Value;
 
             // Get the model that was just created
             CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
@@ -55,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
                 foreach (CustomFormModelField field in submodel.Fields.Values)
                 {
-                    Console.Write($"    FieldName: {field.Name}");
+                    Console.Write($"  FieldName: {field.Name}");
                     if (field.Label != null)
                     {
                         Console.Write($", FieldLabel: {field.Label}");

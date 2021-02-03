@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the cloud service.
         /// </param>
         /// <param name='roleInstanceName'>
-        /// The name of role instance
+        /// The name of role instance.
         /// </param>
         /// <param name='networkInterfaceName'>
         /// The network interface name.

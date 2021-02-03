@@ -162,8 +162,12 @@ function populateIndexList(selector, packageName) {
     httpGetLatestAsync(latestPreviewUrl, latestVersions, packageName)
     var publishedVersions = $('<ul style="display: none;"></ul>')
     var collapsible = $('<div class="versionarrow">&nbsp;&nbsp;&nbsp;Other versions</div>')
-
-    $(selector).next().after(latestVersions)
+    // Check whether it has display name tag.
+    if ($(selector).next().is('h5')) {
+        $(selector).next().after(latestVersions)
+    } else {
+        $(selector).after(latestVersions)
+    }
     $(latestVersions).after(collapsible)
     $(collapsible).after(publishedVersions)
     // Add collapsible arrows on versioned docs.
@@ -216,8 +220,3 @@ $(function () {
         populateOptions($('#navbar'), pkgName)
     }
 })
-
-
-
-
-

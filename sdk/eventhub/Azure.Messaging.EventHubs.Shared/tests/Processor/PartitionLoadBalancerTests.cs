@@ -636,7 +636,7 @@ namespace Azure.Messaging.EventHubs.Tests
             //
             // Assign the processor ownership over half of the partitions in storage, but do not formally claim them.
 
-            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership( partitionIds.Skip(MinimumPartitionCount).Take(OrphanedPartitionCount), loadBalancer.OwnerIdentifier));
+            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds.Skip(MinimumPartitionCount).Take(OrphanedPartitionCount), loadBalancer.OwnerIdentifier));
             completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
             Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount + MinimumPartitionCount), "Storage should be tracking half the partitions as owned by another processor as well as some orphans.");
@@ -708,6 +708,65 @@ namespace Azure.Messaging.EventHubs.Tests
             mockLog.Verify(m => m.StealPartition(loadbalancer.OwnerIdentifier));
             mockLog.Verify(m => m.ShouldStealPartition(loadbalancer.OwnerIdentifier));
             mockLog.Verify(m => m.UnclaimedPartitions(It.Is<HashSet<string>>(set => set.Count == 0 || set.All(item => partitionIds.Contains(item)))));
+        }
+
+        /// <summary>
+        ///   Verifies that ownership is renewed only for partitions past LoadBalancingInterval.
+        /// </summary>
+        ///
+        [Test]
+        public async Task RunLoadBalancingAsyncDoesNotRenewFreshPartitions()
+        {
+            const int NumberOfPartitions = 4;
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
+            string[] CollectVersions() => storageManager.Ownership.OrderBy(pair => pair.Key.Item4).Select(pair => pair.Value.Version).ToArray();
+
+            var now = DateTimeOffset.UtcNow;
+
+            var loadbalancerId = Guid.NewGuid().ToString();
+            var loadbalancerMock = new Mock<PartitionLoadBalancer>(
+                storageManager, loadbalancerId, ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(3), TimeSpan.FromSeconds(60));
+            loadbalancerMock.CallBase = true;
+            loadbalancerMock.Setup(b => b.GetDateTimeOffsetNow()).Returns(() => now);
+            var loadbalancer = loadbalancerMock.Object;
+
+            storageManager.LastModifiedTime = now;
+
+            // This run would re-take ownership and update versions
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            }
+
+            var claimedVersions = CollectVersions();
+
+            // This run would renew ownership
+            now = now.AddSeconds(65);
+            storageManager.LastModifiedTime = now;
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            }
+
+            var renewedVersions = CollectVersions();
+
+            // This run would not review anything as everything is up-to-date
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+            }
+
+            var notRenewedVersions = CollectVersions();
+
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                Assert.That(claimedVersions[i], Is.Not.EqualTo(renewedVersions[i]), "Partitions should've been claimed");
+                Assert.That(renewedVersions[i], Is.EqualTo(notRenewedVersions[i]), "Partitions should've been skipped during renewal");
+            }
+
+            Assert.That(storageManager.TotalRenewals, Is.EqualTo(8), "There should be 4 initial claims and 4 renew claims");
         }
 
         /// <summary>

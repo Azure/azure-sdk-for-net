@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// <param name="dependsOnOverrides">Gets or sets the move resource
         /// dependencies overrides.</param>
         /// <param name="errors">Defines the move resource errors.</param>
-        public MoveResourceProperties(string sourceId, string provisioningState = default(string), string targetId = default(string), string existingTargetId = default(string), ResourceSettings resourceSettings = default(ResourceSettings), MoveResourcePropertiesSourceResourceSettings sourceResourceSettings = default(MoveResourcePropertiesSourceResourceSettings), MoveResourcePropertiesMoveStatus moveStatus = default(MoveResourcePropertiesMoveStatus), IList<MoveResourceDependency> dependsOn = default(IList<MoveResourceDependency>), IList<MoveResourceDependencyOverride> dependsOnOverrides = default(IList<MoveResourceDependencyOverride>), MoveResourcePropertiesErrors errors = default(MoveResourcePropertiesErrors))
+        public MoveResourceProperties(string sourceId, string provisioningState = default(string), string targetId = default(string), string existingTargetId = default(string), ResourceSettings resourceSettings = default(ResourceSettings), ResourceSettings sourceResourceSettings = default(ResourceSettings), MoveResourcePropertiesMoveStatus moveStatus = default(MoveResourcePropertiesMoveStatus), IList<MoveResourceDependency> dependsOn = default(IList<MoveResourceDependency>), IList<MoveResourceDependencyOverride> dependsOnOverrides = default(IList<MoveResourceDependencyOverride>), MoveResourcePropertiesErrors errors = default(MoveResourcePropertiesErrors))
         {
             ProvisioningState = provisioningState;
             SourceId = sourceId;
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// Gets or sets the source resource settings.
         /// </summary>
         [JsonProperty(PropertyName = "sourceResourceSettings")]
-        public MoveResourcePropertiesSourceResourceSettings SourceResourceSettings { get; private set; }
+        public ResourceSettings SourceResourceSettings { get; private set; }
 
         /// <summary>
         /// Gets defines the move resource status.

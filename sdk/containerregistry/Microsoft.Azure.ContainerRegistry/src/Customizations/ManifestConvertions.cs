@@ -34,7 +34,8 @@ namespace Microsoft.Azure.ContainerRegistry.Models
                 Name = v.Name,
                 Signatures = v.Signatures,
                 Tag = v.Tag,
-                SchemaVersion = v.SchemaVersion
+                SchemaVersion = v.SchemaVersion,
+                MediaType=v.MediaType             
             };
             return manifest;
         }
@@ -68,7 +69,8 @@ namespace Microsoft.Azure.ContainerRegistry.Models
             {
                 Manifests = v.Manifests,
                 SchemaVersion = v.SchemaVersion,
-                Annotations = v.Annotations
+                Annotations = v.Annotations,
+                MediaType=v.MediaType               
             };
             return manifest;
         }
@@ -86,7 +88,8 @@ namespace Microsoft.Azure.ContainerRegistry.Models
                 Layers = v.Layers,
                 SchemaVersion = v.SchemaVersion,
                 Config = v.Config,
-                Annotations = v.Annotations
+                Annotations = v.Annotations,
+                MediaType=v.MediaType
             };
             return manifest;
         }
