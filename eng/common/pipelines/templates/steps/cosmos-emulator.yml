@@ -1,6 +1,6 @@
 parameters:
   EmulatorMsiUrl: "https://aka.ms/cosmosdb-emulator"
-  StartParameters: ''
+  StartParameters: '/noexplorer /noui /enablepreview /disableratelimiting /enableaadauthentication /partitioncount=50 /consistency=Strong'
 
 steps:
   - powershell: |
@@ -49,9 +49,6 @@ steps:
       $argumentList = ""
       if (-not [string]::IsNullOrEmpty("${{ parameters.StartParameters }}")) {
           $argumentList += , "${{ parameters.StartParameters }}"
-      } else {
-        # Use the default params if none provided
-        $argumentList = "/noexplorer /noui /enablepreview /disableratelimiting /enableaadauthentication /partitioncount=50 /consistency=Strong"
       }
       Write-Host "Starting emulator process: $Emulator $argumentList"
       $process=Start-Process $Emulator -ArgumentList $argumentList -ErrorAction Stop -PassThru
