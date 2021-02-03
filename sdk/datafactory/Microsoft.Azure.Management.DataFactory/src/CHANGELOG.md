@@ -3,6 +3,12 @@
 ## Version 4.14.0
 ###  Feature Additions
 - Added encryption property for Customer Managed Key
+- Added custom events trigger definition
+- Added Policy property into Databricks linkedService
+- Added managed identity support for authentication in Databricks linkedService
+- Added admin property in Custom Activity typeProperties
+- Added dualStandbyPairName property in IntegrationRuntimeSsisCatalogInfo to support SSISDB failover
+- Added managedVirtualNetwork reference to IR
 
 ## Version 4.13.0
 ###  Feature Additions
