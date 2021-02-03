@@ -2053,12 +2053,14 @@ namespace Azure.DigitalTwins.Core
                             MaxItemsPerPage = pageSizeHint
                         };
 
-                        Response<QueryResult<T>> response = await _queryClient.QueryTwinsAsync<T>(
-                            querySpecification,
-                            options,
-                            _objectSerializer,
-                            _defaultObjectSerializer,
-                            cancellationToken).ConfigureAwait(false);
+                        Response<QueryResult<T>> response = await _queryClient
+                            .QueryTwinsAsync<T>(
+                                querySpecification,
+                                options,
+                                _objectSerializer,
+                                _defaultObjectSerializer,
+                                cancellationToken)
+                            .ConfigureAwait(false);
 
                         return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                     }
@@ -2162,12 +2164,13 @@ namespace Azure.DigitalTwins.Core
                             MaxItemsPerPage = pageSizeHint
                         };
 
-                        Response<QueryResult<T>> response = _queryClient.QueryTwins<T>(
-                            querySpecification,
-                            options,
-                            _objectSerializer,
-                            _defaultObjectSerializer,
-                            cancellationToken);
+                        Response<QueryResult<T>> response = _queryClient
+                            .QueryTwins<T>(
+                                querySpecification,
+                                options,
+                                _objectSerializer,
+                                _defaultObjectSerializer,
+                                cancellationToken);
 
                         return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                     }
@@ -2195,12 +2198,14 @@ namespace Azure.DigitalTwins.Core
                             MaxItemsPerPage = pageSizeHint
                         };
 
-                        Response<QueryResult<T>> response = _queryClient.QueryTwins<T>(
-                            querySpecification,
-                            options,
-                            _objectSerializer,
-                            _defaultObjectSerializer,
-                            cancellationToken);
+                        Response<QueryResult<T>> response = _queryClient
+                            .QueryTwins<T>(
+                                querySpecification,
+                                options,
+                                _objectSerializer,
+                                _defaultObjectSerializer,
+                                cancellationToken);
+
                         return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                     }
                     catch (Exception ex)
