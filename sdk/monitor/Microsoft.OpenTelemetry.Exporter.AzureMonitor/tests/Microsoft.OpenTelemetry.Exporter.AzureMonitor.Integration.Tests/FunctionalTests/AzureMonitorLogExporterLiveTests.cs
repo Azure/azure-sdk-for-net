@@ -16,6 +16,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
 
     using NUnit.Framework;
 
+    /// <summary>
+    /// Collection of tests to evaluate the <see cref="AzureMonitorLogExporter"/>.
+    /// </summary>
     public class AzureMonitorLogExporterLiveTests : AzureMonitorTestBase
     {
         public AzureMonitorLogExporterLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
@@ -49,6 +52,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
 
             processor.ForceFlush();
 
+            // TODO: MAYBE WE COULD HAVE A SHORT WAIT, AND IF NO TELEMETRY IS FOUND, WAIT FOR A LONGER PERIOD.
+            // THIS MIGHT MAKE TEST RUN FASTER, BUT PROVIDE A TRY-AGAIN MECHANIC FOR DAYS THAT INGESTION IS HAVING A BAD DAY.
             await this.WaitForIgnestionAsync();
 
             // VERIFY
