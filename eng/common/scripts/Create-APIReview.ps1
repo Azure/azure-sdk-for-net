@@ -83,7 +83,6 @@ else
 }
 
 $FoundFailure = $False
-# Default config file path to artifact path to support backward compatibility until those scripts are modified
 $pkgInfoPath = Join-Path -Path $ArtifactPath "PackageInfo"
 if ($ConfigFileDir)
 {
