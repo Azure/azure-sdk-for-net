@@ -507,12 +507,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created configuration.
 
-            var configToUpdate = new AnomalyDetectionConfiguration();
+            var configToUpdate = new AnomalyDetectionConfiguration() { WholeSeriesDetectionConditions = wholeConditions };
 
-            configToUpdate.WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
-            {
-                HardThresholdCondition = wholeConditions.HardThresholdCondition
-            };
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
 
             await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
