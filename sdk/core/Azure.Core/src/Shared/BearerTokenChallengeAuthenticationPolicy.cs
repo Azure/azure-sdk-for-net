@@ -68,7 +68,7 @@ namespace Azure.Core.Pipeline
         /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
         /// </summary>
         /// <remarks>This implementation handles common authentication challenges such as claims challenges. Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
-        /// <param name="message">The HttpMessage to be authenticated.</param>
+        /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <param name="context">If the return value is <c>true</c>, a <see cref="TokenRequestContext"/>.</param>
         /// <returns>A boolean indicated whether the request contained a valid challenge and a <see cref="TokenRequestContext"/> was successfully initialized with it.</returns>
         protected virtual bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)
