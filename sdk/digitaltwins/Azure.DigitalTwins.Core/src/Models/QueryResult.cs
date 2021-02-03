@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
@@ -26,12 +25,11 @@ namespace Azure.DigitalTwins.Core
         internal string ContinuationToken { get; }
 
         /// <summary>
-        /// Initializes a new instance of QueryResult.
+        /// In order to serialize/deserialize JsonElements into and out of a stream, we have to use the out of the box ObjectSerializer (JsonObjectSerializer).
+        /// This static property is instantiated whenever it is used so we can efficiently re-use the same object serializer that is provided by default
+        /// If the user specifies a different type of serializer to instantiate the client, the SDK will instantiate a new JsonObjectSerializer of its own.
         /// </summary>
-        internal QueryResult()
-        {
-            Value = new ChangeTrackingList<T>();
-        }
+        internal static ObjectSerializer defaultObjectSerializer { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of QueryResult.
@@ -54,6 +52,21 @@ namespace Azure.DigitalTwins.Core
         {
             IReadOnlyList<T> items = default;
             string continuationToken = default;
+
+            // If the provided objectSerializer is of type JsonObjectSerializer, we will re-use the same object and set it as the defaultObjectSerializer.
+            if (objectSerializer is JsonObjectSerializer)
+            {
+                defaultObjectSerializer = objectSerializer;
+            }
+            // Otherwise, if the defaultObjectSerializer is null, we will statically instantiate it and re-use it in the future.
+            else
+            {
+                if (defaultObjectSerializer == null)
+                {
+                    defaultObjectSerializer = new JsonObjectSerializer();
+                }
+            }
+
             foreach (JsonProperty property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -62,13 +75,21 @@ namespace Azure.DigitalTwins.Core
                     {
                         continue;
                     }
+
                     var array = new List<T>();
+
                     foreach (JsonElement item in property.Value.EnumerateArray())
                     {
-                        using MemoryStream streamedObject = StreamHelper.WriteToStream(item, objectSerializer, default);
+                        // defaultObjectSerializer of type JsonObjectSerializer needs to be used to serialize the JsonElement into a stream.
+                        // Using any other ObjectSerializer (ex: NewtonsoftJsonObjectSerializer) won't be able to deserialize the JsonElement into
+                        // a MemoryStream correctly.
+                        using MemoryStream streamedObject = StreamHelper.WriteToStream(item, defaultObjectSerializer, default);
+
+                        // To deserialize the stream object into the generic type of T, the provided ObjectSerializer will be used.
                         T obj = (T)objectSerializer.Deserialize(streamedObject, typeof(T), default);
                         array.Add(obj);
                     }
+
                     items = array;
                     continue;
                 }
