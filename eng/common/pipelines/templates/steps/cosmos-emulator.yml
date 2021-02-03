@@ -51,7 +51,7 @@ steps:
           $argumentList += , "${{ parameters.StartParameters }}"
       } else {
         # Use the default params if none provided
-        $argumentList = "/noexplorer /noui /enablepreview /disableratelimiting /enableaadauthentication /partitioncount=50 /consistency=Strong"
+        $argumentList = "/noexplorer /noui /enablepreview /disableratelimiting /enableaadauthentication"
       }
       Write-Host "Starting emulator process: $Emulator $argumentList"
       $process=Start-Process $Emulator -ArgumentList $argumentList -ErrorAction Stop -PassThru
