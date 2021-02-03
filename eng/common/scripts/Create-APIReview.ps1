@@ -92,7 +92,7 @@ foreach ($pkgName in $responses.Keys)
     $respCode = $responses[$pkgName]
     if ($respCode -ne '200')
     {
-        $pkgPropPath = Join-Path -Path $ConfigFileDir ($PackageName + ".json")
+        $pkgPropPath = Join-Path -Path $ConfigFileDir "$PackageName.json"
         if (-Not (Test-Path $pkgPropPath))
         {
             Write-Host " Package property file path $($pkgPropPath) is invalid."
