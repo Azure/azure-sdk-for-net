@@ -183,7 +183,12 @@ Using `CloudEvent`:
 // Parse the JSON payload into a list of events using CloudEvent.Parse
 CloudEvent[] cloudEvents = CloudEvent.Parse(jsonPayloadSampleTwo);
 ```
-From here, one can access the event data by deserializing to a specific type using `GetData<T>()` and passing in a custom serializer if necessary. Below is an example calling `GetData<T>()` using CloudEvents. In order to deserialize to the correct type, the `EventType` property (`Type` for CloudEvents) helps distinguish between different events.
+From here, one can access the event data by deserializing to a specific type using `GetData<T>()`. Calling `GetData()` will either return the event data wrapped in `BinaryData`, which represents the serialized JSON event data as bytes.
+
+Using `GetData<T>()`:
+
+Below is an example calling `GetData<T>()` for CloudEvents. In order to deserialize to the correct type, the `EventType` property (`Type` for CloudEvents) helps distinguish between different events. Custom event data should be deserialized using the generic method `GetData<T>()`. There is also an overload for `GetData<T>()` that accepts a custom `ObjectSerializer` to deserialize the event data.
+
 ```C# Snippet:DeserializePayloadUsingGenericGetData
 foreach (CloudEvent cloudEvent in cloudEvents)
 {
@@ -196,7 +201,7 @@ foreach (CloudEvent cloudEvent in cloudEvents)
             break;
         case "MyApp.Models.CustomEventType":
             // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-            TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
+            TestPayload testPayload = cloudEvent.GetData().ToObject<TestPayload>(myCustomSerializer);
             Console.WriteLine(testPayload.Name);
             break;
         case SystemEventNames.StorageBlobDeleted:
@@ -207,14 +212,20 @@ foreach (CloudEvent cloudEvent in cloudEvents)
     }
 }
 ```
-Below is an example using the `IsSystemEvent` property along with `AsSystemEventData()` to deserialize system events. 
+
+Using `TryGetSystemEventData()`:
+
+If expecting mostly system events, it may be cleaner to switch on `TryGetSystemEventData()` and use pattern matching to act on the individual events. If an event is not a system event, the method will return false and the out parameter will be null. 
+
+*As a caveat, if you are using a custom event type with an EventType value that later gets added as a system event by the service and SDK, the return value of `TryGetSystemEventData` would change from `false` to `true`. This could come up if you are pre-emptively creating your own custom events for events that are already being sent by the service, but have not yet been added to the SDK. In this case, it is better to use the generic `GetData<T>` method so that your code flow doesn't change automatically after upgrading (of course, you may still want to modify your code to consume the newly released system event model as opposed to your custom model).*
+
 ```C# Snippet:DeserializePayloadUsingAsSystemEventData
 foreach (EventGridEvent egEvent in egEvents)
 {
-    // If the event is a system event, AsSystemEventData() should return the correct system event type
-    if (egEvent.IsSystemEvent)
+    // If the event is a system event, TryGetSystemEventData() will return the deserialized system event
+    if (egEvent.TryGetSystemEventData(out object systemEvent))
     {
-        switch (egEvent.AsSystemEventData())
+        switch (systemEvent)
         {
             case SubscriptionValidationEventData subscriptionValidated:
                 Console.WriteLine(subscriptionValidated.ValidationCode);

@@ -24,11 +24,18 @@ EventGridPublisherClient client = new EventGridPublisherClient(
     new AzureKeyCredential(topicAccessKey),
     clientOptions);
 ```
-Event Grid also supports authenticating with a shared access signature which allows for providing access to a resource that expires by a certain time without sharing your access key:
-```C# Snippet:CreateWithSas
+Event Grid also supports authenticating with a shared access signature which allows for providing access to a resource that expires by a certain time without sharing your access key. 
+Generally, the workflow would be that one application would generate the SAS string and hand off the string to another application that would consume the string.
+Generate the SAS:
+```C# Snippet:GenerateSas
 var builder = new EventGridSasBuilder(new Uri(topicEndpoint), DateTimeOffset.Now.AddHours(1));
 var keyCredential = new AzureKeyCredential(topicAccessKey);
-var sasCredential = new AzureSasCredential(builder.GenerateSas(keyCredential));
+string sasToken = builder.GenerateSas(keyCredential);
+```
+
+Here is how it would be used from the consumer's perspective:
+```C# Snippet:AuthenticateWithSas
+var sasCredential = new AzureSasCredential(sasToken);
 EventGridPublisherClient client = new EventGridPublisherClient(
     new Uri(topicEndpoint),
     sasCredential);

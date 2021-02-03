@@ -308,6 +308,10 @@ public static class BlobFunction_EnumerateBlobs_BlobClient
 }
 ```
 
+### Configuring the extension
+
+Please refer to [sample functions app]<!--(https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/samples/functionapp) TODO (kasobol-msft) uncomment post merge.-->.
+
 ## Troubleshooting
 
 Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.

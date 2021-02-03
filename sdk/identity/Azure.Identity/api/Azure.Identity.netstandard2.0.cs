@@ -225,14 +225,12 @@ namespace Azure.Identity
         public Azure.Identity.TokenCache TokenCache { get { throw null; } }
         public string Username { get { throw null; } set { } }
     }
-    public partial class TokenCache : System.IDisposable
+    public partial class TokenCache
     {
         public TokenCache() { }
         public event System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> Updated { add { } remove { } }
         public static Azure.Identity.TokenCache Deserialize(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Identity.TokenCache> DeserializeAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
         public void Serialize(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public System.Threading.Tasks.Task SerializeAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -127,7 +127,6 @@ namespace Azure.Messaging.EventGrid.Tests
                         Age = 10,
                         DerivedProperty = 5
                     },
-                    "TestPayload",
                     typeof(TestPayload));
 
             // since the data has not yet been serialized (CloudEvent not constructed from Parse method), GetData returns the passed in instance.
@@ -169,8 +168,7 @@ namespace Azure.Messaging.EventGrid.Tests
                         Name = "name",
                         Age = 10,
                         DerivedProperty = 5
-                    },
-                    "TestPayload");
+                    });
 
             Assert.AreEqual(5, cloudEvent.GetData<DerivedTestPayload>().DerivedProperty);
             Assert.AreEqual(5, cloudEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
