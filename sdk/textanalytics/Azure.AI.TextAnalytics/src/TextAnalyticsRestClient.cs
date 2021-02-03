@@ -12,14 +12,15 @@ namespace Azure.AI.TextAnalytics
 {
     internal partial class TextAnalyticsRestClient
     {
-        internal HttpMessage CreateHealthStatusNextPageRequest(string nextLink, bool? showStats)
+        private HttpMessage CreateHealthStatusNextPageRequest(string apiversion, string nextLink, bool? showStats)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(apiversion, false);
             uri.AppendRawNextLink(nextLink, false);
             if (showStats != null)
             {
@@ -31,17 +32,18 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
+        /// <param name="apiversion"> The specific api version to use. </param>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<HealthcareJobState>> HealthStatusNextPageAsync(string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
+        public async Task<Response<HealthcareJobState>> HealthStatusNextPageAsync(string apiversion, string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateHealthStatusNextPageRequest(nextLink, showStats);
+            using var message = CreateHealthStatusNextPageRequest(apiversion, nextLink, showStats);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -58,17 +60,18 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
+        /// <param name="apiversion"> The specific api version to use. </param>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<HealthcareJobState> HealthStatusNextPage(string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
+        public Response<HealthcareJobState> HealthStatusNextPage(string apiversion, string nextLink, bool? showStats = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateHealthStatusNextPageRequest(nextLink, showStats);
+            using var message = CreateHealthStatusNextPageRequest(apiversion, nextLink, showStats);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

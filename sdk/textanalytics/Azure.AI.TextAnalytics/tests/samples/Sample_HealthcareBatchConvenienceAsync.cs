@@ -51,6 +51,12 @@ namespace Azure.AI.TextAnalytics.Samples
                             Console.WriteLine($"    Offset: {entity.Offset}");
                             Console.WriteLine($"    Length: {entity.Length}");
                             Console.WriteLine($"    Links:");
+
+                            foreach (EntityDataSource entityDataSource in entity.DataSources)
+                            {
+                                Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
+                                Console.WriteLine($"        DataSource: {entityDataSource.Name}");
+                            }
                         }
                     }
                 }

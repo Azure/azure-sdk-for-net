@@ -279,6 +279,41 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
+        [Test]
+        public async Task AnalyzeHealthcareEntitiesPagination()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
+
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.Throws<InvalidOperationException>(() => operation.GetValues());
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+
+            // try async
+            //There most be 1 page
+            List<AnalyzeHealthcareEntitiesResultCollection> asyncPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, asyncPages.Count);
+
+            // First page should have 2 results
+            Assert.AreEqual(2, asyncPages[0].Count);
+
+            // try sync
+            //There most be 1 page
+            List<AnalyzeHealthcareEntitiesResultCollection> pages = operation.GetValues().AsEnumerable().ToList();
+            Assert.AreEqual(1, pages.Count);
+
+            // First page should have 2 results
+            Assert.AreEqual(2, pages[0].Count);
+        }
+
         private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)
         {
             Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);

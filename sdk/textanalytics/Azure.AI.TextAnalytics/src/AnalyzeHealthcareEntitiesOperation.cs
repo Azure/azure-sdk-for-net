@@ -78,6 +78,8 @@ namespace Azure.AI.TextAnalytics
 
         private readonly bool? _showStats;
 
+        private readonly string _apiVersion;
+
         /// <summary>
         /// Provides the input to be part of AnalyzeHealthcareEntitiesOperation class
         /// </summary>
@@ -102,13 +104,15 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Text Analytics Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
+        /// <param name="apiversion">The specific api version to use.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="idToIndexMap"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeHealthcareEntitiesOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
+        internal AnalyzeHealthcareEntitiesOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string apiversion, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
+            _apiVersion = apiversion;
             _idToIndexMap = idToIndexMap;
             _showStats = showStats;
 
@@ -289,7 +293,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(nextLink, _showStats).ConfigureAwait(false);
+                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(_apiVersion, nextLink, _showStats).ConfigureAwait(false);
 
                     AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -321,7 +325,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(nextLink, _showStats);
+                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(_apiVersion, nextLink, _showStats);
 
                     AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
