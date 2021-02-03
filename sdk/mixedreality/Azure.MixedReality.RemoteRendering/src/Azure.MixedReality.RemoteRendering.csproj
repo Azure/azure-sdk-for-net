@@ -16,7 +16,7 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
-  <!-- Shared source from Azure.Core -->
+  <!-- Shared source from Azure.Core and Azure.MixedReality.Authentication -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
