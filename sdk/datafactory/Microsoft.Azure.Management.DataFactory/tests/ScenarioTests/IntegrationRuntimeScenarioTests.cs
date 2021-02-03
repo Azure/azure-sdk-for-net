@@ -164,7 +164,8 @@ namespace DataFactory.Tests.ScenarioTests
                             CatalogAdminUserName = Environment.GetEnvironmentVariable("CatalogAdminUsername"),
                             CatalogAdminPassword = new SecureString(Environment.GetEnvironmentVariable("CatalogAdminPassword")),
                             CatalogServerEndpoint = Environment.GetEnvironmentVariable("CatalogServerEndpoint"),
-                            CatalogPricingTier = "S1"
+                            CatalogPricingTier = "S1",
+                            DualStandbyPairName="Name"
                         },
                         DataProxyProperties = new IntegrationRuntimeDataProxyProperties
                         {
