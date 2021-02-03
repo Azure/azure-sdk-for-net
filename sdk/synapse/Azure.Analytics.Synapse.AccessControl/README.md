@@ -37,8 +37,9 @@ az synapse workspace create \
 ```
 
 ### Authenticate the client
-In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [AccessControlClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.AccessControl/src/Customization/AccessControlClient.cs) class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
- and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
+In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of a [RoleAssignmentsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.AccessControl/src/Customization/RoleAssignmentsClient.cs) and/or a [RoleDefinitionsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.AccessControl/src/Customization/RoleDefinitionsClient.cs) class.
+
+You will also  need a **workspace endpoint**, which you may see as "Development endpoint" in the portal, and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity). To use the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential) provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
@@ -49,8 +50,9 @@ Install-Package Azure.Identity
 
 ## Key concepts
 
-### AccessControlClient
-With a `AccessControlClient` you can get role assignments from the workspace, create new role assignments, and delete role assignments.
+### RoleAssignmentsClient & RoleDefinitionsClient
+
+With a `RoleAssignmentsClient` you can create, update, and delete role assignments. With a `RoleDefinitionsClient` you can get role assignments from the workspace.
 
 ### Role Assignment
 The way you control access to Synapse resources is to create role assignments. A role assignment is the process of attaching a role definition to a user, group, service principal, or managed identity at a particular scope for the purpose of granting access. Access is granted by creating a role assignment, and access is revoked by removing a role assignment.
@@ -67,7 +69,7 @@ The Azure.Analytics.Synapse.AccessControl package supports synchronous and async
 
 ### Create access control client
 
-To interact with Azure Synapse, you need to instantiate a `AccessControlClient`. It requires an endpoint URL and a `TokenCredential`.
+To interact with Azure Synapse, you need to instantiate a `RoleAssignmentsClient` and a `RoleDefinitionsClient`. It requires an endpoint URL and a `TokenCredential`.
 
 ```C# Snippet:CreateAccessControlClient
 // Replace the string below with your actual endpoint url.
@@ -95,7 +97,7 @@ Guid principalId = Guid.Parse("<my-principal-id>");
 string assignmentId = "<my-assignment-id>";
 ```
 
-Then create an instance of `RoleAssignmentOptions` with the requested values. Finally call `CreateRoleAssignment` with the options to create the role assignment.
+Then call `CreateRoleAssignment` with the options to create the role assignment.
 
 ```C# Snippet:CreateRoleAssignment
 Response<RoleAssignmentDetails> response = roleAssignmentsClient.CreateRoleAssignment (assignmentId, roleId, principalId, assignedScope);
@@ -113,7 +115,7 @@ Console.WriteLine($"Role {roleAssignment.RoleDefinitionId} is assigned to {roleA
 
 ### List role assignments
 
-To enumerate all role assignments in the Synapse workspace you can call `GetRoleAssignments`.
+To enumerate all role assignments in the Synapse workspace you can call `ListRoleDefinitions`.
 
 ```C# Snippet:ListRoleAssignments
 Response<IReadOnlyList<SynapseRoleDefinition>> roleAssignments = definitionsClient.ListRoleDefinitions();
