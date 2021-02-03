@@ -33,7 +33,7 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> Initializes a new instance of AssetConversionInputOptions. </summary>
         /// <param name="storageContainerUri"> The URI of the Azure blob storage container containing the input model. </param>
-        /// <param name="storageContainerReadListSas"> An Azure blob storage container shared access signature giving read and list access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. </param>
+        /// <param name="storageContainerReadListSas"> An Azure blob storage container shared access signature giving read and list access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. For security purposes this field will never be filled out in responses bodies. </param>
         /// <param name="blobPrefix"> Only Blobs starting with this prefix will be downloaded to perform the conversion. </param>
         /// <param name="relativeInputAssetPath"> The relative path starting at blobPrefix (or at the container root if blobPrefix is not specified) to the input model. Must point to file with a supported file format ending. </param>
         internal AssetConversionInputOptions(Uri storageContainerUri, string storageContainerReadListSas, string blobPrefix, string relativeInputAssetPath)
@@ -43,7 +43,7 @@ namespace Azure.MixedReality.RemoteRendering
             BlobPrefix = blobPrefix;
             RelativeInputAssetPath = relativeInputAssetPath;
         }
-        /// <summary> An Azure blob storage container shared access signature giving read and list access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. </summary>
+        /// <summary> An Azure blob storage container shared access signature giving read and list access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. For security purposes this field will never be filled out in responses bodies. </summary>
         public string StorageContainerReadListSas { get; set; }
         /// <summary> Only Blobs starting with this prefix will be downloaded to perform the conversion. </summary>
         public string BlobPrefix { get; set; }

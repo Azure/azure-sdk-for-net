@@ -27,7 +27,7 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> Initializes a new instance of AssetConversionOutputOptions. </summary>
         /// <param name="storageContainerUri"> The URI of the Azure blob storage container where the result of the conversion should be written to. </param>
-        /// <param name="storageContainerWriteSas"> An Azure blob storage container shared access signature giving write access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. </param>
+        /// <param name="storageContainerWriteSas"> An Azure blob storage container shared access signature giving write access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. For security purposes this field will never be filled out in responses bodies. </param>
         /// <param name="blobPrefix"> A prefix which gets prepended in front of all files produced by the conversion process. Will be treaded as a virtual folder. </param>
         /// <param name="outputAssetFilename"> The file name of the output asset. Must end in &apos;.arrAsset&apos;. </param>
         internal AssetConversionOutputOptions(Uri storageContainerUri, string storageContainerWriteSas, string blobPrefix, string outputAssetFilename)
@@ -37,7 +37,7 @@ namespace Azure.MixedReality.RemoteRendering
             BlobPrefix = blobPrefix;
             OutputAssetFilename = outputAssetFilename;
         }
-        /// <summary> An Azure blob storage container shared access signature giving write access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. </summary>
+        /// <summary> An Azure blob storage container shared access signature giving write access to the storage container. Optional. If not is not provided the Azure Remote Rendering rendering account needs to be linked with the storage account containing the blob container. For security purposes this field will never be filled out in responses bodies. </summary>
         public string StorageContainerWriteSas { get; set; }
         /// <summary> A prefix which gets prepended in front of all files produced by the conversion process. Will be treaded as a virtual folder. </summary>
         public string BlobPrefix { get; set; }
