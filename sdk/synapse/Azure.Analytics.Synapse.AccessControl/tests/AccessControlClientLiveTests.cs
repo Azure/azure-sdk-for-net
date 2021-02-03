@@ -20,6 +20,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - roleAssignmentId can not be reused in recording due to reuse 409.")]
     public class AccessControlClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
         internal class DisposableClientRole : IAsyncDisposable
