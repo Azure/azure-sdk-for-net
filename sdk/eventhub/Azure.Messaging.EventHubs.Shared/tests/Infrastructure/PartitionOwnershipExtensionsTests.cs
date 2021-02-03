@@ -5,7 +5,7 @@ using System;
 using Azure.Messaging.EventHubs.Primitives;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Processor.Tests
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of tests for the <see cref="PartitionOwnershipExtensions" />

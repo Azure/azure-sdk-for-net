@@ -1,33 +1,17 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Processor.Diagnostics;
 
-namespace Azure.Messaging.EventHubs.Processor
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   A storage blob service that keeps track of checkpoints and ownership.
+    ///   The contract for logging <see cref="BlobsCheckpointStore" />
+    ///   operations.
     /// </summary>
     ///
-    internal sealed partial class BlobsCheckpointStore
+    public interface IBlobEventLogger
     {
-        /// <summary>
-        /// Initializes the <see cref="BlobsCheckpointStore"/> type.
-        /// </summary>
-#pragma warning disable CA1810 // Initialize static fields inline
-        static BlobsCheckpointStore()
-        {
-            BlobsResourceDoesNotExist = Resources.BlobsResourceDoesNotExist;
-        }
-#pragma warning restore CA1810
-
-        /// <summary>
-        ///   The instance of <see cref="BlobEventStoreEventSource" /> which can be mocked for testing.
-        /// </summary>
-        ///
-        internal BlobEventStoreEventSource Logger { get; set; } = BlobEventStoreEventSource.Log;
-
         /// <summary>
         ///   Indicates that an attempt to retrieve a list of ownership has completed.
         /// </summary>
@@ -37,11 +21,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         /// <param name="ownershipCount">The amount of ownership received from the storage service.</param>
         ///
-        partial void ListOwnershipComplete(string fullyQualifiedNamespace,
-                                           string eventHubName,
-                                           string consumerGroup,
-                                           int ownershipCount) =>
-            Logger.ListOwnershipComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, ownershipCount);
+        void ListOwnershipComplete(string fullyQualifiedNamespace,
+                                   string eventHubName,
+                                   string consumerGroup,
+                                   int ownershipCount);
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while retrieving a list of ownership.
@@ -52,11 +35,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         /// <param name="exception">The exception that occurred.</param>
         ///
-        partial void ListOwnershipError(string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        string consumerGroup,
-                                        Exception exception) =>
-            Logger.ListOwnershipError(fullyQualifiedNamespace, eventHubName, consumerGroup, exception.Message);
+        void ListOwnershipError(string fullyQualifiedNamespace,
+                                string eventHubName,
+                                string consumerGroup,
+                                string exception);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve a list of ownership has started.
@@ -66,10 +48,9 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         ///
-        partial void ListOwnershipStart(string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        string consumerGroup) =>
-            Logger.ListOwnershipStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
+        void ListOwnershipStart(string fullyQualifiedNamespace,
+                                string eventHubName,
+                                string consumerGroup);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve a list of checkpoints has completed.
@@ -80,11 +61,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the checkpoints are associated with.</param>
         /// <param name="checkpointCount">The amount of checkpoints received from the storage service.</param>
         ///
-        partial void ListCheckpointsComplete(string fullyQualifiedNamespace,
-                                             string eventHubName,
-                                             string consumerGroup,
-                                             int checkpointCount) =>
-            Logger.ListCheckpointsComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, checkpointCount);
+        void ListCheckpointsComplete(string fullyQualifiedNamespace,
+                                     string eventHubName,
+                                     string consumerGroup,
+                                     int checkpointCount);
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while retrieving a list of checkpoints.
@@ -95,11 +75,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         /// <param name="exception">The exception that occurred.</param>
         ///
-        partial void ListCheckpointsError(string fullyQualifiedNamespace,
-                                          string eventHubName,
-                                          string consumerGroup,
-                                          Exception exception) =>
-            Logger.ListCheckpointsError(fullyQualifiedNamespace, eventHubName, consumerGroup, exception.Message);
+        void ListCheckpointsError(string fullyQualifiedNamespace,
+                                  string eventHubName,
+                                  string consumerGroup,
+                                  string exception);
 
         /// <summary>
         ///   Indicates that invalid checkpoint data was found during an attempt to retrieve a list of checkpoints.
@@ -110,11 +89,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubName">The name of the specific Event Hub the data is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the data is associated with.</param>
         ///
-        partial void InvalidCheckpointFound(string partitionId,
-                                            string fullyQualifiedNamespace,
-                                            string eventHubName,
-                                            string consumerGroup) =>
-            Logger.InvalidCheckpointFound(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+        void InvalidCheckpointFound(string partitionId,
+                                    string fullyQualifiedNamespace,
+                                    string eventHubName,
+                                    string consumerGroup);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve a list of checkpoints has started.
@@ -124,10 +102,9 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoints are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoints are associated with.</param>
         ///
-        partial void ListCheckpointsStart(string fullyQualifiedNamespace,
-                                          string eventHubName,
-                                          string consumerGroup) =>
-            Logger.ListCheckpointsStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
+        void ListCheckpointsStart(string fullyQualifiedNamespace,
+                                  string eventHubName,
+                                  string consumerGroup);
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while updating a checkpoint.
@@ -139,12 +116,11 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="exception">The exception that occurred.</param>
         ///
-        partial void UpdateCheckpointError(string partitionId,
-                                           string fullyQualifiedNamespace,
-                                           string eventHubName,
-                                           string consumerGroup,
-                                           Exception exception) =>
-            Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, exception.Message);
+        void UpdateCheckpointError(string partitionId,
+                                   string fullyQualifiedNamespace,
+                                   string eventHubName,
+                                   string consumerGroup,
+                                   string exception);
 
         /// <summary>
         ///   Indicates that an attempt to update a checkpoint has completed.
@@ -155,11 +131,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         ///
-        partial void UpdateCheckpointComplete(string partitionId,
-                                              string fullyQualifiedNamespace,
-                                              string eventHubName,
-                                              string consumerGroup) =>
-            Logger.UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+        void UpdateCheckpointComplete(string partitionId,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      string consumerGroup);
 
         /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
@@ -170,11 +145,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         ///
-        partial void UpdateCheckpointStart(string partitionId,
-                                           string fullyQualifiedNamespace,
-                                           string eventHubName,
-                                           string consumerGroup) =>
-            Logger.UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+        void UpdateCheckpointStart(string partitionId,
+                                   string fullyQualifiedNamespace,
+                                   string eventHubName,
+                                   string consumerGroup);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve claim partition ownership has completed.
@@ -186,12 +160,11 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the ownership is associated with.</param>
         /// <param name="ownerIdentifier">The identifier of the processor that attempted to claim the ownership for.</param>
         ///
-        partial void ClaimOwnershipComplete(string partitionId,
-                                            string fullyQualifiedNamespace,
-                                            string eventHubName,
-                                            string consumerGroup,
-                                            string ownerIdentifier) =>
-            Logger.ClaimOwnershipComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier);
+        void ClaimOwnershipComplete(string partitionId,
+                                    string fullyQualifiedNamespace,
+                                    string eventHubName,
+                                    string consumerGroup,
+                                    string ownerIdentifier);
 
         /// <summary>
         ///   Indicates that an exception was encountered while attempting to retrieve claim partition ownership.
@@ -204,13 +177,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="ownerIdentifier">The identifier of the processor that attempted to claim the ownership for.</param>
         /// <param name="exception">The exception that occurred.</param>
         ///
-        partial void ClaimOwnershipError(string partitionId,
-                                         string fullyQualifiedNamespace,
-                                         string eventHubName,
-                                         string consumerGroup,
-                                         string ownerIdentifier,
-                                         Exception exception) =>
-            Logger.ClaimOwnershipError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, exception.Message);
+        void ClaimOwnershipError(string partitionId,
+                                 string fullyQualifiedNamespace,
+                                 string eventHubName,
+                                 string consumerGroup,
+                                 string ownerIdentifier,
+                                 string exception);
 
         /// <summary>
         ///   Indicates that ownership was unable to be claimed.
@@ -223,13 +195,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="ownerIdentifier">The identifier of the processor that attempted to claim the ownership for.</param>
         /// <param name="message">The message for the failure.</param>
         ///
-        partial void OwnershipNotClaimable(string partitionId,
-                                           string fullyQualifiedNamespace,
-                                           string eventHubName,
-                                           string consumerGroup,
-                                           string ownerIdentifier,
-                                           string message) =>
-            Logger.OwnershipNotClaimable(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, message);
+        void OwnershipNotClaimable(string partitionId,
+                                   string fullyQualifiedNamespace,
+                                   string eventHubName,
+                                   string consumerGroup,
+                                   string ownerIdentifier,
+                                   string message);
 
         /// <summary>
         ///   Indicates that ownership was successfully claimed.
@@ -241,8 +212,11 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the ownership is associated with.</param>
         /// <param name="ownerIdentifier">The identifier of the processor that attempted to claim the ownership for.</param>
         ///
-        partial void OwnershipClaimed(string partitionId, string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string ownerIdentifier) =>
-            Logger.OwnershipClaimed(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier);
+        void OwnershipClaimed(string partitionId,
+                              string fullyQualifiedNamespace,
+                              string eventHubName,
+                              string consumerGroup,
+                              string ownerIdentifier);
 
         /// <summary>
         ///   Indicates that an attempt to claim a partition ownership has started.
@@ -254,12 +228,11 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the ownership is associated with.</param>
         /// <param name="ownerIdentifier">The identifier of the processor that attempted to claim the ownership for.</param>
         ///
-        partial void ClaimOwnershipStart(string partitionId,
-                                         string fullyQualifiedNamespace,
-                                         string eventHubName,
-                                         string consumerGroup,
-                                         string ownerIdentifier) =>
-            Logger.ClaimOwnershipStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier);
+        void ClaimOwnershipStart(string partitionId,
+                                 string fullyQualifiedNamespace,
+                                 string eventHubName,
+                                 string consumerGroup,
+                                 string ownerIdentifier);
 
         /// <summary>
         ///   Indicates that a <see cref="BlobsCheckpointStore" /> was created.
@@ -269,10 +242,9 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="accountName">The Storage account name corresponding to the associated container client.</param>
         /// <param name="containerName">The name of the associated container client.</param>
         ///
-        partial void BlobsCheckpointStoreCreated(string typeName,
-                                                 string accountName,
-                                                 string containerName) =>
-            Logger.BlobsCheckpointStoreCreated(typeName, accountName, containerName);
+        void BlobsCheckpointStoreCreated(string typeName,
+                                         string accountName,
+                                         string containerName);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve a checkpoint has started.
@@ -283,11 +255,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
         ///
-        partial void GetCheckpointStart(string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        string consumerGroup,
-                                        string partitionId) =>
-            Logger.GetCheckpointStart(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+        void GetCheckpointStart(string fullyQualifiedNamespace,
+                                string eventHubName,
+                                string consumerGroup,
+                                string partitionId);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve a checkpoint has completed.
@@ -298,11 +269,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
         ///
-        partial void GetCheckpointComplete(string fullyQualifiedNamespace,
-                                           string eventHubName,
-                                           string consumerGroup,
-                                           string partitionId) =>
-            Logger.GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+        void GetCheckpointComplete(string fullyQualifiedNamespace,
+                                   string eventHubName,
+                                   string consumerGroup,
+                                   string partitionId);
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.
@@ -314,11 +284,10 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
         /// <param name="exception">The message for the exception that occurred.</param>
         ///
-        partial void GetCheckpointError(string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        string consumerGroup,
-                                        string partitionId,
-                                        Exception exception) =>
-            Logger.GetCheckpointError(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, exception.Message);
+        void GetCheckpointError(string fullyQualifiedNamespace,
+                                string eventHubName,
+                                string consumerGroup,
+                                string partitionId,
+                                string exception);
     }
 }
