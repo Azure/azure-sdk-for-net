@@ -15,16 +15,7 @@
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release are
-        1. New disk property: Tier
-        2. New disk property for ultra disk: LogicalSectorSize
-        3. Add property diskState to snapshot
-        4. New API: ListDiskEncryptionSetAssociatedResources.
-        5. Remove EncryptionAtRestWithPlatformKey in diskEncryptionSetType
-        6. Remove maximum for PlatformFaultDomainCount of DedicatedHostGroup
-        7. New API: RunCommand resource for VM and VMSS instance
-        8. Update the description for DedicatedHostGroup.supportAutomaticPlacement to mention that the property defaults to true.
-        9. Add parameters GroupByClientApplicationId and GroupByUserAgent to LogAnalytics API. 
-        10.CloudServices (Extended Support)
+        1. Fix for the .Net SDK to run smoothly with msi installers.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
