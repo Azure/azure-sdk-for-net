@@ -55,8 +55,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
             // TODO: NEED TO WORK WITH PAVEL TO MAKE THIS STUBBABLE SO IT CAN BE USED IN RECORDED TESTS
             var client = await this.GetApplicationInsightsDataClientAsync();
 
-            var test = await client.Events.GetTraceEventsAsync(appId: TestEnvironment.ApplicationId, timespan: QueryDuration.TenMinutes);
-            Assert.AreEqual(testMessage, test.Value[0].Trace.Message);
+            var telemetry = await client.Events.GetTraceEventsAsync(appId: TestEnvironment.ApplicationId, timespan: QueryDuration.TenMinutes);
+            Assert.AreEqual(testMessage, telemetry.Value[0].Trace.Message);
         }
     }
 }
