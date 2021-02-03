@@ -43,7 +43,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="keyCredential">The Azure Remote Rendering account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
         public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AzureKeyCredential keyCredential, RemoteRenderingClientOptions? options = null)
-            : this(remoteRenderingEndpoint, account, new MixedRealityAccountKeyCredential(account.AccountId.ToString(), keyCredential), options) { }
+            : this(remoteRenderingEndpoint, account, new MixedRealityAccountKeyCredential(account.AccountId, keyCredential), options) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
@@ -60,7 +60,7 @@ namespace Azure.MixedReality.RemoteRendering
             options ??= new RemoteRenderingClientOptions();
 
             Uri authenticationEndpoint = options.AuthenticationEndpoint ?? AuthenticationEndpoint.ConstructFromDomain(account.AccountDomain);
-            TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(account.AccountId.ToString(), authenticationEndpoint, credential);
+            TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(account.AccountId, authenticationEndpoint, credential);
 
             _account = account;
             _accountId = account.AccountId;
