@@ -55,10 +55,14 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 
             // Create the publisher client using an AzureKeyCredential
             // Custom topic should be configured to accept events of the Event Grid schema
-            #region Snippet:CreateWithSas
+            #region Snippet:GenerateSas
             var builder = new EventGridSasBuilder(new Uri(topicEndpoint), DateTimeOffset.Now.AddHours(1));
             var keyCredential = new AzureKeyCredential(topicAccessKey);
-            var sasCredential = new AzureSasCredential(builder.GenerateSas(keyCredential));
+            string sasToken = builder.GenerateSas(keyCredential);
+            #endregion
+
+            #region Snippet:AuthenticateWithSas
+            var sasCredential = new AzureSasCredential(sasToken);
             EventGridPublisherClient client = new EventGridPublisherClient(
                 new Uri(topicEndpoint),
                 sasCredential);
