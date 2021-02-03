@@ -97,7 +97,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                         break;
                     case "MyApp.Models.CustomEventType":
                         // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-                        TestPayload testPayload = cloudEvent.GetData<TestPayload>();
+                        TestPayload testPayload = cloudEvent.GetData().ToObject<TestPayload>(myCustomSerializer);
                         Console.WriteLine(testPayload.Name);
                         break;
                     case SystemEventNames.StorageBlobDeleted:
