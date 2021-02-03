@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.MixedReality.Authentication", "src\Azure.MixedReality.Authentication.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.MixedReality.Authentication.Tests", "tests\Azure.MixedReality.Authentication.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.MixedReality.Authentication.Tests", "tests\Azure.MixedReality.Authentication.Tests\Azure.MixedReality.Authentication.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8052009B-2126-44A3-88CD-4F3B17894C64}"
 EndProject
