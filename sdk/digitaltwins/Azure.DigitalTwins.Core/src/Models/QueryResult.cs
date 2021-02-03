@@ -25,13 +25,6 @@ namespace Azure.DigitalTwins.Core
         internal string ContinuationToken { get; }
 
         /// <summary>
-        /// In order to serialize/deserialize JsonElements into and out of a stream, we have to use the out of the box ObjectSerializer (JsonObjectSerializer).
-        /// This static property is instantiated whenever it is used so we can efficiently re-use the same object serializer that is provided by default
-        /// If the user specifies a different type of serializer to instantiate the client, the SDK will instantiate a new JsonObjectSerializer of its own.
-        /// </summary>
-        internal static ObjectSerializer defaultObjectSerializer { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of QueryResult.
         /// </summary>
         /// <param name="value">The query results.</param>
@@ -47,25 +40,12 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="element">The JSON element to be deserialized into a QueryResult.</param>
         /// <param name="objectSerializer">The object serializer instance used to deserialize the items in the collection.</param>
+        /// <param name="defaultObjectSerializer">The out of the box object serializer to interact with the JsonElement (serialize/deserialize into and out of streams).</param>
         /// <returns>A collection of query results deserialized into type <typeparamref name="T"/>.</returns>
-        internal static QueryResult<T> DeserializeQueryResult(JsonElement element, ObjectSerializer objectSerializer)
+        internal static QueryResult<T> DeserializeQueryResult(JsonElement element, ObjectSerializer objectSerializer, ObjectSerializer defaultObjectSerializer)
         {
             IReadOnlyList<T> items = default;
             string continuationToken = default;
-
-            // If the provided objectSerializer is of type JsonObjectSerializer, we will re-use the same object and set it as the defaultObjectSerializer.
-            if (objectSerializer is JsonObjectSerializer)
-            {
-                defaultObjectSerializer = objectSerializer;
-            }
-            // Otherwise, if the defaultObjectSerializer is null, we will statically instantiate it and re-use it in the future.
-            else
-            {
-                if (defaultObjectSerializer == null)
-                {
-                    defaultObjectSerializer = new JsonObjectSerializer();
-                }
-            }
 
             foreach (JsonProperty property in element.EnumerateObject())
             {

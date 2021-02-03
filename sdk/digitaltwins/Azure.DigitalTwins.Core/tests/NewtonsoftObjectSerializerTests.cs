@@ -5,12 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Azure.DigitalTwins.Core.Tests
 {
     /// <summary>
     /// Tests for custom ObjectSerializer.
+    /// Users can specify their own serializer/deserializer and not go with the default JsonObjectSerializer.
+    /// SDK needs to make sure it can properly use different serializers and the behavior is seamless.
     /// </summary>
     public class NewtonsoftObjectSerializerTests : E2eTestBase
     {
@@ -52,19 +55,15 @@ namespace Azure.DigitalTwins.Core.Tests
                 // Get digital twin using the simple DigitalTwin model annotated with Newtonsoft attributes
                 SimpleNewtonsoftDtModel getResponse = await testClient.GetDigitalTwinAsync<SimpleNewtonsoftDtModel>(roomTwinId).ConfigureAwait(false);
 
-                Assert.IsNotNull(getResponse.Id, "Digital twin Id should not be null or empty");
+                getResponse.Id.Should().NotBeNullOrEmpty("Digital twin ID should not be null or empty");
 
                 // Query DigitalTwins using the simple DigitalTwin model annotated with Newtonsoft attributes
                 AsyncPageable<SimpleNewtonsoftDtModel> queryResponse = testClient.QueryAsync<SimpleNewtonsoftDtModel>("SELECT * FROM DIGITALTWINS");
 
                 await foreach (SimpleNewtonsoftDtModel twin in queryResponse)
                 {
-                    Assert.IsNotNull(twin.Id, "Digital twin Id should not be null or empty");
+                    twin.Id.Should().NotBeNullOrEmpty("Digital twin Id should not be null or empty");
                 }
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {

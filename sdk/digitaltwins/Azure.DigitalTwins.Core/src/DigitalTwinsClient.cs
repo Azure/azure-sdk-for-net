@@ -33,6 +33,12 @@ namespace Azure.DigitalTwins.Core
 
         private readonly ObjectSerializer _objectSerializer;
 
+        /// <summary>
+        /// In order to serialize/deserialize JsonElements into and out of a stream, we have to use the out of the box ObjectSerializer (JsonObjectSerializer).
+        /// If the user specifies a different type of serializer to instantiate the client than the default one, the SDK will instantiate a new JsonObjectSerializer of its own.
+        /// </summary>
+        private readonly ObjectSerializer _defaultObjectSerializer;
+
         private readonly DigitalTwinsRestClient _dtRestClient;
         private readonly DigitalTwinModelsRestClient _dtModelsRestClient;
         private readonly EventRoutesRestClient _eventRoutesRestClient;
@@ -92,6 +98,17 @@ namespace Azure.DigitalTwins.Core
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _objectSerializer = options.Serializer ?? new JsonObjectSerializer();
+
+            // If the objectSerializer is of type JsonObjectSerializer, we will re-use the same object and set it as the defaultObjectSerializer.
+            if (_objectSerializer is JsonObjectSerializer)
+            {
+                _defaultObjectSerializer = _objectSerializer;
+            }
+            // Otherwise, we will instantiate it and re-use it in the future.
+            else
+            {
+                _defaultObjectSerializer = new JsonObjectSerializer();
+            }
 
             options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, GetAuthorizationScopes()), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
@@ -2040,7 +2057,7 @@ namespace Azure.DigitalTwins.Core
                             MaxItemsPerPage = pageSizeHint
                         };
 
-                        Response<QueryResult<T>> response = await _queryClient.QueryTwinsAsync<T>(querySpecification, options, _objectSerializer, cancellationToken).ConfigureAwait(false);
+                        Response<QueryResult<T>> response = await _queryClient.QueryTwinsAsync<T>(querySpecification, options, _objectSerializer, _defaultObjectSerializer, cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                     }
                     catch (Exception ex)
@@ -2067,7 +2084,7 @@ namespace Azure.DigitalTwins.Core
                             MaxItemsPerPage = pageSizeHint
                         };
 
-                        Response<QueryResult<T>> response = await _queryClient.QueryTwinsAsync<T>(querySpecification, options, _objectSerializer, cancellationToken).ConfigureAwait(false);
+                        Response<QueryResult<T>> response = await _queryClient.QueryTwinsAsync<T>(querySpecification, options, _objectSerializer, _defaultObjectSerializer, cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                     }
                     catch (Exception ex)
@@ -2135,7 +2152,7 @@ namespace Azure.DigitalTwins.Core
                             MaxItemsPerPage = pageSizeHint
                         };
 
-                        Response<QueryResult<T>> response = _queryClient.QueryTwins<T>(querySpecification, options, _objectSerializer, cancellationToken);
+                        Response<QueryResult<T>> response = _queryClient.QueryTwins<T>(querySpecification, options, _objectSerializer, _defaultObjectSerializer, cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                     }
                     catch (Exception ex)
@@ -2162,7 +2179,7 @@ namespace Azure.DigitalTwins.Core
                             MaxItemsPerPage = pageSizeHint
                         };
 
-                        Response<QueryResult<T>> response = _queryClient.QueryTwins<T>(querySpecification, options, _objectSerializer, cancellationToken);
+                        Response<QueryResult<T>> response = _queryClient.QueryTwins<T>(querySpecification, options, _objectSerializer, _defaultObjectSerializer, cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                     }
                     catch (Exception ex)

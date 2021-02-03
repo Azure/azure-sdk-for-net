@@ -7,7 +7,7 @@ namespace Azure.DigitalTwins.Core.Tests
 {
     public class SimpleNewtonsoftDtModel
     {
-        [JsonProperty("$dtId")]
+        [JsonProperty(DigitalTwinsJsonPropertyNames.DigitalTwinId)]
         public string Id { get; set; }
     }
 }
