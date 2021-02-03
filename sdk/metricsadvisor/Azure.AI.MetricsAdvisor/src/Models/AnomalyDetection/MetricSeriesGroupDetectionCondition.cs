@@ -10,6 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// of time series.
     /// </summary>
     [CodeGenModel("DimensionGroupConfiguration")]
+    [CodeGenSuppress(nameof(MetricSeriesGroupDetectionCondition), typeof(DimensionKey))]
     public partial class MetricSeriesGroupDetectionCondition : MetricWholeSeriesDetectionCondition
     {
         /// <summary>

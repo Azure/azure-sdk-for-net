@@ -12,6 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// series within the same metric.
     /// </summary>
     [CodeGenModel("AnomalyDetectionConfiguration")]
+    [CodeGenSuppress(nameof(AnomalyDetectionConfiguration), typeof(string), typeof(string), typeof(MetricWholeSeriesDetectionCondition))]
     public partial class AnomalyDetectionConfiguration
     {
         /// <summary>
