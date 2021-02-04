@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
@@ -53,11 +54,11 @@ namespace Azure.AI.TextAnalytics.Samples
 
             AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionResults.Results[0];
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionsResults.ElementAt(0).Result;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
 
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionResults.Results[0];
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionsResults.ElementAt(0).Result;
 
             Console.WriteLine("Recognized Entities");
 

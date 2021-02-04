@@ -47,11 +47,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            IReadOnlyList<RecognizeEntitiesResultCollection> entitiesResult = resultCollection.RecognizeEntitiesActionResults.Results;
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionsResults.ElementAt(0).Result;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
 
-            IReadOnlyList<RecognizePiiEntitiesResultCollection> piiResult = resultCollection.RecognizePiiEntitiesActionResults.Results;
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionsResults.ElementAt(0).Result;
 
             Assert.IsNotNull(keyPhrasesResult);
             Assert.IsNotNull(entitiesResult);
@@ -76,11 +76,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            IReadOnlyList<RecognizeEntitiesResultCollection> entitiesResult = resultCollection.RecognizeEntitiesActionResults.Results;
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionsResults.ElementAt(0).Result;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
 
-            IReadOnlyList < RecognizePiiEntitiesResultCollection> piiResult = resultCollection.RecognizePiiEntitiesActionResults.Results;
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionsResults.ElementAt(0).Result;
 
             Assert.IsNotNull(keyPhrasesResult);
             Assert.IsNotNull(entitiesResult);
@@ -131,13 +131,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
 
             Assert.IsNotNull(keyPhrasesResult);
 
             Assert.AreEqual(2, keyPhrasesResult.Count);
 
-            //Assert.AreEqual("AnalyzeOperationWithLanguageTest", operation.DisplayName);
+            Assert.AreEqual("AnalyzeOperationWithLanguageTest", operation.DisplayName);
 
             var keyPhrasesListId1 = new List<string> { "Bill Gates", "Paul Allen", "Microsoft" };
             var keyPhrasesListId2 = new List<string> { "gato", "perro", "veterinario" };
@@ -180,20 +180,20 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionResults.Results[0];
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionsResults.ElementAt(0).Result;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
 
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionResults.Results[0];
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionsResults.ElementAt(0).Result;
 
             Assert.IsNotNull(keyPhrasesResult);
             Assert.IsNotNull(entitiesResult);
             Assert.IsNotNull(piiResult);
-            //Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
+            Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
 
             // Keyphrases
             Assert.AreEqual(2, keyPhrasesResult.Count);
@@ -252,7 +252,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
 
             Assert.IsNotNull(keyPhrasesResult);
 
@@ -284,7 +284,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
 
             Assert.IsNotNull(keyPhrasesResult);
 
@@ -349,7 +349,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            RecognizePiiEntitiesResultCollection result = resultCollection.RecognizePiiEntitiesActionResults.Results[0];
+            RecognizePiiEntitiesResultCollection result = resultCollection.RecognizePiiEntitiesActionsResults.ElementAt(0).Result;
 
             Assert.IsNotNull(result);
 
@@ -398,7 +398,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection result = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
+            ExtractKeyPhrasesResultCollection result = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
 
             Assert.IsNotNull(result);
 

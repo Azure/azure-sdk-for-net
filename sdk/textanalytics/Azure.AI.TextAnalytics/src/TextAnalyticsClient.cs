@@ -2243,7 +2243,7 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        ///  StartAnalyzeBatchActionsAsync enables the application to have multiple actions including NER, PII and KPE.
+        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including NER, PII and KPE.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2265,7 +2265,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// StartAnalyzeBatchActions enables the application to have multiple actions including NER, PII and KPE.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2287,7 +2287,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// StartAnalyzeBatchActions enables the application to have multiple actions including NER, PII and KPE.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2308,7 +2308,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including NER, PII and KPE.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.

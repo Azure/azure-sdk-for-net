@@ -17,25 +17,25 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         internal AnalyzeBatchActionsResult(AnalyzeJobState jobState, IDictionary<string, int> map)
         {
-            ExtractKeyPhrasesActionResults = Transforms.ConvertToExtractKeyPhrasesActionResults(jobState, map);
-            RecognizeEntitiesActionResults = Transforms.ConvertToRecognizeEntitiesActionsResults(jobState, map);
-            RecognizePiiEntitiesActionResults = Transforms.ConvertToRecognizePiiEntitiesActionsResults(jobState, map);
+            ExtractKeyPhrasesActionsResults = Transforms.ConvertToExtractKeyPhrasesActionResults(jobState, map);
+            RecognizeEntitiesActionsResults = Transforms.ConvertToRecognizeEntitiesActionsResults(jobState, map);
+            RecognizePiiEntitiesActionsResults = Transforms.ConvertToRecognizePiiEntitiesActionsResults(jobState, map);
         }
 
         /// <summary>
         /// Collection for ExtractKeyPhrasesActionsResults
         /// </summary>
-        public ExtractKeyPhrasesActionResults ExtractKeyPhrasesActionResults { get; }
+        public IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesActionsResults { get; }
 
         /// <summary>
         /// RecognizeEntitiesActionsResults
         /// </summary>
-        public RecognizeEntitiesActionResults RecognizeEntitiesActionResults { get; }
+        public IReadOnlyCollection<RecognizeEntitiesActionResult> RecognizeEntitiesActionsResults { get; }
 
         /// <summary>
         /// RecognizePiiEntitiesActionsResults
         /// </summary>
-        public RecognizePiiEntitiesActionResults RecognizePiiEntitiesActionResults { get; }
+        public IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults { get; }
 
         /// <summary>
         /// Statistics

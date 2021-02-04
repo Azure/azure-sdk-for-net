@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// TasksStateTasksDetails.
     /// </summary>
     [CodeGenModel("TasksStateTasksDetails")]
-    public partial class TasksStateTasksDetailsInternal
+    internal partial class TasksStateTasksDetailsInternal
     {
     }
 }
