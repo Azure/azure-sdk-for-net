@@ -92,7 +92,7 @@ namespace Azure.Storage.Blobs
             }
             if (blobContentMD5 != null)
             {
-                request.Headers.Add("x-ms-blob-content-md5", blobContentMD5);
+                request.Headers.Add("x-ms-blob-content-md5", blobContentMD5, "D");
             }
             if (blobCacheControl != null)
             {
@@ -155,7 +155,7 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("Accept", "application/xml");
             if (transactionalContentMD5 != null)
             {
-                request.Headers.Add("Content-MD5", transactionalContentMD5);
+                request.Headers.Add("Content-MD5", transactionalContentMD5, "D");
             }
             request.Headers.Add("Content-Length", contentLength);
             request.Headers.Add("Content-Type", "application/octet-stream");
@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs
             }
             if (blobContentMD5 != null)
             {
-                request.Headers.Add("x-ms-blob-content-md5", blobContentMD5);
+                request.Headers.Add("x-ms-blob-content-md5", blobContentMD5, "D");
             }
             if (blobCacheControl != null)
             {
@@ -360,7 +360,7 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-version", version);
             if (sourceContentMD5 != null)
             {
-                request.Headers.Add("x-ms-source-content-md5", sourceContentMD5);
+                request.Headers.Add("x-ms-source-content-md5", sourceContentMD5, "D");
             }
             if (blobTagsString != null)
             {
@@ -497,7 +497,7 @@ namespace Azure.Storage.Blobs
             request.Uri = uri;
             if (transactionalContentCrc64 != null)
             {
-                request.Headers.Add("x-ms-content-crc64", transactionalContentCrc64);
+                request.Headers.Add("x-ms-content-crc64", transactionalContentCrc64, "D");
             }
             if (leaseId != null)
             {
@@ -521,7 +521,7 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("Content-Length", contentLength);
             if (transactionalContentMD5 != null)
             {
-                request.Headers.Add("Content-MD5", transactionalContentMD5);
+                request.Headers.Add("Content-MD5", transactionalContentMD5, "D");
             }
             request.Headers.Add("Content-Type", "application/octet-stream");
             request.Content = RequestContent.Create(body);
@@ -625,11 +625,11 @@ namespace Azure.Storage.Blobs
             }
             if (sourceContentMD5 != null)
             {
-                request.Headers.Add("x-ms-source-content-md5", sourceContentMD5);
+                request.Headers.Add("x-ms-source-content-md5", sourceContentMD5, "D");
             }
             if (sourceContentcrc64 != null)
             {
-                request.Headers.Add("x-ms-source-content-crc64", sourceContentcrc64);
+                request.Headers.Add("x-ms-source-content-crc64", sourceContentcrc64, "D");
             }
             if (encryptionKey != null)
             {
@@ -786,11 +786,11 @@ namespace Azure.Storage.Blobs
             }
             if (blobContentMD5 != null)
             {
-                request.Headers.Add("x-ms-blob-content-md5", blobContentMD5);
+                request.Headers.Add("x-ms-blob-content-md5", blobContentMD5, "D");
             }
             if (transactionalContentCrc64 != null)
             {
-                request.Headers.Add("x-ms-content-crc64", transactionalContentCrc64);
+                request.Headers.Add("x-ms-content-crc64", transactionalContentCrc64, "D");
             }
             if (metadata != null)
             {
@@ -849,7 +849,7 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("Accept", "application/xml");
             if (transactionalContentMD5 != null)
             {
-                request.Headers.Add("Content-MD5", transactionalContentMD5);
+                request.Headers.Add("Content-MD5", transactionalContentMD5, "D");
             }
             request.Headers.Add("Content-Type", "application/xml");
             var content = new XmlWriterContent();

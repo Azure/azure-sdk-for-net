@@ -82,7 +82,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("Content-MD5") is XElement contentMD5Element)
             {
-                contentMD5 = contentMD5Element.GetBytesFromBase64(null);
+                contentMD5 = contentMD5Element.GetBytesFromBase64Value("D");
             }
             if (element.Element("Content-Disposition") is XElement contentDispositionElement)
             {
