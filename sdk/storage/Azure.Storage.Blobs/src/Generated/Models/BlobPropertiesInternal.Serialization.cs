@@ -194,7 +194,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("RehydratePriority") is XElement rehydratePriorityElement)
             {
-                rehydratePriority = new RehydratePriority(rehydratePriorityElement.Value);
+                rehydratePriority = rehydratePriorityElement.Value.ToRehydratePriority();
             }
             if (element.Element("LastAccessTime") is XElement lastAccessTimeElement)
             {

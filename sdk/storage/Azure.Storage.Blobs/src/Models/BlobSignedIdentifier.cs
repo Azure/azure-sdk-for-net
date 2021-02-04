@@ -9,5 +9,11 @@ namespace Azure.Storage.Blobs.Models
     /// BlobSignedIdentifier.
     /// </summary>
     [CodeGenModel("SignedIdentifier")]
-    public partial class BlobSignedIdentifier {}
+    public partial class BlobSignedIdentifier
+    {
+        /// <summary>
+        /// Creates a new BlobSignedIdentifier instance.
+        /// </summary>
+        public BlobSignedIdentifier() { }
+    }
 }

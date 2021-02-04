@@ -1368,5 +1368,98 @@ namespace Azure.Storage.Blobs.Models
                 BlobSequenceNumber = blobSequenceNumber,
             };
         }
+
+        /// <summary>
+        /// Creates a new BlobBlock instance for mocking.
+        /// </summary>
+        public static BlobBlock BlobBlock(
+            string name,
+            int size)
+        {
+            return new BlobBlock(name, size);
+        }
+
+        /// <summary>
+        /// Creates a new BlobGeoReplication instance for mocking.
+        /// </summary>
+        public static BlobGeoReplication BlobGeoReplication(
+            BlobGeoReplicationStatus status,
+            DateTimeOffset? lastSyncedOn = default)
+            => new BlobGeoReplication(status, lastSyncedOn);
+
+        /// <summary>
+        /// Creates a new BlobInfo instance for mocking.
+        /// </summary>
+        public static BlobInfo BlobInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            return new BlobInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobLease instance for mocking.
+        /// </summary>
+        public static BlobLease BlobLease(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            string leaseId)
+        {
+            return new BlobLease()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                LeaseId = leaseId,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobServiceStatistics instance for mocking.
+        /// </summary>
+        public static BlobServiceStatistics BlobServiceStatistics(
+            Azure.Storage.Blobs.Models.BlobGeoReplication geoReplication = default)
+        {
+            return new BlobServiceStatistics(geoReplication);
+        }
+
+        /// <summary>
+        /// Creates a new BlockList instance for mocking.
+        /// </summary>
+        public static BlockList BlockList(
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> committedBlocks = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> uncommittedBlocks = default)
+        {
+            return new BlockList()
+            {
+                CommittedBlocks = committedBlocks,
+                UncommittedBlocks = uncommittedBlocks,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new UserDelegationKey instance for mocking.
+        /// </summary>
+        public static UserDelegationKey UserDelegationKey(
+            string signedObjectId,
+            string signedTenantId,
+            string signedService,
+            string signedVersion,
+            string value,
+            System.DateTimeOffset signedExpiresOn,
+            System.DateTimeOffset signedStartsOn)
+        {
+            return new UserDelegationKey(
+                signedObjectId,
+                signedTenantId,
+                signedStartsOn,
+                signedExpiresOn,
+                signedService,
+                signedVersion,
+                value);
+        }
     }
 }

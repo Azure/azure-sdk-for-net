@@ -5,47 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard. </summary>
-    public readonly partial struct RehydratePriority : IEquatable<RehydratePriority>
+    public enum RehydratePriority
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="RehydratePriority"/> values are the same. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RehydratePriority(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string HighValue = "High";
-        private const string StandardValue = "Standard";
-
         /// <summary> High. </summary>
-        public static RehydratePriority High { get; } = new RehydratePriority(HighValue);
+        High,
         /// <summary> Standard. </summary>
-        public static RehydratePriority Standard { get; } = new RehydratePriority(StandardValue);
-        /// <summary> Determines if two <see cref="RehydratePriority"/> values are the same. </summary>
-        public static bool operator ==(RehydratePriority left, RehydratePriority right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="RehydratePriority"/> values are not the same. </summary>
-        public static bool operator !=(RehydratePriority left, RehydratePriority right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RehydratePriority"/>. </summary>
-        public static implicit operator RehydratePriority(string value) => new RehydratePriority(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RehydratePriority other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(RehydratePriority other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        Standard
     }
 }

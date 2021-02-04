@@ -1447,7 +1447,7 @@ namespace Azure.Storage.Blobs
             }
             if (rehydratePriority != null)
             {
-                request.Headers.Add("x-ms-rehydrate-priority", rehydratePriority.Value.ToString());
+                request.Headers.Add("x-ms-rehydrate-priority", rehydratePriority.Value.ToSerialString());
             }
             if (sourceIfModifiedSince != null)
             {
@@ -1848,7 +1848,7 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-access-tier", tier.ToString());
             if (rehydratePriority != null)
             {
-                request.Headers.Add("x-ms-rehydrate-priority", rehydratePriority.Value.ToString());
+                request.Headers.Add("x-ms-rehydrate-priority", rehydratePriority.Value.ToSerialString());
             }
             request.Headers.Add("x-ms-version", version);
             if (leaseId != null)

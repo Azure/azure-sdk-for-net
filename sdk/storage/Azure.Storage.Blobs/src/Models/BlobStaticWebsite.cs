@@ -9,5 +9,11 @@ namespace Azure.Storage.Blobs.Models
     /// BlobStaticWebsite.
     /// </summary>
     [CodeGenModel("StaticWebsite")]
-    public partial class BlobStaticWebsite {}
+    public partial class BlobStaticWebsite
+    {
+        /// <summary>
+        /// Creates a new BlobStaticWebsite instance
+        /// </summary>
+        public BlobStaticWebsite() { }
+    }
 }

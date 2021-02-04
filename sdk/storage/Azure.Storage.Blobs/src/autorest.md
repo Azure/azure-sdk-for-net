@@ -168,19 +168,6 @@ directive:
     delete $.CopySource.format;
 ```
 
-### Fix ArchieveStatus
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions
-  transform: >
-    delete $.ArchiveStatus["x-ms-enum"];
-    $.ArchiveStatus["x-ms-enum"] = {
-        "name": "ArchiveStatus",
-        "modelAsString": false
-    };
-```
-
 ### Fix GeoReplication
 ``` yaml
 directive:
@@ -190,6 +177,32 @@ directive:
     delete $.GeoReplication.properties.Status["x-ms-enum"];
     $.GeoReplication.properties.Status["x-ms-enum"] = {
         "name": "BlobGeoReplicationStatus",
+        "modelAsString": false
+    };
+```
+
+### Fix RehydratePriority
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.RehydratePriority["x-ms-enum"];
+    $.RehydratePriority["x-ms-enum"] = {
+        "name": "RehydratePriority",
+        "modelAsString": false
+    };
+```
+
+### Fix ArchieveStatus
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.ArchiveStatus["x-ms-enum"];
+    $.ArchiveStatus["x-ms-enum"] = {
+        "name": "ArchiveStatus",
         "modelAsString": false
     };
 ```
