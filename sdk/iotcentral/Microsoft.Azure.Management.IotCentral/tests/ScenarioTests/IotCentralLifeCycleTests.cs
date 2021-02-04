@@ -208,6 +208,13 @@ namespace IotCentral.Tests.ScenarioTests
                 Assert.True(iotAppsTemplates.Count > 0);
                 Assert.NotNull(iotAppsTemplates[0].Name);
                 Assert.Equal("Store Analytics – Condition Monitoring", iotAppsTemplates[0].Name);
+                Assert.NotNull(iotAppsTemplates[0].Industry);
+                Assert.Equal("Retail", iotAppsTemplates[0].Industry);
+                Assert.True(iotAppsTemplates[0].Locations.Count > 0);
+                Assert.NotNull(iotAppsTemplates[0].Locations[0].Id);
+                Assert.Equal("unitedstates", iotAppsTemplates[0].Locations[0].Id);
+                Assert.NotNull(iotAppsTemplates[0].Locations[0].DisplayName);
+                Assert.Equal("United States", iotAppsTemplates[0].Locations[0].DisplayName);
             }
         }
 
