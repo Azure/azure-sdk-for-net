@@ -12,7 +12,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="FluentAssertions" />
-    <PackageReference Update="Newtonsoft.Json" />
   </ItemGroup>
 
   <ItemGroup>
