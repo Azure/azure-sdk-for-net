@@ -25,7 +25,7 @@ that contain important information for writing your event handler.
   `new CancellationTokenSource(TimeSpan.FromSeconds(10)).Token`, for example)
   will correctly propagate.
 
-- There is a `SyncAsyncEventArgs.RunSynchronously` flag indicating whether your
+- There is a `SyncAsyncEventArgs.IsRunningSynchronously` flag indicating whether your
   handler was invoked synchronously or asynchronously.  In general,
 
     - If you're calling sync methods on your client, you should use sync methods
@@ -33,12 +33,12 @@ that contain important information for writing your event handler.
     - If you're calling async methods on your client, you should use async
       methods where possible to implement your event handler.
     - If you're not in control of how the client will be used or want to write
-      safer code, you should check the `RunSynchronously` property and call
+      safer code, you should check the `IsRunningSynchronously` property and call
       either sync or async methods as directed.
 
   There are code examples of all three situations below to compare.  Please also
   see the note at the very end discussing the dangers of sync-over-async to
-  understand the risks of not using the `RunSynchronously` flag.
+  understand the risks of not using the `IsRunningSynchronously` flag.
 
 - Most events will customize the event data by deriving from `SyncAsyncEventArgs`
   and including details about what triggered the event or providing options to
@@ -125,7 +125,7 @@ write an async handler but raise it from a sync method, the handler will be
 doing sync-over-async and may cause ThreadPool starvation.  See the note at the
 bottom for more details.
 
-You should use the `SyncAsyncEventArgs.RunSynchronously` property to check how
+You should use the `SyncAsyncEventArgs.IsRunningSynchronously` property to check how
 the event is being raised and implement your handler accordingly.  Here's an
 example handler that's safe to invoke from both sync and async code paths.
 
@@ -180,7 +180,7 @@ sync-over-async because you're getting sync behavior but still invoking all the
 async machinery.  See
 [Diagnosing .NET Core ThreadPool Starvation with PerfView](https://docs.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
 for a detailed explanation of how that can cause serious performance problems.
-We recommend you use the `SyncAsyncEventArgs.RunSynchronously` flag to avoid
+We recommend you use the `SyncAsyncEventArgs.IsRunningSynchronously` flag to avoid
 ThreadPool starvation.
 
 But what about executing synchronous code on an async code path like the "Adding
