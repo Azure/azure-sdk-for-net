@@ -9,5 +9,11 @@ namespace Azure.Storage.Blobs.Models
     /// BlobCorsRule.
     /// </summary>
     [CodeGenModel("CorsRule")]
-    public partial class BlobCorsRule {}
+    public partial class BlobCorsRule
+    {
+        /// <summary>
+        /// Creates a new BlobCorsRule instance.
+        /// </summary>
+        public BlobCorsRule() { }
+    }
 }

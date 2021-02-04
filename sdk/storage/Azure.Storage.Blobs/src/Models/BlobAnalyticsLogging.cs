@@ -9,5 +9,11 @@ namespace Azure.Storage.Blobs.Models
     /// BlobAnalyticsLogging.
     /// </summary>
     [CodeGenModel("Logging")]
-    public partial class BlobAnalyticsLogging {}
+    public partial class BlobAnalyticsLogging
+    {
+        /// <summary>
+        /// Creates a new BlobAnalyticsLogging instance.
+        /// </summary>
+        public BlobAnalyticsLogging() { }
+    }
 }
