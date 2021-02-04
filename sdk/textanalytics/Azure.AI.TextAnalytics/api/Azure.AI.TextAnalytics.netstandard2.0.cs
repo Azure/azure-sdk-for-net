@@ -4,7 +4,7 @@ namespace Azure.AI.TextAnalytics
     {
         public AnalyzeHealthcareEntitiesOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -167,16 +167,6 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.StringIndexType StringIndexType { get { throw null; } set { } }
     }
-    public partial class Entity
-    {
-        internal Entity() { }
-        public string Category { get { throw null; } }
-        public double ConfidenceScore { get { throw null; } }
-        public int Length { get { throw null; } }
-        public int Offset { get { throw null; } }
-        public string Subcategory { get { throw null; } }
-        public string Text { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityCategory : System.IEquatable<Azure.AI.TextAnalytics.EntityCategory>
     {
@@ -242,15 +232,18 @@ namespace Azure.AI.TextAnalytics
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.EntityDataSource> DataSources { get { throw null; } }
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
-        public System.Collections.Generic.Dictionary<Azure.AI.TextAnalytics.HealthcareEntity, Azure.AI.TextAnalytics.HealthcareEntityRelationType> RelatedEntities { get { throw null; } }
+        public System.Collections.Generic.IDictionary<Azure.AI.TextAnalytics.HealthcareEntity, Azure.AI.TextAnalytics.HealthcareEntityRelationType> RelatedEntities { get { throw null; } }
         public string SubCategory { get { throw null; } }
         public string Text { get { throw null; } }
     }
-    public partial class HealthcareEntityRelationType : System.IEquatable<Azure.AI.TextAnalytics.HealthcareEntityRelationType>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthcareEntityRelationType : System.IEquatable<Azure.AI.TextAnalytics.HealthcareEntityRelationType>
     {
-        internal HealthcareEntityRelationType() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public static readonly Azure.AI.TextAnalytics.HealthcareEntityRelationType DirectionOfBodyStructure;
         public static readonly Azure.AI.TextAnalytics.HealthcareEntityRelationType DirectionOfExamination;
+        public static readonly Azure.AI.TextAnalytics.HealthcareEntityRelationType DosageOfMedication;
         public static readonly Azure.AI.TextAnalytics.HealthcareEntityRelationType RelationOfExamination;
         public static readonly Azure.AI.TextAnalytics.HealthcareEntityRelationType TimeOfExamination;
         public bool Equals(Azure.AI.TextAnalytics.HealthcareEntityRelationType other) { throw null; }

@@ -22,19 +22,19 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get; }
 
         /// <summary>
-        /// CreatedOn
+        /// Time when the operation was created on.
         /// </summary>
-        public DateTimeOffset CreatedOn { get; }
+        public DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
-        /// ExpiresOn
+        /// Time when the operation will expire.
         /// </summary>
-        public DateTimeOffset ExpiresOn { get; }
+        public DateTimeOffset? ExpiresOn => _expiresOn;
 
         /// <summary>
-        /// LastModified
+        /// Time when the operation was last modified on
         /// </summary>
-        public DateTimeOffset LastModified { get; }
+        public DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
         /// Gets the status of the operation.
@@ -79,6 +79,21 @@ namespace Azure.AI.TextAnalytics
         private readonly bool? _showStats;
 
         private readonly string _apiVersion;
+
+        /// <summary>
+        /// Time when the operation will expire.
+        /// </summary>
+        private DateTimeOffset? _expiresOn;
+
+        /// <summary>
+        /// Time when the operation was last modified on.
+        /// </summary>
+        private DateTimeOffset _lastModified;
+
+        /// <summary>
+        /// Time when the operation was created on.
+        /// </summary>
+        private DateTimeOffset _createdOn;
 
         /// <summary>
         /// Provides the input to be part of AnalyzeHealthcareEntitiesOperation class
@@ -201,11 +216,14 @@ namespace Azure.AI.TextAnalytics
 
                     _response = update.GetRawResponse();
                     _status = update.Value.Status;
+                    _createdOn = update.Value.CreatedDateTime;
+                    _expiresOn = update.Value.ExpirationDateTime;
+                    _lastModified = update.Value.LastUpdateDateTime;
 
                     if (_status == TextAnalyticsOperationStatus.Succeeded)
                     {
                         var nextLink = update.Value.NextLink;
-                        var value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results, _idToIndexMap);
+                        var value = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(update.Value.Results, _idToIndexMap);
                         _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { value }, nextLink, _response);
                         _hasCompleted = true;
                     }
@@ -295,7 +313,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(_apiVersion, nextLink, _showStats).ConfigureAwait(false);
 
-                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
+                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception)
@@ -327,7 +345,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(_apiVersion, nextLink, _showStats);
 
-                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
+                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception)
