@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
     public abstract class PageableOperation<T> : Operation<AsyncPageable<T>> where T : notnull
     {
         /// <summary>
-        /// Gets the final result of the long-running operation in a synchronous way.
+        /// Gets the final result of the long-running operation asynchronously.
         /// </summary>
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
         public override AsyncPageable<T> Value => GetValuesAsync();
 
         /// <summary>
-        /// Gets the final result of the long-running operation in an asynchronous way.
+        /// Gets the final result of the long-running operation asynchronously.
         /// </summary>
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         public abstract AsyncPageable<T> GetValuesAsync();
 
         /// <summary>
-        /// Gets the final result of the long-running operation in an asynchronous way.
+        /// Gets the final result of the long-running operation synchronously.
         /// </summary>
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.

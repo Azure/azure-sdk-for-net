@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -45,7 +47,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            //Take the first page
+            AnalyzeOperationResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasksItemCollection = resultCollection.Tasks.EntityRecognitionTasks;
             IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasksItemCollection = resultCollection.Tasks.EntityRecognitionPiiTasks;
@@ -72,7 +75,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            //Take the first page
+            AnalyzeOperationResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasksItemCollection = resultCollection.Tasks.EntityRecognitionTasks;
             IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasksItemCollection = resultCollection.Tasks.EntityRecognitionPiiTasks;
@@ -126,7 +130,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            //Take the first page
+            AnalyzeOperationResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
@@ -179,7 +184,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            //Take the first page
+            AnalyzeOperationResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
 
@@ -233,69 +239,59 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Will add this once the pagination is implemented for AnalyzeOperation - https://github.com/Azure/azure-sdk-for-net/issues/16958")]
-        public async Task AnalyzeOperationWithSkipParameter()
+        public async Task AnalyzeOperationWithPagination()
         {
             TextAnalyticsClient client = GetClient();
+
+            List<string> documents = new ();
+
+            for (int i = 0; i < 23; i++)
+            {
+                documents.Add("Elon Musk is the CEO of SpaceX and Tesla.");
+            }
 
             AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
             {
                 KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
                 DisplayName = "AnalyzeOperationWithSkipParameter",
-                //Skip = 1
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
+            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(documents, operationOptions);
+
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.Throws<InvalidOperationException>(() => operation.GetValues());
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
-
-            ExtractKeyPhrasesResultCollection result = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
-
-            Assert.IsNotNull(result);
-
-            Assert.AreEqual(1, result.Count);
-
-            var keyPhrasesListId2 = new List<string> { "Tesla stock", "year" };
-
-            foreach (string keyphrase in result[0].KeyPhrases)
-            {
-                Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
-            }
-        }
-
-        [Test]
-        [Ignore("Will add this once the pagination is implemented for AnalyzeOperation - https://github.com/Azure/azure-sdk-for-net/issues/16958")]
-        public async Task AnalyzeOperationWithTopParameter()
-        {
-            TextAnalyticsClient client = GetClient();
-
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-            {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-                DisplayName = "AnalyzeOperationWithSkipParameter",
-                //Top = 1
-            };
-
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            // try async
+            //There most be 2 pages as service limit is 20 documents per page
+            List<AnalyzeOperationResult> asyncPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(2, asyncPages.Count);
 
-            ExtractKeyPhrasesResultCollection result = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+            // First page should have 20 results
+            Assert.AreEqual(20, asyncPages[0].Tasks.KeyPhraseExtractionTasks.FirstOrDefault().Results.Count);
 
-            Assert.IsNotNull(result);
+            // Second page should have remaining 3 results
+            Assert.AreEqual(3, asyncPages[1].Tasks.KeyPhraseExtractionTasks.FirstOrDefault().Results.Count);
 
-            Assert.AreEqual(1, result.Count);
+            // try sync
+            //There most be 2 pages as service limit is 20 documents per page
+            List<AnalyzeOperationResult> pages = operation.GetValues().AsEnumerable().ToList();
+            Assert.AreEqual(2, pages.Count);
 
-            var keyPhrasesListId1 = new List<string> { "CEO of SpaceX", "Elon Musk", "Tesla" };
+            // First page should have 20 results
+            Assert.AreEqual(20, pages[0].Tasks.KeyPhraseExtractionTasks.FirstOrDefault().Results.Count);
 
-            foreach (string keyphrase in result[0].KeyPhrases)
-            {
-                Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
-            }
+            // Second page should have remaining 3 results
+            Assert.AreEqual(3, pages[1].Tasks.KeyPhraseExtractionTasks.FirstOrDefault().Results.Count);
         }
 
         [Test]
@@ -352,7 +348,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            //Take the first page
+            AnalyzeOperationResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             RecognizePiiEntitiesResultCollection result = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;;
 
@@ -397,7 +394,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            //Take the first page
+            AnalyzeOperationResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             ExtractKeyPhrasesResultCollection result = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
