@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics
         private Response _response;
 
         /// <summary>
-        /// The result of the long-running operation. <c>null</c> until result is received on status update.
+        /// Provides the results for the first page.
         /// </summary>
         private Page<AnalyzeOperationResult> _firstPage;
 

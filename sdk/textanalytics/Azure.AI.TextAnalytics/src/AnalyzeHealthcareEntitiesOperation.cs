@@ -85,7 +85,7 @@ namespace Azure.AI.TextAnalytics
         private RequestFailedException _requestFailedException;
 
         /// <summary>
-        /// represents the HTTP response from the service.
+        /// Represents the HTTP response from the service.
         /// </summary>
         private Response _response;
 
