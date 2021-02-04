@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Models
             string name = default;
             bool? deleted = default;
             string version = default;
-            ContainerProperties properties = default;
+            ContainerPropertiesInternal properties = default;
             IReadOnlyDictionary<string, string> metadata = default;
             if (element.Element("Name") is XElement nameElement)
             {
@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("Properties") is XElement propertiesElement)
             {
-                properties = ContainerProperties.DeserializeContainerProperties(propertiesElement);
+                properties = ContainerPropertiesInternal.DeserializeContainerPropertiesInternal(propertiesElement);
             }
             if (element.Element("Metadata") is XElement metadataElement)
             {

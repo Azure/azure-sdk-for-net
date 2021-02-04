@@ -10,13 +10,13 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Properties of a container. </summary>
-    public partial class ContainerProperties
+    internal partial class ContainerPropertiesInternal
     {
-        /// <summary> Initializes a new instance of ContainerProperties. </summary>
+        /// <summary> Initializes a new instance of ContainerPropertiesInternal. </summary>
         /// <param name="lastModified"> . </param>
         /// <param name="etag"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
-        internal ContainerProperties(DateTimeOffset lastModified, string etag)
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag)
         {
             if (etag == null)
             {
@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Models
             Etag = etag;
         }
 
-        /// <summary> Initializes a new instance of ContainerProperties. </summary>
+        /// <summary> Initializes a new instance of ContainerPropertiesInternal. </summary>
         /// <param name="lastModified"> . </param>
         /// <param name="etag"> . </param>
         /// <param name="leaseStatus"> . </param>
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="preventEncryptionScopeOverride"> . </param>
         /// <param name="deletedTime"> . </param>
         /// <param name="remainingRetentionDays"> . </param>
-        internal ContainerProperties(DateTimeOffset lastModified, string etag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays)
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays)
         {
             LastModified = lastModified;
             Etag = etag;

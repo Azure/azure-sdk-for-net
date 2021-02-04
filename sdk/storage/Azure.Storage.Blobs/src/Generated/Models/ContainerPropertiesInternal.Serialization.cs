@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class ContainerProperties
+    internal partial class ContainerPropertiesInternal
     {
-        internal static ContainerProperties DeserializeContainerProperties(XElement element)
+        internal static ContainerPropertiesInternal DeserializeContainerPropertiesInternal(XElement element)
         {
             DateTimeOffset lastModified = default;
             string etag = default;
@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 remainingRetentionDays = (int?)remainingRetentionDaysElement;
             }
-            return new ContainerProperties(lastModified, etag, leaseStatus, leaseState, leaseDuration, publicAccess, hasImmutabilityPolicy, hasLegalHold, defaultEncryptionScope, preventEncryptionScopeOverride, deletedTime, remainingRetentionDays);
+            return new ContainerPropertiesInternal(lastModified, etag, leaseStatus, leaseState, leaseDuration, publicAccess, hasImmutabilityPolicy, hasLegalHold, defaultEncryptionScope, preventEncryptionScopeOverride, deletedTime, remainingRetentionDays);
         }
     }
 }

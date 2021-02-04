@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="name"> . </param>
         /// <param name="properties"> Properties of a container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        internal ContainerItemInternal(string name, ContainerProperties properties)
+        internal ContainerItemInternal(string name, ContainerPropertiesInternal properties)
         {
             if (name == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="version"> . </param>
         /// <param name="properties"> Properties of a container. </param>
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerProperties properties, IReadOnlyDictionary<string, string> metadata)
+        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata)
         {
             Name = name;
             Deleted = deleted;
@@ -53,7 +53,7 @@ namespace Azure.Storage.Blobs.Models
         public bool? Deleted { get; }
         public string Version { get; }
         /// <summary> Properties of a container. </summary>
-        public ContainerProperties Properties { get; }
+        public ContainerPropertiesInternal Properties { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }
