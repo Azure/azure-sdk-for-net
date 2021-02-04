@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Initializes a new instance of TasksStateTasksDetails. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        internal TasksStateTasksDetails(DateTimeOffset lastUpdateDateTime, JobStatus status) : base(lastUpdateDateTime, status)
+        internal TasksStateTasksDetails(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
         }
 
@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
-        internal TasksStateTasksDetails(DateTimeOffset lastUpdateDateTime, string name, JobStatus status) : base(lastUpdateDateTime, name, status)
+        internal TasksStateTasksDetails(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, name, status)
         {
         }
     }

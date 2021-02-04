@@ -54,21 +54,18 @@ namespace Azure.Search.Documents.Tests
 
         private static void AssertNoFailures<T>(SearchIndexingBufferedSender<T> indexer)
         {
-            indexer.ActionFailedAsync +=
-                (IndexDocumentsAction<T> doc,
-                 IndexingResult result,
-                 Exception ex,
-                 CancellationToken cancellationToken) =>
+            indexer.ActionFailed +=
+                (IndexActionFailedEventArgs<T> e) =>
                 {
                     StringBuilder message = new StringBuilder();
-                    if (result != null)
+                    if (e.Result != null)
                     {
-                        Assert.IsFalse(result.Succeeded);
-                        message.AppendLine($"key {result.Key} failed with {result.Status}: {result.ErrorMessage}");
+                        Assert.IsFalse(e.Result.Succeeded);
+                        message.AppendLine($"key {e.Result.Key} failed with {e.Result.Status}: {e.Result.ErrorMessage}");
                     }
-                    if (message != null)
+                    if (e.Exception != null)
                     {
-                        message.AppendLine(ex.ToString());
+                        message.AppendLine(e.Exception.ToString());
                     }
                     Assert.Fail(message.ToString());
                     return Task.CompletedTask;
@@ -78,13 +75,10 @@ namespace Azure.Search.Documents.Tests
         private static ConcurrentQueue<IndexDocumentsAction<T>> TrackFailures<T>(SearchIndexingBufferedSender<T> indexer)
         {
             ConcurrentQueue<IndexDocumentsAction<T>> failures = new ConcurrentQueue<IndexDocumentsAction<T>>();
-            indexer.ActionFailedAsync +=
-                (IndexDocumentsAction<T> doc,
-                 IndexingResult result,
-                 Exception ex,
-                 CancellationToken cancellationToken) =>
+            indexer.ActionFailed +=
+                (IndexActionFailedEventArgs<T> e) =>
                 {
-                    failures.Enqueue(doc);
+                    failures.Enqueue(e.Action);
                     return Task.CompletedTask;
                 };
             return failures;
@@ -93,28 +87,22 @@ namespace Azure.Search.Documents.Tests
         private static ConcurrentDictionary<int, IndexDocumentsAction<T>> TrackPending<T>(SearchIndexingBufferedSender<T> indexer)
         {
             ConcurrentDictionary<int, IndexDocumentsAction<T>> pending = new ConcurrentDictionary<int, IndexDocumentsAction<T>>();
-            indexer.ActionAddedAsync +=
-                (IndexDocumentsAction<T> doc,
-                 CancellationToken cancellationToken) =>
+            indexer.ActionAdded +=
+                (IndexActionEventArgs<T> e) =>
                 {
-                    pending[doc.GetHashCode()] = doc;
+                    pending[e.Action.GetHashCode()] = e.Action;
                     return Task.CompletedTask;
                 };
-            indexer.ActionCompletedAsync +=
-                (IndexDocumentsAction<T> doc,
-                 IndexingResult result,
-                 CancellationToken cancellationToken) =>
+            indexer.ActionCompleted +=
+                (IndexActionCompletedEventArgs<T> e) =>
                 {
-                    pending.TryRemove(doc.GetHashCode(), out IndexDocumentsAction<T> _);
+                    pending.TryRemove(e.Action.GetHashCode(), out IndexDocumentsAction<T> _);
                     return Task.CompletedTask;
                 };
-            indexer.ActionFailedAsync +=
-                (IndexDocumentsAction<T> doc,
-                 IndexingResult result,
-                 Exception ex,
-                 CancellationToken cancellationToken) =>
+            indexer.ActionFailed +=
+                (IndexActionFailedEventArgs<T> e) =>
                 {
-                    pending.TryRemove(doc.GetHashCode(), out IndexDocumentsAction<T> _);
+                    pending.TryRemove(e.Action.GetHashCode(), out IndexDocumentsAction<T> _);
                     return Task.CompletedTask;
                 };
             return pending;
@@ -322,13 +310,10 @@ namespace Azure.Search.Documents.Tests
                     {
                         AutoFlush = false
                     });
-            indexer.ActionFailedAsync +=
-                (IndexDocumentsAction<SimpleDocument> doc,
-                 IndexingResult result,
-                 Exception ex,
-                 CancellationToken cancellationToken) =>
+            indexer.ActionFailed +=
+                (IndexActionFailedEventArgs<SimpleDocument> e) =>
                 {
-                    failures.Add(result);
+                    failures.Add(e.Result);
                     return Task.CompletedTask;
                 };
 
@@ -360,27 +345,22 @@ namespace Azure.Search.Documents.Tests
                     });
 
             List<IndexDocumentsAction<SimpleDocument>> pending = new List<IndexDocumentsAction<SimpleDocument>>();
-            indexer.ActionAddedAsync +=
-                (IndexDocumentsAction<SimpleDocument> doc, CancellationToken cancellationToken) =>
+            indexer.ActionAdded +=
+                (IndexActionEventArgs<SimpleDocument> e) =>
                 {
-                    pending.Add(doc);
+                    pending.Add(e.Action);
                     return Task.CompletedTask;
                 };
-            indexer.ActionCompletedAsync +=
-                (IndexDocumentsAction<SimpleDocument> doc,
-                 IndexingResult result,
-                 CancellationToken cancellationToken) =>
+            indexer.ActionCompleted +=
+                (IndexActionCompletedEventArgs<SimpleDocument> e) =>
                 {
-                    pending.Remove(doc);
+                    pending.Remove(e.Action);
                     return Task.CompletedTask;
                 };
-            indexer.ActionFailedAsync +=
-                (IndexDocumentsAction<SimpleDocument> doc,
-                 IndexingResult result,
-                 Exception ex,
-                 CancellationToken cancellationToken) =>
+            indexer.ActionFailed +=
+                (IndexActionFailedEventArgs<SimpleDocument> e) =>
                 {
-                    pending.Remove(doc);
+                    pending.Remove(e.Action);
                     return Task.CompletedTask;
                 };
 
@@ -920,7 +900,7 @@ namespace Azure.Search.Documents.Tests
                 client.CreateIndexingBufferedSender(
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>());
             int adds = 0;
-            indexer.ActionAddedAsync += (a, c) => { adds++; return Task.CompletedTask; };
+            indexer.ActionAdded += e => { adds++; return Task.CompletedTask; };
             await indexer.UploadDocumentsAsync(data);
             await DelayAsync(EventDelay, EventDelay);
             Assert.AreEqual(data.Length, adds);
@@ -937,7 +917,7 @@ namespace Azure.Search.Documents.Tests
                 client.CreateIndexingBufferedSender(
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>());
             int sent = 0;
-            indexer.ActionSentAsync += (a, c) => { sent++; return Task.CompletedTask; };
+            indexer.ActionSent += e => { sent++; return Task.CompletedTask; };
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
             await DelayAsync(EventDelay, EventDelay);
@@ -955,7 +935,7 @@ namespace Azure.Search.Documents.Tests
                 client.CreateIndexingBufferedSender(
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>());
             int completed = 0;
-            indexer.ActionCompletedAsync += (a, r, c) => { completed++; return Task.CompletedTask; };
+            indexer.ActionCompleted += e => { completed++; return Task.CompletedTask; };
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
             await DelayAsync(EventDelay, EventDelay);
@@ -973,7 +953,7 @@ namespace Azure.Search.Documents.Tests
                 client.CreateIndexingBufferedSender(
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>());
             int failed = 0;
-            indexer.ActionFailedAsync += (a, r, e, c) => { failed++; return Task.CompletedTask; };
+            indexer.ActionFailed += e => { failed++; return Task.CompletedTask; };
             await indexer.MergeDocumentsAsync(data);
             await indexer.FlushAsync();
             await DelayAsync(EventDelay, EventDelay);
@@ -993,10 +973,10 @@ namespace Azure.Search.Documents.Tests
 
             // Throw from every handler
             bool added = false, sent = false, completed = false, failed = false;
-            indexer.ActionAddedAsync += (a, c) => { added = true; throw new InvalidOperationException("ActionAddedAsync: Should not be seen!"); };
-            indexer.ActionSentAsync += (a, c) => { sent = true; throw new InvalidOperationException("ActionSentAsync: Should not be seen!"); };
-            indexer.ActionCompletedAsync += (a, r, c) => { completed = true; throw new InvalidOperationException("ActionCompletedAsync: Should not be seen!"); };
-            indexer.ActionFailedAsync += (a, r, e, c) => { failed = true; throw new InvalidOperationException("ActionFailedAsync: Should not be seen!"); };
+            indexer.ActionAdded += e => { added = true; throw new InvalidOperationException("ActionAddedAsync: Should not be seen!"); };
+            indexer.ActionSent += e => { sent = true; throw new InvalidOperationException("ActionSentAsync: Should not be seen!"); };
+            indexer.ActionCompleted += e => { completed = true; throw new InvalidOperationException("ActionCompletedAsync: Should not be seen!"); };
+            indexer.ActionFailed += e => { failed = true; throw new InvalidOperationException("ActionFailedAsync: Should not be seen!"); };
 
             // Try to merge first for Failed to fire
             await indexer.MergeDocumentsAsync(data);
@@ -1070,7 +1050,7 @@ namespace Azure.Search.Documents.Tests
             };
             AssertNoFailures(indexer);
             int sent = 0;
-            indexer.ActionSentAsync += (a, c) => { sent++; return Task.CompletedTask; };
+            indexer.ActionSent += e => { sent++; return Task.CompletedTask; };
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
             Assert.Less(1, sent);
@@ -1096,7 +1076,7 @@ namespace Azure.Search.Documents.Tests
                 new IndexingResult(result.Key, false, 503);
 
             int attempts = 0;
-            indexer.ActionSentAsync += (a, c) => { attempts++; return Task.CompletedTask; };
+            indexer.ActionSent += e => { attempts++; return Task.CompletedTask; };
             await indexer.MergeOrUploadDocumentsAsync(data);
             await indexer.FlushAsync();
             Assert.AreEqual(6, attempts);

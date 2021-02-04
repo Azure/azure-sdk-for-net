@@ -82,8 +82,8 @@
     
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.4.9" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.22.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.16.5" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.25.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.16.8" />
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
   </ItemGroup>
@@ -119,7 +119,7 @@
     All should have PrivateAssets="All" set so they don't become pacakge dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210121.3" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210201.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200929.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -153,6 +153,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.0.2" />
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
+    <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Devices" Version="1.19.0" />
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.27.0" />
     <PackageReference Update="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />

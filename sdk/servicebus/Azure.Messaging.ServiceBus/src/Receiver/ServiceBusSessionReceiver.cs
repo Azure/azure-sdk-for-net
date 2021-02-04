@@ -23,12 +23,12 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// The Session Id associated with the receiver.
         /// </summary>
-        public string SessionId => InnerReceiver.SessionId;
+        public virtual string SessionId => InnerReceiver.SessionId;
 
         /// <summary>
         /// Gets the <see cref="DateTimeOffset"/> that the receiver's session is locked until.
         /// </summary>
-        public DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
+        public virtual DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
 
         /// <summary>
         /// Creates a session receiver which can be used to interact with all messages with the same sessionId.

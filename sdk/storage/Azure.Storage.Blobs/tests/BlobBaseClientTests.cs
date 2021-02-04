@@ -6052,6 +6052,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var blob = new Mock<BlobBaseClient>();
+            blob.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(blob.Object.CanGenerateSasUri);
+
+            // Act
+            blob.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(blob.Object.CanGenerateSasUri);
+        }
+
+        [Test]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
@@ -6494,6 +6511,18 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsNotNull(blobContainerClient);
             Assert.AreSame(blobContainerClientMock.Object, blobContainerClient);
+        }
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<BlobBaseClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
+            mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         public IEnumerable<AccessConditionParameters> AccessConditions_Data

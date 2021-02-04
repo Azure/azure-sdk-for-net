@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   A class wrapping a <see cref="Core.TransportProducer" />, triggering a clean-up when the object is disposed.
         /// </summary>
         ///
-        internal class PooledProducer: IAsyncDisposable
+        internal class PooledProducer : IAsyncDisposable
         {
             /// <summary>
             ///   A function responsible of cleaning up the resources in use.

@@ -2,6 +2,18 @@
 
 ## 5.1.0-beta.4 (Unreleased)
 
+### Breaking changes
+- Renamed `RecognizeHealthcareEntitiesResultCollection` to `AnalyzeHealthcareEntitiesResultCollection`.
+- Renamed `DocumentHealthcareResult` to `AnalyzeHealthcareEntitiesResult`.
+- Removed `StartHealthcare` and `StartHealthcareAsync` methods.
+- Renamed `StartHealthcareBatch` and `StartHealthcareBatchAsync` to `StartAnalyzeHealthcareEntities` and `StartAnalyzeHealthcareEntitiesAsync` respectively.
+- Renamed `HealthcareOperation` to `AnalyzeHealthcareEntitiesOperation`.
+- Renamed `HealthcareOptions` to `AnalyzeHealthcareEntitiesOptions`.
+- Moved `Cancel` and `CancelAsync` for Healthcare from `TextAnalyticsClient` to `AnalyzeHealthcareEntitiesOperation`.
+- Renamed `JobStatus` to `TextAnalyticsOperationStatus`.
+- Renamed `HealthcareEntityLink` to `EntityDataSource` with `DataSource` to `EntityDataSource` and `Id` to `Name`.
+- Removed `HealthcareRelation` and added `HealthcareRelationType`.
+
 
 ## 5.1.0-beta.3 (2020-11-19)
 ### New Features

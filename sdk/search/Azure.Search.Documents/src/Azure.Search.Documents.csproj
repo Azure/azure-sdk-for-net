@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Search.Documents client library</AssemblyTitle>
     <Version>11.2.0-beta.3</Version>
@@ -31,9 +31,14 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
   <!-- Project and Package references -->
+  <PropertyGroup>
+    <!-- Force a project reference until SyncAsyncEventHandler has shipped -->
+    <UseProjectReferenceToAzureClients>true</UseProjectReferenceToAzureClients>
+  </PropertyGroup>
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />

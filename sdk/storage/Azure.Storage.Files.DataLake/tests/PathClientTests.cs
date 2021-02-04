@@ -8,6 +8,7 @@ using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -193,6 +194,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var pathClient = new Mock<DataLakePathClient>();
+            pathClient.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(pathClient.Object.CanGenerateSasUri);
+
+            // Act
+            pathClient.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(pathClient.Object.CanGenerateSasUri);
+        }
+
+        [Test]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
@@ -366,5 +384,17 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<DataLakePathClient>(TestConfigDefault.ConnectionString, "name", "name", new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakePathClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
+            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
+        }
     }
 }

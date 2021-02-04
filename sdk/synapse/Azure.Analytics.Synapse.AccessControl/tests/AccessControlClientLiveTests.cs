@@ -106,14 +106,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             RoleAssignmentDetails assignment = await DisposableClientRole.CreateResource (client, this.Recording);
 
             Response response = await client.DeleteRoleAssignmentByIdAsync (assignment.Id);
-            switch (response.Status) {
-                case 200:
-                case 204:
-                    break;
-                default:
-                    Assert.Fail($"Unexpected status ${response.Status} returned");
-                    break;
-            }
+            response.AssertSuccess();
         }
 
         [Test]

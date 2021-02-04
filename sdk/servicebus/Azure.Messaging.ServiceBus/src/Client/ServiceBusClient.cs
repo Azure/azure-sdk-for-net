@@ -23,12 +23,15 @@ namespace Azure.Messaging.ServiceBus
     {
         private readonly ServiceBusClientOptions _options;
 
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed;
+
         /// <summary>
         ///   The fully qualified Service Bus namespace that the connection is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
+        public virtual string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusClient"/> has been closed.
@@ -37,7 +40,11 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed { get; private set; }
+        public virtual bool IsClosed
+        {
+            get => _closed;
+            private set => _closed = value;
+        }
 
         /// <summary>
         /// The transport type used for this <see cref="ServiceBusClient"/>.

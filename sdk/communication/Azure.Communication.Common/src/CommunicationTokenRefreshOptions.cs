@@ -16,7 +16,10 @@ namespace Azure.Communication
         internal bool RefreshProactively { get; }
         internal Func<CancellationToken, string> TokenRefresher { get; }
         internal Func<CancellationToken, ValueTask<string>> AsyncTokenRefresher { get; }
+
+#nullable enable
         internal string? InitialToken { get; }
+#nullable restore
 
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationTokenRefreshOptions"/>.
@@ -28,8 +31,8 @@ namespace Azure.Communication
         public CommunicationTokenRefreshOptions(
             bool refreshProactively,
             Func<CancellationToken, string> tokenRefresher,
-            Func<CancellationToken, ValueTask<string>>? asyncTokenRefresher = null,
-            string? initialToken = null)
+            Func<CancellationToken, ValueTask<string>> asyncTokenRefresher = null,
+            string initialToken = null)
         {
             Argument.AssertNotNull(tokenRefresher, nameof(tokenRefresher));
 

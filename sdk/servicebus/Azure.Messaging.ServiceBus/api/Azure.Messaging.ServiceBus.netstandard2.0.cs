@@ -62,8 +62,8 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential) { }
         public ServiceBusClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
         public ServiceBusClient(string connectionString, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
-        public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { get { throw null; } }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> AcceptNextSessionAsync(string queueName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> AcceptNextSessionAsync(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -192,15 +192,15 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusProcessor : System.IAsyncDisposable
     {
         protected ServiceBusProcessor() { }
-        public bool AutoCompleteMessages { get { throw null; } }
-        public string EntityPath { get { throw null; } }
-        public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { get { throw null; } }
-        public bool IsProcessing { get { throw null; } }
-        public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
-        public int MaxConcurrentCalls { get { throw null; } }
-        public int PrefetchCount { get { throw null; } }
-        public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
+        public virtual bool AutoCompleteMessages { get { throw null; } }
+        public virtual string EntityPath { get { throw null; } }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
+        public virtual bool IsProcessing { get { throw null; } }
+        public virtual System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
+        public virtual int MaxConcurrentCalls { get { throw null; } }
+        public virtual int PrefetchCount { get { throw null; } }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ProcessErrorAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessMessageEventArgs, System.Threading.Tasks.Task> ProcessMessageAsync { add { } remove { } }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -266,11 +266,11 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusReceiver : System.IAsyncDisposable
     {
         protected ServiceBusReceiver() { }
-        public string EntityPath { get { throw null; } }
-        public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { get { throw null; } }
-        public int PrefetchCount { get { throw null; } }
-        public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
+        public virtual string EntityPath { get { throw null; } }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
+        public virtual int PrefetchCount { get { throw null; } }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
         public virtual System.Threading.Tasks.Task AbandonMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -336,9 +336,9 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusSender : System.IAsyncDisposable
     {
         protected ServiceBusSender() { }
-        public string EntityPath { get { throw null; } }
-        public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { get { throw null; } }
+        public virtual string EntityPath { get { throw null; } }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
         public virtual System.Threading.Tasks.Task CancelScheduledMessageAsync(long sequenceNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CancelScheduledMessagesAsync(System.Collections.Generic.IEnumerable<long> sequenceNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -360,16 +360,16 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusSessionProcessor : System.IAsyncDisposable
     {
         protected ServiceBusSessionProcessor() { }
-        public bool AutoCompleteMessages { get { throw null; } }
-        public string EntityPath { get { throw null; } }
-        public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { get { throw null; } }
-        public bool IsProcessing { get { throw null; } }
-        public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
-        public int MaxConcurrentCallsPerSession { get { throw null; } }
-        public int MaxConcurrentSessions { get { throw null; } }
-        public int PrefetchCount { get { throw null; } }
-        public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
+        public virtual bool AutoCompleteMessages { get { throw null; } }
+        public virtual string EntityPath { get { throw null; } }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
+        public virtual bool IsProcessing { get { throw null; } }
+        public virtual System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
+        public virtual int MaxConcurrentCallsPerSession { get { throw null; } }
+        public virtual int MaxConcurrentSessions { get { throw null; } }
+        public virtual int PrefetchCount { get { throw null; } }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ProcessErrorAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessSessionMessageEventArgs, System.Threading.Tasks.Task> ProcessMessageAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessSessionEventArgs, System.Threading.Tasks.Task> SessionClosingAsync { add { } remove { } }
@@ -405,8 +405,8 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusSessionReceiver : Azure.Messaging.ServiceBus.ServiceBusReceiver
     {
         protected ServiceBusSessionReceiver() { }
-        public string SessionId { get { throw null; } }
-        public System.DateTimeOffset SessionLockedUntil { get { throw null; } }
+        public virtual string SessionId { get { throw null; } }
+        public virtual System.DateTimeOffset SessionLockedUntil { get { throw null; } }
         public virtual System.Threading.Tasks.Task<System.BinaryData> GetSessionStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task RenewSessionLockAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SetSessionStateAsync(System.BinaryData sessionState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
