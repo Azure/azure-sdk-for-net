@@ -16,7 +16,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "cli123";
+        const string databaseAccountName = "cli124";
 
         const string databaseName = "databaseName";
         const string databaseName2 = "databaseName2";

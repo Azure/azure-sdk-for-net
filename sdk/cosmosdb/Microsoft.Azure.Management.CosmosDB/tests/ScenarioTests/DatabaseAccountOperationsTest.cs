@@ -30,7 +30,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 string databaseAccountName = TestUtilities.GenerateName(prefix: "accountname");
 
                 List<Location> locations = new List<Location>();
-                locations.Add(new Location(locationName: "East US 2 EUAP"));
+                locations.Add(new Location(locationName: "East US 2"));
                 DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
                 {
                     Location = "EAST US 2",
@@ -138,9 +138,6 @@ namespace CosmosDB.Tests.ScenarioTests
                 cosmosDBManagementClient.DatabaseAccounts.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, databaseAccountName, new DatabaseAccountRegenerateKeyParameters { KeyKind = "secondaryReadonly" });
 
                 DatabaseAccountListKeysResult databaseAccountListRegeneratedKeysResult = cosmosDBManagementClient.DatabaseAccounts.ListKeysWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
-
-                bool isNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
-                Assert.True(isNameExists);
 
                 cosmosDBManagementClient.DatabaseAccounts.DeleteWithHttpMessagesAsync(resourceGroupName, databaseAccountName);
             }
