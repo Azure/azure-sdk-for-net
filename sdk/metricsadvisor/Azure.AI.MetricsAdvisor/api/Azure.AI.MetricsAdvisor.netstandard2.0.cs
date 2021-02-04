@@ -299,14 +299,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class AnomalyDetectionConfiguration
     {
-        public AnomalyDetectionConfiguration(string metricId, string name, Azure.AI.MetricsAdvisor.Models.MetricWholeSeriesDetectionCondition wholeSeriesDetectionConditions) { }
+        public AnomalyDetectionConfiguration() { }
         public string Description { get { throw null; } set { } }
         public string Id { get { throw null; } }
-        public string MetricId { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricSingleSeriesDetectionCondition> SeriesDetectionConditions { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricSeriesGroupDetectionCondition> SeriesGroupDetectionConditions { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.MetricWholeSeriesDetectionCondition WholeSeriesDetectionConditions { get { throw null; } }
+        public string MetricId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricSingleSeriesDetectionCondition> SeriesDetectionConditions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricSeriesGroupDetectionCondition> SeriesGroupDetectionConditions { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.MetricWholeSeriesDetectionCondition WholeSeriesDetectionConditions { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AnomalyDetectorDirection : System.IEquatable<Azure.AI.MetricsAdvisor.Models.AnomalyDetectorDirection>
@@ -1036,12 +1036,12 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class MetricSeriesGroupDetectionCondition : Azure.AI.MetricsAdvisor.Models.MetricWholeSeriesDetectionCondition
     {
-        public MetricSeriesGroupDetectionCondition(Azure.AI.MetricsAdvisor.Models.DimensionKey seriesGroupKey) { }
+        public MetricSeriesGroupDetectionCondition() { }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesGroupKey { get { throw null; } }
     }
     public partial class MetricSingleSeriesDetectionCondition : Azure.AI.MetricsAdvisor.Models.MetricWholeSeriesDetectionCondition
     {
-        public MetricSingleSeriesDetectionCondition(Azure.AI.MetricsAdvisor.Models.DimensionKey seriesKey) { }
+        public MetricSingleSeriesDetectionCondition() { }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesKey { get { throw null; } }
     }
     public partial class MetricWholeSeriesDetectionCondition
