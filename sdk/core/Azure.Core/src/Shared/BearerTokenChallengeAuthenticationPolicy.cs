@@ -19,12 +19,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class BearerTokenChallengeAuthenticationPolicy : HttpPipelinePolicy
     {
-        private const string AuthenticationChallengePattern = @"(\w+) ((?:\w+="".*?""(?:, )?)+)(?:, )?";
-        private const string ChallengeParameterPattern = @"(?:(\w+)=""([^""]*)"")+";
         private const string ChallengeHeader = "WWW-Authenticate";
-        private static readonly Regex s_AuthenticationChallengeRegex = new Regex(AuthenticationChallengePattern, RegexOptions.Compiled);
-        private static readonly Regex s_ChallengeParameterRegex = new Regex(ChallengeParameterPattern, RegexOptions.Compiled);
-
         private readonly AccessTokenCache _accessTokenCache;
         private string[] _scopes;
 
