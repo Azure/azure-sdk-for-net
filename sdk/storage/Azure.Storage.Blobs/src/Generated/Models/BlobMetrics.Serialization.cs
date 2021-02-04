@@ -25,10 +25,10 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IncludeAPIs))
+            if (Optional.IsDefined(IncludeApis))
             {
                 writer.WriteStartElement("IncludeAPIs");
-                writer.WriteValue(IncludeAPIs.Value);
+                writer.WriteValue(IncludeApis.Value);
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(RetentionPolicy))
@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs.Models
         {
             string version = default;
             bool enabled = default;
-            bool? includeAPIs = default;
+            bool? includeApis = default;
             BlobRetentionPolicy retentionPolicy = default;
             if (element.Element("Version") is XElement versionElement)
             {
@@ -54,13 +54,13 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("IncludeAPIs") is XElement includeAPIsElement)
             {
-                includeAPIs = (bool?)includeAPIsElement;
+                includeApis = (bool?)includeAPIsElement;
             }
             if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
             {
                 retentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(retentionPolicyElement);
             }
-            return new BlobMetrics(version, enabled, includeAPIs, retentionPolicy);
+            return new BlobMetrics(version, enabled, includeApis, retentionPolicy);
         }
     }
 }
