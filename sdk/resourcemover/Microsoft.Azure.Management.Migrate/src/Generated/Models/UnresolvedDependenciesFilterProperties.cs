@@ -13,28 +13,25 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Summary item.
-    /// </summary>
-    public partial class SummaryItem
+    public partial class UnresolvedDependenciesFilterProperties
     {
         /// <summary>
-        /// Initializes a new instance of the SummaryItem class.
+        /// Initializes a new instance of the
+        /// UnresolvedDependenciesFilterProperties class.
         /// </summary>
-        public SummaryItem()
+        public UnresolvedDependenciesFilterProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SummaryItem class.
+        /// Initializes a new instance of the
+        /// UnresolvedDependenciesFilterProperties class.
         /// </summary>
-        /// <param name="count">Gets the count.</param>
-        /// <param name="item">Gets the item.</param>
-        public SummaryItem(int? count = default(int?), string item = default(string))
+        /// <param name="count">The count of the resource.</param>
+        public UnresolvedDependenciesFilterProperties(int? count = default(int?))
         {
             Count = count;
-            Item = item;
             CustomInit();
         }
 
@@ -44,16 +41,10 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the count.
+        /// Gets or sets the count of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
         public int? Count { get; set; }
-
-        /// <summary>
-        /// Gets the item.
-        /// </summary>
-        [JsonProperty(PropertyName = "item")]
-        public string Item { get; set; }
 
     }
 }
