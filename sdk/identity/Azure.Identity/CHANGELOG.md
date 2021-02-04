@@ -6,6 +6,10 @@
 
 - The `IDisposable` interface has been removed from `TokenCache`.
 
+### New Features
+
+- All credentials now support CAE claims challenges
+
 ## 1.4.0-beta.2 (2021-01-29)
 
 ### Fixes and improvements
