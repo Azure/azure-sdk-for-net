@@ -118,7 +118,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> or <paramref name="options"/> is null. </exception>
         public virtual async Task<AssetConversionOperation> StartConversionAsync(string conversionId, AssetConversionOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StartConversionAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StartConversion)}");
             scope.AddAttribute(nameof(conversionId), conversionId);
             scope.Start();
             try
@@ -257,7 +257,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="options"/> is null. </exception>
         public virtual async Task<StartRenderingSessionOperation> StartSessionAsync(string sessionId, RenderingSessionOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StartSessionAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StartSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
             try
@@ -287,7 +287,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         public virtual async Task<Response<RenderingSession>> GetSessionAsync(string sessionId, CancellationToken cancellationToken = default)
         {
-            return await GetSessionInternalAsync(sessionId, $"{nameof(RemoteRenderingClient)}.{nameof(GetSessionAsync)}", cancellationToken).ConfigureAwait(false);
+            return await GetSessionInternalAsync(sessionId, $"{nameof(RemoteRenderingClient)}.{nameof(GetSession)}", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Updates a particular rendering session. </summary>
@@ -319,7 +319,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<RenderingSession>> UpdateSessionAsync(string sessionId, UpdateSessionOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSessionAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
             try
@@ -360,7 +360,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         public virtual async Task<Response> StopSessionAsync(string sessionId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StopSessionAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StopSession)}");
             scope.AddAttribute(nameof(sessionId), sessionId);
             scope.Start();
 
@@ -418,7 +418,7 @@ namespace Azure.MixedReality.RemoteRendering
         {
             async Task<Page<RenderingSession>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetSessionsAsync)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetSessions)}");
                 scope.Start();
                 try
                 {
@@ -433,7 +433,7 @@ namespace Azure.MixedReality.RemoteRendering
             }
             async Task<Page<RenderingSession>> NextPageFunc(string? nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetSessionsAsync)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetSessions)}");
                 scope.Start();
                 try
                 {

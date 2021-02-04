@@ -83,7 +83,7 @@ namespace Azure.MixedReality.RemoteRendering
         {
             if (!HasCompleted)
             {
-                _response = await _client.GetSessionInternalAsync(_response.Value.SessionId, $"{nameof(StartRenderingSessionOperation)}.{nameof(UpdateStatusAsync)}", cancellationToken).ConfigureAwait(false);
+                _response = await _client.GetSessionInternalAsync(_response.Value.SessionId, $"{nameof(StartRenderingSessionOperation)}.{nameof(UpdateStatus)}", cancellationToken).ConfigureAwait(false);
             }
             return _response.GetRawResponse();
         }

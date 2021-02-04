@@ -14,8 +14,6 @@ namespace Azure.MixedReality.RemoteRendering.Tests
         public RemoteRenderingLiveTests(bool isAsync) :
             base(isAsync/*, RecordedTestMode.Record*/)
         {
-            //TODO: https://github.com/Azure/autorest.csharp/issues/689
-            TestDiagnostics = false;
         }
 
         [RecordedTest]
