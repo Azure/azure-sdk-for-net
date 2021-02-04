@@ -166,7 +166,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("ArchiveStatus") is XElement archiveStatusElement)
             {
-                archiveStatus = new ArchiveStatus(archiveStatusElement.Value);
+                archiveStatus = archiveStatusElement.Value.ToArchiveStatus();
             }
             if (element.Element("CustomerProvidedKeySha256") is XElement customerProvidedKeySha256Element)
             {

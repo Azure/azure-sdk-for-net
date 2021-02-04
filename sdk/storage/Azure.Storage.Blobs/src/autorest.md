@@ -167,3 +167,16 @@ directive:
     delete $.PrevSnapshotUrl.format;
     delete $.CopySource.format;
 ```
+
+### Fix ArchieveStatus
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.ArchiveStatus["x-ms-enum"];
+    $.ArchiveStatus["x-ms-enum"] = {
+        "name": "ArchiveStatus",
+        "modelAsString": false
+    };
+```
