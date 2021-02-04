@@ -236,6 +236,7 @@ namespace IotCentral.Tests.ScenarioTests
                 var readMetricDefinitionsOperation = operationList.Where(e => e.Name.Equals("Microsoft.IoTCentral/IoTApps/providers/Microsoft.Insights/metricDefinitions/read", StringComparison.OrdinalIgnoreCase)).ToList();
 
                 Assert.True(readOperation.Count.Equals(1));
+                Assert.True(readMetricDefinitionsOperation.Count.Equals(1));
                 Assert.NotNull(readMetricDefinitionsOperation[0].Origin);
                 Assert.NotNull(readMetricDefinitionsOperation[0].Properties);
             }
