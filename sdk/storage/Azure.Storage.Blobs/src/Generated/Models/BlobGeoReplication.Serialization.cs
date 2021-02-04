@@ -15,17 +15,17 @@ namespace Azure.Storage.Blobs.Models
     {
         internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element)
         {
-            GeoReplicationStatusType status = default;
-            DateTimeOffset lastSyncTime = default;
+            BlobGeoReplicationStatus status = default;
+            DateTimeOffset? lastSyncedOn = default;
             if (element.Element("Status") is XElement statusElement)
             {
-                status = new GeoReplicationStatusType(statusElement.Value);
+                status = statusElement.Value.ToBlobGeoReplicationStatus();
             }
             if (element.Element("LastSyncTime") is XElement lastSyncTimeElement)
             {
-                lastSyncTime = lastSyncTimeElement.GetDateTimeOffsetValue("R");
+                lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new BlobGeoReplication(status, lastSyncTime);
+            return new BlobGeoReplication(status, lastSyncedOn);
         }
     }
 }

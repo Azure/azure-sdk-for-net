@@ -180,3 +180,16 @@ directive:
         "modelAsString": false
     };
 ```
+
+### Fix GeoReplication
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.GeoReplication.properties.Status["x-ms-enum"];
+    $.GeoReplication.properties.Status["x-ms-enum"] = {
+        "name": "BlobGeoReplicationStatus",
+        "modelAsString": false
+    };
+```

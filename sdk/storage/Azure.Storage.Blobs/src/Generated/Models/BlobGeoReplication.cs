@@ -14,16 +14,14 @@ namespace Azure.Storage.Blobs.Models
     {
         /// <summary> Initializes a new instance of BlobGeoReplication. </summary>
         /// <param name="status"> The status of the secondary location. </param>
-        /// <param name="lastSyncTime"> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
-        internal BlobGeoReplication(GeoReplicationStatusType status, DateTimeOffset lastSyncTime)
+        /// <param name="lastSyncedOn"> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
+        internal BlobGeoReplication(BlobGeoReplicationStatus status, DateTimeOffset? lastSyncedOn)
         {
             Status = status;
-            LastSyncTime = lastSyncTime;
+            LastSyncedOn = lastSyncedOn;
         }
 
         /// <summary> The status of the secondary location. </summary>
-        public GeoReplicationStatusType Status { get; }
-        /// <summary> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </summary>
-        public DateTimeOffset LastSyncTime { get; }
+        public BlobGeoReplicationStatus Status { get; }
     }
 }
