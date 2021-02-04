@@ -10,8 +10,13 @@ using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
+    /// <summary>
+    /// This is the custom class. The other partial is the Swagger auto-generated class.
+    /// </summary>
     internal partial class ApplicationInsightsRestClient
     {
+        internal string ApiVersion { get; set; } = "2";
+
         /// <summary>
         /// This operation sends a sequence of telemetry events that will be monitored by Azure Monitor.
         /// </summary>
@@ -46,16 +51,23 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
         }
 
+        /// <summary>
+        /// Builds the ingestion Uri. (Example: https://dc.services.visualstudio.com/v2/track).
+        /// </summary>
+        internal RequestUriBuilder GetIngestionUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(this.host, false);
+            uri.AppendPath($"/v{this.ApiVersion}/track", false);
+            return uri;
+        }
+
         internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
-            uri.AppendRaw("/v2", false);
-            uri.AppendPath("/track", false);
-            request.Uri = uri;
+            request.Uri = GetIngestionUri();
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             using var content = new NDJsonWriter();
@@ -74,11 +86,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
-            uri.AppendRaw("/v2", false);
-            uri.AppendPath("/track", false);
-            request.Uri = uri;
+            request.Uri = GetIngestionUri();
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             using var content = new NDJsonWriter();

@@ -3,10 +3,15 @@
 
 using Azure.Core;
 
+using System.ComponentModel;
+
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
     public class AzureMonitorExporterOptions : ClientOptions
     {
         public string ConnectionString { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string ApiVersion { get; set; }
     }
 }

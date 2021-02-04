@@ -28,6 +28,10 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             options.AddPolicy(new IngestionResponsePolicy(), HttpPipelinePosition.PerCall);
 
             applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
+            if (!string.IsNullOrWhiteSpace(options.ApiVersion))
+            {
+                applicationInsightsRestClient.ApiVersion = options.ApiVersion;
+            }
         }
 
         public async ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
@@ -62,5 +66,10 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 
             return itemsAccepted;
         }
+
+        /// <summary>
+        /// This method is provided to inspect the Ingestion Uri in unit tests.
+        /// </summary>
+        internal string GetIngestionUri() => this.applicationInsightsRestClient.GetIngestionUri().ToUri().ToString();
     }
 }
