@@ -9,10 +9,11 @@ namespace DnsResolver.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Azure.Management.DnsResolver;
     using Microsoft.Azure.Management.DnsResolver.Models;
+    using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using SubResource = Microsoft.Azure.Management.DnsResolver.Models.SubResource;
 
     internal static class TestDataGenerator
     {
@@ -92,25 +93,43 @@ namespace DnsResolver.Tests
             };
         }
 
-        public static Microsoft.Azure.Management.DnsResolver.Models.SubResource GenerateVirtualNetwork(string subscriptionId = null, string resourceGroupName = null)
+        public static SubResource GenerateNonExistentVirtualNetwork(string subscriptionId = null, string resourceGroupName = null)
         {
-            return new Microsoft.Azure.Management.DnsResolver.Models.SubResource
+            subscriptionId = subscriptionId ?? GenerateSubscriptionId();
+            resourceGroupName = resourceGroupName ?? GenerateResourceGroupName();
+
+            return new SubResource
             {
                 Id = GenerateVirtualNetworkArmId(subscriptionId: subscriptionId, resourceGroupName: resourceGroupName),
             };
         }
 
-        public static DnsResolverModel GenerateDnsResolver(string location = null, string subscriptionId = null,  string resourceGroupName = null, IDictionary<string, string> tags = null, Microsoft.Azure.Management.DnsResolver.Models.SubResource virtualNetwork = null)
+        public static VirtualNetwork GenerateVirtualNetwork(
+            string location = null,
+            string addressSpaceCidr = "10.0.0.0/16",
+            string subnetName = "Default",
+            string subnetAddressSpaceCidr = "10.0.0.0/24")
         {
-            virtualNetwork = virtualNetwork ?? GenerateVirtualNetwork(subscriptionId: subscriptionId, resourceGroupName: resourceGroupName);
-            return new DnsResolverModel
+            return new VirtualNetwork
             {
-                Location = location,
-                Tags = tags,
-                VirtualNetwork = virtualNetwork
+                AddressSpace = new AddressSpace
+                {
+                    AddressPrefixes = new List<string>
+                    {
+                        addressSpaceCidr
+                    }
+                },
+                Subnets = new List<Subnet>
+                {
+                    new Subnet
+                    {
+                        Name = subnetName,
+                        AddressPrefix = subnetAddressSpaceCidr
+                    }
+                },
+                Location = location ?? DefaultResourceLocation,
             };
         }
-
 
         public static InboundEndpoint GenenerateInboundEndpoint(string subscriptionId = null, string resourceGroupName = null, string dnsResolverName = null, string inboundEndpointName = null, IDictionary<string, string> metadataTags = null)
         {
@@ -135,6 +154,16 @@ namespace DnsResolver.Tests
             }
 
             return ipConfigurations;
+        }
+
+        public static DnsResolverModel GenerateDnsResolverWithoutVirtualNetwork(string location = null, IDictionary<string, string> tags = null)
+        {
+            return new DnsResolverModel
+            {
+                Location = location,
+                Tags = tags,
+                VirtualNetwork = new SubResource(),
+            };
         }
 
         public static int GenerateInteger(int minVal= 0, int maxVal = 10)
@@ -168,14 +197,14 @@ namespace DnsResolver.Tests
             return $"{random.Next(1, 255)}.{random.Next(0, 255)}.{random.Next(0, 255)}.{random.Next(0, 255)}";
         }
 
-        private static Microsoft.Azure.Management.DnsResolver.Models.SubResource GenerateRandomSubnetSubResource(string subscriptionId = null, string resourceGroupName = null, string virtualNetworkName = null)
+        private static SubResource GenerateRandomSubnetSubResource(string subscriptionId = null, string resourceGroupName = null, string virtualNetworkName = null)
         {
             subscriptionId = subscriptionId ?? GenerateSubscriptionId();
             resourceGroupName = resourceGroupName ?? GenerateResourceGroupName();
             virtualNetworkName = virtualNetworkName ?? GenerateVirtualNetworkName();
             var subnetName = GenerateSubnetName();
 
-            return new Microsoft.Azure.Management.DnsResolver.Models.SubResource
+            return new SubResource
             {
                 Id = GenerateSubnetArmId(subscriptionId, resourceGroupName, virtualNetworkName, subnetName),
             };

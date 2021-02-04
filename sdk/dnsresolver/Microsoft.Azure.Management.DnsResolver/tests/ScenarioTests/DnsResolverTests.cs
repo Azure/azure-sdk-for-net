@@ -29,7 +29,7 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
 
             var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
@@ -37,7 +37,6 @@ namespace DnsResolver.Tests.ScenarioTests
                 parameters: dnsResolver);
 
             createdDnsResolver.Should().NotBeNull();
-            createdDnsResolver.Id.Should().Be(TestDataGenerator.GenerateDnsResolverArmId(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, dnsResolverName: dnsResolverName));
             createdDnsResolver.Name.Should().Be(dnsResolverName);
             createdDnsResolver.Tags.Should().BeNull();
             createdDnsResolver.Location.Should().Be(Constants.DnsResolverLocation);
@@ -53,7 +52,7 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
             var dnsResolverTags = TestDataGenerator.GenerateTags();
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, tags: dnsResolverTags);
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName, tags: dnsResolverTags);
 
             var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
@@ -69,7 +68,7 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
             dnsResolver.VirtualNetwork.Id = TestDataGenerator.GetRandomString(15);
 
             Action createdDnsResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
@@ -87,7 +86,7 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
 
             var firstCreatedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
@@ -95,7 +94,7 @@ namespace DnsResolver.Tests.ScenarioTests
                 parameters: dnsResolver);
             firstCreatedDnsResolver.Should().NotBeNull();
 
-            var conflictDnsResolver = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            var conflictDnsResolver = TestDataGenerator.GenerateDnsResolverWithoutVirtualNetwork(location: Constants.DnsResolverLocation);
             conflictDnsResolver.VirtualNetwork.Id = dnsResolver.VirtualNetwork.Id;
 
             Action createConflictDnsResolverAction = () =>  this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
@@ -111,16 +110,16 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
-            dnsResolver.VirtualNetwork = TestDataGenerator.GenerateVirtualNetwork();
+            var dnsResolver = TestDataGenerator.GenerateDnsResolverWithoutVirtualNetwork(location: Constants.DnsResolverLocation);
+            dnsResolver.VirtualNetwork = TestDataGenerator.GenerateNonExistentVirtualNetwork(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
 
-            Action createdDnsResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
+            Action createDnsResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: dnsResolverName,
                 parameters: dnsResolver);
 
-            createdDnsResolverAction.Should().NotBeNull();
-            createdDnsResolverAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            createDnsResolverAction.Should().NotBeNull();
+            createDnsResolverAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
@@ -128,7 +127,7 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
 
             var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
@@ -138,7 +137,7 @@ namespace DnsResolver.Tests.ScenarioTests
             createdDnsResolver.Should().NotBeNull();
             createdDnsResolver.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
 
-            dnsResolver.VirtualNetwork = TestDataGenerator.GenerateVirtualNetwork(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            dnsResolver.VirtualNetwork = CreateVirtualNetwork(resourceGroupName: resourceGroupName);
 
             Action updateDnsResolverAction = () =>  this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
@@ -154,13 +153,13 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var firstdnsResolver = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            var firstdnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
 
             var createdFirstdnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: dnsResolverName,
                 parameters: firstdnsResolver);
-            var secondDnsResolver = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            var secondDnsResolver = TestDataGenerator.GenerateDnsResolverWithoutVirtualNetwork(location: Constants.DnsResolverLocation);
             secondDnsResolver.VirtualNetwork = firstdnsResolver.VirtualNetwork;
 
             Action createSecondDnsResolver = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
@@ -177,7 +176,7 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
             var ifMatch = "*";
             var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
@@ -201,10 +200,7 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(
-                location: Constants.DnsResolverLocation,
-                subscriptionId: this.SubscriptionId,
-                resourceGroupName: resourceGroupName);
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
             var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                  resourceGroupName: resourceGroupName,
                  dnsResolverName: dnsResolverName,
@@ -232,7 +228,7 @@ namespace DnsResolver.Tests.ScenarioTests
             Action updateDnsResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
-                parameters: TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName), 
+                parameters: createdDnsResolver, 
                 ifMatch: TestDataGenerator.GetRandomString(10));
 
             updateDnsResolverAction.Should().NotBeNull();
@@ -244,10 +240,7 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(
-                location: Constants.DnsResolverLocation,
-                subscriptionId: this.SubscriptionId,
-                resourceGroupName: resourceGroupName);
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
             var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                  resourceGroupName: resourceGroupName,
                  dnsResolverName: dnsResolverName,
@@ -269,11 +262,7 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(
-                location: Constants.DnsResolverLocation, 
-                subscriptionId: this.SubscriptionId, 
-                resourceGroupName: resourceGroupName, 
-                tags: TestDataGenerator.GenerateTags());
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
             var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                  resourceGroupName: resourceGroupName,
                  dnsResolverName: dnsResolverName,
@@ -296,8 +285,8 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var existingDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
-            var dnsResolverForCreation = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
-            
+            var dnsResolverForCreation = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
+
             Action createDnsResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: existingDnsResolver.Name,
@@ -312,7 +301,7 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolverForCreation = TestDataGenerator.GenerateDnsResolver(location: Constants.DnsResolverLocation,  subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            var dnsResolverForCreation = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
             var ifNoneMatch = "*";
 
             var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
@@ -326,7 +315,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void GetDnsResolver_ResolverExistsByResolverName_ExpectResolverRetrieved() 
+        public void GetDnsResolver_ResolverExists_ExpectResolverRetrieved() 
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -340,7 +329,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void GetDnsResolver_ResolverNotExistsByResolverName_ExpectFailure()
+        public void GetDnsResolver_ResolverNotExists_ExpectFailure()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
@@ -354,31 +343,17 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListDnsResolverByVirtualNetwork_ValidVirtualNetworkAttachedToResolver_ExpectResolverRetrieved()
+        public void ListDnsResolversByVirtualNetwork_ValidVirtualNetworkAttachedToResolver_ExpectResolverRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
-            var virtualNetworkName = TestDataGenerator.GenerateVirtualNetworkName();
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-
-            var virtualNetwork = new SubResource
-            {
-                Id = TestDataGenerator.GenerateVirtualNetworkArmId(
-                    subscriptionId: this.SubscriptionId, 
-                    resourceGroupName: resourceGroupName, 
-                    virtualNetworkName: virtualNetworkName)
-            };
-
-            var dnsResolver = TestDataGenerator.GenerateDnsResolver(
-                location: Constants.DnsResolverLocation, 
-                subscriptionId: this.SubscriptionId, 
-                resourceGroupName: resourceGroupName,
-                virtualNetwork: virtualNetwork);
-
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
             var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: dnsResolverName,
                 parameters: dnsResolver);
 
+            var virtualNetworkName = ExtractArmResourceName(dnsResolver.VirtualNetwork.Id);
             var listResult = this.DnsResolverManagementClient.DnsResolvers.ListByVirtualNetwork(
                 resourceGroupName: resourceGroupName,
                 virtualNetworkName: virtualNetworkName);
@@ -391,7 +366,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListDnsResolverInSubscription_MultipleResolversPresent_ExpectResolverRetrieved()
+        public void ListDnsResolversInSubscription_MultipleResolversPresent_ExpectResolverRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var numDnsResolvers = 2;
@@ -405,7 +380,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListDnsResolverInSubscription_MultipleResolversPresentWithTop_ExpectResolverRetrieved()
+        public void ListDnsResolversInSubscription_MultipleResolversPresentWithTop_ExpectResolverRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var numDnsResolvers = TestDataGenerator.GenerateInteger(2, 10);
@@ -422,7 +397,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListDnsResolverInSubscription_MultipleResolversPresentWithNextLink_ExpectResolverRetrieved()
+        public void ListDnsResolversInSubscription_MultipleResolversPresentWithNextLink_ExpectResolverRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var numDnsResolvers = 2;
@@ -439,7 +414,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListDnsResolverInResourceGroup_NoResolverPresents_ExpectEmptyListRetrieved()
+        public void ListDnsResolversInResourceGroup_NoResolverPresents_ExpectEmptyListRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
 
@@ -451,7 +426,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListDnsResolverInResourceGroup_MultipleResolversPresent_ExpectResolversRetrieved()
+        public void ListDnsResolversInResourceGroup_MultipleResolversPresent_ExpectResolversRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var numDnsResolvers = 2;
@@ -466,7 +441,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListDnsResolverInResourceGroup_MultipleResolversPresentWithTop_ExpectResolversRetrieved()
+        public void ListDnsResolversInResourceGroup_MultipleResolversPresentWithTop_ExpectResolversRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var numDnsResolvers = 2;
@@ -485,7 +460,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListDnsResolverInResourceGroup_MultipleResolversPresentNextLink_ExpectResolversRetrieved()
+        public void ListDnsResolversInResourceGroup_MultipleResolversPresentNextLink_ExpectResolversRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var numDnsResolvers = 2;
@@ -505,7 +480,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListDnsResolverInResourceGroup_MultipleResolversPresentWithTopZero_ExpectError()
+        public void ListDnsResolversInResourceGroup_MultipleResolversPresentWithTopZero_ExpectError()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var numDnsResolvers = 2;
@@ -526,12 +501,12 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolverForPatch = TestDataGenerator.GenerateDnsResolver(resourceGroupName: resourceGroupName);
+            var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
 
             Action patchDnsResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.Update(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: dnsResolverName,
-                parameters: dnsResolverForPatch
+                parameters: dnsResolver
                 );
 
             patchDnsResolverAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -542,17 +517,12 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolverForCreation = TestDataGenerator.GenerateDnsResolver(resourceGroupName: resourceGroupName);
-            var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
-                resourceGroupName: resourceGroupName,
-                dnsResolverName: dnsResolverName,
-                parameters: dnsResolverForCreation
-                );
+            var dnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
 
             var updatedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.Update(
                 resourceGroupName: resourceGroupName,
-                dnsResolverName: createdDnsResolver.Name,
-                parameters: dnsResolverForCreation
+                dnsResolverName: dnsResolver.Name,
+                parameters: dnsResolver
                 );
 
             updatedDnsResolver.Should().NotBeNull();
@@ -565,11 +535,12 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName, tags: null);
             var tagsForUpdate = TestDataGenerator.GenerateTags();
+            createdDnsResolver.Tags = tagsForUpdate;
 
             var updatedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.Update(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
-                parameters: TestDataGenerator.GenerateDnsResolver(tags: tagsForUpdate));
+                parameters: createdDnsResolver);
 
             updatedDnsResolver.Should().NotBeNull();
             updatedDnsResolver.ProvisioningState.Should().BeEquivalentTo(Constants.ProvisioningStateSucceeded);
@@ -582,11 +553,12 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName, tags: TestDataGenerator.GenerateTags());
             var tagsForUpdate = TestDataGenerator.GenerateTags();
+            createdDnsResolver.Tags = tagsForUpdate;
 
             var updatedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.Update(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
-                parameters: TestDataGenerator.GenerateDnsResolver(tags: tagsForUpdate));
+                parameters: createdDnsResolver);
 
             updatedDnsResolver.Should().NotBeNull();
             updatedDnsResolver.ProvisioningState.Should().BeEquivalentTo(Constants.ProvisioningStateSucceeded);
@@ -598,11 +570,12 @@ namespace DnsResolver.Tests.ScenarioTests
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName, tags: TestDataGenerator.GenerateTags());
+            createdDnsResolver.Tags = null;
 
             var updatedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.Update(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
-                parameters: TestDataGenerator.GenerateDnsResolver(tags: null));
+                parameters: createdDnsResolver);
 
             updatedDnsResolver.Should().NotBeNull();
             updatedDnsResolver.ProvisioningState.Should().BeEquivalentTo(Constants.ProvisioningStateSucceeded);

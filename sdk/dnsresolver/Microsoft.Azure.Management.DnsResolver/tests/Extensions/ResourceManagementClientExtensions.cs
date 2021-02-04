@@ -36,6 +36,11 @@ namespace DnsResolver.Tests.Extensions
                 throw new ArgumentNullException(nameof(client));
             }
 
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+
             string location = null;
 
             var parts = resourceType.Split('/');
@@ -61,7 +66,7 @@ namespace DnsResolver.Tests.Extensions
                 throw new ArgumentNullException(nameof(client));
             }
 
-            return client.GetResourceLocation("Microsoft.Network/dnsresolvers");
+            return client.GetResourceLocation(Constants.DnsResolverResourceType);
         }
     }
 }

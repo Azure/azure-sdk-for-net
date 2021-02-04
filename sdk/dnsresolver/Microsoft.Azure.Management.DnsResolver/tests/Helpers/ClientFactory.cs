@@ -7,6 +7,7 @@
 namespace DnsResolver.Tests.Helpers
 {
     using Microsoft.Azure.Management.DnsResolver;
+    using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
@@ -15,7 +16,7 @@ namespace DnsResolver.Tests.Helpers
         /// <summary>
         /// Default constructor for management clients, using the TestSupport Infrastructure
         /// </summary>
-        /// <param name="handler"></param>
+        /// <param name="handler">Delegating Handler to get the client.</param>
         /// <returns>A resource management client, created from the current context (environment variables)</returns>
         public static ResourceManagementClient GetResourcesClient(
             MockContext context,
@@ -30,14 +31,29 @@ namespace DnsResolver.Tests.Helpers
         /// Default constructor for management clients,
         ///  using the TestSupport Infrastructure
         /// </summary>
-        /// <param name="handler"></param>
-        /// <returns>A resource management client, created from the current context (environment variables)</returns>
+        /// <param name="handler">Delegating Handler to get the client.</param>
+        /// <returns>A DnsResolver management client, created from the current context (environment variables)</returns>
         public static DnsResolverManagementClient GetDnsResolverClient(
             MockContext context,
             RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
             var client = context.GetServiceClient<DnsResolverManagementClient>(handlers: handler);
+            return client;
+        }
+
+        /// <summary> 
+        /// Default constructor for Network management clients,
+        ///  using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="handler">Delegating Handler to get the client.</param>
+        /// <returns>A Network management client, created from the current context (environment variables)</returns>
+        public static NetworkManagementClient GetNetworkClient(
+            MockContext context,
+            RecordedDelegatingHandler handler)
+        {
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<NetworkManagementClient>(handlers: handler);
             return client;
         }
     }
