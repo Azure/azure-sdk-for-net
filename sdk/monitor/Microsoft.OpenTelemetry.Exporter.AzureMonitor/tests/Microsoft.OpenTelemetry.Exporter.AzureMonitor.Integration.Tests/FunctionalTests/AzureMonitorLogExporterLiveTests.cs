@@ -50,7 +50,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
             // This would allow us to run tests in parallel.
             logger.Log(logLevel: LogLevel.Information, message: testMessage);
 
-            processor.ForceFlush();
+            var flushResult = processor.ForceFlush(this.FlushTimeoutMilliseconds);
+            Assert.IsTrue(flushResult, "Processor failed to flush");
 
             // TODO: MAYBE WE COULD HAVE A SHORT WAIT, AND IF NO TELEMETRY IS FOUND, WAIT FOR A LONGER PERIOD.
             // THIS MIGHT MAKE TEST RUN FASTER, BUT PROVIDE A TRY-AGAIN MECHANIC FOR DAYS THAT INGESTION IS HAVING A BAD DAY.
@@ -62,6 +63,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.Functi
 
             var telemetry = await client.Events.GetTraceEventsAsync(appId: TestEnvironment.ApplicationId, timespan: QueryDuration.TenMinutes);
             Assert.AreEqual(testMessage, telemetry.Value[0].Trace.Message);
+            Assert.AreEqual(TestEnvironment.InstrumentationKey, telemetry.Value[0].Ai.IKey);
         }
     }
 }
