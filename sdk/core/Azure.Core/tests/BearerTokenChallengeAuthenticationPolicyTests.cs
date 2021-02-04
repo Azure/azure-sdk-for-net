@@ -652,7 +652,7 @@ namespace Azure.Core.Tests
 
             List<Challenge> parsedChallenges = new List<Challenge>();
 
-            while (BearerTokenChallengeAuthenticationPolicy.TryGetNextChallenge(ref challenge, out var scheme, out var parameters))
+            while (BearerTokenChallengeAuthenticationPolicy.TryGetNextChallenge(ref challenge, out var scheme))
             {
                 Challenge parsedChallenge = new Challenge();
 
@@ -678,7 +678,7 @@ namespace Azure.Core.Tests
 
             List<Challenge> parsedChallenges = new List<Challenge>();
 
-            while (BearerTokenChallengeAuthenticationPolicy.TryGetNextChallenge(ref challenge, out var scheme, out var parameters))
+            while (BearerTokenChallengeAuthenticationPolicy.TryGetNextChallenge(ref challenge, out var scheme))
             {
                 Challenge parsedChallenge = new Challenge();
 

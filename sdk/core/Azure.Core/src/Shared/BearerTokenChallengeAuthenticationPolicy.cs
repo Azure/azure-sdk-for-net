@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -16,6 +15,7 @@ namespace Azure.Core.Pipeline
 {
     /// <summary>
     /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an Authentication header.
+    /// Note: This class is currently in preview and is therefore subject to possible future breaking changes.
     /// </summary>
     internal class BearerTokenChallengeAuthenticationPolicy : HttpPipelinePolicy
     {
@@ -168,7 +168,7 @@ namespace Azure.Core.Pipeline
             ReadOnlySpan<char> headerSpan = headerValue.AsSpan();
 
             // Iterate through each challenge value.
-            while (TryGetNextChallenge(ref headerSpan, out var challengeKey, out var challengeParameters))
+            while (TryGetNextChallenge(ref headerSpan, out var challengeKey))
             {
                 // Enumerate each key=value parameter until we find the 'claims' key on the 'Bearer' challenge.
                 while (TryGetNextParameter(ref headerSpan, out var key, out var value))
@@ -183,10 +183,20 @@ namespace Azure.Core.Pipeline
             return null;
         }
 
-        internal static bool TryGetNextChallenge(ref ReadOnlySpan<char> headerValue, out ReadOnlySpan<char> challengeKey, out ReadOnlySpan<char> challengeValue)
+        /// <summary>
+        /// Iterates through the challenge schemes present in a challenge header.
+        /// </summary>
+        /// <param name="headerValue">
+        /// The header value which will be sliced to remove the first parsed <paramref name="challengeKey"/>.
+        /// </param>
+        /// <param name="challengeKey">The parsed challenge scheme.</param>
+        /// <returns>
+        /// <c>true</c> if a challenge scheme was successfully parsed.
+        /// The value of <paramref name="headerValue"/> should be passed to <see cref="TryGetNextParameter"/> to parse the challenge parameters if <c>true</c>.
+        /// </returns>
+        internal static bool TryGetNextChallenge(ref ReadOnlySpan<char> headerValue, out ReadOnlySpan<char> challengeKey)
         {
             challengeKey = default;
-            challengeValue = default;
 
             headerValue = headerValue.TrimStart(' ');
             int endOfChallengeKey = headerValue.IndexOf(' ');
@@ -198,26 +208,35 @@ namespace Azure.Core.Pipeline
 
             challengeKey = headerValue.Slice(0, endOfChallengeKey);
 
-            // Get the parameters string.
-            challengeValue = headerValue.Slice(endOfChallengeKey + 1);
-
             // Slice the challenge key from the headerValue
             headerValue = headerValue.Slice(endOfChallengeKey + 1);
 
             return true;
         }
 
-        public static bool TryGetNextParameter(ref ReadOnlySpan<char> parameters, out ReadOnlySpan<char> paramKey, out ReadOnlySpan<char> paramValue, char separator = '=')
+        /// <summary>
+        /// Iterates through a challenge header value after being parsed by <see cref="TryGetNextChallenge"/>.
+        /// </summary>
+        /// <param name="headerValue">The header value after being parsed by <see cref="TryGetNextChallenge"/>.</param>
+        /// <param name="paramKey">The parsed challenge parameter key.</param>
+        /// <param name="paramValue">The parsed challenge parameter value.</param>
+        /// <param name="separator">The challenge parameter key / value pair separator. The default is '='.</param>
+        /// <returns>
+        /// <c>true</c> if the next available challenge parameter was successfully parsed.
+        /// <c>false</c> if there are no more parameters for the current challenge scheme or an additional challenge scheme was encountered in the <paramref name="headerValue"/>.
+        /// The value of <paramref name="headerValue"/> should be passed again to <see cref="TryGetNextChallenge"/> to attempt to parse any additional challenge schemes if <c>false</c>.
+        /// </returns>
+        internal static bool TryGetNextParameter(ref ReadOnlySpan<char> headerValue, out ReadOnlySpan<char> paramKey, out ReadOnlySpan<char> paramValue, char separator = '=')
         {
             paramKey = default;
             paramValue = default;
             var spaceOrComma = " ,".AsSpan();
 
             // Trim any separater prefixes.
-            parameters = parameters.TrimStart(spaceOrComma);
+            headerValue = headerValue.TrimStart(spaceOrComma);
 
-            int nextSpace = parameters.IndexOf(' ');
-            int nextSeparator = parameters.IndexOf(separator);
+            int nextSpace = headerValue.IndexOf(' ');
+            int nextSeparator = headerValue.IndexOf(separator);
 
             if (nextSpace < nextSeparator && nextSpace != -1)
             {
@@ -229,39 +248,39 @@ namespace Azure.Core.Pipeline
                 return false;
 
             // Get the paramKey.
-            paramKey = parameters.Slice(0, nextSeparator).Trim();
+            paramKey = headerValue.Slice(0, nextSeparator).Trim();
 
             // Slice to remove the 'paramKey=' from the parameters.
-            parameters = parameters.Slice(nextSeparator + 1);
+            headerValue = headerValue.Slice(nextSeparator + 1);
 
             // The start of paramValue will usually be a quoted string. Find the first quote.
-            int quoteIndex = parameters.IndexOf('\"');
+            int quoteIndex = headerValue.IndexOf('\"');
 
             // Get the paramValue, which is delimited by the trailing quote.
-            parameters = parameters.Slice(quoteIndex + 1);
+            headerValue = headerValue.Slice(quoteIndex + 1);
             if (quoteIndex >= 0)
             {
                 // The values are quote wrapped
-                paramValue = parameters.Slice(0, parameters.IndexOf('\"'));
+                paramValue = headerValue.Slice(0, headerValue.IndexOf('\"'));
             }
             else
             {
                 //the values are not quote wrapped (storage is one example of this)
                 // either find the next space indicating the delimiter to the next value, or go to the end since this is the last value.
-                int trailingDelimiterIndex = parameters.IndexOfAny(spaceOrComma);
+                int trailingDelimiterIndex = headerValue.IndexOfAny(spaceOrComma);
                 if (trailingDelimiterIndex >= 0)
                 {
-                    paramValue = parameters.Slice(0, trailingDelimiterIndex);
+                    paramValue = headerValue.Slice(0, trailingDelimiterIndex);
                 }
                 else
                 {
-                    paramValue = parameters;
+                    paramValue = headerValue;
                 }
             }
 
             // Slice to remove the '"paramValue"' from the parameters.
-            if (parameters != paramValue)
-                parameters = parameters.Slice(paramValue.Length + 1);
+            if (headerValue != paramValue)
+                headerValue = headerValue.Slice(paramValue.Length + 1);
 
             return true;
         }
@@ -357,7 +376,7 @@ namespace Azure.Core.Pipeline
                 return info.HeaderValue;
             }
 
-            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources(TokenRequestContext context)
+            private (TaskCompletionSource<HeaderValueInfo>, TaskCompletionSource<HeaderValueInfo>?, bool) GetTaskCompletionSources(TokenRequestContext context)
             {
                 lock (_syncObj)
                 {
@@ -405,36 +424,10 @@ namespace Azure.Core.Pipeline
             }
 
             // must be called under lock (_syncObj)
-            private bool RequestRequiresNewToken(TokenRequestContext context)
-            {
-                if (_currentContext == null)
-                {
-                    return true;
-                }
-
-                if (context.Scopes != null)
-                {
-                    if (context.Scopes.Length != _currentContext.Value.Scopes?.Length)
-                    {
-                        return true;
-                    }
-
-                    for (int i = 0; i < context.Scopes.Length; i++)
-                    {
-                        if (context.Scopes[i] != _currentContext.Value.Scopes?[i])
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                if ((context.Claims != null) && (context.Claims != _currentContext.Value.Claims))
-                {
-                    return true;
-                }
-
-                return false;
-            }
+            private bool RequestRequiresNewToken(TokenRequestContext context) =>
+                _currentContext == null ||
+                (context.Scopes != null && !context.Scopes.SequenceEqual(_currentContext.Value.Scopes)) ||
+                (context.Claims != null && !string.Equals(context.Claims, _currentContext.Value.Claims));
 
             private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, HeaderValueInfo info, TokenRequestContext context, bool async)
             {
