@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.7.0-beta.1 (Unreleased)
-
+- Fixed bug where ShareFileClient.CanGenerateSasUri, ShareDirectoryClient.CanGenerateSasUri, ShareClient.CanGenerateSasUri, ShareServiceClient.CanGenerateSasUri was not mockable
 
 ## 12.6.0 (2021-01-12)
 - Includes all features from 12.5.6-beta.1

@@ -12,7 +12,6 @@ using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
-using Microsoft.Identity.Client;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;

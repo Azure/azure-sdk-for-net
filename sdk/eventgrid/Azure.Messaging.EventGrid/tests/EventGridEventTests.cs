@@ -33,15 +33,15 @@ namespace Azure.Messaging.EventGrid.Tests
                    new AzureKeyCredential("fakeKey"),
                    options);
             var egEvent = new EventGridEvent(
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent",
+                    "TestPayload",
                     new DerivedTestPayload
                     {
                         Name = "name",
                         Age = 10,
                         DerivedProperty = 5
                     },
-                    "record",
-                    "Microsoft.MockPublisher.TestEvent",
-                    "TestPayload",
                     typeof(TestPayload));
 
             // since the data has not yet been serialized (CloudEvent not constructed from Parse method), GetData returns the passed in instance.
@@ -76,15 +76,15 @@ namespace Azure.Messaging.EventGrid.Tests
                    new AzureKeyCredential("fakeKey"),
                    options);
             var egEvent = new EventGridEvent(
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent",
+                    "TestPayload",
                     new DerivedTestPayload
                     {
                         Name = "name",
                         Age = 10,
                         DerivedProperty = 5
-                    },
-                    "record",
-                    "Microsoft.MockPublisher.TestEvent",
-                    "TestPayload");
+                    });
 
             Assert.AreEqual(5, egEvent.GetData<DerivedTestPayload>().DerivedProperty);
             Assert.AreEqual(5, egEvent.GetData().ToObjectFromJson<DerivedTestPayload>().DerivedProperty);

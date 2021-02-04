@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
@@ -14,21 +13,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The AnalyzeHealthcareEntitiesOperation class for LRO. </summary>
-    public class AnalyzeHealthcareEntitiesOperation : Operation<RecognizeHealthcareEntitiesResultCollection>
+    public class AnalyzeHealthcareEntitiesOperation : PageableOperation<AnalyzeHealthcareEntitiesResultCollection>
     {
-        /// <summary>Provides communication with the Text Analytics Azure Cognitive Service through its REST API.</summary>
-        private readonly TextAnalyticsRestClient _serviceClient;
-
-        /// <summary>Provides tools for exception creation in case of failure.</summary>
-        private readonly ClientDiagnostics _diagnostics;
-
-        private TextAnalyticsOperationStatus _status;
-
-        /// <summary>
-        /// Provides the input to be part of AnalyzeHealthcareEntitiesOperation class
-        /// </summary>
-        internal readonly IDictionary<string, int> _idToIndexMap;
-
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
         /// of the long-running operation.
@@ -36,60 +22,83 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get; }
 
         /// <summary>
+        /// Time when the operation was created on.
+        /// </summary>
+        public DateTimeOffset CreatedOn => _createdOn;
+
+        /// <summary>
+        /// Time when the operation will expire.
+        /// </summary>
+        public DateTimeOffset? ExpiresOn => _expiresOn;
+
+        /// <summary>
+        /// Time when the operation was last modified on
+        /// </summary>
+        public DateTimeOffset LastModified => _lastModified;
+
+        /// <summary>
         /// Gets the status of the operation.
         /// </summary>
         public TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
-        /// next link string for pagination
-        /// </summary>
-        internal string NextLink { get; set; }
-
-        /// <summary>
-        /// Final result of the long-running operation.
+        /// Gets the final result of the long-running operation in a synchronous way.
         /// </summary>
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public override RecognizeHealthcareEntitiesResultCollection Value
-        {
-            get
-            {
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                if (HasCompleted && !HasValue)
-                    throw _requestFailedException;
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                else
-                {
-                    return OperationHelpers.GetValue(ref _value);
-                }
-            }
-        }
-
-        /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
-        private bool _hasCompleted;
+        public override AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> Value => GetValuesAsync();
 
         /// <summary>
         /// Returns true if the long-running operation completed.
         /// </summary>
         public override bool HasCompleted => _hasCompleted;
 
-        private RequestFailedException _requestFailedException;
-
-        /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
-        private Response _response;
-
-        /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
-        private RecognizeHealthcareEntitiesResultCollection _value;
-
-        private int? _top { get; }
-        private int? _skip { get; }
-        private bool? _showStats { get; }
-
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
-        public override bool HasValue => _value != null;
+        public override bool HasValue => _firstPage != null;
+
+        /// <summary>Provides communication with the Text Analytics Azure Cognitive Service through its REST API.</summary>
+        private readonly TextAnalyticsRestClient _serviceClient;
+
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        private readonly ClientDiagnostics _diagnostics;
+
+        /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
+        private bool _hasCompleted;
+
+        private TextAnalyticsOperationStatus _status;
+
+        private RequestFailedException _requestFailedException;
+
+        private Response _response;
+
+        private Page<AnalyzeHealthcareEntitiesResultCollection> _firstPage;
+
+        private readonly bool? _showStats;
+
+        private readonly string _apiVersion;
+
+        /// <summary>
+        /// Time when the operation will expire.
+        /// </summary>
+        private DateTimeOffset? _expiresOn;
+
+        /// <summary>
+        /// Time when the operation was last modified on.
+        /// </summary>
+        private DateTimeOffset _lastModified;
+
+        /// <summary>
+        /// Time when the operation was created on.
+        /// </summary>
+        private DateTimeOffset _createdOn;
+
+        /// <summary>
+        /// Provides the input to be part of AnalyzeHealthcareEntitiesOperation class
+        /// </summary>
+        internal readonly IDictionary<string, int> _idToIndexMap;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class.
@@ -110,18 +119,16 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Text Analytics Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
+        /// <param name="apiversion">The specific api version to use.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="idToIndexMap"></param>
-        /// <param name="top"></param>
-        /// <param name="skip"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeHealthcareEntitiesOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, int? top = default, int? skip = default, bool? showStats = default)
+        internal AnalyzeHealthcareEntitiesOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string apiversion, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
+            _apiVersion = apiversion;
             _idToIndexMap = idToIndexMap;
-            _top = top;
-            _skip = skip;
             _showStats = showStats;
 
             // TODO: Add validation here
@@ -169,7 +176,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<RecognizeHealthcareEntitiesResultCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <summary>
@@ -185,7 +192,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<RecognizeHealthcareEntitiesResultCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -204,27 +211,30 @@ namespace Azure.AI.TextAnalytics
                 try
                 {
                     Response<HealthcareJobState> update = async
-                        ? await _serviceClient.HealthStatusAsync(new Guid(Id), _top, _skip, _showStats, cancellationToken).ConfigureAwait(false)
-                        : _serviceClient.HealthStatus(new Guid(Id), _top, _skip, _showStats, cancellationToken);
+                        ? await _serviceClient.HealthStatusAsync(new Guid(Id), null, null, _showStats, cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.HealthStatus(new Guid(Id), null, null, _showStats, cancellationToken);
 
                     _response = update.GetRawResponse();
                     _status = update.Value.Status;
+                    _createdOn = update.Value.CreatedDateTime;
+                    _expiresOn = update.Value.ExpirationDateTime;
+                    _lastModified = update.Value.LastUpdateDateTime;
 
-                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded)
+                    if (_status == TextAnalyticsOperationStatus.Succeeded)
                     {
-                        // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
-                        _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results, _idToIndexMap);
-                        NextLink = update.Value.NextLink;
+                        var nextLink = update.Value.NextLink;
+                        var value = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(update.Value.Results, _idToIndexMap);
+                        _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { value }, nextLink, _response);
                         _hasCompleted = true;
                     }
-                    else if (update.Value.Status == TextAnalyticsOperationStatus.Failed)
+                    else if (_status == TextAnalyticsOperationStatus.Failed)
                     {
                         _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors)
                             .ConfigureAwait(false);
                         _hasCompleted = true;
                         throw _requestFailedException;
                     }
-                    else if (update.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+                    else if (_status == TextAnalyticsOperationStatus.Cancelled)
                     {
                         _requestFailedException = new RequestFailedException("The operation was canceled so no value is available.");
                         _hasCompleted = true;
@@ -281,6 +291,70 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the final result of the long-running operation in an asynchronous way.
+        /// </summary>
+        /// <remarks>
+        /// Operation must complete successfully (HasValue is true) for it to provide values.
+        /// </remarks>
+        public override AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> GetValuesAsync()
+        {
+            if (!HasCompleted)
+                throw new InvalidOperationException("The operation has not completed yet.");
+            if (HasCompleted && !HasValue)
+                throw _requestFailedException;
+
+            async Task<Page<AnalyzeHealthcareEntitiesResultCollection>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                //diagnostics scope?
+                try
+                {
+                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(_apiVersion, nextLink, _showStats).ConfigureAwait(false);
+
+                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
+                    return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets the final result of the long-running operation in an asynchronous way.
+        /// </summary>
+        /// <remarks>
+        /// Operation must complete successfully (HasValue is true) for it to provide values.
+        /// </remarks>
+        public override Pageable<AnalyzeHealthcareEntitiesResultCollection> GetValues()
+        {
+            if (!HasCompleted)
+                throw new InvalidOperationException("The operation has not completed yet.");
+            if (HasCompleted && !HasValue)
+                throw _requestFailedException;
+
+            Page<AnalyzeHealthcareEntitiesResultCollection> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                //diagnostics scope?
+                try
+                {
+                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(_apiVersion, nextLink, _showStats);
+
+                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
+                    return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
         }
     }
 }

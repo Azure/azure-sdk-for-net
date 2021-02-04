@@ -6,12 +6,12 @@ steps:
 - ${{if ne(parameters.ServiceDirectory, '')}}:
   - task: Powershell@2
     inputs:
-    filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1
-    arguments: >
-      -ServiceDirectory ${{parameters.ServiceDirectory}}
-      -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
-    pwsh: true
-    workingDirectory: $(Pipeline.Workspace)
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1
+      arguments: >
+        -ServiceDirectory ${{parameters.ServiceDirectory}}
+        -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+      pwsh: true
+      workingDirectory: $(Pipeline.Workspace)
     displayName: Dump Package properties
     condition: succeeded()
 - pwsh: |

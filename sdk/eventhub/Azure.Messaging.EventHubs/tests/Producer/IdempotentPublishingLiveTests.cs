@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true, ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType }};
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true, ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType } };
 
                 await using var producer = new EventHubProducerClient(connectionString, options);
 
@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true, ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType }};
+                var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true, ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType } };
 
                 await using var producer = new EventHubProducerClient(connectionString, options);
 
@@ -193,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 var sendOptions = new SendEventOptions { PartitionId = partition };
 
-                async Task sendEvents (int delayMilliseconds)
+                async Task sendEvents(int delayMilliseconds)
                 {
                     await Task.Delay(delayMilliseconds);
                     await producer.SendAsync(EventGenerator.CreateEvents(2), sendOptions, cancellationSource.Token);
@@ -230,7 +230,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 var batchOptions = new CreateBatchOptions { PartitionId = partition };
 
-                async Task sendBatch (int delayMilliseconds)
+                async Task sendBatch(int delayMilliseconds)
                 {
                     await Task.Delay(delayMilliseconds);
 
@@ -462,7 +462,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var partition = default(string);
-                var partitionProperties =  default(PartitionPublishingProperties);
+                var partitionProperties = default(PartitionPublishingProperties);
 
                 // Create a producer for a small scope that will Send some events and read the properties.
 
@@ -505,7 +505,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var partition = default(string);
-                var partitionProperties =  default(PartitionPublishingProperties);
+                var partitionProperties = default(PartitionPublishingProperties);
 
                 // Create a producer for a small scope that will Send some events and read the properties.
 
@@ -560,7 +560,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var partition = default(string);
-                var partitionProperties =  default(PartitionPublishingProperties);
+                var partitionProperties = default(PartitionPublishingProperties);
 
                 // Create a producer for a small scope that will Send some events and read the properties.
 

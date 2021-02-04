@@ -145,7 +145,7 @@ namespace Azure.Storage.Blobs
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateAccountSasUri => SharedKeyCredential != null;
+        public virtual bool CanGenerateAccountSasUri => SharedKeyCredential != null;
 
         /// <summary>
         /// <see cref="ServiceRestClient"/>.

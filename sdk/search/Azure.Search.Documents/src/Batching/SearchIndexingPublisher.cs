@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Batching
         /// <summary>
         /// The sender, which we mostly use for raising events.
         /// </summary>
-        private SearchIndexingBufferedSender<T> _sender;
+        private readonly SearchIndexingBufferedSender<T> _sender;
 
         /// <summary>
         /// Creates a new SearchIndexingPublisher which immediately starts
@@ -100,7 +100,7 @@ namespace Azure.Search.Documents.Batching
             // Raise notifications
             foreach (IndexDocumentsAction<T> document in documents)
             {
-                await _sender.RaiseActionAddedAsync(document, cancellationToken).ConfigureAwait(false);
+                await _sender.OnActionAddedAsync(document, cancellationToken).ConfigureAwait(false);
             }
 
             // Add all of the documents and possibly auto flush
@@ -121,7 +121,7 @@ namespace Azure.Search.Documents.Batching
             // Notify the action is being sent
             foreach (PublisherAction<IndexDocumentsAction<T>> action in batch)
             {
-                await _sender.RaiseActionSentAsync(action.Document, cancellationToken).ConfigureAwait(false);
+                await _sender.OnActionSentAsync(action.Document, cancellationToken).ConfigureAwait(false);
             }
 
             // Send the request to the service
@@ -173,7 +173,7 @@ namespace Azure.Search.Documents.Batching
                 Debug.Assert(action.Key == result.Key);
                 if (result.Succeeded)
                 {
-                    await _sender.RaiseActionCompletedAsync(
+                    await _sender.OnActionCompletedAsync(
                         action.Document,
                         result,
                         cancellationToken)
@@ -190,7 +190,7 @@ namespace Azure.Search.Documents.Batching
                 }
                 else
                 {
-                    await _sender.RaiseActionFailedAsync(
+                    await _sender.OnActionFailedAsync(
                         action.Document,
                         result,
                         exception: null,
@@ -218,7 +218,7 @@ namespace Azure.Search.Documents.Batching
         {
             if (!EnqueueRetry(action))
             {
-                await _sender.RaiseActionFailedAsync(
+                await _sender.OnActionFailedAsync(
                     action.Document,
                     result,
                     exception,

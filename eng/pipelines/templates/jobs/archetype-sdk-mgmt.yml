@@ -76,8 +76,6 @@ jobs:
       #       pathtoPublish: $(msBuildLogDir)
       #       artifactName: MsBuildLogs
   - job: "Analyze"
-    variables:
-      - template: ../variables/globals.yml
     dependsOn:
       - Build
     pool:

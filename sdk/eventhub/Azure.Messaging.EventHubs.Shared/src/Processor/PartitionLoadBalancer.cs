@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   read only in the context of this group.
         /// </summary>
         ///
-        public string ConsumerGroup { get;  }
+        public string ConsumerGroup { get; }
 
         /// <summary>
         ///   The identifier of the EventProcessorClient that owns this load balancer.

@@ -186,6 +186,12 @@ namespace Azure
         public static implicit operator T (Azure.Response<T> response) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SyncAsyncEventArgs : System.EventArgs
+    {
+        public SyncAsyncEventArgs(bool runSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        public bool RunSynchronously { get { throw null; } }
+    }
 }
 namespace Azure.Core
 {
@@ -410,6 +416,7 @@ namespace Azure.Core
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
     }
+    public delegate System.Threading.Tasks.Task SyncAsyncEventHandler<T>(T e) where T : Azure.SyncAsyncEventArgs;
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
@@ -421,7 +428,9 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TokenRequestContext(string[] scopes, string? parentRequestId = null) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null) { throw null; }
+        public string? Claims { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }
         public string[] Scopes { get { throw null; } }
     }

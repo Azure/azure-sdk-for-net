@@ -47,6 +47,52 @@ namespace Azure.AI.FormRecognizer
             V2_1_Preview_2 = 2,
         }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FormRecognizerLanguage : System.IEquatable<Azure.AI.FormRecognizer.FormRecognizerLanguage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FormRecognizerLanguage(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.FormRecognizerLanguage De { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLanguage En { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLanguage Es { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLanguage Fr { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLanguage It { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLanguage Ja { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLanguage Nl { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLanguage Pt { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLanguage ZhHans { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.FormRecognizerLanguage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.FormRecognizerLanguage left, Azure.AI.FormRecognizer.FormRecognizerLanguage right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.FormRecognizerLanguage (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.FormRecognizerLanguage left, Azure.AI.FormRecognizer.FormRecognizerLanguage right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FormRecognizerLocale : System.IEquatable<Azure.AI.FormRecognizer.FormRecognizerLocale>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FormRecognizerLocale(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.FormRecognizerLocale EnAU { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLocale EnCA { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLocale EnGB { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLocale EnIN { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerLocale EnUS { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.FormRecognizerLocale other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.FormRecognizerLocale left, Azure.AI.FormRecognizer.FormRecognizerLocale right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.FormRecognizerLocale (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.FormRecognizerLocale left, Azure.AI.FormRecognizer.FormRecognizerLocale right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public static partial class OperationExtensions
     {
         public static System.Threading.Tasks.Task<Azure.Response<Azure.AI.FormRecognizer.Models.RecognizedFormCollection>> WaitForCompletionAsync(this System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeBusinessCardsOperation> operation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -63,14 +109,14 @@ namespace Azure.AI.FormRecognizer
         public RecognizeBusinessCardsOptions() { }
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public bool IncludeFieldElements { get { throw null; } set { } }
-        public string Locale { get { throw null; } set { } }
+        public Azure.AI.FormRecognizer.FormRecognizerLocale? Locale { get { throw null; } set { } }
     }
     public partial class RecognizeContentOptions
     {
         public RecognizeContentOptions() { }
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
-        public string Language { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> Pages { get { throw null; } set { } }
+        public Azure.AI.FormRecognizer.FormRecognizerLanguage? Language { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Pages { get { throw null; } }
     }
     public partial class RecognizeCustomFormsOptions
     {
@@ -83,14 +129,14 @@ namespace Azure.AI.FormRecognizer
         public RecognizeInvoicesOptions() { }
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public bool IncludeFieldElements { get { throw null; } set { } }
-        public string Locale { get { throw null; } set { } }
+        public Azure.AI.FormRecognizer.FormRecognizerLocale? Locale { get { throw null; } set { } }
     }
     public partial class RecognizeReceiptsOptions
     {
         public RecognizeReceiptsOptions() { }
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public bool IncludeFieldElements { get { throw null; } set { } }
-        public string Locale { get { throw null; } set { } }
+        public Azure.AI.FormRecognizer.FormRecognizerLocale? Locale { get { throw null; } set { } }
     }
 }
 namespace Azure.AI.FormRecognizer.Models

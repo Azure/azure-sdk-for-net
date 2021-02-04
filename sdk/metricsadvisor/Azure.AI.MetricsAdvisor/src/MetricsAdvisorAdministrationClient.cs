@@ -275,10 +275,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/>, <paramref name="dataFeed"/>.Name, <paramref name="dataFeed"/>.DataSource, <paramref name="dataFeed"/>.Granularity, <paramref name="dataFeed"/>.Schema, <paramref name="dataFeed"/>.IngestionSettings, or <paramref name="dataFeed"/>.IngestionSettings.IngestionStartTime is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeed"/>.Name is empty.</exception>
         public virtual async Task<Response<string>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            ValidateDataFeedToCreate(dataFeed);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
@@ -306,10 +307,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c> instance
         /// containing the ID of the newly created feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/>, <paramref name="dataFeed"/>.Name, <paramref name="dataFeed"/>.DataSource, <paramref name="dataFeed"/>.Granularity, <paramref name="dataFeed"/>.Schema, <paramref name="dataFeed"/>.IngestionSettings, or <paramref name="dataFeed"/>.IngestionSettings.IngestionStartTime is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeed"/>.Name is empty.</exception>
         public virtual Response<string> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            ValidateDataFeedToCreate(dataFeed);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
@@ -678,6 +680,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return dataFeeds;
         }
 
+        private static void ValidateDataFeedToCreate(DataFeed dataFeed)
+        {
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+            Argument.AssertNotNullOrEmpty(dataFeed.Name, $"{nameof(dataFeed)}.{nameof(dataFeed.Name)}");
+            Argument.AssertNotNull(dataFeed.DataSource, $"{nameof(dataFeed)}.{nameof(dataFeed.DataSource)}");
+            Argument.AssertNotNull(dataFeed.Granularity, $"{nameof(dataFeed)}.{nameof(dataFeed.Granularity)}");
+            Argument.AssertNotNull(dataFeed.Schema, $"{nameof(dataFeed)}.{nameof(dataFeed.Schema)}");
+            Argument.AssertNotNull(dataFeed.IngestionSettings, $"{nameof(dataFeed)}.{nameof(dataFeed.IngestionSettings)}");
+            Argument.AssertNotNull(dataFeed.IngestionSettings.IngestionStartTime, $"{nameof(dataFeed)}.{nameof(dataFeed.IngestionSettings)}.{nameof(dataFeed.IngestionSettings.IngestionStartTime)}");
+        }
+
         #endregion DataFeed
 
         #region AnomalyDetectionConfiguration
@@ -691,10 +704,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/>, <paramref name="detectionConfiguration"/>.MetricId, <paramref name="detectionConfiguration"/>.Name, or <paramref name="detectionConfiguration"/>.WholeSeriesDetectionConditions is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="detectionConfiguration"/>.MetricId or <paramref name="detectionConfiguration"/>.Name is empty.</exception>
         public virtual async Task<Response<string>> CreateDetectionConfigurationAsync(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
+            ValidateDetectionConfigurationToCreate(detectionConfiguration);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDetectionConfiguration)}");
             scope.Start();
@@ -722,10 +736,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/>, <paramref name="detectionConfiguration"/>.MetricId, <paramref name="detectionConfiguration"/>.Name, or <paramref name="detectionConfiguration"/>.WholeSeriesDetectionConditions is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="detectionConfiguration"/>.MetricId or <paramref name="detectionConfiguration"/>.Name is empty.</exception>
         public virtual Response<string> CreateDetectionConfiguration(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
+            ValidateDetectionConfigurationToCreate(detectionConfiguration);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDetectionConfiguration)}");
             scope.Start();
@@ -992,6 +1007,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        private static void ValidateDetectionConfigurationToCreate(AnomalyDetectionConfiguration configuration)
+        {
+            Argument.AssertNotNull(configuration, nameof(configuration));
+            Argument.AssertNotNullOrEmpty(configuration.MetricId, $"{nameof(configuration)}.{nameof(AnomalyDetectionConfiguration.MetricId)}");
+            Argument.AssertNotNullOrEmpty(configuration.Name, $"{nameof(configuration)}.{nameof(AnomalyDetectionConfiguration.Name)}");
+            Argument.AssertNotNull(configuration.WholeSeriesDetectionConditions, $"{nameof(configuration)}.{nameof(AnomalyDetectionConfiguration.WholeSeriesDetectionConditions)}");
         }
 
         #endregion AnomalyDetectionConfiguration

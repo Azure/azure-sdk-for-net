@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -22,7 +23,7 @@ namespace Azure.MixedReality.Authentication.Tests
         private MixedRealityStsClient CreateClient()
         {
             string mixedRealityAccountDomain = TestEnvironment.AccountDomain;
-            string mixedRealityAccountId = TestEnvironment.AccountId;
+            Guid mixedRealityAccountId = Guid.Parse(TestEnvironment.AccountId);
             string mixedRealityAccountKey = TestEnvironment.AccountKey;
 
             return InstrumentClient(new MixedRealityStsClient(
