@@ -12,14 +12,13 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for State.
+    /// Defines values for IdentityType.
     /// </summary>
-    public static class State
+    public static class IdentityType
     {
-        public const string Provisioning = "provisioning";
-        public const string Deprovisioning = "deprovisioning";
-        public const string Succeeded = "succeeded";
-        public const string Failed = "failed";
-        public const string NetworkSourceDeleted = "networkSourceDeleted";
+        public const string None = "None";
+        public const string SystemAssigned = "SystemAssigned";
+        public const string UserAssigned = "UserAssigned";
+        public const string SystemAssignedUserAssigned = "SystemAssigned,UserAssigned";
     }
 }

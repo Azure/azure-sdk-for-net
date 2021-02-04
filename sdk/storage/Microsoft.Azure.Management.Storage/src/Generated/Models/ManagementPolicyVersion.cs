@@ -14,29 +14,29 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// Management policy action for snapshot.
+    /// Management policy action for blob version.
     /// </summary>
-    public partial class ManagementPolicySnapShot
+    public partial class ManagementPolicyVersion
     {
         /// <summary>
-        /// Initializes a new instance of the ManagementPolicySnapShot class.
+        /// Initializes a new instance of the ManagementPolicyVersion class.
         /// </summary>
-        public ManagementPolicySnapShot()
+        public ManagementPolicyVersion()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagementPolicySnapShot class.
+        /// Initializes a new instance of the ManagementPolicyVersion class.
         /// </summary>
-        /// <param name="tierToCool">The function to tier blob snapshot to cool
-        /// storage. Support blob snapshot currently at Hot tier</param>
-        /// <param name="tierToArchive">The function to tier blob snapshot to
-        /// archive storage. Support blob snapshot currently at Hot or Cool
+        /// <param name="tierToCool">The function to tier blob version to cool
+        /// storage. Support blob version currently at Hot tier</param>
+        /// <param name="tierToArchive">The function to tier blob version to
+        /// archive storage. Support blob version currently at Hot or Cool
         /// tier</param>
         /// <param name="delete">The function to delete the blob
-        /// snapshot</param>
-        public ManagementPolicySnapShot(DateAfterCreation tierToCool = default(DateAfterCreation), DateAfterCreation tierToArchive = default(DateAfterCreation), DateAfterCreation delete = default(DateAfterCreation))
+        /// version</param>
+        public ManagementPolicyVersion(DateAfterCreation tierToCool = default(DateAfterCreation), DateAfterCreation tierToArchive = default(DateAfterCreation), DateAfterCreation delete = default(DateAfterCreation))
         {
             TierToCool = tierToCool;
             TierToArchive = tierToArchive;
@@ -50,21 +50,21 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the function to tier blob snapshot to cool storage.
-        /// Support blob snapshot currently at Hot tier
+        /// Gets or sets the function to tier blob version to cool storage.
+        /// Support blob version currently at Hot tier
         /// </summary>
         [JsonProperty(PropertyName = "tierToCool")]
         public DateAfterCreation TierToCool { get; set; }
 
         /// <summary>
-        /// Gets or sets the function to tier blob snapshot to archive storage.
-        /// Support blob snapshot currently at Hot or Cool tier
+        /// Gets or sets the function to tier blob version to archive storage.
+        /// Support blob version currently at Hot or Cool tier
         /// </summary>
         [JsonProperty(PropertyName = "tierToArchive")]
         public DateAfterCreation TierToArchive { get; set; }
 
         /// <summary>
-        /// Gets or sets the function to delete the blob snapshot
+        /// Gets or sets the function to delete the blob version
         /// </summary>
         [JsonProperty(PropertyName = "delete")]
         public DateAfterCreation Delete { get; set; }

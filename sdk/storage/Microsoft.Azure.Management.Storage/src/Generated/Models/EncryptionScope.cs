@@ -52,7 +52,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="keyVaultProperties">The key vault properties for the
         /// encryption scope. This is a required field if encryption scope
         /// 'source' attribute is set to 'Microsoft.KeyVault'.</param>
-        public EncryptionScope(string id = default(string), string name = default(string), string type = default(string), string source = default(string), string state = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), EncryptionScopeKeyVaultProperties keyVaultProperties = default(EncryptionScopeKeyVaultProperties))
+        /// <param name="requireInfrastructureEncryption">A boolean indicating
+        /// whether or not the service applies a secondary layer of encryption
+        /// with platform managed keys for data at rest.</param>
+        public EncryptionScope(string id = default(string), string name = default(string), string type = default(string), string source = default(string), string state = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), EncryptionScopeKeyVaultProperties keyVaultProperties = default(EncryptionScopeKeyVaultProperties), bool? requireInfrastructureEncryption = default(bool?))
             : base(id, name, type)
         {
             Source = source;
@@ -60,6 +63,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             CreationTime = creationTime;
             LastModifiedTime = lastModifiedTime;
             KeyVaultProperties = keyVaultProperties;
+            RequireInfrastructureEncryption = requireInfrastructureEncryption;
             CustomInit();
         }
 
@@ -104,6 +108,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.keyVaultProperties")]
         public EncryptionScopeKeyVaultProperties KeyVaultProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean indicating whether or not the service
+        /// applies a secondary layer of encryption with platform managed keys
+        /// for data at rest.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.requireInfrastructureEncryption")]
+        public bool? RequireInfrastructureEncryption { get; set; }
 
     }
 }
