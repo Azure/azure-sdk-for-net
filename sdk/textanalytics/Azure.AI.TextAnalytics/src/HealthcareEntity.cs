@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics
             Offset = entity.Offset;
             Length = entity.Length;
             DataSources = entity.Links;
-            RelatedEntities = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>(entity.RelatedEntities);
+            RelatedEntities = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>();
         }
         /// <summary>
         /// Gets the entity text as it appears in the input document.
@@ -67,6 +67,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the entities and the relationship between the entities.
         /// </summary>
-        public Dictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; }
+        public IDictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; internal set; }
     }
 }
