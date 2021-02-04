@@ -281,7 +281,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
             Assert.AreEqual(200, operation.GetRawResponse().Status);
-            Assert.AreEqual(TextAnalyticsOperationStatus.Cancelled, operation.Status);
+            Assert.AreEqual(OperationStatus.Cancelled, operation.Status);
 
             try
             {

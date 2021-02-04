@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<DateTimeOffset> expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
-            TextAnalyticsOperationStatus status = default;
+            OperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"))
@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
+                    status = new OperationStatus(property.Value.GetString());
                     continue;
                 }
             }

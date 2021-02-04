@@ -20,11 +20,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// The first top documents from the result.
         /// </summary>
-        public int? Top { get; set; }
+        internal int? Top { get; set; }
 
         /// <summary>
         /// The skipped documents from the result. The Skip is called first when used with Top.
         /// </summary>
-        public int? Skip { get; set; }
+        internal int? Skip { get; set; }
     }
 }

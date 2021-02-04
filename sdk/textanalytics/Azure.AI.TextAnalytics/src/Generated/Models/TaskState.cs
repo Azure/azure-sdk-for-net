@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Initializes a new instance of TaskState. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        internal TaskState(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
+        internal TaskState(DateTimeOffset lastUpdateDateTime, OperationStatus status)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;

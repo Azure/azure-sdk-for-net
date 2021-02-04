@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
 
-        private TextAnalyticsOperationStatus _status;
+        private OperationStatus _status;
 
         /// <summary>
         /// Provides the input to be part of AnalyzeHealthcareEntitiesOperation class
@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the status of the operation.
         /// </summary>
-        public TextAnalyticsOperationStatus Status => _status;
+        public OperationStatus Status => _status;
 
         /// <summary>
         /// next link string for pagination
@@ -225,21 +225,21 @@ namespace Azure.AI.TextAnalytics
                     _response = update.GetRawResponse();
                     _status = update.Value.Status;
 
-                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded)
+                    if (update.Value.Status == OperationStatus.Succeeded)
                     {
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
                         _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results, _idToIndexMap);
                         NextLink = update.Value.NextLink;
                         _hasCompleted = true;
                     }
-                    else if (update.Value.Status == TextAnalyticsOperationStatus.Failed)
+                    else if (update.Value.Status == OperationStatus.Failed)
                     {
                         _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors)
                             .ConfigureAwait(false);
                         _hasCompleted = true;
                         throw _requestFailedException;
                     }
-                    else if (update.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+                    else if (update.Value.Status == OperationStatus.Cancelled)
                     {
                         _requestFailedException = new RequestFailedException("The operation was canceled so no value is available.");
                         _hasCompleted = true;

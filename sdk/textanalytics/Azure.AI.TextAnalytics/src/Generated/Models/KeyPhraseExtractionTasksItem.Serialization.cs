@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class KeyPhraseExtractionTasksItem
+    internal partial class KeyPhraseExtractionTasksItem
     {
         internal static KeyPhraseExtractionTasksItem DeserializeKeyPhraseExtractionTasksItem(JsonElement element)
         {
             KeyPhraseResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> name = default;
-            TextAnalyticsOperationStatus status = default;
+            OperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
+                    status = new OperationStatus(property.Value.GetString());
                     continue;
                 }
             }

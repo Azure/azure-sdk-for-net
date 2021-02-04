@@ -492,25 +492,25 @@ The Analyze functionality allows to choose which of the supported Text Analytics
 
     var batchDocuments = new List<string> { document };
 
-    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+    TextAnalyticsActions batchActions = new TextAnalyticsActions()
     {
-        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-        EntitiesTaskParameters = new EntitiesTaskParameters(),
-        PiiTaskParameters = new PiiTaskParameters(),
+        ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+        RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
+        RecognizePiiEntityOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
+    AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
     await operation.WaitForCompletionAsync();
 
-    AnalyzeOperationResult resultCollection = operation.Value;
+    AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-    RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
+    RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionResults.Results[0];
 
-    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
 
-    RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
+    RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionResults.Results[0];
 
     Console.WriteLine("Recognized Entities");
 

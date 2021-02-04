@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class TasksStateTasksDetails
+    public partial class TasksStateTasksDetailsInternal
     {
-        internal static TasksStateTasksDetails DeserializeTasksStateTasksDetails(JsonElement element)
+        internal static TasksStateTasksDetailsInternal DeserializeTasksStateTasksDetailsInternal(JsonElement element)
         {
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> name = default;
-            TextAnalyticsOperationStatus status = default;
+            OperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdateDateTime"))
@@ -32,11 +32,11 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
+                    status = new OperationStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new TasksStateTasksDetails(lastUpdateDateTime, name.Value, status);
+            return new TasksStateTasksDetailsInternal(lastUpdateDateTime, name.Value, status);
         }
     }
 }

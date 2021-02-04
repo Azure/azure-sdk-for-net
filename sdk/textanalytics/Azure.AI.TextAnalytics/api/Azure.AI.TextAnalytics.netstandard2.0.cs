@@ -1,5 +1,40 @@
 namespace Azure.AI.TextAnalytics
 {
+    public partial class AnalyzeBatchActionsOperation : Azure.Operation<Azure.AI.TextAnalytics.AnalyzeBatchActionsResult>
+    {
+        public AnalyzeBatchActionsOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
+        public int ActionsFailed { get { throw null; } }
+        public int ActionsInProgress { get { throw null; } }
+        public int ActionsSucceeded { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public Azure.AI.TextAnalytics.OperationStatus Status { get { throw null; } }
+        public int TotalActions { get { throw null; } }
+        public override Azure.AI.TextAnalytics.AnalyzeBatchActionsResult Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.TextAnalytics.AnalyzeBatchActionsResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.TextAnalytics.AnalyzeBatchActionsResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AnalyzeBatchActionsOptions
+    {
+        public AnalyzeBatchActionsOptions() { }
+        public bool IncludeStatistics { get { throw null; } set { } }
+    }
+    public partial class AnalyzeBatchActionsResult
+    {
+        internal AnalyzeBatchActionsResult() { }
+        public Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResults ExtractKeyPhrasesActionResults { get { throw null; } }
+        public Azure.AI.TextAnalytics.RecognizeEntitiesActionResults RecognizeEntitiesActionResults { get { throw null; } }
+        public Azure.AI.TextAnalytics.RecognizePiiEntitiesActionResults RecognizePiiEntitiesActionResults { get { throw null; } }
+        public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+    }
     public partial class AnalyzeHealthcareEntitiesOperation : Azure.Operation<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResultCollection>
     {
         public AnalyzeHealthcareEntitiesOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
@@ -9,7 +44,7 @@ namespace Azure.AI.TextAnalytics
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
-        public Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Status { get { throw null; } }
+        public Azure.AI.TextAnalytics.OperationStatus Status { get { throw null; } }
         public override Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResultCollection Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -22,8 +57,6 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeHealthcareEntitiesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public AnalyzeHealthcareEntitiesOptions() { }
-        public int? Skip { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -36,36 +69,6 @@ namespace Azure.AI.TextAnalytics
         internal AnalyzeHealthcareEntitiesResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult>)) { }
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
-    }
-    public partial class AnalyzeOperation : Azure.Operation<Azure.AI.TextAnalytics.AnalyzeOperationResult>
-    {
-        public AnalyzeOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.AI.TextAnalytics.AnalyzeOperationResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.TextAnalytics.AnalyzeOperationResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.TextAnalytics.AnalyzeOperationResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AnalyzeOperationOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
-    {
-        public AnalyzeOperationOptions() { }
-        public string DisplayName { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.EntitiesTaskParameters EntitiesTaskParameters { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.KeyPhrasesTaskParameters KeyPhrasesTaskParameters { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.PiiTaskParameters PiiTaskParameters { get { throw null; } set { } }
-    }
-    public partial class AnalyzeOperationResult
-    {
-        internal AnalyzeOperationResult() { }
-        public string DisplayName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.TextAnalyticsError> Errors { get { throw null; } }
-        public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
-        public Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Status { get { throw null; } }
-        public Azure.AI.TextAnalytics.AnalyzeTasks Tasks { get { throw null; } }
     }
     public partial class AnalyzeSentimentOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
@@ -82,18 +85,6 @@ namespace Azure.AI.TextAnalytics
         internal AnalyzeSentimentResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.AnalyzeSentimentResult>)) { }
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
-    }
-    public partial class AnalyzeTasks
-    {
-        internal AnalyzeTasks() { }
-        public int Completed { get { throw null; } }
-        public Azure.AI.TextAnalytics.TasksStateTasksDetails Details { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.EntityRecognitionPiiTasksItem> EntityRecognitionPiiTasks { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.EntityRecognitionTasksItem> EntityRecognitionTasks { get { throw null; } }
-        public int Failed { get { throw null; } }
-        public int InProgress { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get { throw null; } }
-        public int Total { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AspectSentiment
@@ -156,17 +147,6 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
-    public partial class EntitiesTask
-    {
-        public EntitiesTask() { }
-        public Azure.AI.TextAnalytics.EntitiesTaskParameters Parameters { get { throw null; } set { } }
-    }
-    public partial class EntitiesTaskParameters
-    {
-        public EntitiesTaskParameters() { }
-        public string ModelVersion { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.StringIndexType StringIndexType { get { throw null; } set { } }
-    }
     public partial class Entity
     {
         internal Entity() { }
@@ -213,15 +193,14 @@ namespace Azure.AI.TextAnalytics
         public string EntityId { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class EntityRecognitionPiiTasksItem : Azure.AI.TextAnalytics.TaskState
+    public partial class ExtractKeyPhrasesActionResults : Azure.AI.TextAnalytics.TextAnalyticsActionDetails
     {
-        internal EntityRecognitionPiiTasksItem() { }
-        public Azure.AI.TextAnalytics.RecognizePiiEntitiesResultCollection Results { get { throw null; } }
+        internal ExtractKeyPhrasesActionResults() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection> Results { get { throw null; } }
     }
-    public partial class EntityRecognitionTasksItem : Azure.AI.TextAnalytics.TaskState
+    public partial class ExtractKeyPhrasesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
-        internal EntityRecognitionTasksItem() { }
-        public Azure.AI.TextAnalytics.RecognizeEntitiesResultCollection Results { get { throw null; } }
+        public ExtractKeyPhrasesOptions() { }
     }
     public partial class ExtractKeyPhrasesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -264,32 +243,10 @@ namespace Azure.AI.TextAnalytics
         public static bool operator !=(Azure.AI.TextAnalytics.HealthcareEntityRelationType left, Azure.AI.TextAnalytics.HealthcareEntityRelationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class JobManifestTasks
-    {
-        public JobManifestTasks() { }
-        public System.Collections.Generic.IList<Azure.AI.TextAnalytics.PiiTask> EntityRecognitionPiiTasks { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.TextAnalytics.EntitiesTask> EntityRecognitionTasks { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.TextAnalytics.KeyPhrasesTask> KeyPhraseExtractionTasks { get { throw null; } }
-    }
     public partial class KeyPhraseCollection : System.Collections.ObjectModel.ReadOnlyCollection<string>
     {
         internal KeyPhraseCollection() : base (default(System.Collections.Generic.IList<string>)) { }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
-    }
-    public partial class KeyPhraseExtractionTasksItem : Azure.AI.TextAnalytics.TaskState
-    {
-        internal KeyPhraseExtractionTasksItem() { }
-        public Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection Results { get { throw null; } }
-    }
-    public partial class KeyPhrasesTask
-    {
-        public KeyPhrasesTask() { }
-        public Azure.AI.TextAnalytics.KeyPhrasesTaskParameters Parameters { get { throw null; } set { } }
-    }
-    public partial class KeyPhrasesTaskParameters
-    {
-        public KeyPhrasesTaskParameters() { }
-        public string ModelVersion { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LinkedEntity
@@ -327,6 +284,30 @@ namespace Azure.AI.TextAnalytics
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.OpinionSentiment> Opinions { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationStatus : System.IEquatable<Azure.AI.TextAnalytics.OperationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationStatus(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.OperationStatus Cancelled { get { throw null; } }
+        public static Azure.AI.TextAnalytics.OperationStatus Cancelling { get { throw null; } }
+        public static Azure.AI.TextAnalytics.OperationStatus Failed { get { throw null; } }
+        public static Azure.AI.TextAnalytics.OperationStatus NotStarted { get { throw null; } }
+        public static Azure.AI.TextAnalytics.OperationStatus PartiallyCompleted { get { throw null; } }
+        public static Azure.AI.TextAnalytics.OperationStatus Rejected { get { throw null; } }
+        public static Azure.AI.TextAnalytics.OperationStatus Running { get { throw null; } }
+        public static Azure.AI.TextAnalytics.OperationStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.OperationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.OperationStatus left, Azure.AI.TextAnalytics.OperationStatus right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.OperationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.OperationStatus left, Azure.AI.TextAnalytics.OperationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OpinionSentiment
     {
         private readonly object _dummy;
@@ -358,35 +339,14 @@ namespace Azure.AI.TextAnalytics
     {
         ProtectedHealthInformation = 0,
     }
-    public partial class PiiTask
+    public partial class RecognizeEntitiesActionResults : Azure.AI.TextAnalytics.TextAnalyticsActionDetails
     {
-        public PiiTask() { }
-        public Azure.AI.TextAnalytics.PiiTaskParameters Parameters { get { throw null; } set { } }
+        internal RecognizeEntitiesActionResults() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.RecognizeEntitiesResultCollection> Results { get { throw null; } }
     }
-    public partial class PiiTaskParameters
+    public partial class RecognizeEntitiesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
-        public PiiTaskParameters() { }
-        public Azure.AI.TextAnalytics.PiiTaskParametersDomain? Domain { get { throw null; } set { } }
-        public string ModelVersion { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.StringIndexType StringIndexType { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PiiTaskParametersDomain : System.IEquatable<Azure.AI.TextAnalytics.PiiTaskParametersDomain>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PiiTaskParametersDomain(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.PiiTaskParametersDomain None { get { throw null; } }
-        public static Azure.AI.TextAnalytics.PiiTaskParametersDomain Phi { get { throw null; } }
-        public bool Equals(Azure.AI.TextAnalytics.PiiTaskParametersDomain other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.TextAnalytics.PiiTaskParametersDomain left, Azure.AI.TextAnalytics.PiiTaskParametersDomain right) { throw null; }
-        public static implicit operator Azure.AI.TextAnalytics.PiiTaskParametersDomain (string value) { throw null; }
-        public static bool operator !=(Azure.AI.TextAnalytics.PiiTaskParametersDomain left, Azure.AI.TextAnalytics.PiiTaskParametersDomain right) { throw null; }
-        public override string ToString() { throw null; }
+        public RecognizeEntitiesOptions() { }
     }
     public partial class RecognizeEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -409,6 +369,11 @@ namespace Azure.AI.TextAnalytics
         internal RecognizeLinkedEntitiesResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.RecognizeLinkedEntitiesResult>)) { }
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+    }
+    public partial class RecognizePiiEntitiesActionResults : Azure.AI.TextAnalytics.TextAnalyticsActionDetails
+    {
+        internal RecognizePiiEntitiesActionResults() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.RecognizePiiEntitiesResultCollection> Results { get { throw null; } }
     }
     public partial class RecognizePiiEntitiesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
@@ -463,16 +428,31 @@ namespace Azure.AI.TextAnalytics
         public static bool operator !=(Azure.AI.TextAnalytics.StringIndexType left, Azure.AI.TextAnalytics.StringIndexType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TasksStateTasksDetails : Azure.AI.TextAnalytics.TaskState
+    public partial class TasksStateTasksDetailsInternal : Azure.AI.TextAnalytics.TaskState
     {
-        internal TasksStateTasksDetails() { }
+        internal TasksStateTasksDetailsInternal() { }
     }
     public partial class TaskState
     {
         internal TaskState() { }
         public System.DateTimeOffset LastUpdateDateTime { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Status { get { throw null; } }
+        public Azure.AI.TextAnalytics.OperationStatus Status { get { throw null; } }
+    }
+    public partial class TextAnalyticsActionDetails
+    {
+        internal TextAnalyticsActionDetails() { }
+        public System.DateTimeOffset CompletedOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.TextAnalyticsError> Errors { get { throw null; } }
+        public bool HasError { get { throw null; } }
+    }
+    public partial class TextAnalyticsActions
+    {
+        public TextAnalyticsActions() { }
+        public string DisplayName { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.ExtractKeyPhrasesOptions> ExtractKeyPhrasesOptions { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.RecognizeEntitiesOptions> RecognizeEntitiesOptions { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.RecognizePiiEntitiesOptions> RecognizePiiEntityOptions { get { throw null; } set { } }
     }
     public partial class TextAnalyticsClient
     {
@@ -534,14 +514,14 @@ namespace Azure.AI.TextAnalytics
         public virtual Azure.Response<Azure.AI.TextAnalytics.RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(System.Collections.Generic.IEnumerable<string> documents, string language = null, Azure.AI.TextAnalytics.RecognizePiiEntitiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.TextAnalytics.RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, Azure.AI.TextAnalytics.RecognizePiiEntitiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.TextAnalytics.RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(System.Collections.Generic.IEnumerable<string> documents, string language = null, Azure.AI.TextAnalytics.RecognizePiiEntitiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.TextAnalytics.AnalyzeBatchActionsOperation StartAnalyzeBatchActions(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, Azure.AI.TextAnalytics.TextAnalyticsActions actions, Azure.AI.TextAnalytics.AnalyzeBatchActionsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.TextAnalytics.AnalyzeBatchActionsOperation StartAnalyzeBatchActions(System.Collections.Generic.IEnumerable<string> documents, Azure.AI.TextAnalytics.TextAnalyticsActions actions, string language = null, Azure.AI.TextAnalytics.AnalyzeBatchActionsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, Azure.AI.TextAnalytics.TextAnalyticsActions actions, Azure.AI.TextAnalytics.AnalyzeBatchActionsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(System.Collections.Generic.IEnumerable<string> documents, Azure.AI.TextAnalytics.TextAnalyticsActions actions, string language = null, Azure.AI.TextAnalytics.AnalyzeBatchActionsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(System.Collections.Generic.IEnumerable<string> documents, string language = null, Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(System.Collections.Generic.IEnumerable<string> documents, string language = null, Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AI.TextAnalytics.AnalyzeOperation StartAnalyzeOperationBatch(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, Azure.AI.TextAnalytics.AnalyzeOperationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AI.TextAnalytics.AnalyzeOperation StartAnalyzeOperationBatch(System.Collections.Generic.IEnumerable<string> documents, Azure.AI.TextAnalytics.AnalyzeOperationOptions options, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.AnalyzeOperation> StartAnalyzeOperationBatchAsync(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, Azure.AI.TextAnalytics.AnalyzeOperationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.TextAnalytics.AnalyzeOperation> StartAnalyzeOperationBatchAsync(System.Collections.Generic.IEnumerable<string> documents, Azure.AI.TextAnalytics.AnalyzeOperationOptions options, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
@@ -648,30 +628,6 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.TextAnalyticsWarning TextAnalyticsWarning(string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.TextDocumentBatchStatistics TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount) { throw null; }
         public static Azure.AI.TextAnalytics.TextDocumentStatistics TextDocumentStatistics(int characterCount, int transactionCount) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TextAnalyticsOperationStatus : System.IEquatable<Azure.AI.TextAnalytics.TextAnalyticsOperationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TextAnalyticsOperationStatus(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Cancelled { get { throw null; } }
-        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Cancelling { get { throw null; } }
-        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Failed { get { throw null; } }
-        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus NotStarted { get { throw null; } }
-        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus PartiallyCompleted { get { throw null; } }
-        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Rejected { get { throw null; } }
-        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Running { get { throw null; } }
-        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.AI.TextAnalytics.TextAnalyticsOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.TextAnalytics.TextAnalyticsOperationStatus left, Azure.AI.TextAnalytics.TextAnalyticsOperationStatus right) { throw null; }
-        public static implicit operator Azure.AI.TextAnalytics.TextAnalyticsOperationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.AI.TextAnalytics.TextAnalyticsOperationStatus left, Azure.AI.TextAnalytics.TextAnalyticsOperationStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class TextAnalyticsRequestOptions
     {

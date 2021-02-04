@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task AnalyzeOperationAsync_ManualPolling()
+        public void AnalyzeOperationAsync_ManualPolling()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -41,36 +41,36 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-                EntitiesTaskParameters = new EntitiesTaskParameters(),
-                PiiTaskParameters = new PiiTaskParameters(),
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
+                RecognizePiiEntityOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
+            AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
 
             TimeSpan pollingInterval = new TimeSpan(1000);
 
             while (true)
             {
-                await operation.UpdateStatusAsync();
+                operation.UpdateStatus();
                 if (operation.HasCompleted)
                 {
                     break;
                 }
 
-                await Task.Delay(pollingInterval);
+                Task.Delay(pollingInterval);
             }
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionResults.Results[0];
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
 
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionResults.Results[0];
 
             Console.WriteLine("Recognized Entities");
 

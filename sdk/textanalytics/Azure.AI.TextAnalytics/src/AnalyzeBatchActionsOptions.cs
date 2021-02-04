@@ -1,19 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// PiiTask.
+    /// AnalyzeBatchActionsOptions
     /// </summary>
-    [CodeGenModel("PiiTask")]
-    internal partial class PiiTask
+    public class AnalyzeBatchActionsOptions
     {
         /// <summary>
-        /// Parameters for PiiTask
+        /// IncludeStatistics
         /// </summary>
-        public PiiTaskParameters Parameters { get; set; }
+        public bool IncludeStatistics { get; set; }
     }
 }

@@ -307,9 +307,81 @@ namespace Azure.AI.TextAnalytics
 
         #region Analyze Operation
 
-        internal static AnalyzeOperationResult ConvertToAnalyzeOperationResult(AnalyzeJobState jobState, IDictionary<string, int> map)
+        internal static PiiTask ConvertToPiiTask(RecognizePiiEntitiesOptions option)
         {
-            return new AnalyzeOperationResult(jobState, map);
+            return new PiiTask()
+            {
+                Parameters = new PiiTaskParameters()
+                {
+                    Domain = option.DomainFilter.GetString(),
+                    ModelVersion = option.ModelVersion,
+                    StringIndexType = option.StringIndexType
+                }
+            };
+        }
+
+        internal static EntitiesTask ConvertToEntitiesTask(RecognizeEntitiesOptions option)
+        {
+            return new EntitiesTask()
+            {
+                Parameters = new EntitiesTaskParameters()
+                {
+                    ModelVersion = option.ModelVersion,
+                    StringIndexType = option.StringIndexType
+                }
+            };
+        }
+
+        internal static KeyPhrasesTask ConvertToKeyPhrasesTask(ExtractKeyPhrasesOptions option)
+        {
+            return new KeyPhrasesTask()
+            {
+                Parameters = new KeyPhrasesTaskParameters()
+                {
+                    ModelVersion = option.ModelVersion
+                }
+            };
+        }
+
+        internal static IList<EntitiesTask> ConvertFromEntityOptionsToTasks(IReadOnlyCollection<RecognizeEntitiesOptions> recognizeEntitiesOptions)
+        {
+            List<EntitiesTask> list = new List<EntitiesTask>();
+
+            foreach (RecognizeEntitiesOptions option in recognizeEntitiesOptions)
+            {
+                list.Add(ConvertToEntitiesTask(option));
+            }
+
+            return list;
+        }
+
+        internal static IList<KeyPhrasesTask> ConvertFromKeyPhrasesOptionsToTasks(IReadOnlyCollection<ExtractKeyPhrasesOptions> extractKeyPhrasesOptions)
+        {
+            List<KeyPhrasesTask> list = new List<KeyPhrasesTask>();
+
+            foreach (ExtractKeyPhrasesOptions option in extractKeyPhrasesOptions)
+            {
+                list.Add(ConvertToKeyPhrasesTask(option));
+            }
+
+            return list;
+        }
+
+        internal static IList<PiiTask> ConvertFromPiiEntityOptionsToTasks(IReadOnlyCollection<RecognizePiiEntitiesOptions> recognizePiiEntityOptions)
+        {
+            List <PiiTask> list = new List<PiiTask>();
+
+            foreach (RecognizePiiEntitiesOptions option in recognizePiiEntityOptions)
+            {
+                list.Add(ConvertToPiiTask(option));
+            }
+
+            return list;
+        }
+
+        internal static AnalyzeBatchActionsResult ConvertToAnalyzeOperationResult(AnalyzeJobState jobState, IDictionary<string, int> map)
+        {
+            return new AnalyzeBatchActionsResult(jobState, map);
         }
 
         internal static IReadOnlyList<KeyPhraseExtractionTasksItem> ConvertToKeyPhraseExtractionTasks(IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IDictionary<string, int> idToIndexMap)
@@ -343,6 +415,39 @@ namespace Azure.AI.TextAnalytics
             }
 
             return collection;
+        }
+
+        internal static ExtractKeyPhrasesActionResults ConvertToExtractKeyPhrasesActionResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<ExtractKeyPhrasesResultCollection>();
+            foreach (KeyPhraseExtractionTasksItem task in jobState.Tasks.KeyPhraseExtractionTasks)
+            {
+                collection.Add(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap));
+            }
+
+            return new ExtractKeyPhrasesActionResults(collection, jobState.LastUpdateDateTime, jobState.Errors, jobState.Errors.Any());
+        }
+
+        internal static RecognizePiiEntitiesActionResults ConvertToRecognizePiiEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<RecognizePiiEntitiesResultCollection>();
+            foreach (EntityRecognitionPiiTasksItem task in jobState.Tasks.EntityRecognitionPiiTasks)
+            {
+                collection.Add(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap));
+            }
+
+            return new RecognizePiiEntitiesActionResults(collection, jobState.LastUpdateDateTime, jobState.Errors, jobState.Errors.Any());
+        }
+
+        internal static RecognizeEntitiesActionResults ConvertToRecognizeEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<RecognizeEntitiesResultCollection>();
+            foreach (EntityRecognitionTasksItem task in jobState.Tasks.EntityRecognitionTasks)
+            {
+                collection.Add(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap));
+            }
+
+            return new RecognizeEntitiesActionResults(collection, jobState.LastUpdateDateTime, jobState.Errors, jobState.Errors.Any());
         }
 
         #endregion

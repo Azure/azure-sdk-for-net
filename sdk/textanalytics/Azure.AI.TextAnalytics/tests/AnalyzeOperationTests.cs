@@ -36,24 +36,26 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions);
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasksItemCollection = resultCollection.Tasks.EntityRecognitionTasks;
-            IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasksItemCollection = resultCollection.Tasks.EntityRecognitionPiiTasks;
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+            IReadOnlyList<RecognizeEntitiesResultCollection> entitiesResult = resultCollection.RecognizeEntitiesActionResults.Results;
+
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
+
+            IReadOnlyList<RecognizePiiEntitiesResultCollection> piiResult = resultCollection.RecognizePiiEntitiesActionResults.Results;
 
             Assert.IsNotNull(keyPhrasesResult);
-            Assert.IsNotNull(entityRecognitionTasksItemCollection);
-            Assert.IsNotNull(entityRecognitionPiiTasksItemCollection);
+            Assert.IsNotNull(entitiesResult);
+            Assert.IsNotNull(piiResult);
 
             Assert.AreEqual(2, keyPhrasesResult.Count);
         }
@@ -63,25 +65,26 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchConvenienceDocuments, batchActions, "en");
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasksItemCollection = resultCollection.Tasks.EntityRecognitionTasks;
-            IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasksItemCollection = resultCollection.Tasks.EntityRecognitionPiiTasks;
+            IReadOnlyList<RecognizeEntitiesResultCollection> entitiesResult = resultCollection.RecognizeEntitiesActionResults.Results;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
+
+            IReadOnlyList < RecognizePiiEntitiesResultCollection> piiResult = resultCollection.RecognizePiiEntitiesActionResults.Results;
 
             Assert.IsNotNull(keyPhrasesResult);
-            Assert.IsNotNull(entityRecognitionTasksItemCollection);
-            Assert.IsNotNull(entityRecognitionPiiTasksItemCollection);
+            Assert.IsNotNull(entitiesResult);
+            Assert.IsNotNull(piiResult);
 
             Assert.AreEqual(2, keyPhrasesResult.Count);
 
@@ -116,25 +119,25 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-                {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
                 DisplayName = "AnalyzeOperationWithLanguageTest"
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
 
             Assert.IsNotNull(keyPhrasesResult);
 
             Assert.AreEqual(2, keyPhrasesResult.Count);
 
-            Assert.AreEqual("AnalyzeOperationWithLanguageTest", resultCollection.DisplayName);
+            //Assert.AreEqual("AnalyzeOperationWithLanguageTest", operation.DisplayName);
 
             var keyPhrasesListId1 = new List<string> { "Bill Gates", "Paul Allen", "Microsoft" };
             var keyPhrasesListId2 = new List<string> { "gato", "perro", "veterinario" };
@@ -167,30 +170,30 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-                EntitiesTaskParameters = new EntitiesTaskParameters(),
-                PiiTaskParameters = new PiiTaskParameters(),
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
+                RecognizePiiEntityOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
                 DisplayName = "AnalyzeOperationWithMultipleTasks"
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionResults.Results[0];
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
 
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionResults.Results[0];
 
             Assert.IsNotNull(keyPhrasesResult);
             Assert.IsNotNull(entitiesResult);
             Assert.IsNotNull(piiResult);
-            Assert.AreEqual("AnalyzeOperationWithMultipleTasks", resultCollection.DisplayName);
+            //Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
 
             // Keyphrases
             Assert.AreEqual(2, keyPhrasesResult.Count);
@@ -238,28 +241,26 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-                DisplayName = "AnalyzeOperationWithSkipParameter",
-                //Skip = 1
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection result = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
 
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(keyPhrasesResult);
 
-            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(1, keyPhrasesResult.Count);
 
             var keyPhrasesListId2 = new List<string> { "Tesla stock", "year" };
 
-            foreach (string keyphrase in result[0].KeyPhrases)
+            foreach (string keyphrase in keyPhrasesResult[0].KeyPhrases)
             {
                 Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
             }
@@ -271,28 +272,27 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
                 DisplayName = "AnalyzeOperationWithSkipParameter",
-                //Top = 1
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchConvenienceDocuments, batchActions, "en");
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection result = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
 
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(keyPhrasesResult);
 
-            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(1, keyPhrasesResult.Count);
 
             var keyPhrasesListId1 = new List<string> { "CEO of SpaceX", "Elon Musk", "Tesla" };
 
-            foreach (string keyphrase in result[0].KeyPhrases)
+            foreach (string keyphrase in keyPhrasesResult[0].KeyPhrases)
             {
                 Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
             }
@@ -310,18 +310,16 @@ namespace Azure.AI.TextAnalytics.Tests
                 "Can cause rapid or irregular heartbeat, delirium, panic, psychosis, and heart failure.",
                 "",
             };
-
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
                 DisplayName = "AnalyzeOperationBatchWithErrorTest",
-                //Skip = 1
             };
 
             await Task.Run(() => {
                 RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
-                   AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(documents, operationOptions, "en");
+                   AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions, "en");
                 });
 
                 Assert.IsTrue(ex.ErrorCode.Equals("InvalidArgument"));
@@ -339,22 +337,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 "A patient with medical id 12345678 whose phone number is 800-102-1100 is going under heart surgery",
             };
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                PiiTaskParameters = new PiiTaskParameters()
-                {
-                    Domain = PiiTaskParametersDomain.Phi
-                },
-                DisplayName = "AnalyzeOperationWithPHIDomain"
+                RecognizePiiEntityOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } },
+                DisplayName = "AnalyzeOperationWithPHIDomain",
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(documents, operationOptions, "en");
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions, "en");
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            RecognizePiiEntitiesResultCollection result = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;;
+            RecognizePiiEntitiesResultCollection result = resultCollection.RecognizePiiEntitiesActionResults.Results[0];
 
             Assert.IsNotNull(result);
 
@@ -386,20 +381,24 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
                 DisplayName = "AnalyzeOperationTest",
+            };
+
+            AnalyzeBatchActionsOptions options = new AnalyzeBatchActionsOptions()
+            {
                 IncludeStatistics = true
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions, options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+            AnalyzeBatchActionsResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection result = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+            ExtractKeyPhrasesResultCollection result = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
 
             Assert.IsNotNull(result);
 

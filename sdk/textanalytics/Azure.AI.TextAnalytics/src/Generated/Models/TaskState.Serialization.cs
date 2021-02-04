@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics
         {
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> name = default;
-            TextAnalyticsOperationStatus status = default;
+            OperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdateDateTime"))
@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
+                    status = new OperationStatus(property.Value.GetString());
                     continue;
                 }
             }
