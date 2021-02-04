@@ -96,7 +96,7 @@
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0-beta.1" />
     <PackageReference Update="OpenTelemetry" Version="0.8.0-beta.1" />
-    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.16" />
+    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.25" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
