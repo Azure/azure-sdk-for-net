@@ -133,7 +133,7 @@ example handler that's safe to invoke from both sync and async code paths.
 var client = new AlarmClient();
 client.Ring += async (SyncAsyncEventArgs e) =>
 {
-    if (e.RunSynchronously)
+    if (e.IsRunningSynchronously)
     {
         Console.WriteLine("Wake up!");
     }

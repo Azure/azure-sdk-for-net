@@ -82,7 +82,7 @@ namespace Azure.Core
     /// var client = new AlarmClient();
     /// client.Ring += async (SyncAsyncEventArgs e) =&gt;
     /// {
-    ///     if (e.RunSynchronously)
+    ///     if (e.IsRunningSynchronously)
     ///     {
     ///         Console.WriteLine(&quot;Wake up!&quot;);
     ///     }

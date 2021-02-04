@@ -77,7 +77,7 @@ namespace Azure.Core.Samples
             var client = new AlarmClient();
             client.Ring += async (SyncAsyncEventArgs e) =>
             {
-                if (e.RunSynchronously)
+                if (e.IsRunningSynchronously)
                 {
                     Console.WriteLine("Wake up!");
                 }
