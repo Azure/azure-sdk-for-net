@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
@@ -38,5 +39,15 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the blob, in bytes.
         /// </summary>
         public long BlobContentLength { get; internal set; }
+
+        /// <summary>
+        /// CommittedBlocks.
+        /// </summary>
+        public IEnumerable<BlobBlock> CommittedBlocks { get; internal set; }
+
+        /// <summary>
+        /// UncommittedBlocks.
+        /// </summary>
+        public IEnumerable<BlobBlock> UncommittedBlocks { get; internal set; }
     }
 }
