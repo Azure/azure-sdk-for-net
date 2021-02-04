@@ -64,10 +64,35 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await jobHost.CallAsync(nameof(BinderTestJobs.ServiceBusBinderTest), args);
                 await jobHost.CallAsync(nameof(BinderTestJobs.ServiceBusBinderTest), args);
 
-                //var count = await CleanUpEntity(_firstQueueScope.QueueName);
+                var count = await CleanUpEntity(_firstQueueScope.QueueName);
 
-                //Assert.AreEqual(numMessages * 3, count);
+                Assert.AreEqual(numMessages * 3, count);
             }
+        }
+
+        private async Task<int> CleanUpEntity(string queueName)
+        {
+            await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            var receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
+            {
+                ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete
+            });
+            ServiceBusReceivedMessage message;
+            int count = 0;
+
+            do
+            {
+                message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+                if (message != null)
+                {
+                    count++;
+                }
+                else
+                {
+                    break;
+                }
+            } while (true);
+            return count;
         }
 
         [Test]
