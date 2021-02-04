@@ -1,0 +1,359 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "CommunicationIdentityClient",
+        "description": "Azure Communication Identity Service",
+        "version": "2021-03-07"
+    },
+    "paths": {
+        "/identities": {
+            "post": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Create a new identity.",
+                "operationId": "CommunicationIdentity_Create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationIdentityCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Error",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        }
+                    },
+                    "201": {
+                        "description": "Created - Returns the created identity.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationIdentityAccessTokenResult"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Create an Identity": {
+                        "$ref": "./examples/CreateIdentity.json"
+                    }
+                }
+            }
+        },
+        "/identities/{id}": {
+            "delete": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Delete the identity, revoke all tokens for the identity and delete all associated data.",
+                "operationId": "CommunicationIdentity_Delete",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Identifier of the identity to be deleted.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Error",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    }
+                },
+                "x-ms-examples": {
+                    "Delete an identity": {
+                        "$ref": "./examples/DeleteIdentity.json"
+                    }
+                }
+            }
+        },
+        "/identities/{id}/:revokeAccessTokens": {
+            "post": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Revoke all access tokens for the specific identity.",
+                "operationId": "CommunicationIdentity_RevokeAccessTokens",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Identifier of the identity.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Error",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    }
+                },
+                "x-ms-examples": {
+                    "Revoke access tokens": {
+                        "$ref": "./examples/RevokeAccessTokens.json"
+                    }
+                }
+            }
+        },
+        "/identities/{id}/:issueAccessToken": {
+            "post": {
+                "tags": [
+                    "Token"
+                ],
+                "summary": "Issue a new token for an identity.",
+                "operationId": "CommunicationIdentity_IssueAccessToken",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Identifier of the identity to issue token for.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Requesting scopes for the new token.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationIdentityAccessTokenRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Error",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationErrorResponse"
+                        }
+                    },
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationIdentityAccessToken"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Issue an access token": {
+                        "$ref": "./examples/IssueAccessToken.json"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "CommunicationIdentityTokenScope": {
+            "description": "List of scopes for an access token.",
+            "enum": [
+                "chat",
+                "voip"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "CommunicationIdentityTokenScope",
+                "modelAsString": true
+            }
+        },
+        "CommunicationIdentityCreateRequest": {
+            "type": "object",
+            "properties": {
+                "createTokenWithScopes": {
+                    "description": "Also create access token for the created identity.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentityTokenScope"
+                    }
+                }
+            }
+        },
+        "CommunicationError": {
+            "description": "The Communication Services error.",
+            "required": [
+                "code",
+                "message"
+            ],
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "The error code.",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "The error message.",
+                    "type": "string"
+                },
+                "target": {
+                    "description": "The error target.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "details": {
+                    "description": "Further details about specific errors that led to this error.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationError"
+                    },
+                    "readOnly": true
+                },
+                "innerError": {
+                    "$ref": "#/definitions/CommunicationError"
+                }
+            }
+        },
+        "CommunicationErrorResponse": {
+            "description": "The Communication Services error.",
+            "required": [
+                "error"
+            ],
+            "type": "object",
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/CommunicationError"
+                }
+            }
+        },
+        "CommunicationIdentity": {
+            "description": "A communication identity.",
+            "required": [
+                "id"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Identifier of the identity.",
+                    "type": "string"
+                }
+            }
+        },
+        "CommunicationIdentityAccessToken": {
+            "description": "An access token.",
+            "required": [
+                "expiresOn",
+                "token"
+            ],
+            "type": "object",
+            "properties": {
+                "token": {
+                    "description": "The access token issued for the identity.",
+                    "type": "string"
+                },
+                "expiresOn": {
+                    "format": "date-time",
+                    "description": "The expiry time of the token.",
+                    "type": "string"
+                }
+            }
+        },
+        "CommunicationIdentityAccessTokenResult": {
+            "description": "A communication identity with access token.",
+            "required": [
+                "identity"
+            ],
+            "type": "object",
+            "properties": {
+                "identity": {
+                    "$ref": "#/definitions/CommunicationIdentity"
+                },
+                "accessToken": {
+                    "$ref": "#/definitions/CommunicationIdentityAccessToken"
+                }
+            }
+        },
+        "CommunicationIdentityAccessTokenRequest": {
+            "required": [
+                "scopes"
+            ],
+            "type": "object",
+            "properties": {
+                "scopes": {
+                    "description": "List of scopes attached to the token.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentityTokenScope"
+                    }
+                }
+            }
+        }
+    },
+    "parameters": {
+        "ApiVersionParameter": {
+            "in": "query",
+            "name": "api-version",
+            "description": "Version of API to invoke.",
+            "required": true,
+            "type": "string"
+        }
+    },
+    "securityDefinitions": {
+        "azure_auth": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+            "scopes": {
+                "user_impersonation": "impersonate your user account"
+            }
+        }
+    },
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{endpoint}",
+        "useSchemePrefix": false,
+        "parameters": [
+            {
+                "name": "endpoint",
+                "description": "The communication resource, for example https://my-resource.communication.azure.com",
+                "required": true,
+                "type": "string",
+                "in": "path",
+                "x-ms-skip-url-encoding": true,
+                "x-ms-parameter-location": "client"
+            }
+        ]
+    }
+}
