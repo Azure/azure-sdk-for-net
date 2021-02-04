@@ -33,12 +33,6 @@ namespace Azure.DigitalTwins.Core
 
         private readonly ObjectSerializer _objectSerializer;
 
-        /// <summary>
-        /// In order to serialize/deserialize JsonElements into and out of a stream, we have to use the out of the box ObjectSerializer (JsonObjectSerializer).
-        /// If the user specifies a different type of serializer to instantiate the client than the default one, the SDK will instantiate a new JsonObjectSerializer of its own.
-        /// </summary>
-        private readonly ObjectSerializer _defaultObjectSerializer;
-
         private readonly DigitalTwinsRestClient _dtRestClient;
         private readonly DigitalTwinModelsRestClient _dtModelsRestClient;
         private readonly EventRoutesRestClient _eventRoutesRestClient;
@@ -98,13 +92,6 @@ namespace Azure.DigitalTwins.Core
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _objectSerializer = options.Serializer ?? new JsonObjectSerializer();
-
-            // If the objectSerializer is of type JsonObjectSerializer, we will re-use the same object and set it as the defaultObjectSerializer.
-            // Otherwise, we will instantiate it and re-use it in the future.
-            _defaultObjectSerializer =
-                (_objectSerializer is JsonObjectSerializer)
-                    ? _objectSerializer
-                    : new JsonObjectSerializer();
 
             options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, GetAuthorizationScopes()), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
@@ -2058,7 +2045,6 @@ namespace Azure.DigitalTwins.Core
                                 querySpecification,
                                 options,
                                 _objectSerializer,
-                                _defaultObjectSerializer,
                                 cancellationToken)
                             .ConfigureAwait(false);
 
@@ -2093,7 +2079,6 @@ namespace Azure.DigitalTwins.Core
                                 querySpecification,
                                 options,
                                 _objectSerializer,
-                                _defaultObjectSerializer,
                                 cancellationToken)
                             .ConfigureAwait(false);
 
@@ -2169,7 +2154,6 @@ namespace Azure.DigitalTwins.Core
                                 querySpecification,
                                 options,
                                 _objectSerializer,
-                                _defaultObjectSerializer,
                                 cancellationToken);
 
                         return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
@@ -2203,7 +2187,6 @@ namespace Azure.DigitalTwins.Core
                                 querySpecification,
                                 options,
                                 _objectSerializer,
-                                _defaultObjectSerializer,
                                 cancellationToken);
 
                         return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
