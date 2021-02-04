@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobPrefix
+    internal partial class BlobPrefix
     {
         internal static BlobPrefix DeserializeBlobPrefix(XElement element)
         {

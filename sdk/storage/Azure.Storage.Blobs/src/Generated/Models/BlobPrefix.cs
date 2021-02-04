@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The BlobPrefix. </summary>
-    public partial class BlobPrefix
+    internal partial class BlobPrefix
     {
         /// <summary> Initializes a new instance of BlobPrefix. </summary>
         /// <param name="name"> . </param>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class ClearRange
+    internal partial class ClearRange
     {
         internal static ClearRange DeserializeClearRange(XElement element)
         {

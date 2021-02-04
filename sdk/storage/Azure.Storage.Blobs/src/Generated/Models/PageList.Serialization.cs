@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class PageList
+    internal partial class PageList
     {
         internal static PageList DeserializePageList(XElement element)
         {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> the list of pages. </summary>
-    public partial class PageList
+    internal partial class PageList
     {
         /// <summary> Initializes a new instance of PageList. </summary>
         internal PageList()
