@@ -8,10 +8,10 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    internal partial class DecomissionModelOptions
+    internal partial class DecommissionModelOptions
     {
-        /// <summary> Initializes a new instance of DecomissionModelOptions. </summary>
-        public DecomissionModelOptions()
+        /// <summary> Initializes a new instance of DecommissionModelOptions. </summary>
+        public DecommissionModelOptions()
         {
         }
     }
