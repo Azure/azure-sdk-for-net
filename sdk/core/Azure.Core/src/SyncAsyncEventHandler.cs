@@ -74,7 +74,7 @@ namespace Azure.Core
     /// on a client.  If you write an async handler but raise it from a sync
     /// method, the handler will be doing sync-over-async and may cause
     /// ThreadPool starvation.  See the note in Remarks for more details.  You
-    /// should use the <see cref="SyncAsyncEventArgs.RunSynchronously"/>
+    /// should use the <see cref="SyncAsyncEventArgs.IsRunningSynchronously"/>
     /// property to check how the event is being raised and implement your
     /// handler accordingly.  Here's an example handler that's safe to invoke
     /// from both sync and async code paths.
@@ -158,7 +158,7 @@ namespace Azure.Core
     /// </item>
     /// <item>
     /// <description>
-    /// <see cref="SyncAsyncEventArgs.RunSynchronously"/> is a flag indicating
+    /// <see cref="SyncAsyncEventArgs.IsRunningSynchronously"/> is a flag indicating
     /// whether your handler was invoked synchronously or asynchronously.  If
     /// you're calling sync methods on your client, you should use sync methods
     /// to implement your event handler (you can return
@@ -166,7 +166,7 @@ namespace Azure.Core
     /// your client, you should use async methods where possible to implement
     /// your event handler.  If you're not in control of how the client will be
     /// used or want to write safer code, you should check the
-    /// <see cref="SyncAsyncEventArgs.RunSynchronously"/> property and call
+    /// <see cref="SyncAsyncEventArgs.IsRunningSynchronously"/> property and call
     /// either sync or async methods as directed.
     /// </description>
     /// </item>
@@ -214,7 +214,7 @@ namespace Azure.Core
     /// Diagnosing.NET Core ThreadPool Starvation with PerfView</see>
     /// for a detailed explanation of how that can cause serious performance
     /// problems.  We recommend you use the
-    /// <see cref="SyncAsyncEventArgs.RunSynchronously"/> flag to avoid
+    /// <see cref="SyncAsyncEventArgs.IsRunningSynchronously"/> flag to avoid
     /// ThreadPool starvation.
     /// </para>
     /// </remarks>
