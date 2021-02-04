@@ -163,27 +163,114 @@ namespace Azure.Core.Pipeline
 
         private static string? GetClaimsChallenge(Response response)
         {
-            if (response.Status == (int)HttpStatusCode.Unauthorized && response.Headers.TryGetValue(ChallengeHeader, out string? headerValue))
+            if (response.Status != (int)HttpStatusCode.Unauthorized || !response.Headers.TryGetValue(ChallengeHeader, out string? headerValue))
             {
-                foreach (var (ChallengeKey, ChallengeParameters) in ParseChallenges(headerValue))
+                return null;
+            }
+
+            ReadOnlySpan<char> bearer = "Bearer".AsSpan();
+            ReadOnlySpan<char> claims = "claims".AsSpan();
+            ReadOnlySpan<char> headerSpan = headerValue.AsSpan();
+
+            // Iterate through each challenge value.
+            while (TryGetNextChallenge(ref headerSpan, out var challengeKey, out var challengeParameters))
+            {
+                // Enumerate each key=value parameter until we find the 'claims' key on the 'Bearer' challenge.
+                while (TryGetNextParameter(ref headerSpan, out var key, out var value))
                 {
-                    if (string.Equals(ChallengeKey, "Bearer", StringComparison.OrdinalIgnoreCase))
+                    if (challengeKey.Equals(bearer, StringComparison.OrdinalIgnoreCase) && key.Equals(claims, StringComparison.OrdinalIgnoreCase))
                     {
-                        foreach (var (ChallengeParameterKey, ChallengeParameterValue) in ParseChallengeParameters(ChallengeParameters))
-                        {
-                            if (string.Equals(ChallengeParameterKey, "claims", StringComparison.OrdinalIgnoreCase))
-                            {
-                                // currently we are only handling ARM claims challenges which are always b64url encoded, and must be decoded.
-                                // some handling will have to be added if we intend to handle claims challenges from Graph as well since they
-                                // are not encoded.
-                                return Base64Url.DecodeString(ChallengeParameterValue);
-                            }
-                        }
+                        return Base64Url.DecodeString(value.ToString());
                     }
                 }
             }
 
             return null;
+        }
+
+        internal static bool TryGetNextChallenge(ref ReadOnlySpan<char> headerValue, out ReadOnlySpan<char> challengeKey, out ReadOnlySpan<char> challengeValue)
+        {
+            challengeKey = default;
+            challengeValue = default;
+
+            headerValue = headerValue.TrimStart(' ');
+            int endOfChallengeKey = headerValue.IndexOf(' ');
+
+            if (endOfChallengeKey < 0)
+            {
+                return false;
+            }
+
+            challengeKey = headerValue.Slice(0, endOfChallengeKey);
+
+            // Get the parameters string.
+            challengeValue = headerValue.Slice(endOfChallengeKey + 1);
+
+            // Slice the challenge key from the headerValue
+            headerValue = headerValue.Slice(endOfChallengeKey + 1);
+
+            return true;
+        }
+
+        public static bool TryGetNextParameter(ref ReadOnlySpan<char> parameters, out ReadOnlySpan<char> paramKey, out ReadOnlySpan<char> paramValue, char separator = '=')
+        {
+            paramKey = default;
+            paramValue = default;
+            var spaceOrComma = " ,".AsSpan();
+
+            // Trim any separater prefixes.
+            parameters = parameters.TrimStart(spaceOrComma);
+
+            int nextSpace = parameters.IndexOf(' ');
+            int nextEquals = parameters.IndexOf('=');
+
+            if (nextSpace < nextEquals && nextSpace != -1)
+            {
+                // we encountered another challenge value.
+                return false;
+            }
+
+            // Get the index of the first separator
+            var separatorIndex = parameters.IndexOf(separator);
+            if (separatorIndex < 0)
+                return false;
+
+            // Get the paramKey.
+            paramKey = parameters.Slice(0, separatorIndex).Trim();
+
+            // Slice to remove the 'paramKey=' from the parameters.
+            parameters = parameters.Slice(separatorIndex + 1);
+
+            // The start of paramValue will usually be a quoted string. Find the first quote.
+            int quoteIndex = parameters.IndexOf('\"');
+
+            // Get the paramValue, which is delimited by the trailing quote.
+            parameters = parameters.Slice(quoteIndex + 1);
+            if (quoteIndex >= 0)
+            {
+                // The values are quote wrapped
+                paramValue = parameters.Slice(0, parameters.IndexOf('\"'));
+            }
+            else
+            {
+                //the values are not quote wrapped (storage is one example of this)
+                // either find the next space indicating the delimiter to the next value, or go to the end since this is the last value.
+                int trailingDelimiterIndex = parameters.IndexOfAny(spaceOrComma);
+                if (trailingDelimiterIndex >= 0)
+                {
+                    paramValue = parameters.Slice(0, trailingDelimiterIndex);
+                }
+                else
+                {
+                    paramValue = parameters;
+                }
+            }
+
+            // Slice to remove the '"paramValue"' from the parameters.
+            if (parameters != paramValue)
+                parameters = parameters.Slice(paramValue.Length + 1);
+
+            return true;
         }
 
         private class AccessTokenCache
@@ -401,26 +488,6 @@ namespace Azure.Core.Pipeline
                     ExpiresOn = expiresOn;
                     RefreshOn = refreshOn;
                 }
-            }
-        }
-
-        internal static IEnumerable<(string ChallengeKey, string ChallengeParameters)> ParseChallenges(string headerValue)
-        {
-            var challengeMatches = s_AuthenticationChallengeRegex.Matches(headerValue);
-
-            for (int i = 0; i < challengeMatches.Count; i++)
-            {
-                yield return (challengeMatches[i].Groups[1].Value, challengeMatches[i].Groups[2].Value);
-            }
-        }
-
-        internal static IEnumerable<(string ChallengeParameterKey, string ChallengeParameterValue)> ParseChallengeParameters(string ChallengeParameters)
-        {
-            var paramMatches = s_ChallengeParameterRegex.Matches(ChallengeParameters);
-
-            for (int i = 0; i < paramMatches.Count; i++)
-            {
-                yield return (paramMatches[i].Groups[1].Value, paramMatches[i].Groups[2].Value);
             }
         }
     }

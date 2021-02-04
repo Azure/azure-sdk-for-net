@@ -591,12 +591,34 @@ namespace Azure.Core.Tests
             }
         };
 
+        private const string StorageChallenge = "Bearer authorization_uri=https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize resource_id=https://storage.azure.com";
+        private static readonly Challenge ParsedStorageChallenge = new Challenge()
+        {
+            Scheme = "Bearer",
+            Parameters =
+            {
+                ("authorization_uri", "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize"),
+                ("resource_id", "https://storage.azure.com"),
+            }
+        };
+        private static readonly Challenge ParsedMultipleChallenges = new Challenge
+        {
+            Scheme = "Bearer",
+            Parameters =
+            {
+                ("authorization_uri", "https://login.windows-ppe.net/"),
+                ("error", "invalid_token"),
+                ("error_description", "User session has been revoked"),
+                ("claims", "eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTYwMzc0MjgwMCJ9fX0="),
+            }
+        };
         private static readonly Dictionary<string, string> ChallengeStrings = new Dictionary<string, string>()
         {
             { "CaeInsufficientClaims", CaeInsufficientClaimsChallenge },
             { "CaeSessionsRevoked", CaeSessionsRevokedClaimsChallenge },
             { "KeyVault", KeyVaultChallenge },
-            { "Arm", ArmChallenge }
+            { "Arm", ArmChallenge },
+            { "Storage", StorageChallenge },
         };
 
         private static readonly Dictionary<string, Challenge> ParsedChallenges = new Dictionary<string, Challenge>()
@@ -604,7 +626,16 @@ namespace Azure.Core.Tests
             { "CaeInsufficientClaims", ParsedCaeInsufficientClaimsChallenge },
             { "CaeSessionsRevoked", ParsedCaeSessionsRevokedClaimsChallenge },
             { "KeyVault", ParsedKeyVaultChallenge },
-            { "Arm", ParsedArmChallenge }
+            { "Arm", ParsedArmChallenge },
+            { "Storage", ParsedStorageChallenge }
+        };
+
+        private static readonly List<Challenge> MultipleParsedChallenges = new List<Challenge>()
+        {
+            {  ParsedCaeInsufficientClaimsChallenge },
+            {  ParsedCaeSessionsRevokedClaimsChallenge },
+            {  ParsedKeyVaultChallenge },
+            {  ParsedArmChallenge },
         };
 
         private class Challenge
@@ -615,21 +646,21 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void BearerTokenChallengeAuthenticationPolicy_ValidateChallengeParsing([Values("CaeInsufficientClaims", "CaeSessionsRevoked", "KeyVault", "Arm")] string challengeKey)
+        public void BearerTokenChallengeAuthenticationPolicy_ValidateChallengeParsing([Values("CaeInsufficientClaims", "CaeSessionsRevoked", "KeyVault", "Arm", "Storage")] string challengeKey)
         {
-            var challenge = ChallengeStrings[challengeKey];
+            var challenge = ChallengeStrings[challengeKey].AsSpan();
 
             List<Challenge> parsedChallenges = new List<Challenge>();
 
-            foreach (var (ChallengeKey, ChallengeParameters) in BearerTokenChallengeAuthenticationPolicy.ParseChallenges(challenge))
+            while (BearerTokenChallengeAuthenticationPolicy.TryGetNextChallenge(ref challenge, out var scheme, out var parameters))
             {
                 Challenge parsedChallenge = new Challenge();
 
-                parsedChallenge.Scheme = ChallengeKey;
+                parsedChallenge.Scheme = scheme.ToString();
 
-                foreach (var paramTuple in BearerTokenChallengeAuthenticationPolicy.ParseChallengeParameters(ChallengeParameters))
+                while (BearerTokenChallengeAuthenticationPolicy.TryGetNextParameter(ref challenge, out var key, out var value))
                 {
-                    parsedChallenge.Parameters.Add(paramTuple);
+                    parsedChallenge.Parameters.Add((key.ToString(), value.ToString()));
                 }
 
                 parsedChallenges.Add(parsedChallenge);
@@ -638,6 +669,35 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, parsedChallenges.Count);
 
             ValidateParsedChallenge(ParsedChallenges[challengeKey], parsedChallenges[0]);
+        }
+
+        [Test]
+        public void BearerTokenChallengeAuthenticationPolicy_ValidateChallengeParsingWithMultipleChallenges()
+        {
+            var challenge = string.Join(", ", new[] { CaeInsufficientClaimsChallenge, CaeSessionsRevokedClaimsChallenge, KeyVaultChallenge, ArmChallenge }).AsSpan();
+
+            List<Challenge> parsedChallenges = new List<Challenge>();
+
+            while (BearerTokenChallengeAuthenticationPolicy.TryGetNextChallenge(ref challenge, out var scheme, out var parameters))
+            {
+                Challenge parsedChallenge = new Challenge();
+
+                parsedChallenge.Scheme = scheme.ToString();
+
+                while (BearerTokenChallengeAuthenticationPolicy.TryGetNextParameter(ref challenge, out var key, out var value))
+                {
+                    parsedChallenge.Parameters.Add((key.ToString(), value.ToString()));
+                }
+
+                parsedChallenges.Add(parsedChallenge);
+            }
+
+            Assert.AreEqual(MultipleParsedChallenges.Count, parsedChallenges.Count);
+
+            for (int i = 0; i < parsedChallenges.Count; i++)
+            {
+                ValidateParsedChallenge(MultipleParsedChallenges[i], parsedChallenges[i]);
+            }
         }
 
         [Test]
