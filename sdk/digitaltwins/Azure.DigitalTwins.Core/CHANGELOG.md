@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (2021-02-03)
+## 1.2.1 (2021-02-03)
 
 ### Fixes and improvements
 
