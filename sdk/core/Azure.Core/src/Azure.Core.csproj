@@ -26,7 +26,6 @@
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="Shared\Argument.cs" />
-    <Compile Include="Shared\AzureCoreSharedEventSource.cs" />
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
