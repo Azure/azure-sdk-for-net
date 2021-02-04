@@ -113,10 +113,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 StorageProfile.Validate();
             }
-            if (ExtendedLocation != null)
-            {
-                ExtendedLocation.Validate();
-            }
         }
     }
 }

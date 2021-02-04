@@ -469,10 +469,6 @@ namespace Microsoft.Azure.Management.Compute.Models
                     }
                 }
             }
-            if (ExtendedLocation != null)
-            {
-                ExtendedLocation.Validate();
-            }
         }
     }
 }
