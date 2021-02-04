@@ -242,6 +242,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificatePolicy
     {
+        public CertificatePolicy() { }
         public CertificatePolicy(string issuerName, Azure.Security.KeyVault.Certificates.SubjectAlternativeNames subjectAlternativeNames) { }
         public CertificatePolicy(string issuerName, string subject) { }
         public CertificatePolicy(string issuerName, string subject, Azure.Security.KeyVault.Certificates.SubjectAlternativeNames subjectAlternativeNames) { }
