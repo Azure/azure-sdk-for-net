@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -22,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
     public class ServiceBusHostBuilderExtensionsTests
     {
         [Test]
-        public void ConfigureOptions_AppliesValuesCorrectly()
+        public void ConfigureOptions_AppliesValuesCorrectly_BackCompat()
         {
             ServiceBusOptions options = CreateOptionsFromConfigBackCompat();
 
@@ -34,9 +33,38 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         }
 
         [Test]
-        public void ConfigureOptions_Format_Returns_Expected()
+        public void ConfigureOptions_Format_Returns_Expected_BackCompat()
         {
             ServiceBusOptions options = CreateOptionsFromConfigBackCompat();
+
+            string format = options.Format();
+            JObject iObj = JObject.Parse(format);
+            ServiceBusOptions result = iObj.ToObject<ServiceBusOptions>();
+
+            Assert.AreEqual(123, result.PrefetchCount);
+            // can't round trip the connection string
+            Assert.IsNull(result.ConnectionString);
+            Assert.AreEqual(123, result.MaxConcurrentCalls);
+            Assert.False(result.AutoCompleteMessages);
+            Assert.AreEqual(TimeSpan.FromSeconds(15), result.MaxAutoLockRenewalDuration);
+        }
+
+        [Test]
+        public void ConfigureOptions_AppliesValuesCorrectly()
+        {
+            ServiceBusOptions options = CreateOptionsFromConfig();
+
+            Assert.AreEqual(123, options.PrefetchCount);
+            Assert.AreEqual("TestConnectionString", options.ConnectionString);
+            Assert.AreEqual(123, options.MaxConcurrentCalls);
+            Assert.False(options.AutoCompleteMessages);
+            Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
+        }
+
+        [Test]
+        public void ConfigureOptions_Format_Returns_Expected()
+        {
+            ServiceBusOptions options = CreateOptionsFromConfig();
 
             string format = options.Format();
             JObject iObj = JObject.Parse(format);

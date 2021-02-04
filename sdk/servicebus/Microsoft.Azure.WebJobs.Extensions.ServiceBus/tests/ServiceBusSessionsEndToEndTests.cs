@@ -667,14 +667,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 _options = serviceBusOptions.Value;
                 //_options.SessionProcessorOptions.MessageWaitTimeout = TimeSpan.FromSeconds(90);
-                _options.ClientOptions.RetryOptions.TryTimeout = TimeSpan.FromSeconds(90);
+                _options.RetryOptions.TryTimeout = TimeSpan.FromSeconds(90);
                 _options.MaxConcurrentSessions = 1;
                 _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);
             }
 
             public override SessionMessageProcessor CreateSessionMessageProcessor(string entityPath, string connectionString)
             {
-                var client = new ServiceBusClient(connectionString, _options.ClientOptions);
+                var client = new ServiceBusClient(connectionString, _options.ToClientOptions());
                 ServiceBusSessionProcessor processor;
                 if (entityPath == _firstQueueScope.QueueName)
                 {

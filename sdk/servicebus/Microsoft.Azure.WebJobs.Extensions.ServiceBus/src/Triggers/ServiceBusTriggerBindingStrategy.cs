@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             AddBindingContractMember(contract, "ReplyTo", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "SequenceNumber", typeof(long), isSingleDispatch);
             AddBindingContractMember(contract, "To", typeof(string), isSingleDispatch);
-            AddBindingContractMember(contract, "Subject", typeof(string), isSingleDispatch);
+            AddBindingContractMember(contract, "Label", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "CorrelationId", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "ApplicationProperties", typeof(IDictionary<string, object>), isSingleDispatch);
             contract.Add("MessageReceiver", typeof(ServiceBusReceiver));
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add(nameof(value.ReplyTo), value.ReplyTo));
             SafeAddValue(() => bindingData.Add(nameof(value.SequenceNumber), value.SequenceNumber));
             SafeAddValue(() => bindingData.Add(nameof(value.To), value.To));
-            SafeAddValue(() => bindingData.Add(nameof(value.Subject), value.Subject));
+            SafeAddValue(() => bindingData.Add("Label", value.Subject));
             SafeAddValue(() => bindingData.Add(nameof(value.CorrelationId), value.CorrelationId));
             SafeAddValue(() => bindingData.Add(nameof(value.ApplicationProperties), value.ApplicationProperties));
         }

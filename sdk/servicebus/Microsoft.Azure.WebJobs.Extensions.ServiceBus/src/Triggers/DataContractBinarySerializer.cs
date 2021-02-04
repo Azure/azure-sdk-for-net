@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
         /// </summary>
         public DataContractBinarySerializer(Type type)
         {
-            this._dataContractSerializer = new DataContractSerializer(type);
+            _dataContractSerializer = new DataContractSerializer(type);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
         /// <remarks>Override the default (Text) and use Binary Xml Reader instead</remarks>
         public override object ReadObject(Stream stream)
         {
-            return this.ReadObject(XmlDictionaryReader.CreateBinaryReader(stream, XmlDictionaryReaderQuotas.Max));
+            return ReadObject(XmlDictionaryReader.CreateBinaryReader(stream, XmlDictionaryReaderQuotas.Max));
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
             }
 
             var xmlDictionaryWriter = XmlDictionaryWriter.CreateBinaryWriter(stream, null, null, false);
-            this.WriteObject(xmlDictionaryWriter, graph);
+            WriteObject(xmlDictionaryWriter, graph);
             xmlDictionaryWriter.Flush();
         }
 
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            this._dataContractSerializer.WriteObject(writer, graph);
+            _dataContractSerializer.WriteObject(writer, graph);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
         /// </summary>
         public override bool IsStartObject(XmlDictionaryReader reader)
         {
-            return this._dataContractSerializer.IsStartObject(reader);
+            return _dataContractSerializer.IsStartObject(reader);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
         /// </summary>
         public override object ReadObject(XmlDictionaryReader reader, bool verifyObjectName)
         {
-            return this._dataContractSerializer.ReadObject(reader, verifyObjectName);
+            return _dataContractSerializer.ReadObject(reader, verifyObjectName);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
         /// </summary>
         public override void WriteEndObject(XmlDictionaryWriter writer)
         {
-            this._dataContractSerializer.WriteEndObject(writer);
+            _dataContractSerializer.WriteEndObject(writer);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
         /// </summary>
         public override void WriteObjectContent(XmlDictionaryWriter writer, object graph)
         {
-            this._dataContractSerializer.WriteObjectContent(writer, graph);
+            _dataContractSerializer.WriteObjectContent(writer, graph);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers
         /// </summary>
         public override void WriteStartObject(XmlDictionaryWriter writer, object graph)
         {
-            this._dataContractSerializer.WriteStartObject(writer, graph);
+            _dataContractSerializer.WriteStartObject(writer, graph);
         }
     }
 

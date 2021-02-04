@@ -67,11 +67,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public async Task ProcessMessageAsync_Success()
         {
-            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: Guid.NewGuid().ToString());
-            typeof(ServiceBusReceivedMessage).GetProperty("SequenceNumber").SetValue(message, 1);
-            typeof(ServiceBusReceivedMessage).GetProperty("DeliveryCount").SetValue(message, 55);
-            typeof(ServiceBusReceivedMessage).GetProperty("EnqueuedTime").SetValue(message, DateTimeOffset.Now);
-            typeof(ServiceBusReceivedMessage).GetProperty("LockedUntil").SetValue(message, DateTimeOffset.Now);
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                messageId: Guid.NewGuid().ToString(),
+                sequenceNumber: 1,
+                deliveryCount: 55,
+                enqueuedTime: DateTimeOffset.Now,
+                lockedUntil: DateTimeOffset.Now);
             var receiver = new Mock<ServiceBusReceiver>().Object;
             var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
             _mockMessageProcessor.Setup(p => p.BeginProcessingMessageAsync(receiver, message, It.IsAny<CancellationToken>())).ReturnsAsync(true);

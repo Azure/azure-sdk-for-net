@@ -48,12 +48,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             await _processor.CompleteProcessingMessageAsync(receiver, message, result, CancellationToken.None);
         }
 
-        //[Test]
-        //public void MessageOptions_ReturnsOptions()
-        //{
-        //    Assert.AreSame(_options, _processor.ProcessorOptions);
-        //}
-
         private Task ExceptionReceivedHandler(ProcessErrorEventArgs eventArgs)
         {
             return Task.CompletedTask;

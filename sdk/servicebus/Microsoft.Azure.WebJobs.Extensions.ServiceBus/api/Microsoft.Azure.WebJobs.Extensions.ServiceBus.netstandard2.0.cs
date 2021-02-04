@@ -69,7 +69,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     {
         public ServiceBusOptions() { }
         public bool AutoCompleteMessages { get { throw null; } set { } }
-        public Azure.Messaging.ServiceBus.ServiceBusClientOptions ClientOptions { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
         public System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ExceptionHandler { get { throw null; } set { } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
@@ -78,6 +77,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public int MaxMessages { get { throw null; } set { } }
         public System.TimeSpan? MaxWaitTime { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
+        public Azure.Messaging.ServiceBus.ServiceBusRetryOptions RetryOptions { get { throw null; } set { } }
+        public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
+        public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
         public string Format() { throw null; }
     }
     public partial class ServiceBusWebJobsStartup : Microsoft.Azure.WebJobs.Hosting.IWebJobsStartup

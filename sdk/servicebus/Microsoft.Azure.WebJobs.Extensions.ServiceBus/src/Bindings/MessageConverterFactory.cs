@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             }
             else if (typeof(TInput) == typeof(byte[]))
             {
-                return (IConverter<TInput, ServiceBusMessage>)new ByteArrayToBrokeredMessageConverter();
+                return (IConverter<TInput, ServiceBusMessage>)new ByteArrayToMessageConverter();
             }
             else
             {

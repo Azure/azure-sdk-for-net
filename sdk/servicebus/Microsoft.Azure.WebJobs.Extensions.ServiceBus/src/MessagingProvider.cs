@@ -135,7 +135,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 throw new ArgumentNullException(nameof(connectionString));
             }
 
-            return new ServiceBusClient(connectionString, _options.ClientOptions);
+            return new ServiceBusClient(connectionString, _options.ToClientOptions());
         }
 
         /// <summary>

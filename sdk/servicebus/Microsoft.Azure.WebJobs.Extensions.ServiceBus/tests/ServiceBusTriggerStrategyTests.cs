@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(typeof(string[]), bindingDataContract["ReplyToArray"]);
             Assert.AreEqual(typeof(long[]), bindingDataContract["SequenceNumberArray"]);
             Assert.AreEqual(typeof(string[]), bindingDataContract["ToArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["SubjectArray"]);
+            Assert.AreEqual(typeof(string[]), bindingDataContract["LabelArray"]);
             Assert.AreEqual(typeof(string[]), bindingDataContract["CorrelationIdArray"]);
             Assert.AreEqual(typeof(IDictionary<string, object>[]), bindingDataContract["ApplicationPropertiesArray"]);
             Assert.AreEqual(typeof(ServiceBusReceiver), bindingDataContract["MessageReceiver"]);
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreSame(message.ContentType, bindingData["ContentType"]);
             Assert.AreSame(message.ReplyTo, bindingData["ReplyTo"]);
             Assert.AreSame(message.To, bindingData["To"]);
-            Assert.AreSame(message.Subject, bindingData["Subject"]);
+            Assert.AreSame(message.Subject, bindingData["Label"]);
             Assert.AreSame(message.CorrelationId, bindingData["CorrelationId"]);
 
             IDictionary<string, object> bindingDataUserProps = bindingData["ApplicationProperties"] as IDictionary<string, object>;
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(typeof(string), bindingDataContract["ReplyTo"]);
             Assert.AreEqual(typeof(long), bindingDataContract["SequenceNumber"]);
             Assert.AreEqual(typeof(string), bindingDataContract["To"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["Subject"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["Label"]);
             Assert.AreEqual(typeof(string), bindingDataContract["CorrelationId"]);
             Assert.AreEqual(typeof(IDictionary<string, object>), bindingDataContract["ApplicationProperties"]);
             Assert.AreEqual(typeof(ServiceBusReceiver), bindingDataContract["MessageReceiver"]);

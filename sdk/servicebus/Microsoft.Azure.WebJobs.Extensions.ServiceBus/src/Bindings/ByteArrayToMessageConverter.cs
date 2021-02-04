@@ -7,7 +7,7 @@ using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
-    internal class ByteArrayToBrokeredMessageConverter : IConverter<byte[], ServiceBusMessage>
+    internal class ByteArrayToMessageConverter : IConverter<byte[], ServiceBusMessage>
     {
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public ServiceBusMessage Convert(byte[] input)

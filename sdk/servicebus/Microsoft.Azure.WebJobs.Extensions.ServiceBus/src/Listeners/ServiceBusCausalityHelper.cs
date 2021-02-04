@@ -15,37 +15,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             msg.ApplicationProperties[ParentGuidFieldName] = functionOwner.ToString();
         }
 
-        public static Guid? GetOwner(ServiceBusReceivedMessage msg)
+        public static Guid? GetOwner(ServiceBusReceivedMessage message)
         {
-            object parent;
-            if (msg.ApplicationProperties.TryGetValue(ParentGuidFieldName, out parent))
+            if (message.ApplicationProperties.TryGetValue(ParentGuidFieldName, out var parent))
             {
-                var parentString = parent as string;
-                if (parentString != null)
+                if (Guid.TryParse(parent?.ToString(), out var parentGuid))
                 {
-                    Guid parentGuid;
-                    if (Guid.TryParse(parentString, out parentGuid))
-                    {
-                        return parentGuid;
-                    }
-                }
-            }
-            return null;
-        }
-
-        public static Guid? GetOwner(ServiceBusMessage msg)
-        {
-            object parent;
-            if (msg.ApplicationProperties.TryGetValue(ParentGuidFieldName, out parent))
-            {
-                var parentString = parent as string;
-                if (parentString != null)
-                {
-                    Guid parentGuid;
-                    if (Guid.TryParse(parentString, out parentGuid))
-                    {
-                        return parentGuid;
-                    }
+                    return parentGuid;
                 }
             }
             return null;
