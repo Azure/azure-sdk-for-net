@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class PageRange
+    internal partial struct PageRange
     {
         internal static PageRange DeserializePageRange(XElement element)
         {
