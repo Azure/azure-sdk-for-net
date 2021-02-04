@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Error codes returned by the service. </summary>
-    internal readonly partial struct BlobErrorCode : IEquatable<BlobErrorCode>
+    public readonly partial struct BlobErrorCode : IEquatable<BlobErrorCode>
     {
         private readonly string _value;
 
