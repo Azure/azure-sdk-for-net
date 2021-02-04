@@ -7,9 +7,17 @@
                 "fake",
                 "Test12345",
                 "default",
-                "randompasswd"
+                "randompasswdcd"
             ],
             "_justification": "Secret used by test code, it is fake."
-        }
+        },
+        {
+            "hash": [
+                "8Q1A+ocal4a4rCIrv9ca+kHjSj93rt0wahTPmADLv10=",
+                "2kqTecte2HqyQpB2Is4DDZW2xd9yPb0ywLAwFY9yCuk="
+            ],
+            "_justification": "Secret used by test code"
+        },
+
     ]
 }
