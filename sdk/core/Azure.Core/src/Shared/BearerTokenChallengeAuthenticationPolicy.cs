@@ -217,24 +217,22 @@ namespace Azure.Core.Pipeline
             parameters = parameters.TrimStart(spaceOrComma);
 
             int nextSpace = parameters.IndexOf(' ');
-            int nextEquals = parameters.IndexOf('=');
+            int nextSeparator = parameters.IndexOf(separator);
 
-            if (nextSpace < nextEquals && nextSpace != -1)
+            if (nextSpace < nextSeparator && nextSpace != -1)
             {
                 // we encountered another challenge value.
                 return false;
             }
 
-            // Get the index of the first separator
-            var separatorIndex = parameters.IndexOf(separator);
-            if (separatorIndex < 0)
+            if (nextSeparator < 0)
                 return false;
 
             // Get the paramKey.
-            paramKey = parameters.Slice(0, separatorIndex).Trim();
+            paramKey = parameters.Slice(0, nextSeparator).Trim();
 
             // Slice to remove the 'paramKey=' from the parameters.
-            parameters = parameters.Slice(separatorIndex + 1);
+            parameters = parameters.Slice(nextSeparator + 1);
 
             // The start of paramValue will usually be a quoted string. Find the first quote.
             int quoteIndex = parameters.IndexOf('\"');
