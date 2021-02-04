@@ -6,7 +6,8 @@
                 "Sanitized",
                 "fake",
                 "Test12345",
-                "default"
+                "default",
+                "randompasswd"
             ],
             "_justification": "Secret used by test code, it is fake."
         }
