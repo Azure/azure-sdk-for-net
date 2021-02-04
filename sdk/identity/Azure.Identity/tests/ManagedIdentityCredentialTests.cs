@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -24,8 +25,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyImdsRequestMockAsync()
         {
-            using (new TestEnvVar("MSI_ENDPOINT", null))
-            using (new TestEnvVar("MSI_SECRET", null))
+            using (new TestEnvVar(new () { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null } }))
             {
                 var response = new MockResponse(200);
 
@@ -65,8 +65,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyImdsRequestWithClientIdMockAsync()
         {
-            using (new TestEnvVar("MSI_ENDPOINT", null))
-            using (new TestEnvVar("MSI_SECRET", null))
+            using (new TestEnvVar(new () { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null } }))
             {
                 var response = new MockResponse(200);
 
@@ -108,8 +107,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyAppService2017RequestMockAsync()
         {
-            using (new TestEnvVar("MSI_ENDPOINT", "https://mock.msi.endpoint/"))
-            using (new TestEnvVar("MSI_SECRET", "mock-msi-secret"))
+            using (new TestEnvVar(new () { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" } }))
             {
                 var response = new MockResponse(200);
 
@@ -147,8 +145,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyAppService2017RequestWithClientIdMockAsync()
         {
-            using (new TestEnvVar("MSI_ENDPOINT", "https://mock.msi.endpoint/"))
-            using (new TestEnvVar("MSI_SECRET", "mock-msi-secret"))
+            using (new TestEnvVar(new () { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" } }))
             {
                 var response = new MockResponse(200);
 
@@ -189,8 +186,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyAppService2019RequestMockAsync()
         {
-            using (new TestEnvVar("IDENTITY_ENDPOINT", "https://identity.endpoint/"))
-            using (new TestEnvVar("IDENTITY_HEADER", "mock-identity-header"))
+            using (new TestEnvVar(new () { { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" } }))
             {
                 var expectedToken = "mock-access-token";
                 var response = new MockResponse(200);
@@ -222,10 +218,7 @@ namespace Azure.Identity.Tests
         // The test should be removed if and when support for this api version is added back
         public async Task VerifyAppService2017RequestWith2019EnvVarsMockAsync()
         {
-            using (new TestEnvVar("IDENTITY_ENDPOINT", "https://identity.endpoint/"))
-            using (new TestEnvVar("IDENTITY_HEADER", "mock-identity-header"))
-            using (new TestEnvVar("MSI_ENDPOINT", "https://mock.msi.endpoint/"))
-            using (new TestEnvVar("MSI_SECRET", "mock-msi-secret"))
+            using (new TestEnvVar(new () { { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" } }))
             {
                 var response = new MockResponse(200);
 
@@ -264,8 +257,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyAppService2019RequestWithClientIdMockAsync()
         {
-            using (new TestEnvVar("IDENTITY_ENDPOINT", "https://identity.endpoint/"))
-            using (new TestEnvVar("IDENTITY_HEADER", "mock-identity-header"))
+            using (new TestEnvVar(new () { { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" } }))
             {
                 var expectedToken = "mock-access-token";
                 var response = new MockResponse(200);
@@ -296,8 +288,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyCloudShellMsiRequestMockAsync()
         {
-            using (new TestEnvVar("MSI_ENDPOINT", "https://mock.msi.endpoint/"))
-            using (new TestEnvVar("MSI_SECRET", null))
+            using (new TestEnvVar(new () { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null } }))
             {
                 var response = new MockResponse(200);
 
@@ -341,8 +332,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyCloudShellMsiRequestWithClientIdMockAsync()
         {
-            using (new TestEnvVar("MSI_ENDPOINT", "https://mock.msi.endpoint/"))
-            using (new TestEnvVar("MSI_SECRET", null))
+            using (new TestEnvVar(new () { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null } }))
             {
                 var response = new MockResponse(200);
 

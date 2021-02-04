@@ -412,9 +412,9 @@ catch (RequestFailedException exception)
 Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
 
 ```C# Snippet:TextAnalyticsSampleHealthcareBatchAsync
-    string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
-                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
-                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
+    string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |
+                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE.
+                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months.
                         The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
                         with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
                         another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
@@ -422,16 +422,16 @@ Text Analytics for health is a containerized service that extracts and labels re
                         minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                         increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
+    string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
+
     List<string> batchInput = new List<string>()
     {
-        document,
-        document,
+        document1,
+        document2,
     };
 
     AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
     {
-        Top = 1,
-        Skip = 0,
         IncludeStatistics = true
     };
 
@@ -439,41 +439,42 @@ Text Analytics for health is a containerized service that extracts and labels re
 
     await healthOperation.WaitForCompletionAsync();
 
-    AnalyzeHealthcareEntitiesResultCollection results = healthOperation.Value;
-
-    Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
-    Console.WriteLine("");
-
-    foreach (AnalyzeHealthcareEntitiesResult result in results)
+    await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
     {
-        Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+        Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
+        Console.WriteLine("");
 
-        foreach (HealthcareEntity entity in result.Entities)
+        foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
         {
-            Console.WriteLine($"    Entity: {entity.Text}");
-            Console.WriteLine($"    Category: {entity.Category}");
-            Console.WriteLine($"    Offset: {entity.Offset}");
-            Console.WriteLine($"    Length: {entity.Length}");
-            Console.WriteLine($"    Links:");
+            Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
-            foreach (EntityDataSource entityDataSource in entity.DataSources)
+            foreach (HealthcareEntity entity in result.Entities)
             {
-                Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
-                Console.WriteLine($"        DataSource: {entityDataSource.Name}");
-            }
-        }
+                Console.WriteLine($"    Entity: {entity.Text}");
+                Console.WriteLine($"    Category: {entity.Category}");
+                Console.WriteLine($"    Offset: {entity.Offset}");
+                Console.WriteLine($"    Length: {entity.Length}");
+                Console.WriteLine($"    Links:");
 
-        Console.WriteLine($"    Document statistics:");
-        Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-        Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                foreach (EntityDataSource entityDataSource in entity.DataSources)
+                {
+                    Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
+                    Console.WriteLine($"        DataSource: {entityDataSource.Name}");
+                }
+            }
+
+            Console.WriteLine($"    Document statistics:");
+            Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
+            Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+            Console.WriteLine("");
+        }
+        Console.WriteLine($"Request statistics:");
+        Console.WriteLine($"    Document Count: {documentsInPage.Statistics.DocumentCount}");
+        Console.WriteLine($"    Valid Document Count: {documentsInPage.Statistics.ValidDocumentCount}");
+        Console.WriteLine($"    Transaction Count: {documentsInPage.Statistics.TransactionCount}");
+        Console.WriteLine($"    Invalid Document Count: {documentsInPage.Statistics.InvalidDocumentCount}");
         Console.WriteLine("");
     }
-    Console.WriteLine($"Request statistics:");
-    Console.WriteLine($"    Document Count: {results.Statistics.DocumentCount}");
-    Console.WriteLine($"    Valid Document Count: {results.Statistics.ValidDocumentCount}");
-    Console.WriteLine($"    Transaction Count: {results.Statistics.TransactionCount}");
-    Console.WriteLine($"    Invalid Document Count: {results.Statistics.InvalidDocumentCount}");
-    Console.WriteLine("");
 }
 ```
 

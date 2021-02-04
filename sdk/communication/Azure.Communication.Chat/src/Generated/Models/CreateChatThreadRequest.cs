@@ -16,26 +16,26 @@ namespace Azure.Communication.Chat
     {
         /// <summary> Initializes a new instance of CreateChatThreadRequest. </summary>
         /// <param name="topic"> The chat thread topic. </param>
-        /// <param name="members"> Members to be added to the chat thread. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> or <paramref name="members"/> is null. </exception>
-        public CreateChatThreadRequest(string topic, IEnumerable<ChatThreadMemberInternal> members)
+        /// <param name="participants"> Participants to be added to the chat thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> or <paramref name="participants"/> is null. </exception>
+        public CreateChatThreadRequest(string topic, IEnumerable<ChatParticipantInternal> participants)
         {
             if (topic == null)
             {
                 throw new ArgumentNullException(nameof(topic));
             }
-            if (members == null)
+            if (participants == null)
             {
-                throw new ArgumentNullException(nameof(members));
+                throw new ArgumentNullException(nameof(participants));
             }
 
             Topic = topic;
-            Members = members.ToList();
+            Participants = participants.ToList();
         }
 
         /// <summary> The chat thread topic. </summary>
         public string Topic { get; }
-        /// <summary> Members to be added to the chat thread. </summary>
-        public IList<ChatThreadMemberInternal> Members { get; }
+        /// <summary> Participants to be added to the chat thread. </summary>
+        public IList<ChatParticipantInternal> Participants { get; }
     }
 }
