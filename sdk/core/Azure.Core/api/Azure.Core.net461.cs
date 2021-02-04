@@ -188,9 +188,9 @@ namespace Azure
     }
     public partial class SyncAsyncEventArgs : System.EventArgs
     {
-        public SyncAsyncEventArgs(bool runSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public SyncAsyncEventArgs(bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
-        public bool RunSynchronously { get { throw null; } }
+        public bool IsRunningSynchronously { get { throw null; } }
     }
 }
 namespace Azure.Core
