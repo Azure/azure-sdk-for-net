@@ -66,16 +66,8 @@ namespace IotCentral.Tests.ScenarioTests
                 // Get all Iot Apps in a subscription
                 var iotAppsBySubscription = this.iotCentralClient.Apps.ListBySubscription().ToList();
 
-                // Get all of the available IoT Apps REST API operations
-                var operationList = this.iotCentralClient.Operations.List().ToList();
-
-                // Get IoT Central Apps REST API read operation
-                var readOperation = operationList.Where(e => e.Name.Equals("Microsoft.IoTCentral/IotApps/Read", StringComparison.OrdinalIgnoreCase)).ToList();
-
                 Assert.True(iotAppsByResourceGroup.Count > 0);
                 Assert.True(iotAppsBySubscription.Count > 0);
-                Assert.True(operationList.Count > 0);
-                Assert.True(readOperation.Count.Equals(1));
             }
         }
 
@@ -216,6 +208,29 @@ namespace IotCentral.Tests.ScenarioTests
                 Assert.True(iotAppsTemplates.Count > 0);
                 Assert.NotNull(iotAppsTemplates[0].Name);
                 Assert.Equal("Store Analytics – Condition Monitoring", iotAppsTemplates[0].Name);
+            }
+        }
+
+        [Fact]
+        public void TestIotCentralOperationsApi()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Initialize(context);
+                
+                // Get all of the available IoT Apps REST API operations
+                var operationList = this.iotCentralClient.Operations.List().ToList();
+
+                Assert.True(operationList.Count > 0);
+
+                // Get IoT Central Apps REST API read operation
+                var readOperation = operationList.Where(e => e.Name.Equals("Microsoft.IoTCentral/IotApps/Read", StringComparison.OrdinalIgnoreCase)).ToList();
+                // Get IoT Central Apps REST API read metricDefinitions operation
+                var readMetricDefinitionsOperation = operationList.Where(e => e.Name.Equals("Microsoft.IoTCentral/IoTApps/providers/Microsoft.Insights/metricDefinitions/read", StringComparison.OrdinalIgnoreCase)).ToList();
+
+                Assert.True(readOperation.Count.Equals(1));
+                Assert.NotNull(readMetricDefinitionsOperation[0].Origin);
+                Assert.NotNull(readMetricDefinitionsOperation[0].Properties);
             }
         }
 
