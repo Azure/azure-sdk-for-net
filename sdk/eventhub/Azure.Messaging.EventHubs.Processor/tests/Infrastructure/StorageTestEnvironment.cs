@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
     ///   being run, offering access to information such as environment variables.
     /// </summary>
     ///
-    public class StorageTestEnvironment: TestEnvironment
+    public class StorageTestEnvironment : TestEnvironment
     {
         /// <summary>The singleton instance of the <see cref="StorageTestEnvironment" />, lazily created.</summary>
         private static readonly Lazy<StorageTestEnvironment> Singleton = new Lazy<StorageTestEnvironment>(() => new StorageTestEnvironment(), LazyThreadSafetyMode.ExecutionAndPublication);

@@ -1,0 +1,15 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- Signal that samples are building in the repo as opposed to a standalone download from Samples Browser -->
+    <IsSamplesProject>true</IsSamplesProject>
+    <IsPackable>false</IsPackable>
+    <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
+    <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+  </PropertyGroup>
+
+  <Import Project="..\..\Directory.Build.props" />
+
+  <PropertyGroup>
+    <InheritDocEnabled>false</InheritDocEnabled>
+  </PropertyGroup>
+</Project>

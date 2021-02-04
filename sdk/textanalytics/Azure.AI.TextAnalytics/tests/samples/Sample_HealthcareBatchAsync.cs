@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -40,23 +38,23 @@ namespace Azure.AI.TextAnalytics.Samples
                 document,
             };
 
-            HealthcareOptions options = new HealthcareOptions()
+            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
             {
                 Top = 1,
                 Skip = 0,
                 IncludeStatistics = true
             };
 
-            HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(batchInput, "en", options);
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, "en", options);
 
             await healthOperation.WaitForCompletionAsync();
 
-            RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+            AnalyzeHealthcareEntitiesResultCollection results = healthOperation.Value;
 
             Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
             Console.WriteLine("");
 
-            foreach (DocumentHealthcareResult result in results)
+            foreach (AnalyzeHealthcareEntitiesResult result in results)
             {
                 Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
@@ -66,19 +64,18 @@ namespace Azure.AI.TextAnalytics.Samples
                     Console.WriteLine($"    Category: {entity.Category}");
                     Console.WriteLine($"    Offset: {entity.Offset}");
                     Console.WriteLine($"    Length: {entity.Length}");
-                    Console.WriteLine($"    IsNegated: {entity.IsNegated}");
                     Console.WriteLine($"    Links:");
 
-                    foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+                    foreach (EntityDataSource entityDataSource in entity.DataSources)
                     {
-                        Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-                        Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+                        Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
+                        Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                     }
                 }
 
                 Console.WriteLine($"    Document statistics:");
-                Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.Value.CharacterCount}");
-                Console.WriteLine($"        Transaction count: {result.Statistics.Value.TransactionCount}");
+                Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
+                Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                 Console.WriteLine("");
             }
             Console.WriteLine($"Request statistics:");

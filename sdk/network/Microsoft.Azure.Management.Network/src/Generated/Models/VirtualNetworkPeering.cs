@@ -52,21 +52,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// different region (preview). See here to register for the preview
         /// and learn more
         /// (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).</param>
-        /// <param name="remoteAddressSpace">The reference to the address space
-        /// peered with the remote virtual network.</param>
-        /// <param name="remoteVirtualNetworkAddressSpace">The reference to the
-        /// current address space of the remote virtual network.</param>
+        /// <param name="remoteAddressSpace">The reference to the remote
+        /// virtual network address space.</param>
         /// <param name="remoteBgpCommunities">The reference to the remote
         /// virtual network's Bgp Communities.</param>
         /// <param name="peeringState">The status of the virtual network
         /// peering. Possible values include: 'Initiated', 'Connected',
         /// 'Disconnected'</param>
-        /// <param name="peeringSyncLevel">The peering sync status of the
-        /// virtual network peering. Possible values include: 'FullySynced',
-        /// 'RemoteUnsynced', 'LocalUnsynced', 'LocalAndRemoteUnsynced'</param>
-        /// <param name="syncRemoteAddressSpace">Provided when user wants to
-        /// sync the peering with address space on the remote virtual network
-        /// after the address space is updated.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// virtual network peering resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -75,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkPeering(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), SubResource remoteVirtualNetwork = default(SubResource), AddressSpace remoteAddressSpace = default(AddressSpace), AddressSpace remoteVirtualNetworkAddressSpace = default(AddressSpace), VirtualNetworkBgpCommunities remoteBgpCommunities = default(VirtualNetworkBgpCommunities), string peeringState = default(string), string peeringSyncLevel = default(string), bool? syncRemoteAddressSpace = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkPeering(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), SubResource remoteVirtualNetwork = default(SubResource), AddressSpace remoteAddressSpace = default(AddressSpace), VirtualNetworkBgpCommunities remoteBgpCommunities = default(VirtualNetworkBgpCommunities), string peeringState = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
@@ -84,11 +76,8 @@ namespace Microsoft.Azure.Management.Network.Models
             UseRemoteGateways = useRemoteGateways;
             RemoteVirtualNetwork = remoteVirtualNetwork;
             RemoteAddressSpace = remoteAddressSpace;
-            RemoteVirtualNetworkAddressSpace = remoteVirtualNetworkAddressSpace;
             RemoteBgpCommunities = remoteBgpCommunities;
             PeeringState = peeringState;
-            PeeringSyncLevel = peeringSyncLevel;
-            SyncRemoteAddressSpace = syncRemoteAddressSpace;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -143,18 +132,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource RemoteVirtualNetwork { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference to the address space peered with the
-        /// remote virtual network.
+        /// Gets or sets the reference to the remote virtual network address
+        /// space.
         /// </summary>
         [JsonProperty(PropertyName = "properties.remoteAddressSpace")]
         public AddressSpace RemoteAddressSpace { get; set; }
-
-        /// <summary>
-        /// Gets or sets the reference to the current address space of the
-        /// remote virtual network.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.remoteVirtualNetworkAddressSpace")]
-        public AddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
 
         /// <summary>
         /// Gets or sets the reference to the remote virtual network's Bgp
@@ -169,22 +151,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.peeringState")]
         public string PeeringState { get; set; }
-
-        /// <summary>
-        /// Gets or sets the peering sync status of the virtual network
-        /// peering. Possible values include: 'FullySynced', 'RemoteUnsynced',
-        /// 'LocalUnsynced', 'LocalAndRemoteUnsynced'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.peeringSyncLevel")]
-        public string PeeringSyncLevel { get; set; }
-
-        /// <summary>
-        /// Gets or sets provided when user wants to sync the peering with
-        /// address space on the remote virtual network after the address space
-        /// is updated.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.syncRemoteAddressSpace")]
-        public bool? SyncRemoteAddressSpace { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the virtual network peering

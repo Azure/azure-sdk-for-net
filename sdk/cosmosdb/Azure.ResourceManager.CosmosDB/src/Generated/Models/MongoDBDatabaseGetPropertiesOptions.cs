@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MongoDBDatabaseGetPropertiesOptions : OptionsResource
     {
         /// <summary> Initializes a new instance of MongoDBDatabaseGetPropertiesOptions. </summary>
-        internal MongoDBDatabaseGetPropertiesOptions()
+        public MongoDBDatabaseGetPropertiesOptions()
         {
         }
 

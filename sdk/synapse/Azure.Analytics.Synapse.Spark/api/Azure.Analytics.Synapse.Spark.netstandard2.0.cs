@@ -7,12 +7,25 @@ namespace Azure.Analytics.Synapse.Spark
         public SparkBatchClient(System.Uri endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Spark.SparkClientOptions options) { }
         public virtual Azure.Response CancelSparkBatchJob(int batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelSparkBatchJobAsync(int batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob> CreateSparkBatchJob(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>> CreateSparkBatchJobAsync(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob> GetSparkBatchJob(int batchId, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>> GetSparkBatchJobAsync(int batchId, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection> GetSparkBatchJobs(int? from = default(int?), int? size = default(int?), bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection>> GetSparkBatchJobsAsync(int? from = default(int?), int? size = default(int?), bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Spark.SparkBatchOperation StartCreateSparkBatchJob(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Spark.SparkBatchOperation> StartCreateSparkBatchJobAsync(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SparkBatchOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>
+    {
+        internal SparkBatchOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Analytics.Synapse.Spark.Models.SparkBatchJob Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class SparkClientOptions : Azure.Core.ClientOptions
     {
@@ -31,10 +44,6 @@ namespace Azure.Analytics.Synapse.Spark
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelSparkSessionAsync(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult> CancelSparkStatement(int sessionId, int statementId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult>> CancelSparkStatementAsync(int sessionId, int statementId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkSession> CreateSparkSession(Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions sparkSessionOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkSession>> CreateSparkSessionAsync(Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions sparkSessionOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkStatement> CreateSparkStatement(int sessionId, Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions sparkStatementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkStatement>> CreateSparkStatementAsync(int sessionId, Azure.Analytics.Synapse.Spark.Models.SparkStatementOptions sparkStatementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkSession> GetSparkSession(int sessionId, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkSession>> GetSparkSessionAsync(int sessionId, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection> GetSparkSessions(int? from = default(int?), int? size = default(int?), bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -45,6 +54,34 @@ namespace Azure.Analytics.Synapse.Spark
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection>> GetSparkStatementsAsync(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ResetSparkSessionTimeout(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetSparkSessionTimeoutAsync(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Analytics.Synapse.Spark.SparkSessionOperation StartCreateSparkSession(Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions sparkSessionOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Analytics.Synapse.Spark.SparkSessionOperation> StartCreateSparkSessionAsync(Azure.Analytics.Synapse.Spark.Models.SparkSessionOptions sparkSessionOptions, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SparkSessionOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkSession>
+    {
+        internal SparkSessionOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Analytics.Synapse.Spark.Models.SparkSession Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkSession>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkSession>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class SparkStatementOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkStatement>
+    {
+        internal SparkStatementOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Analytics.Synapse.Spark.Models.SparkStatement Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkStatement>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkStatement>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
 namespace Azure.Analytics.Synapse.Spark.Models
@@ -350,7 +387,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkStatementCancellationResult
     {
         internal SparkStatementCancellationResult() { }
-        public string Msg { get { throw null; } }
+        public string Message { get { throw null; } }
     }
     public partial class SparkStatementCollection
     {
@@ -364,8 +401,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SparkStatementLanguageType(string value) { throw null; }
-        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Dotnetspark { get { throw null; } }
-        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Pyspark { get { throw null; } }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType DotNetSpark { get { throw null; } }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType PySpark { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Spark { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Sql { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType other) { throw null; }

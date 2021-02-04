@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 {
@@ -21,6 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 throw new ArgumentNullException(nameof(builder));
             }
 
+            builder.Services.TryAddSingleton<HttpRequestProcessor>();
             builder.AddExtension<EventGridExtensionConfigProvider>();
             return builder;
         }

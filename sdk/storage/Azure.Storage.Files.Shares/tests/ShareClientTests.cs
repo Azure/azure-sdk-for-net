@@ -15,6 +15,7 @@ using Azure.Storage.Test;
 using NUnit.Framework;
 using System.Threading;
 using Azure.Identity;
+using Moq;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -119,6 +120,37 @@ namespace Azure.Storage.Files.Shares.Tests
                 await shareClient1.DeleteIfExistsAsync();
                 await shareClient2.DeleteIfExistsAsync();
             }
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All, permissions: AccountSasPermissions.All).ToString();
+            Uri uri = test.Share.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new ShareClient(uri, new AzureSasCredential(sas), GetOptions()));
+            ShareProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All, permissions: AccountSasPermissions.All).ToString();
+            Uri uri = test.Share.Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new ShareClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
         [Test]
@@ -2223,6 +2255,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<ShareClient>();
+            directory.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateSasUri);
+        }
+
+        [Test]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
@@ -2322,5 +2371,16 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<ShareClient>(TestConfigDefault.ConnectionString, "name", new ShareClientOptions()).Object;
+            mock = new Mock<ShareClient>(TestConfigDefault.ConnectionString, "name").Object;
+            mock = new Mock<ShareClient>(new Uri("https://test/test/test"), new ShareClientOptions()).Object;
+            mock = new Mock<ShareClient>(new Uri("https://test/test/test"), GetNewSharedKeyCredentials(), new ShareClientOptions()).Object;
+            mock = new Mock<ShareClient>(new Uri("https://test/test/test"), new AzureSasCredential("foo"), new ShareClientOptions()).Object;
+        }
     }
 }

@@ -5,7 +5,6 @@ using System;
 using Azure.Core;
 using Azure.Security.Attestation.Models;
 using System.Security.Cryptography.X509Certificates;
-using Azure.Security.Attestation.Common;
 using System.Text;
 using static System.Net.WebRequestMethods;
 using System.Text.Json.Serialization;

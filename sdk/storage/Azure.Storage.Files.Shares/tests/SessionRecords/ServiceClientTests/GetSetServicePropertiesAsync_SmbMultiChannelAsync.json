@@ -1,134 +1,162 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seancanarypremiumfile.file.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestUri": "https://seancanarypremiumfile2.file.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-85c8bc7ffb22664685ac1a89218fb6d8-def679da5c4ae64b-00",
+        "traceparent": "00-b5811f9041fc7e4dbe50b33dd82b47f6-7b5d86d4d014d143-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200803.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210121.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "beeffcd4-2a95-adaf-2653-680eaf8d583a",
-        "x-ms-date": "Tue, 04 Aug 2020 00:12:53 GMT",
+        "x-ms-date": "Thu, 21 Jan 2021 20:44:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "471",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-client-request-id,Server,x-ms-version,Content-Length,Date,Transfer-Encoding",
         "Content-Type": "application/xml",
-        "Date": "Tue, 04 Aug 2020 00:12:53 GMT",
+        "Date": "Thu, 21 Jan 2021 20:44:23 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "beeffcd4-2a95-adaf-2653-680eaf8d583a",
+<<<<<<< HEAD
         "x-ms-request-id": "f9e5166e-601a-0043-68f3-69d010000000",
+        "x-ms-version": "2020-06-12"
+=======
+        "x-ms-request-id": "bd291ce1-001a-0018-1836-f0e92b000000",
         "x-ms-version": "2020-04-08"
+>>>>>>> master
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003C/StorageServiceProperties\u003E"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedMethods\u003EDELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH\u003C/AllowedMethods\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedHeaders\u003E*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003E*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E86400\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003C/StorageServiceProperties\u003E"
     },
     {
-      "RequestUri": "https://seancanarypremiumfile.file.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestUri": "https://seancanarypremiumfile2.file.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "Content-Length": "429",
+        "Content-Length": "677",
         "Content-Type": "application/xml",
-        "traceparent": "00-d95911981d02da438b5ec604cb3c48fb-e18bd96d0336fc45-00",
+        "traceparent": "00-11d592741396da40bc4834875bc20de6-593a4ae946007046-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200803.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210121.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "6c3ec7f5-8277-3fd0-1979-cb10e206186a",
-        "x-ms-date": "Tue, 04 Aug 2020 00:12:54 GMT",
+        "x-ms-date": "Thu, 21 Jan 2021 20:44:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
-      "RequestBody": "\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003C/StorageServiceProperties\u003E",
+      "RequestBody": "\uFEFF\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedMethods\u003EDELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH\u003C/AllowedMethods\u003E\u003CAllowedHeaders\u003E*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003E*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E86400\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003C/StorageServiceProperties\u003E",
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 04 Aug 2020 00:12:53 GMT",
+        "Date": "Thu, 21 Jan 2021 20:44:23 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "6c3ec7f5-8277-3fd0-1979-cb10e206186a",
+<<<<<<< HEAD
         "x-ms-request-id": "f9e51670-601a-0043-69f3-69d010000000",
+        "x-ms-version": "2020-06-12"
+=======
+        "x-ms-request-id": "bd291ce3-001a-0018-1936-f0e92b000000",
         "x-ms-version": "2020-04-08"
+>>>>>>> master
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seancanarypremiumfile.file.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestUri": "https://seancanarypremiumfile2.file.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-bc6020433928264d9a698be2cc1d0763-563c87f4ccc95a44-00",
+        "traceparent": "00-cd66561bfed0974b9fe0f6d9b1d993c0-b7f03f31ddcff94e-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200803.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210121.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "e819d9d3-ec4f-38c2-32ee-68569c63a642",
-        "x-ms-date": "Tue, 04 Aug 2020 00:12:54 GMT",
+        "x-ms-date": "Thu, 21 Jan 2021 20:44:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "470",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-client-request-id,Server,x-ms-version,Content-Length,Date,Transfer-Encoding",
         "Content-Type": "application/xml",
-        "Date": "Tue, 04 Aug 2020 00:12:53 GMT",
+        "Date": "Thu, 21 Jan 2021 20:44:23 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "e819d9d3-ec4f-38c2-32ee-68569c63a642",
+<<<<<<< HEAD
         "x-ms-request-id": "f9e51677-601a-0043-6af3-69d010000000",
+        "x-ms-version": "2020-06-12"
+=======
+        "x-ms-request-id": "bd291ce8-001a-0018-1a36-f0e92b000000",
         "x-ms-version": "2020-04-08"
+>>>>>>> master
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003C/StorageServiceProperties\u003E"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedMethods\u003EDELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH\u003C/AllowedMethods\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedHeaders\u003E*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003E*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E86400\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003C/StorageServiceProperties\u003E"
     },
     {
-      "RequestUri": "https://seancanarypremiumfile.file.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestUri": "https://seancanarypremiumfile2.file.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "Content-Length": "430",
+        "Content-Length": "678",
         "Content-Type": "application/xml",
-        "traceparent": "00-39c1246aa651384186eb8b69eebabe56-edea2ca64ae61642-00",
+        "traceparent": "00-1c0c73a5ac684541af59c5e0b0934412-99bbf6ed1ec0de40-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200803.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210121.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "083cf152-2fed-ae1b-9b3f-73bcf962d025",
-        "x-ms-date": "Tue, 04 Aug 2020 00:12:54 GMT",
+        "x-ms-date": "Thu, 21 Jan 2021 20:44:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
-      "RequestBody": "\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003C/StorageServiceProperties\u003E",
+      "RequestBody": "\uFEFF\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedMethods\u003EDELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH\u003C/AllowedMethods\u003E\u003CAllowedHeaders\u003E*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003E*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E86400\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003C/StorageServiceProperties\u003E",
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 04 Aug 2020 00:12:53 GMT",
+        "Date": "Thu, 21 Jan 2021 20:44:23 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "083cf152-2fed-ae1b-9b3f-73bcf962d025",
+<<<<<<< HEAD
         "x-ms-request-id": "f9e51678-601a-0043-6bf3-69d010000000",
+        "x-ms-version": "2020-06-12"
+=======
+        "x-ms-request-id": "bd291ce9-001a-0018-1b36-f0e92b000000",
         "x-ms-version": "2020-04-08"
+>>>>>>> master
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "683174547",
-    "Storage_TestConfigPremiumFile": "PremiumFileTenant\nseancanarypremiumfile\nU2FuaXRpemVk\nhttps://seancanarypremiumfile.blob.core.windows.net\nhttps://seancanarypremiumfile.file.core.windows.net\nhttps://seancanarypremiumfile.queue.core.windows.net\nhttps://seancanarypremiumfile.table.core.windows.net\n\n\n\n\nhttps://seancanarypremiumfile-secondary.blob.core.windows.net\nhttps://seancanarypremiumfile-secondary.file.core.windows.net\nhttps://seancanarypremiumfile-secondary.queue.core.windows.net\nhttps://seancanarypremiumfile-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seancanarypremiumfile.blob.core.windows.net/;QueueEndpoint=https://seancanarypremiumfile.queue.core.windows.net/;FileEndpoint=https://seancanarypremiumfile.file.core.windows.net/;BlobSecondaryEndpoint=https://seancanarypremiumfile-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seancanarypremiumfile-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seancanarypremiumfile-secondary.file.core.windows.net/;AccountName=seancanarypremiumfile;AccountKey=Sanitized\n"
+    "Storage_TestConfigPremiumFile": "PremiumFileTenant\nseancanarypremiumfile2\nU2FuaXRpemVk\nhttps://seancanarypremiumfile2.blob.core.windows.net\nhttps://seancanarypremiumfile2.file.core.windows.net\nhttps://seancanarypremiumfile2.queue.core.windows.net\nhttps://seancanarypremiumfile2.table.core.windows.net\n\n\n\n\nhttps://seancanarypremiumfile2-secondary.blob.core.windows.net\nhttps://seancanarypremiumfile2-secondary.file.core.windows.net\nhttps://seancanarypremiumfile2-secondary.queue.core.windows.net\nhttps://seancanarypremiumfile2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seancanarypremiumfile2.blob.core.windows.net/;QueueEndpoint=https://seancanarypremiumfile2.queue.core.windows.net/;FileEndpoint=https://seancanarypremiumfile2.file.core.windows.net/;BlobSecondaryEndpoint=https://seancanarypremiumfile2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seancanarypremiumfile2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seancanarypremiumfile2-secondary.file.core.windows.net/;AccountName=seancanarypremiumfile2;AccountKey=Sanitized\n"
   }
 }

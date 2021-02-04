@@ -169,6 +169,8 @@ namespace Azure.AI.MetricsAdvisor
         protected MetricsAdvisorClient() { }
         public MetricsAdvisorClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential) { }
         public MetricsAdvisorClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions options) { }
+        public MetricsAdvisorClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public MetricsAdvisorClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions options) { }
         public virtual Azure.Response<string> AddFeedback(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> AddFeedbackAsync(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlert> GetAlerts(string alertConfigurationId, Azure.AI.MetricsAdvisor.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -214,8 +216,8 @@ namespace Azure.AI.MetricsAdvisor
     public partial class MetricsAdvisorKeyCredential
     {
         public MetricsAdvisorKeyCredential(string subscriptionKey, string apiKey) { }
-        public void UpdateApiKey(string key) { }
-        public void UpdateSubscriptionKey(string key) { }
+        public void UpdateApiKey(string apiKey) { }
+        public void UpdateSubscriptionKey(string subscriptionKey) { }
     }
 }
 namespace Azure.AI.MetricsAdvisor.Administration
@@ -225,6 +227,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         protected MetricsAdvisorAdministrationClient() { }
         public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential) { }
         public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions options) { }
+        public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions options) { }
         public virtual Azure.Response<string> CreateAlertConfiguration(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateAlertConfigurationAsync(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> CreateDataFeed(Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -503,26 +507,26 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class DataFeed
     {
-        public DataFeed(string dataFeedName, Azure.AI.MetricsAdvisor.Models.DataFeedSource dataSource, Azure.AI.MetricsAdvisor.Models.DataFeedGranularity dataFeedGranularity, Azure.AI.MetricsAdvisor.Models.DataFeedSchema dataFeedSchema, Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings dataFeedIngestionSettings) { }
+        public DataFeed() { }
         public Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode? AccessMode { get { throw null; } set { } }
         public string ActionLinkTemplate { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Administrators { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Administrators { get { throw null; } }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
         public string Creator { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedSource DataSource { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedSource DataSource { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedGranularity Granularity { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedGranularity Granularity { get { throw null; } set { } }
         public string Id { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings IngestionSettings { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings IngestionSettings { get { throw null; } set { } }
         public bool? IsAdministrator { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> MetricIds { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get { throw null; } set { } }
-        public string Name { get { throw null; } }
+        public string Name { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedRollupSettings RollupSettings { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedSchema Schema { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedSourceType SourceType { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedSchema Schema { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedSourceType? SourceType { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IList<string> Viewers { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Viewers { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataFeedAccessMode : System.IEquatable<Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode>
@@ -608,11 +612,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class DataFeedIngestionSettings
     {
-        public DataFeedIngestionSettings(System.DateTimeOffset ingestionStartTime) { }
+        public DataFeedIngestionSettings() { }
         public int? DataSourceRequestConcurrency { get { throw null; } set { } }
         public System.TimeSpan? IngestionRetryDelay { get { throw null; } set { } }
         public System.TimeSpan? IngestionStartOffset { get { throw null; } set { } }
-        public System.DateTimeOffset IngestionStartTime { get { throw null; } }
+        public System.DateTimeOffset? IngestionStartTime { get { throw null; } set { } }
         public System.TimeSpan? StopRetryAfter { get { throw null; } set { } }
     }
     public partial class DataFeedIngestionStatus
@@ -660,7 +664,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         public DataFeedRollupSettings() { }
         public string AlreadyRollupIdentificationValue { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> AutoRollupGroupByColumnNames { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AutoRollupGroupByColumnNames { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod? RollupMethod { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedRollupType? RollupType { get { throw null; } set { } }
     }
@@ -685,8 +689,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class DataFeedSchema
     {
-        public DataFeedSchema(System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DataFeedMetric> metricColumns) { }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DataFeedDimension> DimensionColumns { get { throw null; } set { } }
+        public DataFeedSchema() { }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DataFeedDimension> DimensionColumns { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DataFeedMetric> MetricColumns { get { throw null; } }
         public string TimestampColumn { get { throw null; } set { } }
     }

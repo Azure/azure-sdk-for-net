@@ -36,15 +36,50 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             List<EventGridEvent> eventsList = new List<EventGridEvent>
             {
                 new EventGridEvent(
-                    "This is the event data",
                     "ExampleEventSubject",
                     "Example.EventType",
-                    "1.0")
+                    "1.0",
+                    "This is the event data")
             };
 
             // Send the events
             await client.SendEventsAsync(eventsList);
             #endregion
+        }
+
+        [Test]
+        public async Task AuthenticateWithSasToken()
+        {
+            string topicEndpoint = TestEnvironment.TopicHost;
+            string topicAccessKey = TestEnvironment.TopicKey;
+
+            // Create the publisher client using an AzureKeyCredential
+            // Custom topic should be configured to accept events of the Event Grid schema
+            #region Snippet:GenerateSas
+            var builder = new EventGridSasBuilder(new Uri(topicEndpoint), DateTimeOffset.Now.AddHours(1));
+            var keyCredential = new AzureKeyCredential(topicAccessKey);
+            string sasToken = builder.GenerateSas(keyCredential);
+            #endregion
+
+            #region Snippet:AuthenticateWithSas
+            var sasCredential = new AzureSasCredential(sasToken);
+            EventGridPublisherClient client = new EventGridPublisherClient(
+                new Uri(topicEndpoint),
+                sasCredential);
+            #endregion
+
+            // Add EventGridEvents to a list to publish to the topic
+            List<EventGridEvent> eventsList = new List<EventGridEvent>
+            {
+                new EventGridEvent(
+                    "ExampleEventSubject",
+                    "Example.EventType",
+                    "1.0",
+                    "This is the event data")
+            };
+
+            // Send the events
+            await client.SendEventsAsync(eventsList);
         }
 
         // This sample demonstrates how to publish CloudEvents 1.0 schema events to an Event Grid topic.
@@ -89,7 +124,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                 new CloudEvent(
                     "/cloudevents/example/binarydata",
                     "Example.EventType",
-                    new BinaryData("This is binary data"),
+                    Encoding.UTF8.GetBytes("This is binary data"),
                     "example/binary")};
 
             // Send the events
@@ -118,10 +153,10 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             List<EventGridEvent> eventsList = new List<EventGridEvent>
             {
                 new EventGridEvent(
-                    "This is the event data",
                     "ExampleEventSubject",
                     "Example.EventType",
-                    "1.0")
+                    "1.0",
+                    "This is the event data")
                 {
                     Topic = "MyTopic"
                 }

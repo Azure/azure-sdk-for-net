@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanada.file.core.windows.net/test-share-f74aa3a0-40b4-78e1-6013-f540a37e3c9c?restype=share",
@@ -12,7 +12,8 @@
         "x-ms-client-request-id": "3fba11b6-389e-9419-af5c-aa24c93841b5",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -27,12 +28,12 @@
         "x-ms-client-request-id": "3fba11b6-389e-9419-af5c-aa24c93841b5",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "356613e1-001a-004c-0580-a201b2000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EResourceNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified resource does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ResourceNotFound</Code><Message>The specified resource does not exist.\n",
         "RequestId:356613e1-001a-004c-0580-a201b2000000\n",
-        "Time:2020-10-14T23:18:44.2933058Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2020-10-14T23:18:44.2933058Z</Message></Error>"
       ]
     }
   ],

@@ -4,5 +4,6 @@
 namespace Azure.Media.Analytics.Edge.Models
 {
     internal partial class MediaGraphTopologySetRequestBody
-    { }
+    {
+    }
 }

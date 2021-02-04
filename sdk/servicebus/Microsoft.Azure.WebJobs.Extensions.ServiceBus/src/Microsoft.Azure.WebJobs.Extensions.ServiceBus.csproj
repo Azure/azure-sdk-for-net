@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
+    <Version>5.0.0-beta.1</Version>
+    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;CA1507</NoWarn>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.ServiceBus" VersionOverride="4.2.0" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Sources" VersionOverride="3.0.19" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" VersionOverride="3.0.19" />
+    <!-- TODO: Switch to centralized versions when Microsoft.Extensions.Azure GA -->
+    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.1.0-beta.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedSource" />
+  </ItemGroup>
+</Project>

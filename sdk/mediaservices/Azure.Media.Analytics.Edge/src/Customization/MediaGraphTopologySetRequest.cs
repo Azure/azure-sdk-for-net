@@ -7,20 +7,18 @@ namespace Azure.Media.Analytics.Edge.Models
 {
     public partial class MediaGraphTopologySetRequest
     {
-        internal MediaGraphTopologySetRequestBody GraphBody;
-
         /// <summary>
-        ///  Serialize .
+        ///  Gets the Payload from the request result.
         /// </summary>
-        /// <returns>
-        /// Method payload as Json string.
-        /// </returns>
+        /// <returns>A string containing the Payload. </returns>
         public override string GetPayloadAsJson()
         {
-            GraphBody = new MediaGraphTopologySetRequestBody(Graph.Name);
-            GraphBody.SystemData = Graph.SystemData;
-            GraphBody.Properties = Graph.Properties;
-            return GraphBody.GetPayloadAsJson();
+            var graphBody = new MediaGraphTopologySetRequestBody(Graph.Name)
+            {
+                SystemData = Graph.SystemData,
+                Properties = Graph.Properties
+            };
+            return graphBody.GetPayloadAsJson();
         }
     }
 }

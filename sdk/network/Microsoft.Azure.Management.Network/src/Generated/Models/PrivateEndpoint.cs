@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="extendedLocation">The extended location of the load
+        /// balancer.</param>
         /// <param name="subnet">The ID of the subnet from which the private IP
         /// will be allocated.</param>
         /// <param name="networkInterfaces">An array of references to the
@@ -56,9 +58,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// configurations.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public PrivateEndpoint(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Subnet subnet = default(Subnet), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateLinkServiceConnection> privateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), IList<CustomDnsConfigPropertiesFormat> customDnsConfigs = default(IList<CustomDnsConfigPropertiesFormat>), string etag = default(string))
+        public PrivateEndpoint(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), Subnet subnet = default(Subnet), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateLinkServiceConnection> privateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), IList<CustomDnsConfigPropertiesFormat> customDnsConfigs = default(IList<CustomDnsConfigPropertiesFormat>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
+            ExtendedLocation = extendedLocation;
             Subnet = subnet;
             NetworkInterfaces = networkInterfaces;
             ProvisioningState = provisioningState;
@@ -73,6 +76,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the extended location of the load balancer.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the subnet from which the private IP will be
@@ -124,5 +133,28 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ExtendedLocation != null)
+            {
+                ExtendedLocation.Validate();
+            }
+            if (NetworkInterfaces != null)
+            {
+                foreach (var element in NetworkInterfaces)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

@@ -5,18 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Media.Analytics.Edge.Models
 {
     /// <summary> Allowed states for a graph instance. </summary>
-    public enum MediaGraphInstanceState
+    public readonly partial struct MediaGraphInstanceState : IEquatable<MediaGraphInstanceState>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="MediaGraphInstanceState"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MediaGraphInstanceState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string InactiveValue = "Inactive";
+        private const string ActivatingValue = "Activating";
+        private const string ActiveValue = "Active";
+        private const string DeactivatingValue = "Deactivating";
+
         /// <summary> The media graph instance is idle and not processing media. </summary>
-        Inactive,
+        public static MediaGraphInstanceState Inactive { get; } = new MediaGraphInstanceState(InactiveValue);
         /// <summary> The media graph instance is transitioning into the active state. </summary>
-        Activating,
+        public static MediaGraphInstanceState Activating { get; } = new MediaGraphInstanceState(ActivatingValue);
         /// <summary> The media graph instance is active and processing media. </summary>
-        Active,
+        public static MediaGraphInstanceState Active { get; } = new MediaGraphInstanceState(ActiveValue);
         /// <summary> The media graph instance is transitioning into the inactive state. </summary>
-        Deactivating
+        public static MediaGraphInstanceState Deactivating { get; } = new MediaGraphInstanceState(DeactivatingValue);
+        /// <summary> Determines if two <see cref="MediaGraphInstanceState"/> values are the same. </summary>
+        public static bool operator ==(MediaGraphInstanceState left, MediaGraphInstanceState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="MediaGraphInstanceState"/> values are not the same. </summary>
+        public static bool operator !=(MediaGraphInstanceState left, MediaGraphInstanceState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="MediaGraphInstanceState"/>. </summary>
+        public static implicit operator MediaGraphInstanceState(string value) => new MediaGraphInstanceState(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is MediaGraphInstanceState other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(MediaGraphInstanceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

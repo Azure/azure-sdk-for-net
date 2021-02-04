@@ -832,7 +832,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var credential = EventHubsTestEnvironment.Instance.Credential;
-                var sourceEvents = EventGenerator.CreateEvents(100).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 // Send events to the second partition, which should not be visible to the receiver.
 
@@ -845,9 +845,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     // read operation will not naturally complete; limit the read to only a couple of seconds and trigger cancellation.
 
                     using var readCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationSource.Token);
-                    readCancellation.CancelAfter(TimeSpan.FromSeconds(5));
+                    readCancellation.CancelAfter(TimeSpan.FromSeconds(15));
 
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, readCancellation.Token, waitTime: TimeSpan.FromSeconds(1));
+                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, readCancellation.Token, waitTime: TimeSpan.FromMilliseconds(250));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The main cancellation token should not have been signaled.");
 
                     Assert.That(readState.Events.Count, Is.Zero, "No events should have been read from the empty partition.");
@@ -1411,13 +1411,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName))
                 {
-                    var waitTime = TimeSpan.FromMilliseconds(250);
+                    var waitTime = TimeSpan.FromMilliseconds(100);
                     var desiredEmptyBatches = 10;
                     var minimumEmptyBatches = 5;
 
                     var readTime = TimeSpan
-                        .FromSeconds(waitTime.TotalSeconds * desiredEmptyBatches)
-                        .Add(TimeSpan.FromSeconds(3));
+                        .FromMilliseconds(waitTime.TotalMilliseconds * desiredEmptyBatches)
+                        .Add(TimeSpan.FromSeconds(10));
 
                     // Attempt to read from the empty partition and verify that no events are observed.  Because no events are expected, the
                     // read operation will not naturally complete; limit the read to only a couple of seconds and trigger cancellation.

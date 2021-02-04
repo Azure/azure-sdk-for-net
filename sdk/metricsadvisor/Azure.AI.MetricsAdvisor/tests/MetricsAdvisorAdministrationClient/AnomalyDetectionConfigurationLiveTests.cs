@@ -19,9 +19,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAndGetDetectionConfigurationWithHardCondition()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CreateAndGetDetectionConfigurationWithHardCondition(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string configName = Recording.GenerateAlphaNumericId("config");
             var description = "This hook was created to test the .NET client.";
@@ -317,11 +319,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task UpdateDetectionConfigurationWithMinimumSetupAndGetInstance()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task UpdateDetectionConfigurationWithMinimumSetupAndGetInstance(bool useTokenCredential)
         {
             // Set required parameters of the configuration to be created.
 
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string configName = Recording.GenerateAlphaNumericId("config");
 
@@ -844,9 +848,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetDetectonConfigurations()
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18004")]
+        public async Task GetDetectionConfigurations(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             var configCount = 0;
 
@@ -883,9 +890,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task DeleteDetectionConfiguration()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeleteDetectionConfiguration(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string configName = Recording.GenerateAlphaNumericId("config");
 

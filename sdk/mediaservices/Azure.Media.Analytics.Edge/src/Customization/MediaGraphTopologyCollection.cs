@@ -8,44 +8,17 @@ using Azure.Core;
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    /// <summary>
-    /// Extensions methods to MediaGraphTopologyCollection to add serialization and deserialization
-    /// </summary>
     public partial class MediaGraphTopologyCollection
     {
         /// <summary>
-        ///  Serialize MediaGraphTopologyCollection.
-        /// </summary>
-        /// <returns>
-        /// Serialized Graph Topology Collection.
-        /// </returns>
-        public string Serialize()
-        {
-            return SerializeMediaGraphTopologyCollectionInternal(this);
-        }
-
-        internal static string SerializeMediaGraphTopologyCollectionInternal(IUtf8JsonSerializable serializable)
-        {
-            using var memoryStream = new MemoryStream();
-
-            using (var writer = new Utf8JsonWriter(memoryStream))
-            {
-                serializable.Write(writer);
-            }
-
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
-        }
-
-        /// <summary>
         ///  Deserialize MediaGraphTopology.
         /// </summary>
-        /// <param name="json"></param>
-        /// <returns>
-        /// Deserialized Graph Topologogy Collection.
-        /// </returns>
+        /// <param name="json">The json data that is to be deserialized.</param>
+        /// <returns>A Json string representation of a list of MediaGraphTopology.</returns>
         public static MediaGraphTopologyCollection Deserialize(string json)
         {
-            JsonElement element = JsonDocument.Parse(json).RootElement;
+            using JsonDocument doc = JsonDocument.Parse(json);
+            JsonElement element = doc.RootElement;
             return DeserializeMediaGraphTopologyCollection(element);
         }
     }

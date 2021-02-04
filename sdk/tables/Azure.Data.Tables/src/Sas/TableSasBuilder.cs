@@ -33,15 +33,41 @@ namespace Azure.Data.Tables.Sas
         /// Initializes an instance of a <see cref="TableSasBuilder"/>.
         /// </summary>
         /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
-        /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "racwdl".</param>
+        /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "raud".</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
         public TableSasBuilder(string tableName, string rawPermissions, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(rawPermissions, nameof(tableName));
 
             TableName = tableName;
             ExpiresOn = expiresOn;
             Permissions = rawPermissions;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared acccess signature.
+        /// </summary>
+        /// <param name="uri">The Uri to parse.</param>
+        /// <returns></returns>
+        public TableSasBuilder(Uri uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+
+            var uriBuilder = new TableUriBuilder(uri);
+
+            TableName = uriBuilder.Tablename;
+            ExpiresOn = uriBuilder.Sas.ExpiresOn;
+            Identifier = uriBuilder.Sas.Identifier;
+            IPRange = uriBuilder.Sas.IPRange;
+            PartitionKeyEnd = uriBuilder.Sas.EndPartitionKey;
+            PartitionKeyStart = uriBuilder.Sas.StartPartitionKey;
+            Protocol = uriBuilder.Sas.Protocol;
+            RowKeyEnd = uriBuilder.Sas.EndRowKey;
+            RowKeyStart = uriBuilder.Sas.StartRowKey;
+            StartsOn = uriBuilder.Sas.StartsOn;
+            Version = uriBuilder.Sas.Version;
+            SetPermissions(uriBuilder.Sas.Permissions);
         }
 
         /// <summary>

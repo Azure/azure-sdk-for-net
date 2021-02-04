@@ -23,7 +23,6 @@ namespace Azure.Communication.Chat
         private readonly Uri _endpointUrl;
         private readonly CommunicationTokenCredential _communicationTokenCredential;
         private readonly ChatClientOptions _chatClientOptions;
-        private const string MultiStatusThreadResourceType = "THREAD";
 
         /// <summary> Initializes a new instance of <see cref="ChatClient"/>.</summary>
         /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
@@ -54,19 +53,19 @@ namespace Azure.Communication.Chat
         #region Thread Operations
         /// <summary>Creates a ChatThreadClient asynchronously. <see cref="ChatThreadClient"/>.</summary>
         /// <param name="topic">Topic for the chat thread</param>
-        /// <param name="members">Members to be included in the chat thread</param>
+        /// <param name="participants">Participants to be included in the chat thread</param>
+        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "ChatThreadClient needs to be created by the ChatClient parent object")]
-        public virtual async Task<ChatThreadClient> CreateChatThreadAsync(string topic, IEnumerable<ChatThreadMember> members, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateChatThreadResult>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipant> participants, string? repeatabilityRequestId = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
             scope.Start();
             try
             {
-                Response<MultiStatusResponse> threadResponse =  await _chatRestClient.CreateChatThreadAsync(topic, members.Select(x => x.ToChatThreadMemberInternal()), cancellationToken).ConfigureAwait(false);
-                string threadId = threadResponse.Value.MultipleStatus.First(x => x.Type.ToUpperInvariant() == MultiStatusThreadResourceType).Id;
-                return new ChatThreadClient(threadId, _endpointUrl, _communicationTokenCredential, _chatClientOptions);
+                repeatabilityRequestId ??= Guid.NewGuid().ToString();
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(topic, participants.Select(x => x.ToChatParticipantInternal()), repeatabilityRequestId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -77,18 +76,19 @@ namespace Azure.Communication.Chat
 
         /// <summary>Creates a ChatThreadClient synchronously.<see cref="ChatThreadClient"/>.</summary>
         /// <param name="topic">Topic for the chat thread</param>
-        /// <param name="members">Members to be included in the chat thread</param>
+        /// <param name="participants">Participants to be included in the chat thread</param>
+        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual ChatThreadClient CreateChatThread(string topic, IEnumerable<ChatThreadMember> members, CancellationToken cancellationToken = default)
+        public virtual Response<CreateChatThreadResult> CreateChatThread(string topic, IEnumerable<ChatParticipant> participants, string? repeatabilityRequestId = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
             scope.Start();
             try
             {
-                Response<MultiStatusResponse> threadResponse =  _chatRestClient.CreateChatThread(topic, members.Select(x=>x.ToChatThreadMemberInternal()), cancellationToken);
-                string threadId = threadResponse.Value.MultipleStatus.First(x => x.Type.ToUpperInvariant() == MultiStatusThreadResourceType).Id;
-                return new ChatThreadClient(threadId, _endpointUrl, _communicationTokenCredential, _chatClientOptions);
+                repeatabilityRequestId ??= Guid.NewGuid().ToString();
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(topic, participants.Select(x => x.ToChatParticipantInternal()), repeatabilityRequestId, cancellationToken);
+                return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
             {

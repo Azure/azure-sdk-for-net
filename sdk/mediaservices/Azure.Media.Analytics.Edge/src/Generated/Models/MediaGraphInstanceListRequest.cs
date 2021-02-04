@@ -7,7 +7,7 @@
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    /// <summary> The MediaGraphInstanceListRequest. </summary>
+    /// <summary> Represents the MediaGraphInstanceListRequest. </summary>
     public partial class MediaGraphInstanceListRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of MediaGraphInstanceListRequest. </summary>

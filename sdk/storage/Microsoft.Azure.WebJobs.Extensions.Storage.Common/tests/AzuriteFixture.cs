@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
         private int blobsPort;
         private int queuesPort;
 
-        public AzuriteFixture()
+        public AzuriteFixture(bool includeDebugLog = false)
         {
             // This is to force newer protocol on machines with older .NET Framework. Otherwise tests don't connect to Azurite with unsigned cert.
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -75,7 +75,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             process = new Process();
             process.StartInfo.FileName = "node";
             process.StartInfo.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            process.StartInfo.Arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert cert.pem --key cert.pem --skipApiVersionCheck";
+            var arguments = $"{azuriteScriptLocation} --oauth basic -l {tempDirectory} --blobPort 0 --queuePort 0 --cert cert.pem --key cert.pem --skipApiVersionCheck";
+            string debugLogPath = null;
+            if (includeDebugLog)
+            {
+                debugLogPath = Path.GetTempFileName();
+                arguments += $" -d {debugLogPath}";
+            }
+            process.StartInfo.Arguments = arguments;
             process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{account.Name}:{account.Key}");
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -131,7 +138,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
                 {
                     process.Kill();
                     process.WaitForExit();
-                    throw new InvalidOperationException(ErrorMessage($"azurite process could not initialize within timeout with following output:\n{azuriteOutput}\nerror:\n{azuriteError}"));
+                    var message = $"azurite process could not initialize within timeout with following output:\n{azuriteOutput}\nerror:\n{azuriteError}";
+                    if (includeDebugLog && File.Exists(debugLogPath))
+                    {
+                        using var fileStream = File.Open(debugLogPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                        using var streamReader = new StreamReader(fileStream);
+                        var debugLog = streamReader.ReadToEnd();
+                        message += $"\ndebug log:\n{debugLog}";
+                    }
+                    throw new InvalidOperationException(ErrorMessage(message));
                 }
             }
             account.BlobsPort = blobsPort;

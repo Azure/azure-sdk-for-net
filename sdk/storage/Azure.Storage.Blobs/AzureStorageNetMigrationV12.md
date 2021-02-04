@@ -23,6 +23,7 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
   - [Downloading Blobs from a Container](#downloading-blobs-from-a-container)
   - [Listing Blobs in a Container](#listing-blobs-in-a-container)
   - [Generate a SAS](#generate-a-sas)
+  - [Content Hashes](#content-hashes)
 - [Additional information](#additional-information)
 
 ## Migration benefits
@@ -468,6 +469,93 @@ BlobSasBuilder sasBuilder = new BlobSasBuilder()
 {
     Identifier = "mysignedidentifier"
 };
+```
+
+### Content Hashes
+
+#### Blob Content MD5
+
+V11 calculated blob content MD5 for validation on download by default, assuming there was a stored MD5 in the blob properties. Calculation and storage on upload was opt-in. Note that this value is not generated or validated by the service, and is only retained for the client to validate against.
+
+v11
+
+```csharp
+BlobRequestOptions options = new BlobRequestOptions
+{
+    ChecksumOptions = new ChecksumOptions()
+    {
+        DisableContentMD5Validation = false, // true to disable download content validation
+        StoreContentMD5 = false // true to calculate content MD5 on upload and store property
+    }
+};
+```
+
+V12 does not have an automated mechanism for blob content validation. It must be done per-request by the user.
+
+v12
+
+```C# Snippet:SampleSnippetsBlobMigration_BlobContentMD5
+// upload with blob content hash
+await blobClient.UploadAsync(
+    contentStream,
+    new BlobUploadOptions()
+    {
+        HttpHeaders = new BlobHttpHeaders()
+        {
+            ContentHash = precalculatedContentHash
+        }
+    });
+
+// download whole blob and validate against stored blob content hash
+Response<BlobDownloadInfo> response = await blobClient.DownloadAsync();
+
+Stream downloadStream = response.Value.Content;
+byte[] blobContentMD5 = response.Value.Details.BlobContentHash ?? response.Value.ContentHash;
+// validate stream against hash in your workflow
+```
+
+#### Transactional MD5 and CRC64
+
+Transactional hashes are not stored and have a lifespan of the request they are calculated for. Transactional hashes are verified by the service on upload.
+
+V11 provided transactional hashing on uploads and downloads through opt-in request options. MD5 and Storage's custom CRC64 were supported. The SDK calculated and validated these hashes automatically when enabled. The calculation worked on any upload or download method.
+
+v11
+
+```csharp
+BlobRequestOptions options = new BlobRequestOptions
+{
+    ChecksumOptions = new ChecksumOptions()
+    {
+        // request fails if both are true
+        UseTransactionalMD5 = false, // true to use MD5 on all blob content transactions
+        UseTransactionalCRC64 = false // true to use CRC64 on all blob content transactions
+    }
+};
+```
+
+V12 does not currently provide this functionality. Users who manage their own individual upload and download HTTP requests can provide a precalculated MD5 on upload and access the MD5 in the response object. V12 currently offers no API to request a transactional CRC64.
+
+```C# Snippet:SampleSnippetsBlobMigration_TransactionalMD5
+// upload a block with transactional hash calculated by user
+await blockBlobClient.StageBlockAsync(
+    blockId,
+    blockContentStream,
+    transactionalContentHash: precalculatedBlockHash);
+
+// upload more blocks as needed
+
+// commit block list
+await blockBlobClient.CommitBlockListAsync(blockList);
+
+// download any range of blob with transactional MD5 requested (maximum 4 MB for downloads)
+Response<BlobDownloadInfo> response = await blockBlobClient.DownloadAsync(
+    range: new HttpRange(length: 4 * Constants.MB), // a range must be provided; here we use transactional download max size
+    rangeGetContentHash: true);
+
+Stream downloadStream = response.Value.Content;
+byte[] transactionalMD5 = response.Value.ContentHash;
+// validate stream against hash in your workflow
 ```
 
 ## Additional information

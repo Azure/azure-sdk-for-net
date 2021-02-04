@@ -2,10 +2,9 @@
 
 ## 1.0.0-beta.4 (Unreleased)
 
-### Added
-- Added support to create CommunicationIdentityClient with TokenCredential
-### Fixed
-- Issue with paging results not pulling next pages
+### Breaking
+- CommunicationIdentityClient is moved to a new NuGet package, `Azure.Communication.Identity`.
+- PhoneNumberAdministrationClient is moved to a new NuGet package, `Azure.Communication.PhoneNumbers`.
 
 
 ## 1.0.0-beta.3 (2020-11-16)

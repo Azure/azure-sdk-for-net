@@ -25,6 +25,7 @@ class AzureEngSemanticVersion {
   [string] $BuildNumber
   [int] $PrereleaseNumber
   [bool] $IsPrerelease
+  [string] $VersionType
   [string] $RawVersion
   [bool] $IsSemVerFormat
   [string] $DefaultPrereleaseLabel
@@ -80,6 +81,10 @@ class AzureEngSemanticVersion {
         $this.PrereleaseLabel = "zzz"
         $this.PrereleaseNumber = 99999999
         $this.IsPrerelease = $false
+        $this.VersionType = "GA"
+        if ($this.Patch -ne 0) {
+          $this.VersionType = "Patch"
+        }
       }
       else
       {
@@ -88,6 +93,7 @@ class AzureEngSemanticVersion {
         $this.PrereleaseNumber = [int]$matches["prenumber"]
         $this.PrereleaseNumberSeparator = $matches["prenumsep"]
         $this.IsPrerelease = $true
+        $this.VersionType = "Beta"
 
         $this.BuildNumberSeparator = $matches["buildnumsep"]
         $this.BuildNumber = $matches["buildnumber"]
@@ -175,7 +181,7 @@ class AzureEngSemanticVersion {
   {
     $versions = $versionStrings | ForEach-Object { [AzureEngSemanticVersion]::ParseVersionString($_) }
     $sortedVersions = [AzureEngSemanticVersion]::SortVersions($versions)
-    return ($sortedVersions | ForEach-Object { $_.ToString() })
+    return ($sortedVersions | ForEach-Object { $_.RawVersion })
   }
 
   static [AzureEngSemanticVersion[]] SortVersions([AzureEngSemanticVersion[]] $versions)

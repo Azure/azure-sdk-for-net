@@ -4,15 +4,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core.TestFramework;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
-using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Samples
 {
-    public partial class Sample1_HelloManangedPrivateEndpoint : SampleFixture
+    public partial class Sample1_HelloManagedPrivateEndpoint : SamplesBase<SynapseTestEnvironment>
     {
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
         [Test]
         public void TestManagedPrivateEndpoint()
         {
