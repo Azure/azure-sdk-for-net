@@ -6,10 +6,10 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// OperationStatus.
+    /// TextAnalyticsOperationStatus.
     /// </summary>
     [CodeGenModel("State")]
-    public partial struct OperationStatus
+    public partial struct TextAnalyticsOperationStatus
     {
     }
 }

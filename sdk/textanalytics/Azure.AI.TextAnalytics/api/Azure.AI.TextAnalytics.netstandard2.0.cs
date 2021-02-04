@@ -1,5 +1,40 @@
 namespace Azure.AI.TextAnalytics
 {
+    public partial class AnalyzeBatchActionsOperation : Azure.Operation<Azure.AI.TextAnalytics.AnalyzeBatchActionsResult>
+    {
+        public AnalyzeBatchActionsOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
+        public int ActionsFailed { get { throw null; } }
+        public int ActionsInProgress { get { throw null; } }
+        public int ActionsSucceeded { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Status { get { throw null; } }
+        public int TotalActions { get { throw null; } }
+        public override Azure.AI.TextAnalytics.AnalyzeBatchActionsResult Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.TextAnalytics.AnalyzeBatchActionsResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.TextAnalytics.AnalyzeBatchActionsResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AnalyzeBatchActionsOptions
+    {
+        public AnalyzeBatchActionsOptions() { }
+        public bool IncludeStatistics { get { throw null; } set { } }
+    }
+    public partial class AnalyzeBatchActionsResult
+    {
+        internal AnalyzeBatchActionsResult() { }
+        public Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResults ExtractKeyPhrasesActionResults { get { throw null; } }
+        public Azure.AI.TextAnalytics.RecognizeEntitiesActionResults RecognizeEntitiesActionResults { get { throw null; } }
+        public Azure.AI.TextAnalytics.RecognizePiiEntitiesActionResults RecognizePiiEntitiesActionResults { get { throw null; } }
+        public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+    }
     public partial class AnalyzeHealthcareEntitiesOperation : Azure.AI.TextAnalytics.PageableOperation<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResultCollection>
     {
         public AnalyzeHealthcareEntitiesOperation(string operationId, Azure.AI.TextAnalytics.TextAnalyticsClient client) { }
@@ -251,30 +286,6 @@ namespace Azure.AI.TextAnalytics
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.OpinionSentiment> Opinions { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationStatus : System.IEquatable<Azure.AI.TextAnalytics.OperationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperationStatus(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.OperationStatus Cancelled { get { throw null; } }
-        public static Azure.AI.TextAnalytics.OperationStatus Cancelling { get { throw null; } }
-        public static Azure.AI.TextAnalytics.OperationStatus Failed { get { throw null; } }
-        public static Azure.AI.TextAnalytics.OperationStatus NotStarted { get { throw null; } }
-        public static Azure.AI.TextAnalytics.OperationStatus PartiallyCompleted { get { throw null; } }
-        public static Azure.AI.TextAnalytics.OperationStatus Rejected { get { throw null; } }
-        public static Azure.AI.TextAnalytics.OperationStatus Running { get { throw null; } }
-        public static Azure.AI.TextAnalytics.OperationStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.AI.TextAnalytics.OperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.TextAnalytics.OperationStatus left, Azure.AI.TextAnalytics.OperationStatus right) { throw null; }
-        public static implicit operator Azure.AI.TextAnalytics.OperationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.AI.TextAnalytics.OperationStatus left, Azure.AI.TextAnalytics.OperationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OpinionSentiment
     {
         private readonly object _dummy;
@@ -411,7 +422,7 @@ namespace Azure.AI.TextAnalytics
         internal TaskState() { }
         public System.DateTimeOffset LastUpdateDateTime { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.AI.TextAnalytics.OperationStatus Status { get { throw null; } }
+        public Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Status { get { throw null; } }
     }
     public partial class TextAnalyticsActionDetails
     {
@@ -601,6 +612,30 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.TextAnalyticsWarning TextAnalyticsWarning(string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.TextDocumentBatchStatistics TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount) { throw null; }
         public static Azure.AI.TextAnalytics.TextDocumentStatistics TextDocumentStatistics(int characterCount, int transactionCount) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TextAnalyticsOperationStatus : System.IEquatable<Azure.AI.TextAnalytics.TextAnalyticsOperationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TextAnalyticsOperationStatus(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Cancelled { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Cancelling { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Failed { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus NotStarted { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus PartiallyCompleted { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Rejected { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Running { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.TextAnalyticsOperationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.TextAnalyticsOperationStatus left, Azure.AI.TextAnalytics.TextAnalyticsOperationStatus right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.TextAnalyticsOperationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.TextAnalyticsOperationStatus left, Azure.AI.TextAnalytics.TextAnalyticsOperationStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TextAnalyticsRequestOptions
     {

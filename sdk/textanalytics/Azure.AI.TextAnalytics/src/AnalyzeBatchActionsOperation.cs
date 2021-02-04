@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// The current status of the operation.
         /// </summary>
-        public OperationStatus Status => _status;
+        public TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
         /// Total actions in the operation
@@ -113,7 +113,7 @@ namespace Azure.AI.TextAnalytics
         private DateTimeOffset _createdOn;
         private DateTimeOffset? _expiresOn;
         private DateTimeOffset _lastModified;
-        private OperationStatus _status;
+        private TextAnalyticsOperationStatus _status;
         private string _displayName;
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Azure.AI.TextAnalytics
                     _actionSucceeded = update.Value.Tasks.Completed;
                     _totalActions = update.Value.Tasks.Total;
 
-                    if (update.Value.Status == OperationStatus.Succeeded)
+                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded)
                     {
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
                         _value = Transforms.ConvertToAnalyzeOperationResult(update.Value, _idToIndexMap);
@@ -274,7 +274,7 @@ namespace Azure.AI.TextAnalytics
                         NextLink = update.Value.NextLink;
                         _hasCompleted = true;
                     }
-                    else if (update.Value.Status == OperationStatus.Failed)
+                    else if (update.Value.Status == TextAnalyticsOperationStatus.Failed)
                     {
                         _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors).ConfigureAwait(false);
                         _hasCompleted = true;

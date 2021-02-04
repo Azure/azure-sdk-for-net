@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the status of the operation.
         /// </summary>
-        public OperationStatus Status => _status;
+        public TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
         /// Gets the final result of the long-running operation in a synchronous way.
