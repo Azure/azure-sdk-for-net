@@ -2413,7 +2413,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(), location, idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2451,7 +2451,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(), location, idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
