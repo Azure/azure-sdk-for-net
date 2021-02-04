@@ -2206,7 +2206,7 @@ namespace Azure.AI.TextAnalytics
 
                 var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(),  location, _idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2229,107 +2229,13 @@ namespace Azure.AI.TextAnalytics
 
                 var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new AnalyzeHealthcareEntitiesOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(), location, _idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets collection of healthcare entities from the HealthOperation using async pageable.
-        /// </summary>
-        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="AnalyzeHealthcareEntitiesOperation"/></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AnalyzeHealthcareEntitiesResult"/> items.</returns>
-        public virtual AsyncPageable<AnalyzeHealthcareEntitiesResult> GetHealthcareEntities(AnalyzeHealthcareEntitiesOperation operation, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AnalyzeHealthcareEntitiesResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(GetHealthcareEntities)}");
-                scope.Start();
-
-                try
-                {
-                    Response<AnalyzeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-
-                    AnalyzeHealthcareEntitiesResultCollection result = operation.Value;
-                    return Page.FromValues(result.AsEnumerable(), operation.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AnalyzeHealthcareEntitiesResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(GetHealthcareEntities)}");
-                scope.Start();
-
-                try
-                {
-                    int top = default;
-                    int skip = default;
-                    bool showStats = default;
-
-                    // Extracting Job ID and parameters from the URL.
-                    // TODO - Update with Regex for cleaner implementation
-                    // nextLink - https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/8002878d-2e43-4675-ad20-455fe004641b?$skip=20&$top=0&showStats=true
-
-                    string[] nextLinkSplit = nextLink.Split('/');
-                    // nextLinkSplit = [ 'https:', '', 'cognitiveusw2dev.azure-api.net', 'text', ..., '8002878d-2e43-4675-ad20-455fe004641b?$skip=20&$top=0']
-
-                    string[] jobIdParams = nextLinkSplit.Last().Split('?');
-                    // jobIdParams = ['8002878d-2e43-4675-ad20-455fe004641b', '$skip=20&$top=0']
-
-                    if (jobIdParams.Length != 2)
-                    {
-                        throw new InvalidOperationException($"Failed to parse element reference: {nextLink}");
-                    }
-
-                    // The Id for the Job i.e. the first index of the list
-                    string jobId = jobIdParams[0];
-                    // '8002878d-2e43-4675-ad20-455fe004641b'
-
-                    // Extracting Top and Skip parameter values
-                    string[] parameters = jobIdParams[1].Split('&');
-                    // '$skip=20', '$top=0', 'showStats=true'
-
-                    foreach (string paramater in parameters)
-                    {
-                        if (paramater.Contains("top"))
-                        {
-                            _ = int.TryParse(paramater.Split('=')[1], out top);
-                            // 0
-                        }
-                        if (paramater.Contains("skip"))
-                        {
-                            _ = int.TryParse(paramater.Split('=')[1], out skip);
-                            // 20
-                        }
-                        if (paramater.Contains("showStats"))
-                        {
-                            _ = bool.TryParse(paramater.Split('=')[1], out showStats);
-                            // 20
-                        }
-                    }
-
-                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, showStats, cancellationToken).ConfigureAwait(false);
-
-                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, operation._idToIndexMap);
-                    return Page.FromValues(result.AsEnumerable(), jobState.Value.NextLink, jobState.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         #endregion
