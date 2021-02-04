@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.MixedReality.Models
 {
 
     /// <summary>
-    /// Defines values for NameAvailability.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class NameAvailability
+    public static class CreatedByType
     {
-        public const string True = "true";
-        public const string False = "false";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }
