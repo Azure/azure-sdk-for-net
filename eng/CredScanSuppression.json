@@ -2,7 +2,12 @@
     "tool": "Credential Scanner",
     "suppressions": [
         {
-            "placeholder": "Sanitized",
+            "placeholder": [
+                "Sanitized",
+                "fake",
+                "Test12345",
+                "default"
+            ],
             "_justification": "Secret used by test code, it is fake."
         }
     ]
