@@ -7,7 +7,7 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("DigitalTwinModelsUpdateOptions")]
-    internal partial class DecomissionModelOptions
+    internal partial class DecommissionModelOptions
     {
         // This class declaration changes the namespace, class name and property visibility; do not remove.
 
