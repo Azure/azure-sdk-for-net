@@ -636,7 +636,7 @@ namespace Azure.Messaging.EventHubs.Tests
             //
             // Assign the processor ownership over half of the partitions in storage, but do not formally claim them.
 
-            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership( partitionIds.Skip(MinimumPartitionCount).Take(OrphanedPartitionCount), loadBalancer.OwnerIdentifier));
+            await storageManager.ClaimOwnershipAsync(CreatePartitionOwnership(partitionIds.Skip(MinimumPartitionCount).Take(OrphanedPartitionCount), loadBalancer.OwnerIdentifier));
             completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
             Assert.That(completeOwnership.Count(), Is.EqualTo(OrphanedPartitionCount + MinimumPartitionCount), "Storage should be tracking half the partitions as owned by another processor as well as some orphans.");

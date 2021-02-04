@@ -16,15 +16,5 @@ namespace Azure.AI.TextAnalytics
         public AnalyzeHealthcareEntitiesOptions()
         {
         }
-
-        /// <summary>
-        /// The first top documents from the result.
-        /// </summary>
-        internal int? Top { get; set; }
-
-        /// <summary>
-        /// The skipped documents from the result. The Skip is called first when used with Top.
-        /// </summary>
-        internal int? Skip { get; set; }
     }
 }

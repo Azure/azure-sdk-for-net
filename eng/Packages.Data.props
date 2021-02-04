@@ -153,6 +153,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.0.2" />
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
+    <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Devices" Version="1.19.0" />
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.27.0" />
     <PackageReference Update="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />

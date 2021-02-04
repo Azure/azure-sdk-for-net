@@ -42,7 +42,6 @@ namespace Azure.DigitalTwins.Core
             var memoryStream = new MemoryStream();
 
             objectSerializer.Serialize(memoryStream, obj, typeof(T), cancellationToken);
-
             memoryStream.Seek(0, SeekOrigin.Begin);
 
             return memoryStream;

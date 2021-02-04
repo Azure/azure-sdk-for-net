@@ -17,6 +17,7 @@ namespace Azure.AI.TextAnalytics
             SubCategory = entity.Subcategory;
             ConfidenceScore = entity.ConfidenceScore;
             Offset = entity.Offset;
+            Length = entity.Length;
             DataSources = entity.Links;
             RelatedEntities = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>(entity.RelatedEntities);
         }
