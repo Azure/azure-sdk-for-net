@@ -2408,17 +2408,12 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                // TODO - Add Top and Skip once pagination is implemented for Analyze operation
-                // Github issue - https://github.com/Azure/azure-sdk-for-net/issues/16958
-                int _top = default;
-                int _skip = default;
-
                 ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> response = _serviceRestClient.Analyze(analyzeDocumentInputs, cancellationToken);
                 string location = response.Headers.OperationLocation;
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, _top, _skip, options.IncludeStatistics);
+                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(), location, idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2451,17 +2446,12 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                // TODO - Add Top and Skip once pagination is implemented for Analyze operation
-                // Github issue - https://github.com/Azure/azure-sdk-for-net/issues/16958
-                int _top = default;
-                int _skip = default;
-
                 ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> response = await _serviceRestClient.AnalyzeAsync(analyzeDocumentInputs, cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, _top, _skip, options.IncludeStatistics);
+                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, _options.GetVersionString(), location, idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
