@@ -422,12 +422,14 @@ namespace Azure.Search.Documents.Batching
             // Returns whether the batch is now full.
             bool FillBatchFromQueue(List<PublisherAction<T>> batch, Queue< PublisherAction<T>> queue)
             {
-                // TODO: Consider tracking the keys in the batch and requiring
-                // them to be unique to avoid error alignment problems
+                HashSet<string> documentIdentifiers = new HashSet<string>(StringComparer.Ordinal);
 
                 while (queue.Count > 0)
                 {
-                    if (batch.Count < BatchActionCount)
+                    // Stop filling the batch if we run into an action for a document that is already in the batch.
+                    // We want to keep the actions ordered and map any errors accurately to the documents,
+                    // so we need to split the batch on encountering an action for a previously queued document.
+                    if ((batch.Count < BatchActionCount) && documentIdentifiers.Add(queue.Peek().Key))
                     {
                         batch.Add(queue.Dequeue());
                     }
