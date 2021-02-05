@@ -25,6 +25,5 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-sentiment-analysis#model-versioning"/>.
         /// </summary>
         public new string ModelVersion { get; set; } = "latest";
-
     }
 }

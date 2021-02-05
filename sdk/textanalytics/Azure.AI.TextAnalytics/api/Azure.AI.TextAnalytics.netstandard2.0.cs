@@ -195,6 +195,7 @@ namespace Azure.AI.TextAnalytics
     public partial class ExtractKeyPhrasesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public ExtractKeyPhrasesOptions() { }
+        public new string ModelVersion { get { throw null; } set { } }
     }
     public partial class ExtractKeyPhrasesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -327,6 +328,7 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizeEntitiesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public RecognizeEntitiesOptions() { }
+        public new string ModelVersion { get { throw null; } set { } }
     }
     public partial class RecognizeEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -359,6 +361,7 @@ namespace Azure.AI.TextAnalytics
     {
         public RecognizePiiEntitiesOptions() { }
         public Azure.AI.TextAnalytics.PiiEntityDomainType DomainFilter { get { throw null; } set { } }
+        public new string ModelVersion { get { throw null; } set { } }
     }
     public partial class RecognizePiiEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -412,7 +415,7 @@ namespace Azure.AI.TextAnalytics
     {
         internal TextAnalyticsActionDetails() { }
         public System.DateTimeOffset CompletedOn { get { throw null; } }
-        public Azure.AI.TextAnalytics.TextAnalyticsError Errors { get { throw null; } }
+        public Azure.AI.TextAnalytics.TextAnalyticsError Error { get { throw null; } }
         public bool HasError { get { throw null; } }
     }
     public partial class TextAnalyticsActions

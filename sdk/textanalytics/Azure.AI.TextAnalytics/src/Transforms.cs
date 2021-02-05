@@ -487,7 +487,7 @@ namespace Azure.AI.TextAnalytics
                 TextAnalyticsErrorInternal error;
                 bool isError = errors.TryGetValue(index, out error);
 
-                collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap), jobState.LastUpdateDateTime, error, isError));
+                collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error, isError));
 
                 index++;
             }
@@ -504,7 +504,7 @@ namespace Azure.AI.TextAnalytics
                 TextAnalyticsErrorInternal error;
                 bool isError = errors.TryGetValue(index, out error);
 
-                collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), jobState.LastUpdateDateTime, error, isError));
+                collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error, isError));
             }
 
             return collection;
@@ -519,7 +519,7 @@ namespace Azure.AI.TextAnalytics
                 TextAnalyticsErrorInternal error;
                 bool isError = errors.TryGetValue(index, out error);
 
-                collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), jobState.LastUpdateDateTime, error, isError));
+                collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error, isError));
             }
 
             return collection;
