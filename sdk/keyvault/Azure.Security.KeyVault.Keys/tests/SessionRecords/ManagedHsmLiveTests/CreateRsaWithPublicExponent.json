@@ -1,0 +1,98 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/896215099/create?api-version=7.1",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "traceparent": "00-259b68009277b343977cbcae3d134803-1cbad51e3a162041-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-alpha.20210129.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "9854b6d0b298b90b5225581d3839464e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-request-id": "fe0d9cbc-625a-11eb-a2af-0242ac12000a",
+        "x-ms-server-latency": "1"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/896215099/create?api-version=7.1",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "49",
+        "Content-Type": "application/json",
+        "traceparent": "00-259b68009277b343977cbcae3d134803-1cbad51e3a162041-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-alpha.20210129.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "9854b6d0b298b90b5225581d3839464e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kty": "RSA",
+        "key_size": 2048,
+        "public_exponent": 3
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "708",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-keyvault-network-info": "addr=67.171.12.239",
+        "x-ms-keyvault-region": "eastus2",
+        "x-ms-request-id": "fe798026-625a-11eb-a2af-0242ac12000a",
+        "x-ms-server-latency": "1642"
+      },
+      "ResponseBody": {
+        "attributes": {
+          "created": 1611942852,
+          "enabled": true,
+          "exportable": false,
+          "recoverableDays": 90,
+          "recoveryLevel": "Recoverable\u002BPurgeable",
+          "updated": 1611942852
+        },
+        "key": {
+          "e": "Aw",
+          "key_ops": [
+            "wrapKey",
+            "decrypt",
+            "encrypt",
+            "unwrapKey",
+            "sign",
+            "verify"
+          ],
+          "kid": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/896215099/fb366dda500f0efba89f1dd0835d1d67",
+          "kty": "RSA-HSM",
+          "n": "iw0gn9poPqHSKB1cIX-XtiieU02SwJJi0tn0f7Or8zKFEs2mL0fyeI77bW2pXPe9sCB09uFkKeMJLXGxXyur2JUcql0rVeVpoMqq3a-NpXAFNfZRuGmDV9kyCS3G2i0dWtjAbgjkClk5pc3VTKl9uhqyLn_qS5ypl1C96J-CmypBv361s30HmewLDdQhcpzORv_Fw6PSo4ZQapZhntFOrQdn7I8veJV1mXE7eq2gIkPQwiXnSbhkUwKdDUX8wlQ0cgFCY3ByAVIoHrzTpP3oW-Wm1lWfr1oTEUpSlhdreuIsHfjPUW95NjQ99-l2SDbAsWvNHWRgl8rC_a5pBmKShw"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_MANAGEDHSM_URL": "https://heathskeyvaulthsm.managedhsm.azure.net/",
+    "RandomSeed": "1646831272"
+  }
+}

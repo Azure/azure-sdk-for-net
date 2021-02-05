@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Primitives;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests

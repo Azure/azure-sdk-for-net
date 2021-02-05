@@ -53,10 +53,10 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 eventsList.Add(
                     new EventGridEvent(
-                        new TestPayload("name", i),
                         $"Subject-{i}",
                         "Microsoft.MockPublisher.TestEvent",
-                        "1.0")
+                        "1.0",
+                        new TestPayload("name", i))
                     {
                         Id = Recording.Random.NewGuid().ToString(),
                         EventTime = Recording.Now
@@ -81,10 +81,10 @@ namespace Azure.Messaging.EventGrid.Tests
             for (int i = 0; i < 10; i++)
             {
                 EventGridEvent newEGEvent = new EventGridEvent(
-                    "hello",
                     $"Subject-{i}",
                     "Microsoft.MockPublisher.TestEvent",
-                    "1.0")
+                    "1.0",
+                    "hello")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
                     EventTime = Recording.Now
@@ -174,7 +174,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     "record",
                     "Microsoft.MockPublisher.TestEvent",
                     // testing IEnumerable<byte>
-                    Enumerable.Repeat((byte)1, 1),
+                    Enumerable.Repeat((byte)1, 1).ToArray(),
                     "test/binary")
                 {
                     Id = Recording.Random.NewGuid().ToString(),
@@ -306,10 +306,10 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public async Task CanPublishEventUsingSAS()
         {
-            string sasToken = EventGridPublisherClient.BuildSharedAccessSignature(
+            var builder = new EventGridSasBuilder(
                 new Uri(TestEnvironment.TopicHost),
-                DateTimeOffset.UtcNow.AddMinutes(60),
-                new AzureKeyCredential(TestEnvironment.TopicKey));
+                DateTimeOffset.UtcNow.AddMinutes(60));
+            string sasToken = builder.GenerateSas(new AzureKeyCredential(TestEnvironment.TopicKey));
 
             EventGridPublisherClient sasTokenClient = InstrumentClient(
                 new EventGridPublisherClient(
@@ -345,10 +345,10 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 eventsList.Add(
                     new EventGridEvent(
-                        "hello",
                         $"Subject-{i}",
                         "Microsoft.MockPublisher.TestEvent",
-                        "1.0")
+                        "1.0",
+                        "hello")
                     {
                         Id = Recording.Random.NewGuid().ToString(),
                         EventTime = Recording.Now

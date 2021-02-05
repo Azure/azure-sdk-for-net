@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
@@ -245,26 +247,61 @@ namespace Azure.AI.TextAnalytics
 
         #region Healthcare
 
-        internal static RecognizeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
+        internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities, IEnumerable<HealthcareRelationInternal> healthcareRelations)
         {
-            var healthcareEntititesResults = new List<DocumentHealthcareResult>();
+            var entities = healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
+            foreach (HealthcareRelationInternal relation in healthcareRelations) {
+                string relationType = relation.RelationType;
+                int sourceIndex = ParseHealthcareEntityIndex(relation.Source);
+                int targetIndex = ParseHealthcareEntityIndex(relation.Target);
+                HealthcareEntity sourceEntity = entities[sourceIndex];
+                HealthcareEntity targetEntity = entities[targetIndex];
+                sourceEntity.RelatedEntities.Add(targetEntity, relationType);
+                if (relation.Bidirectional)
+                {
+                    targetEntity.RelatedEntities.Add(sourceEntity, relationType);
+                }
+            }
+            return entities;
+        }
+
+        internal static AnalyzeHealthcareEntitiesResultCollection ConvertToAnalyzeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var healthcareEntititesResults = new List<AnalyzeHealthcareEntitiesResult>();
 
             //Read errors
             foreach (DocumentError error in results.Errors)
             {
-                healthcareEntititesResults.Add(new DocumentHealthcareResult(error.Id, ConvertToError(error.Error)));
+                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read entities
             foreach (DocumentHealthcareEntitiesInternal documentHealthcareEntities in results.Documents)
             {
-                healthcareEntititesResults.Add(new DocumentHealthcareResult(documentHealthcareEntities));
+                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(
+                    documentHealthcareEntities.Id,
+                    documentHealthcareEntities.Statistics ?? default,
+                    ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
+                    ConvertToWarnings(documentHealthcareEntities.Warnings)));
             }
 
             healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
 
-            return new RecognizeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
+            return new AnalyzeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
         }
+
+        private static int ParseHealthcareEntityIndex(string reference)
+        {
+            Match healthcareEntityMatch = _healthcareEntityRegex.Match(reference);
+            if (healthcareEntityMatch.Success)
+            {
+                return int.Parse(healthcareEntityMatch.Groups["entityIndex"].Value, CultureInfo.InvariantCulture);
+            }
+
+            throw new InvalidOperationException($"Failed to parse element reference: {reference}");
+        }
+
+        private static Regex _healthcareEntityRegex = new Regex(@"\#/results/documents\/(?<documentIndex>\d*)\/entities\/(?<entityIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
         #endregion
 

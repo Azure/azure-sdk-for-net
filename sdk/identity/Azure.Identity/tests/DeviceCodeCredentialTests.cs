@@ -162,7 +162,7 @@ namespace Azure.Identity.Tests
 
             var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-            var cancelSource = new CancellationTokenSource(1000);
+            var cancelSource = new CancellationTokenSource(100);
 
             var cred = InstrumentClient(new DeviceCodeCredential(VerifyDeviceCodeCallbackCancellationToken, ClientId, options: options));
 

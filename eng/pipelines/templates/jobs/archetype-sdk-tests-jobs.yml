@@ -53,7 +53,6 @@ jobs:
       matrix: $[ ${{ parameters.Matrix }} ]
 
     variables:
-      - template: ../variables/globals.yml
       # ServiceDirectory references must get passed down by the caller as variable references
       - name: ServiceDirectory
         value: ${{ parameters.ServiceDirectory }}

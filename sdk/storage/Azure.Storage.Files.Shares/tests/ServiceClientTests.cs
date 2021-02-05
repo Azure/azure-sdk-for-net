@@ -135,7 +135,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [NonParallelizable]
         public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
         {
@@ -504,6 +504,23 @@ namespace Azure.Storage.Files.Shares.Tests
                 GetOptions()));
             ShareClient share4 = service4.GetShareClient(GetNewShareName());
             Assert.IsTrue(share4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateAccountSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<ShareServiceClient>();
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateAccountSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateAccountSasUri);
         }
 
         [Test]

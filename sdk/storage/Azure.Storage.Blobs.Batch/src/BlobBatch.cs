@@ -24,6 +24,16 @@ namespace Azure.Storage.Blobs.Specialized
         public int RequestCount => _messages.Count;
 
         /// <summary>
+        /// If this BlobBatch is container scoped.
+        /// </summary>
+        private readonly bool _isContainerScoped;
+
+        /// <summary>
+        /// If this BlobBatch is container scoped.
+        /// </summary>
+        internal bool IsContainerScoped => _isContainerScoped;
+
+        /// <summary>
         /// The <see cref="BlobBatchClient"/> associated with this batch.  It
         /// provides the Uri, BatchOperationPipeline, etc.
         /// </summary>
@@ -58,8 +68,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">
         /// The <see cref="BlobBatchClient"/> associated with this batch.
         /// </param>
-        public BlobBatch(BlobBatchClient client) =>
+        public BlobBatch(BlobBatchClient client)
+        {
             _client = client ?? throw new ArgumentNullException(nameof(client));
+            _isContainerScoped = client.IsContainerScoped;
+        }
 
         /// <summary>
         /// Gets the list of messages to submit as part of this batch.
@@ -184,9 +197,10 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default)
         {
             SetBatchOperationType(BlobBatchOperationType.Delete);
+
             HttpMessage message = BatchRestClient.Blob.DeleteAsync_CreateMessage(
-                _client.BatchOperationPipeline,
-                blobUri,
+                pipeline: _client.BatchOperationPipeline,
+                resourceUri: blobUri,
                 version: _client.Version.ToVersionString(),
                 deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
                 leaseId: conditions?.LeaseId,
@@ -291,8 +305,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
             HttpMessage message = BatchRestClient.Blob.SetAccessTierAsync_CreateMessage(
-                _client.BatchOperationPipeline,
-                blobUri,
+                pipeline: _client.BatchOperationPipeline,
+                resourceUri: blobUri,
                 tier: accessTier,
                 version: _client.Version.ToVersionString(),
                 rehydratePriority: rehydratePriority,

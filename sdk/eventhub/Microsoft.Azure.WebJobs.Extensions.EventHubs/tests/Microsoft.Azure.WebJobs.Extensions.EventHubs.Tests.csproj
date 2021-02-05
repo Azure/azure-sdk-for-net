@@ -24,12 +24,11 @@
   </ItemGroup>
 
   <Import Project="../../Azure.Messaging.EventHubs.Shared/src/Azure.Messaging.EventHubs.Shared.Testing.projitems" />
+  <Import Project="../../Azure.Messaging.EventHubs.Shared/src/Azure.Messaging.EventHubs.Shared.BlobStorageTesting.projitems" />
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\**\*.cs" />
-    <Compile Include="../../Azure.Messaging.EventHubs.Processor/tests/Infrastructure/StorageScope.cs" />
-    <Compile Include="../../Azure.Messaging.EventHubs.Processor/tests/Infrastructure/StorageTestEnvironment.cs" />
   </ItemGroup>
 
   <ItemGroup>

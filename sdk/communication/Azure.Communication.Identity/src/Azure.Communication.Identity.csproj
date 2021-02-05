@@ -10,7 +10,6 @@
     <PackageTags>Microsoft Azure Communication Identity Service;Microsoft;Azure;Azure Communication Service;Azure Communication Identity Service;Identity;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,6 +2,11 @@
 
 ## 4.2.0-beta.4 (Unreleased)
 
+### Added
+
+- Added `CreateEcKeyOptions` class.
+- Added `CreateEcKey` and `CreateEcKeyAsync` methods to the `KeyClient` class.
+
 ### Removed
 
 - Removed local cryptographic support for AES-GCM.

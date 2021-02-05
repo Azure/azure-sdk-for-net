@@ -16,14 +16,20 @@ namespace Azure.Quantum.Jobs
     {
         protected QuantumJobClient() { }
         public QuantumJobClient(string subscriptionId, string resourceGroupName, string workspaceName, string location, Azure.Core.TokenCredential credential = null, Azure.Quantum.QuantumJobClientOptions options = null) { }
-        public virtual Azure.Response Cancel(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CancelAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Quantum.Jobs.Models.JobDetails> Create(string jobId, Azure.Quantum.Jobs.Models.JobDetails job, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Quantum.Jobs.Models.JobDetails>> CreateAsync(string jobId, Azure.Quantum.Jobs.Models.JobDetails job, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CancelJob(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelJobAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Quantum.Jobs.Models.JobDetails> CreateJob(string jobId, Azure.Quantum.Jobs.Models.JobDetails job, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Quantum.Jobs.Models.JobDetails>> CreateJobAsync(string jobId, Azure.Quantum.Jobs.Models.JobDetails job, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Quantum.Jobs.Models.JobDetails> GetJob(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Quantum.Jobs.Models.JobDetails>> GetJobAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Quantum.Jobs.Models.JobDetails> GetJobs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Quantum.Jobs.Models.JobDetails> GetJobsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Quantum.Jobs.Models.ProviderStatus> GetProviderStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Quantum.Jobs.Models.ProviderStatus> GetProviderStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Quantum.Jobs.Models.QuantumJobQuota> GetQuotas(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Quantum.Jobs.Models.QuantumJobQuota> GetQuotasAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Quantum.Jobs.Models.SasUriResponse> GetStorageSasUri(Azure.Quantum.Jobs.Models.BlobDetails blobDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Quantum.Jobs.Models.SasUriResponse>> GetStorageSasUriAsync(Azure.Quantum.Jobs.Models.BlobDetails blobDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.Quantum.Jobs.Models

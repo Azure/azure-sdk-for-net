@@ -82,6 +82,8 @@ parameters:
         pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
         artifactName: SessionRecords
 
+variables:
+  - template: ../variables/globals.yml
 
 stages:
 - ${{ each cloud in parameters.CloudConfig }}:

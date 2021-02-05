@@ -78,29 +78,24 @@ namespace Azure.Search.Documents
         private Task _getKeyFieldAccessorTask;
 
         /// <summary>
-        /// Async event raised whenever an indexing action is added to the
-        /// sender.
+        /// Event raised whenever an indexing action is added to the sender.
         /// </summary>
-        public event Func<IndexDocumentsAction<T>, CancellationToken, Task> ActionAddedAsync;
+        public event SyncAsyncEventHandler<IndexActionEventArgs<T>> ActionAdded;
 
         /// <summary>
-        /// Async event raised whenever an indexing action is sent by the
-        /// sender.
+        /// Event raised whenever an indexing action is sent by the sender.
         /// </summary>
-        public event Func<IndexDocumentsAction<T>, CancellationToken, Task> ActionSentAsync;
+        public event SyncAsyncEventHandler<IndexActionEventArgs<T>> ActionSent;
 
         /// <summary>
-        /// Async event raised whenever an indexing action was submitted
-        /// successfully.
+        /// Event raised whenever an indexing action was submitted successfully.
         /// </summary>
-        public event Func<IndexDocumentsAction<T>, IndexingResult, CancellationToken, Task> ActionCompletedAsync;
+        public event SyncAsyncEventHandler<IndexActionCompletedEventArgs<T>> ActionCompleted;
 
         /// <summary>
-        /// Async event raised whenever an indexing action failed.  The
-        /// <see cref="IndexingResult"/> or <see cref="Exception"/> may be null
-        /// depending on the failure.
+        /// Event raised whenever an indexing action failed.
         /// </summary>
-        public event Func<IndexDocumentsAction<T>, IndexingResult, Exception, CancellationToken, Task> ActionFailedAsync;
+        public event SyncAsyncEventHandler<IndexActionFailedEventArgs<T>> ActionFailed;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -328,21 +323,28 @@ namespace Azure.Search.Documents
 
         #region Notifications
         /// <summary>
-        /// Raise the <see cref="ActionAddedAsync"/> event.
+        /// Raise the <see cref="ActionAdded"/> event.
         /// </summary>
         /// <param name="action">The action being added.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>
         /// A task that will not complete until every handler does.
         /// </returns>
-        internal async Task RaiseActionAddedAsync(
+        protected internal virtual async Task OnActionAddedAsync(
             IndexDocumentsAction<T> action,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             try
             {
-                await ActionAddedAsync
-                    .RaiseAsync(action, cancellationToken)
+                await ActionAdded.RaiseAsync(
+                    new IndexActionEventArgs<T>(
+                        this,
+                        action,
+                        isRunningSynchronously: false,
+                        cancellationToken),
+                    nameof(SearchIndexingBufferedSender<T>),
+                    nameof(ActionAdded),
+                    SearchClient.ClientDiagnostics)
                     .ConfigureAwait(false);
             }
             catch
@@ -353,21 +355,28 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Raise the <see cref="ActionSentAsync"/> event.
+        /// Raise the <see cref="ActionSent"/> event.
         /// </summary>
         /// <param name="action">The action being added.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>
         /// A task that will not complete until every handler does.
         /// </returns>
-        internal async Task RaiseActionSentAsync(
+        protected internal virtual async Task OnActionSentAsync(
             IndexDocumentsAction<T> action,
             CancellationToken cancellationToken)
         {
             try
             {
-                await ActionSentAsync
-                    .RaiseAsync(action, cancellationToken)
+                await ActionSent.RaiseAsync(
+                    new IndexActionEventArgs<T>(
+                        this,
+                        action,
+                        isRunningSynchronously: false,
+                        cancellationToken),
+                    nameof(SearchIndexingBufferedSender<T>),
+                    nameof(ActionSent),
+                    SearchClient.ClientDiagnostics)
                     .ConfigureAwait(false);
             }
             catch
@@ -378,7 +387,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Raise the <see cref="ActionCompletedAsync"/> event.
+        /// Raise the <see cref="ActionCompleted"/> event.
         /// </summary>
         /// <param name="action">The action being added.</param>
         /// <param name="result">The result of indexing.</param>
@@ -386,15 +395,23 @@ namespace Azure.Search.Documents
         /// <returns>
         /// A task that will not complete until every handler does.
         /// </returns>
-        internal async Task RaiseActionCompletedAsync(
+        protected internal virtual async Task OnActionCompletedAsync(
             IndexDocumentsAction<T> action,
             IndexingResult result,
             CancellationToken cancellationToken)
         {
             try
             {
-                await ActionCompletedAsync
-                    .RaiseAsync(action, result, cancellationToken)
+                await ActionCompleted.RaiseAsync(
+                    new IndexActionCompletedEventArgs<T>(
+                        this,
+                        action,
+                        result,
+                        isRunningSynchronously: false,
+                        cancellationToken),
+                    nameof(SearchIndexingBufferedSender<T>),
+                    nameof(ActionCompleted),
+                    SearchClient.ClientDiagnostics)
                     .ConfigureAwait(false);
             }
             catch
@@ -405,7 +422,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Raise the <see cref="ActionFailedAsync"/> event.
+        /// Raise the <see cref="ActionFailed"/> event.
         /// </summary>
         /// <param name="action">The action being added.</param>
         /// <param name="result">The result of indexing.</param>
@@ -414,7 +431,7 @@ namespace Azure.Search.Documents
         /// <returns>
         /// A task that will not complete until every handler does.
         /// </returns>
-        internal async Task RaiseActionFailedAsync(
+        protected internal virtual async Task OnActionFailedAsync(
             IndexDocumentsAction<T> action,
             IndexingResult result,
             Exception exception,
@@ -422,8 +439,17 @@ namespace Azure.Search.Documents
         {
             try
             {
-                await ActionFailedAsync
-                    .RaiseAsync(action, result, exception, cancellationToken)
+                await ActionFailed.RaiseAsync(
+                    new IndexActionFailedEventArgs<T>(
+                        this,
+                        action,
+                        result,
+                        exception,
+                        isRunningSynchronously: false,
+                        cancellationToken),
+                    nameof(SearchIndexingBufferedSender<T>),
+                    nameof(ActionFailed),
+                    SearchClient.ClientDiagnostics)
                     .ConfigureAwait(false);
             }
             catch

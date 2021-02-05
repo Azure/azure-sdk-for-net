@@ -2,6 +2,9 @@
 
 ## 1.1.0-beta.2 (Unreleased)
 
+### Added
+
+- The ability to use `ManagedIdentityCredential` from the configuration using the `"credential": "managedidentity"`
 
 ## 1.1.0-beta.1 (2020-11-10)
 
