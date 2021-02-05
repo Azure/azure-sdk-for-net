@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Purview.Tests", "tests\Microsoft.Azure.Management.Purview.Tests.csproj", "{F4C88094-3A50-433D-A4E8-991C1C1437D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Purview", "Management.Purview\Microsoft.Azure.Management.Purview.csproj", "{E3EEB27E-8A0A-49BD-ACAD-44717901E489}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Purview", "Microsoft.Azure.Management.Purview\Microsoft.Azure.Management.Purview.csproj", "{E3EEB27E-8A0A-49BD-ACAD-44717901E489}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
