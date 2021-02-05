@@ -21,7 +21,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             _serviceEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
         }
 
-        //[Test]
+        [Test]
+        [Explicit("To avoid launching too many sessions during testing, we rely on the live tests.")]
         public void CreateSession()
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
@@ -60,7 +61,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             #endregion Snippet:StopSession
         }
 
-        //[Test]
+        [Test]
+        [Explicit("To avoid launching too many sessions during testing, we rely on the live tests.")]
         public void QueryAndUpdateASession()
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
@@ -91,7 +93,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             client.StopSession(sessionId);
         }
 
-        //[Test]
+        [Test]
+        [Explicit("To avoid launching too many sessions during testing, we rely on the live tests.")]
         public void GetInformationAboutSessions()
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);

@@ -24,7 +24,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             _serviceEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
         }
 
-        //[Test]
+        [Test]
+        [Explicit("This test assume DRAM is set up, so we do not run them live.")]
         public void ConvertSimpleAsset()
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
@@ -60,7 +61,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             #endregion Snippet:QueryAssetConversion
         }
 
-        //[Test]
+        [Test]
+        [Explicit("This test assume DRAM is set up, so we do not run them live.")]
         public void ConvertMoreComplexAsset()
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
@@ -97,7 +99,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
             }
         }
 
-        //[Test]
+        [Test]
+        [Explicit("This test assume DRAM is set up, so we do not run them live.")]
         public void GetConversions()
         {
             AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
