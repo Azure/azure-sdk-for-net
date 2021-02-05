@@ -9,22 +9,22 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Analytics.Synapse.AccessControl.Models
+namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class RolesListResponse
+    public partial class LibraryListResponse
     {
-        internal static RolesListResponse DeserializeRolesListResponse(JsonElement element)
+        internal static LibraryListResponse DeserializeLibraryListResponse(JsonElement element)
         {
-            IReadOnlyList<SynapseRole> value = default;
+            IReadOnlyList<LibraryResource> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<SynapseRole> array = new List<SynapseRole>();
+                    List<LibraryResource> array = new List<LibraryResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseRole.DeserializeSynapseRole(item));
+                        array.Add(LibraryResource.DeserializeLibraryResource(item));
                     }
                     value = array;
                     continue;
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
                     continue;
                 }
             }
-            return new RolesListResponse(value, nextLink.Value);
+            return new LibraryListResponse(value, nextLink.Value);
         }
     }
 }

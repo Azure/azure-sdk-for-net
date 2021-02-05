@@ -9,15 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Analytics.Synapse.AccessControl.Models
+namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> A list of Synapse roles available. </summary>
-    public partial class RolesListResponse
+    /// <summary> A list of Library resources. </summary>
+    public partial class LibraryListResponse
     {
-        /// <summary> Initializes a new instance of RolesListResponse. </summary>
-        /// <param name="value"> List of Synapse roles. </param>
+        /// <summary> Initializes a new instance of LibraryListResponse. </summary>
+        /// <param name="value"> List of Library. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RolesListResponse(IEnumerable<SynapseRole> value)
+        internal LibraryListResponse(IEnumerable<LibraryResource> value)
         {
             if (value == null)
             {
@@ -27,17 +27,17 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RolesListResponse. </summary>
-        /// <param name="value"> List of Synapse roles. </param>
+        /// <summary> Initializes a new instance of LibraryListResponse. </summary>
+        /// <param name="value"> List of Library. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal RolesListResponse(IReadOnlyList<SynapseRole> value, string nextLink)
+        internal LibraryListResponse(IReadOnlyList<LibraryResource> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Synapse roles. </summary>
-        public IReadOnlyList<SynapseRole> Value { get; }
+        /// <summary> List of Library. </summary>
+        public IReadOnlyList<LibraryResource> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }
