@@ -3,7 +3,7 @@
     "info": {
         "title": "CommunicationIdentityClient",
         "description": "Azure Communication Identity Service",
-        "version": "2021-03-07"
+        "version": "2021-02-22-preview1"
     },
     "paths": {
         "/identities": {

@@ -20,6 +20,7 @@ namespace Azure.Communication.Identity
     internal partial class CommunicationIdentityRestClient
     {
         private string endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -27,15 +28,21 @@ namespace Azure.Communication.Identity
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-02-22-preview1")
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             this.endpoint = endpoint;
+            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -48,7 +55,7 @@ namespace Azure.Communication.Identity
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/identities", false);
-            uri.AppendQuery("api-version", "2021-03-07", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -115,7 +122,7 @@ namespace Azure.Communication.Identity
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/identities/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", "2021-03-07", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -175,7 +182,7 @@ namespace Azure.Communication.Identity
             uri.AppendPath("/identities/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/:revokeAccessTokens", false);
-            uri.AppendQuery("api-version", "2021-03-07", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -235,7 +242,7 @@ namespace Azure.Communication.Identity
             uri.AppendPath("/identities/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/:issueAccessToken", false);
-            uri.AppendQuery("api-version", "2021-03-07", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -320,7 +327,7 @@ namespace Azure.Communication.Identity
             uri.AppendPath("/turn/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/:issueCredentials", false);
-            uri.AppendQuery("api-version", "2021-02-22-preview1", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
