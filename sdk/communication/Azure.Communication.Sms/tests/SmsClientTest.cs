@@ -14,7 +14,7 @@ namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientTest
     {
-        [TestCaseSource(nameof(TestData))]
+        [TestCaseSource(nameof(TestDataForSingleSMS))]
         public async Task SendSmsAsyncOverload_PassesToGeneratedOne(string expectedFrom, string expectedTo, string expectedMessage, SmsSendOptions expectedOptions)
         {
             Mock<SmsClient> mockClient = new Mock<SmsClient>() { CallBase = true };
@@ -40,7 +40,7 @@ namespace Azure.Communication.Sms.Tests
             Assert.AreEqual(expectedResponse, actualResponse);
         }
 
-        [TestCaseSource(nameof(TestData))]
+        [TestCaseSource(nameof(TestDataForSingleSMS))]
         public void SendSmsOverload_PassesToGeneratedOne(string expectedFrom, string expectedTo, string expectedMessage, SmsSendOptions expectedOptions)
         {
             Mock<SmsClient> mockClient = new Mock<SmsClient>() { CallBase = true };
@@ -66,7 +66,7 @@ namespace Azure.Communication.Sms.Tests
             Assert.AreEqual(expectedResponse, actualResponse);
         }
 
-        private static IEnumerable<object?[]> TestData()
+        private static IEnumerable<object?[]> TestDataForSingleSMS()
         {
             SmsSendOptions?[] optionsCombinations = new[]
             {
@@ -82,5 +82,5 @@ namespace Azure.Communication.Sms.Tests
 
         private static Expression<Func<SmsClient, TResult>> BuildExpression<TResult>(Expression<Func<SmsClient, TResult>> expression)
             => expression;
-    }
+}
 }
