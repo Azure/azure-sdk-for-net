@@ -392,7 +392,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created hook.
 
-            var hookToUpdate = new WebNotificationHook() { Username = "fakeUsername" };
+            var hookToUpdate = new WebNotificationHook() { Endpoint = endpoint, Username = "fakeUsername" };
 
             await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
 
@@ -496,6 +496,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var hookToUpdate = new WebNotificationHook()
             {
+                Endpoint = endpoint,
                 Description = description,
                 ExternalLink = "http://fake.endpoint.com",
                 // TODO: add certificate key validation (https://github.com/Azure/azure-sdk-for-net/issues/17485)
