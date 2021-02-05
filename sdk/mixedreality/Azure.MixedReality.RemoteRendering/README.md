@@ -27,13 +27,13 @@ Install-Package Azure.MixedReality.RemoteRendering
 From .NET CLI
 
 ```dotnetcli
-dotnet add package Azure.MixedReality.RemoteRendering
+dotnet add package Azure.MixedReality.RemoteRendering --version 1.0.0-beta.1 
 ```
 
 Add a package reference:
 
 ```xml
-<PackageReference Include="Azure.MixedReality.RemoteRendering" Version="1.0.0-preview.1" />
+<PackageReference Include="Azure.MixedReality.RemoteRendering" Version="1.0.0-beta.1" />
 ```
 
 ### Prerequisites
