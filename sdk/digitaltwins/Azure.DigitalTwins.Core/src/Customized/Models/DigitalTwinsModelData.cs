@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    /// <inheritdoc />
     [CodeGenModel("DigitalTwinsModelData")]
     public partial class DigitalTwinsModelData
     {
