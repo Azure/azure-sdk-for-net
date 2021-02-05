@@ -8,7 +8,6 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Azure.Communication.Administration.Models;
 using Azure.Communication.PhoneNumbers.Models;
 using Azure.Communication.PhoneNumbers.Tests;
 using Azure.Core.TestFramework;

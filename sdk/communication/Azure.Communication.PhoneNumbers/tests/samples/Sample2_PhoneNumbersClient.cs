@@ -8,15 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Administration.Models;
-using Azure.Communication.Administration.Tests;
 using Azure.Communication.PhoneNumbers;
 using Azure.Communication.PhoneNumbers.Models;
 using Azure.Communication.PhoneNumbers.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Communication.Administration.Tests.Samples
+namespace Azure.Communication.PhoneNumbers.Tests.Samples
 {
     /// <summary>
     /// Basic Azure Communication Administration samples.
