@@ -187,8 +187,17 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(operation.ActionsFailed, 0);
             Assert.AreEqual(operation.ActionsSucceeded, 0);
             Assert.AreEqual(operation.ActionsInProgress, 0);
+            Assert.AreEqual(operation.TotalActions, 0);
 
             await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.AreEqual(operation.ActionsFailed, 0);
+            Assert.AreEqual(operation.ActionsSucceeded, 3);
+            Assert.AreEqual(operation.ActionsInProgress, 0);
+            Assert.AreEqual(operation.TotalActions, 3);
+            Assert.IsNotNull(operation.ExpiresOn);
+            Assert.IsNotNull(operation.CreatedOn);
+            Assert.IsNotNull(operation.LastModified);
 
             //Take the first page
             AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
