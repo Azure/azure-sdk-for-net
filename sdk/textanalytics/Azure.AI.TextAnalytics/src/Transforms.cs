@@ -418,51 +418,108 @@ namespace Azure.AI.TextAnalytics
             return collection;
         }
 
-        internal static IReadOnlyCollection<ExtractKeyPhrasesActionResult> ConvertToExtractKeyPhrasesActionResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap)
+        private static Regex _targetRegex = new Regex("#/tasks/(\\w+)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+
+        private static string[] parseActionErrorTarget(string targetReference)
+        {
+            if (string.IsNullOrEmpty(targetReference))
+            {
+                throw new InvalidOperationException("Expected an error with a target field referencing an action but did not get one");
+            }
+            // action could be failed and the target reference is "#/tasks/keyPhraseExtractionTasks/0";
+            Match targetMatch = _targetRegex.Match(targetReference);
+
+            string[] taskNameIdPair = new string[2];
+            if (targetMatch.Success && targetMatch.Groups.Count == 3)
+            {
+                taskNameIdPair[0] = targetMatch.Groups[1].Value;
+                taskNameIdPair[1] = targetMatch.Groups[2].Value;
+            }
+            return taskNameIdPair;
+        }
+
+        internal static AnalyzeBatchActionsResult ConvertToAnalyzeBatchActionsResult(AnalyzeJobState jobState, IDictionary<string, int> map)
+        {
+            IDictionary<int, TextAnalyticsErrorInternal> keyPhraseErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> entitiesRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+            IDictionary<int, TextAnalyticsErrorInternal> entitiesPiiRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
+
+            if (jobState.Errors.Any())
+            {
+                foreach (TextAnalyticsErrorInternal error in jobState.Errors)
+                {
+                    string[] targetPair = parseActionErrorTarget(error.Target);
+                    string taskName = targetPair[0];
+                    int taskIndex = int.Parse(targetPair[1], CultureInfo.InvariantCulture);
+
+                    if ("entityRecognitionTasks".Equals(taskName))
+                    {
+                        entitiesRecognitionErrors.Add(taskIndex, error);
+                    }
+                    else if ("entityRecognitionPiiTasks".Equals(taskName))
+                    {
+                        entitiesPiiRecognitionErrors.Add(taskIndex, error);
+                    }
+                    else if ("keyPhraseExtractionTasks".Equals(taskName))
+                    {
+                        keyPhraseErrors.Add(taskIndex, error);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Invalid task name in target reference - {taskName}");
+                    }
+                }
+            }
+
+            var extractKeyPhrasesActionResult = ConvertToExtractKeyPhrasesActionResults(jobState, map, keyPhraseErrors);
+            var recognizeEntitiesActionResults = ConvertToRecognizeEntitiesActionsResults(jobState, map, entitiesRecognitionErrors);
+            var recognizePiiEntitiesActionResults = ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors);
+
+            return new AnalyzeBatchActionsResult(extractKeyPhrasesActionResult, recognizeEntitiesActionResults, recognizePiiEntitiesActionResults, jobState.Statistics);
+        }
+
+        internal static IReadOnlyCollection<ExtractKeyPhrasesActionResult> ConvertToExtractKeyPhrasesActionResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> errors)
         {
             var collection = new List<ExtractKeyPhrasesActionResult>();
-
-            // TODO - Map Error.Target to ActionResult
-            //var errorToIndexMap = new Dictionary<string, Dictionary<int, TextAnalyticsError>>();
-
-            //foreach (TextAnalyticsErrorInternal error in jobState.Errors)
-            //{
-            //    // Sample target string - "#/tasks/keyPhraseExtractionTasks/0"
-            //    string target = error.Target;
-
-            //    string[] segments = target.Split('/');
-            //    if (segments.Length == 4)
-            //    {
-            //        errorToIndexMap.Add(segments[2], new Dictionary<int, TextAnalyticsError>())
-            //        return targetMap;
-            //    }
-
-            //}
+            int index = 0;
             foreach (KeyPhraseExtractionTasksItem task in jobState.Tasks.KeyPhraseExtractionTasks)
             {
-                collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap), jobState.LastUpdateDateTime, jobState.Errors, task.ResultsInternal.Errors.Any()));
+                TextAnalyticsErrorInternal error;
+                bool isError = errors.TryGetValue(index, out error);
+
+                collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap), jobState.LastUpdateDateTime, error, isError));
+
+                index++;
             }
 
             return collection;
         }
 
-        internal static IReadOnlyCollection<RecognizePiiEntitiesActionResult> ConvertToRecognizePiiEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap)
+        internal static IReadOnlyCollection<RecognizePiiEntitiesActionResult> ConvertToRecognizePiiEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> errors)
         {
             var collection = new List<RecognizePiiEntitiesActionResult>();
+            int index = 0;
             foreach (EntityRecognitionPiiTasksItem task in jobState.Tasks.EntityRecognitionPiiTasks)
             {
-                collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), jobState.LastUpdateDateTime, jobState.Errors, task.ResultsInternal.Errors.Any()));
+                TextAnalyticsErrorInternal error;
+                bool isError = errors.TryGetValue(index, out error);
+
+                collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), jobState.LastUpdateDateTime, error, isError));
             }
 
             return collection;
         }
 
-        internal static IReadOnlyCollection<RecognizeEntitiesActionResult> ConvertToRecognizeEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap)
+        internal static IReadOnlyCollection<RecognizeEntitiesActionResult> ConvertToRecognizeEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> errors)
         {
             var collection = new List<RecognizeEntitiesActionResult>();
+            int index = 0;
             foreach (EntityRecognitionTasksItem task in jobState.Tasks.EntityRecognitionTasks)
             {
-                collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), jobState.LastUpdateDateTime, jobState.Errors, task.ResultsInternal.Errors.Any()));
+                TextAnalyticsErrorInternal error;
+                bool isError = errors.TryGetValue(index, out error);
+
+                collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), jobState.LastUpdateDateTime, error, isError));
             }
 
             return collection;

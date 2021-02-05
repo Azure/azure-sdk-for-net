@@ -15,10 +15,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// TextAnalyticsActionDetails
         /// </summary>
-        internal TextAnalyticsActionDetails (DateTimeOffset completedOn, IReadOnlyList<TextAnalyticsErrorInternal> errors, bool hasError)
+        internal TextAnalyticsActionDetails (DateTimeOffset completedOn, TextAnalyticsErrorInternal error, bool hasError)
         {
             CompletedOn = completedOn;
-            Errors = Transforms.ConvertToErrors(errors);
+            Errors = hasError ? Transforms.ConvertToError(error) : default;
             HasError = hasError;
         }
 
@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Error
         /// </summary>
-        public IReadOnlyList<TextAnalyticsError> Errors { get; }
+        public TextAnalyticsError Errors { get; }
 
         /// <summary>
         /// HasError

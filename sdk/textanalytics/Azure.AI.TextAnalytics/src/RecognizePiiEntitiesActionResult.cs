@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class RecognizePiiEntitiesActionResult : TextAnalyticsActionDetails
     {
-        internal RecognizePiiEntitiesActionResult(RecognizePiiEntitiesResultCollection result, DateTimeOffset completedOn, IReadOnlyList<TextAnalyticsErrorInternal> errors, bool hasError) : base(completedOn, errors, hasError)
+        internal RecognizePiiEntitiesActionResult(RecognizePiiEntitiesResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error, bool hasError) : base(completedOn, error, hasError)
         {
             Result = result;
         }

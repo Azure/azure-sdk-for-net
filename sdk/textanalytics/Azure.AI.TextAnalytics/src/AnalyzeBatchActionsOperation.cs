@@ -62,7 +62,7 @@ namespace Azure.AI.TextAnalytics
         public TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
-        /// Total actions in the operation
+        /// Total actions executed in the operation
         /// </summary>
         public int TotalActions => _totalActions;
 

@@ -184,6 +184,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
+            Assert.AreEqual(operation.ActionsFailed, 0);
+            Assert.AreEqual(operation.ActionsSucceeded, 0);
+            Assert.AreEqual(operation.ActionsInProgress, 0);
+
             await operation.WaitForCompletionAsync(PollingInterval);
 
             //Take the first page

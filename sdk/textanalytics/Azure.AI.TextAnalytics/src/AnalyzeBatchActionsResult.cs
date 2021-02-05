@@ -7,38 +7,44 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="JobMetadata"/> objects corresponding
-    /// to a batch of documents, and information about the batch operation.
+    /// Determine the results from analyze batch actions in collections of KeyphraseExtraction, RecognizeEntities and RecognizePiiEntities.
     /// </summary>
     public class AnalyzeBatchActionsResult
     {
-        /// <summary>
-        /// AnalyzeBatchActionsResult
-        /// </summary>
+        internal AnalyzeBatchActionsResult(IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult, IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults, IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults, TextDocumentBatchStatistics statistics)
+        {
+            ExtractKeyPhrasesActionsResults = extractKeyPhrasesActionResult;
+            RecognizeEntitiesActionsResults = recognizeEntitiesActionResults;
+            RecognizePiiEntitiesActionsResults = recognizePiiEntitiesActionResults;
+            Statistics = statistics;
+        }
+
         internal AnalyzeBatchActionsResult(AnalyzeJobState jobState, IDictionary<string, int> map)
         {
-            ExtractKeyPhrasesActionsResults = Transforms.ConvertToExtractKeyPhrasesActionResults(jobState, map);
-            RecognizeEntitiesActionsResults = Transforms.ConvertToRecognizeEntitiesActionsResults(jobState, map);
-            RecognizePiiEntitiesActionsResults = Transforms.ConvertToRecognizePiiEntitiesActionsResults(jobState, map);
+            AnalyzeBatchActionsResult actionResults = Transforms.ConvertToAnalyzeBatchActionsResult(jobState, map);
+            ExtractKeyPhrasesActionsResults = actionResults.ExtractKeyPhrasesActionsResults;
+            RecognizeEntitiesActionsResults = actionResults.RecognizeEntitiesActionsResults;
+            RecognizePiiEntitiesActionsResults = actionResults.RecognizePiiEntitiesActionsResults;
+            Statistics = actionResults.Statistics;
         }
 
         /// <summary>
-        /// Collection for ExtractKeyPhrasesActionsResults
+        /// Determines the collection of ExtractKeyPhrasesActionResult.
         /// </summary>
         public IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesActionsResults { get; }
 
         /// <summary>
-        /// RecognizeEntitiesActionsResults
+        /// Determines the collection of RecognizeEntitiesActionResult.
         /// </summary>
         public IReadOnlyCollection<RecognizeEntitiesActionResult> RecognizeEntitiesActionsResults { get; }
 
         /// <summary>
-        /// RecognizePiiEntitiesActionsResults
+        /// Determines the collection of RecognizePiiEntitiesActionResult.
         /// </summary>
         public IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults { get; }
 
         /// <summary>
-        /// Statistics
+        /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         /// </summary>
         public TextDocumentBatchStatistics Statistics { get; }
     }
