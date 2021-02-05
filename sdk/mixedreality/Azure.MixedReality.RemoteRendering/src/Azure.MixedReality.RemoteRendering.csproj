@@ -8,12 +8,10 @@
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.0-alpha.20210203.1" />
-    <PackageReference Include="System.Text.Json" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.MixedReality.Authentication\src\Azure.MixedReality.Authentication.csproj" />
   </ItemGroup>
-
+  
   <!-- Shared source from Azure.Core and Azure.MixedReality.Authentication -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -28,6 +26,5 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureMixedRealityAuthenticationSharedSources)*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
-
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>
