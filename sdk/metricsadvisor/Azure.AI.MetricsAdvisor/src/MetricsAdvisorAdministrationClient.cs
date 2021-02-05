@@ -1431,11 +1431,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
 
-            if (hook is EmailNotificationHook emailHook)
-            {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailNotificationHook.EmailsToAlert));
-            }
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
             scope.Start();
 
@@ -1467,11 +1462,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
-
-            if (hook is EmailNotificationHook emailHook)
-            {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailNotificationHook.EmailsToAlert));
-            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
             scope.Start();

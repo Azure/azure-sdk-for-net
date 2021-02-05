@@ -34,8 +34,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var emails = new List<string>() { "fake@email.com" };
-            var hook = new EmailNotificationHook("hookName", emails);
+            var hook = new EmailNotificationHook()
+            {
+                Name = "hookName",
+                EmailsToAlert = { "fake@email.com" }
+            };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
@@ -49,8 +52,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var emails = new List<string>() { "fake@email.com" };
-            var hook = new EmailNotificationHook("hookName", emails);
+            var hook = new EmailNotificationHook();
 
             Assert.That(() => adminClient.UpdateHookAsync(null, hook), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.UpdateHookAsync("", hook), Throws.InstanceOf<ArgumentException>());
@@ -68,8 +70,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var emails = new List<string>() { "fake@email.com" };
-            var hook = new EmailNotificationHook("hookName", emails);
+            var hook = new EmailNotificationHook();
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
