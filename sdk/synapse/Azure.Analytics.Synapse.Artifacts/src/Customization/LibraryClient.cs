@@ -7,12 +7,12 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.Artifacts
 {
-    public partial class LibraryClient
+    internal partial class LibraryClient
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LibraryClient"/>.
         /// </summary>
-        public LibraryClient(Uri endpoint, TokenCredential credential)
+        internal LibraryClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, ArtifactsClientOptions.Default)
         {
         }
@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary>
         /// Initializes a new instance of the <see cref="LibraryClient"/>.
         /// </summary>
-        public LibraryClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options)
+        internal LibraryClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options)
             : this(new ClientDiagnostics(options),
                   SynapseClientPipeline.Build(options, credential),
                   endpoint.ToString(),
