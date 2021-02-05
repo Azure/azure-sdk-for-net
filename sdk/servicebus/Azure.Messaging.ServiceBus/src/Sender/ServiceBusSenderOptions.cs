@@ -12,7 +12,8 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusSenderOptions
     {
         /// <summary>
-        ///
+        /// Gets or sets the transaction group associated with the sender.
+        /// This is used for transactions that span different Service Bus entities.
         /// </summary>
         public string TransactionGroup { get; set; }
 

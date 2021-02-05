@@ -223,6 +223,7 @@ namespace Azure.Messaging.ServiceBus
         public int MaxConcurrentCalls { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
+        public string TransactionGroup { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -411,6 +412,7 @@ namespace Azure.Messaging.ServiceBus
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
         public System.TimeSpan? SessionIdleTimeout { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SessionIds { get { throw null; } }
+        public string TransactionGroup { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

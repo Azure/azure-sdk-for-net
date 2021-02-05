@@ -72,6 +72,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly string _identifier;
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
+        private readonly string _transactionGroup;
 
         /// <summary>
         /// Gets the sequence number of the last peeked message.
@@ -82,9 +83,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// The Session Id associated with the receiver.
         /// </summary>
         public override string SessionId { get; protected set; }
-
-        private readonly string _transactionGroup;
-
         public override DateTimeOffset SessionLockedUntil { get; protected set; }
 
         private Exception LinkException { get; set; }

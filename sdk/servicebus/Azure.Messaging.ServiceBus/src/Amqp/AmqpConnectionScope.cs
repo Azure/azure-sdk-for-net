@@ -651,13 +651,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private async Task<AmqpSession> CreateSessionIfNeededAsync(AmqpConnection connection, TimeSpan timeout, string transactionGroupKey)
         {
-            AmqpSession session;
             FaultTolerantAmqpObject<Controller> faultTolerantController = null;
             if (transactionGroupKey != null)
             {
-                if (TransactionGroups.ContainsKey(transactionGroupKey))
+                if (TransactionGroups.TryGetValue(transactionGroupKey, out AmqpTransactionGroup transactionGroup))
                 {
-                    return await TransactionGroups[transactionGroupKey].Session.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                    return await transactionGroup.Session.GetOrCreateAsync(timeout).ConfigureAwait(false);
                 }
                 else
                 {
@@ -667,7 +666,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         {
                             var stopWatch = ValueStopwatch.StartNew();
                             AmqpSession session = await CreateAndOpenSessionAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-                            await CreateControllerAsync(session, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                            _ = await CreateControllerAsync(session, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                             return session;
                         },
                         async (session) => await session.CloseAsync(timeout).ConfigureAwait(false));
@@ -681,14 +680,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         },
                         controller => controller.Close());
 
-                    var transactionGroup = new AmqpTransactionGroup(faultTolerantSession, faultTolerantController);
-                    TransactionGroups.AddOrUpdate(transactionGroupKey, transactionGroup, (key, old) => transactionGroup);
+                    TransactionGroups[transactionGroupKey] = new AmqpTransactionGroup(faultTolerantSession, faultTolerantController);
 
-                    session = await faultTolerantSession.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                    AmqpSession session = await faultTolerantSession.GetOrCreateAsync(timeout).ConfigureAwait(false);
 
                     // When using transaction groups, the controller needs to be opened before the link is established, i.e. we can't
                     // wait until a transaction is declared to open the controller.
-                    await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                    _ = await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
 
                     return session;
                 }

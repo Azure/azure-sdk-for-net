@@ -42,7 +42,8 @@ namespace Azure.Messaging.ServiceBus
         public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
-        ///
+        /// Gets or sets the transaction group associated with the receiver.
+        /// This is used for transactions that span different Service Bus entities.
         /// </summary>
         public string TransactionGroup { get; set; }
 
