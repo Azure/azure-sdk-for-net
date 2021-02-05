@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The AnalyzeBatchActionsOperation class for LRO. </summary>
+    /// <summary> Pageable operation class for analyzing multiple actions using long running operation. </summary>
     public class AnalyzeBatchActionsOperation : PageableOperation<AnalyzeBatchActionsResult>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>

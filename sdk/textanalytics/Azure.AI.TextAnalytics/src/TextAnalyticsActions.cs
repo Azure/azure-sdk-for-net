@@ -5,16 +5,9 @@ using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The AnalyzeBatchActions class for LRO. </summary>
+    /// <summary> Determines the list of actions to be passed as arguments for AnalyzeBatchActionsOperation class. </summary>
     public class TextAnalyticsActions
     {
-        /// <summary>
-        /// Costructor
-        /// </summary>
-        public TextAnalyticsActions()
-        {
-        }
-
         /// <summary>
         /// DisplayName
         /// </summary>

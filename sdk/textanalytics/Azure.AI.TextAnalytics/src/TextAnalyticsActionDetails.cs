@@ -8,32 +8,32 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// TextAnalyticsActionDetails.
+    /// Stores the details for the AnalyzeBatchActionsOperation class.
     /// </summary>
     public class TextAnalyticsActionDetails
     {
         /// <summary>
-        /// TextAnalyticsActionDetails
+        /// Initializes the TextAnalyticsActionDetails class by initializing CompletedOn, Error and HasError properties.
         /// </summary>
         internal TextAnalyticsActionDetails (DateTimeOffset completedOn, TextAnalyticsErrorInternal error, bool hasError)
         {
             CompletedOn = completedOn;
-            Errors = hasError ? Transforms.ConvertToError(error) : default;
+            Error = hasError ? Transforms.ConvertToError(error) : default;
             HasError = hasError;
         }
 
         /// <summary>
-        /// CompletedOn
+        /// Indicates the time at which the action was last updated on.
         /// </summary>
         public DateTimeOffset CompletedOn { get; }
 
         /// <summary>
-        /// Error
+        /// Determines the TextAnalyticsError object for an action result.
         /// </summary>
-        public TextAnalyticsError Errors { get; }
+        public TextAnalyticsError Error { get; }
 
         /// <summary>
-        /// HasError
+        /// Indicates that the document was not successfully processed and an error was returned for this document.
         /// </summary>
         public bool HasError { get; }
     }

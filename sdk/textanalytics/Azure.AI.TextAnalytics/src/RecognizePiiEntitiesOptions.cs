@@ -25,5 +25,13 @@ namespace Azure.AI.TextAnalytics
         /// For more information see <a href="https://aka.ms/tanerpii"/>.
         /// </summary>
         public PiiEntityDomainType DomainFilter { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that, if set, indicates the version of the text
+        /// analytics model that will be used to generate the result.  For supported
+        /// model versions, see operation-specific documentation, for example:
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-sentiment-analysis#model-versioning"/>.
+        /// </summary>
+        public new string ModelVersion { get; set; } = "latest";
     }
 }
