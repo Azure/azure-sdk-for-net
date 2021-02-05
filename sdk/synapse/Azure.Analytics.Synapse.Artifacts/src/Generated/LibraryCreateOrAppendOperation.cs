@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates a library with the library name. Use query param &apos;comp=appendblock&apos; to append the data to the library resource created using the create operation. </summary>
-    public partial class LibraryCreateOrAppendOperation : Operation<Response>, IOperationSource<Response>
+    internal partial class LibraryCreateOrAppendOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
         internal LibraryCreateOrAppendOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)

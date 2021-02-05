@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> The Library service client. </summary>
-    public partial class LibraryClient
+    internal partial class LibraryClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
