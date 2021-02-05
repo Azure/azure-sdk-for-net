@@ -30,9 +30,11 @@ namespace Compute.Tests.DiskRPTests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
-                string testVaultId = @"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/KeyVaultforTest";
-                string encryptionKeyUri = @"https://keyvaultfortest.vault.azure.net/keys/KeyforTest/d2312bdc83184b77ae469668c5595e53";
-                string secretUri = @"https://keyvaultfortest.vault.azure.net/secrets/SecretForTest/374c72ff2c324552a3a90987dd5b2c93";
+                string testVaultId = @"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/testingkvsdk";
+
+                string encryptionKeyUri = @"https://testingkvsdk.vault.azure.net/keys/kvfortestingsdk/0a8eaae773844019b4ecd2dfa4f941c5";
+                string secretUri = @"https://testingkvsdk.vault.azure.net/secrets/secretforsdk/1661cd98b86d447cab87801052eb87c1";
+
                 string encryptionSettingsVersion = "1.0";
 
                 var rgName = TestUtilities.GenerateName(TestPrefix);
