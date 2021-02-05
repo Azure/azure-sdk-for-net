@@ -203,11 +203,31 @@ dataFeed.IngestionSettings = new DataFeedIngestionSettings()
     IngestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z")
 };
 
-Response<string> response = await adminClient.CreateDataFeedAsync(dataFeed);
+Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
 
-string dataFeedId = response.Value;
+DataFeed createdDataFeed = response.Value;
 
-Console.WriteLine($"Data feed ID: {dataFeedId}");
+Console.WriteLine($"Data feed ID: {createdDataFeed.Id}");
+Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
+Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
+
+Console.WriteLine($"Data feed administrators:");
+foreach (string admin in dataFeed.Administrators)
+{
+    Console.WriteLine($" - {admin}");
+}
+
+Console.WriteLine($"Metric IDs:");
+foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
+{
+    Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
+}
+
+Console.WriteLine($"Dimension columns:");
+foreach (DataFeedDimension dimension in dataFeed.Schema.DimensionColumns)
+{
+    Console.WriteLine($" - {dimension.DimensionName}");
+}
 ```
 
 ### Check the ingestion status of a data feed
@@ -272,11 +292,11 @@ detectCondition.SmartDetectionCondition = new SmartDetectionCondition(10.0, Anom
 
 detectCondition.CrossConditionsOperator = DetectionConditionsOperator.Or;
 
-Response<string> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
+Response<AnomalyDetectionConfiguration> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 
-string detectionConfigurationId = response.Value;
+AnomalyDetectionConfiguration createdDetectionConfiguration = response.Value;
 
-Console.WriteLine($"Anomaly detection configuration ID: {detectionConfigurationId}");
+Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfiguration.Id}");
 ```
 
 ### Create a hook for receiving anomaly alerts
@@ -294,11 +314,11 @@ var emailHook = new EmailNotificationHook()
 emailHook.EmailsToAlert.Add("email1@sample.com");
 emailHook.EmailsToAlert.Add("email2@sample.com");
 
-Response<string> response = await adminClient.CreateHookAsync(emailHook);
+Response<NotificationHook> response = await adminClient.CreateHookAsync(emailHook);
 
-string hookId = response.Value;
+NotificationHook createdHook = response.Value;
 
-Console.WriteLine($"Hook ID: {hookId}");
+Console.WriteLine($"Hook ID: {createdHook.Id}");
 ```
 
 ### Create an anomaly alert configuration
@@ -323,11 +343,11 @@ var metricAlertConfiguration = new MetricAnomalyAlertConfiguration(anomalyDetect
 
 alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 
-Response<string> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
+Response<AnomalyAlertConfiguration> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
 
-string alertConfigurationId = response.Value;
+AnomalyAlertConfiguration createdAlertConfiguration = response.Value;
 
-Console.WriteLine($"Alert configuration ID: {alertConfigurationId}");
+Console.WriteLine($"Alert configuration ID: {createdAlertConfiguration.Id}");
 ```
 
 ### Query detected anomalies and triggered alerts
