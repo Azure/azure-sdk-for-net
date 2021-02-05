@@ -11,6 +11,7 @@ namespace Azure.Core
     }
     public partial class DynamicJson : System.Dynamic.IDynamicMetaObjectProvider
     {
+        public DynamicJson() { }
         public DynamicJson(string json) { }
         public DynamicJson(System.Text.Json.JsonElement element) { }
         public Azure.Core.DynamicJson this[int arrayIndex] { get { throw null; } set { } }
@@ -98,6 +99,10 @@ namespace Azure.Core
         protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
         protected override bool TryGetHeader(string name, out string? value) { throw null; }
         protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+    }
+    public partial class ProtocolClientOptions : Azure.Core.ClientOptions
+    {
+        public ProtocolClientOptions() { }
     }
 }
 namespace Azure.Core.GeoJson
