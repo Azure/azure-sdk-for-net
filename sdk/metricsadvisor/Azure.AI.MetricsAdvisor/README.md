@@ -210,31 +210,6 @@ string dataFeedId = response.Value;
 Console.WriteLine($"Data feed ID: {dataFeedId}");
 ```
 
-Note that only the ID of the data feed is known at this point. You can perform another service call to `GetDataFeedAsync` or `GetDataFeed` to get more information, such as status, created time, the list of administrators, or the metric IDs.
-
-```C# Snippet:GetDataFeedAsync
-string dataFeedId = "<dataFeedId>";
-
-Response<DataFeed> response = await adminClient.GetDataFeedAsync(dataFeedId);
-
-DataFeed dataFeed = response.Value;
-
-Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
-Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
-
-Console.WriteLine($"Data feed administrators:");
-foreach (string admin in dataFeed.Administrators)
-{
-    Console.WriteLine($" - {admin}");
-}
-
-Console.WriteLine($"Metric IDs:");
-foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
-{
-    Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
-}
-```
-
 ### Check the ingestion status of a data feed
 
 Check the ingestion status of a previously created [`DataFeed`](#data-feed).
