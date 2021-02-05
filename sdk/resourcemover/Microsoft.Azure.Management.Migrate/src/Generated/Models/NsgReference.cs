@@ -10,30 +10,29 @@
 
 namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Gets or sets the resource settings.
+    /// Defines reference to NSG.
     /// </summary>
-    public partial class ResourceSettings
+    public partial class NsgReference : AzureResourceReference
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceSettings class.
+        /// Initializes a new instance of the NsgReference class.
         /// </summary>
-        public ResourceSettings()
+        public NsgReference()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceSettings class.
+        /// Initializes a new instance of the NsgReference class.
         /// </summary>
-        /// <param name="targetResourceName">Gets or sets the target Resource
-        /// name.</param>
-        public ResourceSettings(string targetResourceName)
+        /// <param name="sourceArmResourceId">Gets the ARM resource ID of the
+        /// tracked resource being referenced.</param>
+        public NsgReference(string sourceArmResourceId)
+            : base(sourceArmResourceId)
         {
-            TargetResourceName = targetResourceName;
             CustomInit();
         }
 
@@ -41,12 +40,6 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the target Resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "targetResourceName")]
-        public string TargetResourceName { get; set; }
 
     }
 }

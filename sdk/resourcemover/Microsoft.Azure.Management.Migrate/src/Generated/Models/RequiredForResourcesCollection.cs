@@ -11,29 +11,33 @@
 namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Gets or sets the resource settings.
+    /// Required for resources collection.
     /// </summary>
-    public partial class ResourceSettings
+    public partial class RequiredForResourcesCollection
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceSettings class.
+        /// Initializes a new instance of the RequiredForResourcesCollection
+        /// class.
         /// </summary>
-        public ResourceSettings()
+        public RequiredForResourcesCollection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceSettings class.
+        /// Initializes a new instance of the RequiredForResourcesCollection
+        /// class.
         /// </summary>
-        /// <param name="targetResourceName">Gets or sets the target Resource
-        /// name.</param>
-        public ResourceSettings(string targetResourceName)
+        /// <param name="sourceIds">Gets or sets the list of source Ids for
+        /// which the input resource is required.</param>
+        public RequiredForResourcesCollection(IList<string> sourceIds = default(IList<string>))
         {
-            TargetResourceName = targetResourceName;
+            SourceIds = sourceIds;
             CustomInit();
         }
 
@@ -43,10 +47,11 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the target Resource name.
+        /// Gets or sets the list of source Ids for which the input resource is
+        /// required.
         /// </summary>
-        [JsonProperty(PropertyName = "targetResourceName")]
-        public string TargetResourceName { get; set; }
+        [JsonProperty(PropertyName = "sourceIds")]
+        public IList<string> SourceIds { get; set; }
 
     }
 }
