@@ -9,5 +9,5 @@ steps:
           Write-Host "##vso[task.LogIssue type=error;]Please follow workflow at https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md"
           exit 1
         }
-      displayName: Prevent eng/common Changes from non Sync Prs
+      displayName: Prevent changes to eng/common outside of azure-sdk-tools repo
       condition: and(succeeded(), ne(variables['Skip.EngCommonWorkflowEnforcer'], 'true'))
