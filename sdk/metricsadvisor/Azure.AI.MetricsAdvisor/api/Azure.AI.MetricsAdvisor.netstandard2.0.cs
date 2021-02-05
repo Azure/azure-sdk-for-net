@@ -289,13 +289,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class AnomalyAlertConfiguration
     {
-        public AnomalyAlertConfiguration(string name, System.Collections.Generic.IList<string> idsOfHooksToAlert, System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfiguration> metricAlertConfigurations) { }
+        public AnomalyAlertConfiguration() { }
         public Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator? CrossMetricsOperator { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IList<string> IdsOfHooksToAlert { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfiguration> MetricAlertConfigurations { get { throw null; } }
-        public string Name { get { throw null; } }
+        public string Name { get { throw null; } set { } }
     }
     public partial class AnomalyDetectionConfiguration
     {
@@ -957,9 +957,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricAnomalyAlertSnoozeCondition
     {
         public MetricAnomalyAlertSnoozeCondition(int autoSnooze, Azure.AI.MetricsAdvisor.Models.SnoozeScope snoozeScope, bool isOnlyForSuccessive) { }
-        public int AutoSnooze { get { throw null; } }
-        public bool IsOnlyForSuccessive { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.SnoozeScope SnoozeScope { get { throw null; } }
+        public int AutoSnooze { get { throw null; } set { } }
+        public bool IsOnlyForSuccessive { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.SnoozeScope SnoozeScope { get { throw null; } set { } }
     }
     public partial class MetricAnomalyFeedback : Azure.AI.MetricsAdvisor.Models.MetricFeedback
     {
@@ -974,7 +974,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         public MetricBoundaryCondition(Azure.AI.MetricsAdvisor.Models.BoundaryDirection direction) { }
         public string CompanionMetricId { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.BoundaryDirection Direction { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.BoundaryDirection Direction { get { throw null; } set { } }
         public double? LowerBound { get { throw null; } set { } }
         public bool? TriggerForMissing { get { throw null; } set { } }
         public double? UpperBound { get { throw null; } set { } }
@@ -1101,8 +1101,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class SeverityCondition
     {
         public SeverityCondition(Azure.AI.MetricsAdvisor.Models.AnomalySeverity minimumAlertSeverity, Azure.AI.MetricsAdvisor.Models.AnomalySeverity maximumAlertSeverity) { }
-        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity MaximumAlertSeverity { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity MinimumAlertSeverity { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity MaximumAlertSeverity { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.AnomalySeverity MinimumAlertSeverity { get { throw null; } set { } }
     }
     public partial class SmartDetectionCondition
     {
