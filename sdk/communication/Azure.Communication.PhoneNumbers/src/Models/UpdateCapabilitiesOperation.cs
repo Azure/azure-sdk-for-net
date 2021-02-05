@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.Models
 {
-    [CodeGenModel("PhoneNumbersReleasePhoneNumberOperation")]
-    public partial class ReleasePhoneNumberOperation
+    [CodeGenModel("PhoneNumbersUpdateCapabilitiesOperation")]
+    public partial class UpdateCapabilitiesOperation
     {
         /// <inheritdoc />
         public override string Id { get; }
