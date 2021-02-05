@@ -10,4 +10,4 @@ steps:
           exit 1
         }
       displayName: Prevent eng/common Changes from non Sync Prs
-      condition: and(succeeded(), ne(variables['Skip.EngCommonWflEnforcer'], 'true'))
+      condition: and(succeeded(), ne(variables['Skip.EngCommonWorkflowEnforcer'], 'true'))
