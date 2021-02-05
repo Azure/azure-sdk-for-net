@@ -12,9 +12,14 @@
 - The constructor of the `AnomalyDetectionConfiguration` class is now parameterless. Required properties should be set via setters.
 - The constructor of the `MetricSingleSeriesDetectionCondition` class is now parameterless. Dimension columns can be added directly to `SeriesKey`.
 - The constructor of the `MetricSeriesGroupDetectionCondition` class is now parameterless. Dimension columns can be added directly to `SeriesGroupKey`.
+- The constructor of the `AnomalyAlertConfiguration` class is now parameterless. Required properties should be set via setters.
 - In `DataFeed`, added property setters to `Name`, `DataSource`, `Granularity`, `IngestionSettings`, and `Schema`.
 - In `DataFeedIngestionSettings`, added a property setter to `IngestionStartTime`.
 - In `AnomalyDetectionConfiguration`, added property setters to `MetricId`, `Name`, and `WholeSeriesDetectionConditions`.
+- In `AnomalyAlertConfiguration`, added a property setter to `Name`.
+- In `MetricAnomalyAlertSnoozeCondition`, added property setters to `AutoSnooze`, `IsOnlyForSuccessive`, and `SnoozeScope`.
+- In `MetricBoundaryCondition`, added a property setter to `Direction`.
+- In `SeverityCondition`, added property setters to `MaximumAlertSeverity` and `MinimumAlertSeverity`.
 - In `DataFeed`, removed the setters of the properties `Administrators` and `Viewers`.
 - In `DataFeedSchema`, removed the setter of the property `DimensionColumns`.
 - In `DataFeedRollupSettings`, removed the setter of the property `AutoRollupGroupByColumnNames`.
@@ -23,6 +28,7 @@
 - `DataFeed.IngestionStartTime` is now nullable.
 - `MetricsAdvisorAdministrationClient.CreateDataFeed` sync and async methods now throw an `ArgumentException` if required properties are not set properly.
 - `MetricsAdvisorAdministrationClient.CreateDetectionConfiguration` sync and async methods now throw an `ArgumentException` if required properties are not set properly.
+- `MetricsAdvisorAdministrationClient.CreateAlertConfiguration` sync and async methods now throw an `ArgumentException` if required properties are not set properly.
 - In `MetricsAdvisorKeyCredential`, renamed the parameter `key` to `subscriptionKey` in the method `UpdateSubscriptionKey`.
 - In `MetricsAdvisorKeyCredential`, renamed the parameter `key` to `apiKey` in the method `UpdateApiKey`.
 
