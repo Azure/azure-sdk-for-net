@@ -8,7 +8,7 @@
 
 ### New Features
 
-- All credentials now support CAE claims challenges
+- All credentials added support to handle the `Claims` property on `TokenRequestContext`
 
 ## 1.4.0-beta.2 (2021-01-29)
 
