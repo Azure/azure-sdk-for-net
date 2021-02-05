@@ -35,13 +35,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var feedbackToAdd = new MetricAnomalyFeedback(MetricId, filter, CreatedFeedbackStartTime, CreatedFeedbackEndTime, AnomalyValue.AutoDetect);
 
-            string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            Assert.That(feedbackId, Is.Not.Null);
-
-            MetricFeedback addedFeedback = await client.GetFeedbackAsync(feedbackId);
-
-            ValidateMetricFeedback(addedFeedback, feedbackId, dimensionKey);
+            ValidateMetricFeedback(addedFeedback, dimensionKey);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Anomaly));
 
@@ -71,13 +67,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 AnomalyDetectionConfigurationId = DetectionConfigurationId
             };
 
-            string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            Assert.That(feedbackId, Is.Not.Null);
-
-            MetricFeedback addedFeedback = await client.GetFeedbackAsync(feedbackId);
-
-            ValidateMetricFeedback(addedFeedback, feedbackId, dimensionKey);
+            ValidateMetricFeedback(addedFeedback, dimensionKey);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Anomaly));
 
@@ -104,13 +96,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var feedbackToAdd = new MetricChangePointFeedback(MetricId, filter, CreatedFeedbackStartTime, CreatedFeedbackEndTime, ChangePointValue.AutoDetect);
 
-            string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            Assert.That(feedbackId, Is.Not.Null);
-
-            MetricFeedback addedFeedback = await client.GetFeedbackAsync(feedbackId);
-
-            ValidateMetricFeedback(addedFeedback, feedbackId, dimensionKey);
+            ValidateMetricFeedback(addedFeedback, dimensionKey);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.ChangePoint));
 
@@ -141,13 +129,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var feedbackToAdd = new MetricCommentFeedback(MetricId, filter, comment);
 
-            string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            Assert.That(feedbackId, Is.Not.Null);
-
-            MetricFeedback addedFeedback = await client.GetFeedbackAsync(feedbackId);
-
-            ValidateMetricFeedback(addedFeedback, feedbackId, dimensionKey);
+            ValidateMetricFeedback(addedFeedback, dimensionKey);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Comment));
 
@@ -177,13 +161,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 EndTime = CreatedFeedbackEndTime
             };
 
-            string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            Assert.That(feedbackId, Is.Not.Null);
-
-            MetricFeedback addedFeedback = await client.GetFeedbackAsync(feedbackId);
-
-            ValidateMetricFeedback(addedFeedback, feedbackId, dimensionKey);
+            ValidateMetricFeedback(addedFeedback, dimensionKey);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Comment));
 
@@ -209,13 +189,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var feedbackToAdd = new MetricPeriodFeedback(MetricId, filter, PeriodType.AutoDetect, periodValue);
 
-            string feedbackId = await client.AddFeedbackAsync(feedbackToAdd);
+            MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            Assert.That(feedbackId, Is.Not.Null);
-
-            MetricFeedback addedFeedback = await client.GetFeedbackAsync(feedbackId);
-
-            ValidateMetricFeedback(addedFeedback, feedbackId, dimensionKey);
+            ValidateMetricFeedback(addedFeedback, dimensionKey);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Period));
 
@@ -352,10 +328,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(feedbackCount, Is.GreaterThan(0));
         }
 
-        private void ValidateMetricFeedback(MetricFeedback feedback, string expectedFeedbackId, DimensionKey expectedDimensionKey)
+        private void ValidateMetricFeedback(MetricFeedback feedback, DimensionKey expectedDimensionKey)
         {
             Assert.That(feedback, Is.Not.Null);
-            Assert.That(feedback.Id, Is.EqualTo(expectedFeedbackId));
+            Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
             Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
 

@@ -674,7 +674,7 @@ namespace Azure.AI.MetricsAdvisor
         /// containing the ID of the newly created feedback.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
-        public virtual async Task<Response<string>> AddFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricFeedback>> AddFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(feedback, nameof(feedback));
 
@@ -686,7 +686,16 @@ namespace Azure.AI.MetricsAdvisor
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = await _serviceRestClient.CreateMetricFeedbackAsync(feedback, cancellationToken).ConfigureAwait(false);
                 string feedbackId = ClientCommon.GetFeedbackId(response.Headers.Location);
 
-                return Response.FromValue(feedbackId, response.GetRawResponse());
+                try
+                {
+                    var addedFeedback = await GetFeedbackAsync(feedbackId, cancellationToken).ConfigureAwait(false);
+
+                    return Response.FromValue(addedFeedback, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The feedback has been added successfully, but the client failed to fetch its data. Feedback ID: {feedbackId}", ex);
+                }
             }
             catch (Exception e)
             {
@@ -705,7 +714,7 @@ namespace Azure.AI.MetricsAdvisor
         /// containing the ID of the newly created feedback.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
-        public virtual Response<string> AddFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
+        public virtual Response<MetricFeedback> AddFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(feedback, nameof(feedback));
 
@@ -717,7 +726,16 @@ namespace Azure.AI.MetricsAdvisor
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = _serviceRestClient.CreateMetricFeedback(feedback, cancellationToken);
                 string feedbackId = ClientCommon.GetFeedbackId(response.Headers.Location);
 
-                return Response.FromValue(feedbackId, response.GetRawResponse());
+                try
+                {
+                    var addedFeedback = GetFeedback(feedbackId, cancellationToken);
+
+                    return Response.FromValue(addedFeedback, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The feedback has been added successfully, but the client failed to fetch its data. Feedback ID: {feedbackId}", ex);
+                }
             }
             catch (Exception e)
             {

@@ -726,7 +726,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/>, <paramref name="detectionConfiguration"/>.MetricId, <paramref name="detectionConfiguration"/>.Name, or <paramref name="detectionConfiguration"/>.WholeSeriesDetectionConditions is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfiguration"/>.MetricId or <paramref name="detectionConfiguration"/>.Name is empty.</exception>
-        public virtual async Task<Response<string>> CreateDetectionConfigurationAsync(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnomalyDetectionConfiguration>> CreateDetectionConfigurationAsync(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             ValidateDetectionConfigurationToCreate(detectionConfiguration, nameof(detectionConfiguration));
 
@@ -738,7 +738,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyDetectionConfigurationAsync(detectionConfiguration, cancellationToken).ConfigureAwait(false);
                 string detectionConfigurationId = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(detectionConfigurationId, response.GetRawResponse());
+                try
+                {
+                    var createdConfig = await GetDetectionConfigurationAsync(detectionConfigurationId, cancellationToken).ConfigureAwait(false);
+
+                    return Response.FromValue(createdConfig, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The configuration has been created successfully, but the client failed to fetch its data. Configuration ID: {detectionConfigurationId}", ex);
+                }
             }
             catch (Exception e)
             {
@@ -758,7 +767,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/>, <paramref name="detectionConfiguration"/>.MetricId, <paramref name="detectionConfiguration"/>.Name, or <paramref name="detectionConfiguration"/>.WholeSeriesDetectionConditions is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfiguration"/>.MetricId or <paramref name="detectionConfiguration"/>.Name is empty.</exception>
-        public virtual Response<string> CreateDetectionConfiguration(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<AnomalyDetectionConfiguration> CreateDetectionConfiguration(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             ValidateDetectionConfigurationToCreate(detectionConfiguration, nameof(detectionConfiguration));
 
@@ -770,7 +779,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = _serviceRestClient.CreateAnomalyDetectionConfiguration(detectionConfiguration, cancellationToken);
                 string detectionConfigurationId = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(detectionConfigurationId, response.GetRawResponse());
+                try
+                {
+                    var createdConfig = GetDetectionConfiguration(detectionConfigurationId, cancellationToken);
+
+                    return Response.FromValue(createdConfig, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The configuration has been created successfully, but the client failed to fetch its data. Configuration ID: {detectionConfigurationId}", ex);
+                }
             }
             catch (Exception e)
             {
@@ -1052,7 +1070,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.Name is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfiguration"/>.Name is empty.</exception>
-        public virtual async Task<Response<string>> CreateAlertConfigurationAsync(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnomalyAlertConfiguration>> CreateAlertConfigurationAsync(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             Argument.AssertNotNullOrEmpty(alertConfiguration.Name, $"{nameof(alertConfiguration)}.{nameof(alertConfiguration.Name)}");
@@ -1065,7 +1083,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyAlertingConfigurationAsync(alertConfiguration, cancellationToken).ConfigureAwait(false);
                 string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(alertConfigurationId, response.GetRawResponse());
+                try
+                {
+                    var createdConfig = await GetAlertConfigurationAsync(alertConfigurationId, cancellationToken).ConfigureAwait(false);
+
+                    return Response.FromValue(createdConfig, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The configuration has been created successfully, but the client failed to fetch its data. Configuration ID: {alertConfigurationId}", ex);
+                }
             }
             catch (Exception e)
             {
@@ -1085,7 +1112,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.Name is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfiguration"/>.Name is empty.</exception>
-        public virtual Response<string> CreateAlertConfiguration(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<AnomalyAlertConfiguration> CreateAlertConfiguration(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             Argument.AssertNotNullOrEmpty(alertConfiguration.Name, $"{nameof(alertConfiguration)}.{nameof(alertConfiguration.Name)}");
@@ -1098,7 +1125,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = _serviceRestClient.CreateAnomalyAlertingConfiguration(alertConfiguration, cancellationToken);
                 string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(alertConfigurationId, response.GetRawResponse());
+                try
+                {
+                    var createdConfig = GetAlertConfiguration(alertConfigurationId, cancellationToken);
+
+                    return Response.FromValue(createdConfig, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The configuration has been created successfully, but the client failed to fetch its data. Configuration ID: {alertConfigurationId}", ex);
+                }
             }
             catch (Exception e)
             {
@@ -1372,7 +1408,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
-        public virtual async Task<Response<string>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHook>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
         {
             ValidateHookToCreate(hook, nameof(hook));
 
@@ -1384,7 +1420,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = await _serviceRestClient.CreateHookAsync(hook, cancellationToken).ConfigureAwait(false);
                 string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
-                return Response.FromValue(hookId, response.GetRawResponse());
+                try
+                {
+                    var createdHook = await GetHookAsync(hookId, cancellationToken).ConfigureAwait(false);
+
+                    return Response.FromValue(createdHook, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The hook has been created successfully, but the client failed to fetch its data. Hook ID: {hookId}", ex);
+                }
             }
             catch (Exception e)
             {
@@ -1404,7 +1449,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
-        public virtual Response<string> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHook> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
         {
             ValidateHookToCreate(hook, nameof(hook));
 
@@ -1416,7 +1461,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = _serviceRestClient.CreateHook(hook, cancellationToken);
                 string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
-                return Response.FromValue(hookId, response.GetRawResponse());
+                try
+                {
+                    var createdHook = GetHook(hookId, cancellationToken);
+
+                    return Response.FromValue(createdHook, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The hook has been created successfully, but the client failed to fetch its data. Hook ID: {hookId}", ex);
+                }
             }
             catch (Exception e)
             {
