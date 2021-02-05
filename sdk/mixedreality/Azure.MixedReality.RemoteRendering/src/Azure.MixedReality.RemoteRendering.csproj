@@ -3,9 +3,7 @@
     <AssemblyTitle>Microsoft Azure Mixed Reality ARR Client</AssemblyTitle>
     <Version>1.0.0-preview.1</Version>
     <PackageTags>Azure MixedReality</PackageTags>
-    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
-    <PackageProjectUrl>https://azure.microsoft.com/services/remote-rendering/</PackageProjectUrl>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>

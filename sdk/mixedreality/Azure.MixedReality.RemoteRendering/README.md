@@ -5,36 +5,12 @@ Azure Remote Rendering (ARR) is a service that enables you to render high-qualit
 This SDK offers functionality to convert assets to the format expected by the runtime, and also to manage
 the lifetime of remote rendering sessions.
 
-> [!Note] Once a session is running, a client application will connect to it using one of the "runtime SDKs".
+> NOTE: Once a session is running, a client application will connect to it using one of the "runtime SDKs".
 > These SDKs are designed to best support the needs of an interactive application doing 3d rendering.
 > They are available in ([.net](https://docs.microsoft.com/dotnet/api/microsoft.azure.remoterendering)
 > or ([C++](https://docs.microsoft.com/cpp/api/remote-rendering/)).
 
 [Product documentation](https://docs.microsoft.com/azure/remote-rendering/)
-
-- [Azure Remote Rendering client library for .NET](#azure-remote-rendering-client-library-for-net)
-  - [Getting started](#getting-started)
-    - [Install the package](#install-the-package)
-    - [Prerequisites](#prerequisites)
-    - [Authenticate the client](#authenticate-the-client)
-      - [Authenticating with account key authentication](#authenticating-with-account-key-authentication)
-      - [Authenticating with an AAD client secret](#authenticating-with-an-aad-client-secret)
-      - [Authenticating a user using device code authentication](#authenticating-a-user-using-device-code-authentication)
-      - [Interactive authentication with DefaultAzureCredential](#interactive-authentication-with-defaultazurecredential)
-      - [Authenticating with a static access token](#authenticating-with-a-static-access-token)
-  - [Key concepts](#key-concepts)
-  - [Examples](#examples)
-    - [Convert a simple asset](#convert-a-simple-asset)
-    - [Convert a more complex asset](#convert-a-more-complex-asset)
-    - [Get the output when an asset conversion has finished](#get-the-output-when-an-asset-conversion-has-finished)
-    - [List conversions](#list-conversions)
-    - [Create a session](#create-a-session)
-    - [Extend the lease time of a session](#extend-the-lease-time-of-a-session)
-    - [List sessions](#list-sessions)
-    - [Stop a session](#stop-a-session)
-  - [Troubleshooting](#troubleshooting)
-  - [Next steps](#next-steps)
-  - [Contributing](#contributing)
 
 ## Getting started
 
@@ -88,9 +64,9 @@ In all the following examples, the client is constructed with a `remoteRendering
 The available endpoints correspond to regions, and the choice of endpoint determines the region in which the service performs its work.
 An example is `https://remoterendering.eastus2.mixedreality.azure.com`.
 
-> [!Note] For converting assets, it is preferable to pick a region close to the storage containing the assets.
+> NOTE: For converting assets, it is preferable to pick a region close to the storage containing the assets.
 
-> [!Note] For rendering, it is strongly recommended that you pick the closest region to the devices using the service. 
+> NOTE: For rendering, it is strongly recommended that you pick the closest region to the devices using the service. 
 > The time taken to communicate with the server impacts the quality of the experience.
 
 #### Authenticating with account key authentication
@@ -236,8 +212,8 @@ The code is as follows:
     AssetConversionOperation conversionOperation = client.StartConversion(conversionId, conversionOptions);
 ```
 
-Note that when a prefix is given in the input options, then the input file parameter is assumed to be relative to that prefix.
-The same applies to the output file parameter in output options.
+> NOTE: when a prefix is given in the input options, then the input file parameter is assumed to be relative to that prefix.
+> The same applies to the output file parameter in output options.
 
 ### Get the output when an asset conversion has finished
 
@@ -304,7 +280,7 @@ If a session is approaching its maximum lease time, but you want to keep it aliv
 its maximum lease time.
 This example shows how to query the current properties and then extend the lease if it will expire soon.
 
-> [!Note] The runtime SDKs also offer this functionality, and in many typical scenarios, you would use them to
+> NOTE: The runtime SDKs also offer this functionality, and in many typical scenarios, you would use them to
 > extend the session lease.
 
 ```csharp Snippet:UpdateSession
@@ -368,7 +344,7 @@ RemoteRenderingServiceError with details.
 
 - Read the [Product documentation](https://docs.microsoft.com/azure/remote-rendering/)
 - Learn about the runtime SDKs:
-  - .net: https://docs.microsoft.com/dotnet/api/microsoft.azure.remoterendering
+  - .NET: https://docs.microsoft.com/dotnet/api/microsoft.azure.remoterendering
   - C++: https://docs.microsoft.com/cpp/api/remote-rendering/
 
 ## Contributing
