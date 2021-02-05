@@ -11,6 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// An alert notification to be triggered after an anomaly is detected by Metrics Advisor.
     /// </summary>
     [CodeGenModel("HookInfo")]
+    [CodeGenSuppress(nameof(NotificationHook), typeof(string))]
     public partial class NotificationHook
     {
         internal NotificationHook()
