@@ -136,8 +136,11 @@ namespace Azure.Messaging.ServiceBus
         public IList<string> SessionIds { get; } = new List<string>();
 
         /// <summary>
-        /// Gets or sets the transaction group associated with the processor.
-        /// This is used for transactions that span different Service Bus entities.
+        /// Gets or sets the transaction group associated with the processor. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// If your transactions only involves a single queue, topic, or subscription, this property
+        /// should not be set.
         /// </summary>
         public string TransactionGroup { get; set; }
 
@@ -174,7 +177,7 @@ namespace Azure.Messaging.ServiceBus
                 PrefetchCount = PrefetchCount,
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxReceiveWaitTime = MaxReceiveWaitTime,
+                MaxReceiveWaitTime = SessionIdleTimeout,
                 TransactionGroup = TransactionGroup
             };
     }

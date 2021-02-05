@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: sessionEnabled))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message = GetMessage(
@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message1 = GetMessage("session1");
@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message1 = GetMessage("session1");
@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message = GetMessage();
@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.TopicName);
 
                 ServiceBusMessage message = GetMessage();
@@ -155,7 +155,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: sessionEnabled))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message = GetMessage(
@@ -188,7 +188,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: sessionEnabled))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 string body = Guid.NewGuid().ToString("N");
@@ -247,7 +247,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 
@@ -314,7 +314,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 
@@ -357,9 +357,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client1 = GetClient();
+                await using var client1 = CreateClient();
                 ServiceBusSender sender = client1.CreateSender(scope.QueueName);
-                await using var client2 = GetClient();
+                await using var client2 = CreateClient();
                 ServiceBusReceiver receiver = client2.CreateReceiver(scope.QueueName);
 
                 ServiceBusMessage message1 = GetMessage();
@@ -387,7 +387,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 
@@ -426,7 +426,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         public async Task TransactionGroupReceivesFirst(bool partitioned, bool enableSessions)
         {
             var transactionGroup = "myTxn";
-            await using var client = GetClient();
+            await using var client = CreateClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
             await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: partitioned, enableSession: enableSessions);
@@ -483,7 +483,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         public async Task TransactionGroupReceivesFirstRollback()
         {
             var transactionGroup = "myTxn";
-            await using var client = GetClient();
+            await using var client = CreateClient();
             await using var topicA = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -552,7 +552,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         public async Task TransactionGroupSendsFirst(bool partitioned, bool enableSessions)
         {
             var transactionGroup = "myTxn";
-            await using var client = GetClient();
+            await using var client = CreateClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
@@ -742,7 +742,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             var transactionGroup = "myTxn";
 
-            await using var client = GetClient();
+            await using var client = CreateClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -797,7 +797,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         public async Task TransactionGroupProcessor()
         {
             var transactionGroup = "myTxn";
-            await using var client = GetClient();
+            await using var client = CreateClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -857,7 +857,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         public async Task TransactionGroupSessionProcessorRollback()
         {
             var transactionGroup = "myTxn";
-            await using var client = GetClient();
+            await using var client = CreateClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
@@ -910,7 +910,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         public async Task TransactionGroupSessionProcessor()
         {
             var transactionGroup = "myTxn";
-            await using var client = GetClient();
+            await using var client = CreateClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
@@ -961,6 +961,72 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             // should not throw
             _ = await client.AcceptNextSessionAsync(queueB.QueueName);
             _ = await client.AcceptNextSessionAsync(queueC.QueueName);
+        }
+
+        [Test]
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        public async Task MultipleTransactionGroupsOnSameClient(bool partitioned, bool enableSessions)
+        {
+            await using var client = CreateClient();
+            await RunTestAsync("transactionGroup1");
+            await RunTestAsync("transactionGroup2");
+
+            async Task RunTestAsync(string transactionGroup)
+            {
+                await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
+                await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
+                await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: partitioned, enableSession: enableSessions);
+                var senderA = client.CreateSender(queueA.QueueName);
+                ServiceBusReceiver receiverA = null;
+                if (!enableSessions)
+                {
+                    receiverA = client.CreateReceiver(queueA.QueueName, new ServiceBusReceiverOptions
+                    {
+                        TransactionGroup = transactionGroup
+                    });
+                }
+                var senderB = client.CreateSender(queueB.QueueName, new ServiceBusSenderOptions
+                {
+                    TransactionGroup = transactionGroup
+                });
+                var senderC = client.CreateSender(topicC.TopicName, new ServiceBusSenderOptions
+                {
+                    TransactionGroup = transactionGroup
+                });
+
+                var message = new ServiceBusMessage
+                {
+                    SessionId = enableSessions ? "sessionId" : null,
+                    TransactionPartitionKey = partitioned ? "sessionId" : null
+                };
+
+                await senderA.SendMessageAsync(message);
+
+                if (enableSessions)
+                {
+                    receiverA = await client.AcceptNextSessionAsync(queueA.QueueName, new ServiceBusSessionReceiverOptions
+                    {
+                        TransactionGroup = transactionGroup
+                    });
+                }
+
+                ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
+
+                // If the transaction succeeds, then all the operations occurred on the same partition.
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await receiverA.CompleteMessageAsync(receivedMessage);
+                    await senderB.SendMessageAsync(message);
+                    await senderC.SendMessageAsync(message);
+                    ts.Complete();
+                }
+
+                receivedMessage = await receiverA.ReceiveMessageAsync();
+                Assert.IsNull(receivedMessage);
+            }
         }
     }
 }

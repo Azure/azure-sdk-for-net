@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Test]
         public async Task TransactionGroup()
         {
-            await using var client = GetClient();
+            await using var client = CreateClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);

@@ -77,8 +77,9 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusRetryPolicy _retryPolicy;
 
         /// <summary>
-        /// Gets the transaction group associated with the sender.
-        /// This is used for transactions that span different Service Bus entities.
+        /// Gets the transaction group associated with the sender. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
         /// </summary>
         public virtual string TransactionGroup { get; }
 
