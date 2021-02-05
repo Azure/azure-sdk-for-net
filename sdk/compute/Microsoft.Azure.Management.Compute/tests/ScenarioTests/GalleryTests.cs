@@ -369,7 +369,7 @@ namespace Compute.Tests
                 ValidateGallery(galleryIn, galleryOut);
 
                 Trace.TraceInformation("Update the sharing profile via post, add the sharing profile groups.");
-                string newTenantId = Guid.NewGuid().ToString();
+                string newTenantId = "583d66a9-0041-4999-8838-75baece101d5";
                 SharingProfileGroup tenantGroups = new SharingProfileGroup()
                 {
                     Type = "AADTenants",
@@ -377,7 +377,7 @@ namespace Compute.Tests
 
                 };
 
-                string newSubId = Guid.NewGuid().ToString();
+                string newSubId = "640c5810-13bf-4b82-b94d-f38c2565e3bc";
                 SharingProfileGroup subGroups = new SharingProfileGroup()
                 {
                     Type = "Subscriptions",
