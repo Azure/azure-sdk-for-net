@@ -3,21 +3,21 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
-    internal class ByteArrayToBrokeredMessageConverter : IConverter<byte[], Message>
+    internal class ByteArrayToMessageConverter : IConverter<byte[], ServiceBusMessage>
     {
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        public Message Convert(byte[] input)
+        public ServiceBusMessage Convert(byte[] input)
         {
             if (input == null)
             {
                 throw new InvalidOperationException("A brokered message cannot contain a null byte array instance.");
             }
 
-            return new Message(input)
+            return new ServiceBusMessage(input)
             {
                 ContentType = ContentTypes.ApplicationOctetStream
             };

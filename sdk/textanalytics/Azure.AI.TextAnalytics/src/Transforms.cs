@@ -266,7 +266,7 @@ namespace Azure.AI.TextAnalytics
             return entities;
         }
 
-        internal static AnalyzeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
+        internal static AnalyzeHealthcareEntitiesResultCollection ConvertToAnalyzeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
         {
             var healthcareEntititesResults = new List<AnalyzeHealthcareEntitiesResult>();
 

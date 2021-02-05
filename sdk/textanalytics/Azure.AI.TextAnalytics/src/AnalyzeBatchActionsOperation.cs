@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The AnalyzeBatchActionsOperation class for LRO. </summary>
-    public class AnalyzeBatchActionsOperation : Operation<AnalyzeBatchActionsResult>
+    public class AnalyzeBatchActionsOperation : PageableOperation<AnalyzeBatchActionsResult>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly TextAnalyticsRestClient _serviceClient;
@@ -73,11 +73,6 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get; }
 
         /// <summary>
-        /// next link string for pagination
-        /// </summary>
-        internal string NextLink { get; set; }
-
-        /// <summary>
         /// Provides the input to be part of AnalyzeOperation class
         /// </summary>
         internal readonly IDictionary<string, int> _idToIndexMap;
@@ -88,22 +83,11 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public override AnalyzeBatchActionsResult Value
-        {
-            get
-            {
-                if (HasCompleted && !HasValue)
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw _requestFailedException;
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                else
-                {
-                    return OperationHelpers.GetValue(ref _value);
-                }
-            }
-        }
+        public override AsyncPageable<AnalyzeBatchActionsResult> Value => GetValuesAsync();
 
-        /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
+        /// <summary>
+        /// <c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.
+        /// </summary>
         private bool _hasCompleted;
 
         private int _totalActions;
@@ -121,22 +105,36 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public override bool HasCompleted => _hasCompleted;
 
+        /// <summary>
+        /// If the operation has an exception, this property saves its information.
+        /// </summary>
         private RequestFailedException _requestFailedException;
 
-        /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
+        /// <summary>
+        /// The last HTTP response received from the server. <c>null</c> until the first response is received.
+        /// </summary>
         private Response _response;
 
-        /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
-        private AnalyzeBatchActionsResult _value;
+        /// <summary>
+        /// Provides the results for the first page.
+        /// </summary>
+        private Page<AnalyzeBatchActionsResult> _firstPage;
 
-        private int? _top { get; }
-        private int? _skip { get; }
+        /// <summary>
+        /// Represents the desire of the user to request statistics.
+        /// This is used in every GET request.
+        /// </summary>
         private bool? _showStats { get; }
+
+        /// <summary>
+        /// Provides the api version to use when doing pagination.
+        /// </summary>
+        private readonly string _apiVersion;
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
-        public override bool HasValue => _value != null;
+        public override bool HasValue => _firstPage != null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeBatchActionsOperation"/> class.
@@ -157,18 +155,16 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
+        /// <param name="apiversion">The specific api version to use.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="idToIndexMap"></param>
-        /// <param name="top"></param>
-        /// <param name="skip"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeBatchActionsOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, int? top = default, int? skip = default, bool? showStats = default)
+        internal AnalyzeBatchActionsOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string apiversion, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
+            _apiVersion = apiversion;
             _idToIndexMap = idToIndexMap;
-            _top = top;
-            _skip = skip;
             _showStats = showStats;
 
             // TODO: Add validation here
@@ -216,7 +212,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<AnalyzeBatchActionsResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<AsyncPageable<AnalyzeBatchActionsResult>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <summary>
@@ -232,7 +228,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<AnalyzeBatchActionsResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<AsyncPageable<AnalyzeBatchActionsResult>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -268,10 +264,10 @@ namespace Azure.AI.TextAnalytics
 
                     if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded)
                     {
-                        // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
-                        _value = Transforms.ConvertToAnalyzeOperationResult(update.Value, _idToIndexMap);
-
-                        NextLink = update.Value.NextLink;
+                        // we need to first assign a value and then mark the operation as completed to avoid race conditions
+                        var nextLink = update.Value.NextLink;
+                        var value = Transforms.ConvertToAnalyzeOperationResult(update.Value, _idToIndexMap);
+                        _firstPage = Page.FromValues(new List<AnalyzeBatchActionsResult>() { value }, nextLink, _response);
                         _hasCompleted = true;
                     }
                     else if (update.Value.Status == TextAnalyticsOperationStatus.Failed)
@@ -289,6 +285,72 @@ namespace Azure.AI.TextAnalytics
             }
 
             return GetRawResponse();
+        }
+
+        /// <summary>
+        /// Gets the final result of the long-running operation asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// Operation must complete successfully (HasValue is true) for it to provide values.
+        /// </remarks>
+        public override AsyncPageable<AnalyzeBatchActionsResult> GetValuesAsync()
+        {
+            ValidateOperationStatus();
+
+            async Task<Page<AnalyzeBatchActionsResult>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                //diagnostics scope?
+                try
+                {
+                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(_apiVersion, nextLink, _showStats).ConfigureAwait(false);
+
+                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
+                    return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets the final result of the long-running operation synchronously.
+        /// </summary>
+        /// <remarks>
+        /// Operation must complete successfully (HasValue is true) for it to provide values.
+        /// </remarks>
+        public override Pageable<AnalyzeBatchActionsResult> GetValues()
+        {
+            ValidateOperationStatus();
+
+            Page<AnalyzeBatchActionsResult> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                //diagnostics scope?
+                try
+                {
+                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(_apiVersion, nextLink, _showStats);
+
+                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
+                    return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
+        }
+
+        private void ValidateOperationStatus()
+        {
+            if (!HasCompleted)
+                throw new InvalidOperationException("The operation has not completed yet.");
+            if (!HasValue)
+                throw _requestFailedException;
         }
     }
 }

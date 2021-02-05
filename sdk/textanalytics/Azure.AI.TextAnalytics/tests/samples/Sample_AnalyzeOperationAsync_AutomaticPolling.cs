@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
                 RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
-                RecognizePiiEntityOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
+                RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
                 DisplayName = "AnalyzeOperationSample"
             };
 
@@ -55,59 +55,60 @@ namespace Azure.AI.TextAnalytics.Samples
 
             await operation.WaitForCompletionAsync(pollingInterval);
 
-            AnalyzeBatchActionsResult resultCollection = operation.Value;
-
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionsResults.ElementAt(0).Result;
-
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
-
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionsResults.ElementAt(0).Result;
-
-            Console.WriteLine("Recognized Entities");
-
-            foreach (RecognizeEntitiesResult result in entitiesResult)
+            await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
             {
-                Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+            RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.ElementAt(0).Result;
 
-                foreach (CategorizedEntity entity in result.Entities)
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
+
+            RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.ElementAt(0).Result;
+
+                Console.WriteLine("Recognized Entities");
+
+                foreach (RecognizeEntitiesResult result in entitiesResult)
                 {
-                    Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Category: {entity.Category}");
-                    Console.WriteLine($"    Offset: {entity.Offset}");
-                    Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                    Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+
+                    foreach (CategorizedEntity entity in result.Entities)
+                    {
+                        Console.WriteLine($"    Entity: {entity.Text}");
+                        Console.WriteLine($"    Category: {entity.Category}");
+                        Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+                        Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                    }
+                    Console.WriteLine("");
                 }
-                Console.WriteLine("");
-            }
 
-            Console.WriteLine("Recognized PII Entities");
+                Console.WriteLine("Recognized PII Entities");
 
-            foreach (RecognizePiiEntitiesResult result in piiResult)
-            {
-                Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
-
-                foreach (PiiEntity entity in result.Entities)
+                foreach (RecognizePiiEntitiesResult result in piiResult)
                 {
-                    Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Category: {entity.Category}");
-                    Console.WriteLine($"    Offset: {entity.Offset}");
-                    Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                    Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
+
+                    foreach (PiiEntity entity in result.Entities)
+                    {
+                        Console.WriteLine($"    Entity: {entity.Text}");
+                        Console.WriteLine($"    Category: {entity.Category}");
+                        Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+                        Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                    }
+                    Console.WriteLine("");
                 }
-                Console.WriteLine("");
-            }
 
-            Console.WriteLine("Key Phrases");
+                Console.WriteLine("Key Phrases");
 
-            foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
-            {
-                Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
-
-                foreach (string keyphrase in result.KeyPhrases)
+                foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
                 {
-                    Console.WriteLine($"    {keyphrase}");
+                    Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+
+                    foreach (string keyphrase in result.KeyPhrases)
+                    {
+                        Console.WriteLine($"    {keyphrase}");
+                    }
+                    Console.WriteLine("");
                 }
-                Console.WriteLine("");
             }
         }
 

@@ -40,9 +40,8 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="element">The JSON element to be deserialized into a QueryResult.</param>
         /// <param name="objectSerializer">The object serializer instance used to deserialize the items in the collection.</param>
-        /// <param name="defaultObjectSerializer">The out of the box object serializer to interact with the JsonElement (serialize/deserialize into and out of streams).</param>
         /// <returns>A collection of query results deserialized into type <typeparamref name="T"/>.</returns>
-        internal static QueryResult<T> DeserializeQueryResult(JsonElement element, ObjectSerializer objectSerializer, ObjectSerializer defaultObjectSerializer)
+        internal static QueryResult<T> DeserializeQueryResult(JsonElement element, ObjectSerializer objectSerializer)
         {
             IReadOnlyList<T> items = default;
             string continuationToken = default;
@@ -60,10 +59,7 @@ namespace Azure.DigitalTwins.Core
 
                     foreach (JsonElement item in property.Value.EnumerateArray())
                     {
-                        // defaultObjectSerializer of type JsonObjectSerializer needs to be used to serialize the JsonElement into a stream.
-                        // Using any other ObjectSerializer (e.g. NewtonsoftJsonObjectSerializer) won't be able to deserialize the JsonElement into
-                        // a MemoryStream correctly.
-                        using MemoryStream streamedObject = StreamHelper.WriteToStream(item, defaultObjectSerializer, default);
+                        using MemoryStream streamedObject = StreamHelper.WriteJsonElementToStream(item);
 
                         // To deserialize the stream object into the generic type of T, the provided ObjectSerializer will be used.
                         T obj = (T)objectSerializer.Deserialize(streamedObject, typeof(T), default);

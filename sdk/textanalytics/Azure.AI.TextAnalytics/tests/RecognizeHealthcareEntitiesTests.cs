@@ -58,6 +58,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
+            ValidateOperationProperties(operation);
+
             List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(1, resultInPages.Count);
 
@@ -94,9 +96,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(9, relatedEntity.Length);
                     Assert.AreEqual(27, relatedEntity.Offset);
                     Assert.AreEqual(1.0, relatedEntity.ConfidenceScore);
-
-                    // TODO - DosageOfMedication is not in relation types and is returned from the service. Need to add to swagger.
-                    //Assert.AreEqual(HealthcareEntityRelationType.DosageOfMedication, entity.RelatedEntities.ElementAt(0).Value);
+                    Assert.AreEqual(HealthcareEntityRelationType.DosageOfMedication, entity.RelatedEntities.FirstOrDefault().Value);
                 }
             }
         }
@@ -109,6 +109,8 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en");
 
             await operation.WaitForCompletionAsync(PollingInterval);
+
+            ValidateOperationProperties(operation);
 
             //Take the first page
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -137,6 +139,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
+            ValidateOperationProperties(operation);
+
             //Take the first page
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
@@ -158,6 +162,8 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments);
 
             await operation.WaitForCompletionAsync(PollingInterval);
+
+            ValidateOperationProperties(operation);
 
             //Take the first page
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -185,6 +191,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
+            ValidateOperationProperties(operation);
+
             //Take the first page
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
@@ -205,6 +213,8 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
 
             await operation.WaitForCompletionAsync(PollingInterval);
+
+            ValidateOperationProperties(operation);
 
             //Take the first page
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -231,6 +241,8 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
+
+            ValidateOperationProperties(operation);
 
             //Take the first page
             AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -296,6 +308,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
+
+            ValidateOperationProperties(operation);
 
             // try async
             //There most be 1 page
@@ -370,6 +384,17 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 Assert.IsNotNull(entitiesInDocument.Warnings);
                 ValidateInDocumenResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
+            }
+        }
+
+        private void ValidateOperationProperties(AnalyzeHealthcareEntitiesOperation operation)
+        {
+            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+
+            if (operation.ExpiresOn.HasValue)
+            {
+                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
             }
         }
     }

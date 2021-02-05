@@ -71,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             return async (QueueMessageDecodingFailedEventArgs args) =>
             {
-                // This event is raised only in async paths hence args.RunSynchronously is ignored.
+                // This event is raised only in async paths hence args.IsRunningSynchronously is ignored.
                 if (args.ReceivedMessage != null)
                 {
                     var queueClient = args.Queue;
