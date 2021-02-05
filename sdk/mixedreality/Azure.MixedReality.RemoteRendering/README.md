@@ -21,7 +21,7 @@ Install the Azure Mixed Reality ARR client library for .NET using one of the fol
 From Visual Studio Package Manager:
 
 ```powershell
-Install-Package Azure.MixedReality.RemoteRendering
+Install-Package Azure.MixedReality.RemoteRendering -AllowPrereleaseVersions
 ```
 
 From .NET CLI
