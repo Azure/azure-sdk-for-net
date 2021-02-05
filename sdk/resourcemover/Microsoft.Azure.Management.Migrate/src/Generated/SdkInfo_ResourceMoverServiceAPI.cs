@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resourcemover/resource-manager/readme.md --csharp --version=V2 --reflect-api-versions --csharp-sdks-folder=C:\\GithubRepo\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "ffc13ff87519f83e1c1ed2b44a1e0ac42f829f6b";
+      public static readonly String GithubCommidId = "7fd1f02a5ccdd088c6df561be0c36d2ff902a36d";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
