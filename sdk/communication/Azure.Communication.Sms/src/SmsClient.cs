@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Communication.Pipeline;
+using System.Linq;
 
 namespace Azure.Communication.Sms
 {
@@ -105,8 +106,17 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
         public virtual async Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            await Task.Yield();
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(from, nameof(from));
+            Argument.AssertNotNullOrEmpty(to, nameof(to));
+            AsyncPageable<SmsSendResult> allSmsSendResults = SendAsync(from, new[] { to }, message, options, cancellationToken);
+            Response response = null;
+            SmsSendResult result = null;
+            await foreach (Page<SmsSendResult> page in allSmsSendResults.AsPages(pageSizeHint: 1).ConfigureAwait(false))
+            {
+                response = page.GetRawResponse();
+                result = page.Values[0];
+            }
+            return Response.FromValue(result, response);
         }
 
         /// <summary>
@@ -123,13 +133,11 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
         public virtual Response<SmsSendResult> Send(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            /*Argument.AssertNotNullOrEmpty(from, nameof(from));
+            Argument.AssertNotNullOrEmpty(from, nameof(from));
             Argument.AssertNotNullOrEmpty(to, nameof(to));
-            Pageable<SendSmsResult> s = Send(from, new[] { to }, message, sendSmsOptions, cancellationToken);
-            SendSmsResult sendSMSResult = s.FirstOrDefault();
-
-            return Response.FromValue(sendSMSResult, s. );*/
-            throw new NotImplementedException();
+            Pageable<SmsSendResult> allSmsSendResults = Send(from, new[] { to }, message, options, cancellationToken);
+            SmsSendResult sendSMSResult = allSmsSendResults.FirstOrDefault();
+            return Response.FromValue(sendSMSResult, allSmsSendResults.AsPages().First().GetRawResponse());
         }
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
@@ -144,13 +152,13 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
         public virtual AsyncPageable<SmsSendResult> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            /*return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
+            return PageResponseEnumerator.CreateAsyncEnumerable(async nextLink =>
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<SendSmsResponse, SmsSendHeaders> responseWithHeaders = nextLink is null ?
+                    ResponseWithHeaders<SmsSendResponse, SmsSendHeaders> responseWithHeaders = nextLink is null ?
                         await RestClient.SendAsync(from, to, message, null, null, options, cancellationToken).ConfigureAwait(false)
                         : await RestClient.SendNextPageAsync(nextLink, from, to, message, null, null, options, cancellationToken).ConfigureAwait(false);
 
@@ -161,8 +169,7 @@ namespace Azure.Communication.Sms
                     scope.Failed(ex);
                     throw;
                 }
-            });*/
-            throw new NotImplementedException();
+            });
         }
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
@@ -177,13 +184,13 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
         public virtual Pageable<SmsSendResult> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            /*return PageResponseEnumerator.CreateEnumerable(nextLink =>
+            return PageResponseEnumerator.CreateEnumerable(nextLink =>
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<SendSmsResponse, SmsSendHeaders> responseWithHeaders = nextLink is null ?
+                    ResponseWithHeaders<SmsSendResponse, SmsSendHeaders> responseWithHeaders = nextLink is null ?
                         RestClient.Send(from, to, message, null, null, options, cancellationToken)
                         : RestClient.SendNextPage(nextLink, from, to, message, null, null, options, cancellationToken);
 
@@ -194,8 +201,7 @@ namespace Azure.Communication.Sms
                     scope.Failed(ex);
                     throw;
                 }
-            });*/
-            throw new NotImplementedException();
+            });
         }
 
         private static T AssertNotNull<T>(T argument, string argumentName)

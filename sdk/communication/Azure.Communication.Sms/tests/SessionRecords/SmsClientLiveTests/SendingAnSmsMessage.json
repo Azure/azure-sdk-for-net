@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/sms?api-version=2020-07-20-preview1",
+      "RequestUri": "https://sanitized.communication.azure.com/sms?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "52",
         "Content-Type": "application/json",
-        "Date": "Tue, 19 Jan 2021 18:32:09 GMT",
-        "traceparent": "00-4bb2883dcf98dd4a9a23eed5df0bb370-ea1f70b9d9c80247-00",
+        "Date": "Fri, 05 Feb 2021 00:35:58 GMT",
+        "traceparent": "00-d03cb4ee82eb2a44a09fac4e317c5e3e-65424beb942b1641-00",
         "User-Agent": [
-          "azsdk-net-Communication.Sms/1.0.0-alpha.20210119.1",
-          "(.NET 5.0.2; Microsoft Windows 10.0.18363)"
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20210204.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "502c14eada64473d9335b07c59ac6bf4",
         "x-ms-content-sha256": "Sanitized",
@@ -23,18 +23,71 @@
         "to": "Sanitized",
         "message": "Hi"
       },
-      "StatusCode": 200,
+      "StatusCode": 202,
       "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 18:32:09 GMT",
-        "MS-CV": "nswxyVraNEmPu2XVO60K2g.0",
+        "Date": "Fri, 05 Feb 2021 00:35:59 GMT",
+        "MS-CV": "zb8IWra2pEuGZZpzRtlOzA.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0qSUHYAAAAABLDvhq5wnwTrdBICdgOxkZWVZSMzBFREdFMDQxNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "561ms"
+        "X-Azure-Ref": "07pIcYAAAAABHR9iRdsR7Toe1ULdC8fGIRVdSMzBFREdFMDUxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "449ms"
       },
       "ResponseBody": {
-        "messageId": "Sanitized"
+        "value": [
+          {
+            "to": "Sanitized",
+            "messageId": "Sanitized",
+            "httpStatusCode": 202,
+            "errorMessage": null
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/sms?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "52",
+        "Content-Type": "application/json",
+        "Date": "Fri, 05 Feb 2021 00:35:59 GMT",
+        "traceparent": "00-feb23f63e8460a4bad35ce93e2192e45-266d334c5efad04d-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20210204.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "e378da25635d09e2a8bfd58cb52ca6f1",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "from": "Sanitized",
+        "to": "Sanitized",
+        "message": "Hi"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 05 Feb 2021 00:35:59 GMT",
+        "MS-CV": "Bh3LsQOmaEKGM7yQxl63BA.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "075IcYAAAAABov\u002B0JNrVTSKIFJmjyiYdhRVdSMzBFREdFMDUxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "290ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "to": "Sanitized",
+            "messageId": "Sanitized",
+            "httpStatusCode": 202,
+            "errorMessage": null
+          }
+        ]
       }
     }
   ],

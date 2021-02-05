@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/sms?api-version=2020-07-20-preview1",
+      "RequestUri": "https://sanitized.communication.azure.com/sms?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "52",
         "Content-Type": "application/json",
-        "Date": "Tue, 19 Jan 2021 18:32:10 GMT",
-        "traceparent": "00-9006d7a24e00244d991913b28ff08a2b-6b1518a0e3a0f248-00",
+        "Date": "Fri, 05 Feb 2021 00:36:02 GMT",
+        "traceparent": "00-29f18bdc88eb60448ccee50dba7860d1-e7d9e117ed0f6e47-00",
         "User-Agent": [
-          "azsdk-net-Communication.Sms/1.0.0-alpha.20210119.1",
-          "(.NET 5.0.2; Microsoft Windows 10.0.18363)"
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20210204.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "6d7c7f66152caa3a97bf9ae0aefca2b7",
         "x-ms-content-sha256": "Sanitized",
@@ -23,18 +23,26 @@
         "to": "Sanitized",
         "message": "Hi"
       },
-      "StatusCode": 200,
+      "StatusCode": 202,
       "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 18:32:10 GMT",
-        "MS-CV": "agzaG2yXxEijoZa/sDYCFQ.0",
+        "Date": "Fri, 05 Feb 2021 00:36:02 GMT",
+        "MS-CV": "MxvJB84GvEi28tgRoOEiAw.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0qiUHYAAAAACHJStMcynRT79NvQCCLNu9WVZSMzBFREdFMDQxNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "559ms"
+        "X-Azure-Ref": "08pIcYAAAAABdzC39qX4PR5wzhnsPQeXHRVdSMzBFREdFMDUxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "297ms"
       },
       "ResponseBody": {
-        "messageId": "Sanitized"
+        "value": [
+          {
+            "to": "Sanitized",
+            "messageId": "Sanitized",
+            "httpStatusCode": 202,
+            "errorMessage": null
+          }
+        ]
       }
     }
   ],

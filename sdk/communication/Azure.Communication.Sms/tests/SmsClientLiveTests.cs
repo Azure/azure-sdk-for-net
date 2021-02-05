@@ -30,11 +30,11 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 #region Snippet:Azure_Communication_Sms_Tests_SendAsync
-                SendSmsResponse result = await client.SendAsync(
+                SmsSendResult result = await client.SendAsync(
                    //@@ from: new PhoneNumber("+18001230000"), // Phone number acquired on your Azure Communication resource
                    //@@ to: new PhoneNumber("+18005670000"),
-                   /*@@*/ from: new PhoneNumberIdentifier(TestEnvironment.PhoneNumber),
-                   /*@@*/ to: new PhoneNumberIdentifier(TestEnvironment.PhoneNumber),
+                   /*@@*/ from: TestEnvironment.PhoneNumber,
+                   /*@@*/ to: TestEnvironment.PhoneNumber,
                    message: "Hi");
                 Console.WriteLine($"Sms id: {result.MessageId}");
                 #endregion Snippet:Azure_Communication_Sms_Tests_SendAsync
@@ -71,9 +71,9 @@ namespace Azure.Communication.Sms.Tests
 
             try
             {
-                SendSmsResponse result = await client.SendAsync(
-                   from: new PhoneNumberIdentifier(TestEnvironment.PhoneNumber),
-                   to: new PhoneNumberIdentifier(TestEnvironment.PhoneNumber),
+                SmsSendResult result = await client.SendAsync(
+                   from: TestEnvironment.PhoneNumber,
+                   to: TestEnvironment.PhoneNumber,
                    message: "Hi");
                 Console.WriteLine($"Sms id: {result.MessageId}");
                 Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
