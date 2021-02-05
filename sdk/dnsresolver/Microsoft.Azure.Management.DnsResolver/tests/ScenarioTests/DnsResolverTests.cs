@@ -9,6 +9,7 @@ namespace DnsResolver.Tests.ScenarioTests
     using FluentAssertions;
     using Microsoft.Azure.Management.DnsResolver;
     using Microsoft.Azure.Management.DnsResolver.Models;
+    using Microsoft.Azure.Management.DnsResolver.Tests.Extensions.Assertions;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.Azure;
     using System;
@@ -31,19 +32,14 @@ namespace DnsResolver.Tests.ScenarioTests
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
             var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
 
-            var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
+            DnsResolverModel createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: dnsResolverName,
                 parameters: dnsResolver);
 
-            createdDnsResolver.Should().NotBeNull();
-            createdDnsResolver.Name.Should().Be(dnsResolverName);
+            createdDnsResolver.Should().BeSuccessfullyCreated();
             createdDnsResolver.Tags.Should().BeNull();
-            createdDnsResolver.Location.Should().Be(Constants.DnsResolverLocation);
-            createdDnsResolver.Etag.Should().NotBeNullOrEmpty();
-            createdDnsResolver.VirtualNetwork.Id.Should().Be(dnsResolver.VirtualNetwork.Id);
             createdDnsResolver.NumberOfInboundEndpoints.Should().Be(0);
-            createdDnsResolver.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
         }
 
         [Fact]
@@ -59,8 +55,7 @@ namespace DnsResolver.Tests.ScenarioTests
                 dnsResolverName: dnsResolverName,
                 parameters: dnsResolver);
 
-            createdDnsResolver.Should().NotBeNull();
-            createdDnsResolver.Tags.Should().NotBeNull().And.BeEquivalentTo(dnsResolverTags);
+            createdDnsResolver.Should().BeSuccessfullyCreated();
         }
 
         [Fact]
@@ -82,7 +77,7 @@ namespace DnsResolver.Tests.ScenarioTests
 
 
         [Fact]
-        public void PutDnsResolver_VirtualNetworkAttachedToAnotherVirtualNetwork_ResolvereNotExists_ExpectConflict()
+        public void PutDnsResolver_VirtualNetworkIsUsedElsewhere_ExpectConflict()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
@@ -162,13 +157,13 @@ namespace DnsResolver.Tests.ScenarioTests
             var secondDnsResolver = TestDataGenerator.GenerateDnsResolverWithoutVirtualNetwork(location: Constants.DnsResolverLocation);
             secondDnsResolver.VirtualNetwork = firstdnsResolver.VirtualNetwork;
 
-            Action createSecondDnsResolver = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
+            Action createSecondDnsResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: dnsResolverName,
                 parameters: secondDnsResolver);
 
-            createSecondDnsResolver.Should().NotBeNull();
-            createSecondDnsResolver.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            createSecondDnsResolverAction.Should().NotBeNull();
+            createSecondDnsResolverAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.Conflict);
         }
 
         [Fact]
@@ -191,8 +186,7 @@ namespace DnsResolver.Tests.ScenarioTests
                 parameters: dnsResolver,
                 ifMatch: ifMatch);
 
-            updatedDnsResolver.Should().NotBeNull();
-            updatedDnsResolver.Tags.Should().BeEquivalentTo(tagsForUpdate);
+            updatedDnsResolver.Should().BeSuccessfullyUpdatedWithExpectedTags(previous: createdDnsResolver, expectedTags: tagsForUpdate);
         }
 
         [Fact]
@@ -206,33 +200,38 @@ namespace DnsResolver.Tests.ScenarioTests
                  dnsResolverName: dnsResolverName,
                  parameters: dnsResolver);
 
-            var addedTags = TestDataGenerator.GenerateTags();
-            dnsResolver.Tags = addedTags;
+            var tagsForUpdate = TestDataGenerator.GenerateTags();
+            dnsResolver.Tags = tagsForUpdate;
             var updatedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
                 parameters: dnsResolver,
                 ifMatch: createdDnsResolver.Etag);
 
-            updatedDnsResolver.Should().NotBeNull();
-            updatedDnsResolver.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
-            updatedDnsResolver.Tags.Should().BeEquivalentTo(addedTags);
+            updatedDnsResolver.Should().BeSuccessfullyUpdatedWithExpectedTags(previous: createdDnsResolver, expectedTags: tagsForUpdate);
         }
 
         [Fact]
-        public void PutDnsResolver_ResolverExistsIfMatchFailure_ExpectFailure()
+        public void PutDnsResolver_ResolverExistsIfMatchFailure_ExpectFailureAndResolverUnchanged()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
-
+            var dnsResolverForUpdate = createdDnsResolver;
+            dnsResolverForUpdate.Tags = TestDataGenerator.GenerateTags();
             Action updateDnsResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
-                dnsResolverName: createdDnsResolver.Name,
-                parameters: createdDnsResolver, 
+                dnsResolverName: dnsResolverForUpdate.Name,
+                parameters: dnsResolverForUpdate, 
                 ifMatch: TestDataGenerator.GetRandomString(10));
 
             updateDnsResolverAction.Should().NotBeNull();
             updateDnsResolverAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.PreconditionFailed);
+
+            var retrievedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.Get(
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name);
+
+            retrievedDnsResolver.Tags.Should().BeNull();
         }
 
         [Fact]
@@ -245,16 +244,15 @@ namespace DnsResolver.Tests.ScenarioTests
                  resourceGroupName: resourceGroupName,
                  dnsResolverName: dnsResolverName,
                  parameters: dnsResolver);
-            var addedTags = TestDataGenerator.GenerateTags();
-            dnsResolver.Tags = addedTags;
+            var tagsForUpdate = TestDataGenerator.GenerateTags();
+            dnsResolver.Tags = tagsForUpdate;
 
             var updatedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
                 parameters: dnsResolver);
 
-            updatedDnsResolver.Should().NotBeNull();
-            updatedDnsResolver.Tags.Should().NotBeNull().And.BeEquivalentTo(addedTags);
+            updatedDnsResolver.Should().BeSuccessfullyUpdatedWithExpectedTags(previous: createdDnsResolver, expectedTags: tagsForUpdate);
         }
 
         [Fact]
@@ -263,41 +261,40 @@ namespace DnsResolver.Tests.ScenarioTests
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
             var dnsResolver = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
+            dnsResolver.Tags = TestDataGenerator.GenerateTags();
             var createdDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                  resourceGroupName: resourceGroupName,
                  dnsResolverName: dnsResolverName,
                  parameters: dnsResolver);
-            var updatedDnsResolverTags = TestDataGenerator.GenerateTags(startFrom: dnsResolver.Tags.Count);
-            dnsResolver.Tags = updatedDnsResolverTags;
+            var tagsForUpdate = TestDataGenerator.GenerateTags(startFrom: dnsResolver.Tags.Count);
+            dnsResolver.Tags = tagsForUpdate;
 
             var updatedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
                 parameters: dnsResolver);
 
-            updatedDnsResolver.Should().NotBeNull();
-            updatedDnsResolver.Tags.Should().NotBeNull().And.BeEquivalentTo(updatedDnsResolverTags);
+            updatedDnsResolver.Should().BeSuccessfullyUpdatedWithExpectedTags(previous: createdDnsResolver, expectedTags: tagsForUpdate);
         }
 
-
         [Fact]
-        public void PutDnsResolver_ResolverExists_ExpectConflicts()
+        public void PutDnsResolver_ResolverExistsUpdateVirtualNetwork_ExpectConflicts()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var existingDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
-            var dnsResolverForCreation = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
+            var dnsResolverForUpdate = GenerateDnsResolverWithNewlyCreatedVirtualNetwork(location: Constants.DnsResolverLocation, resourceGroupName: resourceGroupName);
 
-            Action createDnsResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
+            Action updateDnsResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: existingDnsResolver.Name,
-                parameters: dnsResolverForCreation);
+                parameters: dnsResolverForUpdate);
 
-            createDnsResolverAction.Should().NotBeNull();
-            createDnsResolverAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            updateDnsResolverAction.Should().NotBeNull();
+            updateDnsResolverAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.Conflict);
         }
  
         [Fact]
-        public void PutDnsResolver_ResolverNotExistsIfNoneMatchSuccess_ExpectResolvereCreated()
+        public void PutDnsResolver_ResolverNotExistsIfNoneMatchSuccess_ExpectResolverCreated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
@@ -310,8 +307,7 @@ namespace DnsResolver.Tests.ScenarioTests
                 parameters: dnsResolverForCreation,
                 ifNoneMatch: ifNoneMatch);
 
-            createdDnsResolver.Should().NotBeNull();
-            createdDnsResolver.ProvisioningState.Should().BeEquivalentTo(Constants.ProvisioningStateSucceeded.ToString());
+            createdDnsResolver.Should().BeSuccessfullyCreated();
         }
 
         [Fact]
@@ -324,8 +320,8 @@ namespace DnsResolver.Tests.ScenarioTests
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name);
 
-            retrievedDnsResolver.Should().NotBeNull();
-            retrievedDnsResolver.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
+            retrievedDnsResolver.Should().BeSuccessfullyCreated();
+            retrievedDnsResolver.Should().BeSameAsExpected(createdDnsResolver);
         }
 
         [Fact]
@@ -343,7 +339,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListDnsResolversByVirtualNetwork_ValidVirtualNetworkAttachedToResolver_ExpectResolverRetrieved()
+        public void ListDnsResolversByVirtualNetwork_VirtualNetworkAttachedToResolver_ExpectResolverRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
@@ -383,9 +379,10 @@ namespace DnsResolver.Tests.ScenarioTests
         public void ListDnsResolversInSubscription_MultipleResolversPresentWithTop_ExpectResolverRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
-            var numDnsResolvers = TestDataGenerator.GenerateInteger(2, 10);
+            var numDnsResolvers = 2;
             var topValue = numDnsResolvers - 1;
             var createdDnsResolvers = this.CreateDnsResolvers(resourceGroupName, numDnsResolvers: numDnsResolvers);
+            var expectedResolver = createdDnsResolvers.OrderBy(x => x.Name).Take(topValue);
 
             var listResult = this.DnsResolverManagementClient.DnsResolvers.List(
                 top: topValue);
@@ -394,6 +391,7 @@ namespace DnsResolver.Tests.ScenarioTests
             listResult.NextPageLink.Should().NotBeNullOrEmpty();
             var listedDnsResolvers = listResult.ToArray();
             listedDnsResolvers.Count().Should().Be(topValue);
+            listedDnsResolvers.All(resolver => ValidateListedResolverIsExpected(resolver, expectedResolver));
         }
 
         [Fact]
@@ -516,21 +514,19 @@ namespace DnsResolver.Tests.ScenarioTests
         public void PatchDnsResolver_ResolverExistsEmptyRequest_ExpectSuccess()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
-            var dnsResolverName = TestDataGenerator.GenerateDnsResolverName();
-            var dnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
+            var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
 
             var updatedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.Update(
                 resourceGroupName: resourceGroupName,
-                dnsResolverName: dnsResolver.Name,
-                parameters: dnsResolver
+                dnsResolverName: createdDnsResolver.Name,
+                parameters: createdDnsResolver
                 );
 
-            updatedDnsResolver.Should().NotBeNull();
-            updatedDnsResolver.ProvisioningState.Should().BeEquivalentTo(Constants.ProvisioningStateSucceeded);
+            updatedDnsResolver.Should().BeSuccessfullyUpdatedWithExpectedTags(previous: createdDnsResolver, expectedTags: null);
         }
 
         [Fact]
-        public void PatchDnsResolver_ResolveExistsAddTags_ExpectSuccess()
+        public void PatchDnsResolver_ResolverExistsAddTags_ExpectSuccess()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName, tags: null);
@@ -542,9 +538,7 @@ namespace DnsResolver.Tests.ScenarioTests
                 dnsResolverName: createdDnsResolver.Name,
                 parameters: createdDnsResolver);
 
-            updatedDnsResolver.Should().NotBeNull();
-            updatedDnsResolver.ProvisioningState.Should().BeEquivalentTo(Constants.ProvisioningStateSucceeded);
-            updatedDnsResolver.Tags.Should().BeEquivalentTo(tagsForUpdate);
+            updatedDnsResolver.Should().BeSuccessfullyUpdatedWithExpectedTags(previous: createdDnsResolver, expectedTags: tagsForUpdate);
         }
 
         [Fact]
@@ -560,9 +554,7 @@ namespace DnsResolver.Tests.ScenarioTests
                 dnsResolverName: createdDnsResolver.Name,
                 parameters: createdDnsResolver);
 
-            updatedDnsResolver.Should().NotBeNull();
-            updatedDnsResolver.ProvisioningState.Should().BeEquivalentTo(Constants.ProvisioningStateSucceeded);
-            updatedDnsResolver.Tags.Should().BeEquivalentTo(tagsForUpdate);
+            updatedDnsResolver.Should().BeSuccessfullyUpdatedWithExpectedTags(previous: createdDnsResolver, expectedTags: tagsForUpdate);
         }
 
         [Fact]
@@ -577,9 +569,7 @@ namespace DnsResolver.Tests.ScenarioTests
                 dnsResolverName: createdDnsResolver.Name,
                 parameters: createdDnsResolver);
 
-            updatedDnsResolver.Should().NotBeNull();
-            updatedDnsResolver.ProvisioningState.Should().BeEquivalentTo(Constants.ProvisioningStateSucceeded);
-            updatedDnsResolver.Tags.Should().BeEmpty();
+            updatedDnsResolver.Should().BeSuccessfullyUpdatedWithExpectedTags(previous: createdDnsResolver, expectedTags: null);
         }
 
         [Fact]
@@ -592,6 +582,7 @@ namespace DnsResolver.Tests.ScenarioTests
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: dnsResolverName);
 
+            deleteDnsResolverAction.Should().NotBeNull();
             deleteDnsResolverAction.Should().NotThrow();
         }
 
@@ -606,11 +597,60 @@ namespace DnsResolver.Tests.ScenarioTests
                 dnsResolverName: createdDnsResolver.Name);
 
             deleteResolverAction.Should().NotThrow();
+            Action getResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.Get(
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name);
+
+            getResolverAction.Should().NotBeNull();
+            getResolverAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public void DeleteDnsResolver_ResolverExistsIfMatchSuccess_ExpectDeleted()
+        {
+            var resourceGroupName = this.CreateResourceGroup().Name;
+            var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
+
+            Action deleteResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.Delete(
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name,
+                ifMatch: createdDnsResolver.Etag);
+
+            deleteResolverAction.Should().NotThrow();
+            Action getResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.Get(
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name);
+
+            getResolverAction.Should().NotBeNull();
+            getResolverAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public void DeleteDnsResolver_ResolverExistsIfMatchFailure_ExpectFailureAndResolverUnchanged()
+        {
+            var resourceGroupName = this.CreateResourceGroup().Name;
+            var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
+
+            Action deleteResolverAction = () => this.DnsResolverManagementClient.DnsResolvers.Delete(
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name,
+                ifMatch: TestDataGenerator.GetRandomString(10));
+
+            deleteResolverAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.PreconditionFailed);
+
+            var retrievedDnsResolver = this.DnsResolverManagementClient.DnsResolvers.Get(
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name);
+
+            retrievedDnsResolver.Should().BeSameAsExpected(createdDnsResolver);
         }
 
         private static bool ValidateListedResolverIsExpected(DnsResolverModel listedResolver, IEnumerable<DnsResolverModel> expectedResolvers)
         {
-            return expectedResolvers.Any(expectedResolver => string.Equals(expectedResolver.Id, listedResolver.Id, StringComparison.OrdinalIgnoreCase));
+            return expectedResolvers.Any(expectedResolver => string.Equals(expectedResolver.Id, listedResolver.Id, StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(expectedResolver.Name, listedResolver.Name, StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(expectedResolver.ResourceGuid, listedResolver.ResourceGuid, StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(expectedResolver.VirtualNetwork.Id, listedResolver.VirtualNetwork.Id, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

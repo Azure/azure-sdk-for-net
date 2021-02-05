@@ -26,7 +26,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PutInboundEndpoint_InboundEndpointNotExistsWithIpConfigurationsNoMetadata_ExpectInboundEndpointCreated()
+        public void PutInboundEndpoint_EndpointNotExistsWithIpConfigurationsNoMetadata_ExpectEndpointCreated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -56,7 +56,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PutInboundEndpoint_InboundEndpointNotExistsWithIpConfigurationsAndMetadata_ExpectInboundEndpointCreated()
+        public void PutInboundEndpoint_EndpointNotExistsWithIpConfigurationsAndMetadata_ExpectInboundEndpointCreated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -66,8 +66,7 @@ namespace DnsResolver.Tests.ScenarioTests
 
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(resourceGroupName: resourceGroupName, dnsResolverName: createdDnsResolver.Name, inboundEndpointName: inboundEndpointName, ipConfigurations: ipConfigurations, metadata: metadata);
 
-            createdInboundEndpoint.Name.Should().Be(inboundEndpointName);
-            createdInboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
+            createdInboundEndpoint.Should().BeSuccessfullyCreated();
             createdInboundEndpoint.Metadata.Should().NotBeNull();
             createdInboundEndpoint.Metadata.Should().BeEquivalentTo(metadata);
             createdInboundEndpoint.IpConfigurations.Should().NotBeNull();
@@ -75,18 +74,17 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PutInboundEndpoint_InboundEndpointNotExistsWithMultipleIpConfigurationsAndMetadata_ExpectInboundEndpointCreated()
+        public void PutInboundEndpoint_MultipleIpConfigurationsMetadata_ExpectEndpointCreated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
-            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(count:2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+            var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(count: 2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var metadata = TestDataGenerator.GenerateTags();
 
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(resourceGroupName: resourceGroupName, dnsResolverName: createdDnsResolver.Name, inboundEndpointName: inboundEndpointName, ipConfigurations: ipConfigurations, metadata: metadata);
 
-            createdInboundEndpoint.Name.Should().Be(inboundEndpointName);
-            createdInboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
+            createdInboundEndpoint.Should().BeSuccessfullyCreated();
             createdInboundEndpoint.Metadata.Should().NotBeNull();
             createdInboundEndpoint.Metadata.Should().BeEquivalentTo(metadata);
             createdInboundEndpoint.IpConfigurations.Should().NotBeNull();
@@ -94,15 +92,15 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PutInboundEndpoint_InboundEndpointNotExistsNoIpConfigurations_ExpectFailure()
+        public void PutInboundEndpoint_EndpointNotExistsNoIpConfigurations_ExpectFailure()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
 
             Action putInboundEndpointAction = () => this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
-                resourceGroupName: resourceGroupName, 
-                dnsResolverName: createdDnsResolver.Name, 
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name,
                 inboundEndpointName: inboundEndpointName);
 
             putInboundEndpointAction.Should().NotBeNull();
@@ -110,7 +108,28 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PutInboundEndpoint_IfNoneMatchSuccess_ExpectInboundEndpointCreated()
+        public void PutInboundEndpoint_EndpointExistsUpdateIpConfigurations_ExpectSuccess()
+        {
+            var resourceGroupName = this.CreateResourceGroup().Name;
+            var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
+            var createdInboundEndpoint = this.CreateInboundEndpoint(createdDnsResolver: createdDnsResolver, resourceGroupName: resourceGroupName);
+            var ipConfigurationsForUpdate = TestDataGenerator.GenerateRandomIpConfigurations(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
+
+            var updatedInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name,
+                inboundEndpointName: createdInboundEndpoint.Name,
+                ipConfigurations: ipConfigurationsForUpdate);
+
+            updatedInboundEndpoint.Name.Should().Be(createdInboundEndpoint.Name);
+            updatedInboundEndpoint.ProvisioningState.Should().Be(createdDnsResolver.ProvisioningState);
+            updatedInboundEndpoint.Metadata.Should().BeNull();
+            updatedInboundEndpoint.IpConfigurations.All(ipConfiguration => ValidateIpConfigurationIsExpected(ipConfiguration, ipConfigurationsForUpdate));
+
+        }
+
+        [Fact]
+        public void PutInboundEndpoint_IfNoneMatchSuccess_ExpectEndpointCreated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -118,29 +137,28 @@ namespace DnsResolver.Tests.ScenarioTests
             var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
 
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
-                resourceGroupName: resourceGroupName, 
-                dnsResolverName: createdDnsResolver.Name, 
-                inboundEndpointName: inboundEndpointName, 
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name,
+                inboundEndpointName: inboundEndpointName,
                 ifNoneMatch: "*",
                 ipConfigurations: ipConfigurations);
 
-            createdInboundEndpoint.Name.Should().Be(inboundEndpointName);
-            createdInboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
+            createdInboundEndpoint.Should().BeSuccessfullyCreated();
             createdInboundEndpoint.Metadata.Should().BeNull();
             createdInboundEndpoint.IpConfigurations.All(ipConfiguration => ValidateIpConfigurationIsExpected(ipConfiguration, ipConfigurations));
         }
 
         [Fact]
-        public void PutInboundEndpoint_InboundEndpointExistsWithAddMetadata_ExpectInboundEndpointUpdated()
+        public void PutInboundEndpoint_EndpointExistsWithAddMetadata_ExpectEndpointUpdated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var inboundEndpointName = TestDataGenerator.GenerateInboundEndpointName();
             var ipConfigurations = TestDataGenerator.GenerateRandomIpConfigurations(count: 2, subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName, virtualNetworkName: ExtractArmResourceName(createdDnsResolver.VirtualNetwork.Id));
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
-                resourceGroupName: resourceGroupName, 
-                dnsResolverName: createdDnsResolver.Name, 
-                inboundEndpointName: inboundEndpointName, 
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name,
+                inboundEndpointName: inboundEndpointName,
                 ipConfigurations: ipConfigurations);
             var metadata = TestDataGenerator.GenerateTags();
 
@@ -158,7 +176,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PutInboundEndpoint_InboundEndpointExistsIfMatchSuccess_ExpectInboundEndpointUpdated()
+        public void PutInboundEndpoint_EndpointExistsIfMatchSuccess_ExpectEndpointUpdated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -169,9 +187,9 @@ namespace DnsResolver.Tests.ScenarioTests
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
                 inboundEndpointName: inboundEndpointName,
-                ipConfigurations: ipConfigurations, 
+                ipConfigurations: ipConfigurations,
                 metadata: metadata);
-            
+
 
             var updatedInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
@@ -188,7 +206,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PutInboundEndpoint_InboundEndpointExistsIfMatchFailure_ExpectFailure()
+        public void PutInboundEndpoint_EndpointExistsIfMatchFailure_ExpectFailure()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -216,7 +234,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PatchInboundEndpoint_AddMetadata_ExpectInboundEndpointUpdated()
+        public void PatchInboundEndpoint_AddMetadata_ExpectEndpointUpdated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -243,7 +261,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PatchInboundEndpoint_InboundEndpointExistsIfMatchSuccessRemoveMetadata_ExpectInboundEndpointUpdated()
+        public void PatchInboundEndpoint_ndpointExistsIfMatchSuccessRemoveMetadata_ExpectEndpointUpdated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -257,7 +275,6 @@ namespace DnsResolver.Tests.ScenarioTests
                 ipConfigurations: ipConfigurations,
                 metadata: metadata);
 
-
             var updatedInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.Update(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
@@ -268,12 +285,12 @@ namespace DnsResolver.Tests.ScenarioTests
 
             updatedInboundEndpoint.Name.Should().Be(inboundEndpointName);
             updatedInboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
-            updatedInboundEndpoint.Etag.Should().NotBe(updatedInboundEndpoint.Etag);
+            updatedInboundEndpoint.Etag.Should().NotBe(createdInboundEndpoint.Etag);
             updatedInboundEndpoint.Metadata.Should().BeEmpty();
         }
 
         [Fact]
-        public void PatchInboundEndpoint_InboundEndpointNotExists_ExpectError()
+        public void PatchInboundEndpoint_EndpointNotExists_ExpectError()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -310,12 +327,11 @@ namespace DnsResolver.Tests.ScenarioTests
                 ipConfigurations: ipConfigurations,
                 metadata: metadata);
 
-            updatedDnsResolver.Should().NotBeNull();
-            updatedDnsResolver.ProvisioningState.Should().BeEquivalentTo(Constants.ProvisioningStateSucceeded);
+            updatedDnsResolver.Should().BeSameAsExpected(createdInboundEndpoint);
         }
 
         [Fact]
-        public void GetInboundEndpoint_InboundEndpointExists_ExpectInboundEndpointRetrieved()
+        public void GetInboundEndpoint_EndpointExists_ExpecEndpointRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -331,7 +347,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void GetListInboundEndpoint_InboundEndpointNotExists_ExpectNotFoundError()
+        public void GetListInboundEndpoint_EndpointNotExists_ExpectNotFoundError()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -345,7 +361,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListInboundEndpointsInResourceGroup_MultipleInboundEndpointsPresent_ExpectMultipleInboundEndpointsRetrieved() 
+        public void ListInboundEndpointsInResourceGroup_MultipleEndpointsPresent_ExpectMultipleEndpointsRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -359,7 +375,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListInboundEndpointsInResourceGroup_WithTopParameter_ExpectSpecifiedInboundEndpointsRetrieved()
+        public void ListInboundEndpointsInResourceGroup_WithTopParameter_ExpectSpecifiedEndpointsRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -370,7 +386,7 @@ namespace DnsResolver.Tests.ScenarioTests
 
             var listResult = this.DnsResolverManagementClient.InboundEndpoints.List(
                 resourceGroupName: resourceGroupName,
-                dnsResolverName: createdDnsResolver.Name, 
+                dnsResolverName: createdDnsResolver.Name,
                 top: top);
 
             var listedInboundEndpoints = listResult.ToArray();
@@ -379,7 +395,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListInboundEndpointsInResourceGroup_ListNextPage_ExpectNextInboundEndpointsRetrieved()
+        public void ListInboundEndpointsInResourceGroup_ListNextPage_ExpectNextEndpointsRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -402,7 +418,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void ListInboundEndpointsInResourceGroup_NoInboundEndpointPresents_ExpectNoInboundEndpointRetrieved()
+        public void ListInboundEndpointsInResourceGroup_NoEndpointPresents_ExpectNoEndpointRetrieved()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -416,15 +432,15 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void DeleteInboundEndpoint_InboundEndpointExists_ExpectInboundEndpointDeleted()
+        public void DeleteInboundEndpoint_EndpointExists_ExpectEndpointDeleted()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
             var creatednboundEndpoint = this.CreateInboundEndpoint(createdDnsResolver: createdDnsResolver, resourceGroupName: resourceGroupName);
 
             this.DnsResolverManagementClient.InboundEndpoints.Delete(
-                resourceGroupName: resourceGroupName, 
-                dnsResolverName: createdDnsResolver.Name, 
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name,
                 inboundEndpointName: creatednboundEndpoint.Name);
 
             var listResult = this.DnsResolverManagementClient.InboundEndpoints.List(
@@ -436,7 +452,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void DeleteInboundEndpoint_InboundEndpointExistsIfMatchSuccess_ExpectInboundEndpointDeleted()
+        public void DeleteInboundEndpoint_EndpointExistsIfMatchSuccess_ExpectEndpointDeleted()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -445,7 +461,7 @@ namespace DnsResolver.Tests.ScenarioTests
             this.DnsResolverManagementClient.InboundEndpoints.Delete(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
-                inboundEndpointName: creatednboundEndpoint.Name, 
+                inboundEndpointName: creatednboundEndpoint.Name,
                 ifMatch: creatednboundEndpoint.Etag);
 
             var listResult = this.DnsResolverManagementClient.InboundEndpoints.List(
@@ -453,11 +469,11 @@ namespace DnsResolver.Tests.ScenarioTests
                 dnsResolverName: createdDnsResolver.Name);
 
             listResult.Should().NotBeNull();
-            listResult.Count().Should().Be(0);
+            listResult.Should().BeEmpty();
         }
 
         [Fact]
-        public void DeleteInboundEndpoint_InboundEndpointExistsIfMatchFailure_ExpectError()
+        public void DeleteInboundEndpoint_EndpointExistsIfMatchFailure_ExpectError()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -471,16 +487,17 @@ namespace DnsResolver.Tests.ScenarioTests
 
             deleteInboundEndpointAction.Should().NotBeNull();
             deleteInboundEndpointAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.PreconditionFailed);
-            var listResult = this.DnsResolverManagementClient.InboundEndpoints.List(
+            var retrievedInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.Get(
                 resourceGroupName: resourceGroupName,
-                dnsResolverName: createdDnsResolver.Name);
-            listResult.Should().NotBeNull();
-            listResult.Count().Should().Be(1);
+                dnsResolverName: createdDnsResolver.Name,
+                inboundEndpointName: creatednboundEndpoint.Name);
+
+            retrievedInboundEndpoint.Should().BeSameAsExpected(creatednboundEndpoint);
         }
 
 
         [Fact]
-        public void DeleteInboundEndpoint_InboundEndpointNotExists_ExpectNotFoundError()
+        public void DeleteInboundEndpoint_EndpointNotExists_ExpectNoError()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -488,18 +505,53 @@ namespace DnsResolver.Tests.ScenarioTests
 
             Action deleteInboundEndpointAction = () => this.DnsResolverManagementClient.InboundEndpoints.Delete(
                 resourceGroupName: resourceGroupName,
-                dnsResolverName: createdDnsResolver.Name, 
+                dnsResolverName: createdDnsResolver.Name,
                 inboundEndpointName: inboundEndpointName);
 
             deleteInboundEndpointAction.Should().NotBeNull();
-            deleteInboundEndpointAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            deleteInboundEndpointAction.Should().NotThrow();
+
+            var listResult = this.DnsResolverManagementClient.InboundEndpoints.List(
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name);
+
+            listResult.Should().NotBeNull();
+            listResult.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void DeleteInboundEndpoint_MultipleEndpointsPresentDeleteOne_ExpectOneEndpointDeleted()
+        {
+            var resourceGroupName = this.CreateResourceGroup().Name;
+            var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
+            var numInboundEndpoints = 2;
+            var createdInboundEndpoints = this.CreateInboundEndpoints(createdDnsResolver, resourceGroupName: resourceGroupName, numInboundEndpoints: numInboundEndpoints);
+            var orderedInboundEndpoints = createdInboundEndpoints.OrderBy(x => x.Name);
+            var inboundEndpointForDeletion = orderedInboundEndpoints.First();
+            var expectedInboundEndpoints = orderedInboundEndpoints.Skip(1);
+
+            Action deleteInboundEndpointAction = () => this.DnsResolverManagementClient.InboundEndpoints.Delete(
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name,
+                inboundEndpointName: inboundEndpointForDeletion.Name);
+
+            deleteInboundEndpointAction.Should().NotBeNull();
+            deleteInboundEndpointAction.Should().NotThrow();
+
+            var listResult = this.DnsResolverManagementClient.InboundEndpoints.List(
+                resourceGroupName: resourceGroupName,
+                dnsResolverName: createdDnsResolver.Name);
+
+            listResult.Should().NotBeNull();
+            listResult.Count().Should().Be(1);
+            listResult.All(inboundEndpoint => ValidateInboundEndpointIsExpected(inboundEndpoint, expectedInboundEndpoints));
         }
 
 
         private static bool ValidateIpConfigurationIsExpected(IpConfiguration ipConfigurationForValidation, IEnumerable<IpConfiguration> expectedIpConfigurations)
         {
             return expectedIpConfigurations.Any(
-                expectedIpConfiguration => string.Equals(expectedIpConfiguration.Subnet.Id, ipConfigurationForValidation.Subnet.Id, StringComparison.OrdinalIgnoreCase) && 
+                expectedIpConfiguration => string.Equals(expectedIpConfiguration.Subnet.Id, ipConfigurationForValidation.Subnet.Id, StringComparison.OrdinalIgnoreCase) &&
                 string.Equals(expectedIpConfiguration.PrivateIpAllocationMethod, ipConfigurationForValidation.PrivateIpAllocationMethod, StringComparison.OrdinalIgnoreCase) &&
                 string.Equals(expectedIpConfiguration.PrivateIpAddress, ipConfigurationForValidation.PrivateIpAddress, StringComparison.OrdinalIgnoreCase));
         }
@@ -510,7 +562,6 @@ namespace DnsResolver.Tests.ScenarioTests
                 expectedInboundEndpoint => string.Equals(expectedInboundEndpoint.Id, inboundEndpointForValidation.Id, StringComparison.OrdinalIgnoreCase) &&
                 string.Equals(expectedInboundEndpoint.Name, inboundEndpointForValidation.Name, StringComparison.OrdinalIgnoreCase));
         }
-
     }
 }
 

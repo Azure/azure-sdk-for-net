@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DnsResolver</PackageId>
 		<Description>Provides management capabilities for Azure DNS Resolver.</Description>
-		<Version>1.0.0</Version>
+		<Version>1.0.0-beta.1</Version>
 		<AssemblyName>Microsoft.Azure.Management.DnsResolver</AssemblyName>
 		<PackageTags>Microsoft Azure DNS Resolver;DNS Resolver</PackageTags>
 		<PackageReleaseNotes>

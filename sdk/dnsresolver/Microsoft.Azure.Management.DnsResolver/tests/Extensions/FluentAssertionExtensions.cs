@@ -15,5 +15,10 @@ namespace Microsoft.Azure.Management.DnsResolver.Tests.Extensions.Assertions
         {
             return new InboundEndpointAssertions(inboundEndpoint);
         }
+
+        public static DnsResolverModelAssertions Should(this DnsResolverModel dnsResolverModel)
+        {
+            return new DnsResolverModelAssertions(dnsResolverModel);
+        }
     }
 }

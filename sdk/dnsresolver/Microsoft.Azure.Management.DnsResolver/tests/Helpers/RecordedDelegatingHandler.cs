@@ -12,6 +12,9 @@ namespace DnsResolver.Tests.Helpers
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Handler records test suite's HTTP interactions.
+    /// </summary>
     public class RecordedDelegatingHandler : DelegatingHandler
     {
         private readonly HttpResponseMessage _response;
@@ -45,6 +48,12 @@ namespace DnsResolver.Tests.Helpers
 
         public bool IsPassThrough { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
             System.Threading.CancellationToken cancellationToken)
@@ -88,7 +97,7 @@ namespace DnsResolver.Tests.Helpers
 
                     return new HttpResponseMessage(statusCode)
                     {
-                        Content = new StringContent(""),
+                        Content = new StringContent(string.Empty),
                     };
                 }
             }

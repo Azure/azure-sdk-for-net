@@ -20,11 +20,6 @@ namespace Microsoft.Azure.Management.DnsResolver.Tests.Assertions
 
         protected override string Identifier => nameof(InboundEndpoint);
 
-        public AndConstraint<InboundEndpointAssertions> BeModifiedAfter(InboundEndpoint originalInboundEndpoint)
-        {
-            return new AndConstraint<InboundEndpointAssertions>(this);
-        }
-
         public AndConstraint<InboundEndpointAssertions> BeSuccessfullyCreated()
         {
             var inboundEndpoint = this.Subject;
@@ -33,6 +28,16 @@ namespace Microsoft.Azure.Management.DnsResolver.Tests.Assertions
             inboundEndpoint.Etag.Should().NotBeNullOrEmpty();
             inboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
 
+            return new AndConstraint<InboundEndpointAssertions>(this);
+        }
+
+        public AndConstraint<InboundEndpointAssertions> BeSameAsExpected(InboundEndpoint expected)
+        {
+            var InboundEndpoint = this.Subject;
+            InboundEndpoint.ProvisioningState.Should().Be(expected.ProvisioningState);
+            InboundEndpoint.ResourceGuid.Should().Be(expected.ResourceGuid);
+            InboundEndpoint.Metadata.Should().BeEquivalentTo(expected.Metadata);
+            InboundEndpoint.Name.Should().Be(expected.Name);
             return new AndConstraint<InboundEndpointAssertions>(this);
         }
     }

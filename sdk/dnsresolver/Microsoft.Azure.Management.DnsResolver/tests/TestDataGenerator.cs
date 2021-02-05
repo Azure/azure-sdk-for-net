@@ -131,11 +131,6 @@ namespace DnsResolver.Tests
             };
         }
 
-        public static InboundEndpoint GenenerateInboundEndpoint(string subscriptionId = null, string resourceGroupName = null, string dnsResolverName = null, string inboundEndpointName = null, IDictionary<string, string> metadataTags = null)
-        {
-            return null;
-        }
-
         public static List<IpConfiguration> GenerateRandomIpConfigurations(int count = 1, string subscriptionId = null, string resourceGroupName = null,  string virtualNetworkName = null) 
         {
             subscriptionId = subscriptionId ?? GenerateSubscriptionId();
@@ -164,11 +159,6 @@ namespace DnsResolver.Tests
                 Tags = tags,
                 VirtualNetwork = new SubResource(),
             };
-        }
-
-        public static int GenerateInteger(int minVal= 0, int maxVal = 10)
-        {
-            return Random.Next(minVal, maxVal);
         }
 
         public static IDictionary<string, string> GenerateTags(int numTags = 5, int startFrom = 0)

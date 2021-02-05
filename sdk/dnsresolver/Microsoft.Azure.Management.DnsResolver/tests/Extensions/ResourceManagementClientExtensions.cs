@@ -52,7 +52,7 @@ namespace DnsResolver.Tests.Extensions
             {
                 if (string.Equals(resource.ResourceType, resourceName, StringComparison.OrdinalIgnoreCase))
                 {
-                    location = resource.Locations.FirstOrDefault(loc => !string.IsNullOrEmpty(loc));
+                    location = resource.Locations.FirstOrDefault(loc => !string.IsNullOrWhiteSpace(loc));
                 }
             }
 
