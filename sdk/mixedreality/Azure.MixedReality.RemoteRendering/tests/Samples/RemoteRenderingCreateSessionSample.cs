@@ -16,7 +16,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
         public RemoteRenderingCreateSessionSample()
         {
-            _account = new RemoteRenderingAccount(TestEnvironment.AccountId, TestEnvironment.AccountDomain);
+            _account = new RemoteRenderingAccount(new Guid(TestEnvironment.AccountId), TestEnvironment.AccountDomain);
             _accountKey = TestEnvironment.AccountKey;
             _serviceEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
         }

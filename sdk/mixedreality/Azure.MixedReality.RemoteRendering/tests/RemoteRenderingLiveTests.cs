@@ -188,7 +188,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests
 
         private RemoteRenderingClient GetClient()
         {
-            RemoteRenderingAccount account = new RemoteRenderingAccount(TestEnvironment.AccountId, TestEnvironment.AccountDomain);
+            RemoteRenderingAccount account = new RemoteRenderingAccount(new Guid(TestEnvironment.AccountId), TestEnvironment.AccountDomain);
             Uri serviceEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
 
             var options = InstrumentClientOptions(new RemoteRenderingClientOptions());

@@ -29,17 +29,10 @@ namespace Azure.MixedReality.RemoteRendering
         /// The Azure Remote Rendering account domain. For example, for an account created in the eastus region, this will have the form "eastus.mixedreality.azure.com".
         /// </param>
         /// <exception cref="ArgumentException"> <paramref name="accountId"/> cannot be parsed as a Guid. </exception>
-        public RemoteRenderingAccount(string accountId, string accountDomain)
+        public RemoteRenderingAccount(Guid accountId, string accountDomain)
         {
-            Argument.AssertNotNullOrWhiteSpace(accountId, nameof(accountId));
             Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
-
-            Guid guid;
-            if (!Guid.TryParse(accountId, out guid))
-            {
-                throw new ArgumentException($"The provided accountId \"{accountId}\" is not a valid GUID");
-            }
-            AccountId = guid;
+            AccountId = accountId;
             AccountDomain = accountDomain;
         }
     }
