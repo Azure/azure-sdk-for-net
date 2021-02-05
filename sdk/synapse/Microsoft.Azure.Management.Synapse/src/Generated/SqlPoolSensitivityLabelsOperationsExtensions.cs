@@ -81,6 +81,53 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Update sensitivity labels of a given SQL Pool using an operations batch.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='parameters'>
+            /// </param>
+            public static void Update(this ISqlPoolSensitivityLabelsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SensitivityLabelUpdateList parameters)
+            {
+                operations.UpdateAsync(resourceGroupName, workspaceName, sqlPoolName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update sensitivity labels of a given SQL Pool using an operations batch.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='parameters'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateAsync(this ISqlPoolSensitivityLabelsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets sensitivity labels of a given SQL pool
             /// </summary>
             /// <remarks>
