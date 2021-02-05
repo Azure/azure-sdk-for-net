@@ -33,7 +33,7 @@ To run analyze operation in multiple documents, call `StartAnalyzeOperationBatch
     {
         ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
         RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
-        RecognizePiiEntityOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
+        RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
         DisplayName = "AnalyzeOperationSample"
     };
 
@@ -41,15 +41,13 @@ To run analyze operation in multiple documents, call `StartAnalyzeOperationBatch
 
     await operation.WaitForCompletionAsync();
 
-    AnalyzeBatchActionsResult resultCollection = operation.Value;
+    foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
+    {
+        RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.ElementAt(0).Result;
 
-    RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionResults.Results[0];
+        ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
 
-    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionResults.Results[0];
-
-    RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionResults.Results[0];
-
-        RecognizePiiEntitiesResultCollection piiResult = documentsInPage.Tasks.EntityRecognitionPiiTasks[0].Results;
+        RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.ElementAt(0).Result;
 
         Console.WriteLine("Recognized Entities");
 
