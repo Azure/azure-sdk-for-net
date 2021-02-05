@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl.Models
 {
-    public partial class RoleAssignmentOptions : IUtf8JsonSerializable
+    internal partial class RoleAssignmentRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,13 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
             writer.WriteStringValue(RoleId);
             writer.WritePropertyName("principalId");
             writer.WriteStringValue(PrincipalId);
+            writer.WritePropertyName("scope");
+            writer.WriteStringValue(Scope);
+            if (Optional.IsDefined(PrincipalType))
+            {
+                writer.WritePropertyName("principalType");
+                writer.WriteStringValue(PrincipalType);
+            }
             writer.WriteEndObject();
         }
     }
