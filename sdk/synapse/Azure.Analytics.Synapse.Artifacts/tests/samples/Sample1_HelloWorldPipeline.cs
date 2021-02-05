@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
     /// </summary>
     public partial class Sample1_HelloWorldPipeline : SamplesBase<SynapseTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task RunPipeline()
         {
             #region Snippet:CreatePipelineClientPrep

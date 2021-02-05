@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
     /// </summary>
     public partial class Sample1_HelloWorld : SamplesBase<SynapseTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public void AddAndRemoveRoleAssignmentSync()
         {
             #region Snippet:CreateAccessControlClient

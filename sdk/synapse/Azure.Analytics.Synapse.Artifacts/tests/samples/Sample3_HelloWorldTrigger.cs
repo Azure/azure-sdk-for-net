@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class Sample3_HelloWorldTrigger : SamplesBase<SynapseTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task TriggerSample()
         {
             #region Snippet:CreateTriggerClientPrep

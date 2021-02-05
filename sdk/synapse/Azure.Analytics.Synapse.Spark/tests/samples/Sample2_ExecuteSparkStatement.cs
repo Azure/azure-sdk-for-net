@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
     /// </summary>
     public partial class Sample2_ExecuteSparkStatement : SamplesBase<SynapseTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public void ExecuteSparkStatementSync()
         {
             #region Snippet:CreateSparkSessionClient

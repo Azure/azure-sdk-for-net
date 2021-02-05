@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class Sample6_HelloWorldLinkedService : SamplesBase<SynapseTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task LinkedServiceSample()
         {
             #region Snippet:CreateLinkedServiceClientPrep
