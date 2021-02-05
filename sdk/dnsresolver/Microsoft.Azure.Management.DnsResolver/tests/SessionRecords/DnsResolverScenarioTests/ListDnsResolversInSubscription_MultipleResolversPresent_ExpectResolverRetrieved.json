@@ -1,0 +1,545 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourcegroups/dnsresolvertestrg4803?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlZ3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNDgwMz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f9f40466-0910-464b-af32-021c1895bc19"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "32"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "8f199dd1-6116-4f80-9461-90677ed4b969"
+        ],
+        "x-ms-correlation-request-id": [
+          "8f199dd1-6116-4f80-9461-90677ed4b969"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T112840Z:8f199dd1-6116-4f80-9461-90677ed4b969"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 11:28:39 GMT"
+        ],
+        "Content-Length": [
+          "198"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803\",\r\n  \"name\": \"dnsresolvertestrg4803\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2620?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNDgwMy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zUmVzb2x2ZXJzL2Ruc3Jlc29sdmVydGVzdHJlc29sdmVyMjYyMD9hcGktdmVyc2lvbj0yMDIwLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"virtualNetwork\": {\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet6004\"\r\n    }\r\n  },\r\n  \"location\": \"westus2\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "68794621-d8e4-4c7b-99eb-e59df338bf5e"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "258"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/locations/westus2/dnsResolverOperationResults/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0RG5zUmVzb2x2ZXIiLCJPcGVyYXRpb25JZCI6IjY5ODA5NmQ5LTk5OWEtNDE1OC1hYTc4LWJiNDgyNDBlMDk2NiJ9?api-version=2020-04-01-preview"
+        ],
+        "x-ms-activity-id": [
+          "f723f41b-43cf-4b6f-90f6-3121e461837d"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/locations/westus2/dnsResolverOperationStatuses/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0RG5zUmVzb2x2ZXIiLCJPcGVyYXRpb25JZCI6IjY5ODA5NmQ5LTk5OWEtNDE1OC1hYTc4LWJiNDgyNDBlMDk2NiJ9?api-version=2020-04-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11991"
+        ],
+        "x-ms-request-id": [
+          "8a4af760-e90e-4b4e-9b9c-81f0985cabf7"
+        ],
+        "x-ms-correlation-request-id": [
+          "8a4af760-e90e-4b4e-9b9c-81f0985cabf7"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T112843Z:8a4af760-e90e-4b4e-9b9c-81f0985cabf7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 11:28:43 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/locations/westus2/dnsResolverOperationStatuses/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0RG5zUmVzb2x2ZXIiLCJPcGVyYXRpb25JZCI6IjY5ODA5NmQ5LTk5OWEtNDE1OC1hYTc4LWJiNDgyNDBlMDk2NiJ9?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNDgwMy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYXRpb25zL3dlc3R1czIvZG5zUmVzb2x2ZXJPcGVyYXRpb25TdGF0dXNlcy9leUpQY0dWeVlYUnBiMjVVZVhCbElqb2lWWEJ6WlhKMFJHNXpVbVZ6YjJ4MlpYSWlMQ0pQY0dWeVlYUnBiMjVKWkNJNklqWTVPREE1Tm1RNUxUazVPV0V0TkRFMU9DMWhZVGM0TFdKaU5EZ3lOREJsTURrMk5pSjk/YXBpLXZlcnNpb249MjAyMC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "a7fa1598-e7e7-4dcf-986a-88237178e9a8"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "498"
+        ],
+        "x-ms-request-id": [
+          "22aecba8-593a-4558-b836-048e924c3495"
+        ],
+        "x-ms-correlation-request-id": [
+          "22aecba8-593a-4558-b836-048e924c3495"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T112913Z:22aecba8-593a-4558-b836-048e924c3495"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 11:29:13 GMT"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2620?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNDgwMy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zUmVzb2x2ZXJzL2Ruc3Jlc29sdmVydGVzdHJlc29sdmVyMjYyMD9hcGktdmVyc2lvbj0yMDIwLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "0b6733cd-34b1-454f-b461-9b03cb4c3cef"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "498"
+        ],
+        "x-ms-request-id": [
+          "5e9260ed-bfa7-4381-bab2-859362c73ead"
+        ],
+        "x-ms-correlation-request-id": [
+          "5e9260ed-bfa7-4381-bab2-859362c73ead"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T112913Z:5e9260ed-bfa7-4381-bab2-859362c73ead"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 11:29:13 GMT"
+        ],
+        "Content-Length": [
+          "765"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"virtualNetwork\": {\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet6004\"\r\n    },\r\n    \"numberOfInboundEndpoints\": 0,\r\n    \"maxNumberOfInboundEndpoints\": 5,\r\n    \"numberOfOutboundEndpoints\": 0,\r\n    \"maxNumberOfOutboundEndpoints\": 5,\r\n    \"dnsResolverState\": \"Connected\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"f1ce340a-9fad-47d6-9291-ab449eb01504\"\r\n  },\r\n  \"etag\": \"\\\"0b003dd0-0000-0800-0000-601d2bef0000\\\"\",\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2620\",\r\n  \"name\": \"dnsresolvertestresolver2620\",\r\n  \"type\": \"Microsoft.Network/dnsResolvers\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver3348?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNDgwMy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zUmVzb2x2ZXJzL2Ruc3Jlc29sdmVydGVzdHJlc29sdmVyMzM0OD9hcGktdmVyc2lvbj0yMDIwLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"virtualNetwork\": {\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5701\"\r\n    }\r\n  },\r\n  \"location\": \"westus2\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0abb82a0-7c7d-46ee-94f3-914aef570daa"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "258"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/locations/westus2/dnsResolverOperationResults/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0RG5zUmVzb2x2ZXIiLCJPcGVyYXRpb25JZCI6ImY1YjFhZmE5LWM2YzctNDc3Yi1hMjFhLTU3YTRjZTNmZjdmYyJ9?api-version=2020-04-01-preview"
+        ],
+        "x-ms-activity-id": [
+          "6b894d21-0b63-44e3-86e5-82ed717ee84b"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/locations/westus2/dnsResolverOperationStatuses/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0RG5zUmVzb2x2ZXIiLCJPcGVyYXRpb25JZCI6ImY1YjFhZmE5LWM2YzctNDc3Yi1hMjFhLTU3YTRjZTNmZjdmYyJ9?api-version=2020-04-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11990"
+        ],
+        "x-ms-request-id": [
+          "79fee41a-6f9d-443b-85fe-669ee46c3f09"
+        ],
+        "x-ms-correlation-request-id": [
+          "79fee41a-6f9d-443b-85fe-669ee46c3f09"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T112915Z:79fee41a-6f9d-443b-85fe-669ee46c3f09"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 11:29:14 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/locations/westus2/dnsResolverOperationStatuses/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0RG5zUmVzb2x2ZXIiLCJPcGVyYXRpb25JZCI6ImY1YjFhZmE5LWM2YzctNDc3Yi1hMjFhLTU3YTRjZTNmZjdmYyJ9?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNDgwMy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYXRpb25zL3dlc3R1czIvZG5zUmVzb2x2ZXJPcGVyYXRpb25TdGF0dXNlcy9leUpQY0dWeVlYUnBiMjVVZVhCbElqb2lWWEJ6WlhKMFJHNXpVbVZ6YjJ4MlpYSWlMQ0pQY0dWeVlYUnBiMjVKWkNJNkltWTFZakZoWm1FNUxXTTJZemN0TkRjM1lpMWhNakZoTFRVM1lUUmpaVE5tWmpkbVl5Sjk/YXBpLXZlcnNpb249MjAyMC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "b4899c08-ffa5-42bb-9e60-76121d727ff5"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "497"
+        ],
+        "x-ms-request-id": [
+          "7c66d748-9671-4058-b1ce-8002fbb7b79a"
+        ],
+        "x-ms-correlation-request-id": [
+          "7c66d748-9671-4058-b1ce-8002fbb7b79a"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T112950Z:7c66d748-9671-4058-b1ce-8002fbb7b79a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 11:29:49 GMT"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver3348?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNDgwMy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zUmVzb2x2ZXJzL2Ruc3Jlc29sdmVydGVzdHJlc29sdmVyMzM0OD9hcGktdmVyc2lvbj0yMDIwLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "46ad3c60-8908-4955-9de8-e7b9b1b3f110"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "497"
+        ],
+        "x-ms-request-id": [
+          "c43be2a9-8d36-4dfa-960a-f072a5b0f2d5"
+        ],
+        "x-ms-correlation-request-id": [
+          "c43be2a9-8d36-4dfa-960a-f072a5b0f2d5"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T113000Z:c43be2a9-8d36-4dfa-960a-f072a5b0f2d5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 11:30:00 GMT"
+        ],
+        "Content-Length": [
+          "765"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"virtualNetwork\": {\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5701\"\r\n    },\r\n    \"numberOfInboundEndpoints\": 0,\r\n    \"maxNumberOfInboundEndpoints\": 5,\r\n    \"numberOfOutboundEndpoints\": 0,\r\n    \"maxNumberOfOutboundEndpoints\": 5,\r\n    \"dnsResolverState\": \"Connected\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"df321f0e-daa1-4c6a-8510-400659cfe106\"\r\n  },\r\n  \"etag\": \"\\\"0b0040d0-0000-0800-0000-601d2c0d0000\\\"\",\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver3348\",\r\n  \"name\": \"dnsresolvertestresolver3348\",\r\n  \"type\": \"Microsoft.Network/dnsResolvers\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/providers/Microsoft.Network/dnsResolvers?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNSZXNvbHZlcnM/YXBpLXZlcnNpb249MjAyMC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "502e22e9-b680-4cca-be30-560f1a4dfae3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "42a360e5-2681-49a5-9ed8-3c7a0cf96a06"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "496"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-entities-read": [
+          "59921"
+        ],
+        "x-ms-request-id": [
+          "f769ddba-bae1-46f5-b032-bdd4dff03e1f"
+        ],
+        "x-ms-correlation-request-id": [
+          "f769ddba-bae1-46f5-b032-bdd4dff03e1f"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T113001Z:f769ddba-bae1-46f5-b032-bdd4dff03e1f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 11:30:00 GMT"
+        ],
+        "Content-Length": [
+          "60490"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1061/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet4263\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"8711ddb4-7347-4b02-aff4-9ae55a1b2525\"\r\n      },\r\n      \"etag\": \"\\\"0b0072c9-0000-0800-0000-601d02800000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1061/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver8744\",\r\n      \"name\": \"dnsresolvertestresolver8744\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1094/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet4884\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"ef9761f6-4d57-46d7-b83d-45242c8cae73\"\r\n      },\r\n      \"etag\": \"\\\"0b00d4a1-0000-0800-0000-601b43d10000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1094/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1396\",\r\n      \"name\": \"dnsresolvertestresolver1396\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1449/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet7997\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"be526bc7-c356-4f6e-aa0f-66533e4b3af5\"\r\n      },\r\n      \"etag\": \"\\\"0b00c0a3-0000-0800-0000-601b5fe30000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1449/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2304\",\r\n      \"name\": \"dnsresolvertestresolver2304\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1495/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet1785\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"dc44c2a1-4eb8-45da-9195-452f69ee156c\"\r\n      },\r\n      \"etag\": \"\\\"0b00de27-0000-0800-0000-601316560000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1495/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver4813\",\r\n      \"name\": \"dnsresolvertestresolver4813\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1495/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet7993\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"739baeff-c73c-429a-a3fb-d23bc65a06e2\"\r\n      },\r\n      \"etag\": \"\\\"0b00d927-0000-0800-0000-601316320000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1495/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver95\",\r\n      \"name\": \"dnsresolvertestresolver95\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1496/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet2309\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"596a5c48-a626-4197-aa5e-a51ec6ce2202\"\r\n      },\r\n      \"etag\": \"\\\"0b004acd-0000-0800-0000-601d19520000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1496/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver902\",\r\n      \"name\": \"dnsresolvertestresolver902\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1611/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3157\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"cd6f5262-482f-4fd6-86ca-cc2e29c35a67\"\r\n      },\r\n      \"etag\": \"\\\"0b00b975-0000-0800-0000-601a14ff0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1611/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1623\",\r\n      \"name\": \"dnsresolvertestresolver1623\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1874/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet9059\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"6e73573c-72b6-4297-b61b-b72455b75d73\"\r\n      },\r\n      \"etag\": \"\\\"0b00a413-0000-0800-0000-6010cce50000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg1874/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver7742\",\r\n      \"name\": \"dnsresolvertestresolver7742\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2034/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet6650\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"35c24dd1-270e-4364-b5e0-64bd9d8a1668\"\r\n      },\r\n      \"etag\": \"\\\"0b00ffad-0000-0800-0000-601c42e30000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2034/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver5359\",\r\n      \"name\": \"dnsresolvertestresolver5359\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2038/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3321\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"d2e7573c-6d9e-4e8e-a9c8-753a28c5ae2d\"\r\n      },\r\n      \"etag\": \"\\\"0b009f66-0000-0800-0000-6018c69e0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2038/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver7773\",\r\n      \"name\": \"dnsresolvertestresolver7773\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2274/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet1508\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"515ba40b-0bcc-4766-97ae-9c8da80aa307\"\r\n      },\r\n      \"etag\": \"\\\"0b008070-0000-0800-0000-6019df4a0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2274/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver7846\",\r\n      \"name\": \"dnsresolvertestresolver7846\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg250/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet952\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"ab269ff2-d77b-4d6f-abbd-1f481b1b8bf3\"\r\n      },\r\n      \"etag\": \"\\\"0b004278-0000-0800-0000-601a3ab00000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg250/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver7725\",\r\n      \"name\": \"dnsresolvertestresolver7725\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2538/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3174\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"9147700b-bf91-455a-9286-5ae73525cdcf\"\r\n      },\r\n      \"etag\": \"\\\"0b003cc8-0000-0800-0000-601cfe570000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2538/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver852\",\r\n      \"name\": \"dnsresolvertestresolver852\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2638/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet2903\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"7230fa7d-4b5d-4c38-b3e7-c1a1d1fecc91\"\r\n      },\r\n      \"etag\": \"\\\"0b00666d-0000-0800-0000-6019bb660000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2638/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver5455\",\r\n      \"name\": \"dnsresolvertestresolver5455\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2646/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet4735\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"35dbcdc0-c5a6-4779-a162-0cafc45345a2\"\r\n      },\r\n      \"etag\": \"\\\"0b003f71-0000-0800-0000-6019e9940000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2646/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1503\",\r\n      \"name\": \"dnsresolvertestresolver1503\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2647/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet7512\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"d8f3b87a-ff0b-47e3-acd3-4a711118300b\"\r\n      },\r\n      \"etag\": \"\\\"0b00eac8-0000-0800-0000-601cffcb0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2647/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver8323\",\r\n      \"name\": \"dnsresolvertestresolver8323\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2861/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet6691\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"be72f899-a3d6-4b1d-9d3e-e8f98bd274e8\"\r\n      },\r\n      \"etag\": \"\\\"0b005a14-0000-0800-0000-60110e080000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2861/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver7981\",\r\n      \"name\": \"dnsresolvertestresolver7981\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2942/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3332\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"344c8cd5-9548-4d72-a053-e8dcc50d74ac\"\r\n      },\r\n      \"etag\": \"\\\"0b00c975-0000-0800-0000-601a162b0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2942/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver5098\",\r\n      \"name\": \"dnsresolvertestresolver5098\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2968/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet9095\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"21ead356-2139-442f-90c1-0a0267f2e8d9\"\r\n      },\r\n      \"etag\": \"\\\"0b002aca-0000-0800-0000-601d072d0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg2968/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver6564\",\r\n      \"name\": \"dnsresolvertestresolver6564\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3141/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5958\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"8f4f20cc-72a0-4e22-b723-5a296262d1a1\"\r\n      },\r\n      \"etag\": \"\\\"0b00af64-0000-0800-0000-6018a1ba0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3141/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver3041\",\r\n      \"name\": \"dnsresolvertestresolver3041\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3159/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet229\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"448aac04-88b0-4f6b-a7d9-1f028945e138\"\r\n      },\r\n      \"etag\": \"\\\"0b009966-0000-0800-0000-6018c64e0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3159/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2477\",\r\n      \"name\": \"dnsresolvertestresolver2477\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3361/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet1014\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"abe67ade-c5a0-4b20-a684-3d0cbb0d5783\"\r\n      },\r\n      \"etag\": \"\\\"0b00456d-0000-0800-0000-6019b9ec0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3361/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1453\",\r\n      \"name\": \"dnsresolvertestresolver1453\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3549/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet2152\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"170b66c0-55ba-49dd-b3cc-bdb99fd7fc7a\"\r\n      },\r\n      \"etag\": \"\\\"0b00b8a2-0000-0800-0000-601b4bd70000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3549/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver7675\",\r\n      \"name\": \"dnsresolvertestresolver7675\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg363/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet1305\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"b37144bf-ca10-45d9-bb29-122c6b8c622e\"\r\n      },\r\n      \"etag\": \"\\\"0b006b67-0000-0800-0000-601908ba0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg363/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2186\",\r\n      \"name\": \"dnsresolvertestresolver2186\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3861/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet6152\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"bc4f2464-309e-4410-ad10-282eed608266\"\r\n      },\r\n      \"etag\": \"\\\"0b0029ae-0000-0800-0000-601c441e0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3861/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver949\",\r\n      \"name\": \"dnsresolvertestresolver949\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3902/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5624\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"c61d0938-b5be-46eb-a442-b754f799b78e\"\r\n      },\r\n      \"etag\": \"\\\"0b00c475-0000-0800-0000-601a15bd0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3902/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1353\",\r\n      \"name\": \"dnsresolvertestresolver1353\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3946/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet7877\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"abe01c42-5c5e-42c6-8839-7f532117e0f4\"\r\n      },\r\n      \"etag\": \"\\\"0b00ad0c-0000-0800-0000-600f49c20000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg3946/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2859\",\r\n      \"name\": \"dnsresolvertestresolver2859\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4090/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3954\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"06f20ebb-5fec-46cd-9713-ee98934ff0cd\"\r\n      },\r\n      \"etag\": \"\\\"0b0091c9-0000-0800-0000-601d04160000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4090/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver5800\",\r\n      \"name\": \"dnsresolvertestresolver5800\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4199/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet1401\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"a5d50c71-dab9-462a-b9ad-4d73318cb8ac\"\r\n      },\r\n      \"etag\": \"\\\"0b003d70-0000-0800-0000-6019ddbd0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4199/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver463\",\r\n      \"name\": \"dnsresolvertestresolver463\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg446/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet7383\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"c301a020-dcb8-4656-8c9b-c9d2dba722a4\"\r\n      },\r\n      \"etag\": \"\\\"0b004464-0000-0800-0000-60189c4c0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg446/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver3919\",\r\n      \"name\": \"dnsresolvertestresolver3919\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4534/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3576\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"d0017a52-91ed-4c0b-908f-9bdbc75a820b\"\r\n      },\r\n      \"etag\": \"\\\"0b00a764-0000-0800-0000-6018a16d0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4534/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2781\",\r\n      \"name\": \"dnsresolvertestresolver2781\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4644/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5478\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"73da1916-76df-43f6-bcdd-55828addcfd0\"\r\n      },\r\n      \"etag\": \"\\\"0b001471-0000-0800-0000-6019e7760000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4644/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver9809\",\r\n      \"name\": \"dnsresolvertestresolver9809\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet6004\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"f1ce340a-9fad-47d6-9291-ab449eb01504\"\r\n      },\r\n      \"etag\": \"\\\"0b003dd0-0000-0800-0000-601d2bef0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2620\",\r\n      \"name\": \"dnsresolvertestresolver2620\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5701\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"df321f0e-daa1-4c6a-8510-400659cfe106\"\r\n      },\r\n      \"etag\": \"\\\"0b0040d0-0000-0800-0000-601d2c0d0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4803/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver3348\",\r\n      \"name\": \"dnsresolvertestresolver3348\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4812/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet1401\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"f76f5e78-3226-470c-97d5-6794df48b102\"\r\n      },\r\n      \"etag\": \"\\\"0b000a76-0000-0800-0000-601a17260000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4812/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2629\",\r\n      \"name\": \"dnsresolvertestresolver2629\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5203/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet9645\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"d894d89c-701e-4028-a975-7b2a91740ffd\"\r\n      },\r\n      \"etag\": \"\\\"0b002fc7-0000-0800-0000-601cf8e20000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5203/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver4788\",\r\n      \"name\": \"dnsresolvertestresolver4788\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg52/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet6525\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"46e29e91-68fd-4eb7-ba1e-2d9f84036865\"\r\n      },\r\n      \"etag\": \"\\\"0b002dc8-0000-0800-0000-601cfe070000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg52/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver19\",\r\n      \"name\": \"dnsresolvertestresolver19\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5365/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5824\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"5b4bce91-0f99-4811-b4df-f3a62d4efda2\"\r\n      },\r\n      \"etag\": \"\\\"0b00d775-0000-0800-0000-601a167c0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5365/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver3669\",\r\n      \"name\": \"dnsresolvertestresolver3669\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5510/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet9654\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"9ec3a641-1e4a-4424-95e6-d58a8eb0e94d\"\r\n      },\r\n      \"etag\": \"\\\"0b00662c-0000-0800-0000-601347300000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5510/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2907\",\r\n      \"name\": \"dnsresolvertestresolver2907\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5550/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3432\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"0463db75-69b0-400d-b7be-e82032a94896\"\r\n      },\r\n      \"etag\": \"\\\"0b0065ad-0000-0800-0000-601c3f770000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5550/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2016\",\r\n      \"name\": \"dnsresolvertestresolver2016\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5586/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet647\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"3cd8f221-0ac5-4276-a65b-68efd604d532\"\r\n      },\r\n      \"etag\": \"\\\"0b009bc9-0000-0800-0000-601d04c00000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5586/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1402\",\r\n      \"name\": \"dnsresolvertestresolver1402\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5721/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet2463\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"22c0a287-649e-4b2c-8cfc-a85131d41e9c\"\r\n      },\r\n      \"etag\": \"\\\"0b00556d-0000-0800-0000-6019baa80000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5721/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver7515\",\r\n      \"name\": \"dnsresolvertestresolver7515\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5754/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5348\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"31746449-5b14-437e-a5c2-8f450286a56a\"\r\n      },\r\n      \"etag\": \"\\\"0b005870-0000-0800-0000-6019de410000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5754/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver6444\",\r\n      \"name\": \"dnsresolvertestresolver6444\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5782/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3893\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"329f3b11-2685-48c7-914f-f48c9211a87f\"\r\n      },\r\n      \"etag\": \"\\\"0b00f6c7-0000-0800-0000-601cfd2a0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5782/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver8024\",\r\n      \"name\": \"dnsresolvertestresolver8024\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5911/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet7279\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"78505cbc-1f7b-4fca-b86c-a8f232d7d418\"\r\n      },\r\n      \"etag\": \"\\\"0b00a8c9-0000-0800-0000-601d05890000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg5911/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver8107\",\r\n      \"name\": \"dnsresolvertestresolver8107\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg591/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5112\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"77397f61-3c67-450e-babd-e3bad4527a13\"\r\n      },\r\n      \"etag\": \"\\\"0b00f1ad-0000-0800-0000-601c425f0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg591/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver4277\",\r\n      \"name\": \"dnsresolvertestresolver4277\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6024/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet8489\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"8a03f226-00b8-4aba-b68f-7ea22d576755\"\r\n      },\r\n      \"etag\": \"\\\"0b00e994-0000-0800-0000-601aead40000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6024/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver8480\",\r\n      \"name\": \"dnsresolvertestresolver8480\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6104/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet9319\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"3f08aae5-1922-4437-be5a-13b6b044e45d\"\r\n      },\r\n      \"etag\": \"\\\"0b0025c7-0000-0800-0000-601cf7e30000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6104/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver5728\",\r\n      \"name\": \"dnsresolvertestresolver5728\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg614/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet2005\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"d0f3877d-5ffe-47f0-8e04-e1a72354c6e7\"\r\n      },\r\n      \"etag\": \"\\\"0b006667-0000-0800-0000-601908160000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg614/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver188\",\r\n      \"name\": \"dnsresolvertestresolver188\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6174/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet2252\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"e2431d25-fde6-4b57-92c8-4d07ee7f5d6c\"\r\n      },\r\n      \"etag\": \"\\\"0b00db63-0000-0800-0000-601896030000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6174/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver7587\",\r\n      \"name\": \"dnsresolvertestresolver7587\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6189/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet693\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"5998e362-ba5d-4966-a68b-f7ef941561dd\"\r\n      },\r\n      \"etag\": \"\\\"0b004bc6-0000-0800-0000-601cf3be0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6189/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver5337\",\r\n      \"name\": \"dnsresolvertestresolver5337\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6225/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3779\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"38f74047-05f6-46e0-8f58-8eeaff5ab36f\"\r\n      },\r\n      \"etag\": \"\\\"0b002070-0000-0800-0000-6019dcb50000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6225/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver8165\",\r\n      \"name\": \"dnsresolvertestresolver8165\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6498/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet9469\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"e5db5ec5-9362-40e4-800b-bf7a157de155\"\r\n      },\r\n      \"etag\": \"\\\"0b006170-0000-0800-0000-6019de8e0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6498/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2224\",\r\n      \"name\": \"dnsresolvertestresolver2224\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6792/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet7760\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"0d2a65ab-aba0-45fc-9503-174749c90069\"\r\n      },\r\n      \"etag\": \"\\\"0b008e6d-0000-0800-0000-6019bc300000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6792/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver5433\",\r\n      \"name\": \"dnsresolvertestresolver5433\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6824/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet4311\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"087dc9b3-c069-482c-a2fc-fc319173f4c6\"\r\n      },\r\n      \"etag\": \"\\\"0b004fae-0000-0800-0000-601c451f0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg6824/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1237\",\r\n      \"name\": \"dnsresolvertestresolver1237\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg7094/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5103\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"8d0a79fb-2368-412b-9618-38c74bddf808\"\r\n      },\r\n      \"etag\": \"\\\"0b006e70-0000-0800-0000-6019defa0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg7094/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver5001\",\r\n      \"name\": \"dnsresolvertestresolver5001\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg4102/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet8238\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"5ae9ddc8-90bb-4ea3-be52-80d2ad317de7\"\r\n      },\r\n      \"etag\": \"\\\"0b00080c-0000-0800-0000-600f35550000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg7180/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver4045\",\r\n      \"name\": \"dnsresolvertestresolver4045\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg7389/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet7186\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"c5735b49-54d1-45f2-88dc-b134f865fbce\"\r\n      },\r\n      \"etag\": \"\\\"0b00f011-0000-0800-0000-60108a890000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg7389/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver6887\",\r\n      \"name\": \"dnsresolvertestresolver6887\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg7563/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3027\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"b316c455-1b5b-4375-ad31-532bc5d81fca\"\r\n      },\r\n      \"etag\": \"\\\"0b00f4c8-0000-0800-0000-601d00190000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg7563/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver9951\",\r\n      \"name\": \"dnsresolvertestresolver9951\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg7669/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet9014\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"bcdb482f-0e79-4b6a-880a-b3daa09fb072\"\r\n      },\r\n      \"etag\": \"\\\"0b005d6d-0000-0800-0000-6019bb120000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg7669/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1314\",\r\n      \"name\": \"dnsresolvertestresolver1314\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8194/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet6653\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"83b6f705-ca87-42a0-9108-b14bfcee2cfa\"\r\n      },\r\n      \"etag\": \"\\\"0b000bc8-0000-0800-0000-601cfd980000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8194/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver376\",\r\n      \"name\": \"dnsresolvertestresolver376\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg819/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet2424\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"46f5742d-3a38-4f8f-833c-84cec0cd22e0\"\r\n      },\r\n      \"etag\": \"\\\"0b00fec8-0000-0800-0000-601d00d20000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg819/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2536\",\r\n      \"name\": \"dnsresolvertestresolver2536\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8233/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet4323\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"81599e0b-8fc7-4688-b4a7-6604f782efd9\"\r\n      },\r\n      \"etag\": \"\\\"0b000f70-0000-0800-0000-6019dbed0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8233/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver5910\",\r\n      \"name\": \"dnsresolvertestresolver5910\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8466/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet139\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"ba58a7cb-78ce-4528-a7bf-54da6ec93c63\"\r\n      },\r\n      \"etag\": \"\\\"0b002e70-0000-0800-0000-6019dd230000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8466/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver8818\",\r\n      \"name\": \"dnsresolvertestresolver8818\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8505/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet1826\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"e2810615-cd51-4207-9538-5426433966ae\"\r\n      },\r\n      \"etag\": \"\\\"0b003d78-0000-0800-0000-601a39f20000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8505/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1013\",\r\n      \"name\": \"dnsresolvertestresolver1013\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg858/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet4829\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"25a5a972-a07c-47d2-bf8c-3855fd796bc6\"\r\n      },\r\n      \"etag\": \"\\\"0b00bf75-0000-0800-0000-601a154f0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg858/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1648\",\r\n      \"name\": \"dnsresolvertestresolver1648\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8754/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet4317\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"e1622173-66bb-4cb4-9381-d7ad9f76b5e3\"\r\n      },\r\n      \"etag\": \"\\\"0b004c6d-0000-0800-0000-6019ba3a0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8754/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver507\",\r\n      \"name\": \"dnsresolvertestresolver507\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8797/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet2012\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"dccdd7b3-2643-422c-a867-a4239e55f941\"\r\n      },\r\n      \"etag\": \"\\\"0b000870-0000-0800-0000-6019db9f0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8797/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2732\",\r\n      \"name\": \"dnsresolvertestresolver2732\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8863/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet8777\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"bde29014-fd4e-4060-9db7-10983013a74e\"\r\n      },\r\n      \"etag\": \"\\\"0b009ec7-0000-0800-0000-601cfc6c0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8863/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver6843\",\r\n      \"name\": \"dnsresolvertestresolver6843\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8922/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet8860\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"e92f3d2a-f2e8-4e0a-9124-6bbb9612ddce\"\r\n      },\r\n      \"etag\": \"\\\"0b003870-0000-0800-0000-6019dd6f0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8922/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver4357\",\r\n      \"name\": \"dnsresolvertestresolver4357\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8953/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet170\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"a01049f4-67e0-4a45-804a-d0276525a38c\"\r\n      },\r\n      \"etag\": \"\\\"0b00866d-0000-0800-0000-6019bbe40000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8953/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver1464\",\r\n      \"name\": \"dnsresolvertestresolver1464\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8955/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet1607\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"3c370fdf-a58d-4e86-a05a-022565649fa6\"\r\n      },\r\n      \"etag\": \"\\\"0b001376-0000-0800-0000-601a17760000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg8955/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver8518\",\r\n      \"name\": \"dnsresolvertestresolver8518\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9018/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet1828\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"e3ef37c4-dafb-4833-a956-44966ec753ed\"\r\n      },\r\n      \"etag\": \"\\\"0b006fc8-0000-0800-0000-601cff0f0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9018/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver9240\",\r\n      \"name\": \"dnsresolvertestresolver9240\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9042/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet5286\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"533dadb7-7306-4f35-b337-df1a03e53129\"\r\n      },\r\n      \"etag\": \"\\\"0b00f163-0000-0800-0000-601896d50000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9042/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2793\",\r\n      \"name\": \"dnsresolvertestresolver2793\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9065/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet1240\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"c8c1638e-0682-4e20-b2c9-24c402e57d5c\"\r\n      },\r\n      \"etag\": \"\\\"0b0086c9-0000-0800-0000-601d03940000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9065/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver6213\",\r\n      \"name\": \"dnsresolvertestresolver6213\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg924/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet9196\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"54b50ed9-86b7-4016-8311-0cd1eea233fb\"\r\n      },\r\n      \"etag\": \"\\\"0b00d462-0000-0800-0000-601888330000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg924/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver7680\",\r\n      \"name\": \"dnsresolvertestresolver7680\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9548/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet9576\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"4b85b988-ac25-485a-a5b4-5db21aa29e9b\"\r\n      },\r\n      \"etag\": \"\\\"0b0002c9-0000-0800-0000-601d01200000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9548/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver8919\",\r\n      \"name\": \"dnsresolvertestresolver8919\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9745/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet156\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"42a3f5f2-6b62-49ef-93c3-5eae2c8d9f00\"\r\n      },\r\n      \"etag\": \"\\\"0b00c396-0000-0800-0000-601af7620000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9745/providers/Microsoft.Network/dnsResolvers/dnsresolvertestinboundendpoint8522\",\r\n      \"name\": \"dnsresolvertestinboundendpoint8522\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"virtualNetwork\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9863/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet9827\"\r\n        },\r\n        \"numberOfInboundEndpoints\": 0,\r\n        \"maxNumberOfInboundEndpoints\": 5,\r\n        \"numberOfOutboundEndpoints\": 0,\r\n        \"maxNumberOfOutboundEndpoints\": 5,\r\n        \"dnsResolverState\": \"Connected\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"6267c72f-3367-487e-9ea5-5b03eda25840\"\r\n      },\r\n      \"etag\": \"\\\"0b00c5c7-0000-0800-0000-601cfcbc0000\\\"\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg9863/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver6785\",\r\n      \"name\": \"dnsresolvertestresolver6785\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "GenerateResourceGroupName": [
+      "dnsresolvertestrg4803"
+    ],
+    "GenerateDnsResolverName": [
+      "dnsresolvertestresolver2620",
+      "dnsresolvertestresolver3348"
+    ],
+    "GenerateVirtualNetworkName": [
+      "dnsresolvertestvnet6004",
+      "dnsresolvertestvnet5701"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "0e5a46b1-de0b-4ec3-a5d7-dda908b4e076"
+  }
+}
