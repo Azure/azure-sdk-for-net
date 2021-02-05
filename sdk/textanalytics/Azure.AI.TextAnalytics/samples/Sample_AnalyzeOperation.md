@@ -37,9 +37,9 @@ To run analyze operation in multiple documents, call `StartAnalyzeOperationBatch
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
+    AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
 
-    await operation.WaitForCompletionAsync();
+    operation.WaitForCompletionAsync();
 
     foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
     {

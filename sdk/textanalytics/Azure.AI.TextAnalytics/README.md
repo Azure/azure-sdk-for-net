@@ -501,9 +501,9 @@ The Analyze functionality allows to choose which of the supported Text Analytics
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
+    AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
 
-    await operation.WaitForCompletionAsync();
+    operation.WaitForCompletionAsync();
 
     foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
     {
