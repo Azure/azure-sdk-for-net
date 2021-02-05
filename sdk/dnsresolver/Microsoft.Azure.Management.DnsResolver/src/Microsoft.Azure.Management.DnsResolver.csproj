@@ -10,9 +10,9 @@
 		<AssemblyName>Microsoft.Azure.Management.DnsResolver</AssemblyName>
 		<PackageTags>Microsoft Azure DNS Resolver;DNS Resolver</PackageTags>
 		<PackageReleaseNotes>
-<![CDATA[This is a release SDK for Azure DNS Resolver, which allows you to:
- - create/read/update/delete DNS Resolvers.
-]]>
+		<![CDATA[This is a release SDK for Azure DNS Resolver, which allows you to:
+		 - create/read/update/delete DNS Resolvers.
+		]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 

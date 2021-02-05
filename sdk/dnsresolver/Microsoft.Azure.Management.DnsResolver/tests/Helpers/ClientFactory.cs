@@ -28,8 +28,7 @@ namespace DnsResolver.Tests.Helpers
         }
 
         /// <summary>
-        /// Default constructor for management clients,
-        ///  using the TestSupport Infrastructure
+        /// Default constructor for management clients using the TestSupport Infrastructure.
         /// </summary>
         /// <param name="handler">Delegating Handler to get the client.</param>
         /// <returns>A DnsResolver management client, created from the current context (environment variables)</returns>
