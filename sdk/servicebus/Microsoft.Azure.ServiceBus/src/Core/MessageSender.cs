@@ -482,6 +482,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 throw Fx.Exception.Argument(nameof(message), "Cannot send a message that was already received.");
             }
+
+            Message.ValidateUserPropertySize(message.UserProperties, nameof(message.UserProperties));
         }
 
         static void CloseSession(SendingAmqpLink link)

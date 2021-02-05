@@ -8,6 +8,8 @@ namespace Microsoft.Azure.ServiceBus
     using System.Globalization;
     using Primitives;
 
+    using Microsoft.Azure.ServiceBus.Amqp;
+
     /// <summary>
     /// The message object used to communicate and transfer data with Service Bus.
     /// </summary>
@@ -341,10 +343,44 @@ namespace Microsoft.Azure.ServiceBus
             if (partitionKey != null && partitionKey.Length > Constants.MaxPartitionKeyLength)
             {
                 // TODO: throw FxTrace.Exception.Argument(partitionKeyPropertyName, SRClient.PropertyOverMaxValue(partitionKeyPropertyName, Constants.MaxPartitionKeyLength));
-                throw new ArgumentException("PropertyValueOverMaxValue");
+                throw new ArgumentException("PartitionKeyLengthOverMaxValue");
             }
         }
 
+        internal static void ValidateUserPropertySize(IDictionary<string, object> userProperties, string userPropertiesName)
+        {
+            if (userProperties != null)
+            {
+                if (userProperties.Count > short.MaxValue)
+                {
+                    throw Fx.Exception.Argument(userPropertiesName, 
+                        string.Format("A message cannot have more than '{0}' properties. Found '{1}' properties.", short.MaxValue, userProperties.Count));
+                }
+
+                foreach (KeyValuePair<string, object> entry in userProperties)
+                {
+                    int nameByteCount = SerializationUtilities.GetStringSize(entry.Key);
+
+                    if (nameByteCount > short.MaxValue)
+                    {
+                        throw Fx.Exception.Argument(userPropertiesName,
+                            string.Format("The size of message property '{0}' exceeds the limit of '{1}' bytes.", entry.Key, short.MaxValue));
+                    }
+
+                    PropertyValueType typeId = SerializationUtilities.GetTypeId(entry.Value);
+                    if (typeId != PropertyValueType.Null)
+                    {
+                        byte[] valueBytes = SerializationUtilities.ConvertNativeValueToByteArray(typeId, entry.Value);
+
+                        if (valueBytes.Length > short.MaxValue)
+                        {
+                            throw Fx.Exception.Argument(userPropertiesName,
+                                string.Format("The size of message property '{0}' exceeds the limit of '{1}' bytes.", entry.Key, short.MaxValue));
+                        }
+                    }
+                }
+            }
+        }
         /// <summary>
         /// A collection used to store properties which are set by the Service Bus service.
         /// </summary>

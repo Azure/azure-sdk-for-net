@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -218,6 +219,34 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 finally
                 {
                     await queueClient.CloseAsync();
+                }
+            });
+        }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task LargeMessageUserPropertyShouldThrowArguementException()
+        {
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            {
+                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+
+                try
+                {
+                    string messageBody = "test message body";
+                    var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+                    message.UserProperties["test property"] = string.Empty.PadRight(short.MaxValue + 1, '.');
+                    await Assert.ThrowsAsync<ArgumentException>(async () => await sender.SendAsync(message));
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(e);
+                    throw;
+                }
+                finally
+                {
+                    await sender.CloseAsync();
                 }
             });
         }
