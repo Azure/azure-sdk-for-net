@@ -30,7 +30,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="account">The Azure Remote Rendering account details.</param>
         /// <param name="accessToken">An access token used to access the specified Azure Remote Rendering account.</param>
         /// <param name="options">The options.</param>
-        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AccessToken accessToken, RemoteRenderingClientOptions? options = null)
+        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AccessToken accessToken, RemoteRenderingClientOptions options = null)
             : this(remoteRenderingEndpoint, account, new StaticAccessTokenCredential(accessToken), options) { }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="account">The Azure Remote Rendering account details.</param>
         /// <param name="keyCredential">The Azure Remote Rendering account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
-        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AzureKeyCredential keyCredential, RemoteRenderingClientOptions? options = null)
+        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, AzureKeyCredential keyCredential, RemoteRenderingClientOptions options = null)
             : this(remoteRenderingEndpoint, account, new MixedRealityAccountKeyCredential(account.AccountId, keyCredential), options) { }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="account">The Azure Remote Rendering account details.</param>
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
         /// <param name="options">The options.</param>
-        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, TokenCredential credential, RemoteRenderingClientOptions? options = null)
+        public RemoteRenderingClient(Uri remoteRenderingEndpoint, RemoteRenderingAccount account, TokenCredential credential, RemoteRenderingClientOptions options = null)
         {
             Argument.AssertNotNull(account, nameof(account));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -170,7 +170,7 @@ namespace Azure.MixedReality.RemoteRendering
                     throw;
                 }
             }
-            Page<AssetConversion> NextPageFunc(string? nextLink, int? pageSizeHint)
+            Page<AssetConversion> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetConversions)}");
                 scope.Start();
@@ -207,7 +207,7 @@ namespace Azure.MixedReality.RemoteRendering
                     throw;
                 }
             }
-            async Task<Page<AssetConversion>> NextPageFunc(string? nextLink, int? pageSizeHint)
+            async Task<Page<AssetConversion>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetConversionsAync)}");
                 scope.Start();
@@ -394,7 +394,7 @@ namespace Azure.MixedReality.RemoteRendering
                     throw;
                 }
             }
-            Page<RenderingSession> NextPageFunc(string? nextLink, int? pageSizeHint)
+            Page<RenderingSession> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetSessions)}");
                 scope.Start();
@@ -431,7 +431,7 @@ namespace Azure.MixedReality.RemoteRendering
                     throw;
                 }
             }
-            async Task<Page<RenderingSession>> NextPageFunc(string? nextLink, int? pageSizeHint)
+            async Task<Page<RenderingSession>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(GetSessions)}");
                 scope.Start();

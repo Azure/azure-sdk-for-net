@@ -5,8 +5,6 @@
     <PackageTags>Azure MixedReality</PackageTags>
     <Authors>Microsoft</Authors>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <Nullable>enable</Nullable>
-    <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.MixedReality.Authentication\src\Azure.MixedReality.Authentication.csproj" />
