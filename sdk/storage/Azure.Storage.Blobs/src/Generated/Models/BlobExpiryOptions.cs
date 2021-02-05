@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The BlobExpiryOptions. </summary>
-    public readonly partial struct BlobExpiryOptions : IEquatable<BlobExpiryOptions>
+    internal readonly partial struct BlobExpiryOptions : IEquatable<BlobExpiryOptions>
     {
         private readonly string _value;
 

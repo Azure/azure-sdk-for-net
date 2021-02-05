@@ -40,6 +40,11 @@ namespace Azure.Storage.Blobs.Models
         /// If null, a new blob version was not created.
         /// </summary>
         public string VersionId { get; internal set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal BlobInfo() { }
     }
 
     /// <summary>

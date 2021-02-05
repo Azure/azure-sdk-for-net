@@ -12,24 +12,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> signed identifier. </summary>
     public partial class BlobSignedIdentifier
     {
-        /// <summary> Initializes a new instance of BlobSignedIdentifier. </summary>
-        /// <param name="id"> a unique id. </param>
-        /// <param name="accessPolicy"> An Access policy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accessPolicy"/> is null. </exception>
-        public BlobSignedIdentifier(string id, BlobAccessPolicy accessPolicy)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (accessPolicy == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicy));
-            }
-
-            Id = id;
-            AccessPolicy = accessPolicy;
-        }
 
         /// <summary> a unique id. </summary>
         public string Id { get; set; }

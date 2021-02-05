@@ -10,12 +10,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> the retention policy which determines how long the associated data should persist. </summary>
     public partial class BlobRetentionPolicy
     {
-        /// <summary> Initializes a new instance of BlobRetentionPolicy. </summary>
-        /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
-        public BlobRetentionPolicy(bool enabled)
-        {
-            Enabled = enabled;
-        }
 
         /// <summary> Initializes a new instance of BlobRetentionPolicy. </summary>
         /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
@@ -32,7 +26,5 @@ namespace Azure.Storage.Blobs.Models
         public bool Enabled { get; set; }
         /// <summary> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </summary>
         public int? Days { get; set; }
-        /// <summary> Indicates whether permanent delete is allowed on this storage account. </summary>
-        public bool? AllowPermanentDelete { get; set; }
     }
 }

@@ -21,5 +21,10 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobMetrics instance.
         /// </summary>
         public BlobMetrics() { }
+
+        internal BlobMetrics(bool enabled)
+        {
+            Enabled = enabled;
+        }
     }
 }

@@ -12,8 +12,13 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobStaticWebsite
     {
         /// <summary>
-        /// Creates a new BlobStaticWebsite instance
+        /// Creates a new BlobStaticWebsite instance.
         /// </summary>
         public BlobStaticWebsite() { }
+
+        internal BlobStaticWebsite(bool enabled)
+        {
+            Enabled = enabled;
+        }
     }
 }

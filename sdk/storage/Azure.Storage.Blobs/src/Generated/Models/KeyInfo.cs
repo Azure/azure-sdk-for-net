@@ -10,7 +10,7 @@ using System;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Key information. </summary>
-    public partial class KeyInfo
+    internal partial class KeyInfo
     {
         /// <summary> Initializes a new instance of KeyInfo. </summary>
         /// <param name="start"> The date-time the key is active in ISO 8601 UTC time. </param>
