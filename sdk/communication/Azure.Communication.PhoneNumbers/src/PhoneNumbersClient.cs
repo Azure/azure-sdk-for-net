@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public PhoneNumbersClient(Uri endpoint, AzureKeyCredential keyCredential, PhoneNumbersClientOptions? options = default)
+        public PhoneNumbersClient(Uri endpoint, AzureKeyCredential keyCredential, PhoneNumbersClientOptions options = default)
             : this(
                 AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 AssertNotNull(keyCredential, nameof(keyCredential)),
@@ -53,7 +53,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="tokenCredential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         /// </summary>
-        public PhoneNumbersClient(Uri endpoint, TokenCredential tokenCredential, PhoneNumbersClientOptions? options = default)
+        public PhoneNumbersClient(Uri endpoint, TokenCredential tokenCredential, PhoneNumbersClientOptions options = default)
             : this(
                 AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 AssertNotNull(tokenCredential, nameof(tokenCredential)),

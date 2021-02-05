@@ -22,7 +22,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumbersClientOptions"/>.
         /// </summary>
-        public PhoneNumbersClientOptions(ServiceVersion version = LatestVersion, RetryOptions? retryOptions = default, HttpPipelineTransport? transport = default)
+        public PhoneNumbersClientOptions(ServiceVersion version = LatestVersion, RetryOptions retryOptions = default, HttpPipelineTransport transport = default)
         {
             ApiVersion = version switch
             {

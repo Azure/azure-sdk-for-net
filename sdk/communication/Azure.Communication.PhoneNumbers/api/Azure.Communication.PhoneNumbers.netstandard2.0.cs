@@ -21,8 +21,8 @@ namespace Azure.Communication.PhoneNumbers
         protected PhoneNumbersClient() { }
         public PhoneNumbersClient(string connectionString) { }
         public PhoneNumbersClient(string connectionString, Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions options) { }
-        public PhoneNumbersClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions? options = null) { }
-        public PhoneNumbersClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions? options = null) { }
+        public PhoneNumbersClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions options = null) { }
+        public PhoneNumbersClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions options = null) { }
         public virtual Azure.Response<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> GetByNumber(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber>> GetByNumberAsync(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> ListPhoneNumbers(int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -41,7 +41,7 @@ namespace Azure.Communication.PhoneNumbers
     public partial class PhoneNumbersClientOptions : Azure.Core.ClientOptions
     {
         public const Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion LatestVersion = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V1;
-        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V1, Azure.Core.RetryOptions? retryOptions = null, Azure.Core.Pipeline.HttpPipelineTransport? transport = null) { }
+        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V1, Azure.Core.RetryOptions retryOptions = null, Azure.Core.Pipeline.HttpPipelineTransport transport = null) { }
         public enum ServiceVersion
         {
             V1 = 1,
