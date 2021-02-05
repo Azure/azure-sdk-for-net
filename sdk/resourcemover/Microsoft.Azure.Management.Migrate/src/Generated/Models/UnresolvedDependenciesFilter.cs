@@ -14,26 +14,26 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
     using System.Linq;
 
     /// <summary>
-    /// Gets or sets the resource settings.
+    /// Unresolved dependencies contract.
     /// </summary>
-    public partial class ResourceSettings
+    public partial class UnresolvedDependenciesFilter
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceSettings class.
+        /// Initializes a new instance of the UnresolvedDependenciesFilter
+        /// class.
         /// </summary>
-        public ResourceSettings()
+        public UnresolvedDependenciesFilter()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceSettings class.
+        /// Initializes a new instance of the UnresolvedDependenciesFilter
+        /// class.
         /// </summary>
-        /// <param name="targetResourceName">Gets or sets the target Resource
-        /// name.</param>
-        public ResourceSettings(string targetResourceName)
+        public UnresolvedDependenciesFilter(UnresolvedDependenciesFilterProperties properties = default(UnresolvedDependenciesFilterProperties))
         {
-            TargetResourceName = targetResourceName;
+            Properties = properties;
             CustomInit();
         }
 
@@ -43,10 +43,9 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the target Resource name.
         /// </summary>
-        [JsonProperty(PropertyName = "targetResourceName")]
-        public string TargetResourceName { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public UnresolvedDependenciesFilterProperties Properties { get; set; }
 
     }
 }

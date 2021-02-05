@@ -14,26 +14,27 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
     using System.Linq;
 
     /// <summary>
-    /// Gets or sets the resource settings.
+    /// Summary item.
     /// </summary>
-    public partial class ResourceSettings
+    public partial class Summary
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceSettings class.
+        /// Initializes a new instance of the Summary class.
         /// </summary>
-        public ResourceSettings()
+        public Summary()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceSettings class.
+        /// Initializes a new instance of the Summary class.
         /// </summary>
-        /// <param name="targetResourceName">Gets or sets the target Resource
-        /// name.</param>
-        public ResourceSettings(string targetResourceName)
+        /// <param name="count">Gets the count.</param>
+        /// <param name="item">Gets the item.</param>
+        public Summary(int? count = default(int?), string item = default(string))
         {
-            TargetResourceName = targetResourceName;
+            Count = count;
+            Item = item;
             CustomInit();
         }
 
@@ -43,10 +44,16 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the target Resource name.
+        /// Gets the count.
         /// </summary>
-        [JsonProperty(PropertyName = "targetResourceName")]
-        public string TargetResourceName { get; set; }
+        [JsonProperty(PropertyName = "count")]
+        public int? Count { get; set; }
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        [JsonProperty(PropertyName = "item")]
+        public string Item { get; set; }
 
     }
 }

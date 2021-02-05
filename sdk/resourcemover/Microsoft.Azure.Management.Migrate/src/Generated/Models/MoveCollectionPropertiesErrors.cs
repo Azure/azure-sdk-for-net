@@ -10,30 +10,30 @@
 
 namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Gets or sets the resource settings.
+    /// Defines the move collection errors.
     /// </summary>
-    public partial class ResourceSettings
+    public partial class MoveCollectionPropertiesErrors : MoveResourceError
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceSettings class.
+        /// Initializes a new instance of the MoveCollectionPropertiesErrors
+        /// class.
         /// </summary>
-        public ResourceSettings()
+        public MoveCollectionPropertiesErrors()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceSettings class.
+        /// Initializes a new instance of the MoveCollectionPropertiesErrors
+        /// class.
         /// </summary>
-        /// <param name="targetResourceName">Gets or sets the target Resource
-        /// name.</param>
-        public ResourceSettings(string targetResourceName)
+        /// <param name="properties">The move resource error body.</param>
+        public MoveCollectionPropertiesErrors(MoveResourceErrorBody properties = default(MoveResourceErrorBody))
+            : base(properties)
         {
-            TargetResourceName = targetResourceName;
             CustomInit();
         }
 
@@ -41,12 +41,6 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the target Resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "targetResourceName")]
-        public string TargetResourceName { get; set; }
 
     }
 }
