@@ -14,28 +14,26 @@ namespace Microsoft.Azure.Management.Synapse.Models
     using System.Linq;
 
     /// <summary>
-    /// Error details.
+    /// Dynamic Executor Allocation Properties
     /// </summary>
-    /// <remarks>
-    /// Contains details when the response code indicates an error.
-    /// </remarks>
-    public partial class ErrorContract
+    public partial class DynamicExecutorAllocation
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorContract class.
+        /// Initializes a new instance of the DynamicExecutorAllocation class.
         /// </summary>
-        public ErrorContract()
+        public DynamicExecutorAllocation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorContract class.
+        /// Initializes a new instance of the DynamicExecutorAllocation class.
         /// </summary>
-        /// <param name="error">The error details.</param>
-        public ErrorContract(ErrorResponse error = default(ErrorResponse))
+        /// <param name="enabled">Indicates whether Dynamic Executor Allocation
+        /// is enabled or not.</param>
+        public DynamicExecutorAllocation(bool? enabled = default(bool?))
         {
-            Error = error;
+            Enabled = enabled;
             CustomInit();
         }
 
@@ -45,10 +43,11 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error details.
+        /// Gets or sets indicates whether Dynamic Executor Allocation is
+        /// enabled or not.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorResponse Error { get; set; }
+        [JsonProperty(PropertyName = "enabled")]
+        public bool? Enabled { get; set; }
 
     }
 }

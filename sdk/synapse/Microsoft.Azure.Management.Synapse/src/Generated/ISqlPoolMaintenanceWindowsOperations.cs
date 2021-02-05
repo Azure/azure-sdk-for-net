@@ -19,71 +19,27 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SqlV3Operations operations.
+    /// SqlPoolMaintenanceWindowsOperations operations.
     /// </summary>
-    public partial interface ISqlV3Operations
+    public partial interface ISqlPoolMaintenanceWindowsOperations
     {
         /// <summary>
-        /// All operations
+        /// Get a SQL pool's Maintenance Windows.
         /// </summary>
         /// <remarks>
-        /// Get all available operations
-        /// </remarks>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorContractException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        Task<AzureOperationResponse<IList<AvailableRpOperation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get operation result
-        /// </summary>
-        /// <remarks>
-        /// Get the result of an operation
+        /// Get a SQL pool's Maintenance Windows.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace.
+        /// The name of the workspace
         /// </param>
-        /// <param name='operationId'>
-        /// Operation ID
+        /// <param name='sqlPoolName'>
+        /// SQL pool name
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorContractException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> GetLocationHeaderResultWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get operation status
-        /// </summary>
-        /// <remarks>
-        /// Get the status of an operation
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace.
-        /// </param>
-        /// <param name='operationId'>
-        /// Operation ID
+        /// <param name='maintenanceWindowName'>
+        /// Maintenance window name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -91,7 +47,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorContractException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -100,6 +56,41 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationResource>> GetAzureAsyncHeaderResultWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MaintenanceWindows>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, string maintenanceWindowName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates or updates a Sql pool's maintenance windows settings.
+        /// </summary>
+        /// <remarks>
+        /// Creates or updates a Sql pool's maintenance windows settings.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace
+        /// </param>
+        /// <param name='sqlPoolName'>
+        /// SQL pool name
+        /// </param>
+        /// <param name='maintenanceWindowName'>
+        /// Maintenance window name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The required parameters for creating or updating Maintenance
+        /// Windows settings
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, string maintenanceWindowName, MaintenanceWindows parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
