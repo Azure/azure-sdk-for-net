@@ -109,26 +109,6 @@ namespace Azure.Core.Pipeline
 
             if (async)
             {
-                await AuthenticateRequestAsync(message, new TokenRequestContext(_scopes, message.Request.ClientRequestId), async).ConfigureAwait(false);
-
-            // If the message already has a challenge response due to a sub-class pre-processing the request, get the context from the challenge.
-            if (message.HasResponse && message.Response.Status == 401 && message.Response.Headers.Contains("WWW-Authenticate"))
-            {
-                if (!TryGetTokenRequestContextFromChallenge(message, out context))
-                {
-                    // We were unsuccessful in handling the challenge, so bail out now.
-                    return;
-                }
-            }
-            else
-            {
-                context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
-            }
-
-            await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
-
-            if (async)
-            {
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
@@ -173,7 +153,8 @@ namespace Azure.Core.Pipeline
                 headerValue = _accessTokenCache.GetHeaderValueAsync(message, context, async).EnsureCompleted();
             }
 
-            message.Request.SetHeader(HttpHeader.Names.Authorization, headerValue);
+            //TODO: Revert to Request.SetHeader when this migrates out of Shared source.
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
 
         private static string? GetClaimsChallenge(Response response)
@@ -460,12 +441,12 @@ namespace Azure.Core.Pipeline
                 catch (OperationCanceledException oce) when (cts.IsCancellationRequested)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow));
-                    AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
+                    AzureCoreSharedEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
                 }
                 catch (Exception e)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
-                    AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
+                    AzureCoreSharedEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
                 }
                 finally
                 {
