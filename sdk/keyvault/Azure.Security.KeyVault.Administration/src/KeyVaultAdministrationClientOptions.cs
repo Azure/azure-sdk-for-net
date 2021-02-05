@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The Key Vault API version 7.2-preview.
+            /// The Key Vault API version 7.2.
             /// </summary>
             V7_2 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores

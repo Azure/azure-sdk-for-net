@@ -12,9 +12,10 @@ extends:
 
     # Managed HSMs can be allocated 1 per subscription per region.
     # Declare a custom platform to limit test runs to a single HSM.
-    AdditionalPlatforms:
-      Linux_HSM:
-        OSVmImage: ubuntu-18.04
-        TestTargetFramework: netcoreapp2.1
-        ArmTemplateParameters: "@{enableHsm = $true}"
-        SupportedClouds: Public,UsGov
+    # TODO: Enable once https://github.com/Azure/azure-sdk-for-net/issues/18501 is resolved
+    # AdditionalPlatforms:
+    #   Linux_HSM:
+    #     OSVmImage: ubuntu-18.04
+    #     TestTargetFramework: netcoreapp2.1
+    #     ArmTemplateParameters: "@{enableHsm = $true}"
+    #     SupportedClouds: Public,UsGov

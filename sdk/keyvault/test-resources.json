@@ -34,10 +34,20 @@
             "type": "string",
             "defaultValue": "southcentralus",
             "allowedValues": [
+                "australiacentral",
+                "canadacentral",
+                "centralus",
+                "eastasia",
                 "eastus2",
-                "southcentralus",
+                "koreacentral",
                 "northeurope",
-                "westeurope"
+                "southafricanorth",
+                "southcentralus",
+                "southeastasia",
+                "switzerlandnorth",
+                "uksouth",
+                "westeurope",
+                "westus"
             ],
             "metadata": {
                 "description": "The location of the Managed HSM. By default, this is 'southcentralus'."
