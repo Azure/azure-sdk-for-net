@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class Sample5_HelloWorldDataset : SamplesBase<SynapseTestEnvironment>
     {
-        [RecordedTest]
+        [Test]
         public async Task DatasetSample()
         {
             #region Snippet:CreateDatasetClientPrep

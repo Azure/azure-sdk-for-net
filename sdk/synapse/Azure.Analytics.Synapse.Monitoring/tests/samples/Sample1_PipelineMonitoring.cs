@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Samples
     /// </summary>
     public partial class Sample1_PipelineMonitoring : SamplesBase<SynapseTestEnvironment>
     {
-        [RecordedTest]
+        [Test]
         public void MonitorPipelineRuns()
         {
             #region Snippet:CreateMonitoringClient

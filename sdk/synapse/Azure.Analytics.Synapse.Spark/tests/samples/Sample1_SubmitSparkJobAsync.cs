@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
     /// </summary>
     public partial class Sample1_SubmitSparkJobAsync : SamplesBase<SynapseTestEnvironment>
     {
-        [RecordedTest]
+        [Test]
         public async Task SubmitSparkJobAsync()
         {
             #region Snippet:CreateSparkBatchClientAsync

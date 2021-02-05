@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Samples
     public partial class Sample1_HelloManagedPrivateEndpoint : SamplesBase<SynapseTestEnvironment>
     {
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17455")]
-        [RecordedTest]
+        [Test]
         public void TestManagedPrivateEndpoint()
         {
             #region Snippet:CreateManagedPrivateClient

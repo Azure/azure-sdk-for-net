@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     public partial class Sample4_HelloWorldDataFlow : SamplesBase<SynapseTestEnvironment>
     {
-        [RecordedTest]
+        [Test]
         public async Task DataFlowSample()
         {
             #region Snippet:CreateDataFlowClientPrep

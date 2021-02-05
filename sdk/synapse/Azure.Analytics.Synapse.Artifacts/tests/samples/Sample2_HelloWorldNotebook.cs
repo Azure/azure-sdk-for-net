@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
     /// </summary>
     public partial class Sample2_HelloWorldNotebook : SamplesBase<SynapseTestEnvironment>
     {
-        [RecordedTest]
+        [Test]
         public async Task CreateAndUploadNotebook()
         {
             #region Snippet:CreateNotebookClient
