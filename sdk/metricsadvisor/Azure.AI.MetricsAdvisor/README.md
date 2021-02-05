@@ -310,13 +310,14 @@ Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and t
 
 ```C# Snippet:CreateHookAsync
 string hookName = "Sample hook";
-var emailsToAlert = new List<string>()
+
+var emailHook = new EmailNotificationHook()
 {
-    "email1@sample.com",
-    "email2@sample.com"
+    Name = hookName
 };
 
-var emailHook = new EmailNotificationHook(hookName, emailsToAlert);
+emailHook.EmailsToAlert.Add("email1@sample.com");
+emailHook.EmailsToAlert.Add("email2@sample.com");
 
 Response<string> response = await adminClient.CreateHookAsync(emailHook);
 
