@@ -73,7 +73,7 @@ An example is `https://remoterendering.eastus2.mixedreality.azure.com`.
 
 Use the `AccountKeyCredential` object to use an account identifier and account key to authenticate:
 
-```csharp
+```csharp Snippet:CreateAClient
 RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 AzureKeyCredential accountKeyCredential = new AzureKeyCredential(accountKey);
 
@@ -84,7 +84,7 @@ RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint
 
 Use the `ClientSecretCredential` object to perform client secret authentication.
 
-```csharp
+```csharp Snippet:CreateAClientWithAAD
 RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 
 TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions
@@ -99,7 +99,7 @@ RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint
 
 Use the `DeviceCodeCredential` object to perform device code authentication.
 
-```csharp
+```csharp Snippet:CreateAClientWithDeviceCode
 RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 
 Task deviceCodeCallback(DeviceCodeInfo deviceCodeInfo, CancellationToken cancellationToken)
@@ -125,7 +125,7 @@ information about using device code authentication flow.
 Use the `DefaultAzureCredential` object with `includeInteractiveCredentials: true` to use default interactive authentication
 flow:
 
-```csharp
+```csharp Snippet:CreateAClientWithAzureCredential
 RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 TokenCredential credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
 
@@ -138,7 +138,7 @@ You can pass a Mixed Reality access token as an `AccessToken` previously retriev
 [Mixed Reality STS service](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mixedreality/Azure.MixedReality.Authentication)
 to be used with a Mixed Reality client library:
 
-```csharp
+```csharp Snippet:CreateAClientWithStaticAccessToken
 RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
 
 // GetMixedRealityAccessTokenFromWebService is a hypothetical method that retrieves

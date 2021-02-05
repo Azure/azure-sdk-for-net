@@ -13,24 +13,25 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
     public class RemoteRenderingConvertAssetSample : SamplesBase<RemoteRenderingTestEnvironment>
     {
-        private readonly RemoteRenderingAccount _account;
-        private readonly string _accountKey;
-        private readonly Uri _serviceEndpoint;
-
-        public RemoteRenderingConvertAssetSample()
+        private RemoteRenderingClient GetClient()
         {
-            _account = new RemoteRenderingAccount(new Guid(TestEnvironment.AccountId), TestEnvironment.AccountDomain);
-            _accountKey = TestEnvironment.AccountKey;
-            _serviceEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            string accountKey = TestEnvironment.AccountKey;
+            Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
+
+            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
+            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(accountKey);
+
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, accountKeyCredential);
+            return client;
         }
 
         [Test]
         [Explicit("This test assume DRAM is set up, so we do not run them live.")]
         public void ConvertSimpleAsset()
         {
-            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
-
-            RemoteRenderingClient client = new RemoteRenderingClient(_serviceEndpoint, _account, accountKeyCredential);
+            RemoteRenderingClient client = GetClient();
 
             Uri storageUri = new Uri($"https://{TestEnvironment.StorageAccountName}.blob.core.windows.net/{TestEnvironment.BlobContainerName}");
 
@@ -65,9 +66,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
         [Explicit("This test assume DRAM is set up, so we do not run them live.")]
         public void ConvertMoreComplexAsset()
         {
-            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
-
-            RemoteRenderingClient client = new RemoteRenderingClient(_serviceEndpoint, _account, accountKeyCredential);
+            RemoteRenderingClient client = GetClient();
 
             Uri inputStorageUri = new Uri($"https://{TestEnvironment.StorageAccountName}.blob.core.windows.net/{TestEnvironment.BlobContainerName}");
             Uri outputStorageUri = new Uri($"https://{TestEnvironment.StorageAccountName}.blob.core.windows.net/{TestEnvironment.BlobContainerName}");
@@ -103,9 +102,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
         [Explicit("This test assume DRAM is set up, so we do not run them live.")]
         public void GetConversions()
         {
-            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
-
-            RemoteRenderingClient client = new RemoteRenderingClient(_serviceEndpoint, _account, accountKeyCredential);
+            RemoteRenderingClient client = GetClient();
 
             Console.WriteLine("Successful conversions since yesterday:");
             #region Snippet:GetConversions

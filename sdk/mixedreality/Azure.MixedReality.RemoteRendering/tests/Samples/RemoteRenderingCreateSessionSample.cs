@@ -5,29 +5,41 @@ using System;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Threading;
+using Azure.Core;
+using Azure.Identity;
+using System.Reflection.Emit;
+using System.Threading.Tasks;
 
 namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 {
     public class RemoteRenderingCreateSessionSample : SamplesBase<RemoteRenderingTestEnvironment>
     {
-        private readonly RemoteRenderingAccount _account;
-        private readonly string _accountKey;
-        private readonly Uri _serviceEndpoint;
-
-        public RemoteRenderingCreateSessionSample()
+        /// <summary>
+        /// Demonstrates how to obtain a client with an AzureKeyCredential.
+        /// Methods which demonstrate other authentication schemes are at the bottom of the file.
+        /// </summary>
+        /// <returns></returns>
+        private RemoteRenderingClient GetClientWithAccountKey()
         {
-            _account = new RemoteRenderingAccount(new Guid(TestEnvironment.AccountId), TestEnvironment.AccountDomain);
-            _accountKey = TestEnvironment.AccountKey;
-            _serviceEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            string accountKey = TestEnvironment.AccountKey;
+            Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
+
+            #region Snippet:CreateAClient
+            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
+            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(accountKey);
+
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, accountKeyCredential);
+            #endregion Snippet:CreateAClient
+            return client;
         }
 
         [Test]
         [Explicit("To avoid launching too many sessions during testing, we rely on the live tests.")]
         public void CreateSession()
         {
-            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
-
-            RemoteRenderingClient client = new RemoteRenderingClient(_serviceEndpoint, _account, accountKeyCredential);
+            RemoteRenderingClient client = GetClientWithAccountKey();
 
             #region Snippet:CreateASession
 
@@ -65,9 +77,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
         [Explicit("To avoid launching too many sessions during testing, we rely on the live tests.")]
         public void QueryAndUpdateASession()
         {
-            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
-
-            RemoteRenderingClient client = new RemoteRenderingClient(_serviceEndpoint, _account, accountKeyCredential);
+            RemoteRenderingClient client = GetClientWithAccountKey();
 
             string sessionId = Guid.NewGuid().ToString();
 
@@ -97,9 +107,7 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
         [Explicit("To avoid launching too many sessions during testing, we rely on the live tests.")]
         public void GetInformationAboutSessions()
         {
-            AzureKeyCredential accountKeyCredential = new AzureKeyCredential(_accountKey);
-
-            RemoteRenderingClient client = new RemoteRenderingClient(_serviceEndpoint, _account, accountKeyCredential);
+            RemoteRenderingClient client = GetClientWithAccountKey();
 
             // Ensure there's at least one session to query.
             string sessionId = Guid.NewGuid().ToString();
@@ -125,5 +133,100 @@ namespace Azure.MixedReality.RemoteRendering.Tests.Samples
 
             client.StopSession(sessionId);
         }
+
+        #region Other ways of authenticating the RemoteRenderingClient.
+
+        private RemoteRenderingClient GetClientWithAAD()
+        {
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            string tenantId = TestEnvironment.TenantId;
+            string clientId = TestEnvironment.ClientId;
+            string clientSecret = TestEnvironment.ClientSecret;
+            Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
+
+            #region Snippet:CreateAClientWithAAD
+            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
+
+            TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions
+            {
+                AuthorityHost = new Uri($"https://login.microsoftonline.com/{tenantId}")
+            });
+
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, credential);
+            #endregion Snippet:CreateAClientWithAAD
+            return client;
+        }
+
+        private RemoteRenderingClient GetClientWithDeviceCode()
+        {
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            string tenantId = TestEnvironment.TenantId;
+            string clientId = TestEnvironment.ClientId;
+            Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
+
+            #region Snippet:CreateAClientWithDeviceCode
+            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
+
+            Task deviceCodeCallback(DeviceCodeInfo deviceCodeInfo, CancellationToken cancellationToken)
+            {
+                Console.WriteLine(deviceCodeInfo.Message);
+                return Task.FromResult(0);
+            }
+
+            TokenCredential credential = new DeviceCodeCredential(deviceCodeCallback, tenantId, clientId, new TokenCredentialOptions
+            {
+                AuthorityHost = new Uri($"https://login.microsoftonline.com/{tenantId}"),
+            });
+
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, credential);
+            #endregion Snippet:CreateAClientWithDeviceCode
+            return client;
+        }
+
+        private RemoteRenderingClient GetClientWithDefaultAzureCredential()
+        {
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
+
+            #region Snippet:CreateAClientWithAzureCredential
+            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
+            TokenCredential credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
+
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, credential);
+            #endregion Snippet:CreateAClientWithAzureCredential
+
+            return client;
+        }
+
+        private AccessToken GetMixedRealityAccessTokenFromWebService()
+        {
+            return new AccessToken("TokenObtainedFromStsClientRunningInWebservice", DateTimeOffset.MaxValue);
+        }
+
+        private RemoteRenderingClient GetClientWithStaticAccessToken()
+        {
+            Guid accountId = new Guid(TestEnvironment.AccountId);
+            string accountDomain = TestEnvironment.AccountDomain;
+            Uri remoteRenderingEndpoint = new Uri(TestEnvironment.ServiceEndpoint);
+
+            #region Snippet:CreateAClientWithStaticAccessToken
+            RemoteRenderingAccount account = new RemoteRenderingAccount(accountId, accountDomain);
+
+            // GetMixedRealityAccessTokenFromWebService is a hypothetical method that retrieves
+            // a Mixed Reality access token from a web service. The web service would use the
+            // MixedRealityStsClient and credentials to obtain an access token to be returned
+            // to the client.
+            AccessToken accessToken = GetMixedRealityAccessTokenFromWebService();
+
+            RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, account, accessToken);
+            #endregion Snippet:CreateAClientWithStaticAccessToken
+
+            return client;
+        }
+
+        #endregion
     }
 }
