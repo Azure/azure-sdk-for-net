@@ -2249,9 +2249,12 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="actions"></param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options"></param>
+        /// <param name="actions">
+        /// The different actions to pass as arguments.
+        /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
+        /// </param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -2271,9 +2274,12 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="actions"></param>
+        /// <param name="actions">
+        /// The different actions to pass as arguments.
+        /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
+        /// </param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options"></param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -2293,8 +2299,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="actions"></param>
-        /// <param name="options"></param>
+        /// <param name="actions">
+        /// The different actions to pass as arguments.
+        /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
+        /// </param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -2314,8 +2323,11 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The list of documents to analyze.</param>
-        /// <param name="actions"></param>
-        /// <param name="options"></param>
+        /// <param name="actions">
+        /// The different actions to pass as arguments.
+        /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
+        /// </param>
+        /// <param name="options">Sets the IncludeStatistcs property on the analyze action operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
