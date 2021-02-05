@@ -77,10 +77,8 @@ namespace Azure.Communication.PhoneNumbers
         { }
 
         private PhoneNumbersClient(string endpoint, HttpPipeline httpPipeline, PhoneNumbersClientOptions options)
-        {
-            _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new PhoneNumbersRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-        }
+            : this(new ClientDiagnostics(options), httpPipeline, endpoint, options.ApiVersion)
+        { }
 
         #endregion
 
