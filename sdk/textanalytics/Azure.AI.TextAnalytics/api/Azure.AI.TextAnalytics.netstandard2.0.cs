@@ -408,18 +408,11 @@ namespace Azure.AI.TextAnalytics
         public static bool operator !=(Azure.AI.TextAnalytics.StringIndexType left, Azure.AI.TextAnalytics.StringIndexType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TaskState
-    {
-        internal TaskState() { }
-        public System.DateTimeOffset LastUpdateDateTime { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Status { get { throw null; } }
-    }
     public partial class TextAnalyticsActionDetails
     {
         internal TextAnalyticsActionDetails() { }
         public System.DateTimeOffset CompletedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.TextAnalyticsError> Errors { get { throw null; } }
+        public Azure.AI.TextAnalytics.TextAnalyticsError Errors { get { throw null; } }
         public bool HasError { get { throw null; } }
     }
     public partial class TextAnalyticsActions
