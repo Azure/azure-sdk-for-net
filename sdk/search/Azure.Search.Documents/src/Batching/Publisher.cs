@@ -101,7 +101,7 @@ namespace Azure.Search.Documents.Batching
         protected CancellationToken PublisherCancellationToken { get; }
 
         /// <summary>
-        /// Gets and sets a value indicating the number of actions to group into a batch
+        /// Gets or sets a value indicating the number of actions to group into a batch
         /// when tuning the behavior of the publisher.
         /// </summary>
         protected int BatchActionCount { get; set; }
