@@ -7,7 +7,6 @@ using System.Reflection;
 using Azure.Identity;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
@@ -29,13 +28,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase("path2", ConnectionStringWithEventHub)]
         public void EntityPathInConnectionString(string expectedPathName, string connectionString)
         {
-            EventHubOptions options = new EventHubOptions
-            {
-                ConnectionOptions = new EventHubConnectionOptions
-                {
-                    CustomEndpointAddress = new Uri("http://mycustomendpoint.com")
-                }
-            };
+            EventHubOptions options = new EventHubOptions();
 
             // Test sender
             options.AddSender(expectedPathName, connectionString);
