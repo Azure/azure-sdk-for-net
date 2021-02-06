@@ -503,7 +503,7 @@ The Analyze functionality allows to choose which of the supported Text Analytics
 
     AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
 
-    operation.WaitForCompletionAsync();
+    await operation.WaitForCompletionAsync();
 
     foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
     {

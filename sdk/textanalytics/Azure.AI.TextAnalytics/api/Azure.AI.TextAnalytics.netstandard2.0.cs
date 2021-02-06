@@ -611,6 +611,7 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Failed { get { throw null; } }
         public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus NotStarted { get { throw null; } }
         public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus PartiallyCompleted { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus PartiallySucceeded { get { throw null; } }
         public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Rejected { get { throw null; } }
         public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Running { get { throw null; } }
         public static Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Succeeded { get { throw null; } }
