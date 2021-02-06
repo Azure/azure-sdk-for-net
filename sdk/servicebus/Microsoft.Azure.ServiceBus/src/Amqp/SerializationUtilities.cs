@@ -153,7 +153,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     return decimalBytes;
 
                 default:
-                    throw new SerializationException(string.Format("Serialization operation failed due to unsupported type {0}.", value.GetType().FullName);
+                    throw new SerializationException(string.Format("Serialization operation failed due to unsupported type {0}.", value.GetType().FullName));
             }
         }
 
