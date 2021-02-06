@@ -149,10 +149,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
             key.Deserialize(keyResponse.ContentStream);
             keyResponse.ContentStream.Position = 0;
 
-            MockResponse resultResponse = new MockResponse(200);
-            resultResponse.SetContent(@$"{{""kid"":""{KeyId}"",""value"":{value ?? @"""test"""}}}");
-
-            CryptographyClient client = CreateClient(key, new MockTransport(keyResponse, resultResponse));
+            CryptographyClient client = CreateClient(key, new MockTransport((_) =>
+            {
+                keyResponse.ContentStream.Position = 0;
+                return keyResponse;
+                }
+            ));
 
             object result = await thunk(client, "invalid");
             Assert.IsNotNull(result);
