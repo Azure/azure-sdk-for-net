@@ -13,7 +13,7 @@ namespace Azure.Communication.Sms.Tests.samples
     /// <summary>
     /// Samples to send sms
     /// </summary>
-    public partial class Sample1_SmsClient
+    public partial class Sample1_SmsClient : SamplesBase<SmsClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
@@ -21,15 +21,29 @@ namespace Azure.Communication.Sms.Tests.samples
         {
             SmsClient smsClient = CreateSmsClient();
 
-            #region Snippet:SendSms
-            /// Send an sms
-            SmsSendResult sendSmsResult = smsClient.Send(
-                from: "<leased-phone-number>",
-                to: "<to-phone-number>",
-                message: "<message-to-send>");
-
-            Console.WriteLine("MessageId: " + sendSmsResult.MessageId);
-            #endregion Snippet:SendSms
+            #region Snippet:Azure_Communication_SmsClient_Send_Troubleshooting
+            try
+            {
+                #region Snippet:Azure_Communication_SmsClient_Send
+                SmsSendResult result = smsClient.Send(
+                    //@@ from: "+18001230000", // Phone number acquired on your Azure Communication resource
+                    //@@ to: "+18005670000", // recipient's phone-number
+                    /*@@*/ from: TestEnvironment.PhoneNumber,
+                    /*@@*/ to: TestEnvironment.PhoneNumber,
+                    message: "Hello"); // message-to-send
+                Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
+                #endregion Snippet:Azure_Communication_SmsClient_Send
+                /*@@*/ Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            #endregion Snippet:Azure_Communication_SmsClient_Send_Troubleshooting
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
         }
 
         [Test]
@@ -38,37 +52,42 @@ namespace Azure.Communication.Sms.Tests.samples
         {
             SmsClient smsClient = CreateSmsClient();
 
-            #region Snippet:SendSms
+            #region Snippet:Azure_Communication_SmsClient_Send_SingleSmsWithOptions
             /// Send an sms to a single recipient
             SmsSendResult sendSmsResult = smsClient.Send(
-                from: "<leased-phone-number>",
-                to: "<to-phone-number>",
-                message: "<message-to-send>",
+                //@@ from: "+18001230000", // Phone number acquired on your Azure Communication resource
+                //@@ to: "+18005670000", // recipient's phone-number
+                /*@@*/ from: TestEnvironment.PhoneNumber,
+                /*@@*/ to: TestEnvironment.PhoneNumber,
+                message: "Hello", // message-to-send
                 options: new SmsSendOptions // OPTIONAL
-                    {
+                {
                     EnableDeliveryReport = true,
-                    Tag = "<custom-tags>",
+                    Tag = "customer-service", // custom tags
                 });
+            Console.WriteLine($" MessageId: {sendSmsResult.MessageId} Sent to: {sendSmsResult.To}");
+            /*@@*/ Assert.IsFalse(string.IsNullOrWhiteSpace(sendSmsResult.MessageId));
+            #endregion Snippet:Azure_Communication_SmsClient_Send_SingleSmsWithOptions
 
-            Console.WriteLine("MessageId: " + sendSmsResult.MessageId);
-            #endregion Snippet:SendSms
-
-            #region Snippet:SendGroupSms
+            #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
             /// send an sms to multiple recipients
             Pageable<SmsSendResult> results = smsClient.Send(
-                from: "<leased-phone-number>",
-                to: new[] { "<to-phone-number-1>", "<to-phone-number-2>", "<to-phone-number-3>" },
-                message: "<group-message-to-send>",
+                //@@ from: "+18001230000", // Phone number acquired on your Azure Communication resource
+                //@@ to: new[] { "+18005670000", "+18005670001", "+18005670002" }, // list of recipient's phone-numbers
+                /*@@*/ from: TestEnvironment.PhoneNumber,
+                /*@@*/ to: new[] { TestEnvironment.PhoneNumber, TestEnvironment.PhoneNumber },
+                message: "Holiday Promotion", // group message to send
                 options: new SmsSendOptions // OPTIONAL
-                    {
+                {
                     EnableDeliveryReport = true,
-                    Tag = "<custom-tags>",
+                    Tag = "marketing", // custom tags
                 });
             foreach (SmsSendResult result in results)
             {
                 Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
+                /*@@*/ Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
             }
-            #endregion Snippet:SendGroupSms
+            #endregion Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
         }
 
         [Test]
@@ -77,43 +96,45 @@ namespace Azure.Communication.Sms.Tests.samples
         {
             SmsClient smsClient = CreateSmsClient();
 
-            // SendSmsOptions is an optional field. It can be used
-            // to enable a delivery report to the Azure Event Grid
-            // and to add custom tags in the request
-            SmsSendOptions sendSmsOptions = new SmsSendOptions
-            {
-                EnableDeliveryReport = true,
-                Tag = "<custom-tags>",
-            };
-
-            #region Snippet:SendSms
+            #region Snippet:Azure_Communication_SmsClient_SendAsync_SingleSmsWithOptions
             /// send an sms to a single recipient asynchronously
             SmsSendResult sendSmsResult = await smsClient.SendAsync(
-                from: "<leased-phone-number>",
-                to: "<to-phone-number>",
-                message: "<message-to-send>",
-                sendSmsOptions); //OPTIONAL
+                from: TestEnvironment.PhoneNumber, // leased-phone-number
+                to: TestEnvironment.PhoneNumber, // recipient's phone-number
+                message: "Hello", //message-to-send
+                options: new SmsSendOptions // OPTIONAL
+                {
+                    EnableDeliveryReport = true,
+                    Tag = "customer-service", // custom tags
+                });
             Console.WriteLine($" MessageId: {sendSmsResult.MessageId} Sent to: {sendSmsResult.To}");
-            #endregion Snippet:SendSms
+            /*@@*/ Assert.IsFalse(string.IsNullOrWhiteSpace(sendSmsResult.MessageId));
+            #endregion Snippet:Azure_Communication_SmsClient_SendAsync_SingleSmsWithOptions
 
-            #region Snippet:SendGroupSms
+            #region Snippet:Azure_Communication_SmsClient_SendAsync_GroupSmsWithOptions
             /// send an sms to a multiple recipients asynchronously
             AsyncPageable<SmsSendResult> results = smsClient.SendAsync(
-                from: "<leased-phone-number>",
-                to: new[] { "<to-phone-number-1>", "<to-phone-number-2>", "<to-phone-number-3>" },
-                message: "<group-message-to-send>",
-                sendSmsOptions); // OPTIONAL
+                from: TestEnvironment.PhoneNumber, // leased-phone-number
+                to: new[] { TestEnvironment.PhoneNumber, TestEnvironment.PhoneNumber }, // list of phone numbers
+                message: "Holiday Promotion", // group-message-to-send
+                options: new SmsSendOptions // OPTIONAL
+                {
+                    EnableDeliveryReport = true,
+                    Tag = "marketing", // custom tags
+                });
             await foreach (SmsSendResult result in results)
             {
                 Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
+                /*@@*/ Assert.IsFalse(string.IsNullOrWhiteSpace(result.MessageId));
             }
-            #endregion Snippet:SendGroupSms
+            #endregion Snippet:Azure_Communication_SmsClient_SendAsync_GroupSmsWithOptions
         }
 
         private SmsClient CreateSmsClient()
         {
             #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
-            string connectionString = "YOUR_CONNECTION_STRING"; // Find your Communication Services resource in the Azure portal
+            //@@ string connectionString = YOUR_CONNECTION_STRING; // Find your Communication Services resource in the Azure portal
+            /*@@*/ string connectionString = TestEnvironment.ConnectionString;
             SmsClient client = new SmsClient(connectionString);
             #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
             return client;

@@ -1,6 +1,6 @@
 # Azure Communication SMS client library for .NET
 > Server Version: 
-Chat client: 2020-07-20-preview1
+Chat client: 2021-03-07
 
 This package contains a C# SDK for Azure Communication Services for SMS and Telephony.
 
@@ -32,7 +32,7 @@ using Azure.Communication.Sms;
 SMS clients can be authenticated using the connection string acquired from an Azure Communication Resource in the [Azure Portal][azure_portal].
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
-string connectionString = "YOUR_CONNECTION_STRING"; // Find your Communication Services resource in the Azure portal
+string connectionString = YOUR_CONNECTION_STRING; // Find your Communication Services resource in the Azure portal
 SmsClient client = new SmsClient(connectionString);
 ```
 
@@ -48,25 +48,42 @@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ## Examples
 ### Send a SMS Message
 To send a SMS message, call the `Send` or `SendAsync` function from the `SmsClient`.
-```C# Snippet:Azure_Communication_Sms_Tests_SendAsync
-SendSmsResponse result = await client.SendAsync(
-   from: new PhoneNumber("+18001230000"), // Phone number acquired on your Azure Communication resource
-   to: new PhoneNumber("+18005670000"),
-   message: "Hi");
-Console.WriteLine($"Sms id: {result.MessageId}");
+```C# Snippet:Azure_Communication_SmsClient_Send
+SmsSendResult result = smsClient.Send(
+    from: "+18001230000", // Phone number acquired on your Azure Communication resource
+    to: "+18005670000", // recipient's phone-number
+    message: "Hello"); // message-to-send
+Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
 ```
-
+### Send Group SMS Message
+To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
+```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
+/// send an sms to multiple recipients
+Pageable<SmsSendResult> results = smsClient.Send(
+    from: "+18001230000", // Phone number acquired on your Azure Communication resource
+    to: new[] { "+18005670000", "+18005670001", "+18005670002" }, // list of recipient's phone-numbers
+    message: "Holiday Promotion", // group message to send
+    options: new SmsSendOptions // OPTIONAL
+    {
+        EnableDeliveryReport = true,
+        Tag = "marketing", // custom tags
+    });
+foreach (SmsSendResult result in results)
+{
+    Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
+}
+```
 ## Troubleshooting
 All SMS operations will throw a RequestFailedException on failure.
 
-```C# Snippet:Azure_Communication_Sms_Tests_Troubleshooting
+```C# Snippet:Azure_Communication_SmsClient_Send_Troubleshooting
 try
 {
-    SendSmsResponse result = await client.SendAsync(
-       from: new PhoneNumber("+18001230000"), // Phone number acquired on your Azure Communication resource
-       to: new PhoneNumber("+18005670000"),
-       message: "Hi");
-    Console.WriteLine($"Sms id: {result.MessageId}");
+    SmsSendResult result = smsClient.Send(
+        from: "+18001230000", // Phone number acquired on your Azure Communication resource
+        to: "+18005670000", // recipient's phone-number
+        message: "Hello"); // message-to-send
+    Console.WriteLine($" MessageId: {result.MessageId} Sent to: {result.To}");
 }
 catch (RequestFailedException ex)
 {

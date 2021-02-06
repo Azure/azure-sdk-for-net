@@ -142,7 +142,7 @@ namespace Azure.Communication.Sms
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
-        /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, only one recipient in the list is supported. </param>
+        /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, upto 100 recipients in the list is supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <param name="options"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -158,8 +158,8 @@ namespace Azure.Communication.Sms
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<SmsSendResponse, SmsSendHeaders> responseWithHeaders = nextLink is null ?
-                        await RestClient.SendAsync(from, to, message, null, null, options, cancellationToken).ConfigureAwait(false)
+                    ResponseWithHeaders<SmsSendResponse, SmsSendHeaders> responseWithHeaders = nextLink is null
+                        ? await RestClient.SendAsync(from, to, message, null, null, options, cancellationToken).ConfigureAwait(false)
                         : await RestClient.SendNextPageAsync(nextLink, from, to, message, null, null, options, cancellationToken).ConfigureAwait(false);
 
                     return Page.FromValues(responseWithHeaders.Value.Value, responseWithHeaders.Value.NextLink, responseWithHeaders.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.Communication.Sms
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
-        /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, only one recipient in the list is supported. </param>
+        /// <param name="to"> The recipient&apos;s phone number in E.164 format. In this version, upto 100 recipients in the list is supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <param name="options"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,8 +190,8 @@ namespace Azure.Communication.Sms
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<SmsSendResponse, SmsSendHeaders> responseWithHeaders = nextLink is null ?
-                        RestClient.Send(from, to, message, null, null, options, cancellationToken)
+                    ResponseWithHeaders<SmsSendResponse, SmsSendHeaders> responseWithHeaders = nextLink is null
+                        ? RestClient.Send(from, to, message, null, null, options, cancellationToken)
                         : RestClient.SendNextPage(nextLink, from, to, message, null, null, options, cancellationToken);
 
                     return Page.FromValues(responseWithHeaders.Value.Value, responseWithHeaders.Value.NextLink, responseWithHeaders.GetRawResponse());
