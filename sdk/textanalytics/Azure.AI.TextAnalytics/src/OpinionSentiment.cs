@@ -15,13 +15,14 @@ namespace Azure.AI.TextAnalytics
     {
         private const double _neutralValue = 0d;
 
-        internal OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset)
+        internal OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length)
         {
             Sentiment = sentiment;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, _neutralValue, negativeScore);
             Text = text;
             IsNegated = isNegated;
             Offset = offset;
+            Length = length;
         }
 
         internal OpinionSentiment(SentenceOpinion opinion)
@@ -33,6 +34,7 @@ namespace Azure.AI.TextAnalytics
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), opinion.Sentiment, ignoreCase: true);
             IsNegated = opinion.IsNegated;
             Offset = opinion.Offset;
+            Length = opinion.Length;
         }
 
         /// <summary>
@@ -63,8 +65,13 @@ namespace Azure.AI.TextAnalytics
         public bool IsNegated { get; }
 
         /// <summary>
-        /// Gets the starting position (in UTF-16 code units) for the opinion text.
+        /// Gets the starting position for the opinion text.
         /// </summary>
         public int Offset { get; }
+
+        /// <summary>
+        /// Gets the length of the opinion text.
+        /// </summary>
+        public int Length { get; }
     }
 }
