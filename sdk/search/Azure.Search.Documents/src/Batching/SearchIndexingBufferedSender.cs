@@ -119,6 +119,9 @@ namespace Azure.Search.Documents
         /// The <see cref="SearchIndexingBufferedSenderOptions{T}"/> to
         /// customize the sender's behavior.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="searchClient"/> is null.
+        /// </exception>
         public SearchIndexingBufferedSender(
             SearchClient searchClient,
             SearchIndexingBufferedSenderOptions<T> options = null)

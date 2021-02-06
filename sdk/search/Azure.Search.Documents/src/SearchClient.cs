@@ -64,7 +64,7 @@ namespace Azure.Search.Documents
         /// Gets the <see cref="Azure.Core.Pipeline.ClientDiagnostics"/> used
         /// to provide tracing support for the client library.
         /// </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        private ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// Gets the REST API version of the Search Service to use when making
@@ -729,7 +729,7 @@ namespace Azure.Search.Documents
         /// the <see cref="AsyncPageable{T}.AsPages(string, int?)"/> method.
         /// </para>
         /// </remarks>
-        public virtual async Task<Response<SearchResults<T>>> SearchAsync<T>(
+        public async virtual Task<Response<SearchResults<T>>> SearchAsync<T>(
             string searchText,
             SearchOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1194,7 +1194,7 @@ namespace Azure.Search.Documents
         /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
         /// </remarks>>
-        public virtual async Task<Response<IndexDocumentsResult>> IndexDocumentsAsync<T>(
+        public async virtual Task<Response<IndexDocumentsResult>> IndexDocumentsAsync<T>(
             IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options = null,
             CancellationToken cancellationToken = default) =>
