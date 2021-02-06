@@ -190,7 +190,10 @@ namespace Azure.Test.Perf
             var latency = warmup ? false : options.Latency;
 
             _completedOperations = new int[options.Parallel];
-            _lastCompletionTimes = new TimeSpan[options.Parallel];
+
+            // Initialize _lastCompletionTimes with non-zero values to avoid divide-by-zero for threads
+            // with no completed operations.
+            _lastCompletionTimes = Enumerable.Repeat(TimeSpan.MinValue, options.Parallel).ToArray();
 
             if (latency)
             {
