@@ -15988,15 +15988,15 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new AccountInfo instance for mocking.
         /// </summary>
         public static AccountInfo AccountInfo(
-            Azure.Storage.Blobs.Models.SkuName skuName,
+            bool isHierarchicalNamespaceEnabled,
             Azure.Storage.Blobs.Models.AccountKind accountKind,
-            bool isHierarchicalNamespaceEnabled)
+            Azure.Storage.Blobs.Models.SkuName skuName)
         {
             return new AccountInfo()
             {
-                SkuName = skuName,
-                AccountKind = accountKind,
                 IsHierarchicalNamespaceEnabled = isHierarchicalNamespaceEnabled,
+                AccountKind = accountKind,
+                SkuName = skuName,
             };
         }
     }
@@ -16815,27 +16815,27 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobAppendInfo instance for mocking.
         /// </summary>
         public static BlobAppendInfo BlobAppendInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            byte[] contentHash,
-            byte[] contentCrc64,
-            string blobAppendOffset,
-            int blobCommittedBlockCount,
-            bool isServerEncrypted,
+            string encryptionScope,
             string encryptionKeySha256,
-            string encryptionScope)
+            bool isServerEncrypted,
+            int blobCommittedBlockCount,
+            string blobAppendOffset,
+            byte[] contentCrc64,
+            byte[] contentHash,
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag)
         {
             return new BlobAppendInfo()
             {
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentHash = contentHash,
-                ContentCrc64 = contentCrc64,
-                BlobAppendOffset = blobAppendOffset,
-                BlobCommittedBlockCount = blobCommittedBlockCount,
-                IsServerEncrypted = isServerEncrypted,
-                EncryptionKeySha256 = encryptionKeySha256,
                 EncryptionScope = encryptionScope,
+                EncryptionKeySha256 = encryptionKeySha256,
+                IsServerEncrypted = isServerEncrypted,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                BlobAppendOffset = blobAppendOffset,
+                ContentCrc64 = contentCrc64,
+                ContentHash = contentHash,
+                LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -16981,10 +16981,10 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobBlock instance for mocking.
         /// </summary>
         public static BlobBlock BlobBlock(
-            string name,
-            int size)
+            int size,
+            string name)
         {
-            return new BlobBlock(name, size);
+            return new BlobBlock(size, name);
         }
     }
 }
@@ -17036,17 +17036,17 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContainerAccessPolicy instance for mocking.
         /// </summary>
         public static BlobContainerAccessPolicy BlobContainerAccessPolicy(
-            Azure.Storage.Blobs.Models.PublicAccessType blobPublicAccess,
-            Azure.ETag eTag,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobSignedIdentifier> signedIdentifiers,
             System.DateTimeOffset lastModified,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobSignedIdentifier> signedIdentifiers)
+            Azure.ETag eTag,
+            Azure.Storage.Blobs.Models.PublicAccessType blobPublicAccess)
         {
             return new BlobContainerAccessPolicy()
             {
-                BlobPublicAccess = blobPublicAccess,
-                ETag = eTag,
-                LastModified = lastModified,
                 SignedIdentifiers = signedIdentifiers,
+                LastModified = lastModified,
+                ETag = eTag,
+                BlobPublicAccess = blobPublicAccess,
             };
         }
     }
@@ -17087,13 +17087,13 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContainerInfo instance for mocking.
         /// </summary>
         public static BlobContainerInfo BlobContainerInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified)
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag)
         {
             return new BlobContainerInfo()
             {
-                ETag = eTag,
                 LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -17194,15 +17194,15 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContainerItem instance for mocking.
         /// </summary>
         public static BlobContainerItem BlobContainerItem(
-            string name,
             Azure.Storage.Blobs.Models.BlobContainerProperties properties,
+            string name,
             bool? isDeleted = default,
             string versionId = default)
         {
             return new BlobContainerItem()
             {
-                Name = name,
                 Properties = properties,
+                Name = name,
                 IsDeleted = isDeleted,
                 VersionId = versionId,
             };
@@ -17399,35 +17399,35 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContainerProperties instance for mocking.
         /// </summary>
         public static BlobContainerProperties BlobContainerProperties(
-            System.DateTimeOffset lastModified,
             Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
             Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
             bool? hasImmutabilityPolicy = default,
-            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
+            bool? hasLegalHold = default,
             string defaultEncryptionScope = default,
             bool? preventEncryptionScopeOverride = default,
             System.DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default,
-            bool? hasLegalHold = default)
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
             return new BlobContainerProperties()
             {
-                LastModified = lastModified,
                 ETag = eTag,
+                LastModified = lastModified,
+                LeaseStatus = leaseStatus,
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,
                 PublicAccess = publicAccess,
                 HasImmutabilityPolicy = hasImmutabilityPolicy,
-                LeaseStatus = leaseStatus,
+                HasLegalHold = hasLegalHold,
                 DefaultEncryptionScope = defaultEncryptionScope,
                 PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
                 DeletedOn = deletedOn,
                 RemainingRetentionDays = remainingRetentionDays,
                 Metadata = metadata,
-                HasLegalHold = hasLegalHold,
             };
         }
     }
@@ -17610,23 +17610,23 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContentInfo instance for mocking.
         /// </summary>
         public static BlobContentInfo BlobContentInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            byte[] contentHash,
-            string versionId,
-            string encryptionKeySha256,
+            long blobSequenceNumber,
             string encryptionScope,
-            long blobSequenceNumber)
+            string encryptionKeySha256,
+            string versionId,
+            byte[] contentHash,
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag)
         {
             return new BlobContentInfo()
             {
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentHash = contentHash,
-                VersionId = versionId,
-                EncryptionKeySha256 = encryptionKeySha256,
-                EncryptionScope = encryptionScope,
                 BlobSequenceNumber = blobSequenceNumber,
+                EncryptionScope = encryptionScope,
+                EncryptionKeySha256 = encryptionKeySha256,
+                VersionId = versionId,
+                ContentHash = contentHash,
+                LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -17682,19 +17682,19 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobCopyInfo instance for mocking.
         /// </summary>
         public static BlobCopyInfo BlobCopyInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string versionId,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
             string copyId,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus)
+            string versionId,
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag)
         {
             return new BlobCopyInfo()
             {
-                ETag = eTag,
-                LastModified = lastModified,
-                VersionId = versionId,
-                CopyId = copyId,
                 CopyStatus = copyStatus,
+                CopyId = copyId,
+                VersionId = versionId,
+                LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -18720,13 +18720,13 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobInfo instance for mocking.
         /// </summary>
         public static BlobInfo BlobInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified)
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag)
         {
             return new BlobInfo()
             {
-                ETag = eTag,
                 LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -19294,7 +19294,8 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobItemProperties BlobItemProperties(
             bool accessTierInferred,
-            bool? serverEncrypted = default,
+            System.DateTimeOffset? lastModified = default,
+            long? contentLength = default,
             string contentType = default,
             string contentEncoding = default,
             string contentLanguage = default,
@@ -19311,12 +19312,11 @@ namespace Azure.Storage.Blobs.Models
             System.Uri copySource = default,
             string copyProgress = default,
             string copyStatusDescription = default,
-            long? contentLength = default,
+            bool? serverEncrypted = default,
             bool? incrementalCopy = default,
             string destinationSnapshot = default,
             int? remainingRetentionDays = default,
             Azure.Storage.Blobs.Models.AccessTier? accessTier = default,
-            System.DateTimeOffset? lastModified = default,
             Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
             string customerProvidedKeySha256 = default,
             string encryptionScope = default,
@@ -19334,7 +19334,8 @@ namespace Azure.Storage.Blobs.Models
             return new BlobItemProperties()
             {
                 AccessTierInferred = accessTierInferred,
-                ServerEncrypted = serverEncrypted,
+                LastModified = lastModified,
+                ContentLength = contentLength,
                 ContentType = contentType,
                 ContentEncoding = contentEncoding,
                 ContentLanguage = contentLanguage,
@@ -19351,12 +19352,11 @@ namespace Azure.Storage.Blobs.Models
                 CopySource = copySource,
                 CopyProgress = copyProgress,
                 CopyStatusDescription = copyStatusDescription,
-                ContentLength = contentLength,
+                ServerEncrypted = serverEncrypted,
                 IncrementalCopy = incrementalCopy,
                 DestinationSnapshot = destinationSnapshot,
                 RemainingRetentionDays = remainingRetentionDays,
                 AccessTier = accessTier,
-                LastModified = lastModified,
                 ArchiveStatus = archiveStatus,
                 CustomerProvidedKeySha256 = customerProvidedKeySha256,
                 EncryptionScope = encryptionScope,
@@ -19415,15 +19415,15 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobLease instance for mocking.
         /// </summary>
         public static BlobLease BlobLease(
-            Azure.ETag eTag,
+            string leaseId,
             System.DateTimeOffset lastModified,
-            string leaseId)
+            Azure.ETag eTag)
         {
             return new BlobLease()
             {
-                ETag = eTag,
-                LastModified = lastModified,
                 LeaseId = leaseId,
+                LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -20321,19 +20321,19 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobSnapshotInfo instance for mocking.
         /// </summary>
         public static BlobSnapshotInfo BlobSnapshotInfo(
-            string snapshot,
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
+            bool isServerEncrypted,
             string versionId,
-            bool isServerEncrypted)
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag,
+            string snapshot)
         {
             return new BlobSnapshotInfo()
             {
-                Snapshot = snapshot,
-                ETag = eTag,
-                LastModified = lastModified,
-                VersionId = versionId,
                 IsServerEncrypted = isServerEncrypted,
+                VersionId = versionId,
+                LastModified = lastModified,
+                ETag = eTag,
+                Snapshot = snapshot,
             };
         }
     }
@@ -20987,17 +20987,17 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlockInfo instance for mocking.
         /// </summary>
         public static BlockInfo BlockInfo(
-            byte[] contentHash,
-            byte[] contentCrc64,
+            string encryptionScope,
             string encryptionKeySha256,
-            string encryptionScope)
+            byte[] contentCrc64,
+            byte[] contentHash)
         {
             return new BlockInfo()
             {
-                ContentHash = contentHash,
-                ContentCrc64 = contentCrc64,
-                EncryptionKeySha256 = encryptionKeySha256,
                 EncryptionScope = encryptionScope,
+                EncryptionKeySha256 = encryptionKeySha256,
+                ContentCrc64 = contentCrc64,
+                ContentHash = contentHash,
             };
         }
     }
@@ -22811,15 +22811,15 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new PageBlobInfo instance for mocking.
         /// </summary>
         public static PageBlobInfo PageBlobInfo(
-            Azure.ETag eTag,
+            long blobSequenceNumber,
             System.DateTimeOffset lastModified,
-            long blobSequenceNumber)
+            Azure.ETag eTag)
         {
             return new PageBlobInfo()
             {
-                ETag = eTag,
-                LastModified = lastModified,
                 BlobSequenceNumber = blobSequenceNumber,
+                LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -22889,23 +22889,23 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new PageInfo instance for mocking.
         /// </summary>
         public static PageInfo PageInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            byte[] contentHash,
-            byte[] contentCrc64,
-            long blobSequenceNumber,
+            string encryptionScope,
             string encryptionKeySha256,
-            string encryptionScope)
+            long blobSequenceNumber,
+            byte[] contentCrc64,
+            byte[] contentHash,
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag)
         {
             return new PageInfo()
             {
-                ETag = eTag,
-                LastModified = lastModified,
-                ContentHash = contentHash,
-                ContentCrc64 = contentCrc64,
-                BlobSequenceNumber = blobSequenceNumber,
-                EncryptionKeySha256 = encryptionKeySha256,
                 EncryptionScope = encryptionScope,
+                EncryptionKeySha256 = encryptionKeySha256,
+                BlobSequenceNumber = blobSequenceNumber,
+                ContentCrc64 = contentCrc64,
+                ContentHash = contentHash,
+                LastModified = lastModified,
+                ETag = eTag,
             };
         }
     }
@@ -23853,23 +23853,23 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new UserDelegationKey instance for mocking.
         /// </summary>
         public static UserDelegationKey UserDelegationKey(
-            string signedObjectId,
-            string signedTenantId,
-            string signedService,
-            string signedVersion,
-            string value,
+            System.DateTimeOffset signedStartsOn,
             System.DateTimeOffset signedExpiresOn,
-            System.DateTimeOffset signedStartsOn)
+            string value,
+            string signedVersion,
+            string signedService,
+            string signedTenantId,
+            string signedObjectId)
         {
             return new UserDelegationKey()
             {
-                SignedObjectId = signedObjectId,
-                SignedTenantId = signedTenantId,
-                SignedService = signedService,
-                SignedVersion = signedVersion,
-                Value = value,
-                SignedExpiresOn = signedExpiresOn,
                 SignedStartsOn = signedStartsOn,
+                SignedExpiresOn = signedExpiresOn,
+                Value = value,
+                SignedVersion = signedVersion,
+                SignedService = signedService,
+                SignedTenantId = signedTenantId,
+                SignedObjectId = signedObjectId,
             };
         }
     }
