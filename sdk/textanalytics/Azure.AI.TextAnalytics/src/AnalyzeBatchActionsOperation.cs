@@ -262,7 +262,7 @@ namespace Azure.AI.TextAnalytics
                     _actionSucceeded = update.Value.Tasks.Completed;
                     _totalActions = update.Value.Tasks.Total;
 
-                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded)
+                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded || update.Value.Status == TextAnalyticsOperationStatus.PartiallySucceeded)
                     {
                         // we need to first assign a value and then mark the operation as completed to avoid race conditions
                         var nextLink = update.Value.NextLink;

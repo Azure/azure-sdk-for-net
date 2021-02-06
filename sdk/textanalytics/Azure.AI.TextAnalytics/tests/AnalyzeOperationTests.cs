@@ -184,20 +184,20 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
-            Assert.AreEqual(operation.ActionsFailed, 0);
-            Assert.AreEqual(operation.ActionsSucceeded, 0);
-            Assert.AreEqual(operation.ActionsInProgress, 0);
-            Assert.AreEqual(operation.TotalActions, 0);
+            Assert.AreEqual(0, operation.ActionsFailed);
+            Assert.AreEqual(0, operation.ActionsSucceeded);
+            Assert.AreEqual(0, operation.ActionsInProgress);
+            Assert.AreEqual(0, operation.TotalActions);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            Assert.AreEqual(operation.ActionsFailed, 0);
-            Assert.AreEqual(operation.ActionsSucceeded, 3);
-            Assert.AreEqual(operation.ActionsInProgress, 0);
-            Assert.AreEqual(operation.TotalActions, 3);
-            Assert.IsNotNull(operation.ExpiresOn);
-            Assert.IsNotNull(operation.CreatedOn);
-            Assert.IsNotNull(operation.LastModified);
+            Assert.AreEqual(0, operation.ActionsFailed);
+            Assert.AreEqual(3, operation.ActionsSucceeded);
+            Assert.AreEqual(0, operation.ActionsInProgress);
+            Assert.AreEqual(3, operation.TotalActions);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
 
             //Take the first page
             AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -310,7 +310,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Will add this once the pagination is implemented for AnalyzeOperation - https://github.com/Azure/azure-sdk-for-net/issues/16958")]
         public async Task AnalyzeOperationBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -323,19 +322,35 @@ namespace Azure.AI.TextAnalytics.Tests
             };
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>()
+                {
+                    new ExtractKeyPhrasesOptions(),
+                    new ExtractKeyPhrasesOptions()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                },
                 DisplayName = "AnalyzeOperationBatchWithErrorTest",
             };
 
-            await Task.Run(() => {
-                RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
-                {
-                   AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions, "en");
-                });
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions, "en");
 
-                Assert.IsTrue(ex.ErrorCode.Equals("InvalidArgument"));
-                Assert.IsTrue(ex.Status.Equals(400));
-            });
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            //Take the first page
+            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            ExtractKeyPhrasesActionResult resultWithActionError = resultCollection.ExtractKeyPhrasesActionsResults.ElementAtOrDefault(1);
+
+            ExtractKeyPhrasesActionResult resultWithDocumentError = resultCollection.ExtractKeyPhrasesActionsResults.FirstOrDefault();
+
+            ExtractKeyPhrasesResultCollection extractKeyPhrasesResultCollection = resultCollection.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
+
+            Assert.IsTrue(resultWithActionError.HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, resultWithActionError.Error.ErrorCode.ToString());
+
+            Assert.IsTrue(extractKeyPhrasesResultCollection.ElementAt(2).HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, extractKeyPhrasesResultCollection.ElementAt(2).Error.ErrorCode.ToString());
         }
 
         [Test]

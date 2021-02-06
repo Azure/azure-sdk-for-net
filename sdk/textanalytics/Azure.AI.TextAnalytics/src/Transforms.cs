@@ -315,7 +315,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new PiiTaskParameters()
                 {
                     Domain = option.DomainFilter.GetString(),
-                    ModelVersion = option.ModelVersion,
+                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
                     StringIndexType = option.StringIndexType
                 }
             };
@@ -327,7 +327,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new EntitiesTaskParameters()
                 {
-                    ModelVersion = option.ModelVersion,
+                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
                     StringIndexType = option.StringIndexType
                 }
             };
@@ -339,7 +339,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new KeyPhrasesTaskParameters()
                 {
-                    ModelVersion = option.ModelVersion
+                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
                 }
             };
         }
@@ -505,6 +505,7 @@ namespace Azure.AI.TextAnalytics
                 bool isError = errors.TryGetValue(index, out error);
 
                 collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error, isError));
+                index++;
             }
 
             return collection;
@@ -520,6 +521,7 @@ namespace Azure.AI.TextAnalytics
                 bool isError = errors.TryGetValue(index, out error);
 
                 collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error, isError));
+                index++;
             }
 
             return collection;

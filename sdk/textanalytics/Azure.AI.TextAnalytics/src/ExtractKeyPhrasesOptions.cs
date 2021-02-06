@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtractKeyPhrasesOptions"/>
         /// class which allows callers to specify details about how the operation
-        /// is run. For example set model version, whether to include statistics..
+        /// is run. For example set model version, whether to include statistics.
         /// </summary>
         public ExtractKeyPhrasesOptions()
         {
@@ -24,6 +24,6 @@ namespace Azure.AI.TextAnalytics
         /// model versions, see operation-specific documentation, for example:
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-sentiment-analysis#model-versioning"/>.
         /// </summary>
-        public new string ModelVersion { get; set; } = "latest";
+        public new string ModelVersion { get; set; }
     }
 }

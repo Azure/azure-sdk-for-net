@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public void AnalyzeOperationBatchConvenience()
+        public async Task AnalyzeOperationBatchConvenience()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
 
-            operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync();
 
             foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
             {
