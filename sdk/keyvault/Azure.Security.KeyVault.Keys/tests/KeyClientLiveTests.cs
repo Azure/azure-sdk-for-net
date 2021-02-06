@@ -943,17 +943,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task GetPropertiesOfKeyVersionsNonExisting()
         {
-            // BUGBUG: Key Vault returns HTTP 200 for /keys/does-not-exist/versions while Managed HSM returns HTTP 404: https://github.com/Azure/azure-sdk-for-net/issues/16444
-            if (this is ManagedHsmLiveTests)
-            {
-                RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetPropertiesOfKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync());
-                Assert.AreEqual("KeyNotFound", ex.ErrorCode);
-            }
-            else
-            {
-                List<KeyProperties> allKeys = await Client.GetPropertiesOfKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
-                Assert.AreEqual(0, allKeys.Count);
-            }
+            List<KeyProperties> allKeys = await Client.GetPropertiesOfKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
+            Assert.AreEqual(0, allKeys.Count);
         }
     }
 }
