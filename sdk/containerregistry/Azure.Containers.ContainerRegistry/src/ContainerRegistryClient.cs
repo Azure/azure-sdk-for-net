@@ -94,44 +94,6 @@ namespace Azure.Containers.ContainerRegistry
             throw new NotImplementedException();
         }
 
-        ///// <summary> List repositories. </summary>
-        ///// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
-        ///// <param name="n"> query parameter for max number of items. </param>
-        ///// <param name="cancellationToken"> The cancellation token to use. </param>
-        //public virtual async Task<Response<Repositories>> GetRepositoriesAsync(string last = null, int? n = null, CancellationToken cancellationToken = default)
-        //    {
-        //        using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.GetRepositories");
-        //        scope.Start();
-        //        try
-        //        {
-        //            return await RestClient.GetRepositoriesAsync(last, n, cancellationToken).ConfigureAwait(false);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            scope.Failed(e);
-        //            throw;
-        //        }
-        //    }
-
-        //    /// <summary> List repositories. </summary>
-        //    /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
-        //    /// <param name="n"> query parameter for max number of items. </param>
-        //    /// <param name="cancellationToken"> The cancellation token to use. </param>
-        //    public virtual Response<Repositories> GetRepositories(string last = null, int? n = null, CancellationToken cancellationToken = default)
-        //    {
-        //        using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.GetRepositories");
-        //        scope.Start();
-        //        try
-        //        {
-        //            return RestClient.GetRepositories(last, n, cancellationToken);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            scope.Failed(e);
-        //            throw;
-        //        }
-        //    }
-
         /// <summary> Get repository attributes. </summary>
         /// <param name="respositoryName"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -208,7 +170,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="repositoryName"> Name of the image (including the namespace). </param>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetRepositoryPermissionsAsync(string repositoryName, ContentPermissions value = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetRepositoryPermissionsAsync(string repositoryName, ContentPermissions value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.UpdateRepositoryAttributes");
             scope.Start();
@@ -227,7 +189,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="repositoryName"> Name of the image (including the namespace). </param>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetRepositoryPermissions(string repositoryName, ContentPermissions value = null, CancellationToken cancellationToken = default)
+        public virtual Response SetRepositoryPermissions(string repositoryName, ContentPermissions value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.UpdateRepositoryAttributes");
             scope.Start();
