@@ -10,6 +10,9 @@ namespace Azure.Containers.ContainerRegistry.Models
 {
     public partial class RepositoryAttributes
     {
+        [CodeGenMember("ImageName")]
+        public string Name { get; }
+
         [CodeGenMember("ChangeableAttributes")]
         public ContentPermissions Permissions { get; }
     }
