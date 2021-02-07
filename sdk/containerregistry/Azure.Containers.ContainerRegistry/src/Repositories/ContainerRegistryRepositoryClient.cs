@@ -248,7 +248,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> Tag name. </param>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateTagAttributesAsync(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateTagAttributesAsync(string name, string reference, ContentPermissions value = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.UpdateTagAttributes");
             scope.Start();
@@ -268,7 +268,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> Tag name. </param>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateTagAttributes(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateTagAttributes(string name, string reference, ContentPermissions value = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.UpdateTagAttributes");
             scope.Start();
@@ -406,7 +406,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateManifestAttributesAsync(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateManifestAttributesAsync(string name, string reference, ContentPermissions value = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.UpdateManifestAttributes");
             scope.Start();
@@ -426,7 +426,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateManifestAttributes(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateManifestAttributes(string name, string reference, ContentPermissions value = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.UpdateManifestAttributes");
             scope.Start();

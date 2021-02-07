@@ -10,35 +10,35 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Models
 {
-    public partial class ChangeableAttributes : IUtf8JsonSerializable
+    public partial class ContentPermissions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeleteEnabled))
+            if (Optional.IsDefined(CanDelete))
             {
                 writer.WritePropertyName("deleteEnabled");
-                writer.WriteBooleanValue(DeleteEnabled.Value);
+                writer.WriteBooleanValue(CanDelete.Value);
             }
-            if (Optional.IsDefined(WriteEnabled))
+            if (Optional.IsDefined(CanWrite))
             {
                 writer.WritePropertyName("writeEnabled");
-                writer.WriteBooleanValue(WriteEnabled.Value);
+                writer.WriteBooleanValue(CanWrite.Value);
             }
-            if (Optional.IsDefined(ListEnabled))
+            if (Optional.IsDefined(CanList))
             {
                 writer.WritePropertyName("listEnabled");
-                writer.WriteBooleanValue(ListEnabled.Value);
+                writer.WriteBooleanValue(CanList.Value);
             }
-            if (Optional.IsDefined(ReadEnabled))
+            if (Optional.IsDefined(CanRead))
             {
                 writer.WritePropertyName("readEnabled");
-                writer.WriteBooleanValue(ReadEnabled.Value);
+                writer.WriteBooleanValue(CanRead.Value);
             }
             writer.WriteEndObject();
         }
 
-        internal static ChangeableAttributes DeserializeChangeableAttributes(JsonElement element)
+        internal static ContentPermissions DeserializeContentPermissions(JsonElement element)
         {
             Optional<bool> deleteEnabled = default;
             Optional<bool> writeEnabled = default;
@@ -87,7 +87,7 @@ namespace Azure.Containers.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ChangeableAttributes(Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ContentPermissions(Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }

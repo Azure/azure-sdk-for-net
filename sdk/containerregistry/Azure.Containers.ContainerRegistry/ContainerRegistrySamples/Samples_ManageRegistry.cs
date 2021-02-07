@@ -13,15 +13,15 @@ namespace ContainerRegistrySamples
     {
         public async Task ViewRepositories()
         {
-            //var client = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
+            var client = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
 
-            //AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
-            //await foreach (var repository in repositories)
-            //{
-            //    Console.WriteLine($"Repository name is {repository}");
-            //}
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
+            await foreach (var repository in repositories)
+            {
+                Console.WriteLine($"Repository name is {repository}");
+            }
 
-            //// TODO: Come up with a nice hero scenario to illustrate in samples
+            // TODO: Come up with a nice hero scenario to illustrate in samples
         }
 
         public async Task ViewManifestsInRepository()
