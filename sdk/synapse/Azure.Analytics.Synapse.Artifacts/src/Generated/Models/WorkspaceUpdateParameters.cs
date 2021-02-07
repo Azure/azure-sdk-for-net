@@ -11,13 +11,8 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Parameters for updating a workspace resource. </summary>
-    internal partial class WorkspaceUpdateParameters
+    public partial class WorkspaceUpdateParameters
     {
-        /// <summary> Initializes a new instance of WorkspaceUpdateParameters. </summary>
-        internal WorkspaceUpdateParameters()
-        {
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
 
         /// <summary> The resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
