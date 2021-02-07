@@ -14,25 +14,41 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class DataFeed
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataFeed"/> class.
+        /// </summary>
+        public DataFeed()
+        {
+            Administrators = new ChangeTrackingList<string>();
+            Viewers = new ChangeTrackingList<string>();
+        }
+
         internal DataFeed(DataFeedDetail dataFeedDetail)
         {
             Id = dataFeedDetail.DataFeedId;
             Status = dataFeedDetail.Status;
             CreatedTime = dataFeedDetail.CreatedTime;
+            Creator = dataFeedDetail.Creator;
             IsAdministrator = dataFeedDetail.IsAdmin;
-            MetricIds = dataFeedDetail.Metrics.Select(metric => metric.MetricId).ToList();
+            MetricIds = dataFeedDetail.Metrics.ToDictionary(metric => metric.MetricName, metric => metric.MetricId);
             Name = dataFeedDetail.DataFeedName;
-            SourceType = dataFeedDetail.DataSourceType;
+            DataSource = DataFeedSource.GetDataFeedSource(dataFeedDetail);
             Schema = new DataFeedSchema(dataFeedDetail);
             Granularity = new DataFeedGranularity(dataFeedDetail);
             IngestionSettings = new DataFeedIngestionSettings(dataFeedDetail);
-            Options = new DataFeedOptions(dataFeedDetail);
+            Description = dataFeedDetail.DataFeedDescription;
+            ActionLinkTemplate = dataFeedDetail.ActionLinkTemplate;
+            AccessMode = dataFeedDetail.ViewMode;
+            RollupSettings = new DataFeedRollupSettings(dataFeedDetail);
+            MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(dataFeedDetail);
+            Administrators = dataFeedDetail.Admins;
+            Viewers = dataFeedDetail.Viewers;
         }
 
         /// <summary>
         /// The unique identifier of this <see cref="DataFeed"/>. Set by the service.
         /// </summary>
-        public string Id { get; internal set; }
+        public string Id { get; }
 
         /// <summary>
         /// The current ingestion status of this <see cref="DataFeed"/>.
@@ -45,6 +61,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset? CreatedTime { get; }
 
         /// <summary>
+        /// The e-mail address of creator of this <see cref="DataFeed"/>.
+        /// </summary>
+        public string Creator { get; }
+
+        /// <summary>
         /// Whether or not the user who queried the information about this <see cref="DataFeed"/>
         /// is one of its administrators.
         /// </summary>
@@ -54,320 +75,179 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The unique identifiers of the metrics defined in this feed's <see cref="DataFeedSchema"/>.
         /// Set by the service.
         /// </summary>
-        public IReadOnlyList<string> MetricIds { get; }
+        public IReadOnlyDictionary<string, string> MetricIds { get; }
 
         /// <summary>
         /// A custom name for this <see cref="DataFeed"/> to be displayed on the web portal.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The source from which data is consumed.
+        /// </summary>
+        public DataFeedSource DataSource { get; set; }
 
         /// <summary>
         /// The type of data source that ingests this <see cref="DataFeed"/> with data.
         /// </summary>
-        public DataFeedSourceType SourceType { get; }
+        public DataFeedSourceType? SourceType => DataSource?.Type;
 
         /// <summary>
         /// Defines how this <see cref="DataFeed"/> structures the data ingested from the data source
         /// in terms of metrics and dimensions.
         /// </summary>
-        public DataFeedSchema Schema { get; }
+        public DataFeedSchema Schema { get; set; }
 
         /// <summary>
         /// The frequency with which ingestion from the data source will happen.
         /// </summary>
-        public DataFeedGranularity Granularity { get; }
+        public DataFeedGranularity Granularity { get; set; }
 
         /// <summary>
         /// Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.
         /// </summary>
-        public DataFeedIngestionSettings IngestionSettings { get; }
+        public DataFeedIngestionSettings IngestionSettings { get; set; }
 
         /// <summary>
-        /// A set of options configuring the behavior of this <see cref="DataFeed"/>. Options include administrators,
-        /// roll-up settings, access mode, and others.
+        /// A description of this <see cref="DataFeed"/>.
         /// </summary>
-        public DataFeedOptions Options { get; }
+        public string Description { get; set; }
 
-        /// <summary> Converts a data source specific <see cref="DataFeed"/> into its equivalent data source specific <see cref="DataFeedDetailPatch"/>. </summary>
+        /// <summary>
+        /// Defines actionable HTTP URLs, which consist of the placeholders %datafeed, %metric, %timestamp, %detect_config, and %tagset.
+        /// You can use the template to redirect from an anomaly or an incident to a specific URL to drill down.
+        /// See the <see href="https://docs.microsoft.com/azure/cognitive-services/metrics-advisor/how-tos/manage-data-feeds#action-link-template">documentation</see> for details.
+        /// </summary>
+        public string ActionLinkTemplate { get; set; }
+
+        /// <summary>
+        /// The access mode for this <see cref="DataFeed"/>.
+        /// </summary>
+        public DataFeedAccessMode? AccessMode { get; set; }
+
+        /// <summary>
+        /// Configures the behavior of this <see cref="DataFeed"/> for rolling-up the ingested data
+        /// before detecting anomalies.
+        /// </summary>
+        public DataFeedRollupSettings RollupSettings { get; set; }
+
+        /// <summary>
+        /// Configures the behavior of this <see cref="DataFeed"/> when dealing with missing points
+        /// in the data ingested from the data source.
+        /// </summary>
+        public DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get; set; }
+
+        /// <summary>
+        /// The emails of this data feed's administrators. Administrators have total control over a
+        /// data feed, being allowed to update, delete or pause them. They also have access to the
+        /// credentials used to authenticate to the data source.
+        /// </summary>
+        public IList<string> Administrators { get; }
+
+        /// <summary>
+        /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
+        /// do not have access to the credentials used to authenticate to the data source.
+        /// </summary>
+        public IList<string> Viewers { get; }
+
+        internal DataFeedDetail GetDataFeedDetail()
+        {
+            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartTime.Value);
+
+            foreach (var column in Schema.DimensionColumns)
+            {
+                detail.Dimension.Add(column);
+            }
+            detail.TimestampColumn = Schema.TimestampColumn;
+
+            detail.GranularityAmount = Granularity.CustomGranularityValue;
+
+            detail.MaxConcurrency = IngestionSettings.DataSourceRequestConcurrency;
+            detail.MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds;
+            detail.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;
+            detail.StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds;
+
+            detail.DataFeedDescription = Description;
+            detail.ActionLinkTemplate = ActionLinkTemplate;
+            detail.ViewMode = AccessMode;
+
+            if (RollupSettings != null)
+            {
+                detail.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
+                detail.NeedRollup = RollupSettings.RollupType;
+                detail.RollUpMethod = RollupSettings.RollupMethod;
+                foreach (string columnName in RollupSettings.AutoRollupGroupByColumnNames)
+                {
+                    detail.RollUpColumns.Add(columnName);
+                }
+            }
+
+            if (MissingDataPointFillSettings != null)
+            {
+                detail.FillMissingPointType = MissingDataPointFillSettings.FillType;
+                detail.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
+            }
+
+            foreach (var admin in Administrators)
+            {
+                detail.Admins.Add(admin);
+            }
+
+            foreach (var viewer in Viewers)
+            {
+                detail.Viewers.Add(viewer);
+            }
+
+            return detail;
+        }
+
+        /// <summary>
+        /// Converts a data source specific <see cref="DataFeed"/> into its equivalent data source specific <see cref="DataFeedDetailPatch"/>.
+        /// </summary>
         internal DataFeedDetailPatch GetPatchModel()
         {
-            return this switch
+            DataFeedDetailPatch patch = DataSource?.InstantiateDataFeedDetailPatch()
+                ?? new DataFeedDetailPatch();
+
+            patch.DataFeedName = Name;
+            patch.Status = Status.HasValue ? new DataFeedDetailPatchStatus(Status.ToString()) : default(DataFeedDetailPatchStatus?);
+
+            if (Schema != null)
             {
-                DataFeed p when p.SourceType == DataFeedSourceType.AzureApplicationInsights => new AzureApplicationInsightsDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.AzureBlob => new AzureBlobDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.AzureCosmosDb => new AzureCosmosDBDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.AzureDataLakeStorageGen2 => new AzureDataLakeStorageGen2DataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.AzureTable => new AzureTableDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.Elasticsearch => new ElasticsearchDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.HttpRequest => new HttpRequestDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.InfluxDb => new InfluxDBDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.MySql => new MySqlDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.SqlServer => new SQLServerDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                DataFeed p when p.SourceType == DataFeedSourceType.MongoDb => new MongoDBDataFeedPatch()
-                {
-                    DataFeedName = p.Name,
-                    DataFeedDescription = p.Options?.FeedDescription,
-                    TimestampColumn = p.Schema.TimestampColumn,
-                    DataStartFrom = p.IngestionSettings.IngestionStartTime,
-                    StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds,
-                    MaxConcurrency = p.IngestionSettings.DataSourceRequestConcurrency,
-                    MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds,
-                    StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds,
-                    NeedRollup = p.Options?.RollupSettings?.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(p.Options.RollupSettings.RollupType.ToString()) : default,
-                    RollUpMethod = p.Options?.RollupSettings?.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(p.Options.RollupSettings.RollupMethod.ToString()) : default,
-                    RollUpColumns = p.Options?.RollupSettings?.AutoRollupGroupByColumnNames ?? new ChangeTrackingList<string>(),
-                    AllUpIdentification = p.Options?.RollupSettings?.AlreadyRollupIdentificationValue,
-                    FillMissingPointType = p.Options?.MissingDataPointFillSettings?.FillType.HasValue == true  ? new DataFeedDetailPatchFillMissingPointType(p.Options.MissingDataPointFillSettings.FillType.ToString()) : default,
-                    FillMissingPointValue = p.Options?.MissingDataPointFillSettings?.CustomFillValue,
-                    ViewMode = p.Options?.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(p.Options.AccessMode.ToString()) : default,
-                    Admins = p.Options?.Administrators,
-                    Viewers = p.Options?.Viewers,
-                    Status = p.Status.HasValue ? new DataFeedDetailPatchStatus(p.Status.ToString()) : default,
-                },
-                _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
-            };
+                patch.TimestampColumn = Schema.TimestampColumn;
+            }
+
+            if (IngestionSettings != null)
+            {
+                patch.DataStartFrom = IngestionSettings.IngestionStartTime.HasValue ? ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartTime.Value) : null;
+                patch.MaxConcurrency = IngestionSettings.DataSourceRequestConcurrency;
+                patch.MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds;
+                patch.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;
+                patch.StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds;
+            }
+
+            patch.DataFeedDescription = Description;
+            patch.ActionLinkTemplate = ActionLinkTemplate;
+            patch.ViewMode = AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(AccessMode.ToString()) : default(DataFeedDetailPatchViewMode?);
+
+            if (RollupSettings != null)
+            {
+                patch.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
+                patch.NeedRollup = RollupSettings.RollupType.HasValue ? new DataFeedDetailPatchNeedRollup(RollupSettings.RollupType.ToString()) : default(DataFeedDetailPatchNeedRollup?);
+                patch.RollUpMethod = RollupSettings.RollupMethod.HasValue ? new DataFeedDetailPatchRollUpMethod(RollupSettings.RollupMethod.ToString()) : default(DataFeedDetailPatchRollUpMethod?);
+                patch.RollUpColumns = RollupSettings.AutoRollupGroupByColumnNames;
+            }
+
+            if (MissingDataPointFillSettings != null)
+            {
+                patch.FillMissingPointType = MissingDataPointFillSettings.FillType.HasValue ? new DataFeedDetailPatchFillMissingPointType(MissingDataPointFillSettings.FillType.ToString()) : default(DataFeedDetailPatchFillMissingPointType?);
+                patch.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
+            }
+
+            patch.Admins = Administrators;
+            patch.Viewers = Viewers;
+
+            return patch;
         }
     }
 }

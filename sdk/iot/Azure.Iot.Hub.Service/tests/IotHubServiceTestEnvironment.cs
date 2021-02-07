@@ -9,11 +9,6 @@ namespace Azure.Iot.Hub.Service.Tests
     // This class contains the configurations required to be set to run tests against the CI pipeline.
     public class IotHubServiceTestEnvironment : TestEnvironment
     {
-        public IotHubServiceTestEnvironment()
-            : base(TestSettings.IotHubEnvironmentVariablesPrefix.ToLower())
-        {
-        }
-
         public string IotHubConnectionString => GetRecordedVariable(TestSettings.IotHubConnectionString,
             options => options
                 .HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64)

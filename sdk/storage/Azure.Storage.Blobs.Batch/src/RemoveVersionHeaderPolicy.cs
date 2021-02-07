@@ -22,7 +22,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// recordings which need repeatable x-ms-client-request-id values in
         /// the sub-operations.
         /// </summary>
-        internal bool RemoveClientRequestIdHeaders { get; set; } = false;
+        internal bool RemoveClientRequestIdHeaders { get; set; }
 
         /// <inheritdoc />
         public override void OnSendingRequest(HttpMessage message)

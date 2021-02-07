@@ -38,21 +38,17 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
         /// <param name="tags">The resource tags.</param>
-        public DigitalTwinsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="identity">The managed identity for the
+        /// DigitalTwinsInstance.</param>
+        public DigitalTwinsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DigitalTwinsIdentity identity = default(DigitalTwinsIdentity))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            Identity = identity;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for DigitalTwinsResource class.
-        /// </summary>
-        static DigitalTwinsResource()
-        {
-            Sku = new DigitalTwinsSkuInfo();
         }
 
         /// <summary>
@@ -91,11 +87,10 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// This property is reserved for future use, and will be
-        /// ignored/omitted
+        /// Gets or sets the managed identity for the DigitalTwinsInstance.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public static DigitalTwinsSkuInfo Sku { get; private set; }
+        [JsonProperty(PropertyName = "identity")]
+        public DigitalTwinsIdentity Identity { get; set; }
 
     }
 }

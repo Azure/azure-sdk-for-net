@@ -24,11 +24,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("startTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -39,6 +49,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("results"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TroubleshootingDetails> array = new List<TroubleshootingDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

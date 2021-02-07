@@ -79,6 +79,11 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public static readonly string InvalidCountryHint = "InvalidCountryHint";
 
+        /// <summary>
+        /// Specifies that the error code is a not found job.
+        /// </summary>
+        public static readonly string NotFound = "NotFound";
+
         private TextAnalyticsErrorCode(string errorCode)
         {
             Argument.AssertNotNullOrEmpty(errorCode, nameof(errorCode));

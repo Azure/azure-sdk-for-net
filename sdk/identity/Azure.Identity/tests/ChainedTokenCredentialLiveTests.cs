@@ -12,19 +12,12 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ChainedTokenCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ChainedTokenCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
         public ChainedTokenCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
             TestDiagnostics = false;
         }
 
@@ -124,7 +117,7 @@ namespace Azure.Identity.Tests
         public async Task ChainedTokenCredential_UseAzureCliCredential()
         {
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
             var processService = new TestProcessService(new TestProcess { Output = processOutput });
 
@@ -155,7 +148,7 @@ namespace Azure.Identity.Tests
         public async Task ChainedTokenCredential_UseAzureCliCredential_ParallelCalls()
         {
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Output = processOutput }};
 
@@ -184,7 +177,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void ChainedTokenCredential_AllCredentialsHaveFailed_CredentialUnavailableException()
         {
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", "{}");
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
 
             var fileSystem = new TestFileSystemService();
             var processService = new TestProcessService(new TestProcess { Error = "'az' is not recognized" });
@@ -239,7 +232,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void ChainedTokenCredential_AllCredentialsHaveFailed_LastAuthenticationFailedException()
         {
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var fileSystem = new TestFileSystemService();
             var processService = new TestProcessService(new TestProcess {Error = "Error"});
 

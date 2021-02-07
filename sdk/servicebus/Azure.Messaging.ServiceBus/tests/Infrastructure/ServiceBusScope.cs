@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
         private const double RetryExponentialBackoffSeconds = 3.0;
 
-        /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
+        /// <summary>The number of seconds to use as the basis for applying jitter to retry backoff calculations.</summary>
         private const double RetryBaseJitterSeconds = 60.0;
 
         /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
@@ -122,6 +122,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                              bool enableSession,
                                                              bool forceQueueCreation = false,
                                                              TimeSpan? lockDuration = default,
+                                                             string overrideNamespace = default,
                                                              [CallerMemberName] string caller = "")
         {
             // If there was an override and the force flag is not set for creation, then build a scope
@@ -138,7 +139,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-            var serviceBusNamespace = ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
+            var serviceBusNamespace = overrideNamespace ?? ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
             var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
@@ -305,7 +306,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <param name="maxRetryAttempts">The maximum retry attempts to allow.</param>
         /// <param name="exponentialBackoffSeconds">The number of seconds to use as the basis for backing off on retry attempts.</param>
-        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry back-off calculations.</param>
+        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry backoff calculations.</param>
         ///
         /// <returns>The retry policy in which to execute the management operation.</returns>
         ///
@@ -322,7 +323,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <param name="maxRetryAttempts">The maximum retry attempts to allow.</param>
         /// <param name="exponentialBackoffSeconds">The number of seconds to use as the basis for backing off on retry attempts.</param>
-        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry back-off calculations.</param>
+        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry backoff calculations.</param>
         ///
         /// <returns>The retry policy in which to execute the management operation.</returns>
         ///
@@ -406,7 +407,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         /// <param name="attempt">The current attempt number.</param>
-        /// <param name="exponentialBackoffSeconds">The exponential back-off amount,, in seconds.</param>
+        /// <param name="exponentialBackoffSeconds">The exponential backoff amount, in seconds.</param>
         /// <param name="baseJitterSeconds">The amount of base jitter to include, in seconds.</param>
         ///
         /// <returns>The interval to wait before retrying the attempted operation.</returns>

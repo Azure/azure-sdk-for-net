@@ -1,6 +1,6 @@
 # Azure Storage Blobs client library for .NET
 
-> Server Version: 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
+> Server Version: 2020-04-8, 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
 
 Azure Blob storage is Microsoft's object storage solution for the cloud. Blob
 storage is optimized for storing massive amounts of unstructured data.
@@ -162,7 +162,6 @@ try
 catch (RequestFailedException ex)
     when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted ||
           ex.ErrorCode == BlobErrorCode.ContainerNotFound)
-
 {
     // Ignore any errors if the container being deleted or if it has already been deleted
 }

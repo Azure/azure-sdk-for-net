@@ -49,8 +49,8 @@ namespace Azure.AI.AnomalyDetector
             uri.AppendRaw("/anomalydetector/v1.0", false);
             uri.AppendPath("/timeseries/entire/detect", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
@@ -121,8 +121,8 @@ namespace Azure.AI.AnomalyDetector
             uri.AppendRaw("/anomalydetector/v1.0", false);
             uri.AppendPath("/timeseries/last/detect", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
@@ -193,8 +193,8 @@ namespace Azure.AI.AnomalyDetector
             uri.AppendRaw("/anomalydetector/v1.0", false);
             uri.AppendPath("/timeseries/changepoint/detect", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;

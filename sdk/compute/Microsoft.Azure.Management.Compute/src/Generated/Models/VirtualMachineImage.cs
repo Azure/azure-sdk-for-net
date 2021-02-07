@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'V2'</param>
         /// <param name="disallowed">Specifies disallowed configuration for the
         /// VirtualMachine created from the image</param>
-        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>), AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default(AutomaticOSUpgradeProperties), string hyperVGeneration = default(string), DisallowedConfiguration disallowed = default(DisallowedConfiguration))
+        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>), AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default(AutomaticOSUpgradeProperties), string hyperVGeneration = default(string), DisallowedConfiguration disallowed = default(DisallowedConfiguration), IList<VirtualMachineImageFeature> features = default(IList<VirtualMachineImageFeature>))
             : base(name, location, id, tags, extendedLocation)
         {
             Plan = plan;
@@ -57,6 +57,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             AutomaticOSUpgradeProperties = automaticOSUpgradeProperties;
             HyperVGeneration = hyperVGeneration;
             Disallowed = disallowed;
+            Features = features;
             CustomInit();
         }
 
@@ -97,6 +98,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.disallowed")]
         public DisallowedConfiguration Disallowed { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.features")]
+        public IList<VirtualMachineImageFeature> Features { get; set; }
 
         /// <summary>
         /// Validate the object.

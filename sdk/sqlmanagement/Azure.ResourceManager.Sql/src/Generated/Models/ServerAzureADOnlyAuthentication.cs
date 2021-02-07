@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Azure Active Directory only authentication. </summary>
-    public partial class ServerAzureADOnlyAuthentication : Resource
+    public partial class ServerAzureADOnlyAuthentication : ProxyResource
     {
         /// <summary> Initializes a new instance of ServerAzureADOnlyAuthentication. </summary>
         public ServerAzureADOnlyAuthentication()

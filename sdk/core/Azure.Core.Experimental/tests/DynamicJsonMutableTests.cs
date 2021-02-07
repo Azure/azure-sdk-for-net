@@ -26,6 +26,5 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(json.ToString(), "{\"a\":\"2\"}");
         }
-
     }
 }

@@ -33,10 +33,17 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// object</param>
         /// <param name="display">Contains the localized display information
         /// for this operation</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="isDataAction">Gets or sets a value indicating whether
+        /// the operation is a data action or not</param>
+        /// <param name="origin">Origin of the operation</param>
+        /// <param name="properties">Properties of the operation</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), bool? isDataAction = default(bool?), string origin = default(string), OperationProperties properties = default(OperationProperties))
         {
             Name = name;
             Display = display;
+            IsDataAction = isDataAction;
+            Origin = origin;
+            Properties = properties;
             CustomInit();
         }
 
@@ -56,6 +63,25 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the operation is a data
+        /// action or not
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets origin of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public OperationProperties Properties { get; set; }
 
     }
 }

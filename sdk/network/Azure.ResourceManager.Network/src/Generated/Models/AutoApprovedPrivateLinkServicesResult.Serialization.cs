@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AutoApprovedPrivateLinkService> array = new List<AutoApprovedPrivateLinkService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

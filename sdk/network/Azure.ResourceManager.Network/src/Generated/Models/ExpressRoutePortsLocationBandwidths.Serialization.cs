@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("valueInGbps"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     valueInGbps = property.Value.GetInt32();
                     continue;
                 }

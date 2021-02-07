@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("lastKeyRotationTimestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastKeyRotationTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

@@ -39,11 +39,21 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("innererror"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     innererror = InnerError.DeserializeInnerError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TextAnalyticsErrorInternal> array = new List<TextAnalyticsErrorInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

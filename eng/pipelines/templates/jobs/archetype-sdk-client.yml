@@ -1,22 +1,56 @@
+parameters:
+- name: Artifacts
+  type: object
+  default: []
+- name: TestPipeline
+  type: boolean
+  default: false
+- name: ArtifactName
+  type: string
+  default: packages
+- name: SDKType
+  type: string
+  default: client
+- name: ServiceDirectory
+  type: string
+  default: not-specified
+- name: ServiceToTest
+  type: string
+  default: ''
+- name: TestSetupSteps
+  type: stepList
+  default: []
+- name: WindowsPool
+  type: string
+  default: azsdk-pool-mms-win-2019-general
+- name: LinuxPool
+  type: string
+  default: azsdk-pool-mms-ubuntu-1804-general
+- name: TestTimeoutInMinutes
+  type: number
+
 jobs:
   - job: Build
-    variables:
-      - template: ../variables/globals.yml
     pool:
-      vmImage: windows-2019
+      name: ${{ parameters.WindowsPool }} # Comment this line back-out to switch to public pools.
+      # vmImage: windows-2019 # Comment this line back-in to switch to public pools.
     steps:
-      - task: PowerShell@2
-        displayName: Prep template pipeline for release
-        condition: and(succeeded(),eq(variables['TestPipeline'],'true'))
-        inputs:
-          pwsh: true
-          workingDirectory: $(Build.SourcesDirectory)
-          filePath: eng/scripts/SetTestPipelineVersion.ps1
+      - ${{if eq(parameters.TestPipeline, 'true')}}:
+        - task: PowerShell@2
+          displayName: Prep template pipeline for release
+          condition: succeeded()
+          inputs:
+            pwsh: true
+            workingDirectory: $(Build.SourcesDirectory)
+            filePath: eng/scripts/SetTestPipelineVersion.ps1
+            arguments: '-BuildID $(Build.BuildId)'
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
+        parameters:
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
       - pwsh: |
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
@@ -31,9 +65,11 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: >-
           dotnet pack eng/service.proj -warnaserror
-          /p:ServiceDirectory=${{parameters.ServiceToBuild}}
+          /p:SDKType=${{ parameters.SDKType }}
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeTests=false
           /p:PublicSign=false $(VersioningProperties)
           /p:Configuration=$(BuildConfiguration)
@@ -43,7 +79,6 @@ jobs:
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
@@ -55,12 +90,16 @@ jobs:
         inputs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
+
+      - template: /eng/common/pipelines/templates/steps/create-apireview.yml
+        parameters:
+          Artifacts: ${{parameters.Artifacts}}
+
   - job: "Analyze"
-    condition: ne(variables['Skip.Analyze'], true)
-    variables:
-      - template: ../variables/globals.yml
+    condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     pool:
-      vmImage: ubuntu-18.04
+      name: ${{ parameters.LinuxPool }}
+      vmImage:
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -68,7 +107,11 @@ jobs:
           versionSpec: "3.6"
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
-          Directory: sdk/${{ parameters.ServiceDirectory }}
+          ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+            Directory: ''
+            Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
+          ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+            Directory: sdk/${{ parameters.ServiceDirectory }}
           CheckLinkGuidance: $true
       - script: |
           pip install setuptools wheel
@@ -80,17 +123,19 @@ jobs:
           SourceDirectory: $(Build.SourcesDirectory)
       - task: NodeTool@0
         inputs:
-          versionSpec: '13.13.0'
+          versionSpec: '14.x'
         displayName: 'Install NodeJS'
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - task: PowerShell@2
         displayName: "Verify generated code"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
+          arguments: >
+           -ServiceDirectory ${{ parameters.ServiceToTest }}
+           -SDKType ${{ parameters.SDKType }}
           pwsh: true
           failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
@@ -100,52 +145,69 @@ jobs:
         inputs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+
   - job: "Test"
-    condition: ne(variables['Skip.Test'], true)
-    variables:
-      - template: ../variables/globals.yml
+    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+    condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
         Linux:
-          OSVmImage: "ubuntu-18.04"
+          Pool: ${{ parameters.LinuxPool }} # Comment out to swap back to public hosted pool.
+          OSVmImage: # "ubuntu-18.04" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
-          OSVmImage: "windows-2019"
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: netcoreapp2.1
-          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            CollectCoverage: true
+          CollectCoverage: true
         Windows_NetCoreApp_ProjectReferences:
-          OSVmImage: "windows-2019"
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: netcoreapp2.1
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
-          OSVmImage: "windows-2019"
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net461
         Windows_NetFramework_ProjectReferences:
-          OSVmImage: "windows-2019"
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
           TestTargetFramework: net461
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         MacOs:
+          Pool: # Intentionally blank.
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+        Windows_Net50:
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
+          TestTargetFramework: net5.0
+        Windows_Net50_ProjectReferences:
+          Pool: ${{ parameters.WindowsPool }} # Comment out to swap back to public hosted pool.
+          OSVmImage: # "windows-2019" # Comment back in to swap back to public hosted pool.
+          TestTargetFramework: net5.0
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
     pool:
       vmImage: "$(OSVmImage)"
+      name: "$(Pool)"
     steps:
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: >-
-          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
+          dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false
-          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
+          /p:SDKType=${{ parameters.SDKType }}
+          /p:ServiceDirectory=${{ parameters.ServiceToTest }}
+          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
+          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
+          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{ parameters.ServiceDirectory }}
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
@@ -155,15 +217,17 @@ jobs:
           testResultsFormat: "VSTest"
           mergeTestResults: true
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
-        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
-        displayName: ReportGenerator
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Generate Code Coverage Reports
         inputs:
-          reports: '**/*coverage.netcoreapp2.1.cobertura.xml'
-          targetdir: '$(Build.SourcesDirectory)'
+          reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
+          targetdir: $(Build.ArtifactStagingDirectory)\coverage
           reporttypes: Cobertura
+          filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
+          verbosity: Verbose
       - task: PublishCodeCoverageResults@1
-        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
-        displayName: 'Publish code coverage report'
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Publish Code Coverage Reports
         inputs:
-          codeCoverageTool: 'Cobertura'
-          summaryFileLocation: 'Cobertura.xml'
+          codeCoverageTool: Cobertura
+          summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml

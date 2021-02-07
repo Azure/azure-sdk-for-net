@@ -28,11 +28,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("v"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     v = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("as"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     @as = property.Value.GetInt32();
                     continue;
                 }

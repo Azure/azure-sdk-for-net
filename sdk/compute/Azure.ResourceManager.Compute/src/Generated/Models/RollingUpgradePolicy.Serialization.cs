@@ -48,16 +48,31 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("maxBatchInstancePercent"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxBatchInstancePercent = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxUnhealthyInstancePercent"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxUnhealthyInstancePercent = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxUnhealthyUpgradedInstancePercent"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxUnhealthyUpgradedInstancePercent = property.Value.GetInt32();
                     continue;
                 }

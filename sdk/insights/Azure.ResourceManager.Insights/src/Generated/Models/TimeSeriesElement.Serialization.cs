@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("metadatavalues"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MetadataValue> array = new List<MetadataValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -31,6 +36,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("data"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MetricValue> array = new List<MetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

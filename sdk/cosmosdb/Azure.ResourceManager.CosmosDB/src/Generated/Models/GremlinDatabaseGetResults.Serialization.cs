@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("resource");
                 writer.WriteObjectValue(Resource);
             }
+            if (Optional.IsDefined(Options))
+            {
+                writer.WritePropertyName("options");
+                writer.WriteObjectValue(Options);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<GremlinDatabaseGetPropertiesResource> resource = default;
-            Optional<OptionsResource> options = default;
+            Optional<GremlinDatabaseGetPropertiesOptions> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -76,6 +81,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -86,16 +96,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("resource"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             resource = GremlinDatabaseGetPropertiesResource.DeserializeGremlinDatabaseGetPropertiesResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("options"))
                         {
-                            options = OptionsResource.DeserializeOptionsResource(property0.Value);
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            options = GremlinDatabaseGetPropertiesOptions.DeserializeGremlinDatabaseGetPropertiesOptions(property0.Value);
                             continue;
                         }
                     }

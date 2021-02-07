@@ -7,12 +7,19 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>5.6.0</Version>
+		<Version>6.2.0</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-This release supports one feature:
-- Support to create cluster with encryption at host.
+This release contains the bellow change:
+- Add property "PrivateIPAddress" in the class ApplicationGetEndpoint.
+- Add property "PrivateIPAddress" in the class ConnectivityEndpoint.
+- Add properties "VmSizesWithEncryptionAtHost" and "VmSizeProperties" in the class BillingResponseListResult.
+- Add properties "ClusterHdpVersion", "StorageProfile" and "ExcludedServicesConfig" in the class ClusterGetProperties.
+- Add property "TenantId" in the class ClusterIdentityUserAssignedIdentitiesValue.
+- Add properties "Recommend" and "Default" in the class FilterMode.
+- Add property "EncryptDataDisks" in the class Role.
+- Add new classes Dimension, ExcludedServicesConfig, MetricSpecifications, OperationProperties, ServiceSpecification and VmSizeProperty.
       ]]>
 		</PackageReleaseNotes>
     

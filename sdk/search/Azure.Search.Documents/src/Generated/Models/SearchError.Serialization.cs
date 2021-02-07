@@ -32,6 +32,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("details"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SearchError> array = new List<SearchError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

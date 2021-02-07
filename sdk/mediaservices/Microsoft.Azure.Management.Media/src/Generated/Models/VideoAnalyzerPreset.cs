@@ -36,16 +36,22 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="audioLanguage">The language for the audio payload in
         /// the input using the BCP-47 format of 'language tag-region' (e.g:
         /// 'en-US').  If you know the language of your content, it is
-        /// recommended that you specify it. If the language isn't specified or
-        /// set to null, automatic language detection will choose the first
-        /// language detected and process with the selected language for the
-        /// duration of the file. It does not currently support dynamically
-        /// switching between languages after the first language is detected.
-        /// The automatic detection works best with audio recordings with
-        /// clearly discernable speech. If automatic detection fails to find
-        /// the language, transcription would fallback to 'en-US'." The list of
-        /// supported languages is available here:
+        /// recommended that you specify it. The language must be specified
+        /// explicitly for AudioAnalysisMode::Basic, since automatic language
+        /// detection is not included in basic mode. If the language isn't
+        /// specified or set to null, automatic language detection will choose
+        /// the first language detected and process with the selected language
+        /// for the duration of the file. It does not currently support
+        /// dynamically switching between languages after the first language is
+        /// detected. The automatic detection works best with audio recordings
+        /// with clearly discernable speech. If automatic detection fails to
+        /// find the language, transcription would fallback to 'en-US'." The
+        /// list of supported languages is available here:
         /// https://go.microsoft.com/fwlink/?linkid=2109463</param>
+        /// <param name="mode">Determines the set of audio analysis operations
+        /// to be performed. If unspecified, the Standard AudioAnalysisMode
+        /// would be chosen. Possible values include: 'Standard',
+        /// 'Basic'</param>
         /// <param name="experimentalOptions">Dictionary containing key value
         /// pairs for parameters not exposed in the preset itself</param>
         /// <param name="insightsToExtract">Defines the type of insights that
@@ -60,8 +66,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// only. Your Jobs in such conditions would error out. Possible values
         /// include: 'AudioInsightsOnly', 'VideoInsightsOnly',
         /// 'AllInsights'</param>
-        public VideoAnalyzerPreset(string audioLanguage = default(string), IDictionary<string, string> experimentalOptions = default(IDictionary<string, string>), InsightsType? insightsToExtract = default(InsightsType?))
-            : base(audioLanguage, experimentalOptions)
+        public VideoAnalyzerPreset(string audioLanguage = default(string), AudioAnalysisMode? mode = default(AudioAnalysisMode?), IDictionary<string, string> experimentalOptions = default(IDictionary<string, string>), InsightsType? insightsToExtract = default(InsightsType?))
+            : base(audioLanguage, mode, experimentalOptions)
         {
             InsightsToExtract = insightsToExtract;
             CustomInit();

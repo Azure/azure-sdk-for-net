@@ -133,15 +133,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="instanceView">The virtual machine instance
         /// view.</param>
         /// <param name="licenseType">Specifies that the image or disk that is
-        /// being used was licensed on-premises. This element is only used for
-        /// images that contain the Windows Server operating system.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server
-        /// &lt;br&gt;&lt;br&gt; If this element is included in a request for
-        /// an update, the value must match the initial value. This value
-        /// cannot be updated. &lt;br&gt;&lt;br&gt; For more information, see
-        /// [Azure Hybrid Use Benefit for Windows
-        /// Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible
+        /// values for Windows Server operating system are:
+        /// &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt;
+        /// Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux
+        /// Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for
+        /// RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE)
+        /// &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use
+        /// Benefit for Windows
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
+        /// &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
         /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15</param>
         /// <param name="vmId">Specifies the VM unique ID which is a 128-bits
         /// identifier that is encoded and stored in all Azure IaaS VMs SMBIOS
@@ -158,7 +160,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="zones">The virtual machine zones.</param>
         /// <param name="extendedLocation">The extended location of the Virtual
         /// Machine.</param>
-        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), int? platformFaultDomain = default(int?), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
+        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), int? platformFaultDomain = default(int?), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(location, id, name, type, tags)
         {
             Plan = plan;
@@ -392,16 +394,19 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies that the image or disk that is being used
-        /// was licensed on-premises. This element is only used for images that
-        /// contain the Windows Server operating system.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
+        /// was licensed on-premises. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// Possible values for Windows Server operating system are:
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Windows_Client
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Windows_Server
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; If this element is included in
-        /// a request for an update, the value must match the initial value.
-        /// This value cannot be updated. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-        /// For more information, see [Azure Hybrid Use Benefit for Windows
-        /// Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values for Linux
+        /// Server operating system are: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// RHEL_BYOS (for RHEL) &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; SLES_BYOS
+        /// (for SUSE) &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more
+        /// information, see [Azure Hybrid Use Benefit for Windows
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [Azure Hybrid Use Benefit for
+        /// Linux
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Minimum api-version:
         /// 2015-06-15
         /// </summary>

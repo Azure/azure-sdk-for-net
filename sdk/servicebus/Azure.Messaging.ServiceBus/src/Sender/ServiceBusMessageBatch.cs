@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly object _syncGuard = new object();
 
         /// <summary>A flag indicating that the batch is locked, such as when in use during a send batch operation.</summary>
-        private bool _locked = false;
+        private bool _locked;
 
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the messages in the batch as
@@ -76,9 +76,15 @@ namespace Azure.Messaging.ServiceBus
         ///   of the batch does not exceed its maximum.
         /// </summary>
         ///
-        /// <param name="message">Message to attempt to add to the batch.</param>
+        /// <param name="message">The message to attempt to add to the batch.</param>
         ///
         /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
+        ///
+        /// <exception cref="InvalidOperationException">
+        ///   When a batch is sent, it will be locked for the duration of that operation.  During this time,
+        ///   no messages may be added to the batch.  Calling <c>TryAdd</c> while the batch is being sent will
+        ///   result in an <see cref="InvalidOperationException" /> until the send has completed.
+        /// </exception>
         ///
         public bool TryAddMessage(ServiceBusMessage message)
         {

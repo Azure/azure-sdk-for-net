@@ -34,122 +34,118 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestBoundJobScheduleCommit()
         {
-            Action test = () =>
+            void test()
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestBoundJobScheduleCommit";
+                try
                 {
-                    string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestBoundJobScheduleCommit";
-                    try
+                    //
+                    // Create the job schedule
+                    //
+                    const int jobSchedulePriority = 5;
+                    const string jobManagerId = "TestBoundJobScheduleCommit";
+                    const string jobManagerCommandLine = "ping 127.0.0.1 -n 500";
+
+                    IList<MetadataItem> metadata = new List<MetadataItem> { new MetadataItem("key1", "test1"), new MetadataItem("key2", "test2") };
+                    CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
+                    TimeSpan firstRecurrenceInterval = TimeSpan.FromMinutes(2);
+                    jobSchedule.Schedule = new Schedule() { RecurrenceInterval = firstRecurrenceInterval };
+                    PoolInformation poolInfo = new PoolInformation()
                     {
-                        //
-                        // Create the job schedule
-                        //
-                        const int jobSchedulePriority = 5;
-                        const string jobManagerId = "TestBoundJobScheduleCommit";
-                        const string jobManagerCommandLine = "ping 127.0.0.1 -n 500";
+                        PoolId = poolFixture.PoolId
+                    };
 
-                        IList<MetadataItem> metadata = new List<MetadataItem> { new MetadataItem("key1", "test1"), new MetadataItem("key2", "test2") };
-                        CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
-                        TimeSpan firstRecurrenceInterval = TimeSpan.FromMinutes(2);
-                        jobSchedule.Schedule = new Schedule() { RecurrenceInterval = firstRecurrenceInterval };
-                        PoolInformation poolInfo = new PoolInformation()
-                            {
-                                PoolId = this.poolFixture.PoolId
-                            };
-
-                        jobSchedule.JobSpecification = new JobSpecification(poolInfo)
-                            {
-                                Priority = jobSchedulePriority,
-                                JobManagerTask = new JobManagerTask(jobManagerId, jobManagerCommandLine)
-                            };
-
-                        jobSchedule.Metadata = metadata;
-
-                        this.testOutputHelper.WriteLine("Initial job schedule commit()");
-                        jobSchedule.Commit();
-
-                        //Get the bound job schedule
-                        CloudJobSchedule boundJobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jobScheduleId);
-
-                        //Ensure the job schedule is structured as expected
-                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, this.poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, firstRecurrenceInterval, metadata);
-
-                        //Update the bound job schedule schedule
-                        TimeSpan recurrenceInterval = TimeSpan.FromMinutes(5);
-                        boundJobSchedule.Schedule = new Schedule()
-                        {
-                            RecurrenceInterval = recurrenceInterval
-                        };
-
-                        this.testOutputHelper.WriteLine("Updating JobSchedule Schedule");
-                        boundJobSchedule.Commit();
-
-                        //Ensure the job schedule is correct after commit
-                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, this.poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
-
-                        //Update the bound job schedule priority
-                        const int newJobSchedulePriority = 1;
-                        boundJobSchedule.JobSpecification.Priority = newJobSchedulePriority;
-
-                        this.testOutputHelper.WriteLine("Updating JobSpecification.Priority");
-                        boundJobSchedule.Commit();
-
-                        //Ensure the job schedule is correct after commit
-                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, this.poolFixture.PoolId, newJobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
-
-                        //Update the bound job schedule job manager commandline
-                        const string newJobManagerCommandLine = "ping 127.0.0.1 -n 150";
-                        boundJobSchedule.JobSpecification.JobManagerTask.CommandLine = newJobManagerCommandLine;
-
-                        this.testOutputHelper.WriteLine("Updating JobSpecification.JobManagerTask.CommandLine");
-                        boundJobSchedule.Commit();
-
-                        //Ensure the job schedule is correct after commit
-                        AssertJobScheduleCorrectness(batchCli.JobScheduleOperations, boundJobSchedule, this.poolFixture.PoolId, newJobSchedulePriority, jobManagerId, newJobManagerCommandLine, recurrenceInterval, metadata);
-
-                        //Update the bound job schedule PoolInformation
-                        const string newPoolId = "TestPool";
-
-                        boundJobSchedule.JobSpecification.PoolInformation = new PoolInformation() { PoolId = newPoolId };
-
-                        this.testOutputHelper.WriteLine("Updating PoolInformation");
-                        boundJobSchedule.Commit();
-
-                        //Ensure the job schedule is correct after commit
-                        AssertJobScheduleCorrectness(
-                            batchCli.JobScheduleOperations,
-                            boundJobSchedule,
-                            newPoolId,
-                            newJobSchedulePriority,
-                            jobManagerId,
-                            newJobManagerCommandLine,
-                            recurrenceInterval,
-                            metadata);
-
-                        //Update the bound job schedule Metadata
-                        IList<MetadataItem> newMetadata = new List<MetadataItem> { new MetadataItem("Object", "Model") };
-                        boundJobSchedule.Metadata = newMetadata;
-
-                        this.testOutputHelper.WriteLine("Updating Metadata");
-                        boundJobSchedule.Commit();
-
-                        //Ensure the job schedule is correct after commit
-                        AssertJobScheduleCorrectness(
-                            batchCli.JobScheduleOperations,
-                            boundJobSchedule,
-                            newPoolId,
-                            newJobSchedulePriority,
-                            jobManagerId,
-                            newJobManagerCommandLine,
-                            recurrenceInterval,
-                            newMetadata);
-                    }
-                    finally
+                    jobSchedule.JobSpecification = new JobSpecification(poolInfo)
                     {
-                        batchCli.JobScheduleOperations.DeleteJobSchedule(jobScheduleId);
-                    }
+                        Priority = jobSchedulePriority,
+                        JobManagerTask = new JobManagerTask(jobManagerId, jobManagerCommandLine)
+                    };
+
+                    jobSchedule.Metadata = metadata;
+
+                    testOutputHelper.WriteLine("Initial job schedule commit()");
+                    jobSchedule.Commit();
+
+                    //Get the bound job schedule
+                    CloudJobSchedule boundJobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jobScheduleId);
+
+                    //Ensure the job schedule is structured as expected
+                    AssertJobScheduleCorrectness(boundJobSchedule, poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, firstRecurrenceInterval, metadata);
+
+                    //Update the bound job schedule schedule
+                    TimeSpan recurrenceInterval = TimeSpan.FromMinutes(5);
+                    boundJobSchedule.Schedule = new Schedule()
+                    {
+                        RecurrenceInterval = recurrenceInterval
+                    };
+
+                    testOutputHelper.WriteLine("Updating JobSchedule Schedule");
+                    boundJobSchedule.Commit();
+
+                    //Ensure the job schedule is correct after commit
+                    AssertJobScheduleCorrectness(boundJobSchedule, poolFixture.PoolId, jobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
+
+                    //Update the bound job schedule priority
+                    const int newJobSchedulePriority = 1;
+                    boundJobSchedule.JobSpecification.Priority = newJobSchedulePriority;
+
+                    testOutputHelper.WriteLine("Updating JobSpecification.Priority");
+                    boundJobSchedule.Commit();
+
+                    //Ensure the job schedule is correct after commit
+                    AssertJobScheduleCorrectness(boundJobSchedule, poolFixture.PoolId, newJobSchedulePriority, jobManagerId, jobManagerCommandLine, recurrenceInterval, metadata);
+
+                    //Update the bound job schedule job manager commandline
+                    const string newJobManagerCommandLine = "ping 127.0.0.1 -n 150";
+                    boundJobSchedule.JobSpecification.JobManagerTask.CommandLine = newJobManagerCommandLine;
+
+                    testOutputHelper.WriteLine("Updating JobSpecification.JobManagerTask.CommandLine");
+                    boundJobSchedule.Commit();
+
+                    //Ensure the job schedule is correct after commit
+                    AssertJobScheduleCorrectness(boundJobSchedule, poolFixture.PoolId, newJobSchedulePriority, jobManagerId, newJobManagerCommandLine, recurrenceInterval, metadata);
+
+                    //Update the bound job schedule PoolInformation
+                    const string newPoolId = "TestPool";
+
+                    boundJobSchedule.JobSpecification.PoolInformation = new PoolInformation() { PoolId = newPoolId };
+
+                    testOutputHelper.WriteLine("Updating PoolInformation");
+                    boundJobSchedule.Commit();
+
+                    //Ensure the job schedule is correct after commit
+                    AssertJobScheduleCorrectness(
+                        boundJobSchedule,
+                        newPoolId,
+                        newJobSchedulePriority,
+                        jobManagerId,
+                        newJobManagerCommandLine,
+                        recurrenceInterval,
+                        metadata);
+
+                    //Update the bound job schedule Metadata
+                    IList<MetadataItem> newMetadata = new List<MetadataItem> { new MetadataItem("Object", "Model") };
+                    boundJobSchedule.Metadata = newMetadata;
+
+                    testOutputHelper.WriteLine("Updating Metadata");
+                    boundJobSchedule.Commit();
+
+                    //Ensure the job schedule is correct after commit
+                    AssertJobScheduleCorrectness(
+                        boundJobSchedule,
+                        newPoolId,
+                        newJobSchedulePriority,
+                        jobManagerId,
+                        newJobManagerCommandLine,
+                        recurrenceInterval,
+                        newMetadata);
                 }
-            };
+                finally
+                {
+                    batchCli.JobScheduleOperations.DeleteJobSchedule(jobScheduleId);
+                }
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -157,7 +153,6 @@
         #region Test helpers
         
         private static void AssertJobScheduleCorrectness(
-            JobScheduleOperations jobScheduleOperations,
             CloudJobSchedule boundJobSchedule,
             string expectedPoolId,
             int expectedJobPriority,
@@ -210,53 +205,51 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task JobSchedulePatch()
         {
-            Func<Task> test = async () =>
+            static async Task test()
             {
-                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string jobScheduleId = "TestPatchJobSchedule-" + TestUtilities.GetMyName();
+                const string newJobManagerCommandLine = "cmd /c dir";
+                const string metadataKey = "Foo";
+                const string metadataValue = "Bar";
+                TimeSpan newRecurrenceInterval = TimeSpan.FromDays(2);
+                try
                 {
-                    string jobScheduleId = "TestPatchJobSchedule-" + TestUtilities.GetMyName();
-                    const string newJobManagerCommandLine = "cmd /c dir";
-                    const string metadataKey = "Foo";
-                    const string metadataValue = "Bar";
-                    TimeSpan newRecurrenceInterval = TimeSpan.FromDays(2);
-                    try
-                    {
-                        CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(
-                            jobScheduleId,
-                            new Schedule()
-                                {
-                                    RecurrenceInterval = TimeSpan.FromDays(1)
-                                },
-                            new JobSpecification(new PoolInformation() { PoolId = "DummyPool" })
-                                {
-                                    JobManagerTask = new JobManagerTask(id: "Foo", commandLine: "Foo")
-                                });
+                    CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(
+                        jobScheduleId,
+                        new Schedule()
+                        {
+                            RecurrenceInterval = TimeSpan.FromDays(1)
+                        },
+                        new JobSpecification(new PoolInformation() { PoolId = "DummyPool" })
+                        {
+                            JobManagerTask = new JobManagerTask(id: "Foo", commandLine: "Foo")
+                        });
 
-                        await jobSchedule.CommitAsync().ConfigureAwait(false);
-                        await jobSchedule.RefreshAsync().ConfigureAwait(false);
+                    await jobSchedule.CommitAsync().ConfigureAwait(false);
+                    await jobSchedule.RefreshAsync().ConfigureAwait(false);
 
-                        jobSchedule.JobSpecification.JobManagerTask.CommandLine = newJobManagerCommandLine;
-                        jobSchedule.Metadata = new List<MetadataItem>()
+                    jobSchedule.JobSpecification.JobManagerTask.CommandLine = newJobManagerCommandLine;
+                    jobSchedule.Metadata = new List<MetadataItem>()
                             {
                                 new MetadataItem(metadataKey, metadataValue)
                             };
-                        jobSchedule.Schedule.RecurrenceInterval = newRecurrenceInterval;
+                    jobSchedule.Schedule.RecurrenceInterval = newRecurrenceInterval;
 
-                        await jobSchedule.CommitChangesAsync().ConfigureAwait(false);
+                    await jobSchedule.CommitChangesAsync().ConfigureAwait(false);
 
-                        await jobSchedule.RefreshAsync().ConfigureAwait(false);
+                    await jobSchedule.RefreshAsync().ConfigureAwait(false);
 
-                        Assert.Equal(newRecurrenceInterval, jobSchedule.Schedule.RecurrenceInterval);
-                        Assert.Equal(newJobManagerCommandLine, jobSchedule.JobSpecification.JobManagerTask.CommandLine);
-                        Assert.Equal(metadataKey, jobSchedule.Metadata.Single().Name);
-                        Assert.Equal(metadataValue, jobSchedule.Metadata.Single().Value);
-                    }
-                    finally
-                    {
-                        await TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).ConfigureAwait(false);
-                    }
+                    Assert.Equal(newRecurrenceInterval, jobSchedule.Schedule.RecurrenceInterval);
+                    Assert.Equal(newJobManagerCommandLine, jobSchedule.JobSpecification.JobManagerTask.CommandLine);
+                    Assert.Equal(metadataKey, jobSchedule.Metadata.Single().Name);
+                    Assert.Equal(metadataValue, jobSchedule.Metadata.Single().Value);
                 }
-            };
+                finally
+                {
+                    await TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).ConfigureAwait(false);
+                }
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
@@ -266,107 +259,105 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void SampleCreateJobScheduleAutoPool()
         {
-            Action test = () =>
+            void test()
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jsId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-CreateWiAutoPoolTest";
+                try
                 {
-                    string jsId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-CreateWiAutoPoolTest";
-                    try
+                    CloudJobSchedule newJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jsId, null, null);
                     {
-                        CloudJobSchedule newJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jsId, null, null);
-                        {
-                            newJobSchedule.Metadata = MakeMetaData("onCreateName", "onCreateValue");
+                        newJobSchedule.Metadata = MakeMetaData("onCreateName", "onCreateValue");
 
-                            PoolInformation poolInformation = new PoolInformation();
-                            AutoPoolSpecification iaps = new AutoPoolSpecification();
-                            Schedule schedule = new Schedule() { RecurrenceInterval = TimeSpan.FromMinutes(18) };
-                            poolInformation.AutoPoolSpecification = iaps;
+                        PoolInformation poolInformation = new PoolInformation();
+                        AutoPoolSpecification iaps = new AutoPoolSpecification();
+                        Schedule schedule = new Schedule() { RecurrenceInterval = TimeSpan.FromMinutes(18) };
+                        poolInformation.AutoPoolSpecification = iaps;
 
-                            iaps.AutoPoolIdPrefix = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName();
-                            iaps.PoolLifetimeOption = Microsoft.Azure.Batch.Common.PoolLifetimeOption.Job;
-                            iaps.KeepAlive = false;
+                        iaps.AutoPoolIdPrefix = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName();
+                        iaps.PoolLifetimeOption = Microsoft.Azure.Batch.Common.PoolLifetimeOption.Job;
+                        iaps.KeepAlive = false;
 
-                            PoolSpecification ps = new PoolSpecification();
+                        PoolSpecification ps = new PoolSpecification();
 
-                            iaps.PoolSpecification = ps;
+                        iaps.PoolSpecification = ps;
 
-                            ps.TargetDedicatedComputeNodes = 1;
-                            ps.VirtualMachineSize = PoolFixture.VMSize;
-                            
-                            ps.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
+                        ps.TargetDedicatedComputeNodes = 1;
+                        ps.VirtualMachineSize = PoolFixture.VMSize;
 
-                            ps.Metadata = MakeMetaData("pusMDIName", "pusMDIValue");
+                        ps.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
 
-                            JobSpecification jobSpec = newJobSchedule.JobSpecification;
-                            Assert.Null(jobSpec);
+                        ps.Metadata = MakeMetaData("pusMDIName", "pusMDIValue");
 
-                            jobSpec = new JobSpecification(poolInformation);
+                        JobSpecification jobSpec = newJobSchedule.JobSpecification;
+                        Assert.Null(jobSpec);
 
-                            JobManagerTask jobMgr = jobSpec.JobManagerTask;
+                        jobSpec = new JobSpecification(poolInformation);
 
-                            Assert.Null(jobMgr);
+                        JobManagerTask jobMgr = jobSpec.JobManagerTask;
 
-                            jobMgr = new JobManagerTask(TestUtilities.GetMyName() + "-JobManagerTest", "hostname");
+                        Assert.Null(jobMgr);
 
-                            jobMgr.KillJobOnCompletion = false;
+                        jobMgr = new JobManagerTask(TestUtilities.GetMyName() + "-JobManagerTest", "hostname");
 
-                            // set the JobManagerTask on the JobSpecification
-                            jobSpec.JobManagerTask = jobMgr;
+                        jobMgr.KillJobOnCompletion = false;
 
-                            // set the JobSpecifcation on the Job Schedule
-                            newJobSchedule.JobSpecification = jobSpec;
+                        // set the JobManagerTask on the JobSpecification
+                        jobSpec.JobManagerTask = jobMgr;
 
-                            newJobSchedule.Schedule = schedule;
+                        // set the JobSpecifcation on the Job Schedule
+                        newJobSchedule.JobSpecification = jobSpec;
 
-                            newJobSchedule.Commit();
-                        }
+                        newJobSchedule.Schedule = schedule;
 
-                        CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jsId);
-                        {
-                            TestUtilities.DisplayJobScheduleLong(this.testOutputHelper, jobSchedule);
-
-                            List<MetadataItem> mdi = new List<MetadataItem>(jobSchedule.Metadata);
-
-                            // check the values specified for AddJobSchedule are correct.
-                            foreach (MetadataItem curIMDI in mdi)
-                            {
-                                Assert.Equal("onCreateName", curIMDI.Name);
-                                Assert.Equal("onCreateValue", curIMDI.Value);
-                            }
-
-                            // add metadata items
-                            mdi.Add(new MetadataItem("modifiedName", "modifiedValue"));
-
-                            jobSchedule.Metadata = mdi;
-
-                            jobSchedule.Commit();
-
-                            // confirm metadata updated correctly
-                            CloudJobSchedule jsUpdated = batchCli.JobScheduleOperations.GetJobSchedule(jsId);
-                            {
-                                List<MetadataItem> updatedMDI = new List<MetadataItem>(jsUpdated.Metadata);
-
-                                Assert.Equal(2, updatedMDI.Count);
-
-                                Assert.Equal("onCreateName", updatedMDI[0].Name);
-                                Assert.Equal("onCreateValue", updatedMDI[0].Value);
-
-                                Assert.Equal("modifiedName", updatedMDI[1].Name);
-                                Assert.Equal("modifiedValue", updatedMDI[1].Value);
-                            }
-
-                            jobSchedule.Refresh();
-
-                            TestUtilities.DisplayJobScheduleLong(this.testOutputHelper, jobSchedule);
-                        }
+                        newJobSchedule.Commit();
                     }
-                    finally
+
+                    CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jsId);
                     {
-                        // clean up
-                        TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jsId).Wait();
+                        TestUtilities.DisplayJobScheduleLong(testOutputHelper, jobSchedule);
+
+                        List<MetadataItem> mdi = new List<MetadataItem>(jobSchedule.Metadata);
+
+                        // check the values specified for AddJobSchedule are correct.
+                        foreach (MetadataItem curIMDI in mdi)
+                        {
+                            Assert.Equal("onCreateName", curIMDI.Name);
+                            Assert.Equal("onCreateValue", curIMDI.Value);
+                        }
+
+                        // add metadata items
+                        mdi.Add(new MetadataItem("modifiedName", "modifiedValue"));
+
+                        jobSchedule.Metadata = mdi;
+
+                        jobSchedule.Commit();
+
+                        // confirm metadata updated correctly
+                        CloudJobSchedule jsUpdated = batchCli.JobScheduleOperations.GetJobSchedule(jsId);
+                        {
+                            List<MetadataItem> updatedMDI = new List<MetadataItem>(jsUpdated.Metadata);
+
+                            Assert.Equal(2, updatedMDI.Count);
+
+                            Assert.Equal("onCreateName", updatedMDI[0].Name);
+                            Assert.Equal("onCreateValue", updatedMDI[0].Value);
+
+                            Assert.Equal("modifiedName", updatedMDI[1].Name);
+                            Assert.Equal("modifiedValue", updatedMDI[1].Value);
+                        }
+
+                        jobSchedule.Refresh();
+
+                        TestUtilities.DisplayJobScheduleLong(testOutputHelper, jobSchedule);
                     }
                 }
-            };
+                finally
+                {
+                    // clean up
+                    TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jsId).Wait();
+                }
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -376,73 +367,71 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1433008JobScheduleScheduleNewable()
         {
-            Action test = () =>
+            void test()
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jsId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-Bug1433008JobScheduleScheduleNewable";
+
+                try
                 {
-                    string jsId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-Bug1433008JobScheduleScheduleNewable";
+                    DateTime unboundDNRU = DateTime.UtcNow.AddYears(1);
 
-                    try
+                    CloudJobSchedule newJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jsId, null, null);
                     {
-                        DateTime unboundDNRU = DateTime.UtcNow.AddYears(1);
+                        AutoPoolSpecification iaps = new AutoPoolSpecification();
+                        PoolSpecification ips = new PoolSpecification();
+                        JobSpecification jobSpecification = new JobSpecification(new PoolInformation() { AutoPoolSpecification = iaps });
+                        iaps.PoolSpecification = ips;
 
-                        CloudJobSchedule newJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jsId, null, null);
-                        {
-                            AutoPoolSpecification iaps = new AutoPoolSpecification();
-                            PoolSpecification ips = new PoolSpecification();
-                            JobSpecification jobSpecification = new JobSpecification(new PoolInformation() { AutoPoolSpecification = iaps });
-                            iaps.PoolSpecification = ips;
+                        iaps.AutoPoolIdPrefix = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName();
+                        iaps.PoolLifetimeOption = Microsoft.Azure.Batch.Common.PoolLifetimeOption.Job;
+                        iaps.KeepAlive = false;
 
-                            iaps.AutoPoolIdPrefix = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName();
-                            iaps.PoolLifetimeOption = Microsoft.Azure.Batch.Common.PoolLifetimeOption.Job;
-                            iaps.KeepAlive = false;
+                        PoolSpecification ps = iaps.PoolSpecification;
 
-                            PoolSpecification ps = iaps.PoolSpecification;
+                        ps.TargetDedicatedComputeNodes = 1;
+                        ps.VirtualMachineSize = PoolFixture.VMSize;
 
-                            ps.TargetDedicatedComputeNodes = 1;
-                            ps.VirtualMachineSize = PoolFixture.VMSize;
-                            
-                            ps.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
+                        ps.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
 
-                            Schedule sched = new Schedule();
+                        Schedule sched = new Schedule();
 
-                            sched.DoNotRunUntil = unboundDNRU;
+                        sched.DoNotRunUntil = unboundDNRU;
 
-                            newJobSchedule.Schedule = sched;
-                            newJobSchedule.JobSpecification = jobSpecification;
+                        newJobSchedule.Schedule = sched;
+                        newJobSchedule.JobSpecification = jobSpecification;
 
-                            newJobSchedule.Commit();
-                        }
-
-                        CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jsId);
-
-                        // confirm that the original value(s) are set
-                        TestUtilities.DisplayJobScheduleLong(this.testOutputHelper, jobSchedule);
-
-                        Assert.Equal(unboundDNRU, jobSchedule.Schedule.DoNotRunUntil);
-
-                        // now update the schedule and confirm
-
-                        DateTime boundDNRU = DateTime.UtcNow.AddYears(2);
-
-                        jobSchedule.Schedule.DoNotRunUntil = boundDNRU;
-
-                        jobSchedule.Commit();
-
-                        jobSchedule.Refresh();
-
-                        // confirm that the new value(s) are set
-                        TestUtilities.DisplayJobScheduleLong(this.testOutputHelper, jobSchedule);
-
-                        Assert.Equal(boundDNRU, jobSchedule.Schedule.DoNotRunUntil);
+                        newJobSchedule.Commit();
                     }
-                    finally
-                    {
-                        // clean up
-                        TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jsId).Wait();
-                    }
+
+                    CloudJobSchedule jobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jsId);
+
+                    // confirm that the original value(s) are set
+                    TestUtilities.DisplayJobScheduleLong(testOutputHelper, jobSchedule);
+
+                    Assert.Equal(unboundDNRU, jobSchedule.Schedule.DoNotRunUntil);
+
+                    // now update the schedule and confirm
+
+                    DateTime boundDNRU = DateTime.UtcNow.AddYears(2);
+
+                    jobSchedule.Schedule.DoNotRunUntil = boundDNRU;
+
+                    jobSchedule.Commit();
+
+                    jobSchedule.Refresh();
+
+                    // confirm that the new value(s) are set
+                    TestUtilities.DisplayJobScheduleLong(testOutputHelper, jobSchedule);
+
+                    Assert.Equal(boundDNRU, jobSchedule.Schedule.DoNotRunUntil);
                 }
-            };
+                finally
+                {
+                    // clean up
+                    TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jsId).Wait();
+                }
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -452,55 +441,53 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
         public void TestListJobsByJobSchedule()
         {
-            Action test = () =>
+            static void test()
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestListJobsByJobSchedule";
+
+                try
                 {
-                    string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestListJobsByJobSchedule";
-
-                    try
+                    Schedule schedule = new Schedule()
                     {
-                        Schedule schedule = new Schedule()
-                        {
-                            DoNotRunAfter = DateTime.UtcNow.Add(TimeSpan.FromDays(1)),
-                            RecurrenceInterval = TimeSpan.FromMinutes(1)
-                        };
+                        DoNotRunAfter = DateTime.UtcNow.Add(TimeSpan.FromDays(1)),
+                        RecurrenceInterval = TimeSpan.FromMinutes(1)
+                    };
 
-                        JobSpecification jobSpecification = new JobSpecification(new PoolInformation()
-                            {
-                                PoolId = "DummyPool"
-                            });
-
-                        CloudJobSchedule unboundJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, schedule, jobSpecification);
-                        unboundJobSchedule.Commit();
-
-                        //List the jobs under this JobSchedule
-                        for (int i = 1; i <= 3; i++)
-                        {
-                            string expectedJobId = string.Format("{0}:job-{1}", jobScheduleId, i);
-                            CloudJobSchedule boundJobSchedule = TestUtilities.WaitForJobOnJobSchedule(
-                                batchCli.JobScheduleOperations,
-                                jobScheduleId, 
-                                expectedJobId: expectedJobId, 
-                                timeout: TimeSpan.FromSeconds(70));
-
-                            List<CloudJob> jobs = boundJobSchedule.ListJobs().ToList();
-                            Assert.Equal(i, jobs.Count);
-
-                            jobs = batchCli.JobScheduleOperations.ListJobs(jobScheduleId).ToList();
-                            Assert.Equal(i, jobs.Count);
-
-                            //Terminate the current job to force a new job to be created
-                            batchCli.JobOperations.TerminateJob(expectedJobId);
-                        }
-                    }
-                    finally
+                    JobSpecification jobSpecification = new JobSpecification(new PoolInformation()
                     {
-                        // clean up
-                        TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).Wait();
+                        PoolId = "DummyPool"
+                    });
+
+                    CloudJobSchedule unboundJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, schedule, jobSpecification);
+                    unboundJobSchedule.Commit();
+
+                    //List the jobs under this JobSchedule
+                    for (int i = 1; i <= 3; i++)
+                    {
+                        string expectedJobId = string.Format("{0}:job-{1}", jobScheduleId, i);
+                        CloudJobSchedule boundJobSchedule = TestUtilities.WaitForJobOnJobSchedule(
+                            batchCli.JobScheduleOperations,
+                            jobScheduleId,
+                            expectedJobId: expectedJobId,
+                            timeout: TimeSpan.FromSeconds(70));
+
+                        List<CloudJob> jobs = boundJobSchedule.ListJobs().ToList();
+                        Assert.Equal(i, jobs.Count);
+
+                        jobs = batchCli.JobScheduleOperations.ListJobs(jobScheduleId).ToList();
+                        Assert.Equal(i, jobs.Count);
+
+                        //Terminate the current job to force a new job to be created
+                        batchCli.JobOperations.TerminateJob(expectedJobId);
                     }
                 }
-            };
+                finally
+                {
+                    // clean up
+                    TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).Wait();
+                }
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -510,79 +497,77 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestJobScheduleVerbs()
         {
-            Action test = () =>
+            void test()
             {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestEnableDisableDeleteJobSchedule";
+
+                try
                 {
-                    string jobScheduleId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestEnableDisableDeleteJobSchedule";
-
-                    try
+                    Schedule schedule = new Schedule()
                     {
-                        Schedule schedule = new Schedule()
-                        {
-                            DoNotRunAfter = DateTime.UtcNow.Add(TimeSpan.FromDays(1))
-                        };
+                        DoNotRunAfter = DateTime.UtcNow.Add(TimeSpan.FromDays(1))
+                    };
 
-                        JobSpecification jobSpecification = new JobSpecification(new PoolInformation()
-                            {
-                                PoolId = "DummyPool"
-                            });
-
-                        CloudJobSchedule unboundJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, schedule, jobSpecification);
-                        unboundJobSchedule.Commit();
-
-                        CloudJobSchedule boundJobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jobScheduleId);
-
-                        //Disable the job schedule via instance
-                        boundJobSchedule.Disable();
-                        boundJobSchedule.Refresh();
-                        
-                        Assert.NotNull(boundJobSchedule.State);
-                        Assert.Equal(JobScheduleState.Disabled, boundJobSchedule.State);
-
-                        //Enable the job schedule via instance
-                        boundJobSchedule.Enable();
-                        boundJobSchedule.Refresh();
-
-                        Assert.NotNull(boundJobSchedule.State);
-                        Assert.Equal(JobScheduleState.Active, boundJobSchedule.State);
-
-                        //Disable the job schedule via operations
-                        batchCli.JobScheduleOperations.DisableJobSchedule(jobScheduleId);
-                        boundJobSchedule.Refresh();
-
-                        Assert.NotNull(boundJobSchedule.State);
-                        Assert.Equal(JobScheduleState.Disabled, boundJobSchedule.State);
-
-                        //Enable the job schedule via instance
-                        batchCli.JobScheduleOperations.EnableJobSchedule(jobScheduleId);
-                        boundJobSchedule.Refresh();
-
-                        Assert.NotNull(boundJobSchedule.State);
-                        Assert.Equal(JobScheduleState.Active, boundJobSchedule.State);
-
-                        //Terminate the job schedule
-                        batchCli.JobScheduleOperations.TerminateJobSchedule(jobScheduleId);
-
-                        boundJobSchedule.Refresh();
-                        Assert.True(boundJobSchedule.State == JobScheduleState.Completed || boundJobSchedule.State == JobScheduleState.Terminating);
-
-                        //Delete the job schedule
-                        boundJobSchedule.Delete();
-                        
-                        //Wait for deletion to take
-                        BatchException be = TestUtilities.AssertThrowsEventuallyAsync<BatchException>(() => boundJobSchedule.RefreshAsync(), TimeSpan.FromSeconds(30)).Result;
-                        Assert.NotNull(be.RequestInformation);
-                        Assert.NotNull(be.RequestInformation.BatchError);
-                        Assert.Equal("JobScheduleNotFound", be.RequestInformation.BatchError.Code);
-                    }
-                    finally
+                    JobSpecification jobSpecification = new JobSpecification(new PoolInformation()
                     {
-                        // clean up
-                        TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).Wait();
-                    }
+                        PoolId = "DummyPool"
+                    });
+
+                    CloudJobSchedule unboundJobSchedule = batchCli.JobScheduleOperations.CreateJobSchedule(jobScheduleId, schedule, jobSpecification);
+                    unboundJobSchedule.Commit();
+
+                    CloudJobSchedule boundJobSchedule = batchCli.JobScheduleOperations.GetJobSchedule(jobScheduleId);
+
+                    //Disable the job schedule via instance
+                    boundJobSchedule.Disable();
+                    boundJobSchedule.Refresh();
+
+                    Assert.NotNull(boundJobSchedule.State);
+                    Assert.Equal(JobScheduleState.Disabled, boundJobSchedule.State);
+
+                    //Enable the job schedule via instance
+                    boundJobSchedule.Enable();
+                    boundJobSchedule.Refresh();
+
+                    Assert.NotNull(boundJobSchedule.State);
+                    Assert.Equal(JobScheduleState.Active, boundJobSchedule.State);
+
+                    //Disable the job schedule via operations
+                    batchCli.JobScheduleOperations.DisableJobSchedule(jobScheduleId);
+                    boundJobSchedule.Refresh();
+
+                    Assert.NotNull(boundJobSchedule.State);
+                    Assert.Equal(JobScheduleState.Disabled, boundJobSchedule.State);
+
+                    //Enable the job schedule via instance
+                    batchCli.JobScheduleOperations.EnableJobSchedule(jobScheduleId);
+                    boundJobSchedule.Refresh();
+
+                    Assert.NotNull(boundJobSchedule.State);
+                    Assert.Equal(JobScheduleState.Active, boundJobSchedule.State);
+
+                    //Terminate the job schedule
+                    batchCli.JobScheduleOperations.TerminateJobSchedule(jobScheduleId);
+
+                    boundJobSchedule.Refresh();
+                    Assert.True(boundJobSchedule.State == JobScheduleState.Completed || boundJobSchedule.State == JobScheduleState.Terminating);
+
+                    //Delete the job schedule
+                    boundJobSchedule.Delete();
+
+                    //Wait for deletion to take
+                    BatchException be = TestUtilities.AssertThrowsEventuallyAsync<BatchException>(() => boundJobSchedule.RefreshAsync(), TimeSpan.FromSeconds(30)).Result;
+                    Assert.NotNull(be.RequestInformation);
+                    Assert.NotNull(be.RequestInformation.BatchError);
+                    Assert.Equal("JobScheduleNotFound", be.RequestInformation.BatchError.Code);
                 }
-            };
+                finally
+                {
+                    // clean up
+                    TestUtilities.DeleteJobScheduleIfExistsAsync(batchCli, jobScheduleId).Wait();
+                }
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }

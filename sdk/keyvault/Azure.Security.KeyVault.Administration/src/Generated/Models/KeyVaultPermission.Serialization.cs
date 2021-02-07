@@ -8,8 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration.Models;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     public partial class KeyVaultPermission : IUtf8JsonSerializable
     {
@@ -42,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WriteStartArray();
                 foreach (var item in DataActions)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +53,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WriteStartArray();
                 foreach (var item in NotDataActions)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -63,12 +64,17 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             Optional<IList<string>> actions = default;
             Optional<IList<string>> notActions = default;
-            Optional<IList<string>> dataActions = default;
-            Optional<IList<string>> notDataActions = default;
+            Optional<IList<KeyVaultDataAction>> dataActions = default;
+            Optional<IList<KeyVaultDataAction>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -79,6 +85,11 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (property.NameEquals("notActions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -89,20 +100,30 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (property.NameEquals("dataActions"))
                 {
-                    List<string> array = new List<string>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<KeyVaultDataAction> array = new List<KeyVaultDataAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new KeyVaultDataAction(item.GetString()));
                     }
                     dataActions = array;
                     continue;
                 }
                 if (property.NameEquals("notDataActions"))
                 {
-                    List<string> array = new List<string>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<KeyVaultDataAction> array = new List<KeyVaultDataAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new KeyVaultDataAction(item.GetString()));
                     }
                     notDataActions = array;
                     continue;

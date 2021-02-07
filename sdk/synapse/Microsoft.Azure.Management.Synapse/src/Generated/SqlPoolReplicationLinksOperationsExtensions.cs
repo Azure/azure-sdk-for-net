@@ -74,6 +74,64 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Get SQL pool replication link by name
+            /// </summary>
+            /// <remarks>
+            /// Get SQL pool replication link by name.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='linkId'>
+            /// The ID of the replication link.
+            /// </param>
+            public static ReplicationLink GetByName(this ISqlPoolReplicationLinksOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string linkId)
+            {
+                return operations.GetByNameAsync(resourceGroupName, workspaceName, sqlPoolName, linkId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get SQL pool replication link by name
+            /// </summary>
+            /// <remarks>
+            /// Get SQL pool replication link by name.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='linkId'>
+            /// The ID of the replication link.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationLink> GetByNameAsync(this ISqlPoolReplicationLinksOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetByNameWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, linkId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get SQL pool replication links
             /// </summary>
             /// <remarks>

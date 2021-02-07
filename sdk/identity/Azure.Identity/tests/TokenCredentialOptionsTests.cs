@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -67,6 +68,37 @@ namespace Azure.Identity.Tests
                 TokenCredentialOptions option = new TokenCredentialOptions();
 
                 Assert.AreEqual(option.AuthorityHost, AzureAuthorityHosts.AzurePublicCloud);
+            }
+        }
+
+        [Test]
+        public void SetAuthorityHostToNonHttpsEndpointThrows()
+        {
+            TokenCredentialOptions options = new TokenCredentialOptions();
+
+            Assert.Throws<ArgumentException>(() => options.AuthorityHost = new Uri("http://unprotected.login.com"));
+        }
+
+        [NonParallelizable]
+        [Test]
+        public void EnviornmentSpecifiedNonHttpsAuthorityHostFails()
+        {
+            string tenantId = Guid.NewGuid().ToString();
+            string clientId = Guid.NewGuid().ToString();
+            string username = Guid.NewGuid().ToString();
+            string password = Guid.NewGuid().ToString();
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+            using (new TestEnvVar("AZURE_AUTHORITY_HOST", "http://unprotected.login.com"))
+            {
+                Assert.Throws<ArgumentException>(() => new ClientCertificateCredential(tenantId, clientId, certificatePath, new ClientCertificateCredentialOptions()));
+                Assert.Throws<ArgumentException>(() => new ClientSecretCredential(tenantId, clientId, password, new TokenCredentialOptions()));
+                Assert.Throws<ArgumentException>(() => new DefaultAzureCredential(new DefaultAzureCredentialOptions()));
+                Assert.Throws<ArgumentException>(() => new DeviceCodeCredential(new DeviceCodeCredentialOptions()));
+                Assert.Throws<ArgumentException>(() => new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions()));
+                Assert.Throws<ArgumentException>(() => new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions()));
+                Assert.Throws<ArgumentException>(() => new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions()));
+                Assert.Throws<ArgumentException>(() => new UsernamePasswordCredential(tenantId, clientId, username, password, new TokenCredentialOptions()));
             }
         }
     }

@@ -60,7 +60,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// hub</param>
         /// <param name="compression">The event hub messages compression type.
         /// Possible values include: 'None', 'GZip'</param>
-        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string))
+        /// <param name="provisioningState">The provisioned state of the
+        /// resource. Possible values include: 'Running', 'Creating',
+        /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
+        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string), string provisioningState = default(string))
             : base(id, name, type, location)
         {
             EventHubResourceId = eventHubResourceId;
@@ -70,6 +73,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             DataFormat = dataFormat;
             EventSystemProperties = eventSystemProperties;
             Compression = compression;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -127,6 +131,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.compression")]
         public string Compression { get; set; }
+
+        /// <summary>
+        /// Gets the provisioned state of the resource. Possible values
+        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
+        /// 'Moving'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

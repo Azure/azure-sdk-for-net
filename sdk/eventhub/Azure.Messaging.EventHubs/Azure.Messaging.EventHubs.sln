@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Tests", "tests\Azure.Messaging.EventHubs.Tests.csproj", "{51A23FD9-A32D-4390-9A5B-1EA7A045F0F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Samples", "samples\Azure.Messaging.EventHubs.Samples.csproj", "{AD33C619-AC51-4F29-937B-184B4F785F57}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{2CFDB3D6-5CFB-428C-9C89-29DD169B5433}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{2DB233D3-E757-423C-8F8D-742B0AFF4713}"
@@ -47,18 +45,6 @@ Global
 		{51A23FD9-A32D-4390-9A5B-1EA7A045F0F9}.Release|x64.Build.0 = Release|Any CPU
 		{51A23FD9-A32D-4390-9A5B-1EA7A045F0F9}.Release|x86.ActiveCfg = Release|Any CPU
 		{51A23FD9-A32D-4390-9A5B-1EA7A045F0F9}.Release|x86.Build.0 = Release|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Debug|x64.Build.0 = Debug|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Debug|x86.Build.0 = Debug|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Release|x64.ActiveCfg = Release|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Release|x64.Build.0 = Release|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Release|x86.ActiveCfg = Release|Any CPU
-		{AD33C619-AC51-4F29-937B-184B4F785F57}.Release|x86.Build.0 = Release|Any CPU
 		{2CFDB3D6-5CFB-428C-9C89-29DD169B5433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CFDB3D6-5CFB-428C-9C89-29DD169B5433}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CFDB3D6-5CFB-428C-9C89-29DD169B5433}.Debug|x64.ActiveCfg = Debug|Any CPU

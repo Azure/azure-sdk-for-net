@@ -172,6 +172,16 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
         }
 
+        internal bool IsAnonymousAccessible { get; set; } = false;
+
+        internal bool FilteringMessagesBeforePublishing { get; set; } = false;
+
+        internal string ForwardTo { get; set; } = null;
+
+        internal bool EnableExpress { get; set; } = false;
+
+        internal bool EnableSubscriptionPartitioning { get; set; } = false;
+
         /// <summary>
         /// List of properties that were retrieved using GetTopic but are not understood by this version of client is stored here.
         /// The list will be sent back when an already retrieved TopicDescription will be used in UpdateTopic call.
@@ -202,6 +212,11 @@ namespace Microsoft.Azure.ServiceBus.Management
                 && this.RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
                 && this.Status.Equals(other.Status)
                 && string.Equals(this.userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(this.ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
+                && this.EnableExpress == other.EnableExpress
+                && this.IsAnonymousAccessible == other.IsAnonymousAccessible
+                && this.FilteringMessagesBeforePublishing == other.FilteringMessagesBeforePublishing
+                && this.EnableSubscriptionPartitioning == other.EnableSubscriptionPartitioning
                 && (this.AuthorizationRules != null && other.AuthorizationRules != null
                     || this.AuthorizationRules == null && other.AuthorizationRules == null)
                 && (this.AuthorizationRules == null || this.AuthorizationRules.Equals(other.AuthorizationRules)))

@@ -12,7 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IncidentResult. </summary>
     public partial class AnomalyIncident
     {
-        /// <summary> incident start time. </summary>
-        public DateTimeOffset StartTime { get; }
     }
 }

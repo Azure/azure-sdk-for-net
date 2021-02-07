@@ -1,0 +1,138 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/1c61ccbf-70b3-45a3-a1fb-848ce46d70a6/resourceGroups/ndicola-azsposh/providers/Microsoft.OperationalInsights/workspaces/azsposh/providers/Microsoft.SecurityInsights/incidents/654ac651-07af-43c6-861b-eb5a0eb3dbc2?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWM2MWNjYmYtNzBiMy00NWEzLWExZmItODQ4Y2U0NmQ3MGE2L3Jlc291cmNlR3JvdXBzL25kaWNvbGEtYXpzcG9zaC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9wZXJhdGlvbmFsSW5zaWdodHMvd29ya3NwYWNlcy9henNwb3NoL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHlJbnNpZ2h0cy9pbmNpZGVudHMvNjU0YWM2NTEtMDdhZi00M2M2LTg2MWItZWI1YTBlYjNkYmMyP2FwaS12ZXJzaW9uPTIwMjAtMDEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"severity\": \"Low\",\r\n    \"status\": \"Active\",\r\n    \"title\": \"SDKCreateIncidentTest\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "86bb5bef-db29-4e6b-993e-2f73d55e9b99"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SecurityInsights.SecurityInsightsClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "115"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "e8eae643-fecd-421c-bb6a-b8ade4bdd220"
+        ],
+        "x-ms-correlation-request-id": [
+          "e8eae643-fecd-421c-bb6a-b8ade4bdd220"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210114T041422Z:e8eae643-fecd-421c-bb6a-b8ade4bdd220"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 14 Jan 2021 04:14:22 GMT"
+        ],
+        "Content-Length": [
+          "1126"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1c61ccbf-70b3-45a3-a1fb-848ce46d70a6/resourceGroups/ndicola-azsposh/providers/Microsoft.OperationalInsights/workspaces/azsposh/providers/Microsoft.SecurityInsights/Incidents/654ac651-07af-43c6-861b-eb5a0eb3dbc2\",\r\n  \"name\": \"654ac651-07af-43c6-861b-eb5a0eb3dbc2\",\r\n  \"etag\": \"\\\"5e00b0f1-0000-0100-0000-5fffc51e0000\\\"\",\r\n  \"type\": \"Microsoft.SecurityInsights/Incidents\",\r\n  \"properties\": {\r\n    \"title\": \"SDKCreateIncidentTest\",\r\n    \"severity\": \"Low\",\r\n    \"status\": \"Active\",\r\n    \"owner\": {\r\n      \"objectId\": null,\r\n      \"email\": null,\r\n      \"assignedTo\": null,\r\n      \"userPrincipalName\": null\r\n    },\r\n    \"labels\": [],\r\n    \"lastModifiedTimeUtc\": \"2021-01-14T04:14:22.7098784Z\",\r\n    \"createdTimeUtc\": \"2021-01-14T04:14:22.7098784Z\",\r\n    \"incidentNumber\": 147,\r\n    \"additionalData\": {\r\n      \"alertsCount\": 0,\r\n      \"bookmarksCount\": 0,\r\n      \"commentsCount\": 0,\r\n      \"alertProductNames\": [],\r\n      \"tactics\": []\r\n    },\r\n    \"relatedAnalyticRuleIds\": [],\r\n    \"incidentUrl\": \"https://portal.azure.com/#asset/Microsoft_Azure_Security_Insights/Incident/subscriptions/1c61ccbf-70b3-45a3-a1fb-848ce46d70a6/resourceGroups/ndicola-azsposh/providers/Microsoft.OperationalInsights/workspaces/azsposh/providers/Microsoft.SecurityInsights/Incidents/654ac651-07af-43c6-861b-eb5a0eb3dbc2\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1c61ccbf-70b3-45a3-a1fb-848ce46d70a6/resourceGroups/ndicola-azsposh/providers/Microsoft.OperationalInsights/workspaces/azsposh/providers/Microsoft.SecurityInsights/incidents/654ac651-07af-43c6-861b-eb5a0eb3dbc2?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWM2MWNjYmYtNzBiMy00NWEzLWExZmItODQ4Y2U0NmQ3MGE2L3Jlc291cmNlR3JvdXBzL25kaWNvbGEtYXpzcG9zaC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9wZXJhdGlvbmFsSW5zaWdodHMvd29ya3NwYWNlcy9henNwb3NoL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHlJbnNpZ2h0cy9pbmNpZGVudHMvNjU0YWM2NTEtMDdhZi00M2M2LTg2MWItZWI1YTBlYjNkYmMyP2FwaS12ZXJzaW9uPTIwMjAtMDEtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "21eb8135-6ce2-48aa-bcba-ce4d87146034"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.SecurityInsights.SecurityInsightsClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "5f0bebf0-5920-4bfa-8987-6b220f989640"
+        ],
+        "x-ms-correlation-request-id": [
+          "5f0bebf0-5920-4bfa-8987-6b220f989640"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210114T041422Z:5f0bebf0-5920-4bfa-8987-6b220f989640"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 14 Jan 2021 04:14:22 GMT"
+        ],
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

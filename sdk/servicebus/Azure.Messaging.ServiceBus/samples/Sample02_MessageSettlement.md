@@ -14,7 +14,7 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -57,7 +57,7 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-// deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+// dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
 await receiver.DeadLetterMessageAsync(receivedMessage);
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.

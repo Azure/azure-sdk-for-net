@@ -24,26 +24,51 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("timestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("activeSeriesCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     activeSeriesCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("allSeriesCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     allSeriesCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("metricsCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     metricsCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("datafeedCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     datafeedCount = property.Value.GetInt32();
                     continue;
                 }

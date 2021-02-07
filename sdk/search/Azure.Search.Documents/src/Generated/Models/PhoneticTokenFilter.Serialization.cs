@@ -42,11 +42,21 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("encoder"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     encoder = property.Value.GetString().ToPhoneticEncoder();
                     continue;
                 }
                 if (property.NameEquals("replace"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     replace = property.Value.GetBoolean();
                     continue;
                 }

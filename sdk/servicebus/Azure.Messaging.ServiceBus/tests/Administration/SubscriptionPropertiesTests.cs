@@ -3,6 +3,11 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
@@ -20,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardTo = $"{baseUrl}{longName}");
 
-            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.{Environment.NewLine}Parameter name: ForwardTo", ex.Message);
+            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
             Assert.AreEqual($"ForwardTo", ex.ParamName);
         }
 
@@ -34,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardDeadLetteredMessagesTo = $"{baseUrl}{longName}");
 
-            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.{Environment.NewLine}Parameter name: ForwardDeadLetteredMessagesTo", ex.Message);
+            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
             Assert.AreEqual($"ForwardDeadLetteredMessagesTo", ex.ParamName);
         }
 
@@ -92,6 +97,73 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual("forward", properties.ForwardTo);
             Assert.AreEqual("dlq", properties.ForwardDeadLetteredMessagesTo);
             Assert.AreEqual("metadata", properties.UserMetadata);
+        }
+
+        [Test]
+        public void CanCreateSubscriptionPropertiesFromOptions()
+        {
+            var options = new CreateSubscriptionOptions("topic", "subscription")
+            {
+                LockDuration = TimeSpan.FromSeconds(60),
+                RequiresSession = true,
+                DefaultMessageTimeToLive = TimeSpan.FromSeconds(120),
+                AutoDeleteOnIdle = TimeSpan.FromMinutes(10),
+                DeadLetteringOnMessageExpiration = true,
+                MaxDeliveryCount = 5,
+                EnableBatchedOperations = true,
+                Status = EntityStatus.Disabled,
+                ForwardDeadLetteredMessagesTo = "dlqForward",
+                ForwardTo = "forward",
+                UserMetadata = "metadata"
+            };
+            var properties = new SubscriptionProperties(options);
+
+            Assert.AreEqual(options, new CreateSubscriptionOptions(properties));
+        }
+
+        [Test]
+        public async Task UnknownElementsInAtomXmlHandledCorrectly()
+        {
+            string subscriptionDescriptionXml = $@"<entry xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<title xmlns=""{AdministrationClientConstants.AtomNamespace}"">testqueue1</title>" +
+                $@"<content xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<SubscriptionDescription xmlns=""{AdministrationClientConstants.ServiceBusNamespace}"">" +
+                $"<LockDuration>{XmlConvert.ToString(TimeSpan.FromMinutes(1))}</LockDuration>" +
+                $"<RequiresSession>true</RequiresSession>" +
+                $"<DefaultMessageTimeToLive>{XmlConvert.ToString(TimeSpan.FromMinutes(60))}</DefaultMessageTimeToLive>" +
+                $"<DeadLetteringOnMessageExpiration>false</DeadLetteringOnMessageExpiration>" +
+                $"<DeadLetteringOnFilterEvaluationExceptions>false</DeadLetteringOnFilterEvaluationExceptions>" +
+                $"<MaxDeliveryCount>10</MaxDeliveryCount>" +
+                $"<EnableBatchedOperations>true</EnableBatchedOperations>" +
+                $"<Status>Active</Status>" +
+                $"<ForwardTo>fq1</ForwardTo>" +
+                $"<UserMetadata></UserMetadata>" +
+                $"<AutoDeleteOnIdle>{XmlConvert.ToString(TimeSpan.FromMinutes(60))}</AutoDeleteOnIdle>" +
+                $"<IsClientAffine>prop1</IsClientAffine>" +
+                $"<ClientAffineProperties><ClientId>xyz</ClientId><IsDurable>false</IsDurable><IsShared>true</IsShared></ClientAffineProperties>" +
+                $"<UnknownElement3>prop3</UnknownElement3>" +
+                $"<UnknownElement4>prop4</UnknownElement4>" +
+                $"</SubscriptionDescription>" +
+                $"</content>" +
+                $"</entry>";
+            MockResponse response = new MockResponse(200);
+            response.SetContent(subscriptionDescriptionXml);
+            SubscriptionProperties subscriptionDesc = await SubscriptionPropertiesExtensions.ParseResponseAsync("abcd", response, new ClientDiagnostics(new ServiceBusAdministrationClientOptions()));
+            Assert.NotNull(subscriptionDesc.UnknownProperties);
+            XDocument doc = SubscriptionPropertiesExtensions.Serialize(subscriptionDesc);
+
+            XName subscriptionDescriptionElementName = XName.Get("SubscriptionDescription", AdministrationClientConstants.ServiceBusNamespace);
+            XElement expectedSubscriptionDecriptionElement = XElement.Parse(subscriptionDescriptionXml).Descendants(subscriptionDescriptionElementName).FirstOrDefault();
+            XElement serializedSubscriptionDescritionElement = doc.Descendants(subscriptionDescriptionElementName).FirstOrDefault();
+            XNode expectedChildNode = expectedSubscriptionDecriptionElement.FirstNode;
+            XNode actualChildNode = serializedSubscriptionDescritionElement.FirstNode;
+            while (expectedChildNode != null)
+            {
+                Assert.NotNull(actualChildNode);
+                Assert.True(XNode.DeepEquals(expectedChildNode, actualChildNode), $"SubscriptionDescrition parsing and serialization combo didn't work as expected. {expectedChildNode.ToString()}");
+                expectedChildNode = expectedChildNode.NextNode;
+                actualChildNode = actualChildNode.NextNode;
+            }
         }
     }
 }

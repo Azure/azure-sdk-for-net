@@ -11,14 +11,11 @@
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// properties related to eventhub.
+    /// Properties related to EventHub.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("EventHub")]
     public partial class EventHub : DigitalTwinsEndpointResourceProperties
     {
         /// <summary>
@@ -32,22 +29,38 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <summary>
         /// Initializes a new instance of the EventHub class.
         /// </summary>
-        /// <param name="connectionStringPrimaryKey">PrimaryConnectionString of
-        /// the endpoint. Will be obfuscated during read</param>
-        /// <param
-        /// name="connectionStringSecondaryKey">SecondaryConnectionString of
-        /// the endpoint. Will be obfuscated during read</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Provisioning', 'Deleting', 'Succeeded', 'Failed',
-        /// 'Canceled'</param>
+        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
+        /// 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
-        /// <param name="tags">The resource tags.</param>
-        public EventHub(string connectionStringPrimaryKey, string connectionStringSecondaryKey, string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(provisioningState, createdTime, tags)
+        /// <param name="authenticationType">Specifies the authentication type
+        /// being used for connecting to the endpoint. Possible values include:
+        /// 'KeyBased', 'IdentityBased'</param>
+        /// <param name="deadLetterSecret">Dead letter storage secret for
+        /// key-based authentication. Will be obfuscated during read.</param>
+        /// <param name="deadLetterUri">Dead letter storage URL for
+        /// identity-based authentication.</param>
+        /// <param name="connectionStringPrimaryKey">PrimaryConnectionString of
+        /// the endpoint for key-based authentication. Will be obfuscated
+        /// during read.</param>
+        /// <param
+        /// name="connectionStringSecondaryKey">SecondaryConnectionString of
+        /// the endpoint for key-based authentication. Will be obfuscated
+        /// during read.</param>
+        /// <param name="endpointUri">The URL of the EventHub namespace for
+        /// identity-based authentication. It must include the protocol
+        /// sb://</param>
+        /// <param name="entityPath">The EventHub name in the EventHub
+        /// namespace for identity-based authentication.</param>
+        public EventHub(string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string authenticationType = default(string), string deadLetterSecret = default(string), string deadLetterUri = default(string), string connectionStringPrimaryKey = default(string), string connectionStringSecondaryKey = default(string), string endpointUri = default(string), string entityPath = default(string))
+            : base(provisioningState, createdTime, authenticationType, deadLetterSecret, deadLetterUri)
         {
             ConnectionStringPrimaryKey = connectionStringPrimaryKey;
             ConnectionStringSecondaryKey = connectionStringSecondaryKey;
+            EndpointUri = endpointUri;
+            EntityPath = entityPath;
             CustomInit();
         }
 
@@ -57,18 +70,32 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets primaryConnectionString of the endpoint. Will be
-        /// obfuscated during read
+        /// Gets or sets primaryConnectionString of the endpoint for key-based
+        /// authentication. Will be obfuscated during read.
         /// </summary>
-        [JsonProperty(PropertyName = "connectionString-PrimaryKey")]
+        [JsonProperty(PropertyName = "connectionStringPrimaryKey")]
         public string ConnectionStringPrimaryKey { get; set; }
 
         /// <summary>
-        /// Gets or sets secondaryConnectionString of the endpoint. Will be
-        /// obfuscated during read
+        /// Gets or sets secondaryConnectionString of the endpoint for
+        /// key-based authentication. Will be obfuscated during read.
         /// </summary>
-        [JsonProperty(PropertyName = "connectionString-SecondaryKey")]
+        [JsonProperty(PropertyName = "connectionStringSecondaryKey")]
         public string ConnectionStringSecondaryKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of the EventHub namespace for identity-based
+        /// authentication. It must include the protocol sb://
+        /// </summary>
+        [JsonProperty(PropertyName = "endpointUri")]
+        public string EndpointUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the EventHub name in the EventHub namespace for
+        /// identity-based authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "entityPath")]
+        public string EntityPath { get; set; }
 
     }
 }

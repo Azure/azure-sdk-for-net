@@ -27,6 +27,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("time"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -37,16 +42,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("memberRemoved"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     memberRemoved = ACSChatThreadMemberProperties.DeserializeACSChatThreadMemberProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     version = property.Value.GetInt64();
                     continue;
                 }

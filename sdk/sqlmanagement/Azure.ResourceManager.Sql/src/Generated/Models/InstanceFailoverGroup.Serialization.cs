@@ -82,20 +82,40 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("readWriteEndpoint"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             readWriteEndpoint = InstanceFailoverGroupReadWriteEndpoint.DeserializeInstanceFailoverGroupReadWriteEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("readOnlyEndpoint"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             readOnlyEndpoint = InstanceFailoverGroupReadOnlyEndpoint.DeserializeInstanceFailoverGroupReadOnlyEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("replicationRole"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             replicationRole = new InstanceFailoverGroupReplicationRole(property0.Value.GetString());
                             continue;
                         }
@@ -106,6 +126,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("partnerRegions"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<PartnerRegionInfo> array = new List<PartnerRegionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -116,6 +141,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("managedInstancePairs"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ManagedInstancePairInfo> array = new List<ManagedInstancePairInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

@@ -16,9 +16,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static MetricSeriesData DeserializeMetricSeriesData(JsonElement element)
         {
-            Optional<MetricSeriesDefinition> id = default;
-            Optional<IReadOnlyList<DateTimeOffset>> timestampList = default;
-            Optional<IReadOnlyList<double>> valueList = default;
+            MetricSeriesDefinition id = default;
+            IReadOnlyList<DateTimeOffset> timestampList = default;
+            IReadOnlyList<double> valueList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -47,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricSeriesData(id.Value, Optional.ToList(timestampList), Optional.ToList(valueList));
+            return new MetricSeriesData(id, timestampList, valueList);
         }
     }
 }

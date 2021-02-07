@@ -32,6 +32,7 @@ namespace Azure.Search.Documents
         public virtual string ServiceName { get { throw null; } }
         public virtual Azure.Response<Azure.Search.Documents.Models.AutocompleteResults> Autocomplete(string searchText, string suggesterName, Azure.Search.Documents.AutocompleteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.AutocompleteResults>> AutocompleteAsync(string searchText, string suggesterName, Azure.Search.Documents.AutocompleteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Search.Documents.SearchIndexingBufferedSender<T> CreateIndexingBufferedSender<T>(Azure.Search.Documents.SearchIndexingBufferedSenderOptions<T> options = null) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.IndexDocumentsResult> DeleteDocuments(string keyName, System.Collections.Generic.IEnumerable<string> keyValues, Azure.Search.Documents.IndexDocumentsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.IndexDocumentsResult>> DeleteDocumentsAsync(string keyName, System.Collections.Generic.IEnumerable<string> keyValues, Azure.Search.Documents.IndexDocumentsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.IndexDocumentsResult>> DeleteDocumentsAsync<T>(System.Collections.Generic.IEnumerable<T> documents, Azure.Search.Documents.IndexDocumentsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -67,6 +68,53 @@ namespace Azure.Search.Documents
     {
         public static string Create(System.FormattableString filter) { throw null; }
         public static string Create(System.FormattableString filter, System.IFormatProvider formatProvider) { throw null; }
+    }
+    public static partial class SearchIndexingBufferedSenderExtensions
+    {
+        public static void DeleteDocuments(this Azure.Search.Documents.SearchIndexingBufferedSender<Azure.Search.Documents.Models.SearchDocument> indexer, string keyFieldName, System.Collections.Generic.IEnumerable<string> documentKeys, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public static System.Threading.Tasks.Task DeleteDocumentsAsync(this Azure.Search.Documents.SearchIndexingBufferedSender<Azure.Search.Documents.Models.SearchDocument> indexer, string keyFieldName, System.Collections.Generic.IEnumerable<string> documentKeys, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SearchIndexingBufferedSenderOptions<T>
+    {
+        public SearchIndexingBufferedSenderOptions() { }
+        public bool AutoFlush { get { throw null; } set { } }
+        public System.TimeSpan? AutoFlushInterval { get { throw null; } set { } }
+        public System.Threading.CancellationToken FlushCancellationToken { get { throw null; } set { } }
+        public int? InitialBatchActionCount { get { throw null; } set { } }
+        public System.Func<T, string> KeyFieldAccessor { get { throw null; } set { } }
+        public int MaxRetries { get { throw null; } set { } }
+        public System.TimeSpan MaxRetryDelay { get { throw null; } set { } }
+        public System.TimeSpan RetryDelay { get { throw null; } set { } }
+    }
+    public partial class SearchIndexingBufferedSender<T> : System.IAsyncDisposable, System.IDisposable
+    {
+        protected SearchIndexingBufferedSender() { }
+        public virtual System.Uri Endpoint { get { throw null; } }
+        public virtual string IndexName { get { throw null; } }
+        public virtual string ServiceName { get { throw null; } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Search.Documents.Models.IndexActionEventArgs<T>> ActionAdded { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Search.Documents.Models.IndexActionCompletedEventArgs<T>> ActionCompleted { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Search.Documents.Models.IndexActionFailedEventArgs<T>> ActionFailed { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Search.Documents.Models.IndexActionEventArgs<T>> ActionSent { add { } remove { } }
+        public virtual void DeleteDocuments(System.Collections.Generic.IEnumerable<T> documents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public virtual System.Threading.Tasks.Task DeleteDocumentsAsync(System.Collections.Generic.IEnumerable<T> documents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        ~SearchIndexingBufferedSender() { }
+        public void Flush(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public System.Threading.Tasks.Task FlushAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual void IndexDocuments(Azure.Search.Documents.Models.IndexDocumentsBatch<T> batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public virtual System.Threading.Tasks.Task IndexDocumentsAsync(Azure.Search.Documents.Models.IndexDocumentsBatch<T> batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual void MergeDocuments(System.Collections.Generic.IEnumerable<T> documents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public virtual System.Threading.Tasks.Task MergeDocumentsAsync(System.Collections.Generic.IEnumerable<T> documents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual void MergeOrUploadDocuments(System.Collections.Generic.IEnumerable<T> documents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public virtual System.Threading.Tasks.Task MergeOrUploadDocumentsAsync(System.Collections.Generic.IEnumerable<T> documents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnActionAddedAsync(Azure.Search.Documents.Models.IndexDocumentsAction<T> action, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnActionCompletedAsync(Azure.Search.Documents.Models.IndexDocumentsAction<T> action, Azure.Search.Documents.Models.IndexingResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnActionFailedAsync(Azure.Search.Documents.Models.IndexDocumentsAction<T> action, Azure.Search.Documents.Models.IndexingResult result, System.Exception exception, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnActionSentAsync(Azure.Search.Documents.Models.IndexDocumentsAction<T> action, System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Threading.Tasks.ValueTask System.IAsyncDisposable.DisposeAsync() { throw null; }
+        void System.IDisposable.Dispose() { }
+        public virtual void UploadDocuments(System.Collections.Generic.IEnumerable<T> documents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public virtual System.Threading.Tasks.Task UploadDocumentsAsync(System.Collections.Generic.IEnumerable<T> documents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SearchOptions
     {
@@ -780,8 +828,8 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class LengthTokenFilter : Azure.Search.Documents.Indexes.Models.TokenFilter
     {
         public LengthTokenFilter(string name) { }
-        public int? MaxLength { get { throw null; } }
-        public int? MinLength { get { throw null; } }
+        public int? MaxLength { get { throw null; } set { } }
+        public int? MinLength { get { throw null; } set { } }
     }
     public partial class LexicalAnalyzer
     {
@@ -1439,6 +1487,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public SearchIndexer(string name, string dataSourceName, string targetIndexName) { }
         public string DataSourceName { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey EncryptionKey { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.FieldMapping> FieldMappings { get { throw null; } }
         public bool? IsDisabled { get { throw null; } set { } }
@@ -1463,6 +1512,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy DataChangeDetectionPolicy { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.DataDeletionDetectionPolicy DataDeletionDetectionPolicy { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey EncryptionKey { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType Type { get { throw null; } set { } }
@@ -1519,6 +1569,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public SearchIndexerSkillset(string name, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerSkill> skills) { }
         public Azure.Search.Documents.Indexes.Models.CognitiveServicesAccount CognitiveServicesAccount { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey EncryptionKey { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerSkill> Skills { get { throw null; } }
@@ -2145,6 +2196,23 @@ namespace Azure.Search.Documents.Models
     {
         Value = 0,
         Range = 1,
+    }
+    public partial class IndexActionCompletedEventArgs<T> : Azure.Search.Documents.Models.IndexActionEventArgs<T>
+    {
+        public IndexActionCompletedEventArgs(Azure.Search.Documents.SearchIndexingBufferedSender<T> sender, Azure.Search.Documents.Models.IndexDocumentsAction<T> action, Azure.Search.Documents.Models.IndexingResult result, bool runSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) : base (default(Azure.Search.Documents.SearchIndexingBufferedSender<T>), default(Azure.Search.Documents.Models.IndexDocumentsAction<T>), default(bool), default(System.Threading.CancellationToken)) { }
+        public Azure.Search.Documents.Models.IndexingResult Result { get { throw null; } }
+    }
+    public partial class IndexActionEventArgs<T> : Azure.SyncAsyncEventArgs
+    {
+        public IndexActionEventArgs(Azure.Search.Documents.SearchIndexingBufferedSender<T> sender, Azure.Search.Documents.Models.IndexDocumentsAction<T> action, bool runSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public Azure.Search.Documents.Models.IndexDocumentsAction<T> Action { get { throw null; } }
+        public Azure.Search.Documents.SearchIndexingBufferedSender<T> Sender { get { throw null; } }
+    }
+    public partial class IndexActionFailedEventArgs<T> : Azure.Search.Documents.Models.IndexActionEventArgs<T>
+    {
+        public IndexActionFailedEventArgs(Azure.Search.Documents.SearchIndexingBufferedSender<T> sender, Azure.Search.Documents.Models.IndexDocumentsAction<T> action, Azure.Search.Documents.Models.IndexingResult result, System.Exception exception, bool runSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) : base (default(Azure.Search.Documents.SearchIndexingBufferedSender<T>), default(Azure.Search.Documents.Models.IndexDocumentsAction<T>), default(bool), default(System.Threading.CancellationToken)) { }
+        public System.Exception Exception { get { throw null; } }
+        public Azure.Search.Documents.Models.IndexingResult Result { get { throw null; } }
     }
     public enum IndexActionType
     {

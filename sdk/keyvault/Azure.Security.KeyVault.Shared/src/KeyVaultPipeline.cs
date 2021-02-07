@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault
             return firstPage.ToUri();
         }
 
-        public Request CreateRequest(RequestMethod method, Uri uri)
+        public Request CreateRequest(RequestMethod method, Uri uri, bool appendApiVersion)
         {
             Request request = _pipeline.CreateRequest();
 
@@ -63,6 +63,11 @@ namespace Azure.Security.KeyVault
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
             request.Uri.Reset(uri);
+
+            if (appendApiVersion)
+            {
+                request.Uri.AppendQuery("api-version", ApiVersion);
+            }
 
             return request;
         }
@@ -86,12 +91,14 @@ namespace Azure.Security.KeyVault
             return request;
         }
 
+#pragma warning disable CA1822 // Member can be static
         public Response<T> CreateResponse<T>(Response response, T result)
             where T : IJsonDeserializable
         {
             result.Deserialize(response.ContentStream);
             return Response.FromValue(result, response);
         }
+#pragma warning restore CA1822 // Member can be static
 
         public DiagnosticScope CreateScope(string name)
         {
@@ -112,7 +119,7 @@ namespace Azure.Security.KeyVault
                     firstPageUri = new Uri(nextLink);
                 }
 
-                using Request request = CreateRequest(RequestMethod.Get, firstPageUri);
+                using Request request = CreateRequest(RequestMethod.Get, firstPageUri, false);
                 Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 // read the respose
@@ -143,7 +150,7 @@ namespace Azure.Security.KeyVault
                     firstPageUri = new Uri(nextLink);
                 }
 
-                using Request request = CreateRequest(RequestMethod.Get, firstPageUri);
+                using Request request = CreateRequest(RequestMethod.Get, firstPageUri, false);
                 Response response = SendRequest(request, cancellationToken);
 
                 // read the respose
@@ -193,6 +200,15 @@ namespace Azure.Security.KeyVault
             return CreateResponse(response, resultFactory());
         }
 
+        public async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, CancellationToken cancellationToken)
+            where TResult : IJsonDeserializable
+        {
+            using Request request = CreateRequest(method, uri, true);
+            Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+            return CreateResponse(response, resultFactory());
+        }
+
         public Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TResult : IJsonDeserializable
         {
@@ -201,6 +217,16 @@ namespace Azure.Security.KeyVault
 
             return CreateResponse(response, resultFactory());
         }
+
+        public Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, CancellationToken cancellationToken)
+            where TResult : IJsonDeserializable
+        {
+            using Request request = CreateRequest(method, uri, true);
+            Response response = SendRequest(request, cancellationToken);
+
+            return CreateResponse(response, resultFactory());
+        }
+
         public async Task<Response> SendRequestAsync(RequestMethod method, CancellationToken cancellationToken, params string[] path)
         {
             using Request request = CreateRequest(method, path);

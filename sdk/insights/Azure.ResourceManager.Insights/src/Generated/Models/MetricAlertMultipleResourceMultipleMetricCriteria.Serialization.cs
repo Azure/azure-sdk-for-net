@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("allOf"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MultiMetricCriteria> array = new List<MultiMetricCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

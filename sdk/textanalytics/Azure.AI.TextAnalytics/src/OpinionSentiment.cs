@@ -8,8 +8,8 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Contains the predicted sentiment, confidence scores, and other information about the opinion of an aspect.
-    /// For example, in the sentence "The food is good", the opinion of the
-    /// aspect 'food' is 'good'.
+    /// <para>For example, in the sentence "The food is good", the opinion of the
+    /// aspect 'food' is 'good'.</para>
     /// </summary>
     public readonly struct OpinionSentiment
     {
@@ -36,7 +36,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the predicted Sentiment for the opinion. Possible values
+        /// Gets the predicted Sentiment for the opinion taking into account the
+        /// value of <see cref="IsNegated"/>. Possible values
         /// include 'positive', 'mixed', and 'negative'.
         /// </summary>
         public TextSentiment Sentiment { get; }
@@ -55,8 +56,9 @@ namespace Azure.AI.TextAnalytics
         public string Text { get; }
 
         /// <summary>
-        /// Whether the opinion is negated. For example, in
-        /// "The food is not good", the opinion "good" is negated.
+        /// Whether the opinion is negated.
+        /// <para>For example, in "The food is not good",
+        /// the opinion "good" is negated.</para>
         /// </summary>
         public bool IsNegated { get; }
 

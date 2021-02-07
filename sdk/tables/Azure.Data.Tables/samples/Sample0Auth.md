@@ -44,10 +44,13 @@ Portal Storage account blade or **Connection String** under Settings in the Port
 account blade.
 
 You can also get access to your account keys from the Azure CLI with:
+
 ```
 az storage account keys list --account-name <account_name> --resource-group <resource_group>
 ```
-or 
+
+or
+
 ```
 az cosmosdb list-keys --name <account_name> --resource-group <resource_group>
 ```

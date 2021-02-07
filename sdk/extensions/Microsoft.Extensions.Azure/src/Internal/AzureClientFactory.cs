@@ -18,9 +18,7 @@ namespace Microsoft.Extensions.Azure
 
         private readonly IOptionsMonitor<TOptions> _monitor;
 
-        private readonly EventSourceLogForwarder _logForwarder;
-        private readonly AzureComponentFactory _componentFactory;
-        private FallbackAzureClientFactory<TClient> _fallbackFactory;
+        private readonly AzureEventSourceLogForwarder _logForwarder;
 
         public AzureClientFactory(
             IServiceProvider serviceProvider,
@@ -28,8 +26,7 @@ namespace Microsoft.Extensions.Azure
             IOptionsMonitor<AzureClientCredentialOptions<TClient>> clientsOptions,
             IEnumerable<ClientRegistration<TClient>> clientRegistrations,
             IOptionsMonitor<TOptions> monitor,
-            EventSourceLogForwarder logForwarder,
-            AzureComponentFactory componentFactory)
+            AzureEventSourceLogForwarder logForwarder)
         {
             _clientRegistrations = new Dictionary<string, ClientRegistration<TClient>>();
             foreach (var registration in clientRegistrations)
@@ -42,7 +39,6 @@ namespace Microsoft.Extensions.Azure
             _clientsOptions = clientsOptions;
             _monitor = monitor;
             _logForwarder = logForwarder;
-            _componentFactory = componentFactory;
         }
 
         public TClient CreateClient(string name)
@@ -51,12 +47,7 @@ namespace Microsoft.Extensions.Azure
 
             if (!_clientRegistrations.TryGetValue(name, out ClientRegistration<TClient> registration))
             {
-                _fallbackFactory ??= new FallbackAzureClientFactory<TClient>(
-                    _globalOptions,
-                    _serviceProvider,
-                    _componentFactory,
-                    _logForwarder);
-                return _fallbackFactory.CreateClient(name);
+                throw new InvalidOperationException($"Unable to find client registration with type '{typeof(TClient).Name}' and name '{name}'.");
             }
 
             return registration.GetClient(_monitor.Get(name), _clientsOptions.Get(name).CredentialFactory(_serviceProvider));

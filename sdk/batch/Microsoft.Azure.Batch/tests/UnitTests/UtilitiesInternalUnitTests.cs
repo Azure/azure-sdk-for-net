@@ -277,18 +277,16 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestStreamToStringAsciiEncoding()
         {
-            using (MemoryStream s = new MemoryStream())
-            using (StreamWriter streamWriter = new StreamWriter(s, Encoding.ASCII))
-            {
-                const string expectedText = "I am Foo!";
-                streamWriter.Write(expectedText);
-                streamWriter.Flush();
+            using MemoryStream s = new MemoryStream();
+            using StreamWriter streamWriter = new StreamWriter(s, Encoding.ASCII);
+            const string expectedText = "I am Foo!";
+            streamWriter.Write(expectedText);
+            streamWriter.Flush();
 
-                s.Seek(0, SeekOrigin.Begin);
-                
-                string text = UtilitiesInternal.StreamToString(s, Encoding.ASCII);
-                Assert.Equal(expectedText, text);
-            }
+            s.Seek(0, SeekOrigin.Begin);
+
+            string text = UtilitiesInternal.StreamToString(s, Encoding.ASCII);
+            Assert.Equal(expectedText, text);
         }
 
         [Theory, 
@@ -297,38 +295,34 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestStreamToStringUtf8NoByteOrderMarking(bool includeByteOrderMarking)
         {
-            using (MemoryStream s = new MemoryStream())
-            using (StreamWriter streamWriter = new StreamWriter(s, new UTF8Encoding(includeByteOrderMarking)))
-            {
-                const string expectedText = "㌎ 丧 가";
-                streamWriter.Write(expectedText);
-                streamWriter.Flush();
+            using MemoryStream s = new MemoryStream();
+            using StreamWriter streamWriter = new StreamWriter(s, new UTF8Encoding(includeByteOrderMarking));
+            const string expectedText = "㌎ 丧 가";
+            streamWriter.Write(expectedText);
+            streamWriter.Flush();
 
-                s.Seek(0, SeekOrigin.Begin);
+            s.Seek(0, SeekOrigin.Begin);
 
-                string text = UtilitiesInternal.StreamToString(s, Encoding.UTF8);
-                Assert.Equal(expectedText, text);
-            }
+            string text = UtilitiesInternal.StreamToString(s, Encoding.UTF8);
+            Assert.Equal(expectedText, text);
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestStreamToStringDoesntReadWholeStream()
         {
-            using (MemoryStream s = new MemoryStream())
-            using (StreamWriter streamWriter = new StreamWriter(s, new UTF8Encoding(false)))
-            {
-                const string inputText = "This is a test";
-                streamWriter.Write(inputText);
-                streamWriter.Flush();
+            using MemoryStream s = new MemoryStream();
+            using StreamWriter streamWriter = new StreamWriter(s, new UTF8Encoding(false));
+            const string inputText = "This is a test";
+            streamWriter.Write(inputText);
+            streamWriter.Flush();
 
-                const int bytesToSkip = 4;
-                
-                s.Seek(bytesToSkip, SeekOrigin.Begin);
-                
-                string text = UtilitiesInternal.StreamToString(s, Encoding.UTF8);
-                Assert.Equal(" is a test", text);
-            }
+            const int bytesToSkip = 4;
+
+            s.Seek(bytesToSkip, SeekOrigin.Begin);
+
+            string text = UtilitiesInternal.StreamToString(s, Encoding.UTF8);
+            Assert.Equal(" is a test", text);
         }
 
     }

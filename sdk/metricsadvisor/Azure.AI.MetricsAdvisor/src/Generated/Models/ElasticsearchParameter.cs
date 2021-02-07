@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ElasticsearchParameter. </summary>
@@ -17,26 +15,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="port"> Port. </param>
         /// <param name="authHeader"> Authorization header. </param>
         /// <param name="query"> Query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="port"/>, <paramref name="authHeader"/>, or <paramref name="query"/> is null. </exception>
         public ElasticsearchParameter(string host, string port, string authHeader, string query)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
-            if (port == null)
-            {
-                throw new ArgumentNullException(nameof(port));
-            }
-            if (authHeader == null)
-            {
-                throw new ArgumentNullException(nameof(authHeader));
-            }
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
-
             Host = host;
             Port = port;
             AuthHeader = authHeader;

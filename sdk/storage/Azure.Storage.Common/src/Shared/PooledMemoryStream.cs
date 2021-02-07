@@ -346,6 +346,7 @@ namespace Azure.Storage.Shared
 
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             Clear();
         }
 

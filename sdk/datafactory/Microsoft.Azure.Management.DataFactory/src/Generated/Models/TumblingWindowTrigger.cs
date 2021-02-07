@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="pipeline">Pipeline for which runs are created when an
         /// event is fired for trigger window that is ready.</param>
         /// <param name="frequency">The frequency of the time windows. Possible
-        /// values include: 'Minute', 'Hour'</param>
+        /// values include: 'Minute', 'Hour', 'Month'</param>
         /// <param name="interval">The interval of the time windows. The
         /// minimum interval allowed is 15 Minutes.</param>
         /// <param name="startTime">The start time for the time period for the
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the frequency of the time windows. Possible values
-        /// include: 'Minute', 'Hour'
+        /// include: 'Minute', 'Hour', 'Month'
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.frequency")]
         public string Frequency { get; set; }

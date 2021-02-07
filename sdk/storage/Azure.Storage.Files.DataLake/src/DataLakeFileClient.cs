@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake
@@ -25,7 +26,7 @@ namespace Azure.Storage.Files.DataLake
     public class DataLakeFileClient : DataLakePathClient
     {
         /// <summary>
-        /// Gets the maximum number of bytes that can be sent in a call
+        /// Gets the maximum number of bytes that can be sent in each append call in
         /// to <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
         /// Supported value is now larger than <see cref="int.MaxValue"/>; please use
         /// <see cref="MaxUploadLongBytes"/>.
@@ -36,8 +37,8 @@ namespace Azure.Storage.Files.DataLake
             : int.MaxValue;  // value is larger than can be represented by an int
 
         /// <summary>
-        /// Gets the maximum number of bytes that can be sent in a call
-        /// to <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
+        /// Gets the maximum number of bytes that can be sent in each append call in
+        /// <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
         /// </summary>
         public virtual long MaxUploadLongBytes => Version < DataLakeClientOptions.ServiceVersion.V2019_12_12
             ? Constants.DataLake.Pre_2019_12_12_MaxAppendBytes
@@ -61,7 +62,7 @@ namespace Azure.Storage.Files.DataLake
         /// file.
         /// </param>
         public DataLakeFileClient(Uri fileUri)
-            : this(fileUri, (HttpPipelinePolicy)null, null)
+            : this(fileUri, (HttpPipelinePolicy)null, null, null)
         {
         }
 
@@ -79,7 +80,65 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, DataLakeClientOptions options)
-            : this(fileUri, (HttpPipelinePolicy)null, options)
+            : this(fileUri, (HttpPipelinePolicy)null, options, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
+        /// </param>
+        /// <param name="fileSystemName">
+        /// The name of the file system containing this path.
+        /// </param>
+        /// <param name="filePath">
+        /// The path to the file.
+        /// </param>
+        public DataLakeFileClient(
+            string connectionString,
+            string fileSystemName,
+            string filePath)
+            : this(connectionString, fileSystemName, filePath, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
+        /// </param>
+        /// <param name="fileSystemName">
+        /// The name of the file system containing this path.
+        /// </param>
+        /// <param name="filePath">
+        /// The path to the file.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakeFileClient(
+            string connectionString,
+            string fileSystemName,
+            string filePath,
+            DataLakeClientOptions options)
+            : base(connectionString, fileSystemName, filePath, options)
         {
         }
 
@@ -95,7 +154,7 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, StorageSharedKeyCredential credential)
-            : this(fileUri, credential.AsPolicy(), null)
+            : this(fileUri, credential.AsPolicy(), null, credential)
         {
         }
 
@@ -116,7 +175,52 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(), options)
+            : this(fileUri, credential.AsPolicy(), options, credential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeFileClient(Uri fileUri, AzureSasCredential credential)
+            : this(fileUri, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeFileClient(Uri fileUri, AzureSasCredential credential, DataLakeClientOptions options)
+            : this(fileUri, credential.AsPolicy<DataLakeUriBuilder>(fileUri), options, null)
         {
         }
 
@@ -132,7 +236,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential)
-            : this(fileUri, credential.AsPolicy(), null)
+            : this(fileUri, credential.AsPolicy(), null, null)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -154,7 +258,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(), options)
+            : this(fileUri, credential.AsPolicy(), options, null)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -176,8 +280,15 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal DataLakeFileClient(Uri fileUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
-            : base(fileUri, authentication, options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
+            : base(fileUri, authentication, options, storageSharedKeyCredential)
         {
         }
 
@@ -215,12 +326,14 @@ namespace Azure.Storage.Files.DataLake
             Uri fileSystemUri,
             string filePath,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             DataLakeClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics)
             : base(
                   fileSystemUri,
                   filePath,
                   pipeline,
+                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics)
         {
@@ -1193,7 +1306,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
 
         /// <summary>
@@ -1315,7 +1427,6 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
-
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -3538,7 +3649,6 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}");
                 try
                 {
-
                     PathExpiryOptions blobExpiryOptions;
                     string expiresOn = null;
 

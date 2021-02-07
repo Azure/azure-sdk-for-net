@@ -1,6 +1,6 @@
 # Azure Storage Queues client library for .NET
 
-> Server Version: 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
+> Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
 
 Azure Queue storage is a service for storing large numbers of messages that 
 can be accessed from anywhere in the world via authenticated calls using
@@ -86,7 +86,7 @@ queue.SendMessage("third");
 foreach (QueueMessage message in queue.ReceiveMessages(maxMessages: 10).Value)
 {
     // "Process" the message
-    Console.WriteLine($"Message: {message.MessageText}");
+    Console.WriteLine($"Message: {message.Body}");
 
     // Let the service know we're finished with the message and
     // it can be safely deleted.
@@ -124,6 +124,20 @@ QueueClient queue = new QueueClient(accountUri, new DefaultAzureCredential());
 ```
 
 Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation][storage_ad] and [our samples](#next-steps).
+
+### Message encoding
+
+This version of library does not encode message by default. V11 and prior versions as well as Azure Functions use base64-encoded messages by default.
+Therefore it's recommended to use this feature for interop scenarios.
+
+```C# Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_ConfigureMessageEncodingAsync
+QueueClientOptions queueClientOptions = new QueueClientOptions()
+{
+    MessageEncoding = QueueMessageEncoding.Base64
+};
+
+QueueClient queueClient = new QueueClient(connectionString, queueName, queueClientOptions);
+```
 
 ## Troubleshooting
 

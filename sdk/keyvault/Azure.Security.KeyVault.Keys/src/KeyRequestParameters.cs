@@ -15,6 +15,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string CurveNamePropertyName = "crv";
         private const string AttributesPropertyName = "attributes";
         private const string TagsPropertyName = "tags";
+        private const string PublicExponentPropertyName = "public_exponent";
 
         private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
         private static readonly JsonEncodedText s_keySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
@@ -22,6 +23,7 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
         private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+        private static readonly JsonEncodedText s_publicExponentPropertyNameBytes = JsonEncodedText.Encode(PublicExponentPropertyName);
 
         private KeyAttributes _attributes;
 
@@ -34,7 +36,7 @@ namespace Azure.Security.KeyVault.Keys
         public DateTimeOffset? Expires { get => _attributes.ExpiresOn; set => _attributes.ExpiresOn = value; }
         public IDictionary<string, string> Tags { get; set; }
         public KeyCurveName? Curve { get; set; }
-
+        public int? PublicExponent { get; set; }
         internal KeyRequestParameters(KeyProperties key, IEnumerable<KeyOperation> operations)
         {
             if (key.Enabled.HasValue)
@@ -103,6 +105,20 @@ namespace Azure.Security.KeyVault.Keys
             {
                 KeySize = rsaKey.KeySize.Value;
             }
+
+            if (rsaKey.PublicExponent.HasValue)
+            {
+                PublicExponent = rsaKey.PublicExponent.Value;
+            }
+        }
+
+        internal KeyRequestParameters(CreateOctKeyOptions octKey)
+            : this(octKey.KeyType, octKey)
+        {
+            if (octKey.KeySize.HasValue)
+            {
+                KeySize = octKey.KeySize.Value;
+            }
         }
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
@@ -146,6 +162,11 @@ namespace Azure.Security.KeyVault.Keys
                 }
 
                 json.WriteEndObject();
+            }
+
+            if (PublicExponent.HasValue)
+            {
+                json.WriteNumber(s_publicExponentPropertyNameBytes, PublicExponent.Value);
             }
         }
     }

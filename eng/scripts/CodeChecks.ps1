@@ -4,12 +4,16 @@
 param (
     [Parameter(Position=0)]
     [string] $ServiceDirectory,
-    [string] $ProjectDirectory
+
+    [Parameter()]
+    [string] $ProjectDirectory,
+
+    [Parameter()]
+    [string] $SDKType = "client"
 )
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 1
-
 
 [string[]] $errors = @()
 
@@ -72,21 +76,21 @@ try {
 
         Write-Host "Re-generating clients"
         Invoke-Block {
-            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:ServiceDirectory=$ServiceDirectory
+            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
 
             # https://github.com/Azure/azure-sdk-for-net/issues/8584
             # & $repoRoot\storage\generate.ps1
         }
     }
 
-    Write-Host "Re-generating readmes"
+    Write-Host "Re-generating snippets"
     Invoke-Block {
         & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
     }
 
     Write-Host "Re-generating listings"
     Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory
+        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType
     }
 
     if (-not $ProjectDirectory)

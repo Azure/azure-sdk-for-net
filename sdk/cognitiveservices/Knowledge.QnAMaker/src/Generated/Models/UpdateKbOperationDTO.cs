@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -93,5 +94,29 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         [JsonProperty(PropertyName = "defaultAnswerUsedForExtraction")]
         public string DefaultAnswerUsedForExtraction { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Update != null)
+            {
+                Update.Validate();
+            }
+            if (DefaultAnswerUsedForExtraction != null)
+            {
+                if (DefaultAnswerUsedForExtraction.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DefaultAnswerUsedForExtraction", 300);
+                }
+                if (DefaultAnswerUsedForExtraction.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DefaultAnswerUsedForExtraction", 1);
+                }
+            }
+        }
     }
 }

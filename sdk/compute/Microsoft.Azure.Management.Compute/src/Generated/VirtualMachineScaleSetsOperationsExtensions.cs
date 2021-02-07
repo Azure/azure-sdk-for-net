@@ -24,6 +24,42 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class VirtualMachineScaleSetsOperationsExtensions
     {
             /// <summary>
+            /// Gets all the VM scale sets under the specified subscription for the
+            /// specified location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location for which VM scale sets under the subscription are queried.
+            /// </param>
+            public static IPage<VirtualMachineScaleSet> ListByLocation(this IVirtualMachineScaleSetsOperations operations, string location)
+            {
+                return operations.ListByLocationAsync(location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the VM scale sets under the specified subscription for the
+            /// specified location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location for which VM scale sets under the subscription are queried.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<VirtualMachineScaleSet>> ListByLocationAsync(this IVirtualMachineScaleSetsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByLocationWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update a VM scale set.
             /// </summary>
             /// <param name='operations'>
@@ -1706,6 +1742,42 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task BeginSetOrchestrationServiceStateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginSetOrchestrationServiceStateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets all the VM scale sets under the specified subscription for the
+            /// specified location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<VirtualMachineScaleSet> ListByLocationNext(this IVirtualMachineScaleSetsOperations operations, string nextPageLink)
+            {
+                return operations.ListByLocationNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the VM scale sets under the specified subscription for the
+            /// specified location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<VirtualMachineScaleSet>> ListByLocationNextAsync(this IVirtualMachineScaleSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByLocationNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

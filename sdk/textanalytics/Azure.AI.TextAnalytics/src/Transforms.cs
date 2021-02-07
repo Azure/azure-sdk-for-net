@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
@@ -27,9 +30,31 @@ namespace Azure.AI.TextAnalytics
             return new TextAnalyticsError(errorCode, message, target);
         }
 
+        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<TextAnalyticsErrorInternal> internalErrors)
+        {
+            var errors = new List<TextAnalyticsError>();
+
+            if (internalErrors == null)
+            {
+                return errors;
+            }
+
+            foreach (TextAnalyticsErrorInternal error in internalErrors)
+            {
+                errors.Add(ConvertToError(error));
+            }
+            return errors;
+        }
+
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
         {
             var warnings = new List<TextAnalyticsWarning>();
+
+            if (internalWarnings == null)
+            {
+                return warnings;
+            }
+
             foreach (TextAnalyticsWarningInternal warning in internalWarnings)
             {
                 warnings.Add(new TextAnalyticsWarning(warning));
@@ -216,6 +241,108 @@ namespace Azure.AI.TextAnalytics
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
 
             return new RecognizeLinkedEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
+        #region Healthcare
+
+        internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IEnumerable<HealthcareEntityInternal> healthcareEntities, IEnumerable<HealthcareRelationInternal> healthcareRelations)
+        {
+            var entities = healthcareEntities.Select((entity) => new HealthcareEntity(entity)).ToList();
+            foreach (HealthcareRelationInternal relation in healthcareRelations) {
+                string relationType = relation.RelationType;
+                int sourceIndex = ParseHealthcareEntityIndex(relation.Source);
+                int targetIndex = ParseHealthcareEntityIndex(relation.Target);
+                HealthcareEntity sourceEntity = entities[sourceIndex];
+                HealthcareEntity targetEntity = entities[targetIndex];
+                sourceEntity.RelatedEntities.Add(targetEntity, relationType);
+                if (relation.Bidirectional)
+                {
+                    targetEntity.RelatedEntities.Add(sourceEntity, relationType);
+                }
+            }
+            return entities;
+        }
+
+        internal static AnalyzeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var healthcareEntititesResults = new List<AnalyzeHealthcareEntitiesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read entities
+            foreach (DocumentHealthcareEntitiesInternal documentHealthcareEntities in results.Documents)
+            {
+                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(
+                    documentHealthcareEntities.Id,
+                    documentHealthcareEntities.Statistics ?? default,
+                    ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
+                    ConvertToWarnings(documentHealthcareEntities.Warnings)));
+            }
+
+            healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
+
+            return new AnalyzeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
+        }
+
+        private static int ParseHealthcareEntityIndex(string reference)
+        {
+            Match healthcareEntityMatch = _healthcareEntityRegex.Match(reference);
+            if (healthcareEntityMatch.Success)
+            {
+                return int.Parse(healthcareEntityMatch.Groups["entityIndex"].Value, CultureInfo.InvariantCulture);
+            }
+
+            throw new InvalidOperationException($"Failed to parse element reference: {reference}");
+        }
+
+        private static Regex _healthcareEntityRegex = new Regex(@"\#/results/documents\/(?<documentIndex>\d*)\/entities\/(?<entityIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+
+        #endregion
+
+        #region Analyze Operation
+
+        internal static AnalyzeOperationResult ConvertToAnalyzeOperationResult(AnalyzeJobState jobState, IDictionary<string, int> map)
+        {
+            return new AnalyzeOperationResult(jobState, map);
+        }
+
+        internal static IReadOnlyList<KeyPhraseExtractionTasksItem> ConvertToKeyPhraseExtractionTasks(IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<KeyPhraseExtractionTasksItem>();
+            foreach (KeyPhraseExtractionTasksItem task in keyPhraseExtractionTasks)
+            {
+                collection.Add(new KeyPhraseExtractionTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
+        }
+
+        internal static IReadOnlyList<EntityRecognitionPiiTasksItem> ConvertToEntityRecognitionPiiTasks(IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<EntityRecognitionPiiTasksItem>();
+            foreach (EntityRecognitionPiiTasksItem task in entityRecognitionPiiTasks)
+            {
+                collection.Add(new EntityRecognitionPiiTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
+        }
+
+        internal static IReadOnlyList<EntityRecognitionTasksItem> ConvertToEntityRecognitionTasks(IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<EntityRecognitionTasksItem>();
+            foreach (EntityRecognitionTasksItem task in entityRecognitionTasks)
+            {
+                collection.Add(new EntityRecognitionTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
         }
 
         #endregion

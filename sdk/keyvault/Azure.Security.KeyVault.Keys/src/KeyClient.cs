@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -77,7 +78,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
-        /// If the named key already exists, Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// If the named key already exists, Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="name">The name of the key.</param>
         /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
@@ -110,7 +111,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
-        /// If the named key already exists, Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// If the named key already exists, Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="name">The name of the key.</param>
         /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
@@ -143,7 +144,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new Elliptic Curve key in Key Vault. If the named key already exists,
-        /// Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="ecKeyOptions">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -172,7 +173,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new Elliptic Curve key in Key Vault. If the named key already exists,
-        /// Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="ecKeyOptions">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -201,7 +202,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new RSA key in Key Vault. If the named key already exists, Azure Key Vault creates a new
-        /// version of the key. It requires the keys/create permission.
+        /// version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="rsaKeyOptions">The key options object containing information about the RSA key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -230,7 +231,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new RSA key in Key Vault. If the named key already exists, Azure Key Vault creates a new
-        /// version of the key. It requires the keys/create permission.
+        /// version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="rsaKeyOptions">The key options object containing information about the RSA key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -249,6 +250,64 @@ namespace Azure.Security.KeyVault.Keys
             try
             {
                 return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(rsaKeyOptions.Name), cancellationToken, KeysPath, rsaKeyOptions.Name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new AES key in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="octKeyOptions">The key options object containing information about the AES key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="octKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<KeyVaultKey> CreateOctKey(CreateOctKeyOptions octKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(octKeyOptions, nameof(octKeyOptions));
+
+            var parameters = new KeyRequestParameters(octKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOctKey)}");
+            scope.AddAttribute("key", octKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(octKeyOptions.Name), cancellationToken, KeysPath, octKeyOptions.Name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new AES key in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="octKeyOptions">The key options object containing information about the AES key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="octKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<KeyVaultKey>> CreateOctKeyAsync(CreateOctKeyOptions octKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(octKeyOptions, nameof(octKeyOptions));
+
+            var parameters = new KeyRequestParameters(octKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOctKey)}");
+            scope.AddAttribute("key", octKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(octKeyOptions.Name), cancellationToken, KeysPath, octKeyOptions.Name, "/create").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -411,7 +470,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeys", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), $"{nameof(KeyClient)}.{nameof(GetPropertiesOfKeys)}", cancellationToken));
         }
 
         /// <summary>
@@ -429,7 +488,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeys", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), $"{nameof(KeyClient)}.{nameof(GetPropertiesOfKeys)}", cancellationToken));
         }
 
         /// <summary>
@@ -450,7 +509,7 @@ namespace Azure.Security.KeyVault.Keys
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{KeysPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeyVersions", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), $"{nameof(KeyClient)}.{nameof(GetPropertiesOfKeyVersions)}", cancellationToken));
         }
 
         /// <summary>
@@ -471,7 +530,7 @@ namespace Azure.Security.KeyVault.Keys
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{KeysPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeyVersions", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), $"{nameof(KeyClient)}.{nameof(GetPropertiesOfKeyVersions)}", cancellationToken));
         }
 
         /// <summary>
@@ -637,7 +696,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedKeysPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedKey(), "KeyClient.GetDeletedKeys", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedKey(), $"{nameof(KeyClient)}.{nameof(GetDeletedKeys)}", cancellationToken));
         }
 
         /// <summary>
@@ -657,7 +716,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedKeysPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedKey(), "KeyClient.GetDeletedKeys", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedKey(), $"{nameof(KeyClient)}.{nameof(GetDeletedKeys)}", cancellationToken));
         }
 
         /// <summary>
@@ -980,6 +1039,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="name">The name of the key.</param>
         /// <param name="keyMaterial">The <see cref="JsonWebKey"/> being imported.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="KeyVaultKey"/> that was imported.</returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="keyMaterial"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -1017,6 +1077,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="name">The name of the key.</param>
         /// <param name="keyMaterial">The <see cref="JsonWebKey"/> being imported.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="KeyVaultKey"/> that was imported.</returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="keyMaterial"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -1053,6 +1114,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="importKeyOptions">The key import configuration object containing information about the <see cref="JsonWebKey"/> being imported.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="KeyVaultKey"/> that was imported.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="importKeyOptions"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultKey> ImportKey(ImportKeyOptions importKeyOptions, CancellationToken cancellationToken = default)
@@ -1065,7 +1127,6 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-
                 return _pipeline.SendRequest(RequestMethod.Put, importKeyOptions, () => new KeyVaultKey(importKeyOptions.Name), cancellationToken, KeysPath, importKeyOptions.Name);
             }
             catch (Exception e)
@@ -1086,6 +1147,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="importKeyOptions">The key import configuration object containing information about the <see cref="JsonWebKey"/> being imported.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="KeyVaultKey"/> that was imported.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="importKeyOptions"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultKey>> ImportKeyAsync(ImportKeyOptions importKeyOptions, CancellationToken cancellationToken = default)

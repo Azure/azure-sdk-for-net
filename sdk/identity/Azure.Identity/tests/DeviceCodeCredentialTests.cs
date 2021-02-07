@@ -50,7 +50,6 @@ namespace Azure.Identity.Tests
 
         private class MockException : Exception
         {
-
         }
 
         private async Task ThrowingDeviceCodeCallback(DeviceCodeInfo code, CancellationToken cancellationToken)
@@ -163,7 +162,7 @@ namespace Azure.Identity.Tests
 
             var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-            var cancelSource = new CancellationTokenSource(1000);
+            var cancelSource = new CancellationTokenSource(100);
 
             var cred = InstrumentClient(new DeviceCodeCredential(VerifyDeviceCodeCallbackCancellationToken, ClientId, options: options));
 
@@ -230,7 +229,6 @@ namespace Azure.Identity.Tests
             if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/oauth2/v2.0/token"))
             {
                 return CreateTokenResponse(code, token);
-
             }
 
             throw new InvalidOperationException();
@@ -424,7 +422,4 @@ namespace Azure.Identity.Tests
             }
         }
     }
-
-
-
 }

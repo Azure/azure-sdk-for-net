@@ -74,11 +74,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("imageReference"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     imageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("galleryImageReference"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     galleryImageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
                     continue;
                 }
@@ -99,6 +109,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("uploadSizeBytes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     uploadSizeBytes = property.Value.GetInt64();
                     continue;
                 }

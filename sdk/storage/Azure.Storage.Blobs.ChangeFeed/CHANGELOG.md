@@ -1,7 +1,17 @@
 # Release History
 
-## 12.0.0-preview.6 (Unreleased)
+## 12.0.0-preview.9 (Unreleased)
 
+
+## 12.0.0-preview.8 (2021-01-12)
+- Fixed bug where we couldn't handle BlobChangeFeedEvent.EventData.ClientRequestIds that were not GUIDs.
+
+## 12.0.0-preview.7 (2020-12-07)
+- Added support for service version 2020-04-08.
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.6 (2020-11-10)
+- This release contains bug fixes to improve quality.
 
 ## 12.0.0-preview.5 (2020-09-30)
 - Added support for service version 2020-02-10.

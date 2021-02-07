@@ -7,13 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.Synapse</PackageId>
 		<Description>Azure Synapse Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Synapse</AssemblyName>
-		<Version>1.0.0-preview.3</Version>
+		<Version>1.0.0-preview.5</Version>
 		<PackageTags>Microsoft Azure Synapse Management;Synapse;Synapse Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-			- Add new extraProperties (readonly) to workspaceinfo properties contract
-      - Spark Compute Isolation enabled
-      - Workspace add extra properties
+			- Add Encryption to Synapse Workspace Patch properties
+			- Managed identity SQL control settings API now is a long running operation
       ]]>
 		</PackageReleaseNotes>
     

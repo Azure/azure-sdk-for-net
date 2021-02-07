@@ -33,7 +33,6 @@ namespace Azure.Identity
         public DeviceCodeCredential() :
             this(DefaultDeviceCodeHandler, null, Constants.DeveloperSignOnClientId, null, null)
         {
-
         }
 
         /// <summary>
@@ -55,7 +54,6 @@ namespace Azure.Identity
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, TokenCredentialOptions options = default)
             : this(deviceCodeCallback, null, clientId, options, null)
         {
-
         }
 
         /// <summary>
@@ -67,7 +65,7 @@ namespace Azure.Identity
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId,  TokenCredentialOptions options = default)
-            : this(deviceCodeCallback, tenantId, clientId, options, null)
+            : this(deviceCodeCallback, Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull:true), clientId, options, null)
         {
         }
 
@@ -108,7 +106,7 @@ namespace Azure.Identity
         /// Interactively authenticates a user via the default browser.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution if persistent caching was enabled via <see cref="DeviceCodeCredentialOptions.EnablePersistentCache"/> when credential was instantiated.</returns>
+        /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution of credentials using the same <see cref="DeviceCodeCredentialOptions.TokenCache"/>.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
@@ -198,7 +196,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)Record, async, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, Record, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
@@ -234,6 +232,5 @@ namespace Azure.Identity
         {
             return DeviceCodeCallback(new DeviceCodeInfo(deviceCode), cancellationToken);
         }
-
     }
 }

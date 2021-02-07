@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var streamData = bodyStream.ToArray();
             Assert.That(streamData, Is.Not.Null, "There should have been data in the stream.");
-            Assert.That(streamData, Is.EqualTo(eventData.EventBody.ToBytes().ToArray()), "The body data and the data read from the stream should agree.");
+            Assert.That(streamData, Is.EqualTo(eventData.EventBody.ToArray()), "The body data and the data read from the stream should agree.");
         }
 
         /// <summary>
@@ -87,8 +87,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sourceEvent = new EventData(
                 new byte[] { 0x21, 0x22 },
-                new Dictionary<string, object> { {"Test", 123 } },
-                new Dictionary<string, object> { { "System", "Hello" }},
+                new Dictionary<string, object> { { "Test", 123 } },
+                new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
                 666777,
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
@@ -117,8 +117,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sourceEvent = new EventData(
                 new byte[] { 0x21, 0x22 },
-                new Dictionary<string, object> { {"Test", 123 } },
-                new Dictionary<string, object> { { "System", "Hello" }},
+                new Dictionary<string, object> { { "Test", 123 } },
+                new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
                 666777,
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),

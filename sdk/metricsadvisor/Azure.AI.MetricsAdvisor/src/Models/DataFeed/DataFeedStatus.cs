@@ -11,8 +11,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenModel("DataFeedDetailStatus")]
     public readonly partial struct DataFeedStatus
     {
-        // TODO: what is actually paused in a paused data feed? Ingestion? Anomaly detection? Both?
-
         /// <summary>
         /// The <see cref="DataFeed"/> is active.
         /// </summary>

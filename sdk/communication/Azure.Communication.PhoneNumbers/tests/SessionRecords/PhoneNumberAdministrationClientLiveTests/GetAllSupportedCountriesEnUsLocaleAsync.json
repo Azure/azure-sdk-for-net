@@ -1,0 +1,44 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries?locale=en-US\u0026api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Sat, 21 Nov 2020 03:50:05 GMT",
+        "User-Agent": "azsdk-net-Communication.Administration/1.0.0-alpha.20201120.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "30a249b25a094000dc678e62d175ece1",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 21 Nov 2020 03:50:05 GMT",
+        "MS-CV": "UI06EKN7hEm5uJcpXH/tfQ.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0bY64XwAAAABNdCre/q5YTbHyBPrW9RTMWVZSMzBFREdFMDMyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "484ms"
+      },
+      "ResponseBody": {
+        "countries": [
+          {
+            "localizedName": "Canada",
+            "countryCode": "CA"
+          },
+          {
+            "localizedName": "United States",
+            "countryCode": "US"
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==;",
+    "RandomSeed": "815011431"
+  }
+}

@@ -7,7 +7,8 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="PiiEntity"/> objects in a document.
+    /// Collection of <see cref="PiiEntity"/> objects in a document,
+    /// and warnings encountered while processing the document.
     /// </summary>
     public class PiiEntityCollection : ReadOnlyCollection<PiiEntity>
     {

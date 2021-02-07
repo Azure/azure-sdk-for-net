@@ -17,6 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
     public class IndexingTests : SearchTestBase
     {
         public IndexingTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)

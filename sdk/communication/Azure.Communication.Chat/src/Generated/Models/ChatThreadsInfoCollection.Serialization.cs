@@ -15,7 +15,7 @@ namespace Azure.Communication.Chat
     {
         internal static ChatThreadsInfoCollection DeserializeChatThreadsInfoCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ChatThreadInfo>> value = default;
+            IReadOnlyList<ChatThreadInfo> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,7 +35,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatThreadsInfoCollection(Optional.ToList(value), nextLink.Value);
+            return new ChatThreadsInfoCollection(value, nextLink.Value);
         }
     }
 }

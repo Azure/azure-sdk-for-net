@@ -30,11 +30,21 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("createdByType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdByType = new CreatedByType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -45,11 +55,21 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("lastModifiedByType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastModifiedByType = new CreatedByType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastModifiedAt"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastModifiedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

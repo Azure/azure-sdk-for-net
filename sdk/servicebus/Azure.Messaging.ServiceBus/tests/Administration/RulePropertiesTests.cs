@@ -21,5 +21,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual(filter, properties.Filter);
             Assert.AreEqual(action, properties.Action);
         }
+
+        [Test]
+        public void CanCreateRulePropertiesFromOptions()
+        {
+            var options = new CreateRuleOptions("rule")
+            {
+                Filter = new SqlRuleFilter("PROPERTY(@propertyName) = @stringPropertyValue"),
+                Action = new SqlRuleAction("SET a='b'")
+            };
+            var properties = new RuleProperties(options);
+
+            Assert.AreEqual(options, new CreateRuleOptions(properties));
+        }
     }
 }

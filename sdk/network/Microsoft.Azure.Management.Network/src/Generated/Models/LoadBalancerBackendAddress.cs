@@ -38,12 +38,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// virtual network.</param>
         /// <param name="networkInterfaceIPConfiguration">Reference to IP
         /// address defined in network interfaces.</param>
+        /// <param name="loadBalancerFrontendIPConfiguration">Reference to the
+        /// frontend ip address configuration defined in regional
+        /// loadbalancer.</param>
         /// <param name="name">Name of the backend address.</param>
-        public LoadBalancerBackendAddress(SubResource virtualNetwork = default(SubResource), string ipAddress = default(string), SubResource networkInterfaceIPConfiguration = default(SubResource), string name = default(string))
+        public LoadBalancerBackendAddress(SubResource virtualNetwork = default(SubResource), string ipAddress = default(string), SubResource networkInterfaceIPConfiguration = default(SubResource), SubResource loadBalancerFrontendIPConfiguration = default(SubResource), string name = default(string))
         {
             VirtualNetwork = virtualNetwork;
             IpAddress = ipAddress;
             NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
+            LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
             Name = name;
             CustomInit();
         }
@@ -71,6 +75,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkInterfaceIPConfiguration")]
         public SubResource NetworkInterfaceIPConfiguration { get; private set; }
+
+        /// <summary>
+        /// Gets or sets reference to the frontend ip address configuration
+        /// defined in regional loadbalancer.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.loadBalancerFrontendIPConfiguration")]
+        public SubResource LoadBalancerFrontendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets name of the backend address.

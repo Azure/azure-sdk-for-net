@@ -1,67 +1,66 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/locations/centralus/discoveredSecuritySolutions?api-version=2015-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvbG9jYXRpb25zL2NlbnRyYWx1cy9kaXNjb3ZlcmVkU2VjdXJpdHlTb2x1dGlvbnM/YXBpLXZlcnNpb249MjAxNS0wNi0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/locations/centralus/discoveredSecuritySolutions?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvbG9jYXRpb25zL2NlbnRyYWx1cy9kaXNjb3ZlcmVkU2VjdXJpdHlTb2x1dGlvbnM/YXBpLXZlcnNpb249MjAyMC0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d3bc6bea-1992-4689-8c23-6709c8463509"
+          "a5e76593-7e09-4dec-aa90-d66f0e985fd9"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/0.1.0.0"
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"securityFamily\": \"SaasWaf\",\r\n        \"offer\": \"\",\r\n        \"publisher\": \"microsoft\",\r\n        \"sku\": \"\"\r\n      },\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.Security/locations/centralus/discoveredSecuritySolutions/ContosoWAF2\",\r\n      \"name\": \"ContosoWAF2\",\r\n      \"type\": \"Microsoft.Security/locations/discoveredSecuritySolutions\",\r\n      \"location\": \"northeurope\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Sun, 22 Jul 2018 12:52:31 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
+        "x-ms-request-id": [
+          ""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "64070609-a951-47bb-8f3d-626b2c3764e4"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "749"
         ],
         "x-ms-correlation-request-id": [
-          "5a6e998a-ae6c-4926-9a72-24d410949de5"
+          "ca360ebd-f4ad-4ba1-9296-dc6d0eac8336"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH:20180722T125232Z:5a6e998a-ae6c-4926-9a72-24d410949de5"
+          "UKSOUTH:20201104T132351Z:ca360ebd-f4ad-4ba1-9296-dc6d0eac8336"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Wed, 04 Nov 2020 13:23:51 GMT"
+        ],
+        "Content-Length": [
+          "385"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"securityFamily\": \"SaasWaf\",\r\n        \"offer\": \"\",\r\n        \"publisher\": \"microsoft\",\r\n        \"sku\": \"\"\r\n      },\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.Security/locations/centralus/discoveredSecuritySolutions/ContosoWAF2\",\r\n      \"name\": \"ContosoWAF2\",\r\n      \"type\": \"Microsoft.Security/locations/discoveredSecuritySolutions\",\r\n      \"location\": \"northeurope\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

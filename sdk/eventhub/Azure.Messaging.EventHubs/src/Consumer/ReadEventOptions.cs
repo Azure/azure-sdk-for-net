@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Consumer
     public class ReadEventOptions
     {
         /// <summary>The maximum amount of time to wait to for an event to be available before emitting an empty item; if <c>null</c>, empty items will not be emitted.</summary>
-        private TimeSpan? _maximumWaitTime = null;
+        private TimeSpan? _maximumWaitTime;
 
         /// <summary>The event catch count to use when reading events.</summary>
         private int _cacheEventCount = 100;
@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         private int _prefetchCount = 300;
 
         /// <summary>The prefetch size limit to use for the partition receiver.</summary>
-        private long? _prefetchSizeInBytes = default;
+        private long? _prefetchSizeInBytes;
 
         /// <summary>
         ///   When populated, the owner level indicates that a reading is intended to be performed exclusively for events in the

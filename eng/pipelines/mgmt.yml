@@ -14,8 +14,8 @@ pr:
     - sdk/appplatform/Microsoft.Azure.Management.AppPlatform
     - sdk/attestation/Microsoft.Azure.Management.Attestation
     - sdk/authorization/Microsoft.Azure.Management.Authorization
-    - sdk/automation/Microsoft.Azure.Management.Automation
     - sdk/automanage/Microsoft.Azure.Management.Automanage
+    - sdk/automation/Microsoft.Azure.Management.Automation
     - sdk/avs/Microsoft.Azure.Management.Avs
     - sdk/azurestack/Microsoft.AzureStack.Management.AzureBridge.Admin
     - sdk/azurestack/Microsoft.AzureStack.Management.Backup.Admin
@@ -39,6 +39,7 @@ pr:
     - sdk/cdn/Microsoft.Azure.Management.Cdn
     - sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices
     - sdk/compute/Microsoft.Azure.Management.Compute
+    - sdk/confluent/Microsoft.Azure.Management.Confluent
     - sdk/consumption/Microsoft.Azure.Management.Consumption
     - sdk/containerinstance/Microsoft.Azure.Management.ContainerInstance
     - sdk/containerregistry/Microsoft.Azure.Management.ContainerRegistry
@@ -49,6 +50,7 @@ pr:
     - sdk/customproviders/Microsoft.Azure.Management.CustomProviders
     - sdk/databox/Microsoft.Azure.Management.DataBox
     - sdk/databoxedge/Microsoft.Azure.Management.DataBoxEdge
+    - sdk/datadog/Microsoft.Azure.Management.Datadog
     - sdk/datafactory/Microsoft.Azure.Management.DataFactory
     - sdk/datalake-analytics/Microsoft.Azure.Management.DataLake.Analytics
     - sdk/datalake-store/Microsoft.Azure.Management.DataLake.Store
@@ -81,6 +83,7 @@ pr:
     - sdk/logic/Microsoft.Azure.Management.Logic
     - sdk/machinelearning/Microsoft.Azure.Management.MachineLearning
     - sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute
+    - sdk/machinelearningservices/Azure.ResourceManager.MachineLearningServices
     - sdk/maintenance/Microsoft.Azure.Management.Maintenance
     - sdk/managednetwork/Microsoft.Azure.Management.ManagedNetwork
     - sdk/managedserviceidentity/Microsoft.Azure.Management.ManagedServiceIdentity
@@ -111,22 +114,26 @@ pr:
     - sdk/postgresql/Microsoft.Azure.Management.PostgreSQL
     - sdk/powerbidedicated/Microsoft.Azure.Management.PowerBIDedicated
     - sdk/privatedns/Microsoft.Azure.Management.PrivateDns
+    - sdk/quantum/Microsoft.Azure.Management.Quantum 
     - sdk/recoveryservices/Microsoft.Azure.Management.RecoveryServices
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     - sdk/redis/Microsoft.Azure.Management.RedisCache
-    - sdk/regionmove/Microsoft.Azure.Management.Migrate
+    - sdk/redisenterprise/Microsoft.Azure.Management.RedisEnterpriseCache
     - sdk/relay/Microsoft.Azure.Management.Relay
     - sdk/reservations/Microsoft.Azure.Management.Reservations
     - sdk/resourcegraph/Microsoft.Azure.Management.ResourceGraph
+    - sdk/resourcemover/Microsoft.Azure.Management.Migrate
     - sdk/resources/Microsoft.Azure.Management.Resource
     - sdk/scheduler/Microsoft.Azure.Management.Scheduler
     - sdk/search/Microsoft.Azure.Management.Search
     - sdk/securitycenter/Microsoft.Azure.Management.SecurityCenter
+    - sdk/securityinsights/Microsoft.Azure.Management.SecurityInsights
     - sdk/servermanagement/Microsoft.Azure.Management.ServerManagement
     - sdk/servicebus/Microsoft.Azure.Management.ServiceBus
     - sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric
     - sdk/signalr/Microsoft.Azure.Management.SignalR
+    - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlmanagement/Microsoft.Azure.Management.SqlManagement
     - sdk/sqlvirtualmachine/Microsoft.Azure.Management.SqlVirtualMachine
     - sdk/storage/Microsoft.Azure.Management.Storage
@@ -140,15 +147,17 @@ pr:
     - sdk/synapse/Microsoft.Azure.Management.Synapse
     - sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager
     - sdk/websites/Microsoft.Azure.Management.WebSites
-    - eng/pipelines/mgmt.yml
-    - eng/pipelines/templates/jobs/archetype-sdk-mgmt.yml
-
+    - sdk/workloadmonitor/Microsoft.Azure.Management.WorkloadMonitor
 variables:
-  skipComponentGovernanceDetection: true
-  msBuildLogDir: msbuildlogs
-  loggingArgs: '/clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log'
-  RPScopeArgs: '/p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)'
-  timeoutInMinutes: 120
+  - template: templates/variables/globals.yml
+  - name: msBuildLogDir
+    value: msbuildlogs
+  - name: loggingArgs
+    value: /clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log
+  - name: RPScopeArgs
+    value: /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)
+  - name: timeoutInMinutes
+    value: 120
 jobs:
 - template: templates/jobs/archetype-sdk-mgmt.yml
   parameters:

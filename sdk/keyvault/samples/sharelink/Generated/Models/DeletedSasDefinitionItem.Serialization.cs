@@ -32,11 +32,21 @@ namespace Azure.Security.KeyVault.Storage.Models
                 }
                 if (property.NameEquals("scheduledPurgeDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     scheduledPurgeDate = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
                 if (property.NameEquals("deletedDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     deletedDate = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
@@ -52,11 +62,21 @@ namespace Azure.Security.KeyVault.Storage.Models
                 }
                 if (property.NameEquals("attributes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     attributes = SasDefinitionAttributes.DeserializeSasDefinitionAttributes(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

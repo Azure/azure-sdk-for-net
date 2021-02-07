@@ -10,17 +10,10 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientCertificateCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ClientCertificateCredentialLiveTests : IdentityRecordedTestBase
     {
         public ClientCertificateCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
         }
 
         [SetUp]
@@ -40,7 +33,7 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
-            var credential = new ClientCertificateCredential(tenantId, clientId, certPath, options);
+            var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, certPath, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
 
@@ -75,7 +68,7 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
-            var credential = new ClientCertificateCredential(tenantId, clientId, cert, options);
+            var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, cert, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
 
@@ -102,15 +95,15 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task IncludeX5CCliamHeader()
+        public async Task IncludeX5CClaimHeader()
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var certPath = TestEnvironment.ServicePrincipalSniCertificatePath;
 
-            var options = InstrumentClientOptions(new ClientCertificateCredentialOptions { IncludeX5CCliamHeader = true });
+            var options = InstrumentClientOptions(new ClientCertificateCredentialOptions { SendCertificateChain = true });
 
-            var credential = new ClientCertificateCredential(tenantId, clientId, certPath, options);
+            var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, certPath, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
 
@@ -129,7 +122,7 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
-            var credential = new ClientCertificateCredential(tenantId, clientId, new X509Certificate2(certPath), options);
+            var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, new X509Certificate2(certPath), options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
 

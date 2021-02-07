@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Identity;
 using NUnit.Framework;
@@ -20,6 +19,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
                 #region Snippet:ServiceBusSendAndReceive
+                #region Snippet:ServiceBusSendSingleMessage
                 //@@ string connectionString = "<connection_string>";
                 //@@ string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
@@ -28,12 +28,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
-                // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+                // create a message that we can send. UTF-8 encoding is used when providing a string.
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
                 // send the message
                 await sender.SendMessageAsync(message);
 
+                #endregion
+                #region Snippet:ServiceBusReceiveSingleMessage
                 // create a receiver that we can use to receive the message
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -43,6 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // get the message body as a string
                 string body = receivedMessage.Body.ToString();
                 Console.WriteLine(body);
+                #endregion
                 #endregion
                 Assert.AreEqual("Hello world!", receivedMessage.Body.ToString());
             }
@@ -61,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
                 // send the message
                 await sender.SendMessageAsync(message);
@@ -97,8 +100,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
                 #region Snippet:ServiceBusSendAndReceiveBatch
                 IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
-                messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-                messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+                messages.Add(new ServiceBusMessage("First"));
+                messages.Add(new ServiceBusMessage("Second"));
                 // send the messages
                 await sender.SendMessagesAsync(messages);
                 #endregion
@@ -143,14 +146,47 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
-                // create a message batch that we can send
                 #region Snippet:ServiceBusSendAndReceiveSafeBatch
-                ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-                messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-                messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+                // add the messages that we plan to send to a local queue
+                Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
+                messages.Enqueue(new ServiceBusMessage("First message"));
+                messages.Enqueue(new ServiceBusMessage("Second message"));
+                messages.Enqueue(new ServiceBusMessage("Third message"));
 
-                // send the message batch
-                await sender.SendMessagesAsync(messageBatch);
+                // create a message batch that we can send
+                // total number of messages to be sent to the Service Bus queue
+                int messageCount = messages.Count;
+
+                // while all messages are not sent to the Service Bus queue
+                while (messages.Count > 0)
+                {
+                    // start a new batch
+                    using ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+
+                    // add the first message to the batch
+                    if (messageBatch.TryAddMessage(messages.Peek()))
+                    {
+                        // dequeue the message from the .NET queue once the message is added to the batch
+                        messages.Dequeue();
+                    }
+                    else
+                    {
+                        // if the first message can't fit, then it is too large for the batch
+                        throw new Exception($"Message {messageCount - messages.Count} is too large and cannot be sent.");
+                    }
+
+                    // add as many messages as possible to the current batch
+                    while (messages.Count > 0 && messageBatch.TryAddMessage(messages.Peek()))
+                    {
+                        // dequeue the message from the .NET queue as it has been added to the batch
+                        messages.Dequeue();
+                    }
+
+                    // now, send the batch
+                    await sender.SendMessagesAsync(messageBatch);
+
+                    // if there are any remaining messages in the .NET queue, the while loop repeats
+                }
                 #endregion
 
                 // create a receiver that we can use to receive the messages
@@ -161,14 +197,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
-                    // get the message body as a string using an implicit cast
+                    // get the message body as a string
                     string body = receivedMessage.Body.ToString();
-                }
-                var sentMessagesEnum = messageBatch.AsEnumerable<ServiceBusMessage>().GetEnumerator();
-                foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
-                {
-                    sentMessagesEnum.MoveNext();
-                    Assert.AreEqual(sentMessagesEnum.Current.Body.ToString(), receivedMessage.Body.ToString());
                 }
             }
         }
@@ -187,7 +217,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
                 #region Snippet:ServiceBusSchedule
                 long seq = await sender.ScheduleMessageAsync(

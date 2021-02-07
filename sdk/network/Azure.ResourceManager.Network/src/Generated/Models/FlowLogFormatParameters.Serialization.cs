@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new FlowLogFormatType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     version = property.Value.GetInt32();
                     continue;
                 }

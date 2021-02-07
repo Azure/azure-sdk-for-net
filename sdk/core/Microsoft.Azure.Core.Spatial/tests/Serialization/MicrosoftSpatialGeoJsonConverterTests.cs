@@ -120,7 +120,6 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             StringAssert.IsMatch(@"\{""type\"":""Point"",""coordinates"":\[-121\.72690\d+,46\.87996\d+\]\}", json);
         }
 
-
         [Test]
         public void ThrowsActionableExceptionMessage()
         {

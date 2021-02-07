@@ -37,16 +37,31 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = new VirtualNetworkGatewaySkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     tier = new VirtualNetworkGatewaySkuTier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("capacity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     capacity = property.Value.GetInt32();
                     continue;
                 }

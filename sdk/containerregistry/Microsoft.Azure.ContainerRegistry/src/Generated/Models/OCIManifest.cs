@@ -34,9 +34,10 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="schemaVersion">Schema version</param>
         /// <param name="config">V2 image config descriptor</param>
         /// <param name="layers">List of V2 image layer information</param>
-        public OCIManifest(int? schemaVersion = default(int?), Descriptor config = default(Descriptor), IList<Descriptor> layers = default(IList<Descriptor>), Annotations annotations = default(Annotations))
+        public OCIManifest(int? schemaVersion = default(int?), string mediaType = default(string), Descriptor config = default(Descriptor), IList<Descriptor> layers = default(IList<Descriptor>), Annotations annotations = default(Annotations))
             : base(schemaVersion)
         {
+            MediaType = mediaType;
             Config = config;
             Layers = layers;
             Annotations = annotations;
@@ -64,6 +65,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "annotations")]
         public Annotations Annotations { get; set; }
+        
+        /// <summary>
+        /// Gets or sets media type for this Manifest
+        /// </summary>
+        [JsonProperty(PropertyName = "mediaType")]
+        public string MediaType { get; set; }
 
     }
 }

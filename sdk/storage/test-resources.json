@@ -114,7 +114,15 @@
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[concat(variables('primaryAccountName'), '/default')]",
             "properties": {
-                "isVersioningEnabled": true
+                "isVersioningEnabled": true,
+                "lastAccessTimeTrackingPolicy": {
+                    "enable": true,
+                    "name": "AccessTimeTracking",
+                    "trackingGranularityInDays": 1,
+                    "blobType": [
+                        "blockBlob"
+                    ]
+                }
             },
             "dependsOn": [
                 "[variables('primaryAccountName')]"
@@ -171,6 +179,20 @@
                 "encryption": "[variables('encryption')]",
                 "accessTier": "Hot"
             }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[concat(variables('dataLakeAccountName'), '/default')]",
+            "properties": {
+                "containerDeleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 1
+                }
+            },
+            "dependsOn": [
+                "[variables('dataLakeAccountName')]"
+            ]
         },
         {
             "type": "Microsoft.Storage/storageAccounts",

@@ -19,6 +19,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("action"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     action = new AppAction(property.Value.GetString());
                     continue;
                 }

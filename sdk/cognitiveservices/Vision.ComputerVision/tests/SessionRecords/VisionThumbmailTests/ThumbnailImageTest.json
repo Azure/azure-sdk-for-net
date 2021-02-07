@@ -1,39 +1,45 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v3.0/generateThumbnail?width=64&height=64&smartCropping=false",
-      "EncodedRequestUri": "L3Zpc2lvbi92My4wL2dlbmVyYXRlVGh1bWJuYWlsP3dpZHRoPTY0JmhlaWdodD02NCZzbWFydENyb3BwaW5nPWZhbHNl",
+      "RequestUri": "/vision/v3.1/generateThumbnail?width=64&height=64&smartCropping=false",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4xL2dlbmVyYXRlVGh1bWJuYWlsP3dpZHRoPTY0JmhlaWdodD02NCZzbWFydENyb3BwaW5nPWZhbHNl",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/house.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.3815.0",
+          "FxVersion/4.6.29220.03",
           "OSName/Windows",
-          "OSVersion/10.0.18362.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/6.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "186"
+          "152"
         ]
       },
       "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.ComputerVision.GenerateThumbnail=1,CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "281"
+        ],
         "apim-request-id": [
-          "4fdb3d5b-66bb-4c9b-982b-fd80d184ff2a"
+          "a12e93bb-14ad-4295-8932-cf09fdbb0cd8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 04:06:29 GMT"
+          "Wed, 30 Sep 2020 21:51:18 GMT"
         ],
         "Content-Length": [
           "2523"

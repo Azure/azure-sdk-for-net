@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -180,7 +180,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
             if (diskEncryptionSetId != null)
             {
-
                 Assert.True(getVMWithInstanceViewResponse.StorageProfile.OsDisk.ManagedDisk.DiskEncryptionSet != null, "OsDisk.ManagedDisk.DiskEncryptionSet is null");
                 Assert.True(string.Equals(diskEncryptionSetId, getVMWithInstanceViewResponse.StorageProfile.OsDisk.ManagedDisk.DiskEncryptionSet.Id, StringComparison.OrdinalIgnoreCase),
                     "OsDisk.ManagedDisk.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");

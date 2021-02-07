@@ -243,7 +243,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Name);
             Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
-
         }
 
         [Test]
@@ -284,7 +283,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Name);
             Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
-
         }
 
         // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.

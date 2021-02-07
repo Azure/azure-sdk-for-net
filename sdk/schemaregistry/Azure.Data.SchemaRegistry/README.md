@@ -42,13 +42,10 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
 ```C# Snippet:SchemaRegistryCreateSchemaRegistryClient
-string endpoint = "<event_hubs_namespace_hostname>";
-var credentials = new ClientSecretCredential(
-    "<tenant_id>",
-    "<client_id>",
-    "<client_secret>"
-);
-var client = new SchemaRegistryClient(endpoint, credentials);
+// Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
+// including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+// For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+var client = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -78,8 +75,7 @@ The following shows examples of what is available through the SchemaRegistryClie
 Register a schema to be stored in the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRegisterSchema
-string schemaName = "<schema_name>";
-string groupName = "<schema_group_name>";
+string schemaName = "employeeSample";
 SerializationType schemaType = SerializationType.Avro;
 // Example schema's content
 string schemaContent = @"
@@ -101,8 +97,7 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, s
 Retrieve a previously registered schema ID from the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaId
-string schemaName = "<schema_name>";
-string groupName = "<schema_group_name>";
+string schemaName = "employeeSample";
 SerializationType schemaType = SerializationType.Avro;
 // Example schema's content
 string schemaContent = @"
@@ -125,8 +120,6 @@ string schemaId = schemaProperties.Value.Id;
 Retrieve a previously registered schema's content from the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRetrieveSchema
-string schemaId = "<schema_id>";
-
 Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
 string schemaContent = schemaProperties.Value.Content;
 ```

@@ -74,10 +74,20 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("partitionIds"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -88,31 +98,61 @@ namespace Azure.ResourceManager.EventHubs.Models
                         }
                         if (property0.NameEquals("createdAt"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("updatedAt"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("messageRetentionInDays"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             messageRetentionInDays = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("partitionCount"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             partitionCount = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("status"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             status = property0.Value.GetString().ToEntityStatus();
                             continue;
                         }
                         if (property0.NameEquals("captureDescription"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             captureDescription = CaptureDescription.DeserializeCaptureDescription(property0.Value);
                             continue;
                         }
