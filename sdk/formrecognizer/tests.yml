@@ -5,4 +5,18 @@ extends:
   parameters:
     ServiceDirectory: formrecognizer
     TimeoutInMinutes: 240
+    CloudConfig:
+      Public:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      Preview:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+      Canary:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: 'centraluseuap'
+      UsGov:
+        SubscriptionConfiguration: $(sub-config-gov-test-resources-test)
+        Location: 'usgovvirginia'
+      China:
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        Location: 'chinaeast2'
     Clouds: 'Public,Preview,UsGov,China,Canary'
