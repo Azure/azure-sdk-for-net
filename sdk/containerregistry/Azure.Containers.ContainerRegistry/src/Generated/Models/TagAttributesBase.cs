@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Tag attribute details. </summary>
@@ -22,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <param name="lastUpdateTime"> Tag last update time. </param>
         /// <param name="signed"> Is signed. </param>
         /// <param name="changeableAttributes"> Changeable attributes. </param>
-        internal TagAttributesBase(string name, string digest, string createdTime, string lastUpdateTime, bool? signed, ChangeableAttributes changeableAttributes)
+        internal TagAttributesBase(string name, string digest, DateTimeOffset? createdTime, DateTimeOffset? lastUpdateTime, bool? signed, ContentPermissions changeableAttributes)
         {
             Name = name;
             Digest = digest;
@@ -37,12 +39,12 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <summary> Tag digest. </summary>
         public string Digest { get; }
         /// <summary> Tag created time. </summary>
-        public string CreatedTime { get; }
+        public DateTimeOffset? CreatedTime { get; }
         /// <summary> Tag last update time. </summary>
-        public string LastUpdateTime { get; }
+        public DateTimeOffset? LastUpdateTime { get; }
         /// <summary> Is signed. </summary>
         public bool? Signed { get; }
         /// <summary> Changeable attributes. </summary>
-        public ChangeableAttributes ChangeableAttributes { get; }
+        public ContentPermissions ChangeableAttributes { get; }
     }
 }

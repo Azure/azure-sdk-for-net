@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -30,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <param name="configMediaType"> Config blob media type. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="changeableAttributes"> Changeable attributes. </param>
-        internal ManifestAttributesBase(string digest, long? imageSize, string createdTime, string lastUpdateTime, string architecture, string os, string mediaType, string configMediaType, IReadOnlyList<string> tags, ChangeableAttributes changeableAttributes)
+        internal ManifestAttributesBase(string digest, long? imageSize, DateTimeOffset? createdTime, DateTimeOffset? lastUpdateTime, string architecture, string os, string mediaType, string configMediaType, IReadOnlyList<string> tags, ContentPermissions changeableAttributes)
         {
             Digest = digest;
             ImageSize = imageSize;
@@ -49,9 +50,9 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <summary> Image size. </summary>
         public long? ImageSize { get; }
         /// <summary> Created time. </summary>
-        public string CreatedTime { get; }
+        public DateTimeOffset? CreatedTime { get; }
         /// <summary> Last update time. </summary>
-        public string LastUpdateTime { get; }
+        public DateTimeOffset? LastUpdateTime { get; }
         /// <summary> CPU architecture. </summary>
         public string Architecture { get; }
         /// <summary> Operating system. </summary>
@@ -63,6 +64,6 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
         /// <summary> Changeable attributes. </summary>
-        public ChangeableAttributes ChangeableAttributes { get; }
+        public ContentPermissions ChangeableAttributes { get; }
     }
 }

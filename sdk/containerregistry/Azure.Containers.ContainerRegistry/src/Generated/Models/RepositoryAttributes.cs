@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Repository attributes. </summary>
@@ -23,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <param name="manifestCount"> Number of the manifests. </param>
         /// <param name="tagCount"> Number of the tags. </param>
         /// <param name="changeableAttributes"> Changeable attributes. </param>
-        internal RepositoryAttributes(string registry, string imageName, string createdTime, string lastUpdateTime, int? manifestCount, int? tagCount, ChangeableAttributes changeableAttributes)
+        internal RepositoryAttributes(string registry, string imageName, DateTimeOffset? createdTime, DateTimeOffset? lastUpdateTime, int? manifestCount, int? tagCount, ContentPermissions changeableAttributes)
         {
             Registry = registry;
             ImageName = imageName;
@@ -39,14 +41,14 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <summary> Image name. </summary>
         public string ImageName { get; }
         /// <summary> Image created time. </summary>
-        public string CreatedTime { get; }
+        public DateTimeOffset? CreatedTime { get; }
         /// <summary> Image last update time. </summary>
-        public string LastUpdateTime { get; }
+        public DateTimeOffset? LastUpdateTime { get; }
         /// <summary> Number of the manifests. </summary>
         public int? ManifestCount { get; }
         /// <summary> Number of the tags. </summary>
         public int? TagCount { get; }
         /// <summary> Changeable attributes. </summary>
-        public ChangeableAttributes ChangeableAttributes { get; }
+        public ContentPermissions ChangeableAttributes { get; }
     }
 }

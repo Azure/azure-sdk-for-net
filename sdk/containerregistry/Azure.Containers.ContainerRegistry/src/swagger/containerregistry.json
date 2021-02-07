@@ -1162,10 +1162,12 @@
                 },
                 "createdTime": {
                     "type": "string",
+                    "format": "date-time",
                     "description": "Image created time"
                 },
                 "lastUpdateTime": {
                     "type": "string",
+                    "format": "date-time",
                     "description": "Image last update time"
                 },
                 "manifestCount": {
@@ -1296,10 +1298,12 @@
                 },
                 "createdTime": {
                     "type": "string",
+                    "format": "date-time",
                     "description": "Tag created time"
                 },
                 "lastUpdateTime": {
                     "type": "string",
+                    "format": "date-time",
                     "description": "Tag last update time"
                 },
                 "signed": {
@@ -1453,10 +1457,12 @@
                 },
                 "createdTime": {
                     "type": "string",
+                    "format": "date-time",
                     "description": "Created time"
                 },
                 "lastUpdateTime": {
                     "type": "string",
+                    "format": "date-time",
                     "description": "Last update time"
                 },
                 "architecture": {
