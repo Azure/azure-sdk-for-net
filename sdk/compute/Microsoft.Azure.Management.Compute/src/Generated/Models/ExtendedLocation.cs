@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -39,13 +38,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             Type = type;
             CustomInit();
         }
-        /// <summary>
-        /// Static constructor for ExtendedLocation class.
-        /// </summary>
-        static ExtendedLocation()
-        {
-            Type = "EdgeZone";
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
@@ -65,18 +57,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }

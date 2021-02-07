@@ -1,0 +1,261 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/resourceGroups/PatchStatusRg/providers/Microsoft.Compute/virtualMachines/testLinuxVM/assessPatches?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Jlc291cmNlR3JvdXBzL1BhdGNoU3RhdHVzUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy90ZXN0TGludXhWTS9hc3Nlc3NQYXRjaGVzP2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "523b0d13-5eb3-4aaf-af8f-f2bf80289c1d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f?monitor=true&api-version=2020-12-01"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f?api-version=2020-12-01"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/PatchOperation3Min;189,Microsoft.Compute/PatchOperation30Min;598"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "dc85906d-4431-44c5-88de-8120079117fa"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210206T020311Z:dc85906d-4431-44c5-88de-8120079117fa"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sat, 06 Feb 2021 02:03:10 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zL2ExYTBhMzVkLWIxZWQtNDFkNy1hMjBmLTJiYTU5YTI3ZjQ4Zj9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetOperation3Min;14998,Microsoft.Compute/GetOperation30Min;29990"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "bc4d8428-04d7-4d98-960a-c4d2e27ecfaa"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "883b1c2d-1317-4e3c-ae33-1b04e8dc2426"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210206T020341Z:883b1c2d-1317-4e3c-ae33-1b04e8dc2426"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sat, 06 Feb 2021 02:03:40 GMT"
+        ],
+        "Content-Length": [
+          "134"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-02-05T18:03:11.0221447-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zL2ExYTBhMzVkLWIxZWQtNDFkNy1hMjBmLTJiYTU5YTI3ZjQ4Zj9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetOperation3Min;14995,Microsoft.Compute/GetOperation30Min;29987"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "de55e367-35ab-44bf-ba9e-89f83bae90a7"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "459178f2-db7a-41ed-9f09-e2a4f5d61147"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210206T020412Z:459178f2-db7a-41ed-9f09-e2a4f5d61147"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sat, 06 Feb 2021 02:04:12 GMT"
+        ],
+        "Content-Length": [
+          "2461"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-02-05T18:03:11.0221447-08:00\",\r\n  \"endTime\": \"2021-02-05T18:04:10.8964365-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"status\": \"Succeeded\",\r\n      \"assessmentActivityId\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\",\r\n      \"rebootPending\": false,\r\n      \"criticalAndSecurityPatchCount\": 4,\r\n      \"otherPatchCount\": 0,\r\n      \"startDateTime\": \"2021-02-05T18:03:11.0534198-08:00\",\r\n      \"availablePatches\": [\r\n        {\r\n          \"patchId\": \"ca-certificates_20210119~16.04.1_Ubuntu_16.04\",\r\n          \"name\": \"ca-certificates\",\r\n          \"version\": \"20210119~16.04.1\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"rebootBehavior\": \"NeverReboots\",\r\n          \"publishedDate\": \"0001-01-01T00:00:00-08:00\",\r\n          \"activityId\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\",\r\n          \"lastModifiedDateTime\": \"2021-02-05T18:03:51-08:00\",\r\n          \"assessmentState\": \"Available\"\r\n        },\r\n        {\r\n          \"patchId\": \"python3-problem-report_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n          \"name\": \"python3-problem-report\",\r\n          \"version\": \"2.20.1-0ubuntu2.30\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"rebootBehavior\": \"NeverReboots\",\r\n          \"publishedDate\": \"0001-01-01T00:00:00-08:00\",\r\n          \"activityId\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\",\r\n          \"lastModifiedDateTime\": \"2021-02-05T18:03:51-08:00\",\r\n          \"assessmentState\": \"Available\"\r\n        },\r\n        {\r\n          \"patchId\": \"python3-apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n          \"name\": \"python3-apport\",\r\n          \"version\": \"2.20.1-0ubuntu2.30\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"rebootBehavior\": \"NeverReboots\",\r\n          \"publishedDate\": \"0001-01-01T00:00:00-08:00\",\r\n          \"activityId\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\",\r\n          \"lastModifiedDateTime\": \"2021-02-05T18:03:51-08:00\",\r\n          \"assessmentState\": \"Available\"\r\n        },\r\n        {\r\n          \"patchId\": \"apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n          \"name\": \"apport\",\r\n          \"version\": \"2.20.1-0ubuntu2.30\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"rebootBehavior\": \"NeverReboots\",\r\n          \"publishedDate\": \"0001-01-01T00:00:00-08:00\",\r\n          \"activityId\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\",\r\n          \"lastModifiedDateTime\": \"2021-02-05T18:03:51-08:00\",\r\n          \"assessmentState\": \"Available\"\r\n        }\r\n      ],\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"0\",\r\n        \"message\": \"0 error/s reported.\"\r\n      }\r\n    }\r\n  },\r\n  \"name\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f?monitor=true&api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zL2ExYTBhMzVkLWIxZWQtNDFkNy1hMjBmLTJiYTU5YTI3ZjQ4Zj9tb25pdG9yPXRydWUmYXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetOperation3Min;14994,Microsoft.Compute/GetOperation30Min;29986"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "623f42a5-6cfd-43d5-8cb2-1bc5fe076eaf"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "5720bb18-3c34-4757-9531-2a55068463e0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20210206T020412Z:5720bb18-3c34-4757-9531-2a55068463e0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sat, 06 Feb 2021 02:04:12 GMT"
+        ],
+        "Content-Length": [
+          "1721"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"assessmentActivityId\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\",\r\n  \"rebootPending\": false,\r\n  \"criticalAndSecurityPatchCount\": 4,\r\n  \"otherPatchCount\": 0,\r\n  \"startDateTime\": \"2021-02-05T18:03:11.0534198-08:00\",\r\n  \"availablePatches\": [\r\n    {\r\n      \"patchId\": \"ca-certificates_20210119~16.04.1_Ubuntu_16.04\",\r\n      \"name\": \"ca-certificates\",\r\n      \"version\": \"20210119~16.04.1\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"rebootBehavior\": \"NeverReboots\",\r\n      \"publishedDate\": \"0001-01-01T00:00:00-08:00\",\r\n      \"activityId\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\",\r\n      \"lastModifiedDateTime\": \"2021-02-05T18:03:51-08:00\",\r\n      \"assessmentState\": \"Available\"\r\n    },\r\n    {\r\n      \"patchId\": \"python3-problem-report_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n      \"name\": \"python3-problem-report\",\r\n      \"version\": \"2.20.1-0ubuntu2.30\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"rebootBehavior\": \"NeverReboots\",\r\n      \"publishedDate\": \"0001-01-01T00:00:00-08:00\",\r\n      \"activityId\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\",\r\n      \"lastModifiedDateTime\": \"2021-02-05T18:03:51-08:00\",\r\n      \"assessmentState\": \"Available\"\r\n    },\r\n    {\r\n      \"patchId\": \"python3-apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n      \"name\": \"python3-apport\",\r\n      \"version\": \"2.20.1-0ubuntu2.30\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"rebootBehavior\": \"NeverReboots\",\r\n      \"publishedDate\": \"0001-01-01T00:00:00-08:00\",\r\n      \"activityId\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\",\r\n      \"lastModifiedDateTime\": \"2021-02-05T18:03:51-08:00\",\r\n      \"assessmentState\": \"Available\"\r\n    },\r\n    {\r\n      \"patchId\": \"apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n      \"name\": \"apport\",\r\n      \"version\": \"2.20.1-0ubuntu2.30\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"rebootBehavior\": \"NeverReboots\",\r\n      \"publishedDate\": \"0001-01-01T00:00:00-08:00\",\r\n      \"activityId\": \"a1a0a35d-b1ed-41d7-a20f-2ba59a27f48f\",\r\n      \"lastModifiedDateTime\": \"2021-02-05T18:03:51-08:00\",\r\n      \"assessmentState\": \"Available\"\r\n    }\r\n  ],\r\n  \"error\": {\r\n    \"details\": [],\r\n    \"code\": \"0\",\r\n    \"message\": \"0 error/s reported.\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "28337c71-5911-4e75-8354-c4ac645e902d"
+  }
+}

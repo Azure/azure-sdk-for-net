@@ -48,8 +48,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Enter any required information and then click **Save**.</param>
         /// <param name="hardwareProfile">Specifies the hardware settings for
         /// the virtual machine.</param>
-        /// <param name="applicationProfile">Specifies the gallery applications
-        /// that should be made available to the VM/VMSS</param>
         /// <param name="storageProfile">Specifies the storage settings for the
         /// virtual machine disks.</param>
         /// <param name="additionalCapabilities">Specifies additional
@@ -165,7 +163,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         {
             Plan = plan;
             HardwareProfile = hardwareProfile;
-            ApplicationProfile = applicationProfile;
             StorageProfile = storageProfile;
             AdditionalCapabilities = additionalCapabilities;
             OsProfile = osProfile;
@@ -216,13 +213,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hardwareProfile")]
         public HardwareProfile HardwareProfile { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies the gallery applications that should be made
-        /// available to the VM/VMSS
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.applicationProfile")]
-        public ApplicationProfile ApplicationProfile { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the storage settings for the virtual machine
@@ -478,10 +468,6 @@ namespace Microsoft.Azure.Management.Compute.Models
                         element.Validate();
                     }
                 }
-            }
-            if (ExtendedLocation != null)
-            {
-                ExtendedLocation.Validate();
             }
         }
     }

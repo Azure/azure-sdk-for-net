@@ -101,7 +101,6 @@ namespace Compute.Tests
 
                 configurePatchSetting = inputVM =>
                 {
-                    autoLogonContent = GetAutoLogonContent(5, inputVM.OsProfile.AdminUsername, inputVM.OsProfile.AdminPassword);
                     SetLinuxConfigurationPatchSettings(linuxPatchSetting, inputVM);
                 };
 
@@ -222,10 +221,23 @@ namespace Compute.Tests
         private void SetLinuxConfigurationPatchSettings(LinuxPatchSettings linuxPatchSetting, VirtualMachine inputVM)
         {
             var osProfile = inputVM.OsProfile;
+            string sshPath = "/home/" + osProfile.AdminUsername + "/.ssh/authorized_keys";
             osProfile.LinuxConfiguration = new LinuxConfiguration
             {
                 ProvisionVMAgent = true,
                 PatchSettings = linuxPatchSetting,
+                DisablePasswordAuthentication = true,
+                Ssh = new SshConfiguration
+                {
+                    PublicKeys = new List<SshPublicKey>
+                        {
+                            new SshPublicKey
+                            {
+                                Path = sshPath,
+                                KeyData = DefaultSshPublicKey,
+                            }
+                        }
+                }
             };
         }
     }

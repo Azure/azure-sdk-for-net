@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/7602e371-c6bc-4bb3-bc2d-491dfc17fc32/resourceGroups/PatchStatusRg/providers/Microsoft.Compute/virtualMachines/testVmWindows/instanceView?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzYwMmUzNzEtYzZiYy00YmIzLWJjMmQtNDkxZGZjMTdmYzMyL3Jlc291cmNlR3JvdXBzL1BhdGNoU3RhdHVzUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy90ZXN0Vm1XaW5kb3dzL2luc3RhbmNlVmlldz9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/resourceGroups/PatchStatusRg/providers/Microsoft.Compute/virtualMachines/testVmWindows/instanceView?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Jlc291cmNlR3JvdXBzL1BhdGNoU3RhdHVzUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy90ZXN0Vm1XaW5kb3dzL2luc3RhbmNlVmlldz9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d96046ca-d1fe-49b0-ae19-0362b3546c75"
+          "166cd1dc-1d59-45b1-8d98-66095f3a2b55"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29518.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -27,35 +27,35 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/LowCostGet3Min;3992,Microsoft.Compute/LowCostGet30Min;31990"
+          "Microsoft.Compute/LowCostGet3Min;3994,Microsoft.Compute/LowCostGet30Min;31976"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "62734e58-f29b-4289-a0d0-6cfe7d78db3d"
+          "e9f0d249-997c-4bed-a156-65a2f78e0fe6"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "836e875b-e2b4-4088-b5a5-c920cbfb4839"
+          "09009847-ec38-487c-9adb-9549fdaea5f5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20201201T024020Z:836e875b-e2b4-4088-b5a5-c920cbfb4839"
+          "WESTCENTRALUS:20210205T090235Z:09009847-ec38-487c-9adb-9549fdaea5f5"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 01 Dec 2020 02:40:20 GMT"
+          "Fri, 05 Feb 2021 09:02:35 GMT"
         ],
         "Content-Length": [
-          "4346"
+          "6550"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -64,12 +64,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"computerName\": \"testVmWindows\",\r\n  \"osName\": \"Windows Server 2016 Datacenter\",\r\n  \"osVersion\": \"Microsoft Windows NT 10.0.14393.0\",\r\n  \"vmAgent\": {\r\n    \"vmAgentVersion\": \"2.7.41491.1005\",\r\n    \"statuses\": [\r\n      {\r\n        \"code\": \"ProvisioningState/succeeded\",\r\n        \"level\": \"Info\",\r\n        \"displayStatus\": \"Ready\",\r\n        \"message\": \"GuestAgent is running and processing the extensions.\",\r\n        \"time\": \"2020-11-30T18:40:13-08:00\"\r\n      }\r\n    ],\r\n    \"extensionHandlers\": [\r\n      {\r\n        \"type\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n        \"typeHandlerVersion\": \"2.20.0.1\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\",\r\n          \"message\": \"ExtensionOperation:enable. Status:Success\"\r\n        }\r\n      },\r\n      {\r\n        \"type\": \"Microsoft.Azure.Security.AntimalwareSignature.AntimalwareConfiguration\",\r\n        \"typeHandlerVersion\": \"2.0.54.0\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\"\r\n        }\r\n      },\r\n      {\r\n        \"type\": \"Microsoft.CPlat.Core.WindowsPatchExtension\",\r\n        \"typeHandlerVersion\": \"1.5.28\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"patchStatus\": {\r\n    \"availablePatchSummary\": {\r\n      \"assessmentActivityId\": \"d3df8b67-4c5b-4508-bf43-fdab33bac4da\",\r\n      \"status\": \"Succeeded\",\r\n      \"startTime\": \"2020-11-24T12:45:04.8476667-08:00\",\r\n      \"lastModifiedTime\": \"2020-11-24T12:55:45.3964695-08:00\",\r\n      \"criticalAndSecurityPatchCount\": 0,\r\n      \"otherPatchCount\": 1,\r\n      \"rebootPending\": false\r\n    },\r\n    \"lastPatchInstallationSummary\": {\r\n      \"installationActivityId\": \"d3df8b67-4c5b-4508-bf43-fdab33bac4da\",\r\n      \"status\": \"Succeeded\",\r\n      \"startTime\": \"2020-11-24T12:45:04.8476667-08:00\",\r\n      \"lastModifiedTime\": \"2020-11-24T12:55:45.3964695-08:00\",\r\n      \"maintenanceWindowExceeded\": false,\r\n      \"notSelectedPatchCount\": 1,\r\n      \"excludedPatchCount\": 0,\r\n      \"pendingPatchCount\": 0,\r\n      \"installedPatchCount\": 0,\r\n      \"failedPatchCount\": 0\r\n    },\r\n    \"configurationStatuses\": [\r\n      {\r\n        \"code\": \"PatchModeConfigurationState/Ready\",\r\n        \"level\": \"Info\",\r\n        \"displayStatus\": \"Ready\",\r\n        \"time\": \"2020-11-24T12:45:26.7226098-08:00\"\r\n      }\r\n    ]\r\n  },\r\n  \"disks\": [\r\n    {\r\n      \"name\": \"testVmWindows_OsDisk_1_cce52813076f4ce5850727675b6730b9\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2020-11-24T12:38:51.0173697-08:00\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"bootDiagnostics\": {},\r\n  \"extensions\": [\r\n    {\r\n      \"name\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n      \"type\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n      \"typeHandlerVersion\": \"2.20.0.1\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"message\": \"ExtensionOperation:enable. Status:Success\",\r\n          \"time\": \"2020-11-30T18:39:55-08:00\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Azure.Security.AntimalwareSignature.AntimalwareConfiguration\",\r\n      \"type\": \"Microsoft.Azure.Security.AntimalwareSignature.AntimalwareConfiguration\",\r\n      \"typeHandlerVersion\": \"2.0.54.0\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"message\": \"Enable AntimalwareSignature extension complete\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"internalData\": {\r\n    \"fabricCluster\": \"asiasoutheast-prod-c\",\r\n    \"fabricTenantName\": \"6987c18f-7338-4461-b47e-1e6658c7dec4\"\r\n  },\r\n  \"hyperVGeneration\": \"V1\",\r\n  \"statuses\": [\r\n    {\r\n      \"code\": \"ProvisioningState/succeeded\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Provisioning succeeded\",\r\n      \"time\": \"2020-11-24T16:33:40.7798878-08:00\"\r\n    },\r\n    {\r\n      \"code\": \"PowerState/running\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"VM running\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"computerName\": \"testVmWindows\",\r\n  \"osName\": \"Windows Server 2012 R2 Datacenter\",\r\n  \"osVersion\": \"Microsoft Windows NT 6.3.9600.0\",\r\n  \"vmAgent\": {\r\n    \"vmAgentVersion\": \"2.7.41491.1008\",\r\n    \"statuses\": [\r\n      {\r\n        \"code\": \"ProvisioningState/succeeded\",\r\n        \"level\": \"Info\",\r\n        \"displayStatus\": \"Ready\",\r\n        \"message\": \"GuestAgent is running and processing the extensions.\",\r\n        \"time\": \"2021-02-05T01:02:23-08:00\"\r\n      }\r\n    ],\r\n    \"extensionHandlers\": [\r\n      {\r\n        \"type\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n        \"typeHandlerVersion\": \"2.22.0.1\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\",\r\n          \"message\": \"ExtensionOperation:enable. Status:Success\"\r\n        }\r\n      },\r\n      {\r\n        \"type\": \"Microsoft.Azure.Security.AntimalwareSignature.AntimalwareConfiguration\",\r\n        \"typeHandlerVersion\": \"2.58.4\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\"\r\n        }\r\n      },\r\n      {\r\n        \"type\": \"Microsoft.CPlat.Core.WindowsPatchExtension\",\r\n        \"typeHandlerVersion\": \"1.5.28\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"patchStatus\": {\r\n    \"availablePatchSummary\": {\r\n      \"assessmentActivityId\": \"78566ef0-d92a-4994-a714-2c234e0234ad\",\r\n      \"status\": \"Failed\",\r\n      \"startTime\": \"2021-02-04T23:44:44.1600906-08:00\",\r\n      \"lastModifiedTime\": \"2021-02-04T23:54:48.4373579-08:00\",\r\n      \"criticalAndSecurityPatchCount\": 0,\r\n      \"otherPatchCount\": 0,\r\n      \"rebootPending\": false,\r\n      \"error\": {\r\n        \"details\": [\r\n          {\r\n            \"code\": \"Error\",\r\n            \"message\": \"\\\"[\\\"Internal error when assessing the machine for available updates: ActivityId = [78566ef0-d92a-4994-a714-2c234e0234ad], Operation=[Assessing], Message=[Exception from HRESULT: 0x80072EE2]\\\"    at UpdateManagementAction.concrete.UpdateAssessment.GetAvailableUpdates()\\r\\n   at UpdateManagementAction.concrete.PatchAction.AssessAndInstallUpdates(IUpdateAssessment assessment, IUpdateFilter updateFilter, IUpdateDownloader downloader, IUpdateInstaller installer, Int32 cutOffWindowInMinutes, UpdateManagementResultSummary managementResultSummary, UpdateCollection filteredUpdateCollection)\\r\\n   at UpdateManagementAction.concrete.PatchAction.Patch(UpdateManagementResultSummary managementResultSummary)].\\\"\"\r\n          }\r\n        ],\r\n        \"code\": \"Error\",\r\n        \"message\": \"\\\"1 errors reported. The latest 3 errors are shared in details. To view all errors, review this log file on the machine:[C:\\\\WindowsAzure\\\\Logs\\\\Plugins\\\\Microsoft.CPlat.Core.WindowsPatchExtension\\\\1.5.28]\"\r\n      }\r\n    },\r\n    \"lastPatchInstallationSummary\": {\r\n      \"installationActivityId\": \"78566ef0-d92a-4994-a714-2c234e0234ad\",\r\n      \"status\": \"Succeeded\",\r\n      \"startTime\": \"2021-02-04T23:44:44.1600906-08:00\",\r\n      \"lastModifiedTime\": \"2021-02-04T23:54:48.4373579-08:00\",\r\n      \"maintenanceWindowExceeded\": false,\r\n      \"notSelectedPatchCount\": 0,\r\n      \"excludedPatchCount\": 0,\r\n      \"pendingPatchCount\": 0,\r\n      \"installedPatchCount\": 0,\r\n      \"failedPatchCount\": 0,\r\n      \"error\": {\r\n        \"details\": [\r\n          {\r\n            \"code\": \"Error\",\r\n            \"message\": \"\\\"[\\\"Internal error when assessing the machine for available updates: ActivityId = [78566ef0-d92a-4994-a714-2c234e0234ad], Operation=[Assessing], Message=[Exception from HRESULT: 0x80072EE2]\\\"    at UpdateManagementAction.concrete.UpdateAssessment.GetAvailableUpdates()\\r\\n   at UpdateManagementAction.concrete.PatchAction.AssessAndInstallUpdates(IUpdateAssessment assessment, IUpdateFilter updateFilter, IUpdateDownloader downloader, IUpdateInstaller installer, Int32 cutOffWindowInMinutes, UpdateManagementResultSummary managementResultSummary, UpdateCollection filteredUpdateCollection)\\r\\n   at UpdateManagementAction.concrete.PatchAction.Patch(UpdateManagementResultSummary managementResultSummary)].\\\"\"\r\n          }\r\n        ],\r\n        \"code\": \"Error\",\r\n        \"message\": \"\\\"2 errors reported. The latest 3 errors are shared in details. To view all errors, review this log file on the machine:[C:\\\\WindowsAzure\\\\Logs\\\\Plugins\\\\Microsoft.CPlat.Core.WindowsPatchExtension\\\\1.5.28]\"\r\n      }\r\n    },\r\n    \"configurationStatuses\": [\r\n      {\r\n        \"code\": \"PatchModeConfigurationState/Ready\",\r\n        \"level\": \"Info\",\r\n        \"displayStatus\": \"Ready\",\r\n        \"time\": \"2021-02-04T23:45:20.8956109-08:00\"\r\n      }\r\n    ]\r\n  },\r\n  \"disks\": [\r\n    {\r\n      \"name\": \"testVmWindows_OsDisk_1_e9a83074032644398ad73bc9f4f5f3c5\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2021-02-04T23:42:39.6146403-08:00\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"bootDiagnostics\": {},\r\n  \"extensions\": [\r\n    {\r\n      \"name\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n      \"type\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n      \"typeHandlerVersion\": \"2.22.0.1\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"message\": \"ExtensionOperation:enable. Status:Success\",\r\n          \"time\": \"2021-02-05T01:02:18-08:00\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Azure.Security.AntimalwareSignature.AntimalwareConfiguration\",\r\n      \"type\": \"Microsoft.Azure.Security.AntimalwareSignature.AntimalwareConfiguration\",\r\n      \"typeHandlerVersion\": \"2.58.4\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"message\": \"AntimalwareNotInstalled, no action necessary\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"internalData\": {\r\n    \"fabricCluster\": \"asiasoutheast-prod-a\",\r\n    \"fabricTenantName\": \"b9b11616-ed58-490b-a00e-6252cdb24cbf\"\r\n  },\r\n  \"hyperVGeneration\": \"V1\",\r\n  \"statuses\": [\r\n    {\r\n      \"code\": \"ProvisioningState/succeeded\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Provisioning succeeded\",\r\n      \"time\": \"2021-02-04T23:55:50.9034693-08:00\"\r\n    },\r\n    {\r\n      \"code\": \"PowerState/running\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"VM running\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "7602e371-c6bc-4bb3-bc2d-491dfc17fc32"
+    "SubscriptionId": "28337c71-5911-4e75-8354-c4ac645e902d"
   }
 }

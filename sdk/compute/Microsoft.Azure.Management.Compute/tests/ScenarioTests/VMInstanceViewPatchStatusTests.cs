@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         private const string RgName = "PatchStatusRg";
         private const string WindowsVmName = "testVmWindows";
         private const string LinuxVmName = "testVmLinux";
-
+        
         //How to re-record this test:
         // 1. Manually create Resource group and VM
         // update the constants for RgName and WindowsVmName
@@ -66,11 +66,11 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             if (isWindowsImage)
             {
                 Assert.Equal(0, vmInstanceView.PatchStatus.AvailablePatchSummary.CriticalAndSecurityPatchCount);
-                Assert.Equal(1, vmInstanceView.PatchStatus.AvailablePatchSummary.OtherPatchCount);
+                Assert.Equal(0, vmInstanceView.PatchStatus.AvailablePatchSummary.OtherPatchCount);
 
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.ExcludedPatchCount);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.FailedPatchCount);
-                Assert.Equal(1, vmInstanceView.PatchStatus.LastPatchInstallationSummary.NotSelectedPatchCount);
+                Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.NotSelectedPatchCount);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.InstalledPatchCount);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.PendingPatchCount);
 
@@ -82,12 +82,12 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             else
             {
                 Assert.Equal(0, vmInstanceView.PatchStatus.AvailablePatchSummary.CriticalAndSecurityPatchCount);
-                Assert.Equal(11, vmInstanceView.PatchStatus.AvailablePatchSummary.OtherPatchCount);
+                Assert.Equal(0, vmInstanceView.PatchStatus.AvailablePatchSummary.OtherPatchCount);
 
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.ExcludedPatchCount);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.FailedPatchCount);
-                Assert.Equal(11, vmInstanceView.PatchStatus.LastPatchInstallationSummary.NotSelectedPatchCount);
-                Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.InstalledPatchCount);
+                Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.NotSelectedPatchCount);
+                Assert.Equal(4, vmInstanceView.PatchStatus.LastPatchInstallationSummary.InstalledPatchCount);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.PendingPatchCount);
             }
         }
