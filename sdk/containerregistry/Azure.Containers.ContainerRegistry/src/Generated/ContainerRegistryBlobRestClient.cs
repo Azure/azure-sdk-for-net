@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class BlobRestClient
+    internal partial class ContainerRegistryBlobRestClient
     {
         private string url;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of BlobRestClient. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryBlobRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
+        public ContainerRegistryBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
             if (url == null)
             {
@@ -38,7 +38,7 @@ namespace Azure.Containers.ContainerRegistry
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetRequest(string name, string digest)
+        internal HttpMessage CreateGetBlobRequest(string name, string digest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,7 +59,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, BlobGetHeaders>> GetAsync(string name, string digest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders>> GetBlobAsync(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -70,9 +70,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
-            using var message = CreateGetRequest(name, digest);
+            using var message = CreateGetBlobRequest(name, digest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobGetHeaders(message.Response);
+            var headers = new ContainerRegistryBlobGetBlobHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -81,7 +81,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 307:
-                    return ResponseWithHeaders.FromValue<Stream, BlobGetHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<Stream, ContainerRegistryBlobGetBlobHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -92,7 +92,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public ResponseWithHeaders<Stream, BlobGetHeaders> Get(string name, string digest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> GetBlob(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -103,9 +103,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
-            using var message = CreateGetRequest(name, digest);
+            using var message = CreateGetBlobRequest(name, digest);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlobGetHeaders(message.Response);
+            var headers = new ContainerRegistryBlobGetBlobHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -114,13 +114,13 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 307:
-                    return ResponseWithHeaders.FromValue<Stream, BlobGetHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<Stream, ContainerRegistryBlobGetBlobHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCheckRequest(string name, string digest)
+        internal HttpMessage CreateCheckBlobExistsRequest(string name, string digest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -141,7 +141,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobCheckHeaders>> CheckAsync(string name, string digest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobCheckBlobExistsHeaders>> CheckBlobExistsAsync(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -152,9 +152,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
-            using var message = CreateCheckRequest(name, digest);
+            using var message = CreateCheckBlobExistsRequest(name, digest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobCheckHeaders(message.Response);
+            var headers = new ContainerRegistryBlobCheckBlobExistsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -170,7 +170,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public ResponseWithHeaders<BlobCheckHeaders> Check(string name, string digest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobCheckBlobExistsHeaders> CheckBlobExists(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -181,9 +181,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
-            using var message = CreateCheckRequest(name, digest);
+            using var message = CreateCheckBlobExistsRequest(name, digest);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlobCheckHeaders(message.Response);
+            var headers = new ContainerRegistryBlobCheckBlobExistsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -194,7 +194,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string name, string digest)
+        internal HttpMessage CreateDeleteBlobRequest(string name, string digest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -215,7 +215,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, BlobDeleteHeaders>> DeleteAsync(string name, string digest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders>> DeleteBlobAsync(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -226,9 +226,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
-            using var message = CreateDeleteRequest(name, digest);
+            using var message = CreateDeleteBlobRequest(name, digest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobDeleteHeaders(message.Response);
+            var headers = new ContainerRegistryBlobDeleteBlobHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -246,7 +246,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public ResponseWithHeaders<Stream, BlobDeleteHeaders> Delete(string name, string digest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> DeleteBlob(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -257,9 +257,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
-            using var message = CreateDeleteRequest(name, digest);
+            using var message = CreateDeleteBlobRequest(name, digest);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlobDeleteHeaders(message.Response);
+            var headers = new ContainerRegistryBlobDeleteBlobHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -272,7 +272,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateMountRequest(string name, string @from, string mount)
+        internal HttpMessage CreateMountBlobRequest(string name, string @from, string mount)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -295,7 +295,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="mount"> Digest of blob to mount from the source repository. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="from"/>, or <paramref name="mount"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobMountHeaders>> MountAsync(string name, string @from, string mount, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobMountBlobHeaders>> MountBlobAsync(string name, string @from, string mount, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -310,9 +310,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(mount));
             }
 
-            using var message = CreateMountRequest(name, @from, mount);
+            using var message = CreateMountBlobRequest(name, @from, mount);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobMountHeaders(message.Response);
+            var headers = new ContainerRegistryBlobMountBlobHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -328,7 +328,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="mount"> Digest of blob to mount from the source repository. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="from"/>, or <paramref name="mount"/> is null. </exception>
-        public ResponseWithHeaders<BlobMountHeaders> Mount(string name, string @from, string mount, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobMountBlobHeaders> MountBlob(string name, string @from, string mount, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -343,9 +343,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(mount));
             }
 
-            using var message = CreateMountRequest(name, @from, mount);
+            using var message = CreateMountBlobRequest(name, @from, mount);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlobMountHeaders(message.Response);
+            var headers = new ContainerRegistryBlobMountBlobHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -355,7 +355,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateGetStatusRequest(string location)
+        internal HttpMessage CreateGetUploadStatusRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -373,16 +373,16 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobGetStatusHeaders>> GetStatusAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobGetUploadStatusHeaders>> GetUploadStatusAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetStatusRequest(location);
+            using var message = CreateGetUploadStatusRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobGetStatusHeaders(message.Response);
+            var headers = new ContainerRegistryBlobGetUploadStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 204:
@@ -396,16 +396,16 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public ResponseWithHeaders<BlobGetStatusHeaders> GetStatus(string location, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobGetUploadStatusHeaders> GetUploadStatus(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetStatusRequest(location);
+            using var message = CreateGetUploadStatusRequest(location);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlobGetStatusHeaders(message.Response);
+            var headers = new ContainerRegistryBlobGetUploadStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 204:
@@ -415,7 +415,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateUploadRequest(string location, Stream value)
+        internal HttpMessage CreateUploadChunkRequest(string location, Stream value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -436,7 +436,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="value"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobUploadHeaders>> UploadAsync(string location, Stream value, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders>> UploadChunkAsync(string location, Stream value, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -447,9 +447,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(value));
             }
 
-            using var message = CreateUploadRequest(location, value);
+            using var message = CreateUploadChunkRequest(location, value);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobUploadHeaders(message.Response);
+            var headers = new ContainerRegistryBlobUploadChunkHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -464,7 +464,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="value"/> is null. </exception>
-        public ResponseWithHeaders<BlobUploadHeaders> Upload(string location, Stream value, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> UploadChunk(string location, Stream value, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -475,9 +475,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(value));
             }
 
-            using var message = CreateUploadRequest(location, value);
+            using var message = CreateUploadChunkRequest(location, value);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlobUploadHeaders(message.Response);
+            var headers = new ContainerRegistryBlobUploadChunkHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -487,7 +487,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateEndUploadRequest(string digest, string location, Stream value)
+        internal HttpMessage CreateCompleteUploadRequest(string digest, string location, Stream value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -510,7 +510,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Optional raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/>, <paramref name="location"/>, or <paramref name="value"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobEndUploadHeaders>> EndUploadAsync(string digest, string location, Stream value, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders>> CompleteUploadAsync(string digest, string location, Stream value, CancellationToken cancellationToken = default)
         {
             if (digest == null)
             {
@@ -525,9 +525,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(value));
             }
 
-            using var message = CreateEndUploadRequest(digest, location, value);
+            using var message = CreateCompleteUploadRequest(digest, location, value);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobEndUploadHeaders(message.Response);
+            var headers = new ContainerRegistryBlobCompleteUploadHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -543,7 +543,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Optional raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/>, <paramref name="location"/>, or <paramref name="value"/> is null. </exception>
-        public ResponseWithHeaders<BlobEndUploadHeaders> EndUpload(string digest, string location, Stream value, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> CompleteUpload(string digest, string location, Stream value, CancellationToken cancellationToken = default)
         {
             if (digest == null)
             {
@@ -558,9 +558,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(value));
             }
 
-            using var message = CreateEndUploadRequest(digest, location, value);
+            using var message = CreateCompleteUploadRequest(digest, location, value);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlobEndUploadHeaders(message.Response);
+            var headers = new ContainerRegistryBlobCompleteUploadHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -647,7 +647,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobStartUploadHeaders>> StartUploadAsync(string name, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders>> StartUploadAsync(string name, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -656,7 +656,7 @@ namespace Azure.Containers.ContainerRegistry
 
             using var message = CreateStartUploadRequest(name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobStartUploadHeaders(message.Response);
+            var headers = new ContainerRegistryBlobStartUploadHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -670,7 +670,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ResponseWithHeaders<BlobStartUploadHeaders> StartUpload(string name, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> StartUpload(string name, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -679,7 +679,7 @@ namespace Azure.Containers.ContainerRegistry
 
             using var message = CreateStartUploadRequest(name);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlobStartUploadHeaders(message.Response);
+            var headers = new ContainerRegistryBlobStartUploadHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -712,7 +712,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="range"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, BlobGetChunkHeaders>> GetChunkAsync(string name, string digest, string range, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, ContainerRegistryBlobGetChunkHeaders>> GetChunkAsync(string name, string digest, string range, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -729,7 +729,7 @@ namespace Azure.Containers.ContainerRegistry
 
             using var message = CreateGetChunkRequest(name, digest, range);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobGetChunkHeaders(message.Response);
+            var headers = new ContainerRegistryBlobGetChunkHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 206:
@@ -748,7 +748,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="range"/> is null. </exception>
-        public ResponseWithHeaders<Stream, BlobGetChunkHeaders> GetChunk(string name, string digest, string range, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, ContainerRegistryBlobGetChunkHeaders> GetChunk(string name, string digest, string range, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -765,7 +765,7 @@ namespace Azure.Containers.ContainerRegistry
 
             using var message = CreateGetChunkRequest(name, digest, range);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlobGetChunkHeaders(message.Response);
+            var headers = new ContainerRegistryBlobGetChunkHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 206:
@@ -778,7 +778,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateCheckChunkRequest(string name, string digest, string range)
+        internal HttpMessage CreateCheckChunkExistsRequest(string name, string digest, string range)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -801,7 +801,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="range"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobCheckChunkHeaders>> CheckChunkAsync(string name, string digest, string range, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobCheckChunkExistsHeaders>> CheckChunkExistsAsync(string name, string digest, string range, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -816,9 +816,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateCheckChunkRequest(name, digest, range);
+            using var message = CreateCheckChunkExistsRequest(name, digest, range);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobCheckChunkHeaders(message.Response);
+            var headers = new ContainerRegistryBlobCheckChunkExistsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -834,7 +834,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="range"/> is null. </exception>
-        public ResponseWithHeaders<BlobCheckChunkHeaders> CheckChunk(string name, string digest, string range, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobCheckChunkExistsHeaders> CheckChunkExists(string name, string digest, string range, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -849,9 +849,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateCheckChunkRequest(name, digest, range);
+            using var message = CreateCheckChunkExistsRequest(name, digest, range);
             _pipeline.Send(message, cancellationToken);
-            var headers = new BlobCheckChunkHeaders(message.Response);
+            var headers = new ContainerRegistryBlobCheckChunkExistsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:

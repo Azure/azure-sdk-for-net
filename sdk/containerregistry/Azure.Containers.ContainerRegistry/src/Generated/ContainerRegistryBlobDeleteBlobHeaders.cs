@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal class BlobDeleteHeaders
+    internal class ContainerRegistryBlobDeleteBlobHeaders
     {
         private readonly Response _response;
-        public BlobDeleteHeaders(Response response)
+        public ContainerRegistryBlobDeleteBlobHeaders(Response response)
         {
             _response = response;
         }

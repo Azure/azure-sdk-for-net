@@ -8,3 +8,23 @@ input-file:
 public-clients: true
 
 ```
+
+### Make generated models internal by default
+
+#``` yaml
+#directive:
+#  from: swagger-document
+#  where: $.definitions.*
+#  transform: >
+#    $["x-accessibility"] = "internal"
+#```
+
+### Make select generated models internal
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.V1Manifest
+  transform: >
+    $["x-accessibility"] = "internal"
+```

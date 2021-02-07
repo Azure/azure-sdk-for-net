@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestsRestClient
+    internal partial class ContainerRegistryRepositoryRestClient
     {
         private string url;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of ManifestsRestClient. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryRepositoryRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ManifestsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
+        public ContainerRegistryRepositoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
             if (url == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetRequest(string name, string reference, string accept)
+        internal HttpMessage CreateGetManifestRequest(string name, string reference, string accept)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,7 +65,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public async Task<Response<ManifestWrapper>> GetAsync(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManifestWrapper>> GetManifestAsync(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -76,7 +76,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            using var message = CreateGetRequest(name, reference, accept);
+            using var message = CreateGetManifestRequest(name, reference, accept);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -98,7 +98,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public Response<ManifestWrapper> Get(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
+        public Response<ManifestWrapper> GetManifest(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -109,7 +109,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            using var message = CreateGetRequest(name, reference, accept);
+            using var message = CreateGetManifestRequest(name, reference, accept);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -125,7 +125,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string name, string reference, Manifest payload)
+        internal HttpMessage CreateCreateManifestRequest(string name, string reference, Manifest payload)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
-        public async Task<ResponseWithHeaders<object, ManifestsCreateHeaders>> CreateAsync(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<object, ContainerRegistryRepositoryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -166,9 +166,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(payload));
             }
 
-            using var message = CreateCreateRequest(name, reference, payload);
+            using var message = CreateCreateManifestRequest(name, reference, payload);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ManifestsCreateHeaders(message.Response);
+            var headers = new ContainerRegistryRepositoryCreateManifestHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -189,7 +189,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
-        public ResponseWithHeaders<object, ManifestsCreateHeaders> Create(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<object, ContainerRegistryRepositoryCreateManifestHeaders> CreateManifest(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -204,9 +204,9 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(payload));
             }
 
-            using var message = CreateCreateRequest(name, reference, payload);
+            using var message = CreateCreateManifestRequest(name, reference, payload);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ManifestsCreateHeaders(message.Response);
+            var headers = new ContainerRegistryRepositoryCreateManifestHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -221,7 +221,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string name, string reference)
+        internal HttpMessage CreateDeleteManifestRequest(string name, string reference)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -242,7 +242,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string name, string reference, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteManifestAsync(string name, string reference, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -253,7 +253,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            using var message = CreateDeleteRequest(name, reference);
+            using var message = CreateDeleteManifestRequest(name, reference);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -269,7 +269,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public Response Delete(string name, string reference, CancellationToken cancellationToken = default)
+        public Response DeleteManifest(string name, string reference, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -280,7 +280,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            using var message = CreateDeleteRequest(name, reference);
+            using var message = CreateDeleteManifestRequest(name, reference);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -291,7 +291,329 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateGetListRequest(string name, string last, int? n, string orderby)
+        internal HttpMessage CreateGetTagsRequest(string name, string last, int? n, string orderby, string digest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_tags", false);
+            if (last != null)
+            {
+                uri.AppendQuery("last", last, true);
+            }
+            if (n != null)
+            {
+                uri.AppendQuery("n", n.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (digest != null)
+            {
+                uri.AppendQuery("digest", digest, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> List tags of a repository. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
+        /// <param name="n"> query parameter for max number of items. </param>
+        /// <param name="orderby"> orderby query parameter. </param>
+        /// <param name="digest"> filter by digest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public async Task<Response<TagList>> GetTagsAsync(string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var message = CreateGetTagsRequest(name, last, n, orderby, digest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TagList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = TagList.DeserializeTagList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> List tags of a repository. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
+        /// <param name="n"> query parameter for max number of items. </param>
+        /// <param name="orderby"> orderby query parameter. </param>
+        /// <param name="digest"> filter by digest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public Response<TagList> GetTags(string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var message = CreateGetTagsRequest(name, last, n, orderby, digest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TagList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = TagList.DeserializeTagList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetTagAttributesRequest(string name, string reference)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_tags/", false);
+            uri.AppendPath(reference, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get tag attributes by tag. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        public async Task<Response<TagAttributes>> GetTagAttributesAsync(string name, string reference, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (reference == null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            using var message = CreateGetTagAttributesRequest(name, reference);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TagAttributes value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = TagAttributes.DeserializeTagAttributes(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get tag attributes by tag. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        public Response<TagAttributes> GetTagAttributes(string name, string reference, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (reference == null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            using var message = CreateGetTagAttributesRequest(name, reference);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TagAttributes value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = TagAttributes.DeserializeTagAttributes(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateTagAttributesRequest(string name, string reference, ChangeableAttributes value)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_tags/", false);
+            uri.AppendPath(reference, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (value != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(value);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Update tag attributes. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> Tag name. </param>
+        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        public async Task<Response> UpdateTagAttributesAsync(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (reference == null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            using var message = CreateUpdateTagAttributesRequest(name, reference, value);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Update tag attributes. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> Tag name. </param>
+        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        public Response UpdateTagAttributes(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (reference == null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            using var message = CreateUpdateTagAttributesRequest(name, reference, value);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteTagRequest(string name, string reference)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_tags/", false);
+            uri.AppendPath(reference, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Delete tag. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        public async Task<Response> DeleteTagAsync(string name, string reference, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (reference == null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            using var message = CreateDeleteTagRequest(name, reference);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Delete tag. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
+        public Response DeleteTag(string name, string reference, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (reference == null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            using var message = CreateDeleteTagRequest(name, reference);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetManifestsRequest(string name, string last, int? n, string orderby)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -325,14 +647,14 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<Response<AcrManifests>> GetListAsync(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AcrManifests>> GetManifestsAsync(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetListRequest(name, last, n, orderby);
+            using var message = CreateGetManifestsRequest(name, last, n, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -355,14 +677,14 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Response<AcrManifests> GetList(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<AcrManifests> GetManifests(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetListRequest(name, last, n, orderby);
+            using var message = CreateGetManifestsRequest(name, last, n, orderby);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -378,7 +700,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateGetAttributesRequest(string name, string reference)
+        internal HttpMessage CreateGetManifestAttributesRequest(string name, string reference)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -399,7 +721,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public async Task<Response<ManifestAttributes>> GetAttributesAsync(string name, string reference, CancellationToken cancellationToken = default)
+        public async Task<Response<ManifestAttributes>> GetManifestAttributesAsync(string name, string reference, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -410,7 +732,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            using var message = CreateGetAttributesRequest(name, reference);
+            using var message = CreateGetManifestAttributesRequest(name, reference);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -431,7 +753,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public Response<ManifestAttributes> GetAttributes(string name, string reference, CancellationToken cancellationToken = default)
+        public Response<ManifestAttributes> GetManifestAttributes(string name, string reference, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -442,7 +764,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            using var message = CreateGetAttributesRequest(name, reference);
+            using var message = CreateGetManifestAttributesRequest(name, reference);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -458,7 +780,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateUpdateAttributesRequest(string name, string reference, ChangeableAttributes value)
+        internal HttpMessage CreateUpdateManifestAttributesRequest(string name, string reference, ChangeableAttributes value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -487,7 +809,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public async Task<Response> UpdateAttributesAsync(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateManifestAttributesAsync(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -498,7 +820,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            using var message = CreateUpdateAttributesRequest(name, reference, value);
+            using var message = CreateUpdateManifestAttributesRequest(name, reference, value);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -515,7 +837,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public Response UpdateAttributes(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public Response UpdateManifestAttributes(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -526,7 +848,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            using var message = CreateUpdateAttributesRequest(name, reference, value);
+            using var message = CreateUpdateManifestAttributesRequest(name, reference, value);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
