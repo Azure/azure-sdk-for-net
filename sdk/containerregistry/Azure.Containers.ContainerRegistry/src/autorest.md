@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 input-file:
     -  $(this-folder)/swagger/containerregistry.json
-public-clients: true
+public-clients: false
 
 ```
 
@@ -25,6 +25,30 @@ public-clients: true
 directive:
   from: swagger-document
   where: $.definitions.V1Manifest
+  transform: >
+    $["x-accessibility"] = "internal"
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.V2Manifest
+  transform: >
+    $["x-accessibility"] = "internal"
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.OCIIndex
+  transform: >
+    $["x-accessibility"] = "internal"
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.OCIManifest
   transform: >
     $["x-accessibility"] = "internal"
 ```
