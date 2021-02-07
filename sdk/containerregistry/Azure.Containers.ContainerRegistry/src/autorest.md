@@ -52,3 +52,19 @@ directive:
   transform: >
     $["x-accessibility"] = "internal"
 ```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AcrManifests
+  transform: >
+    $["x-accessibility"] = "internal"
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ManifestAttributesBase
+  transform: >
+    $["x-accessibility"] = "internal"
+```

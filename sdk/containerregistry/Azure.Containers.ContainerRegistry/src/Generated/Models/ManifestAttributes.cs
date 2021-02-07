@@ -30,7 +30,5 @@ namespace Azure.Containers.ContainerRegistry.Models
         public string Registry { get; }
         /// <summary> Image name. </summary>
         public string ImageName { get; }
-        /// <summary> Manifest attributes. </summary>
-        public ManifestAttributesBase Attributes { get; }
     }
 }

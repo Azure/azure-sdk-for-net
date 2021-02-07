@@ -322,45 +322,39 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> List manifests of a repository. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
-        /// <param name="n"> query parameter for max number of items. </param>
-        /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AcrManifests>> GetManifestsAsync(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManifestAttributes> ListManifestsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifests");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetManifestsAsync(name, last, n, orderby, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotImplementedException();
+            //using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifests");
+            //scope.Start();
+            //try
+            //{
+            //    return await RestClient.GetManifestsAsync(name, last, n, orderby, cancellationToken).ConfigureAwait(false);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary> List manifests of a repository. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
-        /// <param name="n"> query parameter for max number of items. </param>
-        /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AcrManifests> GetManifests(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManifestAttributes> ListManifests(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifests");
-            scope.Start();
-            try
-            {
-                return RestClient.GetManifests(name, last, n, orderby, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotImplementedException();
+            //using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifests");
+            //scope.Start();
+            //try
+            //{
+            //    return RestClient.GetManifests(name, last, n, orderby, cancellationToken);
+            //}
+            //catch (Exception e)
+            //{
+            //    scope.Failed(e);
+            //    throw;
+            //}
         }
 
         /// <summary> Get manifest attributes. </summary>

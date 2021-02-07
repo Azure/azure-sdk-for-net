@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Models
 {
-    public partial class AcrManifests
+    internal partial class AcrManifests
     {
         internal static AcrManifests DeserializeAcrManifests(JsonElement element)
         {
