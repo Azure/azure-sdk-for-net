@@ -63,7 +63,7 @@ namespace Compute.Tests.DiskRPTests
                 disk.Location = "eastus2";
                 disk.CreationData.GalleryImageReference = new ImageDiskReference
                 {
-                    Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/galleries/GalleryForTest/images/ImageforTest/versions/1.0.0",
+                    Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/galleries/gallerysdktest/images/ImageForTest/versions/1.0.2",
                     Lun = 0
                 };
                 try
