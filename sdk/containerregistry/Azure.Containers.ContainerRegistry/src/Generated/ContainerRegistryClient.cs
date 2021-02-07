@@ -14,38 +14,49 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The Repository service client. </summary>
-    public partial class RepositoryClient
+    /// <summary> The ContainerRegistry service client. </summary>
+    public partial class ContainerRegistryClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal RepositoryRestClient RestClient { get; }
-        /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
-        protected RepositoryClient()
-        {
-        }
-        /// <summary> Initializes a new instance of RepositoryClient. </summary>
+        internal ContainerRegistryRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of ContainerRegistryClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
-        internal RepositoryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
+        internal ContainerRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
-            RestClient = new RepositoryRestClient(clientDiagnostics, pipeline, url);
+            RestClient = new ContainerRegistryRestClient(clientDiagnostics, pipeline, url);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        /// <summary> List repositories. </summary>
-        /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
-        /// <param name="n"> query parameter for max number of items. </param>
+        /// <summary> Tells whether this Docker Registry instance supports Docker Registry HTTP API v2. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Repositories>> GetListAsync(string last = null, int? n = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CheckDockerV2SupportAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RepositoryClient.GetList");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.CheckDockerV2Support");
             scope.Start();
             try
             {
-                return await RestClient.GetListAsync(last, n, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CheckDockerV2SupportAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tells whether this Docker Registry instance supports Docker Registry HTTP API v2. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response CheckDockerV2Support(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.CheckDockerV2Support");
+            scope.Start();
+            try
+            {
+                return RestClient.CheckDockerV2Support(cancellationToken);
             }
             catch (Exception e)
             {
@@ -58,13 +69,32 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Repositories> GetList(string last = null, int? n = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Repositories>> GetRepositoriesAsync(string last = null, int? n = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RepositoryClient.GetList");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.GetRepositories");
             scope.Start();
             try
             {
-                return RestClient.GetList(last, n, cancellationToken);
+                return await RestClient.GetRepositoriesAsync(last, n, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List repositories. </summary>
+        /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
+        /// <param name="n"> query parameter for max number of items. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Repositories> GetRepositories(string last = null, int? n = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.GetRepositories");
+            scope.Start();
+            try
+            {
+                return RestClient.GetRepositories(last, n, cancellationToken);
             }
             catch (Exception e)
             {
@@ -76,13 +106,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get repository attributes. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RepositoryAttributes>> GetAttributesAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RepositoryAttributes>> GetRepositoryAttributesAsync(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RepositoryClient.GetAttributes");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.GetRepositoryAttributes");
             scope.Start();
             try
             {
-                return await RestClient.GetAttributesAsync(name, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetRepositoryAttributesAsync(name, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -94,13 +124,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get repository attributes. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RepositoryAttributes> GetAttributes(string name, CancellationToken cancellationToken = default)
+        public virtual Response<RepositoryAttributes> GetRepositoryAttributes(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RepositoryClient.GetAttributes");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.GetRepositoryAttributes");
             scope.Start();
             try
             {
-                return RestClient.GetAttributes(name, cancellationToken);
+                return RestClient.GetRepositoryAttributes(name, cancellationToken);
             }
             catch (Exception e)
             {
@@ -112,13 +142,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Delete the repository identified by `name`. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeletedRepository>> DeleteAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedRepository>> DeleteRepositoryAsync(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RepositoryClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.DeleteRepository");
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(name, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteRepositoryAsync(name, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -130,13 +160,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Delete the repository identified by `name`. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeletedRepository> Delete(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedRepository> DeleteRepository(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RepositoryClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.DeleteRepository");
             scope.Start();
             try
             {
-                return RestClient.Delete(name, cancellationToken);
+                return RestClient.DeleteRepository(name, cancellationToken);
             }
             catch (Exception e)
             {
@@ -149,13 +179,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateAttributesAsync(string name, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateRepositoryAttributesAsync(string name, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RepositoryClient.UpdateAttributes");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.UpdateRepositoryAttributes");
             scope.Start();
             try
             {
-                return await RestClient.UpdateAttributesAsync(name, value, cancellationToken).ConfigureAwait(false);
+                return await RestClient.UpdateRepositoryAttributesAsync(name, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -168,13 +198,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateAttributes(string name, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateRepositoryAttributes(string name, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RepositoryClient.UpdateAttributes");
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.UpdateRepositoryAttributes");
             scope.Start();
             try
             {
-                return RestClient.UpdateAttributes(name, value, cancellationToken);
+                return RestClient.UpdateRepositoryAttributes(name, value, cancellationToken);
             }
             catch (Exception e)
             {

@@ -10,18 +10,18 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal class BlobGetHeaders
+    internal class ContainerRegistryRepositoryCreateManifestHeaders
     {
         private readonly Response _response;
-        public BlobGetHeaders(Response response)
+        public ContainerRegistryRepositoryCreateManifestHeaders(Response response)
         {
             _response = response;
         }
+        /// <summary> Identifies the docker upload uuid for the current request. </summary>
+        public string DockerContentDigest => _response.Headers.TryGetValue("Docker-Content-Digest", out string value) ? value : null;
+        /// <summary> The canonical location url of the uploaded manifest. </summary>
+        public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
         /// <summary> The length of the requested blob content. </summary>
         public long? ContentLength => _response.Headers.TryGetValue("Content-Length", out long? value) ? value : null;
-        /// <summary> Digest of the targeted content for the request. </summary>
-        public string DockerContentDigest => _response.Headers.TryGetValue("Docker-Content-Digest", out string value) ? value : null;
-        /// <summary> The location where the layer should be accessible. </summary>
-        public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
     }
 }
