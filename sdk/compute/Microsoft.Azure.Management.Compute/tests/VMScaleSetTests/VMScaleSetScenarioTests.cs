@@ -257,6 +257,34 @@ namespace Compute.Tests
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
             }
         }
+        
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_ExtendedLocationScenario")]
+        public void TestVMScaleSetScenarioOperations_ExtendedLocationScenario()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                ImageReference imageReference = new ImageReference
+                {
+                    Publisher = "MicrosoftWindowsServer",
+                    Offer = "WindowsServer",
+                    Sku = "2016-Datacenter",
+                    Version = "14393.4048.2011170655"
+                };
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, vmSize: VirtualMachineSizeTypes.StandardD2sV3, 
+                        faultDomainCount: 1, capacity: 1, shouldOverProvision: false, validateVmssVMInstanceView: true, imageReference: imageReference,
+                        validateListSku: false, deleteAsPartOfTest: false, extendedLocation: "MicrosoftRRDCLab1");
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
 
         [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ScheduledEvents")]
@@ -494,7 +522,7 @@ namespace Compute.Tests
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
             bool? encryptionAtHostEnabled = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false,
             int? faultDomainCount = null, int? capacity = null, bool shouldOverProvision = true, bool validateVmssVMInstanceView = false,
-            ImageReference imageReference = null, bool validateListSku = true, bool deleteAsPartOfTest = true)
+            ImageReference imageReference = null, bool validateListSku = true, bool deleteAsPartOfTest = true, string extendedLocation = null)
         {
             EnsureClientsInitialized(context);
 
@@ -563,7 +591,8 @@ namespace Compute.Tests
                     capacity: capacity,
                     dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                     dedicatedHostGroupName: dedicatedHostGroupName,
-                    dedicatedHostName: dedicatedHostName);
+                    dedicatedHostName: dedicatedHostName,
+                    extendedLocation: extendedLocation);
 
                 if (diskEncryptionSetId != null)
                 {
@@ -583,7 +612,7 @@ namespace Compute.Tests
                         "SecurityProfile.EncryptionAtHost is not same as expected");
                 }
 
-                ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks, ppgId: ppgId, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
+                ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks, ppgId: ppgId, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId, extendedLocation: extendedLocation);
 
                 var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
                 Assert.NotNull(getInstanceViewResponse);
@@ -598,7 +627,7 @@ namespace Compute.Tests
                 }
 
                 var listResponse = m_CrpClient.VirtualMachineScaleSets.List(rgName);
-                ValidateVMScaleSet(inputVMScaleSet, listResponse.FirstOrDefault(x => x.Name == vmssName), hasManagedDisks);
+                ValidateVMScaleSet(inputVMScaleSet, listResponse.FirstOrDefault(x => x.Name == vmssName), hasManagedDisks, extendedLocation: extendedLocation);
 
                 if (validateListSku)
                 {
