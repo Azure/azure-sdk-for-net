@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyResolver resolver = GetResolver(transport);
             CryptographyClient client = await resolver.ResolveAsync(new Uri("https://mock.vault.azure.net/keys/mock-key"));
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.UnwrapKeyAsync(KeyWrapAlgorithm.A256KW, new byte[] { 0, 1, 2, 3 }));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.UnwrapKeyAsync(KeyWrapAlgorithm.A256KW, new byte[] { 0, 1, 2, 3 }));
             Assert.AreEqual((int)HttpStatusCode.Forbidden, ex.Status);
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             KeyResolver resolver = GetResolver(transport);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => resolver.ResolveAsync(new Uri("https://mock.vault.azure.net/secrets/mock-secret")));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await resolver.ResolveAsync(new Uri("https://mock.vault.azure.net/secrets/mock-secret")));
             Assert.AreEqual((int)HttpStatusCode.Forbidden, ex.Status);
         }
 

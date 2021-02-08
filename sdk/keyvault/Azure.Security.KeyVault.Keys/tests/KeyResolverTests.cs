@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void ResolveAsyncArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => new KeyResolver(new DefaultAzureCredential()).ResolveAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await new KeyResolver(new DefaultAzureCredential()).ResolveAsync(null));
         }
     }
 }

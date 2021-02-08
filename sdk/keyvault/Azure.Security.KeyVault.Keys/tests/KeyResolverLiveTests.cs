@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             uriBuilder.AppendPath(Recording.GenerateId());
 
-            Assert.ThrowsAsync<RequestFailedException>(() => Resolver.ResolveAsync(uriBuilder.ToUri()));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Resolver.ResolveAsync(uriBuilder.ToUri()));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             uriBuilder.AppendPath(Recording.GenerateId());
 
-            Assert.ThrowsAsync<RequestFailedException>(() => Resolver.ResolveAsync(uriBuilder.ToUri()));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Resolver.ResolveAsync(uriBuilder.ToUri()));
         }
 
         [Test]

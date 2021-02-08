@@ -25,60 +25,60 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public void SetArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetSecretAsync(null, "value"));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetSecretAsync("name", null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetSecretAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.SetSecretAsync(null, "value"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.SetSecretAsync("name", null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.SetSecretAsync(null));
 
-            Assert.ThrowsAsync<ArgumentException>(() => Client.SetSecretAsync("", "value"));
+            Assert.ThrowsAsync<ArgumentException>(async () => await Client.SetSecretAsync("", "value"));
         }
 
         [Test]
         public void UpdatePropertiesArgumentValidation()
         {
             SecretProperties secret = new SecretProperties("secret-name");
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateSecretPropertiesAsync(null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateSecretPropertiesAsync(secret));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateSecretPropertiesAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateSecretPropertiesAsync(secret));
         }
 
         [Test]
         public void RestoreArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RestoreSecretBackupAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.RestoreSecretBackupAsync(null));
         }
 
         [Test]
         public void PurgeDeletedArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.PurgeDeletedSecretAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedSecretAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.PurgeDeletedSecretAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(async () => await Client.PurgeDeletedSecretAsync(""));
         }
 
         [Test]
         public void GetArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetSecretAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetSecretAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetSecretAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetSecretAsync(""));
         }
 
         [Test]
         public void DeleteArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartDeleteSecretAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.StartDeleteSecretAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.StartDeleteSecretAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(async () => await Client.StartDeleteSecretAsync(""));
         }
 
         [Test]
         public void GetDeletedArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetDeletedSecretAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedSecretAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetDeletedSecretAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetDeletedSecretAsync(""));
         }
 
         [Test]
         public void RecoverDeletedArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartRecoverDeletedSecretAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.StartRecoverDeletedSecretAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.StartRecoverDeletedSecretAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(async () => await Client.StartRecoverDeletedSecretAsync(""));
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public void ChallengeBasedAuthenticationRequiresHttps()
         {
             // After passing parameter validation, ChallengeBasedAuthenticationPolicy should throw for "http" requests.
-            Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetSecretAsync("test"));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Client.GetSecretAsync("test"));
         }
     }
 }

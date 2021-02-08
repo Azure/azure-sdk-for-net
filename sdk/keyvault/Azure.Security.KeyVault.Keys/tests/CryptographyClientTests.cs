@@ -30,15 +30,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void SignDataAsyncArugmentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SignDataAsync(SignatureAlgorithm.ES256Value, (byte[])null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SignDataAsync(SignatureAlgorithm.ES256Value, (Stream)null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.SignDataAsync(SignatureAlgorithm.ES256Value, (byte[])null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.SignDataAsync(SignatureAlgorithm.ES256Value, (Stream)null));
         }
 
         [Test]
         public void VerifyDataAsyncArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (byte[])null, new byte[0]));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (Stream)null, new byte[0]));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (byte[])null, new byte[0]));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (Stream)null, new byte[0]));
         }
     }
 }

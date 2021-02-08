@@ -26,16 +26,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void CreateIssuerArgumentValidation()
         {
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateIssuerAsync(null));
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.CreateIssuerAsync(null));
             Assert.AreEqual("issuer", ex.ParamName);
 
             CertificateIssuer issuer = new CertificateIssuer();
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.CreateIssuerAsync(issuer));
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.CreateIssuerAsync(issuer));
             Assert.AreEqual("issuer", ex.ParamName);
             StringAssert.StartsWith("issuer.Name cannot be null or an empty string.", ex.Message);
 
             issuer = new CertificateIssuer("test");
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.CreateIssuerAsync(issuer));
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.CreateIssuerAsync(issuer));
             Assert.AreEqual("issuer", ex.ParamName);
             StringAssert.StartsWith("issuer.Provider cannot be null or an empty string.", ex.Message);
         }
@@ -43,10 +43,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void GetIssuerArgumentValidation()
         {
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetIssuerAsync(null));
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetIssuerAsync(null));
             Assert.AreEqual("issuerName", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.GetIssuerAsync(string.Empty));
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetIssuerAsync(string.Empty));
             Assert.AreEqual("issuerName", ex.ParamName);
             StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
         }
@@ -54,11 +54,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void UpdateIssuerArgumentValidation()
         {
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateIssuerAsync(null));
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateIssuerAsync(null));
             Assert.AreEqual("issuer", ex.ParamName);
 
             CertificateIssuer issuer = new CertificateIssuer();
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateIssuerAsync(issuer));
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.UpdateIssuerAsync(issuer));
             Assert.AreEqual("issuer", ex.ParamName);
             StringAssert.StartsWith("issuer.Name cannot be null or an empty string.", ex.Message);
         }
@@ -66,27 +66,27 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void DeleteIssuerArgumentValidation()
         {
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.DeleteIssuerAsync(null));
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.DeleteIssuerAsync(null));
             Assert.AreEqual("issuerName", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteIssuerAsync(string.Empty));
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.DeleteIssuerAsync(string.Empty));
             Assert.AreEqual("issuerName", ex.ParamName);
         }
 
         [Test]
         public void SetContactsArgumentValidation()
         {
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetContactsAsync(null));
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.SetContactsAsync(null));
             Assert.AreEqual("contacts", ex.ParamName);
         }
 
         [Test]
         public void GetCertificatePolicyArgumentValidation()
         {
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetCertificatePolicyAsync(null));
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetCertificatePolicyAsync(null));
             Assert.AreEqual("certificateName", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.GetCertificatePolicyAsync(string.Empty));
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetCertificatePolicyAsync(string.Empty));
             Assert.AreEqual("certificateName", ex.ParamName);
             StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
         }
@@ -96,10 +96,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             CertificatePolicy policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=Azure SDK");
 
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateCertificatePolicyAsync(null, policy));
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateCertificatePolicyAsync(null, policy));
             Assert.AreEqual("certificateName", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync(string.Empty, policy));
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.UpdateCertificatePolicyAsync(string.Empty, policy));
             Assert.AreEqual("certificateName", ex.ParamName);
             StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
         }
@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void ChallengeBasedAuthenticationRequiresHttps()
         {
             // After passing parameter validation, ChallengeBasedAuthenticationPolicy should throw for "http" requests.
-            Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetCertificateAsync("test"));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Client.GetCertificateAsync("test"));
         }
 
         [Test]

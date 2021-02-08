@@ -128,7 +128,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             AssertSecretPropertiesEqual(secret.Properties, updateResult);
 
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetSecretAsync(secretName));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetSecretAsync(secretName));
 
             secret.Properties.Enabled = true;
 
@@ -259,7 +259,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public void BackupSecretNonExisting()
         {
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.BackupSecretAsync(Recording.GenerateId()));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Client.BackupSecretAsync(Recording.GenerateId()));
         }
 
         [Test]
@@ -280,8 +280,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             await Client.PurgeDeletedSecretAsync(secretName);
             await WaitForPurgedSecret(secretName);
 
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetSecretAsync(secretName));
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetDeletedSecretAsync(secretName));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetSecretAsync(secretName));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetDeletedSecretAsync(secretName));
 
             SecretProperties restoreResult = await Client.RestoreSecretBackupAsync(backup);
 
@@ -292,7 +292,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public void RestoreMalformedBackup()
         {
             byte[] backupMalformed = Encoding.ASCII.GetBytes("non-existing");
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.RestoreSecretBackupAsync(backupMalformed));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Client.RestoreSecretBackupAsync(backupMalformed));
         }
 
         [Test]
@@ -311,13 +311,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.NotNull(deletedSecret.DeletedOn);
             Assert.NotNull(deletedSecret.ScheduledPurgeDate);
 
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetSecretAsync(secretName));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetSecretAsync(secretName));
         }
 
         [Test]
         public void StartDeleteSecretNonExisting()
         {
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.StartDeleteSecretAsync(Recording.GenerateId()));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Client.StartDeleteSecretAsync(Recording.GenerateId()));
         }
 
         [Test]
@@ -347,7 +347,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public void GetDeletedSecretNonExisting()
         {
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetDeletedSecretAsync(Recording.GenerateId()));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetDeletedSecretAsync(Recording.GenerateId()));
         }
 
         [Test]
@@ -379,7 +379,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public void StartRecoverDeletedSecretNonExisting()
         {
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.StartRecoverDeletedSecretAsync(Recording.GenerateId()));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await Client.StartRecoverDeletedSecretAsync(Recording.GenerateId()));
         }
 
         [Test]
