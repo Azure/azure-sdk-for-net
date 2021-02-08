@@ -18,11 +18,11 @@ namespace Compute.Tests
     {
         // these needs to be decided and created, especially subscription.
         // two gallery shared to the tenant, but only one gallery shared to the sub
-        protected const string GalleryUniqueName = "97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYCXYCGPPV";
+        protected const string GalleryUniqueName = "97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV";
         protected const string GalleryImageName = "jmaesscc";
         protected const string GalleryImageVersionName = "1.0.0";
         
-        private string galleryAccessLocation = "eastus2";
+        private string galleryAccessLocation = "eastus2euap";
 
         [Fact]
         public void SharedGallery_GetAndList_Tests()
@@ -41,7 +41,7 @@ namespace Compute.Tests
                 Trace.TraceInformation("Got the shared galleries which are shared to tenant of current subscription.");
 
                 int count = sharedGalleriesList.Count();
-                Assert.Equal(2, count);
+                Assert.Equal(1, count);
 
                 foreach(SharedGallery gallery in sharedGalleriesList)
                 {
@@ -60,6 +60,14 @@ namespace Compute.Tests
 
                 ValidateSharedGallery(sharedGalleriesList.First());
 
+                sharedGalleriesList = m_CrpClient.SharedGalleries.List(galleryAccessLocation, sharedTo: SharedToValues.Tenant);
+
+                count = sharedGalleriesList.Count();
+                Assert.Equal(1, count);
+                Trace.TraceInformation("Got the shared gallery {0} which is shared to current tenant.", GalleryUniqueName);
+
+                ValidateSharedGallery(sharedGalleriesList.First());
+
             }
         }
 
@@ -73,6 +81,7 @@ namespace Compute.Tests
                 SharedGalleryImage sharedGalleryImageOut = m_CrpClient.SharedGalleryImages.Get(galleryAccessLocation, GalleryUniqueName, GalleryImageName);
                 Trace.TraceInformation("Got the shared gallery image {0} which is shared to current subscription.", GalleryImageName);
                 Assert.NotNull(sharedGalleryImageOut);
+                
                 ValidateSharedGalleryImage(sharedGalleryImageOut);
                 
 
@@ -98,6 +107,14 @@ namespace Compute.Tests
                 Trace.TraceInformation("Got the shared gallery {0} which is shared to current subscription.", GalleryUniqueName);
 
                 ValidateSharedGalleryImage(sharedGalleryImagesList.First());
+
+                sharedGalleryImagesList = m_CrpClient.SharedGalleryImages.List(galleryAccessLocation, GalleryUniqueName, sharedTo: SharedToValues.Tenant);
+
+                count = sharedGalleryImagesList.Count();
+                Assert.Equal(1, count);
+                Trace.TraceInformation("Got the shared gallery {0} which is shared to current tenant.", GalleryUniqueName);
+
+                ValidateSharedGalleryImage(sharedGalleryImagesList.First());
             }
         }
 
@@ -117,7 +134,7 @@ namespace Compute.Tests
                 Trace.TraceInformation("Got the shared gallery image versions which are shared to tenant of current subscription.");
 
                 int count = sharedGalleryImageVersionsList.Count();
-                Assert.Equal(2, count);
+                Assert.Equal(1, count);
 
                 foreach (SharedGalleryImageVersion galleryImageVersion in sharedGalleryImageVersionsList)
                 {
@@ -133,6 +150,15 @@ namespace Compute.Tests
                 count = sharedGalleryImageVersionsList.Count();
                 Assert.Equal(1, count);
                 Trace.TraceInformation("Got the shared gallery {0} which is shared to current subscription.", GalleryUniqueName);
+
+                ValidateSharedGalleryImageVersion(sharedGalleryImageVersionsList.First());
+
+                sharedGalleryImageVersionsList = m_CrpClient.SharedGalleryImageVersions.List(galleryAccessLocation, GalleryUniqueName, GalleryImageName,
+                    sharedTo: SharedToValues.Tenant);
+
+                count = sharedGalleryImageVersionsList.Count();
+                Assert.Equal(1, count);
+                Trace.TraceInformation("Got the shared gallery {0} which is shared to current tenant.", GalleryUniqueName);
 
                 ValidateSharedGalleryImageVersion(sharedGalleryImageVersionsList.First());
             }
