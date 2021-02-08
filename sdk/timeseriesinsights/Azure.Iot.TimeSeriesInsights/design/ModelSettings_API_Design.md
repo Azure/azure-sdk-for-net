@@ -79,9 +79,9 @@ Updates time series model settings - either the model name or default type ID.
  /// <summary>
 /// Updates model settings, either the model name or default type ID asynchronously.
 /// </summary>
-/// <param name="modelSettings">Model settings update request body.</param>
+/// <param name="options">Model settings update request body.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>The updated Model Settings with the http response <see cref="Response{T}"/>.</returns>
 /// <exception cref="ArgumentNullException"> <paramref name="modelSettings"/> is null. </exception>
-public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsAsync(UpdateModelSettings modelSettings, CancellationToken cancellationToken = default)
+public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsAsync(UpdateModelSettingsOptions options, CancellationToken cancellationToken = default)
 ```
