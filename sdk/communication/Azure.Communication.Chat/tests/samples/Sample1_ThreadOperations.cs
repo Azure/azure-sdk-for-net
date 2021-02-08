@@ -17,11 +17,11 @@ namespace Azure.Communication.Chat.Tests.samples
         public async Task CreateGetUpdateDeleteThreadAsync()
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
-            Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync();
-            AccessToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadMember.Value, new[] { CommunicationTokenScope.Chat });
+            Response<CommunicationUserIdentifier> threadCreatorIdentifier = await communicationIdentityClient.CreateUserAsync();
+            CommunicationUserIdentifier kimberly = await communicationIdentityClient.CreateUserAsync();
+            AccessToken communicationUserToken = await communicationIdentityClient.IssueTokenAsync(threadCreatorIdentifier.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
             string endpoint = TestEnvironment.ChatApiUrl();
-            string threadCreatorId = threadMember.Value.Id;
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
             ChatClient chatClient = new ChatClient(
@@ -29,11 +29,10 @@ namespace Azure.Communication.Chat.Tests.samples
                 new CommunicationTokenCredential(userToken));
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 
-            var threadCreator = new CommunicationUserIdentifier(threadCreatorId);
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-            var chatParticipant = new ChatParticipant(threadCreator)
+            var chatParticipant = new ChatParticipant(communicationIdentifier: kimberly)
             {
-                DisplayName = "UserDisplayName"
+                DisplayName = "Kim"
             };
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
             string threadId = createChatThreadResult.ChatThread.Id;
@@ -53,8 +52,7 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
-            var topic = "new topic";
-            await chatThreadClient.UpdateTopicAsync(topic);
+            await chatThreadClient.UpdateTopicAsync(topic: "new topic !");
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread
