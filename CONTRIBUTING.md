@@ -317,7 +317,7 @@ As you can see in the example below, we want to use the `Azure.Data.Tables` vers
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Azure.Data.Tables" Version="3.0.0-alpha.*"/>
+    <PackageReference Include="Azure.Data.Tables" Version="3.0.0-alpha.*" />
   </ItemGroup>
 </Project>
 ```
