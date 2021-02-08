@@ -20,12 +20,16 @@ namespace Azure.Containers.ContainerRegistry
         private readonly HttpPipeline _pipeline;
         internal ContainerRegistryRepositoryRestClient RestClient { get; }
 
+        // Name of the image (including the namespace).
+        private string _repositoryName;
+
         public ContainerRegistryRepositoryClient(Uri endpoint, string repositoryName, TokenCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
         {
         }
 
         public ContainerRegistryRepositoryClient(Uri endpoint, string repositoryName, TokenCredential credential, ContainerRegistryClientOptions options)
         {
+            _repositoryName = repositoryName;
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryRepositoryClient for mocking. </summary>
@@ -321,11 +325,16 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        // TODO: concern here with this name -- GetManifests doesn't return the same thing as GetManifest.  Will this lead to 
+        // caller confusion?
         /// <summary> List manifests of a repository. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ManifestAttributes> ListManifestsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManifestAttributes> GetManifestsAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
+
+            // call await RestClient.GetManifestsAsync(**_repositoryName**, last, n, orderby, cancellationToken).ConfigureAwait(false);            
+
             //using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifests");
             //scope.Start();
             //try
@@ -341,9 +350,12 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> List manifests of a repository. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ManifestAttributes> ListManifests(CancellationToken cancellationToken = default)
+        public virtual Pageable<ManifestAttributes> GetManifests(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
+
+            // call RestClient.GetManifests(**_repositoryName**, last, n, orderby, cancellationToken).ConfigureAwait(false);            
+
             //using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifests");
             //scope.Start();
             //try
@@ -358,16 +370,14 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Get manifest attributes. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManifestAttributes>> GetManifestAttributesAsync(string name, string reference, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManifestAttributes>> GetManifestAttributesAsync(string tagOrDigest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifestAttributes");
             scope.Start();
             try
             {
-                return await RestClient.GetManifestAttributesAsync(name, reference, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetManifestAttributesAsync(_repositoryName, tagOrDigest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -377,16 +387,14 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Get manifest attributes. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManifestAttributes> GetManifestAttributes(string name, string reference, CancellationToken cancellationToken = default)
+        public virtual Response<ManifestAttributes> GetManifestAttributes(string tagOrDigest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifestAttributes");
             scope.Start();
             try
             {
-                return RestClient.GetManifestAttributes(name, reference, cancellationToken);
+                return RestClient.GetManifestAttributes(_repositoryName, tagOrDigest, cancellationToken);
             }
             catch (Exception e)
             {
