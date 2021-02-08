@@ -2,6 +2,13 @@
 
 ## 4.2.0-beta.4 (Unreleased)
 
+### Added
+
+- Added constructor to `KeyVaultSecretIdentifier` to parse a `Uri`.
+
+### Removed
+
+- Removed `KeyVaultSecretIdentifier.Parse` and `KeyVaultSecretIdentifier.TryParse` in favor of the added constructor.
 
 ## 4.2.0-beta.3 (2020-11-12)
 

@@ -5,6 +5,11 @@
 ### Added
 
 - Added default constructor to `CertificatePolicy` to use when importing a PEM-encoded certificate ([#16217](https://github.com/Azure/azure-sdk-for-net/issues/16217)).
+- Added constructor to `KeyVaultCertificateIdentifier` to parse a `Uri`.
+
+### Removed
+
+- Removed `KeyVaultCertificateIdentifier.Parse` and `KeyVaultCertificateIdentifier.TryParse` in favor of the added constructor.
 
 ## 4.2.0-beta.3 (2020-11-12)
 
