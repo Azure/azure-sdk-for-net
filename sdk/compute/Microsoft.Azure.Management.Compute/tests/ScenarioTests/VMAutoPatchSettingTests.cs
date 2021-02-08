@@ -53,7 +53,7 @@ namespace Compute.Tests
 
             // The following variables are defined here to allow validation
             string autoLogonContent = null;
-            var patchSetting = new PatchSettings
+            var windowsPatchSetting = new PatchSettings
             {
                 PatchMode = patchSettingMode
             };
@@ -61,11 +61,11 @@ namespace Compute.Tests
             Action<VirtualMachine> configureWindowsConfigurationPatchSetting = inputVM =>
             {
                 autoLogonContent = GetAutoLogonContent(5, inputVM.OsProfile.AdminUsername, inputVM.OsProfile.AdminPassword);
-                SetWindowsConfigurationPatchSettings(patchSetting, enableAutomaticUpdates, autoLogonContent, inputVM);
+                SetWindowsConfigurationPatchSettings(windowsPatchSetting, enableAutomaticUpdates, autoLogonContent, inputVM);
             };
 
             Action<VirtualMachine> validateWindowsConfigurationPatchSetting =
-                outputVM => ValidateWinPatchSetting(patchSetting.PatchMode, enableAutomaticUpdates, autoLogonContent, outputVM);
+                outputVM => ValidateWinPatchSetting(windowsPatchSetting .PatchMode, enableAutomaticUpdates, autoLogonContent, outputVM);
 
             TestVMWithOSProfile(
                 rgName: rgName,
@@ -148,7 +148,7 @@ namespace Compute.Tests
             {
                 ProvisionVMAgent = true,
                 EnableAutomaticUpdates = enableAutomaticUpdates,
-                PatchSettings = patchSetting,
+                PatchSettings = windowsPatchSetting,
                 AdditionalUnattendContent = new List<AdditionalUnattendContent>
                     {
                         new AdditionalUnattendContent
