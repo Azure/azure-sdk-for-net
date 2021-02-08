@@ -7,6 +7,11 @@
 - Added `CreateEcKeyOptions` class.
 - Added `CreateEcKey` and `CreateEcKeyAsync` methods to the `KeyClient` class.
 
+### Changed
+
+- Renamed `EncryptOptions` to `EncryptParameters`.
+- Renamed `DecryptOptions` to `DecryptParameters`.
+
 ### Removed
 
 - Removed local cryptographic support for AES-GCM.

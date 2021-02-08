@@ -9,136 +9,136 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Options for encrypting plaintext.
+    /// Parameters for encrypting plaintext.
     /// </summary>
-    public class EncryptOptions : IJsonSerializable
+    public class EncryptParameters : IJsonSerializable
     {
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.Rsa15"/> encryption algorithm.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.Rsa15"/> encryption algorithm.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.Rsa15"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.Rsa15"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions Rsa15Options(byte[] plaintext) =>
-            new EncryptOptions(EncryptionAlgorithm.Rsa15, plaintext, null, null);
+        public static EncryptParameters Rsa15Parameters(byte[] plaintext) =>
+            new EncryptParameters(EncryptionAlgorithm.Rsa15, plaintext, null, null);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.RsaOaep"/> encryption algorithm.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.RsaOaep"/> encryption algorithm.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.RsaOaep"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.RsaOaep"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions RsaOaepOptions(byte[] plaintext) =>
-            new EncryptOptions(EncryptionAlgorithm.RsaOaep, plaintext, null, null);
+        public static EncryptParameters RsaOaepParameters(byte[] plaintext) =>
+            new EncryptParameters(EncryptionAlgorithm.RsaOaep, plaintext, null, null);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.RsaOaep256"/> encryption algorithm.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.RsaOaep256"/> encryption algorithm.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.RsaOaep256"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.RsaOaep256"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions RsaOaep256Options(byte[] plaintext) =>
-            new EncryptOptions(EncryptionAlgorithm.RsaOaep256, plaintext, null, null);
+        public static EncryptParameters RsaOaep256Parameters(byte[] plaintext) =>
+            new EncryptParameters(EncryptionAlgorithm.RsaOaep256, plaintext, null, null);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A128Gcm"/> encryption algorithm.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128Gcm"/> encryption algorithm.
         /// The nonce will be generated automatically and returned in the <see cref="EncryptResult"/> after encryption.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="additionalAuthenticationData">Optional data that is authenticated but not encrypted.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A128Gcm"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128Gcm"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions A128GcmOptions(byte[] plaintext, byte[] additionalAuthenticationData = null) =>
-            new EncryptOptions(EncryptionAlgorithm.A128Gcm, plaintext, null, additionalAuthenticationData);
+        public static EncryptParameters A128GcmParameters(byte[] plaintext, byte[] additionalAuthenticationData = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A128Gcm, plaintext, null, additionalAuthenticationData);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A192Gcm"/> encryption algorithm.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192Gcm"/> encryption algorithm.
         /// The nonce will be generated automatically and returned in the <see cref="EncryptResult"/> after encryption.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="additionalAuthenticationData">Optional data that is authenticated but not encrypted.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A192Gcm"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192Gcm"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions A192GcmOptions(byte[] plaintext, byte[] additionalAuthenticationData = null) =>
-            new EncryptOptions(EncryptionAlgorithm.A192Gcm, plaintext, null, additionalAuthenticationData);
+        public static EncryptParameters A192GcmParameters(byte[] plaintext, byte[] additionalAuthenticationData = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A192Gcm, plaintext, null, additionalAuthenticationData);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A256Gcm"/> encryption algorithm.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256Gcm"/> encryption algorithm.
         /// The nonce will be generated automatically and returned in the <see cref="EncryptResult"/> after encryption.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="additionalAuthenticationData">Optional data that is authenticated but not encrypted.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A256Gcm"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256Gcm"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions A256GcmOptions(byte[] plaintext, byte[] additionalAuthenticationData = null) =>
-            new EncryptOptions(EncryptionAlgorithm.A256Gcm, plaintext, null, additionalAuthenticationData);
+        public static EncryptParameters A256GcmParameters(byte[] plaintext, byte[] additionalAuthenticationData = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A256Gcm, plaintext, null, additionalAuthenticationData);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A128Cbc"/> encryption algorithm.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128Cbc"/> encryption algorithm.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A128Cbc"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128Cbc"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions A128CbcOptions(byte[] plaintext, byte[] iv = null) =>
-            new EncryptOptions(EncryptionAlgorithm.A128Cbc, plaintext, iv, null);
+        public static EncryptParameters A128CbcParameters(byte[] plaintext, byte[] iv = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A128Cbc, plaintext, iv, null);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A192Cbc"/> encryption algorithm.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192Cbc"/> encryption algorithm.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A192Cbc"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192Cbc"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions A192CbcOptions(byte[] plaintext, byte[] iv = null) =>
-            new EncryptOptions(EncryptionAlgorithm.A192Cbc, plaintext, iv, null);
+        public static EncryptParameters A192CbcParameters(byte[] plaintext, byte[] iv = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A192Cbc, plaintext, iv, null);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A256Cbc"/> encryption algorithm.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256Cbc"/> encryption algorithm.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A256Cbc"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256Cbc"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions A256CbcOptions(byte[] plaintext, byte[] iv = null) =>
-            new EncryptOptions(EncryptionAlgorithm.A256Cbc, plaintext, iv, null);
+        public static EncryptParameters A256CbcParameters(byte[] plaintext, byte[] iv = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A256Cbc, plaintext, iv, null);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A128CbcPad"/> encryption algorithm with PKCS#7 padding.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128CbcPad"/> encryption algorithm with PKCS#7 padding.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A128CbcPad"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128CbcPad"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions A128CbcPadOptions(byte[] plaintext, byte[] iv = null) =>
-            new EncryptOptions(EncryptionAlgorithm.A128CbcPad, plaintext, iv, null);
+        public static EncryptParameters A128CbcPadParameters(byte[] plaintext, byte[] iv = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A128CbcPad, plaintext, iv, null);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A192CbcPad"/> encryption algorithm with PKCS#7 padding.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192CbcPad"/> encryption algorithm with PKCS#7 padding.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A192CbcPad"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192CbcPad"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions A192CbcPadOptions(byte[] plaintext, byte[] iv = null) =>
-            new EncryptOptions(EncryptionAlgorithm.A192CbcPad, plaintext, iv, null);
+        public static EncryptParameters A192CbcPadParameters(byte[] plaintext, byte[] iv = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A192CbcPad, plaintext, iv, null);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A256CbcPad"/> encryption algorithm with PKCS#7 padding.
+        /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256CbcPad"/> encryption algorithm with PKCS#7 padding.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
-        /// <returns>An instance of the <see cref="EncryptOptions"/> class for the <see cref="EncryptionAlgorithm.A256CbcPad"/> encryption algorithm.</returns>
+        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256CbcPad"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptOptions A256CbcPadOptions(byte[] plaintext, byte[] iv = null) =>
-            new EncryptOptions(EncryptionAlgorithm.A256CbcPad, plaintext, iv, null);
+        public static EncryptParameters A256CbcPadParameters(byte[] plaintext, byte[] iv = null) =>
+            new EncryptParameters(EncryptionAlgorithm.A256CbcPad, plaintext, iv, null);
 
-        internal EncryptOptions(EncryptionAlgorithm algorithm, byte[] plaintext) :
+        internal EncryptParameters(EncryptionAlgorithm algorithm, byte[] plaintext) :
             this(algorithm, plaintext, null, null)
         {
         }
 
-        internal EncryptOptions(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] additionalAuthenticatedData)
+        internal EncryptParameters(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] additionalAuthenticatedData)
         {
             Argument.AssertNotNull(plaintext, nameof(plaintext));
 
