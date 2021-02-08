@@ -1,7 +1,7 @@
 # Release History
 ## 4.0.0-beta.5 (2021-02-09)
 
-### Added
+### New Features
 - Added `TryGetSystemEventData` that attempts to deserialize event data into a known system event.
 - Added `EventGridSasBuilder` for constructing SAS tokens.
 - Added `SystemEventNames` that contain the names that will be stamped into the event Type for system events.
