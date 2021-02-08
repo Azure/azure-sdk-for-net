@@ -36,7 +36,7 @@ namespace Azure.Storage.Queues
         /// <param name="queueClient">The <see cref="QueueClient"/> that has received invalid message.</param>
         /// <param name="receivedMessage">The received <see cref="QueueMessage"/> message.</param>
         /// <param name="peekedMessage">The peeked <see cref="PeekedMessage"/> message.</param>
-        /// <param name="runSynchronously">
+        /// <param name="isRunningSynchronously">
         /// A value indicating whether the event handler was invoked
         /// synchronously or asynchronously.  Please see
         /// <see cref="Azure.Core.SyncAsyncEventHandler{T}"/> for more details.
@@ -55,9 +55,9 @@ namespace Azure.Storage.Queues
             QueueClient queueClient,
             QueueMessage receivedMessage,
             PeekedMessage peekedMessage,
-            bool runSynchronously,
+            bool isRunningSynchronously,
             CancellationToken cancellationToken)
-            : base(runSynchronously, cancellationToken)
+            : base(isRunningSynchronously, cancellationToken)
         {
             Argument.AssertNotNull(queueClient, nameof(queueClient));
             Queue = queueClient;

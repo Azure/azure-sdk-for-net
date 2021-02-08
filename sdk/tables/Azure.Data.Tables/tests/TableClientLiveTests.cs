@@ -1055,14 +1055,14 @@ namespace Azure.Data.Tables.Tests
             await client.AddEntityAsync(entitiesToCreate[2]).ConfigureAwait(false);
 
             // Create the batch.
-            TableTransactionalBatch batch = InstrumentClient(client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey));
+            TableTransactionalBatch batch = InstrumentClient(client.CreateTransactionalBatch(PartitionKeyValue));
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
             // Add a Merge operation to the entity we are adding.
-            var updatedEntity = entitiesToCreate[0];
-            updatedEntity.StringTypeProperty = updatedString;
-            batch.UpdateEntity(updatedEntity, ETag.All, TableUpdateMode.Merge);
+            var mergeEntity = new TableEntity(PartitionKeyValue, entitiesToCreate[0].RowKey);
+            mergeEntity.Add("MergedProperty", "foo");
+            batch.UpdateEntity(mergeEntity, ETag.All, TableUpdateMode.Merge);
 
             // Add a Delete operation.
             var entityToDelete = entitiesToCreate[1];
@@ -1096,11 +1096,12 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities.
 
-            var entityResults = await client.QueryAsync<TestEntity>().ToEnumerableAsync().ConfigureAwait(false);
+            var entityResults = await client.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count - 1), "The entity result count should match the created count minus the deleted count.");
-            Assert.That(entityResults.Single(e => e.RowKey == entitiesToCreate[0].RowKey).StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
-            Assert.That(entityResults.Single(e => e.RowKey == entitiesToCreate[2].RowKey).StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
+            Assert.That(entityResults.Single(e => e.RowKey == entitiesToCreate[0].RowKey).ContainsKey("StringTypeProperty"), "The merged entity result should still contain StringTypeProperty.");
+            Assert.That(entityResults.Single(e => e.RowKey == entitiesToCreate[0].RowKey)["MergedProperty"], Is.EqualTo("foo"), "The merged entity should have merged the value of MergedProperty.");
+            Assert.That(entityResults.Single(e => e.RowKey == entitiesToCreate[2].RowKey)["StringTypeProperty"], Is.EqualTo(updatedString), "The entity result property should have been updated.");
         }
 
         /// <summary>

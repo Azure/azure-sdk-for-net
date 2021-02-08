@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -32,9 +33,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -42,6 +44,11 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

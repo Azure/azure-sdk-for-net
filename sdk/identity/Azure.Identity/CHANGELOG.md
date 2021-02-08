@@ -6,6 +6,10 @@
 
 - The `IDisposable` interface has been removed from `TokenCache`.
 
+### New Features
+
+- All credentials added support to handle the `Claims` property on `TokenRequestContext`
+
 ## 1.4.0-beta.2 (2021-01-29)
 
 ### Fixes and improvements

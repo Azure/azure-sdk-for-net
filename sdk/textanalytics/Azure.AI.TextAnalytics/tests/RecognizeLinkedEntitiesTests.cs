@@ -229,6 +229,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.IsTrue(minimumExpectedOutput.Contains(match.Text, StringComparer.OrdinalIgnoreCase));
                     Assert.GreaterOrEqual(match.ConfidenceScore, 0.0);
                     Assert.GreaterOrEqual(match.Offset, 0);
+                    Assert.Greater(match.Length, 0);
                 }
             }
         }

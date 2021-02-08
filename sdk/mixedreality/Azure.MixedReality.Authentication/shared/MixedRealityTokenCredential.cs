@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
+#nullable enable
+
 namespace Azure.MixedReality.Authentication
 {
     /// <summary>

@@ -22,6 +22,7 @@ token from the STS that can be used to access Mixed Reality services.
     - [MixedRealityStsClient](#mixedrealitystsclient)
   - [Examples](#examples)
     - [Retrieve an access token](#retrieve-an-access-token)
+      - [Using the access token in a Mixed Reality client library](#using-the-access-token-in-a-mixed-reality-client-library)
   - [Troubleshooting](#troubleshooting)
   - [Next steps](#next-steps)
     - [Client libraries supporting authentication with Mixed Reality Authentication](#client-libraries-supporting-authentication-with-mixed-reality-authentication)
@@ -172,6 +173,24 @@ AccessToken token = await client.GetTokenAsync(accountId);
 ```
 
 See the authentication examples [above](#authenticate-the-client) for more complex authentication scenarios.
+
+#### Using the access token in a Mixed Reality client library
+
+Some Mixed Reality client libraries might accept an access token in place of a credential. For example:
+
+```csharp
+// GetMixedRealityAccessTokenFromWebService is a hypothetical method that retrieves
+// a Mixed Reality access token from a web service. The web service would use the
+// MixedRealityStsClient and credentials to obtain an access token to be returned
+// to the client.
+AccessToken accessToken = await GetMixedRealityAccessTokenFromWebService();
+
+SpatialAnchorsAccount account = new SpatialAnchorsAccount(accountId, accountDomain);
+SpatialAnchorsClient client = new SpatialAnchorsClient(account, accessToken);
+```
+
+Note: The `SpatialAnchorsClient` usage above is hypothetical and may not reflect the actual library. Consult the
+documentation for the client library you're using to determine if and how this might be supported.
 
 ## Troubleshooting
 
