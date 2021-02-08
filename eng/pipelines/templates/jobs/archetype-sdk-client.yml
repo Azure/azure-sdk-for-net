@@ -194,7 +194,6 @@ jobs:
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
-          AgentPool: $(Pool)
           AgentImage: $(OSVmImage)
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
