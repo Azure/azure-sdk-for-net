@@ -257,36 +257,22 @@ The Azure SDK for .NET releases packages daily from our CI pipeline to our NuGet
 
 **Dev Feed Package Browser**:
 
-1. https://aka.ms/azsdk/net/feed
-1. https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+- https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
 
 **Dev Feed Package Source**:
 
-1. https://aka.ms/azsdk/net/feed/index.json
-1. https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
+- https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
 
 ### 1. Add NuGet Package Dev Feed
 
-You have multiple options for referencing the dev feed. You can either add it directly to your project or to your NuGet.Config file.
-
-#### Project File
-
-You can add the dev feed directly in your `.csproj` file.
-
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <RestoreSources>https://aka.ms/azsdk/net/feed/index.json;https://api.nuget.org/v3/index.json</RestoreSources>
-  </PropertyGroup>
-</Project>
-```
+You have multiple options for referencing the dev feed. You can either add it via the NuGet CLI or manually edit your NuGet.Config file.
 
 #### NuGet CLI
 
 You can add the dev feed using the [NuGet CLI](https://docs.microsoft.com/nuget/reference/nuget-exe-cli-reference), which will add it to the NuGet.Config file.
 
 ```bash
-nuget sources add -Name "Azure SDK for .NET Dev Feed" -Source "https://aka.ms/azsdk/net/feed/index.json"
+nuget sources add -Name "Azure SDK for .NET Dev Feed" -Source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
 ```
 
 You can then view the list of NuGet package sources with this command:
@@ -304,14 +290,15 @@ You can add the dev feed to your NuGet.Config file, which can be at the Solution
 <configuration>
   <packageSources>
     <clear />
-    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
-    <add key="Azure SDK for .NET Dev Feed" value="https://aka.ms/azsdk/net/feed/index.json" />
+    <add key="Azure SDK for .NET Dev Feed" value="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" />
   </packageSources>
   <disabledPackageSources>
     <clear />
   </disabledPackageSources>
 </configuration>
 ```
+
+> You can place a NuGet.Config file in the root of your solution. Projects within the solution will use the feed defined in that file.
 
 ### 2. Find NuGet Package
 
@@ -333,7 +320,7 @@ As you can see in the example below, we want to use the `Azure.Data.Tables` vers
     <PackageReference Include="Azure.Data.Tables" Version="3.0.0-alpha.*"/>
   </ItemGroup>
   <PropertyGroup>
-    <RestoreSources>https://aka.ms/azsdk/net/feed/index.json;https://api.nuget.org/v3/index.json</RestoreSources>
+    <RestoreSources>https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json;https://api.nuget.org/v3/index.json</RestoreSources>
   </PropertyGroup>
 </Project>
 ```
