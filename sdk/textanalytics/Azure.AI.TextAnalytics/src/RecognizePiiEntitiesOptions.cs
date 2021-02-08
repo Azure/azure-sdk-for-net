@@ -6,7 +6,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Options that allow callers to specify details about how the operation
     /// is run. For example set model version, whether to include statistics,
-    /// and filter the response entities by a given domain type.
+    /// and filter the response entities by a given domain filter.
     /// </summary>
     public class RecognizePiiEntitiesOptions : TextAnalyticsRequestOptions
     {
@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics
         /// Initializes a new instance of the <see cref="RecognizePiiEntitiesOptions"/>
         /// class which allows callers to specify details about how the operation
         /// is run. For example set model version, whether to include statistics,
-        /// and filter the response entities by a given domain type.
+        /// and filter the response entities by a given domain filter.
         /// </summary>
         public RecognizePiiEntitiesOptions()
         {

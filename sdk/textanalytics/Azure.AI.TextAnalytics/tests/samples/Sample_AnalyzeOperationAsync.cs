@@ -41,25 +41,25 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-                EntitiesTaskParameters = new EntitiesTaskParameters(),
-                PiiTaskParameters = new PiiTaskParameters(),
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
+                RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
             await operation.WaitForCompletionAsync();
 
-            await foreach (AnalyzeOperationResult documentsInPage in operation.Value)
+            await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
             {
-                RecognizeEntitiesResultCollection entitiesResult = documentsInPage.Tasks.EntityRecognitionTasks[0].Results;
+                RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.FirstOrDefault().Result;
 
-                ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.Tasks.KeyPhraseExtractionTasks[0].Results;
+                ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
 
-                RecognizePiiEntitiesResultCollection piiResult = documentsInPage.Tasks.EntityRecognitionPiiTasks[0].Results;
+                RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.FirstOrDefault().Result;
 
                 Console.WriteLine("Recognized Entities");
 

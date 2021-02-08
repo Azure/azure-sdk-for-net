@@ -12,14 +12,59 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The AnalyzeOperation class for LRO. </summary>
-    public class AnalyzeOperation : PageableOperation<AnalyzeOperationResult>
+    /// <summary> Pageable operation class for analyzing multiple actions using long running operation. </summary>
+    public class AnalyzeBatchActionsOperation : PageableOperation<AnalyzeBatchActionsResult>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly TextAnalyticsRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
+
+        /// <summary>
+        /// Total actions failed in the operation
+        /// </summary>
+        public int ActionsFailed => _actionsFailed;
+
+        /// <summary>
+        /// Total actions in progress in the operation
+        /// </summary>
+        public int ActionsInProgress => _actionsInProgress;
+
+        /// <summary>
+        /// Total actions succeeded in the operation
+        /// </summary>
+        public int ActionsSucceeded => _actionSucceeded;
+
+        /// <summary>
+        /// Time when the operation was created on.
+        /// </summary>
+        public DateTimeOffset CreatedOn => _createdOn;
+
+        /// <summary>
+        /// Display Name of the operation
+        /// </summary>
+        public string DisplayName => _displayName;
+
+        /// <summary>
+        /// Time when the operation will expire.
+        /// </summary>
+        public DateTimeOffset? ExpiresOn => _expiresOn;
+
+        /// <summary>
+        /// Time when the operation was last modified on.
+        /// </summary>
+        public DateTimeOffset LastModified => _lastModified;
+
+        /// <summary>
+        /// The current status of the operation.
+        /// </summary>
+        public TextAnalyticsOperationStatus Status => _status;
+
+        /// <summary>
+        /// Total actions executed in the operation
+        /// </summary>
+        public int TotalActions => _totalActions;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
@@ -38,12 +83,22 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public override AsyncPageable<AnalyzeOperationResult> Value => GetValuesAsync();
+        public override AsyncPageable<AnalyzeBatchActionsResult> Value => GetValuesAsync();
 
         /// <summary>
         /// <c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.
         /// </summary>
         private bool _hasCompleted;
+
+        private int _totalActions;
+        private int _actionsFailed;
+        private int _actionSucceeded;
+        private int _actionsInProgress;
+        private DateTimeOffset _createdOn;
+        private DateTimeOffset? _expiresOn;
+        private DateTimeOffset _lastModified;
+        private TextAnalyticsOperationStatus _status;
+        private string _displayName;
 
         /// <summary>
         /// Returns true if the long-running operation completed.
@@ -63,7 +118,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Provides the results for the first page.
         /// </summary>
-        private Page<AnalyzeOperationResult> _firstPage;
+        private Page<AnalyzeBatchActionsResult> _firstPage;
 
         /// <summary>
         /// Represents the desire of the user to request statistics.
@@ -82,11 +137,11 @@ namespace Azure.AI.TextAnalytics
         public override bool HasValue => _firstPage != null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeOperation"/> class.
+        /// Initializes a new instance of the <see cref="AnalyzeBatchActionsOperation"/> class.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public AnalyzeOperation(string operationId, TextAnalyticsClient client)
+        public AnalyzeBatchActionsOperation(string operationId, TextAnalyticsClient client)
         {
             // TODO: Add argument validation here.
 
@@ -96,7 +151,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeOperation"/> class.
+        /// Initializes a new instance of the <see cref="AnalyzeBatchActionsOperation"/> class.
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
@@ -104,7 +159,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="idToIndexMap"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string apiversion, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
+        internal AnalyzeBatchActionsOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string apiversion, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -122,7 +177,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <remarks>
         /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="AnalyzeOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// An instance of <see cref="AnalyzeBatchActionsOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
         public override Response GetRawResponse() => _response;
@@ -157,7 +212,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<AsyncPageable<AnalyzeOperationResult>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<AsyncPageable<AnalyzeBatchActionsResult>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <summary>
@@ -173,7 +228,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<AsyncPageable<AnalyzeOperationResult>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<AsyncPageable<AnalyzeBatchActionsResult>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -186,7 +241,7 @@ namespace Azure.AI.TextAnalytics
         {
             if (!_hasCompleted)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeOperation)}.{nameof(UpdateStatus)}");
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeBatchActionsOperation)}.{nameof(UpdateStatus)}");
                 scope.Start();
 
                 try
@@ -197,12 +252,22 @@ namespace Azure.AI.TextAnalytics
 
                     _response = update.GetRawResponse();
 
-                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded)
+                    _displayName = update.Value.DisplayName;
+                    _createdOn = update.Value.CreatedDateTime;
+                    _expiresOn = update.Value.ExpirationDateTime;
+                    _lastModified = update.Value.LastUpdateDateTime;
+                    _status = update.Value.Status;
+                    _actionsFailed = update.Value.Tasks.Failed;
+                    _actionsInProgress = update.Value.Tasks.InProgress;
+                    _actionSucceeded = update.Value.Tasks.Completed;
+                    _totalActions = update.Value.Tasks.Total;
+
+                    if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded || update.Value.Status == TextAnalyticsOperationStatus.PartiallySucceeded)
                     {
                         // we need to first assign a value and then mark the operation as completed to avoid race conditions
                         var nextLink = update.Value.NextLink;
                         var value = Transforms.ConvertToAnalyzeOperationResult(update.Value, _idToIndexMap);
-                        _firstPage = Page.FromValues(new List<AnalyzeOperationResult>() { value }, nextLink, _response);
+                        _firstPage = Page.FromValues(new List<AnalyzeBatchActionsResult>() { value }, nextLink, _response);
                         _hasCompleted = true;
                     }
                     else if (update.Value.Status == TextAnalyticsOperationStatus.Failed)
@@ -228,19 +293,19 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override AsyncPageable<AnalyzeOperationResult> GetValuesAsync()
+        public override AsyncPageable<AnalyzeBatchActionsResult> GetValuesAsync()
         {
             ValidateOperationStatus();
 
-            async Task<Page<AnalyzeOperationResult>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AnalyzeBatchActionsResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 //diagnostics scope?
                 try
                 {
                     Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(_apiVersion, nextLink, _showStats).ConfigureAwait(false);
 
-                    AnalyzeOperationResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
-                    return Page.FromValues(new List<AnalyzeOperationResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
+                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
+                    return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception)
                 {
@@ -257,19 +322,19 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override Pageable<AnalyzeOperationResult> GetValues()
+        public override Pageable<AnalyzeBatchActionsResult> GetValues()
         {
             ValidateOperationStatus();
 
-            Page<AnalyzeOperationResult> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AnalyzeBatchActionsResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 //diagnostics scope?
                 try
                 {
                     Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(_apiVersion, nextLink, _showStats);
 
-                    AnalyzeOperationResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
-                    return Page.FromValues(new List<AnalyzeOperationResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
+                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
+                    return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception)
                 {
