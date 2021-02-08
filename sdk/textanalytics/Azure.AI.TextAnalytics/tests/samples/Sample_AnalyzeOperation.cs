@@ -50,7 +50,18 @@ namespace Azure.AI.TextAnalytics.Samples
 
             AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
 
-            operation.WaitForCompletionAsync();
+            TimeSpan pollingInterval = new TimeSpan(1000);
+
+            while (true)
+            {
+                operation.UpdateStatus();
+                if (operation.HasCompleted)
+                {
+                    break;
+                }
+
+                Task.Delay(pollingInterval);
+            }
 
             foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
             {
