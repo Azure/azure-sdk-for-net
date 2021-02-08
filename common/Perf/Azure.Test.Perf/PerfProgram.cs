@@ -74,7 +74,8 @@ namespace Azure.Test.Perf
                 .OrderBy(a => a.Name);
             foreach (var a in azureAssemblies)
             {
-                Console.WriteLine($"{a.Name}: {a.Version}");
+                var informationalVersion = FileVersionInfo.GetVersionInfo(Assembly.Load(a).Location).ProductVersion;
+                Console.WriteLine($"{a.Name}: {a.Version} ({informationalVersion})");
             }
             Console.WriteLine();
 

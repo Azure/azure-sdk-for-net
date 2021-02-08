@@ -164,7 +164,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender1
                     await using SearchIndexingBufferedSender<Product> indexer =
-                        searchClient.CreateIndexingBufferedSender<Product>();
+                        new SearchIndexingBufferedSender<Product>(searchClient);
                     await indexer.UploadDocumentsAsync(GenerateCatalog(count: 100000));
                     #endregion
                 }
