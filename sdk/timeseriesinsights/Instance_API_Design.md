@@ -6,40 +6,60 @@ Time Series Model instances are virtual representations of the time series thems
 ### GET /timeseries/instances
 
 ```csharp
-public virtual Pageable<TimeSeriesInstance> GetInstances(string clientSessionId = null, CancellationToken cancellationToken = default);
+public virtual Pageable<TimeSeriesInstance> GetInstances(CancellationToken cancellationToken = default);
 ```
 
 ### POST /timeseries/instances/suggest
 
 ```csharp
-public virtual Response<InstancesSearchStringSuggestion[]> GetSearchSuggestions(InstancesSuggestRequest suggestRequest, string clientSessionId = null, CancellationToken cancellationToken = default);
+public virtual Response<InstancesSearchStringSuggestion[]> GetSearchSuggestions(InstancesSuggestRequest instancesSuggestRequest, CancellationToken cancellationToken = default);
 
-// Thoughts on renaming IstancesSearchStringSuggestion to InstanceSuggestion
+// Thoughts on renaming InstancesSuggestRequest to GetSearchSuggestionsOptions
+// Thoughts on renaming InstancesSearchStringSuggestion to InstanceSuggestion
 ```
 
 ### POST /timeseries/instances/$batch
 
 ```csharp
-public virtual Response<InstanceOrError[]> GetInstancesByTimeSeriesIds(TimeSeriesId[] timeSeriesIds, clientSessionId = null, CancellationToken cancellationToken = default);
+public virtual Response<InstanceOrError[]> GetInstances(TimeSeriesId[] timeSeriesIds, CancellationToken cancellationToken = default);
 
-// Thoughts on renaming InstanceOrError to GetInstanceOperationResponse
+// Thoughts on renaming InstanceOrError to GetInstanceOperationResult
+```
 
-public virtual Response<InstanceOrError[]> GetInstancesByNames(string[] timeSeriesNames, clientSessionId = null, CancellationToken cancellationToken = default);
+```csharp
+public virtual Response<InstanceOrError[]> GetInstances(string[] timeSeriesNames, CancellationToken cancellationToken = default);
 
-public virtual Response<InstanceOrError[]> CreateOrReplaceTimeSeriesInstances(TimeSeriesInstance[] timeSeriesInstances, clientSessionId = null, CancellationToken cancellationToken = default);
+// Thoughts on naming the APIs GetInstancesByIds and GetInstancesByNames
+```
 
-public virtual Response<InstanceOrError[]> UpdateTimeSeriesInstances(TimeSeriesInstance[] timeSeriesInstances, clientSessionId = null, CancellationToken cancellationToken = default);
+```csharp
 
-public virtual Response<TsiErrorBody[]> DeleteInstancesByTimeSeriesId(TimeSeriesId[] timeSeriesIds, clientSessionId = null, CancellationToken cancellationToken = default);
+public virtual Response<InstanceOrError[]> CreateOrReplaceInstances(TimeSeriesInstance[] timeSeriesInstances, CancellationToken cancellationToken = default);
+```
+
+```csharp
+public virtual Response<InstanceOrError[]> ReplaceInstances(TimeSeriesInstance[] timeSeriesInstances, CancellationToken cancellationToken = default);
+
+// thoughts on only having CreateOrReplaceInstances? It's safer to have both. 
+```
+
+```csharp
+public virtual Response<TsiErrorBody[]> DeleteInstances(TimeSeriesId[] timeSeriesIds, CancellationToken cancellationToken = default);
 
 // Thoughts on renaming TsiErrorBody to DeleteInstanceOperationResponse
+```
 
-public virtual Response<TsiErrorBody[]> DeleteInstancesByNames(string[] timeSeriesNames, clientSessionId = null, CancellationToken cancellationToken = default);
+```csharp
+public virtual Response<TsiErrorBody[]> DeleteInstances(string[] timeSeriesNames, CancellationToken cancellationToken = default);
 
+// Thoughts on naming the APIs DeleteInstancesByIds and DeleteInstancesByNames
 ```
 
 ### POST /timeseries/instances/search
 
 ```csharp
-public virtual Pageable<TimeSeriesInstance> Search(SearchInstancesRequest parameters, string continuationToken = null, string clientSessionId = null, CancellationToken cancellationToken = default)
+public virtual Response<SearchInstancesResponsePage> Search(SearchInstancesRequest searchInstancesRequest, string continuationToken = null, CancellationToken cancellationToken = default)
+
+// Thoughts on renaming SearchInstancesRequest to SearchInstancesOptions
+// Thoughts on renaming SearchInstancesResponsePage to SearchInstancesResponse
 ```
