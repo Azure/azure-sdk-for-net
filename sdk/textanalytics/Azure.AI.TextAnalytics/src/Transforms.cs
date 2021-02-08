@@ -418,14 +418,14 @@ namespace Azure.AI.TextAnalytics
             return collection;
         }
 
-        private static Regex _targetRegex = new Regex("#/tasks/(\\w+)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
-
         private static string[] parseActionErrorTarget(string targetReference)
         {
             if (string.IsNullOrEmpty(targetReference))
             {
                 throw new InvalidOperationException("Expected an error with a target field referencing an action but did not get one");
             }
+            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+
             // action could be failed and the target reference is "#/tasks/keyPhraseExtractionTasks/0";
             Match targetMatch = _targetRegex.Match(targetReference);
 

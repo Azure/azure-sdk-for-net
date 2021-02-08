@@ -342,15 +342,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ExtractKeyPhrasesActionResult resultWithActionError = resultCollection.ExtractKeyPhrasesActionsResults.ElementAtOrDefault(1);
 
-            ExtractKeyPhrasesActionResult resultWithDocumentError = resultCollection.ExtractKeyPhrasesActionsResults.FirstOrDefault();
-
-            ExtractKeyPhrasesResultCollection extractKeyPhrasesResultCollection = resultCollection.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
+            ExtractKeyPhrasesResultCollection resultWithDocumentError = resultCollection.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
 
             Assert.IsTrue(resultWithActionError.HasError);
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, resultWithActionError.Error.ErrorCode.ToString());
 
-            Assert.IsTrue(extractKeyPhrasesResultCollection.ElementAt(2).HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, extractKeyPhrasesResultCollection.ElementAt(2).Error.ErrorCode.ToString());
+            Assert.IsTrue(resultWithDocumentError.ElementAt(2).HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultWithDocumentError.ElementAt(2).Error.ErrorCode.ToString());
         }
 
         [Test]
