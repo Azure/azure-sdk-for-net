@@ -237,11 +237,28 @@ namespace Compute.Tests
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
             }
         }
+        
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_ForceDelete")]
+        public void TestVMScenarioOperations_ForceDelete()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ForceDelete", hasManagedDisks: true, forceDelete: true);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
 
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A1_v2",
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null,
-            bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true)
+            bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true,
+            bool forceDelete = false)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -348,6 +365,11 @@ namespace Compute.Tests
                         updateParams.Tags.Add(updateKey, "UpdateTagValue");
                         VirtualMachine updateResponse = m_CrpClient.VirtualMachines.Update(rgName, inputVM.Name, updateParams);
                         Assert.True(updateResponse.Tags.ContainsKey(updateKey));
+                    }
+                    
+                    if(forceDelete)
+                    {
+                        m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name, forceDeletion: true);
                     }
                 }
                 finally
