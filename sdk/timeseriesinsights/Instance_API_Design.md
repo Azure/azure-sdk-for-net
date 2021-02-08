@@ -33,7 +33,6 @@ public virtual Response<InstanceOrError[]> GetInstances(string[] timeSeriesNames
 ```
 
 ```csharp
-
 public virtual Response<InstanceOrError[]> CreateOrReplaceInstances(TimeSeriesInstance[] timeSeriesInstances, CancellationToken cancellationToken = default);
 ```
 
