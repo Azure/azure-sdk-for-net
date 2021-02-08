@@ -2,8 +2,6 @@ parameters:
   - name: ScriptDirectory
     type: string
     default: 'eng/common/scripts'
-  - name: AgentPool
-    type: string
   - name: AgentImage
     type: string
 
@@ -15,5 +13,4 @@ steps:
       workingDirectory: $(System.DefaultWorkingDirectory)
       filePath: ${{ parameters.ScriptDirectory }}/Verify-AgentOS.ps1
       arguments: >
-        -AgentPool ${{ parameters.AgentPool }}
         -AgentImage ${{ parameters.AgentImage }}
