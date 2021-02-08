@@ -44,7 +44,7 @@ For example, include details on obtaining an account key and endpoint URI, setti
 
 The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
 
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. Copy the contents as they are:
+Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
