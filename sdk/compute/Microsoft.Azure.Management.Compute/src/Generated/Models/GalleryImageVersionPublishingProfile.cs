@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The publishing profile of a gallery image Version.
+    /// The publishing profile of a gallery Image Version.
     /// </summary>
     public partial class GalleryImageVersionPublishingProfile : GalleryArtifactPublishingProfileBase
     {
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// deployed from the latest version of the Image Definition won't use
         /// this Image Version.</param>
         /// <param name="publishedDate">The timestamp for when the gallery
-        /// image version is published.</param>
+        /// Image Version is published.</param>
         /// <param name="endOfLifeDate">The end of life date of the gallery
-        /// image version. This property can be used for decommissioning
+        /// Image Version. This property can be used for decommissioning
         /// purposes. This property is updatable.</param>
         /// <param name="storageAccountType">Specifies the storage account type
         /// to be used to store the image. This property is not updatable.

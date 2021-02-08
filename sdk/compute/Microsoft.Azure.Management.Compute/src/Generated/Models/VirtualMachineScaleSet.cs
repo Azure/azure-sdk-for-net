@@ -297,10 +297,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 VirtualMachineProfile.Validate();
             }
-            if (ExtendedLocation != null)
-            {
-                ExtendedLocation.Validate();
-            }
         }
     }
 }

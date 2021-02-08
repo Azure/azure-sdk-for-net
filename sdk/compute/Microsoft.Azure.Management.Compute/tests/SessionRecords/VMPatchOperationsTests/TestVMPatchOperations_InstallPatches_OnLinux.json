@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/7602e371-c6bc-4bb3-bc2d-491dfc17fc32/resourceGroups/PatchStatusRg/providers/Microsoft.Compute/virtualMachines/testVmLinux/installPatches?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzYwMmUzNzEtYzZiYy00YmIzLWJjMmQtNDkxZGZjMTdmYzMyL3Jlc291cmNlR3JvdXBzL1BhdGNoU3RhdHVzUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy90ZXN0Vm1MaW51eC9pbnN0YWxsUGF0Y2hlcz9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/resourceGroups/PatchStatusRg/providers/Microsoft.Compute/virtualMachines/testVmLinux/installPatches?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Jlc291cmNlR3JvdXBzL1BhdGNoU3RhdHVzUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy90ZXN0Vm1MaW51eC9pbnN0YWxsUGF0Y2hlcz9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"maximumDuration\": \"PT4H\",\r\n  \"rebootSetting\": \"IfRequired\",\r\n  \"linuxParameters\": {\r\n    \"classificationsToInclude\": [\r\n      \"Critical\",\r\n      \"Security\"\r\n    ],\r\n    \"maintenanceRunId\": \"11/30/2020 6:27:13 AM\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"maximumDuration\": \"PT4H\",\r\n  \"rebootSetting\": \"IfRequired\",\r\n  \"linuxParameters\": {\r\n    \"classificationsToInclude\": [\r\n      \"Critical\",\r\n      \"Security\"\r\n    ],\r\n    \"maintenanceRunId\": \"2/8/2021 8:20:04 AM\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2fe8110b-7dd8-4409-9f1c-7ec2e7072018"
+          "265d419d-c89e-4912-9824-fb7a22281c56"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29518.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "226"
+          "224"
         ]
       },
       "ResponseHeaders": {
@@ -33,19 +33,19 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/7602e371-c6bc-4bb3-bc2d-491dfc17fc32/providers/Microsoft.Compute/locations/southeastasia/operations/7b6d7c4a-4423-4486-8c43-6f5d77557c34?monitor=true&api-version=2020-06-01"
+          "https://management.azure.com/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?monitor=true&api-version=2020-12-01"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/7602e371-c6bc-4bb3-bc2d-491dfc17fc32/providers/Microsoft.Compute/locations/southeastasia/operations/7b6d7c4a-4423-4486-8c43-6f5d77557c34?api-version=2020-06-01"
+          "https://management.azure.com/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?api-version=2020-12-01"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/PatchOperation3Min;189,Microsoft.Compute/PatchOperation30Min;597"
+          "Microsoft.Compute/PatchOperation3Min;188,Microsoft.Compute/PatchOperation30Min;593"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "7b6d7c4a-4423-4486-8c43-6f5d77557c34"
+          "05446525-2b41-4b4a-9a72-539b459f810e"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -55,16 +55,16 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "f26fae31-6084-4a59-aeb4-e12462ff5d86"
+          "48669f25-f491-4bff-aa51-8c02d3b0a151"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20201130T062713Z:f26fae31-6084-4a59-aeb4-e12462ff5d86"
+          "WESTUS:20210208T082004Z:48669f25-f491-4bff-aa51-8c02d3b0a151"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 30 Nov 2020 06:27:13 GMT"
+          "Mon, 08 Feb 2021 08:20:03 GMT"
         ],
         "Expires": [
           "-1"
@@ -77,16 +77,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/7602e371-c6bc-4bb3-bc2d-491dfc17fc32/providers/Microsoft.Compute/locations/southeastasia/operations/7b6d7c4a-4423-4486-8c43-6f5d77557c34?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzYwMmUzNzEtYzZiYy00YmIzLWJjMmQtNDkxZGZjMTdmYzMyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzdiNmQ3YzRhLTQ0MjMtNDQ4Ni04YzQzLTZmNWQ3NzU1N2MzND9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzA1NDQ2NTI1LTJiNDEtNGI0YS05YTcyLTUzOWI0NTlmODEwZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29518.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -97,13 +97,13 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14986,Microsoft.Compute/GetOperation30Min;29971"
+          "Microsoft.Compute/GetOperation3Min;14992,Microsoft.Compute/GetOperation30Min;29935"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "62698b25-b94c-4695-b2ff-f7f31bfe325c"
+          "64878b70-8051-40f6-9ca8-f6648694b520"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -113,16 +113,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "ca3b5555-1c49-4545-a92d-b77181fd5190"
+          "5edf5c6c-a35d-4486-830e-5ae9bccd240a"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20201130T062744Z:ca3b5555-1c49-4545-a92d-b77181fd5190"
+          "WESTUS:20210208T082034Z:5edf5c6c-a35d-4486-830e-5ae9bccd240a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 30 Nov 2020 06:27:43 GMT"
+          "Mon, 08 Feb 2021 08:20:34 GMT"
         ],
         "Content-Length": [
           "134"
@@ -134,20 +134,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2020-11-29T22:27:13.3910775-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"7b6d7c4a-4423-4486-8c43-6f5d77557c34\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-02-08T00:20:04.4301095-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"05446525-2b41-4b4a-9a72-539b459f810e\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7602e371-c6bc-4bb3-bc2d-491dfc17fc32/providers/Microsoft.Compute/locations/southeastasia/operations/7b6d7c4a-4423-4486-8c43-6f5d77557c34?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzYwMmUzNzEtYzZiYy00YmIzLWJjMmQtNDkxZGZjMTdmYzMyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzdiNmQ3YzRhLTQ0MjMtNDQ4Ni04YzQzLTZmNWQ3NzU1N2MzND9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzA1NDQ2NTI1LTJiNDEtNGI0YS05YTcyLTUzOWI0NTlmODEwZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29518.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -158,13 +158,13 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14986,Microsoft.Compute/GetOperation30Min;29968"
+          "Microsoft.Compute/GetOperation3Min;14989,Microsoft.Compute/GetOperation30Min;29932"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c4cff5ed-8a0b-43c6-af42-5aaf2e84e29a"
+          "910708f5-5f0d-4a30-a953-b34d8cf8d6dd"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -174,19 +174,19 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "c86e0768-2521-4b49-9593-3a0d4ee99ff5"
+          "f2e6b74e-6142-453a-9712-989c576dc1f9"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20201130T062814Z:c86e0768-2521-4b49-9593-3a0d4ee99ff5"
+          "WESTUS:20210208T082105Z:f2e6b74e-6142-453a-9712-989c576dc1f9"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 30 Nov 2020 06:28:14 GMT"
+          "Mon, 08 Feb 2021 08:21:04 GMT"
         ],
         "Content-Length": [
-          "3529"
+          "134"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -195,20 +195,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2020-11-29T22:27:13.3910775-08:00\",\r\n  \"endTime\": \"2020-11-29T22:28:02.7039152-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"status\": \"Succeeded\",\r\n      \"installationActivityId\": \"7b6d7c4a-4423-4486-8c43-6f5d77557c34\",\r\n      \"rebootStatus\": \"NotNeeded\",\r\n      \"maintenanceWindowExceeded\": false,\r\n      \"excludedPatchCount\": 0,\r\n      \"notSelectedPatchCount\": 11,\r\n      \"pendingPatchCount\": 0,\r\n      \"installedPatchCount\": 0,\r\n      \"failedPatchCount\": 0,\r\n      \"patches\": [\r\n        {\r\n          \"patchId\": \"ubuntu-core-launcher_2.47.1_Ubuntu_16.04\",\r\n          \"name\": \"ubuntu-core-launcher\",\r\n          \"version\": \"2.47.1\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        },\r\n        {\r\n          \"patchId\": \"snapd_2.47.1_Ubuntu_16.04\",\r\n          \"name\": \"snapd\",\r\n          \"version\": \"2.47.1\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        },\r\n        {\r\n          \"patchId\": \"grub-efi-amd64-signed_1.66.29+2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n          \"name\": \"grub-efi-amd64-signed\",\r\n          \"version\": \"1.66.29+2.02~beta2-36ubuntu3.29\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        },\r\n        {\r\n          \"patchId\": \"grub-efi-amd64_2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n          \"name\": \"grub-efi-amd64\",\r\n          \"version\": \"2.02~beta2-36ubuntu3.29\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        },\r\n        {\r\n          \"patchId\": \"grub-efi-amd64-bin_2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n          \"name\": \"grub-efi-amd64-bin\",\r\n          \"version\": \"2.02~beta2-36ubuntu3.29\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        },\r\n        {\r\n          \"patchId\": \"grub2-common_2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n          \"name\": \"grub2-common\",\r\n          \"version\": \"2.02~beta2-36ubuntu3.29\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        },\r\n        {\r\n          \"patchId\": \"grub-pc-bin_2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n          \"name\": \"grub-pc-bin\",\r\n          \"version\": \"2.02~beta2-36ubuntu3.29\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        },\r\n        {\r\n          \"patchId\": \"grub-common_2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n          \"name\": \"grub-common\",\r\n          \"version\": \"2.02~beta2-36ubuntu3.29\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        },\r\n        {\r\n          \"patchId\": \"ubuntu-release-upgrader-core_1:16.04.32_Ubuntu_16.04\",\r\n          \"name\": \"ubuntu-release-upgrader-core\",\r\n          \"version\": \"1:16.04.32\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        },\r\n        {\r\n          \"patchId\": \"python3-distupgrade_1:16.04.32_Ubuntu_16.04\",\r\n          \"name\": \"python3-distupgrade\",\r\n          \"version\": \"1:16.04.32\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        },\r\n        {\r\n          \"patchId\": \"cloud-guest-utils_0.27-0ubuntu25.2_Ubuntu_16.04\",\r\n          \"name\": \"cloud-guest-utils\",\r\n          \"version\": \"0.27-0ubuntu25.2\",\r\n          \"classifications\": [\r\n            \"Other\"\r\n          ],\r\n          \"installationState\": \"NotSelected\"\r\n        }\r\n      ],\r\n      \"startDateTime\": \"2020-11-29T22:27:13.4223258-08:00\",\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"0\",\r\n        \"message\": \"0 error/s reported.\"\r\n      }\r\n    }\r\n  },\r\n  \"name\": \"7b6d7c4a-4423-4486-8c43-6f5d77557c34\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-02-08T00:20:04.4301095-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"05446525-2b41-4b4a-9a72-539b459f810e\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7602e371-c6bc-4bb3-bc2d-491dfc17fc32/providers/Microsoft.Compute/locations/southeastasia/operations/7b6d7c4a-4423-4486-8c43-6f5d77557c34?monitor=true&api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzYwMmUzNzEtYzZiYy00YmIzLWJjMmQtNDkxZGZjMTdmYzMyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzdiNmQ3YzRhLTQ0MjMtNDQ4Ni04YzQzLTZmNWQ3NzU1N2MzND9tb25pdG9yPXRydWUmYXBpLXZlcnNpb249MjAyMC0wNi0wMQ==",
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzA1NDQ2NTI1LTJiNDEtNGI0YS05YTcyLTUzOWI0NTlmODEwZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29321.03",
+          "FxVersion/4.6.29518.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -219,13 +219,13 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14985,Microsoft.Compute/GetOperation30Min;29967"
+          "Microsoft.Compute/GetOperation3Min;14989,Microsoft.Compute/GetOperation30Min;29929"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "051a2229-766a-4536-b552-6066feec8cd8"
+          "8f4a9d53-e2bf-4c94-a094-4d4f1327287a"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -235,19 +235,19 @@
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "96aeaf1c-0771-4ea8-9dd7-b36abeedf202"
+          "68918bc3-58ec-4bf0-b64e-79183b8f195c"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20201130T062815Z:96aeaf1c-0771-4ea8-9dd7-b36abeedf202"
+          "WESTUS:20210208T082135Z:68918bc3-58ec-4bf0-b64e-79183b8f195c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 30 Nov 2020 06:28:15 GMT"
+          "Mon, 08 Feb 2021 08:21:34 GMT"
         ],
         "Content-Length": [
-          "2388"
+          "1723"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -256,12 +256,73 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"installationActivityId\": \"7b6d7c4a-4423-4486-8c43-6f5d77557c34\",\r\n  \"rebootStatus\": \"NotNeeded\",\r\n  \"maintenanceWindowExceeded\": false,\r\n  \"excludedPatchCount\": 0,\r\n  \"notSelectedPatchCount\": 11,\r\n  \"pendingPatchCount\": 0,\r\n  \"installedPatchCount\": 0,\r\n  \"failedPatchCount\": 0,\r\n  \"patches\": [\r\n    {\r\n      \"patchId\": \"ubuntu-core-launcher_2.47.1_Ubuntu_16.04\",\r\n      \"name\": \"ubuntu-core-launcher\",\r\n      \"version\": \"2.47.1\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    },\r\n    {\r\n      \"patchId\": \"snapd_2.47.1_Ubuntu_16.04\",\r\n      \"name\": \"snapd\",\r\n      \"version\": \"2.47.1\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    },\r\n    {\r\n      \"patchId\": \"grub-efi-amd64-signed_1.66.29+2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n      \"name\": \"grub-efi-amd64-signed\",\r\n      \"version\": \"1.66.29+2.02~beta2-36ubuntu3.29\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    },\r\n    {\r\n      \"patchId\": \"grub-efi-amd64_2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n      \"name\": \"grub-efi-amd64\",\r\n      \"version\": \"2.02~beta2-36ubuntu3.29\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    },\r\n    {\r\n      \"patchId\": \"grub-efi-amd64-bin_2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n      \"name\": \"grub-efi-amd64-bin\",\r\n      \"version\": \"2.02~beta2-36ubuntu3.29\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    },\r\n    {\r\n      \"patchId\": \"grub2-common_2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n      \"name\": \"grub2-common\",\r\n      \"version\": \"2.02~beta2-36ubuntu3.29\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    },\r\n    {\r\n      \"patchId\": \"grub-pc-bin_2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n      \"name\": \"grub-pc-bin\",\r\n      \"version\": \"2.02~beta2-36ubuntu3.29\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    },\r\n    {\r\n      \"patchId\": \"grub-common_2.02~beta2-36ubuntu3.29_Ubuntu_16.04\",\r\n      \"name\": \"grub-common\",\r\n      \"version\": \"2.02~beta2-36ubuntu3.29\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    },\r\n    {\r\n      \"patchId\": \"ubuntu-release-upgrader-core_1:16.04.32_Ubuntu_16.04\",\r\n      \"name\": \"ubuntu-release-upgrader-core\",\r\n      \"version\": \"1:16.04.32\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    },\r\n    {\r\n      \"patchId\": \"python3-distupgrade_1:16.04.32_Ubuntu_16.04\",\r\n      \"name\": \"python3-distupgrade\",\r\n      \"version\": \"1:16.04.32\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    },\r\n    {\r\n      \"patchId\": \"cloud-guest-utils_0.27-0ubuntu25.2_Ubuntu_16.04\",\r\n      \"name\": \"cloud-guest-utils\",\r\n      \"version\": \"0.27-0ubuntu25.2\",\r\n      \"classifications\": [\r\n        \"Other\"\r\n      ],\r\n      \"installationState\": \"NotSelected\"\r\n    }\r\n  ],\r\n  \"startDateTime\": \"2020-11-29T22:27:13.4223258-08:00\",\r\n  \"error\": {\r\n    \"details\": [],\r\n    \"code\": \"0\",\r\n    \"message\": \"0 error/s reported.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-02-08T00:20:04.4301095-08:00\",\r\n  \"endTime\": \"2021-02-08T00:21:32.3509395-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"status\": \"Succeeded\",\r\n      \"installationActivityId\": \"05446525-2b41-4b4a-9a72-539b459f810e\",\r\n      \"rebootStatus\": \"NotNeeded\",\r\n      \"maintenanceWindowExceeded\": false,\r\n      \"excludedPatchCount\": 0,\r\n      \"notSelectedPatchCount\": 0,\r\n      \"pendingPatchCount\": 0,\r\n      \"installedPatchCount\": 4,\r\n      \"failedPatchCount\": 0,\r\n      \"patches\": [\r\n        {\r\n          \"patchId\": \"ca-certificates_20210119~16.04.1_Ubuntu_16.04\",\r\n          \"name\": \"ca-certificates\",\r\n          \"version\": \"20210119~16.04.1\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"installationState\": \"Installed\"\r\n        },\r\n        {\r\n          \"patchId\": \"python3-problem-report_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n          \"name\": \"python3-problem-report\",\r\n          \"version\": \"2.20.1-0ubuntu2.30\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"installationState\": \"Installed\"\r\n        },\r\n        {\r\n          \"patchId\": \"python3-apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n          \"name\": \"python3-apport\",\r\n          \"version\": \"2.20.1-0ubuntu2.30\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"installationState\": \"Installed\"\r\n        },\r\n        {\r\n          \"patchId\": \"apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n          \"name\": \"apport\",\r\n          \"version\": \"2.20.1-0ubuntu2.30\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"installationState\": \"Installed\"\r\n        }\r\n      ],\r\n      \"startDateTime\": \"2021-02-08T00:20:04.4613804-08:00\",\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"0\",\r\n        \"message\": \"0 error/s reported.\"\r\n      }\r\n    }\r\n  },\r\n  \"name\": \"05446525-2b41-4b4a-9a72-539b459f810e\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?monitor=true&api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzA1NDQ2NTI1LTJiNDEtNGI0YS05YTcyLTUzOWI0NTlmODEwZT9tb25pdG9yPXRydWUmYXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetOperation3Min;14988,Microsoft.Compute/GetOperation30Min;29928"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "d6288206-35d8-432f-9006-c03633832bae"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "38f144a2-11cd-45db-a291-0ee4243d84c7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210208T082135Z:38f144a2-11cd-45db-a291-0ee4243d84c7"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 08 Feb 2021 08:21:34 GMT"
+        ],
+        "Content-Length": [
+          "1107"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"installationActivityId\": \"05446525-2b41-4b4a-9a72-539b459f810e\",\r\n  \"rebootStatus\": \"NotNeeded\",\r\n  \"maintenanceWindowExceeded\": false,\r\n  \"excludedPatchCount\": 0,\r\n  \"notSelectedPatchCount\": 0,\r\n  \"pendingPatchCount\": 0,\r\n  \"installedPatchCount\": 4,\r\n  \"failedPatchCount\": 0,\r\n  \"patches\": [\r\n    {\r\n      \"patchId\": \"ca-certificates_20210119~16.04.1_Ubuntu_16.04\",\r\n      \"name\": \"ca-certificates\",\r\n      \"version\": \"20210119~16.04.1\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"installationState\": \"Installed\"\r\n    },\r\n    {\r\n      \"patchId\": \"python3-problem-report_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n      \"name\": \"python3-problem-report\",\r\n      \"version\": \"2.20.1-0ubuntu2.30\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"installationState\": \"Installed\"\r\n    },\r\n    {\r\n      \"patchId\": \"python3-apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n      \"name\": \"python3-apport\",\r\n      \"version\": \"2.20.1-0ubuntu2.30\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"installationState\": \"Installed\"\r\n    },\r\n    {\r\n      \"patchId\": \"apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n      \"name\": \"apport\",\r\n      \"version\": \"2.20.1-0ubuntu2.30\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"installationState\": \"Installed\"\r\n    }\r\n  ],\r\n  \"startDateTime\": \"2021-02-08T00:20:04.4613804-08:00\",\r\n  \"error\": {\r\n    \"details\": [],\r\n    \"code\": \"0\",\r\n    \"message\": \"0 error/s reported.\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "7602e371-c6bc-4bb3-bc2d-491dfc17fc32"
+    "SubscriptionId": "28337c71-5911-4e75-8354-c4ac645e902d"
   }
 }
