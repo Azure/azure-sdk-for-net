@@ -187,9 +187,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public byte[] AuthenticationTag { get; internal set; }
 
         /// <summary>
-        /// Gets or sets additional data that is authenticated during decryption but not encrypted.
+        /// Gets additional data that is authenticated during decryption but not encrypted.
         /// </summary>
-        public byte[] AdditionalAuthenticatedData { get; set; }
+        public byte[] AdditionalAuthenticatedData { get; internal set; }
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {

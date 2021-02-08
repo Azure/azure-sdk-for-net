@@ -11,6 +11,8 @@
 
 - Renamed `EncryptOptions` to `EncryptParameters`.
 - Renamed `DecryptOptions` to `DecryptParameters`.
+- Made `EncryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
+- Made `DecryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
 
 ### Removed
 

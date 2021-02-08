@@ -164,9 +164,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public byte[] Iv { get; private set; }
 
         /// <summary>
-        /// Gets or sets additional data that is authenticated during decryption but not encrypted.
+        /// Gets additional data that is authenticated during decryption but not encrypted.
         /// </summary>
-        public byte[] AdditionalAuthenticatedData { get; set; }
+        public byte[] AdditionalAuthenticatedData { get; }
 
         internal void Initialize()
         {

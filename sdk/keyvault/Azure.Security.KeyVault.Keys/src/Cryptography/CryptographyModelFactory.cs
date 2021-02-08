@@ -19,13 +19,16 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="ciphertext">Sets the <see cref="DecryptParameters.Ciphertext"/> property.</param>
         /// <param name="iv">Sets the <see cref="DecryptParameters.Iv"/> property.</param>
         /// <param name="authenticationTag">Sets the <see cref="DecryptParameters.AuthenticationTag"/> property.</param>
+        /// <param name="additionalAuthenticatedData">Sets the <see cref="DecryptParameters.AdditionalAuthenticatedData"/> property.</param>
         /// <returns>A new instance of the <see cref="Cryptography.DecryptParameters"/> class for mocking purposes.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="ciphertext"/> is null.</exception>
-        public static DecryptParameters DecryptParameters(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationTag = default) => new DecryptParameters(algorithm, ciphertext)
-        {
-            Iv = iv,
-            AuthenticationTag = authenticationTag,
-        };
+        public static DecryptParameters DecryptParameters(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationTag = default, byte[] additionalAuthenticatedData = default) =>
+            new DecryptParameters(algorithm, ciphertext)
+            {
+                Iv = iv,
+                AuthenticationTag = authenticationTag,
+                AdditionalAuthenticatedData = additionalAuthenticatedData,
+            };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Cryptography.DecryptResult"/> class for mocking purposes.
@@ -47,9 +50,11 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="algorithm">Sets the <see cref="EncryptParameters.Algorithm"/> property.</param>
         /// <param name="plaintext">Sets the <see cref="EncryptParameters.Plaintext"/> property.</param>
         /// <param name="iv">Sets the <see cref="DecryptParameters.Iv"/> property.</param>
+        /// <param name="additionalAuthenticatedData">Sets the <see cref="DecryptParameters.AdditionalAuthenticatedData"/> property.</param>
         /// <returns>A new instance of the <see cref="Cryptography.EncryptParameters"/> class for mocking purposes.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptParameters EncryptParameters(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default) => new EncryptParameters(algorithm, plaintext, iv, null);
+        public static EncryptParameters EncryptParameters(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] additionalAuthenticatedData = default) =>
+            new EncryptParameters(algorithm, plaintext, iv, additionalAuthenticatedData);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Cryptography.EncryptResult"/> class for mocking purposes.
