@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class TasksStateTasksDetails
+    internal partial class TasksStateTasksDetailsInternal
     {
-        internal static TasksStateTasksDetails DeserializeTasksStateTasksDetails(JsonElement element)
+        internal static TasksStateTasksDetailsInternal DeserializeTasksStateTasksDetailsInternal(JsonElement element)
         {
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> name = default;
@@ -36,7 +36,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new TasksStateTasksDetails(lastUpdateDateTime, name.Value, status);
+            return new TasksStateTasksDetailsInternal(lastUpdateDateTime, name.Value, status);
         }
     }
 }

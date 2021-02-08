@@ -11,7 +11,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The TasksStateTasksKeyPhraseExtractionTasksItem. </summary>
-    public partial class KeyPhraseExtractionTasksItem : TaskState
+    internal partial class KeyPhraseExtractionTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>

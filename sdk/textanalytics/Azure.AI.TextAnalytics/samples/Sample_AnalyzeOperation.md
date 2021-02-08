@@ -29,25 +29,25 @@ To run analyze operation in multiple documents, call `StartAnalyzeOperationBatch
 
     var batchDocuments = new List<string> { document };
 
-    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+    TextAnalyticsActions batchActions = new TextAnalyticsActions()
     {
-        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-        EntitiesTaskParameters = new EntitiesTaskParameters(),
-        PiiTaskParameters = new PiiTaskParameters(),
+        ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+        RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
+        RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
+    AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
 
     await operation.WaitForCompletionAsync();
 
-    foreach (AnalyzeOperationResult documentsInPage in operation.GetValues())
+    foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
     {
-        RecognizeEntitiesResultCollection entitiesResult = documentsInPage.Tasks.EntityRecognitionTasks[0].Results;
+        RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.FirstOrDefault().Result;
 
-        ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.Tasks.KeyPhraseExtractionTasks[0].Results;
+        ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
 
-        RecognizePiiEntitiesResultCollection piiResult = documentsInPage.Tasks.EntityRecognitionPiiTasks[0].Results;
+        RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.FirstOrDefault().Result;
 
         Console.WriteLine("Recognized Entities");
 
