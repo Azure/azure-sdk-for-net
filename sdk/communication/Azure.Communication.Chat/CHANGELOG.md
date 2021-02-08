@@ -1,13 +1,13 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2021-02-08)
 # Breaking
 - Support for CreateChatThreadResult and AddChatParticipantsResult to handle partial errors in batch calls.
 - Added idempotency identifier parameter for chat creation calls.
 - Added support for readreceipts and getparticipants pagination.
-- Added new model for messages 
-- Removed priority field
-- Added new model for errors
+- Added new model for messages anc ontent types : Text, Html, ParticipantAdded, ParticipantRemoved, TopicUpdated 
+- Removed priority field (ChatMessage.Priority)
+- Added new model for errors (CommunicationError)
 
 
 ## 1.0.0-beta.3 (2020-11-16)
