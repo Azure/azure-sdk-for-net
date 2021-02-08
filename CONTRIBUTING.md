@@ -304,7 +304,7 @@ You can add the dev feed to your NuGet.Config file, which can be at the Solution
 
 You can use the following options to find the available dev feed packages:
 
-1. Search the Azure SDK for .NET Dev Feed: https://aka.ms/azsdk/net/feed
+1. Search the Azure SDK for .NET Dev Feed: https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
 1. In Visual Studio, use the [Package Manager UI](https://docs.microsoft.com/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages), be sure to check "Include prerelease".
 1. Use the NuGet CLI, for example `nuget list azure.identity -Prerelease -Allversions`
 
