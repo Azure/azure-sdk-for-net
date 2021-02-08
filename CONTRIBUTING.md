@@ -319,9 +319,6 @@ As you can see in the example below, we want to use the `Azure.Data.Tables` vers
   <ItemGroup>
     <PackageReference Include="Azure.Data.Tables" Version="3.0.0-alpha.*"/>
   </ItemGroup>
-  <PropertyGroup>
-    <RestoreSources>https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json;https://api.nuget.org/v3/index.json</RestoreSources>
-  </PropertyGroup>
 </Project>
 ```
 
