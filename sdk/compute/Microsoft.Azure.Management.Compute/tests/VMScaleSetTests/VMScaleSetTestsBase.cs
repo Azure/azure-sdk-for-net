@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.Azure.Management.Compute;
@@ -282,7 +283,8 @@ namespace Compute.Tests
             int? capacity = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            string extendedLocation = null)
         {
             try
             {
@@ -312,7 +314,8 @@ namespace Compute.Tests
                                                                                      capacity: capacity,
                                                                                      dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                                                                                      dedicatedHostGroupName: dedicatedHostGroupName,
-                                                                                     dedicatedHostName: dedicatedHostName);
+                                                                                     dedicatedHostName: dedicatedHostName,
+                                                                                     extendedLocation: extendedLocation);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -402,7 +405,8 @@ namespace Compute.Tests
             int? capacity = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            string extendedLocation = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -412,16 +416,18 @@ namespace Compute.Tests
                     Location = m_location
                 });
 
-            var getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
+            LoadBalancer loadBalancer = null;
+            var getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName, extendedLocation: extendedLocation);
 
-            var subnetResponse = subnet ?? CreateVNET(rgName);
+            var subnetResponse = subnet ?? CreateVNET(rgName, extendedLocation: extendedLocation);
 
             var nicResponse = CreateNIC(
                 rgName,
                 subnetResponse,
-                getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
+                getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null,
+                extendedLocation: extendedLocation);
 
-            var loadBalancer = (getPublicIpAddressResponse != null && createWithHealthProbe) ?
+            loadBalancer = (getPublicIpAddressResponse != null && createWithHealthProbe) ?
                 CreatePublicLoadBalancerWithProbe(rgName, getPublicIpAddressResponse) : null;
 
             Assert.True(createWithManagedDisks || storageAccount != null);
@@ -468,6 +474,11 @@ namespace Compute.Tests
                 CreateDedicatedHost(rgName, dedicatedHostGroupName, dedicatedHostName, "DSv3-Type1");
                 inputVMScaleSet.HostGroup = new CM.SubResource() { Id = dedicatedHostGroupReferenceId };
             }
+            
+            if (extendedLocation != null)
+            {
+                inputVMScaleSet.ExtendedLocation = new CM.ExtendedLocation(extendedLocation);
+            }
 
             inputVMScaleSet.SinglePlacementGroup = singlePlacementGroup ? (bool?) null : false;
 
@@ -492,7 +503,7 @@ namespace Compute.Tests
                 }
             }
 
-            ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks, ppgId: ppgId, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
+            ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks, ppgId: ppgId, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId, extendedLocation: extendedLocation);
 
             return createOrUpdateResponse;
         }
@@ -512,7 +523,7 @@ namespace Compute.Tests
         }
 
         protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false, string ppgId = null,
-            string dedicatedHostGroupReferenceId = null)
+            string dedicatedHostGroupReferenceId = null, string extendedLocation = null)
         {
             Assert.True(!string.IsNullOrEmpty(vmScaleSetOut.ProvisioningState));
 
@@ -737,6 +748,16 @@ namespace Compute.Tests
             if (dedicatedHostGroupReferenceId != null)
             {
                 Assert.Equal(dedicatedHostGroupReferenceId, vmScaleSetOut.HostGroup.Id, StringComparer.OrdinalIgnoreCase);
+            }
+            
+            if (extendedLocation != null)
+            {
+                Assert.NotNull(vmScaleSetOut.ExtendedLocation);
+                Assert.Equal(extendedLocation, vmScaleSetOut.ExtendedLocation.Name, StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                Assert.Null(vmScaleSetOut.ExtendedLocation);
             }
         }
 
