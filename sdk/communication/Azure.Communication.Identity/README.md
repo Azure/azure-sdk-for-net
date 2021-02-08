@@ -14,7 +14,7 @@ Azure Communication Identity is managing tokens for Azure Communication Services
 Install the Azure Communication Identity client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Communication.Identity --version 1.0.0-beta.3
+dotnet add package Azure.Communication.Identity --version 1.0.0-beta.4
 ```
 
 ### Prerequisites
@@ -41,7 +41,16 @@ var connectionString = "<connection_string>";
 var client = new CommunicationIdentityClient(connectionString);
 ```
 
-Clients also have the option to authenticate using a valid token.
+The identity client can also be authenticated using an endpoint and an access key acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
+
+```C# Snippet:CreateCommunicationIdentityClient
+// Get endpoint and access key for our Azure Communication resource.
+var endpoint = "<endpoint_string>";
+var accessKey = "<access_key_string>";
+var client = new CommunicationIdentityClient(new Uri(endpoint), new AzureKeyCredential(accessKey));
+```
+
+Clients also have the option to authenticate using a valid Active Directory token.
 
 ```C# Snippet:CreateCommunicationIdentityFromToken
 var endpoint = new Uri("https://my-resource.communication.azure.com");
