@@ -799,7 +799,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class EmailNotificationHook : Azure.AI.MetricsAdvisor.Models.NotificationHook
     {
-        public EmailNotificationHook(string name, System.Collections.Generic.IList<string> emailsToAlert) { }
+        public EmailNotificationHook() { }
         public System.Collections.Generic.IList<string> EmailsToAlert { get { throw null; } }
     }
     public partial class EnrichmentStatus
@@ -1072,7 +1072,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Description { get { throw null; } set { } }
         public string ExternalLink { get { throw null; } set { } }
         public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
+        public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PeriodType : System.IEquatable<Azure.AI.MetricsAdvisor.Models.PeriodType>
@@ -1150,11 +1150,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class WebNotificationHook : Azure.AI.MetricsAdvisor.Models.NotificationHook
     {
-        public WebNotificationHook(string name, string endpoint) { }
+        public WebNotificationHook() { }
         public string CertificateKey { get { throw null; } set { } }
         public string CertificatePassword { get { throw null; } set { } }
-        public string Endpoint { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } set { } }
+        public string Endpoint { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }

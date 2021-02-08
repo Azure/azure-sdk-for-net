@@ -279,7 +279,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeed"/>.Name is empty.</exception>
         public virtual async Task<Response<string>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            ValidateDataFeedToCreate(dataFeed);
+            ValidateDataFeedToCreate(dataFeed, nameof(dataFeed));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
@@ -311,7 +311,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeed"/>.Name is empty.</exception>
         public virtual Response<string> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            ValidateDataFeedToCreate(dataFeed);
+            ValidateDataFeedToCreate(dataFeed, nameof(dataFeed));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
@@ -680,15 +680,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return dataFeeds;
         }
 
-        private static void ValidateDataFeedToCreate(DataFeed dataFeed)
+        private static void ValidateDataFeedToCreate(DataFeed dataFeed, string paramName)
         {
-            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
-            Argument.AssertNotNullOrEmpty(dataFeed.Name, $"{nameof(dataFeed)}.{nameof(dataFeed.Name)}");
-            Argument.AssertNotNull(dataFeed.DataSource, $"{nameof(dataFeed)}.{nameof(dataFeed.DataSource)}");
-            Argument.AssertNotNull(dataFeed.Granularity, $"{nameof(dataFeed)}.{nameof(dataFeed.Granularity)}");
-            Argument.AssertNotNull(dataFeed.Schema, $"{nameof(dataFeed)}.{nameof(dataFeed.Schema)}");
-            Argument.AssertNotNull(dataFeed.IngestionSettings, $"{nameof(dataFeed)}.{nameof(dataFeed.IngestionSettings)}");
-            Argument.AssertNotNull(dataFeed.IngestionSettings.IngestionStartTime, $"{nameof(dataFeed)}.{nameof(dataFeed.IngestionSettings)}.{nameof(dataFeed.IngestionSettings.IngestionStartTime)}");
+            Argument.AssertNotNull(dataFeed, paramName);
+            Argument.AssertNotNullOrEmpty(dataFeed.Name, $"{paramName}.{nameof(dataFeed.Name)}");
+            Argument.AssertNotNull(dataFeed.DataSource, $"{paramName}.{nameof(dataFeed.DataSource)}");
+            Argument.AssertNotNull(dataFeed.Granularity, $"{paramName}.{nameof(dataFeed.Granularity)}");
+            Argument.AssertNotNull(dataFeed.Schema, $"{paramName}.{nameof(dataFeed.Schema)}");
+            Argument.AssertNotNull(dataFeed.IngestionSettings, $"{paramName}.{nameof(dataFeed.IngestionSettings)}");
+            Argument.AssertNotNull(dataFeed.IngestionSettings.IngestionStartTime, $"{paramName}.{nameof(dataFeed.IngestionSettings)}.{nameof(dataFeed.IngestionSettings.IngestionStartTime)}");
         }
 
         #endregion DataFeed
@@ -708,7 +708,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="detectionConfiguration"/>.MetricId or <paramref name="detectionConfiguration"/>.Name is empty.</exception>
         public virtual async Task<Response<string>> CreateDetectionConfigurationAsync(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
-            ValidateDetectionConfigurationToCreate(detectionConfiguration);
+            ValidateDetectionConfigurationToCreate(detectionConfiguration, nameof(detectionConfiguration));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDetectionConfiguration)}");
             scope.Start();
@@ -740,7 +740,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="detectionConfiguration"/>.MetricId or <paramref name="detectionConfiguration"/>.Name is empty.</exception>
         public virtual Response<string> CreateDetectionConfiguration(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
-            ValidateDetectionConfigurationToCreate(detectionConfiguration);
+            ValidateDetectionConfigurationToCreate(detectionConfiguration, nameof(detectionConfiguration));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDetectionConfiguration)}");
             scope.Start();
@@ -1009,12 +1009,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
         }
 
-        private static void ValidateDetectionConfigurationToCreate(AnomalyDetectionConfiguration configuration)
+        private static void ValidateDetectionConfigurationToCreate(AnomalyDetectionConfiguration configuration, string paramName)
         {
-            Argument.AssertNotNull(configuration, nameof(configuration));
-            Argument.AssertNotNullOrEmpty(configuration.MetricId, $"{nameof(configuration)}.{nameof(AnomalyDetectionConfiguration.MetricId)}");
-            Argument.AssertNotNullOrEmpty(configuration.Name, $"{nameof(configuration)}.{nameof(AnomalyDetectionConfiguration.Name)}");
-            Argument.AssertNotNull(configuration.WholeSeriesDetectionConditions, $"{nameof(configuration)}.{nameof(AnomalyDetectionConfiguration.WholeSeriesDetectionConditions)}");
+            Argument.AssertNotNull(configuration, paramName);
+            Argument.AssertNotNullOrEmpty(configuration.MetricId, $"{paramName}.{nameof(AnomalyDetectionConfiguration.MetricId)}");
+            Argument.AssertNotNullOrEmpty(configuration.Name, $"{paramName}.{nameof(AnomalyDetectionConfiguration.Name)}");
+            Argument.AssertNotNull(configuration.WholeSeriesDetectionConditions, $"{paramName}.{nameof(AnomalyDetectionConfiguration.WholeSeriesDetectionConditions)}");
         }
 
         #endregion AnomalyDetectionConfiguration
@@ -1354,12 +1354,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
         public virtual async Task<Response<string>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hook, nameof(hook));
-
-            if (hook is EmailNotificationHook emailHook)
-            {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailNotificationHook.EmailsToAlert));
-            }
+            ValidateHookToCreate(hook, nameof(hook));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateHook)}");
             scope.Start();
@@ -1391,12 +1386,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
         public virtual Response<string> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hook, nameof(hook));
-
-            if (hook is EmailNotificationHook emailHook)
-            {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailNotificationHook.EmailsToAlert));
-            }
+            ValidateHookToCreate(hook, nameof(hook));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateHook)}");
             scope.Start();
@@ -1431,11 +1421,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
 
-            if (hook is EmailNotificationHook emailHook)
-            {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailNotificationHook.EmailsToAlert));
-            }
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
             scope.Start();
 
@@ -1467,11 +1452,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
-
-            if (hook is EmailNotificationHook emailHook)
-            {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailNotificationHook.EmailsToAlert));
-            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
             scope.Start();
@@ -1691,6 +1671,25 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
 
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        private static void ValidateHookToCreate(NotificationHook hook, string paramName)
+        {
+            Argument.AssertNotNull(hook, paramName);
+            Argument.AssertNotNullOrEmpty(hook.Name, $"{paramName}.{nameof(hook.Name)}");
+
+            if (hook is EmailNotificationHook emailHook)
+            {
+                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, $"{paramName}.{nameof(EmailNotificationHook.EmailsToAlert)}");
+            }
+            else if (hook is WebNotificationHook webHook)
+            {
+                Argument.AssertNotNullOrEmpty(webHook.Endpoint, $"{paramName}.{nameof(WebNotificationHook.Endpoint)}");
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid hook type. A hook must be created from an ${nameof(EmailNotificationHook)} or a {nameof(WebNotificationHook)} instance.");
+            }
         }
 
         #endregion NotificationHook

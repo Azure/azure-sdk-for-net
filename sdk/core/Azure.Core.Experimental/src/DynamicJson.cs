@@ -29,6 +29,13 @@ namespace Azure.Core
         private List<DynamicJson>? _arrayRepresentation;
         private object? _value;
 
+        /// <summary>
+        /// Construcs a new DynamicJson which represents an empty JSON object.
+        /// </summary>
+        public DynamicJson() : this(System.Array.Empty<KeyValuePair<string, DynamicJson>>())
+        {
+        }
+
         public DynamicJson(string json): this(JsonDocument.Parse(json).RootElement)
         {
         }

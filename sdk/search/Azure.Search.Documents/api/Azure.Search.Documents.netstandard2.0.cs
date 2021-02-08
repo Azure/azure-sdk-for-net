@@ -82,13 +82,14 @@ namespace Azure.Search.Documents
         public System.Threading.CancellationToken FlushCancellationToken { get { throw null; } set { } }
         public int? InitialBatchActionCount { get { throw null; } set { } }
         public System.Func<T, string> KeyFieldAccessor { get { throw null; } set { } }
-        public int MaxRetries { get { throw null; } set { } }
-        public System.TimeSpan MaxRetryDelay { get { throw null; } set { } }
-        public System.TimeSpan RetryDelay { get { throw null; } set { } }
+        public int MaxRetriesPerIndexAction { get { throw null; } set { } }
+        public System.TimeSpan MaxThrottlingDelay { get { throw null; } set { } }
+        public System.TimeSpan ThrottlingDelay { get { throw null; } set { } }
     }
     public partial class SearchIndexingBufferedSender<T> : System.IAsyncDisposable, System.IDisposable
     {
         protected SearchIndexingBufferedSender() { }
+        public SearchIndexingBufferedSender(Azure.Search.Documents.SearchClient searchClient, Azure.Search.Documents.SearchIndexingBufferedSenderOptions<T> options = null) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string IndexName { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
