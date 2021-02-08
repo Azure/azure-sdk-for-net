@@ -488,6 +488,84 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_OrchestrationMode")]
+        public void TestVMScaleSetScenarioOperations_OrchestrationMode()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    var rgName = TestUtilities.GenerateName(TestPrefix);
+                    var vmssName = TestUtilities.GenerateName("vmss");
+                    string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                    VirtualMachineScaleSet inputVMScaleSet;
+
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: false);
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                    var getResponse = CreateVMScaleSetFlex_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        imageRef,
+                        out inputVMScaleSet,
+                        null,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.OrchestrationMode = OrchestrationMode.Flexible;
+                            vmScaleSet.PlatformFaultDomainCount = 2;
+                            vmScaleSet.SinglePlacementGroup = false;
+
+                        }
+                        );
+
+                    ValidateVMScaleSet_OrchestrationMode(inputVMScaleSet, getResponse);
+
+                    // delete resources
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+
+                    // after deleting resources, recreate them for testing VMSS in orchestrationMode.Uniform
+                    rgName = TestUtilities.GenerateName(TestPrefix);
+                    vmssName = TestUtilities.GenerateName("vmss");
+                    storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+                    getResponse = CreateVMScaleSet_NoAsyncTracking(
+                            rgName,
+                            vmssName,
+                            storageAccountOutput,
+                            imageRef,
+                            out inputVMScaleSet,
+                            null,
+                            (vmScaleSet) =>
+                            {
+                                vmScaleSet.Overprovision = false;
+                                vmScaleSet.OrchestrationMode = OrchestrationMode.Uniform;
+                            },
+                            createWithManagedDisks: true,
+                            createWithPublicIpAddress: false,
+                            createWithHealthProbe: true);
+
+                    ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+
+                    // delete resources
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
 
         private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
             bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false, 
