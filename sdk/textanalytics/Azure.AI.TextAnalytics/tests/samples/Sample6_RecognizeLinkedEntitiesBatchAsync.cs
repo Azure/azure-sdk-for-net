@@ -86,6 +86,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         {
                             Console.WriteLine($"    Match Text: {match.Text}");
                             Console.WriteLine($"    Offset: {match.Offset}");
+                            Console.WriteLine($"    Length: {match.Length}");
                             Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
                         }
                         Console.WriteLine("");
