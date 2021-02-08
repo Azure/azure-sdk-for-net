@@ -47,15 +47,22 @@ jobs:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
         Linux:
+          Pool: Azure Pipelines
           OSVmImage: "ubuntu-18.04"
         Windows:
+          Pool: Azure Pipelines
           OSVmImage: "windows-2019"
         MacOs:
+          Pool: Azure Pipelines
           OSVmImage: "macOS-10.15"
     pool:
+      name: Pool
       vmImage: "$(OSVmImage)"
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+        parameters:
+          AgentPool: $(Pool)
+          AgentImage: $(OSVmImage)
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"
