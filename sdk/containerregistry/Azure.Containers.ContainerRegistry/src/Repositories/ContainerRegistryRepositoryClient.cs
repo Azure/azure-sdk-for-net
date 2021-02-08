@@ -403,18 +403,14 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Update attributes of a manifest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
-        /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateManifestAttributesAsync(string name, string reference, ContentPermissions value = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetManifestPermissionsAsync(string tagOrDigest, ContentPermissions value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.UpdateManifestAttributes");
             scope.Start();
             try
             {
-                return await RestClient.UpdateManifestAttributesAsync(name, reference, value, cancellationToken).ConfigureAwait(false);
+                return await RestClient.UpdateManifestAttributesAsync(_repositoryName, tagOrDigest, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -423,18 +419,14 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Update attributes of a manifest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
-        /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateManifestAttributes(string name, string reference, ContentPermissions value = null, CancellationToken cancellationToken = default)
+        public virtual Response SetManifestPermissions(string tagOrDigest, ContentPermissions value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.UpdateManifestAttributes");
             scope.Start();
             try
             {
-                return RestClient.UpdateManifestAttributes(name, reference, value, cancellationToken);
+                return RestClient.UpdateManifestAttributes(_repositoryName, tagOrDigest, value, cancellationToken);
             }
             catch (Exception e)
             {
