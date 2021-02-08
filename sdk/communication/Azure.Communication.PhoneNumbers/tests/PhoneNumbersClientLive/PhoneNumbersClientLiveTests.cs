@@ -13,7 +13,7 @@ using Azure.Communication.PhoneNumbers.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Communication.Administration.Tests
+namespace Azure.Communication.PhoneNumbers.Tests
 {
     /// <summary>
     /// The suite of tests for the <see cref="PhoneNumberAdministrationClient"/> class.
