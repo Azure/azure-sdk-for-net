@@ -100,6 +100,33 @@ namespace Compute.Tests
 
             return vmExtension;
         }
+        
+        protected VirtualMachineScaleSet CreateDefaultVMScaleSetInput_Flex(
+            string rgName,
+            ImageReference imageRef,
+            bool hasManagedDisks = false,
+            IList<string> zones = null,
+            int? faultDomainCount = null)
+        {
+            string containerName = TestUtilities.GenerateName(TestPrefix);
+            //var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
+            var vmssName = TestUtilities.GenerateName("vmss");
+
+            string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA0 : VirtualMachineSizeTypes.StandardA1V2;
+            var vmScaleSet = new VirtualMachineScaleSet()
+            {
+                Location = m_location,
+                Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
+                Zones = zones,
+            };
+
+            if (faultDomainCount != null)
+            {
+                vmScaleSet.PlatformFaultDomainCount = faultDomainCount;
+            };
+
+            return vmScaleSet;
+        }
 
         protected VirtualMachineScaleSet CreateDefaultVMScaleSetInput(
             string rgName,
@@ -254,6 +281,50 @@ namespace Compute.Tests
 
             return vmScaleSet;
         }
+        
+        public VirtualMachineScaleSet CreateVMScaleSetFlex_NoAsyncTracking(
+            string rgName,
+            string vmssName,
+            ImageReference imageRef,
+            out VirtualMachineScaleSet inputVMScaleSet,
+            VirtualMachineScaleSetExtensionProfile extensionProfile = null,
+            Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
+            bool createWithPublicIpAddress = false,
+            bool createWithManagedDisks = false,
+            bool createWithHealthProbe = false,
+            Subnet subnet = null,
+            IList<string> zones = null,
+            string ppgId = null,
+            bool singlePlacementGroup = true,
+            int? faultDomainCount = null)
+        {
+            try
+            {
+                var createOrUpdateResponse = CreateVMScaleSetFlexAndGetOperationResponse(rgName,
+                    vmssName,
+                    imageRef,
+                    out inputVMScaleSet,
+                    vmScaleSetCustomizer,
+                    createWithPublicIpAddress,
+                    createWithManagedDisks,
+                    createWithHealthProbe,
+                    ppgId,
+                    subnet,
+                    zones,
+                    singlePlacementGroup: singlePlacementGroup,
+                    faultDomainCount: faultDomainCount);
+
+                var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+
+                return getResponse;
+            }
+            catch
+            {
+                // TODO: It is better to issue Delete and forget.
+                m_ResourcesClient.ResourceGroups.Delete(rgName);
+                throw;
+            }
+        }
 
         public VirtualMachineScaleSet CreateVMScaleSet_NoAsyncTracking(
             string rgName,
@@ -373,6 +444,81 @@ namespace Compute.Tests
         protected void PatchVMScaleSet(string rgName, string vmssName, VirtualMachineScaleSetUpdate inputVMScaleSet)
         {
             var patchResponse = m_CrpClient.VirtualMachineScaleSets.Update(rgName, vmssName, inputVMScaleSet);
+        }
+        
+        private VirtualMachineScaleSet CreateVMScaleSetFlexAndGetOperationResponse(
+            string rgName,
+            string vmssName,
+            ImageReference imageRef,
+            out VirtualMachineScaleSet inputVMScaleSet,
+            Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
+            bool createWithPublicIpAddress = false,
+            bool createWithManagedDisks = false,
+            bool createWithHealthProbe = false,
+            string ppgId = null,
+            Subnet subnet = null,
+            IList<string> zones = null,
+            bool singlePlacementGroup = true,
+            int? faultDomainCount = null)
+        {
+            // Create the resource Group, it might have been already created during StorageAccount creation.
+            var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
+                rgName,
+                new ResourceGroup
+                {
+                    Location = m_location
+                });
+
+            var getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
+
+            var subnetResponse = subnet ?? CreateVNET(rgName);
+
+            var nicResponse = CreateNIC(
+                rgName,
+                subnetResponse,
+                getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
+
+            var loadBalancer = (getPublicIpAddressResponse != null && createWithHealthProbe) ?
+                CreatePublicLoadBalancerWithProbe(rgName, getPublicIpAddressResponse) : null;
+
+            inputVMScaleSet = CreateDefaultVMScaleSetInput_Flex(rgName, imageRef, hasManagedDisks: createWithManagedDisks,
+                zones: zones, faultDomainCount: faultDomainCount);
+
+            if (vmScaleSetCustomizer != null)
+            {
+                vmScaleSetCustomizer(inputVMScaleSet);
+            }
+
+            if (ppgId != null)
+            {
+                inputVMScaleSet.ProximityPlacementGroup = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = ppgId };
+            }
+            inputVMScaleSet.SinglePlacementGroup = singlePlacementGroup ? (bool?)null : false;
+
+            VirtualMachineScaleSet createOrUpdateResponse = null;
+
+            try
+            {
+                createOrUpdateResponse = m_CrpClient.VirtualMachineScaleSets.CreateOrUpdate(rgName, vmssName, inputVMScaleSet);
+
+                Assert.True(createOrUpdateResponse.Name == vmssName);
+                Assert.True(createOrUpdateResponse.Location.ToLower() == inputVMScaleSet.Location.ToLower().Replace(" ", ""));
+            }
+            catch (CloudException e)
+            {
+                if (e.Message.Contains("the allotted time"))
+                {
+                    createOrUpdateResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            ValidateVMScaleSet_OrchestrationMode(inputVMScaleSet, createOrUpdateResponse);
+
+            return createOrUpdateResponse;
         }
 
         private VirtualMachineScaleSet CreateVMScaleSetAndGetOperationResponse(
@@ -508,6 +654,49 @@ namespace Compute.Tests
                 Assert.NotNull(vmScaleSetInstanceView.Extensions);
                 int instancesCount = vmScaleSetInstanceView.Extensions.First().StatusesSummary.Sum(t => t.Count.Value);
                 Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            }
+        }
+        
+        // ValidateVMScaleSet for a VMScaleSet created in Flex Orchestration Mode
+        protected void ValidateVMScaleSet_OrchestrationMode(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut)
+        {
+            Assert.True(!string.IsNullOrEmpty(vmScaleSetOut.ProvisioningState));
+            if (vmScaleSetOut.OrchestrationMode != null)
+            {
+                Assert.True(vmScaleSet.OrchestrationMode == vmScaleSetOut.OrchestrationMode);
+            }
+            if (vmScaleSet.Zones != null)
+            {
+                Assert.True(vmScaleSet.Zones.SequenceEqual(vmScaleSetOut.Zones), "Zones don't match");
+                if (vmScaleSet.ZoneBalance.HasValue)
+                {
+                    Assert.Equal(vmScaleSet.ZoneBalance, vmScaleSetOut.ZoneBalance);
+                }
+                else
+                {
+                    if (vmScaleSet.Zones.Count > 1)
+                    {
+                        Assert.True(vmScaleSetOut.ZoneBalance.HasValue);
+                    }
+                    else
+                    {
+                        Assert.False(vmScaleSetOut.ZoneBalance.HasValue);
+                    }
+                }
+
+                if (vmScaleSet.PlatformFaultDomainCount.HasValue)
+                {
+                    Assert.Equal(vmScaleSet.PlatformFaultDomainCount, vmScaleSetOut.PlatformFaultDomainCount);
+                }
+                else
+                {
+                    Assert.True(vmScaleSetOut.PlatformFaultDomainCount.HasValue);
+                }
+            }
+            else
+            {
+                Assert.Null(vmScaleSetOut.Zones);
+                Assert.Null(vmScaleSetOut.ZoneBalance);
             }
         }
 
