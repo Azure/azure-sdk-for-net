@@ -7,7 +7,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Determine the results from analyze batch actions in collections of KeyphraseExtraction, RecognizeEntities and RecognizePiiEntities.
+    /// The results of an analyze batch actions operation.
     /// </summary>
     public class AnalyzeBatchActionsResult
     {
