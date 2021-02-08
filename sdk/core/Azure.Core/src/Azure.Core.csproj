@@ -28,7 +28,6 @@
     <Compile Include="Shared\Argument.cs" />
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
-    <Compile Include="Shared\AzureCoreSharedEventSource.cs" />
     <Compile Include="Shared\Base64Url.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />

@@ -16,4 +16,7 @@
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
+<ItemGroup>
+    <!-- <Compile Include="$(AzureCoreSharedSources)BearerTokenChallengeAuthenticationPolicy.cs" Link="Shared\BearerTokenChallengeAuthenticationPolicy.cs" /> -->
+</ItemGroup>
 </Project>

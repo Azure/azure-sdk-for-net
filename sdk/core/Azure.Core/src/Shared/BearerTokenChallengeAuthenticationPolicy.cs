@@ -153,7 +153,6 @@ namespace Azure.Core.Pipeline
                 headerValue = _accessTokenCache.GetHeaderValueAsync(message, context, async).EnsureCompleted();
             }
 
-            //TODO: Revert to Request.SetHeader when this migrates out of Shared source.
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
 
@@ -438,15 +437,19 @@ namespace Azure.Core.Pipeline
                     HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(context, async, cts.Token).ConfigureAwait(false);
                     backgroundUpdateTcs.SetResult(newInfo);
                 }
-                catch (OperationCanceledException oce) when (cts.IsCancellationRequested)
+                catch (OperationCanceledException) when (cts.IsCancellationRequested)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow));
-                    AzureCoreSharedEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
+
+                    // https://github.com/Azure/azure-sdk-for-net/issues/18539
+                    //AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
-                    AzureCoreSharedEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
+
+                    // https://github.com/Azure/azure-sdk-for-net/issues/18539
+                    //AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
                 }
                 finally
                 {
