@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (2021-02-08)
+## 1.0.0-beta.4 (2021-02-09)
 
 ### Added
 - Added `MicrosoftTeamsUserIdentifier`.
