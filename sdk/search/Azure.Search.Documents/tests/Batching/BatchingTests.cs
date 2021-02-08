@@ -213,13 +213,13 @@ namespace Azure.Search.Documents.Tests
         public async Task Champion_OneShotUpload()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = GetBatchingSearchClient(resources);
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(50000);
 
             // Wrap in a block so we DisposeAsync before getting the Count below
             {
                 await using SearchIndexingBufferedSender<SimpleDocument> indexer =
-                    new SearchIndexingBufferedSender<SimpleDocument>(client);
+                    client.CreateIndexingBufferedSender<SimpleDocument>();
 
                 AssertNoFailures(indexer);
                 await indexer.UploadDocumentsAsync(data);
@@ -233,13 +233,13 @@ namespace Azure.Search.Documents.Tests
         public async Task Champion_ContinueAddingWhileSending()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = GetBatchingSearchClient(resources);
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(1000);
 
             // Wrap in a block so we DisposeAsync before getting the Count below
             {
                 await using SearchIndexingBufferedSender<SimpleDocument> indexer =
-                    new SearchIndexingBufferedSender<SimpleDocument>(client);
+                    client.CreateIndexingBufferedSender<SimpleDocument>();
                 AssertNoFailures(indexer);
 
                 // Trickle documents in
