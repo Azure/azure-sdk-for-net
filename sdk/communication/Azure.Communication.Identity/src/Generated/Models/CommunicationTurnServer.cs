@@ -10,14 +10,14 @@ using System;
 namespace Azure.Communication.Identity.Models
 {
     /// <summary> An instance of a TURN server with credentials. </summary>
-    public partial class TurnServer
+    public partial class CommunicationTurnServer
     {
-        /// <summary> Initializes a new instance of TurnServer. </summary>
+        /// <summary> Initializes a new instance of CommunicationTurnServer. </summary>
         /// <param name="urls"> URL of the server. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="urls"/>, <paramref name="username"/>, or <paramref name="credential"/> is null. </exception>
-        internal TurnServer(string urls, string username, string credential)
+        internal CommunicationTurnServer(string urls, string username, string credential)
         {
             if (urls == null)
             {

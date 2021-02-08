@@ -337,7 +337,7 @@ namespace Azure.Communication.Identity
         /// <param name="id"> Identifier of the existing identity to issue credentials for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<TurnCredentialsResponse>> IssueTurnCredentialsAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationTurnCredentialsResponse>> IssueTurnCredentialsAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -350,9 +350,9 @@ namespace Azure.Communication.Identity
             {
                 case 200:
                     {
-                        TurnCredentialsResponse value = default;
+                        CommunicationTurnCredentialsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TurnCredentialsResponse.DeserializeTurnCredentialsResponse(document.RootElement);
+                        value = CommunicationTurnCredentialsResponse.DeserializeCommunicationTurnCredentialsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -364,7 +364,7 @@ namespace Azure.Communication.Identity
         /// <param name="id"> Identifier of the existing identity to issue credentials for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<TurnCredentialsResponse> IssueTurnCredentials(string id, CancellationToken cancellationToken = default)
+        public Response<CommunicationTurnCredentialsResponse> IssueTurnCredentials(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -377,9 +377,9 @@ namespace Azure.Communication.Identity
             {
                 case 200:
                     {
-                        TurnCredentialsResponse value = default;
+                        CommunicationTurnCredentialsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TurnCredentialsResponse.DeserializeTurnCredentialsResponse(document.RootElement);
+                        value = CommunicationTurnCredentialsResponse.DeserializeCommunicationTurnCredentialsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

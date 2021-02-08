@@ -290,6 +290,45 @@ namespace Azure.Communication.Identity
             }
         }
 
+        /// <summary>Issues a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        public virtual Response<CommunicationTurnCredentialsResponse> IssueTurnCredentials(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
+            scope.Start();
+            try
+            {
+                Response<CommunicationTurnCredentialsResponse> response = RestClient.IssueTurnCredentials(communicationUser.Id, cancellationToken);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Asynchronously issues a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to issue a token.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual async Task<Response<CommunicationTurnCredentialsResponse>> IssueTurnCredentialsAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(IssueToken)}");
+            scope.Start();
+            try
+            {
+                Response<CommunicationTurnCredentialsResponse> response = await RestClient.IssueTurnCredentialsAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         private static T AssertNotNull<T>(T argument, string argumentName)
             where T : class
         {

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
-    public partial class TurnServer
+    public partial class CommunicationTurnServer
     {
-        internal static TurnServer DeserializeTurnServer(JsonElement element)
+        internal static CommunicationTurnServer DeserializeCommunicationTurnServer(JsonElement element)
         {
             string urls = default;
             string username = default;
@@ -35,7 +35,7 @@ namespace Azure.Communication.Identity.Models
                     continue;
                 }
             }
-            return new TurnServer(urls, username, credential);
+            return new CommunicationTurnServer(urls, username, credential);
         }
     }
 }
