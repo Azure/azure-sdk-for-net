@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class ExtractKeyPhrasesActionResult : TextAnalyticsActionDetails
     {
-        internal ExtractKeyPhrasesActionResult(ExtractKeyPhrasesResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error, bool hasError) : base(completedOn, error, hasError)
+        internal ExtractKeyPhrasesActionResult(ExtractKeyPhrasesResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error) : base(completedOn, error)
         {
             Result = result;
         }

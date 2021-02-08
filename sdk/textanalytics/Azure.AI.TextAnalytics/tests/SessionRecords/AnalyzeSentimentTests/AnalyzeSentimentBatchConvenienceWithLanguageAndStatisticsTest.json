@@ -8,7 +8,7 @@
         "Content-Length": "222",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-5c7225c06a19fa47989573d2614cb011-9ae01d678bece64f-00",
+        "traceparent": "00-71aec577c972f9498a915bd387cf79d5-fa2c32f490c73548-00",
         "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "ddaaf35e96b9dae8e520d1e25db41ef1",
         "x-ms-return-client-request-id": "true"
@@ -29,14 +29,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "313df920-f7ff-4ff2-a25d-007c8f1709e2",
+        "apim-request-id": "5a063281-8dbc-44a8-88b2-bb1083ac30e0",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Fri, 05 Feb 2021 23:43:33 GMT",
+        "Date": "Sat, 06 Feb 2021 03:48:21 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "466"
+        "x-envoy-upstream-service-time": "88"
       },
       "ResponseBody": {
         "statistics": {

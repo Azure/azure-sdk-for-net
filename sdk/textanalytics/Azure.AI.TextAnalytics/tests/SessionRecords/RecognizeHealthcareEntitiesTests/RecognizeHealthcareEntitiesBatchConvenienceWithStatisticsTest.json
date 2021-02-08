@@ -8,7 +8,7 @@
         "Content-Length": "223",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-39d67841470fec47868dc64e590a006a-c5298e51f4000c46-00",
+        "traceparent": "00-6fe11c7c5620c6469e5c7abc5dab8d73-36440cea78d04943-00",
         "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "87697e405fe3a2c8182b48340c37e5c5",
         "x-ms-return-client-request-id": "true"
@@ -29,18 +29,18 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "09a34e5e-6f70-4f74-94af-8b9f3532f730",
-        "Date": "Fri, 05 Feb 2021 23:44:21 GMT",
-        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/dc5a2a64-f663-4c33-891f-188c32aa3bc5",
+        "apim-request-id": "d323c5b2-cede-4d57-8375-dbf7ac114db8",
+        "Date": "Sat, 06 Feb 2021 03:49:18 GMT",
+        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/27e6b4aa-2acc-46bb-a9b5-801bd6282c46",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "72"
+        "x-envoy-upstream-service-time": "109"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/dc5a2a64-f663-4c33-891f-188c32aa3bc5?showStats=true",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/27e6b4aa-2acc-46bb-a9b5-801bd6282c46?showStats=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
@@ -52,25 +52,25 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ed68962d-47a0-4a4b-9f42-61d33ed68808",
+        "apim-request-id": "f362c137-df1c-4a71-9517-75d0df0d3943",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 05 Feb 2021 23:44:21 GMT",
+        "Date": "Sat, 06 Feb 2021 03:49:18 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
-        "jobId": "dc5a2a64-f663-4c33-891f-188c32aa3bc5",
-        "lastUpdateDateTime": "2021-02-05T23:44:21Z",
-        "createdDateTime": "2021-02-05T23:44:21Z",
-        "expirationDateTime": "2021-02-06T23:44:21Z",
+        "jobId": "27e6b4aa-2acc-46bb-a9b5-801bd6282c46",
+        "lastUpdateDateTime": "2021-02-06T03:49:18Z",
+        "createdDateTime": "2021-02-06T03:49:18Z",
+        "expirationDateTime": "2021-02-07T03:49:18Z",
         "status": "notStarted",
         "errors": []
       }
     },
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/dc5a2a64-f663-4c33-891f-188c32aa3bc5?showStats=true",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/27e6b4aa-2acc-46bb-a9b5-801bd6282c46?showStats=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
@@ -82,25 +82,25 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "33cd0a05-1f82-4ec4-b166-3985874d2219",
+        "apim-request-id": "9e588071-9616-45af-b445-dd9e55b54226",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 05 Feb 2021 23:44:22 GMT",
+        "Date": "Sat, 06 Feb 2021 03:49:19 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "6"
+        "x-envoy-upstream-service-time": "9"
       },
       "ResponseBody": {
-        "jobId": "dc5a2a64-f663-4c33-891f-188c32aa3bc5",
-        "lastUpdateDateTime": "2021-02-05T23:44:21Z",
-        "createdDateTime": "2021-02-05T23:44:21Z",
-        "expirationDateTime": "2021-02-06T23:44:21Z",
+        "jobId": "27e6b4aa-2acc-46bb-a9b5-801bd6282c46",
+        "lastUpdateDateTime": "2021-02-06T03:49:18Z",
+        "createdDateTime": "2021-02-06T03:49:18Z",
+        "expirationDateTime": "2021-02-07T03:49:18Z",
         "status": "notStarted",
         "errors": []
       }
     },
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/dc5a2a64-f663-4c33-891f-188c32aa3bc5?showStats=true",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/27e6b4aa-2acc-46bb-a9b5-801bd6282c46?showStats=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
@@ -112,19 +112,49 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a035b18d-0295-45eb-91c4-7dbd80db0b04",
+        "apim-request-id": "17cbdc37-e747-4162-9582-457295d9f174",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 05 Feb 2021 23:44:23 GMT",
+        "Date": "Sat, 06 Feb 2021 03:49:20 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "65"
+        "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
-        "jobId": "dc5a2a64-f663-4c33-891f-188c32aa3bc5",
-        "lastUpdateDateTime": "2021-02-05T23:44:23Z",
-        "createdDateTime": "2021-02-05T23:44:21Z",
-        "expirationDateTime": "2021-02-06T23:44:21Z",
+        "jobId": "27e6b4aa-2acc-46bb-a9b5-801bd6282c46",
+        "lastUpdateDateTime": "2021-02-06T03:49:18Z",
+        "createdDateTime": "2021-02-06T03:49:18Z",
+        "expirationDateTime": "2021-02-07T03:49:18Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/health/jobs/27e6b4aa-2acc-46bb-a9b5-801bd6282c46?showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6048c45f2600a6bd35d41e41de29aaf3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a696d414-9d96-4a5c-8b73-211392ad4b4c",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 06 Feb 2021 03:49:21 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "97"
+      },
+      "ResponseBody": {
+        "jobId": "27e6b4aa-2acc-46bb-a9b5-801bd6282c46",
+        "lastUpdateDateTime": "2021-02-06T03:49:21Z",
+        "createdDateTime": "2021-02-06T03:49:18Z",
+        "expirationDateTime": "2021-02-07T03:49:18Z",
         "status": "succeeded",
         "errors": [],
         "results": {

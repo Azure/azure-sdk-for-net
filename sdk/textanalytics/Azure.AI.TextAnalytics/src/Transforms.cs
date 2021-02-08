@@ -485,9 +485,9 @@ namespace Azure.AI.TextAnalytics
             foreach (KeyPhraseExtractionTasksItem task in jobState.Tasks.KeyPhraseExtractionTasks)
             {
                 TextAnalyticsErrorInternal error;
-                bool isError = errors.TryGetValue(index, out error);
+                errors.TryGetValue(index, out error);
 
-                collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error, isError));
+                collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error));
 
                 index++;
             }
@@ -502,9 +502,9 @@ namespace Azure.AI.TextAnalytics
             foreach (EntityRecognitionPiiTasksItem task in jobState.Tasks.EntityRecognitionPiiTasks)
             {
                 TextAnalyticsErrorInternal error;
-                bool isError = errors.TryGetValue(index, out error);
+                errors.TryGetValue(index, out error);
 
-                collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error, isError));
+                collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error));
                 index++;
             }
 
@@ -518,9 +518,9 @@ namespace Azure.AI.TextAnalytics
             foreach (EntityRecognitionTasksItem task in jobState.Tasks.EntityRecognitionTasks)
             {
                 TextAnalyticsErrorInternal error;
-                bool isError = errors.TryGetValue(index, out error);
+                errors.TryGetValue(index, out error);
 
-                collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error, isError));
+                collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, error));
                 index++;
             }
 
