@@ -5,6 +5,10 @@ This sample demonstrates how to analyze sentiment of documents and get more gran
 For the purpose of the sample, we will be the administrator of a hotel and we've set a system to look at the online reviews customers are posting to identify the major complaints about our hotel.
 In order to do so, we will use the Sentiment Analysis feature of the Text Analytics client library. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
+For example, if a customer leaves feedback about a hotel such as "The room was great, but the staff was unfriendly.", Opinion Mining will locate aspects in the text, and their associated opinions and sentiments. Sentiment Analysis might only report a negative sentiment.
+
+![opinion mining diagram](./assets/opinion-mining.png)
+
 ## Creating a `TextAnalyticsClient`
 
 To create a new `TextAnalyticsClient`, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
