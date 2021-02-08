@@ -5,7 +5,9 @@ using System;
 using System.Collections;
 using System.Diagnostics.Tracing;
 using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -275,7 +277,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 Transport = transport,
             };
 
-            return InstrumentClient(new CryptographyClient(key, new DefaultAzureCredential(), options, provider));
+            return InstrumentClient(new CryptographyClient(key, new MockCredential(), options, provider));
         }
 
         private static IEnumerable GetAesOperations()
@@ -314,6 +316,21 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 yield return new TestCaseData("VerifyData", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyDataAsync(algorithm ?? SignatureAlgorithm.RS256, s_buffer, s_buffer)))
                     .ConditionalIgnore(ignoreHashingMethods, "Cannot hash locally with invalid algorithm");
                 yield return new TestCaseData("WrapKey", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.WrapKeyAsync(algorithm ?? KeyWrapAlgorithm.RsaOaep, s_buffer)));
+            }
+        }
+
+        public class MockCredential : TokenCredential
+        {
+            private AccessToken token = new AccessToken("mockToken", DateTimeOffset.UtcNow.AddHours(1));
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return token;
+            }
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return new ValueTask<AccessToken>(token);
             }
         }
     }
