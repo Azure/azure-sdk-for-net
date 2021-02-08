@@ -1,0 +1,62 @@
+parameters:
+- name: AdditionalParameters
+  type: object
+- name: CloudConfig
+  type: object
+  default: {}
+- name: MatrixConfigs
+  type: object
+  default: []
+
+jobs:
+- job: generate_matrix
+  variables:
+    displayNameFilter: $[ coalesce(variables.jobMatrixFilter, '.*') ]
+  pool:
+    name: azsdk-pool-mms-ubuntu-1804-general
+    vmImage: MMSUbuntu18.04
+  displayName: Generate Job Matrix
+  steps:
+    - ${{ each config in parameters.MatrixConfigs }}:
+      - ${{ if eq(config.GenerateVMJobs, 'true') }}:
+        - pwsh: |
+            Write-Host "DISPLAY NAME FILTER: $(displayNameFilter)"
+            eng/scripts/job-matrix/Create-JobMatrix.ps1 `
+              -ConfigPath ${{ config.Path }} `
+              -Selection ${{ config.Selection }} `
+              -DisplayNameFilter "$(displayNameFilter)" `
+              -Filters @("container=^$", "SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}")
+          name: generate_vm_job_matrix_${{ config.Name }}
+          displayName: Generate VM Job Matrix
+
+      - ${{ if eq(config.GenerateContainerJobs, 'true') }}:
+        - pwsh: |
+            Write-Host "DISPLAY NAME FILTER: $(displayNameFilter)"
+            eng/scripts/job-matrix/Create-JobMatrix.ps1 `
+              -ConfigPath ${{ config.Path }} `
+              -Selection ${{ config.Selection }} `
+              -DisplayNameFilter "$(displayNameFilter)" `
+              -Filters @("container=.*", "SupportedClouds=$^$|{{ parameters.CloudConfig.Cloud }}")
+          name: generate_container_job_matrix_${{ config.Name }}
+          displayName: Generate Container Job Matrix
+
+- ${{ each config in parameters.MatrixConfigs }}:
+  - ${{ if eq(config.GenerateVMJobs, 'true') }}:
+    - template: ./archetype-sdk-tests-jobs.yml
+      parameters:
+        UsePlatformContainer: false
+        Matrix: dependencies.generate_matrix.outputs['generate_vm_job_matrix_${{ config.Name }}.matrix']
+        DependsOn: generate_matrix
+        CloudConfig: ${{ parameters.CloudConfig }}
+        ${{ each param in parameters.AdditionalParameters }}:
+          ${{ param.key }}: ${{ param.value }}
+
+  - ${{ if eq(config.GenerateContainerJobs, 'true') }}:
+    - template: ./archetype-sdk-tests-jobs.yml
+      parameters:
+        UsePlatformContainer: true
+        Matrix: dependencies.generate_matrix.outputs['generate_container_job_matrix_${{ config.Name }}.matrix']
+        DependsOn: generate_matrix
+        CloudConfig: ${{ parameters.CloudConfig }}
+        ${{ each param in parameters.AdditionalParameters }}:
+          ${{ param.key }}: ${{ param.value }}

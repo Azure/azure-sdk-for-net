@@ -76,6 +76,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     {
                         Console.WriteLine($"    Text: {entity.Text}");
                         Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"    Length: {entity.Length}");
                         Console.WriteLine($"    Category: {entity.Category}");
                         if (!string.IsNullOrEmpty(entity.SubCategory))
                             Console.WriteLine($"    SubCategory: {entity.SubCategory}");

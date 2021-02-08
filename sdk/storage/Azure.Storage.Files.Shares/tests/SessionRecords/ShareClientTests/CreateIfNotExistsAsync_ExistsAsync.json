@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanada.file.core.windows.net/test-share-ef0b5308-4cde-1dd1-0823-6a958530078c?restype=share",
@@ -13,14 +13,15 @@
         "x-ms-client-request-id": "9d8ef369-ea4b-bf0f-f549-a9034f18090c",
         "x-ms-date": "Wed, 14 Oct 2020 23:18:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 14 Oct 2020 23:18:46 GMT",
-        "ETag": "\u00220x8D8709780500D60\u0022",
+        "ETag": "\"0x8D8709780500D60\"",
         "Last-Modified": "Wed, 14 Oct 2020 23:18:46 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -28,7 +29,7 @@
         ],
         "x-ms-client-request-id": "9d8ef369-ea4b-bf0f-f549-a9034f18090c",
         "x-ms-request-id": "6e013f23-301a-000a-4080-a23535000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     },
@@ -45,7 +46,8 @@
         "x-ms-client-request-id": "922bf762-6aa1-b240-eda4-d847526f4322",
         "x-ms-date": "Wed, 14 Oct 2020 23:18:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 409,
@@ -60,12 +62,12 @@
         "x-ms-client-request-id": "922bf762-6aa1-b240-eda4-d847526f4322",
         "x-ms-error-code": "ShareAlreadyExists",
         "x-ms-request-id": "6e013f26-301a-000a-4180-a23535000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareAlreadyExists\u003C/Code\u003E\u003CMessage\u003EThe specified share already exists.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareAlreadyExists</Code><Message>The specified share already exists.\n",
         "RequestId:6e013f26-301a-000a-4180-a23535000000\n",
-        "Time:2020-10-14T23:18:46.9148534Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2020-10-14T23:18:46.9148534Z</Message></Error>"
       ]
     },
     {
@@ -82,7 +84,8 @@
         "x-ms-date": "Wed, 14 Oct 2020 23:18:45 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -95,7 +98,7 @@
         ],
         "x-ms-client-request-id": "57a098a3-77ec-006b-5238-b2840260b971",
         "x-ms-request-id": "6e013f27-301a-000a-4280-a23535000000",
-        "x-ms-version": "2020-04-08"
+        "x-ms-version": "2020-06-12"
       },
       "ResponseBody": []
     }

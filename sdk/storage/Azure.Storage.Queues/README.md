@@ -125,6 +125,20 @@ QueueClient queue = new QueueClient(accountUri, new DefaultAzureCredential());
 
 Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation][storage_ad] and [our samples](#next-steps).
 
+### Message encoding
+
+This version of library does not encode message by default. V11 and prior versions as well as Azure Functions use base64-encoded messages by default.
+Therefore it's recommended to use this feature for interop scenarios.
+
+```C# Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_ConfigureMessageEncodingAsync
+QueueClientOptions queueClientOptions = new QueueClientOptions()
+{
+    MessageEncoding = QueueMessageEncoding.Base64
+};
+
+QueueClient queueClient = new QueueClient(connectionString, queueName, queueClientOptions);
+```
+
 ## Troubleshooting
 
 All Azure Storage Queue service operations will throw a

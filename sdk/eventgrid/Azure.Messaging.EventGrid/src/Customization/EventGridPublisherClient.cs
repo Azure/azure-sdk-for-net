@@ -50,16 +50,7 @@ namespace Azure.Messaging.EventGrid
         {
         }
 
-        /// <summary>Initalizes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
-        /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
-        /// <param name="credential">The Shared Access Signature credential used to authenticate with the service.This signature
-        /// can be constructed using <see cref="BuildSharedAccessSignature"/>.</param>
-        public EventGridPublisherClient(Uri endpoint, AzureSasCredential credential)
-            : this(endpoint, credential, new EventGridPublisherClientOptions())
-        {
-        }
-
-        /// <summary>Initalizes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
+         /// <summary>Initalizes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
         /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
         /// <param name="credential">The key credential used to authenticate with the service.</param>
         /// <param name="options">The set of options to use for configuring the client.</param>
@@ -137,9 +128,9 @@ namespace Azure.Messaging.EventGrid
         /// </summary>
         /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
         /// <param name="credential">The Shared Access Signature credential used to connect to Azure. This signature
-        /// can be constructed using <see cref="BuildSharedAccessSignature"/>.</param>
+        /// can be constructed using the <see cref="EventGridSasBuilder"/>.</param>
         /// <param name="options">The set of options to use for configuring the client.</param>
-        public EventGridPublisherClient(Uri endpoint, AzureSasCredential credential, EventGridPublisherClientOptions options)
+        public EventGridPublisherClient(Uri endpoint, AzureSasCredential credential, EventGridPublisherClientOptions options = default)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
@@ -369,38 +360,6 @@ namespace Azure.Messaging.EventGrid
             {
                 scope.Failed(e);
                 throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a SAS token for use with the Event Grid service.
-        /// </summary>
-        /// <param name="endpoint">The path for the event grid topic to which you're sending events. For example, "https://TOPIC-NAME.REGION-NAME.eventgrid.azure.net/eventGrid/api/events".</param>
-        /// <param name="expirationUtc">Time at which the SAS token becomes invalid for authentication.</param>
-        /// <param name="key">The key credential used to generate the token.</param>
-        /// <param name="apiVersion">The service version to use when handling requests made with the SAS token.</param>
-        /// <returns>The generated SAS token string.</returns>
-        public static string BuildSharedAccessSignature(Uri endpoint, DateTimeOffset expirationUtc, AzureKeyCredential key, EventGridPublisherClientOptions.ServiceVersion apiVersion = EventGridPublisherClientOptions.LatestVersion)
-        {
-            const char Resource = 'r';
-            const char Expiration = 'e';
-            const char Signature = 's';
-
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Reset(endpoint);
-            uriBuilder.AppendQuery("api-version", apiVersion.GetVersionString(), true);
-            string encodedResource = HttpUtility.UrlEncode(uriBuilder.ToString());
-            var culture = CultureInfo.CreateSpecificCulture("en-US");
-            var encodedExpirationUtc = HttpUtility.UrlEncode(expirationUtc.ToString(culture));
-
-            string unsignedSas = $"{Resource}={encodedResource}&{Expiration}={encodedExpirationUtc}";
-            using (var hmac = new HMACSHA256(Convert.FromBase64String(key.Key)))
-            {
-                string signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(unsignedSas)));
-                string encodedSignature = HttpUtility.UrlEncode(signature);
-                string signedSas = $"{unsignedSas}&{Signature}={encodedSignature}";
-
-                return signedSas;
             }
         }
 

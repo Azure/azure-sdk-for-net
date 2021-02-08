@@ -252,6 +252,7 @@ try
     {
         Console.WriteLine($"  Text: {entity.Text}");
         Console.WriteLine($"  Offset: {entity.Offset}");
+        Console.WriteLine($"  Length: {entity.Length}");
         Console.WriteLine($"  Category: {entity.Category}");
         if (!string.IsNullOrEmpty(entity.SubCategory))
             Console.WriteLine($"  SubCategory: {entity.SubCategory}");
@@ -333,6 +334,7 @@ try
         {
             Console.WriteLine($"    Match Text: {match.Text}");
             Console.WriteLine($"    Offset: {match.Offset}");
+            Console.WriteLine($"    Length: {match.Length}");
             Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
         }
         Console.WriteLine("");
@@ -394,6 +396,7 @@ try
     {
         Console.WriteLine($"    Text: {entity.Text}");
         Console.WriteLine($"    Offset: {entity.Offset}");
+        Console.WriteLine($"  Length: {entity.Length}");
         Console.WriteLine($"    Category: {entity.Category}");
         if (!string.IsNullOrEmpty(entity.SubCategory))
             Console.WriteLine($"    SubCategory: {entity.SubCategory}");
@@ -411,10 +414,10 @@ catch (RequestFailedException exception)
 ### Recognize Healthcare Entities Asynchronously
 Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
 
-```C# Snippet:RecognizeHealthcareEntitiesAsync
-    string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
-                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
-                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
+```C# Snippet:TextAnalyticsSampleHealthcareBatchAsync
+    string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |
+                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE.
+                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months.
                         The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
                         with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
                         another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
@@ -422,34 +425,57 @@ Text Analytics for health is a containerized service that extracts and labels re
                         minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                         increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-    HealthcareOperation healthOperation = await client.StartHealthcareAsync(document);
+    string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
+
+    List<string> batchInput = new List<string>()
+    {
+        document1,
+        document2,
+    };
+
+    AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
+    {
+        IncludeStatistics = true
+    };
+
+    AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, "en", options);
 
     await healthOperation.WaitForCompletionAsync();
 
-    RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
-
-    Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
-    Console.WriteLine("");
-
-    foreach (DocumentHealthcareResult result in results)
+    await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
     {
-        Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+        Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
+        Console.WriteLine("");
 
-        foreach (HealthcareEntity entity in result.Entities)
+        foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
         {
-            Console.WriteLine($"    Entity: {entity.Text}");
-            Console.WriteLine($"    Category: {entity.Category}");
-            Console.WriteLine($"    Offset: {entity.Offset}");
-            Console.WriteLine($"    Length: {entity.Length}");
-            Console.WriteLine($"    IsNegated: {entity.IsNegated}");
-            Console.WriteLine($"    Links:");
+            Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
-            foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+            foreach (HealthcareEntity entity in result.Entities)
             {
-                Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-                Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+                Console.WriteLine($"    Entity: {entity.Text}");
+                Console.WriteLine($"    Category: {entity.Category}");
+                Console.WriteLine($"    Offset: {entity.Offset}");
+                Console.WriteLine($"    Length: {entity.Length}");
+                Console.WriteLine($"    Links:");
+
+                foreach (EntityDataSource entityDataSource in entity.DataSources)
+                {
+                    Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
+                    Console.WriteLine($"        DataSource: {entityDataSource.Name}");
+                }
             }
+
+            Console.WriteLine($"    Document statistics:");
+            Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
+            Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+            Console.WriteLine("");
         }
+        Console.WriteLine($"Request statistics:");
+        Console.WriteLine($"    Document Count: {documentsInPage.Statistics.DocumentCount}");
+        Console.WriteLine($"    Valid Document Count: {documentsInPage.Statistics.ValidDocumentCount}");
+        Console.WriteLine($"    Transaction Count: {documentsInPage.Statistics.TransactionCount}");
+        Console.WriteLine($"    Invalid Document Count: {documentsInPage.Statistics.InvalidDocumentCount}");
         Console.WriteLine("");
     }
 }
@@ -482,59 +508,60 @@ The Analyze functionality allows to choose which of the supported Text Analytics
 
     await operation.WaitForCompletionAsync();
 
-    AnalyzeOperationResult resultCollection = operation.Value;
-
-    RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
-
-    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
-
-    RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
-
-    Console.WriteLine("Recognized Entities");
-
-    foreach (RecognizeEntitiesResult result in entitiesResult)
+    foreach (AnalyzeOperationResult documentsInPage in operation.GetValues())
     {
-        Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+        RecognizeEntitiesResultCollection entitiesResult = documentsInPage.Tasks.EntityRecognitionTasks[0].Results;
 
-        foreach (CategorizedEntity entity in result.Entities)
+        ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.Tasks.KeyPhraseExtractionTasks[0].Results;
+
+        RecognizePiiEntitiesResultCollection piiResult = documentsInPage.Tasks.EntityRecognitionPiiTasks[0].Results;
+
+        Console.WriteLine("Recognized Entities");
+
+        foreach (RecognizeEntitiesResult result in entitiesResult)
         {
-            Console.WriteLine($"    Entity: {entity.Text}");
-            Console.WriteLine($"    Category: {entity.Category}");
-            Console.WriteLine($"    Offset: {entity.Offset}");
-            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+            Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+
+            foreach (CategorizedEntity entity in result.Entities)
+            {
+                Console.WriteLine($"    Entity: {entity.Text}");
+                Console.WriteLine($"    Category: {entity.Category}");
+                Console.WriteLine($"    Offset: {entity.Offset}");
+                Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+                Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+            }
+            Console.WriteLine("");
         }
-        Console.WriteLine("");
-    }
 
-    Console.WriteLine("Recognized PII Entities");
+        Console.WriteLine("Recognized PII Entities");
 
-    foreach (RecognizePiiEntitiesResult result in piiResult)
-    {
-        Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
-
-        foreach (PiiEntity entity in result.Entities)
+        foreach (RecognizePiiEntitiesResult result in piiResult)
         {
-            Console.WriteLine($"    Entity: {entity.Text}");
-            Console.WriteLine($"    Category: {entity.Category}");
-            Console.WriteLine($"    Offset: {entity.Offset}");
-            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+            Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
+
+            foreach (PiiEntity entity in result.Entities)
+            {
+                Console.WriteLine($"    Entity: {entity.Text}");
+                Console.WriteLine($"    Category: {entity.Category}");
+                Console.WriteLine($"    Offset: {entity.Offset}");
+                Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+                Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+            }
+            Console.WriteLine("");
         }
-        Console.WriteLine("");
-    }
 
-    Console.WriteLine("Key Phrases");
+        Console.WriteLine("Key Phrases");
 
-    foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
-    {
-        Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
-
-        foreach (string keyphrase in result.KeyPhrases)
+        foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
         {
-            Console.WriteLine($"    {keyphrase}");
+            Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+
+            foreach (string keyphrase in result.KeyPhrases)
+            {
+                Console.WriteLine($"    {keyphrase}");
+            }
+            Console.WriteLine("");
         }
-        Console.WriteLine("");
     }
 }
 ```

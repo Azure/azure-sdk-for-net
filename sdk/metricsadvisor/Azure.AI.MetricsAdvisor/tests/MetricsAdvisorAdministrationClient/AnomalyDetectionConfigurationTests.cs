@@ -24,9 +24,40 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            Assert.That(() => adminClient.CreateDetectionConfigurationAsync(null), Throws.InstanceOf<ArgumentNullException>());
+            var metricId = "metricId";
+            var name = "configName";
+            var conditions = new MetricWholeSeriesDetectionCondition();
 
+            var config = new AnomalyDetectionConfiguration()
+            {
+                MetricId = null,
+                Name = name,
+                WholeSeriesDetectionConditions = conditions
+            };
+
+            Assert.That(() => adminClient.CreateDetectionConfigurationAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.CreateDetectionConfiguration(null), Throws.InstanceOf<ArgumentNullException>());
+
+            Assert.That(() => adminClient.CreateDetectionConfigurationAsync(config), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.CreateDetectionConfiguration(config), Throws.InstanceOf<ArgumentNullException>());
+
+            config.MetricId = "";
+            Assert.That(() => adminClient.CreateDetectionConfigurationAsync(config), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => adminClient.CreateDetectionConfiguration(config), Throws.InstanceOf<ArgumentException>());
+
+            config.MetricId = metricId;
+            config.Name = null;
+            Assert.That(() => adminClient.CreateDetectionConfigurationAsync(config), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.CreateDetectionConfiguration(config), Throws.InstanceOf<ArgumentNullException>());
+
+            config.Name = "";
+            Assert.That(() => adminClient.CreateDetectionConfigurationAsync(config), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => adminClient.CreateDetectionConfiguration(config), Throws.InstanceOf<ArgumentException>());
+
+            config.Name = name;
+            config.WholeSeriesDetectionConditions = null;
+            Assert.That(() => adminClient.CreateDetectionConfigurationAsync(config), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.CreateDetectionConfiguration(config), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -34,7 +65,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var config = new AnomalyDetectionConfiguration(FakeGuid, "configName", new ());
+            var config = new AnomalyDetectionConfiguration()
+            {
+                MetricId = FakeGuid,
+                Name = "configName",
+                WholeSeriesDetectionConditions = new ()
+            };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
@@ -48,7 +84,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var config = new AnomalyDetectionConfiguration(FakeGuid, "configName", new ());
+            var config = new AnomalyDetectionConfiguration();
 
             Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(null, config), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.UpdateDetectionConfigurationAsync("", config), Throws.InstanceOf<ArgumentException>());
@@ -66,7 +102,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var config = new AnomalyDetectionConfiguration(FakeGuid, "configName", new ());
+            var config = new AnomalyDetectionConfiguration();
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();

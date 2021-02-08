@@ -55,7 +55,7 @@ For more information about creating the resource or how to get the location and 
 
 ### Authenticate the client
 
-In order to interact with the Metrics Advisor service, you'll need to create an instance of the [`MetricsAdvisorClient`][metrics_advisor_client_class] or the [`MetricsAdvisorAdministrationClient`][metrics_advisor_admin_client_class] classes. You will need an **endpoint**, a **subscription key** and an **API key** to instantiate a client object.
+In order to interact with the Metrics Advisor service, you'll need to create an instance of the [`MetricsAdvisorClient`][metrics_advisor_client_class] or the [`MetricsAdvisorAdministrationClient`][metrics_advisor_admin_client_class] classes. You will need an **endpoint**, a **subscription key**, and an **API key** to instantiate a client object.
 
 #### Get the Endpoint and the Subscription Key
 
@@ -93,6 +93,34 @@ string subscriptionKey = "<subscriptionKey>";
 string apiKey = "<apiKey>";
 var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
 var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
+```
+
+#### Create a MetricsAdvisorClient or a MetricsAdvisorAdministrationClient with Azure Active Directory
+
+`MetricsAdvisorKeyCredential` authentication is used in the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].
+
+To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, or other credential providers provided with the Azure SDK, please install the `Azure.Identity` package:
+
+```PowerShell
+Install-Package Azure.Identity
+```
+
+You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to Metrics Advisor by assigning the `"Cognitive Services Metrics Advisor User"` role to your service principal. You may want to assign the `"Cognitive Services Metrics Advisor Administrator"` role instead if administrator privileges are required.
+
+Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
+
+Once you have the environment variables set, you can create a [`MetricsAdvisorClient`][metrics_advisor_client_class]:
+
+```C# Snippet:CreateMetricsAdvisorClientWithAad
+string endpoint = "<endpoint>";
+var client = new MetricsAdvisorClient(new Uri(endpoint), new DefaultAzureCredential());
+```
+
+Alternately, you can also create a [`MetricsAdvisorAdministrationClient`][metrics_advisor_admin_client_class] to perform administration operations:
+
+```C# Snippet:CreateMetricsAdvisorAdministrationClientWithAad
+string endpoint = "<endpoint>";
+var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -158,29 +186,22 @@ Metrics Advisor supports multiple types of data sources. In this sample we'll il
 string sqlServerConnectionString = "<connectionString>";
 string sqlServerQuery = "<query>";
 
-var dataFeedName = "Sample data feed";
-var dataFeedSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
-var dataFeedGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
+var dataFeed = new DataFeed();
 
-var dataFeedMetrics = new List<DataFeedMetric>()
-{
-    new DataFeedMetric("cost"),
-    new DataFeedMetric("revenue")
-};
-var dataFeedDimensions = new List<DataFeedDimension>()
-{
-    new DataFeedDimension("category"),
-    new DataFeedDimension("city")
-};
-var dataFeedSchema = new DataFeedSchema(dataFeedMetrics)
-{
-    DimensionColumns = dataFeedDimensions
-};
+dataFeed.Name = "Sample data feed";
+dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
+dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
-var ingestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-var dataFeedIngestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
+dataFeed.Schema = new DataFeedSchema();
+dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("cost"));
+dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("revenue"));
+dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("category"));
+dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("city"));
 
-var dataFeed = new DataFeed(dataFeedName, dataFeedSource, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
+dataFeed.IngestionSettings = new DataFeedIngestionSettings()
+{
+    IngestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z")
+};
 
 Response<string> response = await adminClient.CreateDataFeedAsync(dataFeed);
 
@@ -256,23 +277,25 @@ Create an [`AnomalyDetectionConfiguration`](#data-point-anomaly) to tell the ser
 string metricId = "<metricId>";
 string configurationName = "Sample anomaly detection configuration";
 
-var hardThresholdSuppressCondition = new SuppressCondition(1, 100);
-var hardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardThresholdSuppressCondition)
+var detectionConfiguration = new AnomalyDetectionConfiguration()
+{
+    MetricId = metricId,
+    Name = configurationName,
+    WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+};
+
+var detectCondition = detectionConfiguration.WholeSeriesDetectionConditions;
+
+var hardSuppress = new SuppressCondition(1, 100);
+detectCondition.HardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardSuppress)
 {
     LowerBound = 5.0
 };
 
-var smartDetectionSuppressCondition = new SuppressCondition(4, 50);
-var smartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartDetectionSuppressCondition);
+var smartSuppress = new SuppressCondition(4, 50);
+detectCondition.SmartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartSuppress);
 
-var detectionCondition = new MetricWholeSeriesDetectionCondition()
-{
-    HardThresholdCondition = hardThresholdCondition,
-    SmartDetectionCondition = smartDetectionCondition,
-    CrossConditionsOperator = DetectionConditionsOperator.Or
-};
-
-var detectionConfiguration = new AnomalyDetectionConfiguration(metricId, configurationName, detectionCondition);
+detectCondition.CrossConditionsOperator = DetectionConditionsOperator.Or;
 
 Response<string> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 
@@ -287,13 +310,14 @@ Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and t
 
 ```C# Snippet:CreateHookAsync
 string hookName = "Sample hook";
-var emailsToAlert = new List<string>()
+
+var emailHook = new EmailNotificationHook()
 {
-    "email1@sample.com",
-    "email2@sample.com"
+    Name = hookName
 };
 
-var emailHook = new EmailNotificationHook(hookName, emailsToAlert);
+emailHook.EmailsToAlert.Add("email1@sample.com");
+emailHook.EmailsToAlert.Add("email2@sample.com");
 
 Response<string> response = await adminClient.CreateHookAsync(emailHook);
 
@@ -311,15 +335,18 @@ string hookId = "<hookId>";
 string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
 
 string configurationName = "Sample anomaly alert configuration";
-var idsOfHooksToAlert = new List<string>() { hookId };
 
-var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-var metricAlertConfigurations = new List<MetricAnomalyAlertConfiguration>()
+AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
 {
-    new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope)
+    Name = configurationName
 };
 
-AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration(configurationName, idsOfHooksToAlert, metricAlertConfigurations);
+alertConfiguration.IdsOfHooksToAlert.Add(hookId);
+
+var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+var metricAlertConfiguration = new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope);
+
+alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 
 Response<string> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
 
@@ -496,8 +523,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [metricsadv-sample9]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample09_QueryTimeSeriesInformation.cs
 [metricsadv-sample10]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample10_FeedbackCrudOperations.cs
 
+[aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
+[register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/samples/Diagnostics.md
 

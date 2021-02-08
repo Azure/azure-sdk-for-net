@@ -12,7 +12,9 @@ namespace Azure
     /// <summary>
     /// Represents the HTTP response from the service.
     /// </summary>
+#pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Response : IDisposable
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
         /// Gets the HTTP status code.

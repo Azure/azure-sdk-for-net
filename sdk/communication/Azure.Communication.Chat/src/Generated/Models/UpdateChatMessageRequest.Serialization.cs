@@ -20,11 +20,6 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("content");
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(Priority))
-            {
-                writer.WritePropertyName("priority");
-                writer.WriteStringValue(Priority.Value.ToString());
-            }
             writer.WriteEndObject();
         }
     }

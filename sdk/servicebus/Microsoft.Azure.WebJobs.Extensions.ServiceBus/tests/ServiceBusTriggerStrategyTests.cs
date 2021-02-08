@@ -3,18 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Xunit;
-using static Microsoft.Azure.ServiceBus.Message;
+using Azure.Messaging.ServiceBus;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
     public class ServiceBusTriggerStrategyTests
     {
-        [Fact]
+        [Test]
         public void GetStaticBindingContract_ReturnsExpectedValue()
         {
             var strategy = new ServiceBusTriggerBindingStrategy();
@@ -23,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             CheckBindingContract(bindingDataContract);
         }
 
-        [Fact]
+        [Test]
         public void GetBindingContract_SingleDispatch_ReturnsExpectedValue()
         {
             var strategy = new ServiceBusTriggerBindingStrategy();
@@ -32,108 +28,100 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             CheckBindingContract(bindingDataContract);
         }
 
-        [Fact]
+        [Test]
         public void GetBindingContract_MultipleDispatch_ReturnsExpectedValue()
         {
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingDataContract = strategy.GetBindingContract(false);
 
-            Assert.Equal(15, bindingDataContract.Count);
-            Assert.Equal(typeof(int[]), bindingDataContract["DeliveryCountArray"]);
-            Assert.Equal(typeof(string[]), bindingDataContract["DeadLetterSourceArray"]);
-            Assert.Equal(typeof(string[]), bindingDataContract["LockTokenArray"]);
-            Assert.Equal(typeof(DateTime[]), bindingDataContract["ExpiresAtUtcArray"]);
-            Assert.Equal(typeof(DateTime[]), bindingDataContract["EnqueuedTimeUtcArray"]);
-            Assert.Equal(typeof(string[]), bindingDataContract["MessageIdArray"]);
-            Assert.Equal(typeof(string[]), bindingDataContract["ContentTypeArray"]);
-            Assert.Equal(typeof(string[]), bindingDataContract["ReplyToArray"]);
-            Assert.Equal(typeof(long[]), bindingDataContract["SequenceNumberArray"]);
-            Assert.Equal(typeof(string[]), bindingDataContract["ToArray"]);
-            Assert.Equal(typeof(string[]), bindingDataContract["LabelArray"]);
-            Assert.Equal(typeof(string[]), bindingDataContract["CorrelationIdArray"]);
-            Assert.Equal(typeof(IDictionary<string, object>[]), bindingDataContract["UserPropertiesArray"]);
-            Assert.Equal(typeof(MessageReceiver), bindingDataContract["MessageReceiver"]);
-            Assert.Equal(typeof(IMessageSession), bindingDataContract["MessageSession"]);
+            Assert.AreEqual(15, bindingDataContract.Count);
+            Assert.AreEqual(typeof(int[]), bindingDataContract["DeliveryCountArray"]);
+            Assert.AreEqual(typeof(string[]), bindingDataContract["DeadLetterSourceArray"]);
+            Assert.AreEqual(typeof(string[]), bindingDataContract["LockTokenArray"]);
+            Assert.AreEqual(typeof(DateTime[]), bindingDataContract["ExpiresAtUtcArray"]);
+            Assert.AreEqual(typeof(DateTime[]), bindingDataContract["EnqueuedTimeUtcArray"]);
+            Assert.AreEqual(typeof(string[]), bindingDataContract["MessageIdArray"]);
+            Assert.AreEqual(typeof(string[]), bindingDataContract["ContentTypeArray"]);
+            Assert.AreEqual(typeof(string[]), bindingDataContract["ReplyToArray"]);
+            Assert.AreEqual(typeof(long[]), bindingDataContract["SequenceNumberArray"]);
+            Assert.AreEqual(typeof(string[]), bindingDataContract["ToArray"]);
+            Assert.AreEqual(typeof(string[]), bindingDataContract["LabelArray"]);
+            Assert.AreEqual(typeof(string[]), bindingDataContract["CorrelationIdArray"]);
+            Assert.AreEqual(typeof(IDictionary<string, object>[]), bindingDataContract["ApplicationPropertiesArray"]);
+            Assert.AreEqual(typeof(ServiceBusReceiver), bindingDataContract["MessageReceiver"]);
+            Assert.AreEqual(typeof(ServiceBusSessionReceiver), bindingDataContract["MessageSession"]);
         }
 
-        [Fact]
+        [Test]
         public void GetBindingData_SingleDispatch_ReturnsExpectedValue()
         {
-            var message = new Message(new byte[] { });
-            SystemPropertiesCollection sysProp = GetSystemProperties();
-            TestHelpers.SetField(message, "SystemProperties", sysProp);
             IDictionary<string, object> userProps = new Dictionary<string, object>();
             userProps.Add(new KeyValuePair<string, object>("prop1", "value1"));
             userProps.Add(new KeyValuePair<string, object>("prop2", "value2"));
-            TestHelpers.SetField(message, "UserProperties", userProps);
+            var message = CreateMessageWithSystemProperties(applicationProperties: userProps);
 
             var input = ServiceBusTriggerInput.CreateSingle(message);
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
-            Assert.Equal(15, bindingData.Count);  // SystemPropertiesCollection is sealed
+            Assert.AreEqual(15, bindingData.Count);
 
-            Assert.Same(input.MessageReceiver as MessageReceiver, bindingData["MessageReceiver"]);
-            Assert.Same(input.MessageReceiver as IMessageSession, bindingData["MessageSession"]);
-            Assert.Equal(message.SystemProperties.LockToken, bindingData["LockToken"]);
-            Assert.Equal(message.SystemProperties.SequenceNumber, bindingData["SequenceNumber"]);
-            Assert.Equal(message.SystemProperties.DeliveryCount, bindingData["DeliveryCount"]);
-            Assert.Same(message.SystemProperties.DeadLetterSource, bindingData["DeadLetterSource"]);
-            Assert.Equal(message.ExpiresAtUtc, bindingData["ExpiresAtUtc"]);
-            Assert.Same(message.MessageId, bindingData["MessageId"]);
-            Assert.Same(message.ContentType, bindingData["ContentType"]);
-            Assert.Same(message.ReplyTo, bindingData["ReplyTo"]);
-            Assert.Same(message.To, bindingData["To"]);
-            Assert.Same(message.Label, bindingData["Label"]);
-            Assert.Same(message.CorrelationId, bindingData["CorrelationId"]);
+            Assert.AreSame(input.Receiver, bindingData["MessageReceiver"]);
+            Assert.AreSame(input.SessionReceiver, bindingData["MessageSession"]);
+            Assert.AreEqual(message.LockToken, bindingData["LockToken"]);
+            Assert.AreEqual(message.SequenceNumber, bindingData["SequenceNumber"]);
+            Assert.AreEqual(message.DeliveryCount, bindingData["DeliveryCount"]);
+            Assert.AreSame(message.DeadLetterSource, bindingData["DeadLetterSource"]);
+            Assert.AreEqual(message.ExpiresAt, bindingData["ExpiresAtUtc"]);
+            Assert.AreEqual(message.EnqueuedTime, bindingData["EnqueuedTimeUtc"]);
+            Assert.AreSame(message.MessageId, bindingData["MessageId"]);
+            Assert.AreSame(message.ContentType, bindingData["ContentType"]);
+            Assert.AreSame(message.ReplyTo, bindingData["ReplyTo"]);
+            Assert.AreSame(message.To, bindingData["To"]);
+            Assert.AreSame(message.Subject, bindingData["Label"]);
+            Assert.AreSame(message.CorrelationId, bindingData["CorrelationId"]);
 
-            IDictionary<string, object> bindingDataUserProps = bindingData["UserProperties"] as Dictionary<string, object>;
+            IDictionary<string, object> bindingDataUserProps = bindingData["ApplicationProperties"] as IDictionary<string, object>;
             Assert.NotNull(bindingDataUserProps);
-            Assert.Equal("value1", bindingDataUserProps["prop1"]);
-            Assert.Equal("value2", bindingDataUserProps["prop2"]);
+            Assert.AreEqual("value1", bindingDataUserProps["prop1"]);
+            Assert.AreEqual("value2", bindingDataUserProps["prop2"]);
         }
 
-        [Fact]
+        [Test]
         public void GetBindingData_MultipleDispatch_ReturnsExpectedValue()
         {
-            var messages = new Message[3]
+            var messages = new ServiceBusReceivedMessage[3]
             {
-                new Message(Encoding.UTF8.GetBytes("Event 1")),
-                new Message(Encoding.UTF8.GetBytes("Event 2")),
-                new Message(Encoding.UTF8.GetBytes("Event 3")),
+                CreateMessageWithSystemProperties("Event 1"),
+                CreateMessageWithSystemProperties("Event 2"),
+                CreateMessageWithSystemProperties("Event 3"),
             };
 
-            foreach (var message in messages)
-            {
-                SystemPropertiesCollection sysProps = GetSystemProperties();
-                TestHelpers.SetField(message, "SystemProperties", sysProps);
-            }
-
-            var input = ServiceBusTriggerInput.CreateBatch(messages);
+             var input = ServiceBusTriggerInput.CreateBatch(messages);
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
-            Assert.Equal(15, bindingData.Count);
-            Assert.Same(input.MessageReceiver as MessageReceiver, bindingData["MessageReceiver"]);
-            Assert.Same(input.MessageReceiver as IMessageSession, bindingData["MessageSession"]);
+            Assert.AreEqual(15, bindingData.Count);
+            Assert.AreSame(input.Receiver, bindingData["MessageReceiver"]);
+            Assert.AreSame(input.SessionReceiver, bindingData["MessageSession"]);
 
             // verify an array was created for each binding data type
-            Assert.Equal(messages.Length, ((int[])bindingData["DeliveryCountArray"]).Length);
-            Assert.Equal(messages.Length, ((string[])bindingData["DeadLetterSourceArray"]).Length);
-            Assert.Equal(messages.Length, ((string[])bindingData["LockTokenArray"]).Length);
-            Assert.Equal(messages.Length, ((DateTime[])bindingData["ExpiresAtUtcArray"]).Length);
-            Assert.Equal(messages.Length, ((DateTime[])bindingData["EnqueuedTimeUtcArray"]).Length);
-            Assert.Equal(messages.Length, ((string[])bindingData["MessageIdArray"]).Length);
-            Assert.Equal(messages.Length, ((string[])bindingData["ContentTypeArray"]).Length);
-            Assert.Equal(messages.Length, ((string[])bindingData["ReplyToArray"]).Length);
-            Assert.Equal(messages.Length, ((long[])bindingData["SequenceNumberArray"]).Length);
-            Assert.Equal(messages.Length, ((string[])bindingData["ToArray"]).Length);
-            Assert.Equal(messages.Length, ((string[])bindingData["LabelArray"]).Length);
-            Assert.Equal(messages.Length, ((string[])bindingData["CorrelationIdArray"]).Length);
-            Assert.Equal(messages.Length, ((IDictionary<string, object>[])bindingData["UserPropertiesArray"]).Length);
+            Assert.AreEqual(messages.Length, ((int[])bindingData["DeliveryCountArray"]).Length);
+            Assert.AreEqual(messages.Length, ((string[])bindingData["DeadLetterSourceArray"]).Length);
+            Assert.AreEqual(messages.Length, ((string[])bindingData["LockTokenArray"]).Length);
+            Assert.AreEqual(messages.Length, ((DateTime[])bindingData["ExpiresAtUtcArray"]).Length);
+            Assert.AreEqual(messages.Length, ((DateTime[])bindingData["EnqueuedTimeUtcArray"]).Length);
+            Assert.AreEqual(messages.Length, ((string[])bindingData["MessageIdArray"]).Length);
+            Assert.AreEqual(messages.Length, ((string[])bindingData["ContentTypeArray"]).Length);
+            Assert.AreEqual(messages.Length, ((string[])bindingData["ReplyToArray"]).Length);
+            Assert.AreEqual(messages.Length, ((long[])bindingData["SequenceNumberArray"]).Length);
+            Assert.AreEqual(messages.Length, ((string[])bindingData["ToArray"]).Length);
+            Assert.AreEqual(messages.Length, ((string[])bindingData["SubjectArray"]).Length);
+            Assert.AreEqual(messages.Length, ((string[])bindingData["CorrelationIdArray"]).Length);
+            Assert.AreEqual(messages.Length, ((IDictionary<string, object>[])bindingData["ApplicationPropertiesArray"]).Length);
         }
 
-        [Fact]
+        [Test]
         public void BindSingle_Returns_Exptected_Message()
         {
             string data = "123";
@@ -143,44 +131,46 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 
             var contract = strategy.GetBindingData(triggerInput);
 
-            Message single = strategy.BindSingle(triggerInput, null);
-            string body = Encoding.UTF8.GetString(single.Body);
+            ServiceBusReceivedMessage single = strategy.BindSingle(triggerInput, null);
+            string body = single.Body.ToString();
 
-            Assert.Equal(data, body);
+            Assert.AreEqual(data, body);
             Assert.Null(contract["MessageReceiver"]);
             Assert.Null(contract["MessageSession"]);
         }
 
         private static void CheckBindingContract(Dictionary<string, Type> bindingDataContract)
         {
-            Assert.Equal(15, bindingDataContract.Count);
-            Assert.Equal(typeof(int), bindingDataContract["DeliveryCount"]);
-            Assert.Equal(typeof(string), bindingDataContract["DeadLetterSource"]);
-            Assert.Equal(typeof(string), bindingDataContract["LockToken"]);
-            Assert.Equal(typeof(DateTime), bindingDataContract["ExpiresAtUtc"]);
-            Assert.Equal(typeof(DateTime), bindingDataContract["EnqueuedTimeUtc"]);
-            Assert.Equal(typeof(string), bindingDataContract["MessageId"]);
-            Assert.Equal(typeof(string), bindingDataContract["ContentType"]);
-            Assert.Equal(typeof(string), bindingDataContract["ReplyTo"]);
-            Assert.Equal(typeof(long), bindingDataContract["SequenceNumber"]);
-            Assert.Equal(typeof(string), bindingDataContract["To"]);
-            Assert.Equal(typeof(string), bindingDataContract["Label"]);
-            Assert.Equal(typeof(string), bindingDataContract["CorrelationId"]);
-            Assert.Equal(typeof(IDictionary<string, object>), bindingDataContract["UserProperties"]);
-            Assert.Equal(typeof(MessageReceiver), bindingDataContract["MessageReceiver"]);
-            Assert.Equal(typeof(IMessageSession), bindingDataContract["MessageSession"]);
+            Assert.AreEqual(15, bindingDataContract.Count);
+            Assert.AreEqual(typeof(int), bindingDataContract["DeliveryCount"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["DeadLetterSource"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["LockToken"]);
+            Assert.AreEqual(typeof(DateTime), bindingDataContract["ExpiresAtUtc"]);
+            Assert.AreEqual(typeof(DateTime), bindingDataContract["EnqueuedTimeUtc"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["MessageId"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["ContentType"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["ReplyTo"]);
+            Assert.AreEqual(typeof(long), bindingDataContract["SequenceNumber"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["To"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["Label"]);
+            Assert.AreEqual(typeof(string), bindingDataContract["CorrelationId"]);
+            Assert.AreEqual(typeof(IDictionary<string, object>), bindingDataContract["ApplicationProperties"]);
+            Assert.AreEqual(typeof(ServiceBusReceiver), bindingDataContract["MessageReceiver"]);
+            Assert.AreEqual(typeof(ServiceBusSessionReceiver), bindingDataContract["MessageSession"]);
         }
 
-        private static SystemPropertiesCollection GetSystemProperties()
+        private static ServiceBusReceivedMessage CreateMessageWithSystemProperties(string body = default, IDictionary<string, object> applicationProperties = default)
         {
-            SystemPropertiesCollection sysProps = new SystemPropertiesCollection();
-            TestHelpers.SetField(sysProps, "deliveryCount", 1);
-            TestHelpers.SetField(sysProps, "lockedUntilUtc", DateTime.MinValue);
-            TestHelpers.SetField(sysProps, "sequenceNumber", 1);
-            TestHelpers.SetField(sysProps, "enqueuedTimeUtc", DateTime.MinValue);
-            TestHelpers.SetField(sysProps, "lockTokenGuid", Guid.NewGuid());
-            TestHelpers.SetField(sysProps, "deadLetterSource", "test");
-            return sysProps;
+            ServiceBusReceivedMessage receivedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                body: body == null ? null : new BinaryData(body),
+                deliveryCount: 1,
+                lockedUntil: DateTime.MinValue,
+                sequenceNumber: 1,
+                enqueuedTime: DateTime.MinValue,
+                lockTokenGuid: Guid.NewGuid(),
+                deadLetterSource: "test",
+                properties: applicationProperties);
+            return receivedMessage;
         }
     }
 }

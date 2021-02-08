@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
     /// <summary>
     /// Gets or sets the resource settings.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ResourceSettings")]
     public partial class ResourceSettings
     {
         /// <summary>

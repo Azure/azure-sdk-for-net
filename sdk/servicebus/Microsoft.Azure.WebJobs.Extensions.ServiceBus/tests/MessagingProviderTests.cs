@@ -1,15 +1,15 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Options;
-using Xunit;
+using NUnit.Framework;
+using System;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
     public class MessagingProviderTests
     {
-        [Fact]
+        [Test]
         public void CreateMessageReceiver_ReturnsExpectedReceiver()
         {
             string defaultConnection = "Endpoint=sb://default.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
@@ -18,19 +18,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 ConnectionString = defaultConnection
             };
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(config));
-            var receiver = provider.CreateMessageReceiver("entityPath", defaultConnection);
-            Assert.Equal("entityPath", receiver.Path);
+            var receiver = provider.CreateBatchMessageReceiver("entityPath", defaultConnection);
+            Assert.AreEqual("entityPath", receiver.EntityPath);
 
-            var receiver2 = provider.CreateMessageReceiver("entityPath", defaultConnection);
-            Assert.Same(receiver, receiver2);
+            var receiver2 = provider.CreateBatchMessageReceiver("entityPath", defaultConnection);
+            Assert.AreSame(receiver, receiver2);
 
             config.PrefetchCount = 100;
-            receiver = provider.CreateMessageReceiver("entityPath1", defaultConnection);
-            Assert.Equal(100, receiver.PrefetchCount);
+            receiver = provider.CreateBatchMessageReceiver("entityPath1", defaultConnection);
+            Assert.AreEqual(100, receiver.PrefetchCount);
         }
 
-        [Fact]
-        public void CreateClientEntity_ReturnsExpectedReceiver()
+        [Test]
+        public void CreateProcessor_ReturnsExpectedProcessor()
         {
             string defaultConnection = "Endpoint=sb://default.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
             var config = new ServiceBusOptions
@@ -38,18 +38,22 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 ConnectionString = defaultConnection
             };
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(config));
-            var clientEntity = provider.CreateClientEntity("entityPath", defaultConnection);
-            Assert.Equal("entityPath", clientEntity.Path);
+            var processor = provider.CreateProcessor("entityPath", defaultConnection);
+            Assert.AreEqual("entityPath", processor.EntityPath);
 
-            var receiver2 = provider.CreateClientEntity("entityPath", defaultConnection);
-            Assert.Same(clientEntity, receiver2);
+            var processor2 = provider.CreateProcessor("entityPath", defaultConnection);
+            Assert.AreSame(processor, processor2);
 
             config.PrefetchCount = 100;
-            clientEntity = provider.CreateClientEntity("entityPath1", defaultConnection);
-            Assert.Equal(100, ((QueueClient)clientEntity).PrefetchCount);
+            config.MaxConcurrentCalls = 5;
+            config.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(30);
+            processor = provider.CreateProcessor("entityPath1", defaultConnection);
+            Assert.AreEqual(config.PrefetchCount, processor.PrefetchCount);
+            Assert.AreEqual(config.MaxConcurrentCalls, processor.MaxConcurrentCalls);
+            Assert.AreEqual(config.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
         }
 
-        [Fact]
+        [Test]
         public void CreateMessageSender_ReturnsExpectedSender()
         {
             string defaultConnection = "Endpoint=sb://default.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
@@ -59,10 +63,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             };
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(config));
             var sender = provider.CreateMessageSender("entityPath", defaultConnection);
-            Assert.Equal("entityPath", sender.Path);
+            Assert.AreEqual("entityPath", sender.EntityPath);
 
             var sender2 = provider.CreateMessageSender("entityPath", defaultConnection);
-            Assert.Same(sender, sender2);
+            Assert.AreSame(sender, sender2);
         }
     }
 }

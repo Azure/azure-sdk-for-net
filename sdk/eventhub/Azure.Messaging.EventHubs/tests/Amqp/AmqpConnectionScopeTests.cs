@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -1966,7 +1966,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             catch
             {
-               // Ignore any other exception; the assertions will fail with better context.
+                // Ignore any other exception; the assertions will fail with better context.
             }
 
             Assert.That(observedException, Is.Not.Null, "An Event Hubs exception should have been thrown when requesting authorization.");
