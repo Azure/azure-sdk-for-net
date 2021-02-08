@@ -174,7 +174,7 @@
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsPerfProject)' == 'true'">
+  <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
 
