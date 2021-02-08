@@ -19,10 +19,14 @@ namespace Azure.Identity
     public class TokenCache
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
-        private SemaphoreSlim _lock = new SemaphoreSlim(1,1);
-        private byte[] _data;
+        private readonly SemaphoreSlim _lock = new SemaphoreSlim(1,1);
         private DateTimeOffset _lastUpdated;
         private ConditionalWeakTable<object, CacheTimestamp> _cacheAccessMap;
+
+        /// <summary>
+        /// The internal state of the cache.
+        /// </summary>
+        internal byte[] Data { get; private set; }
 
         private class CacheTimestamp
         {
@@ -51,7 +55,7 @@ namespace Azure.Identity
 
         internal TokenCache(byte[] data)
         {
-            _data = data;
+            Data = data;
             _lastUpdated = DateTimeOffset.UtcNow;
             _cacheAccessMap = new ConditionalWeakTable<object, CacheTimestamp>();
         }
@@ -60,86 +64,6 @@ namespace Azure.Identity
         /// An event notifying the subscriber that the underlying <see cref="TokenCache"/> has been updated. This event can be handled to persist the updated cache data.
         /// </summary>
         public event Func<TokenCacheUpdatedArgs, Task> Updated;
-
-        /// <summary>
-        /// Serializes the <see cref="TokenCache"/> to the specified <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> which the serialized <see cref="TokenCache"/> will be written to.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public void Serialize(Stream stream, CancellationToken cancellationToken = default)
-        {
-            if (stream is null)
-                throw new ArgumentNullException(nameof(stream));
-
-            SerializeAsync(stream, false, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
-        /// Serializes the <see cref="TokenCache"/> to the specified <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> to which the serialized <see cref="TokenCache"/> will be written.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public async Task SerializeAsync(Stream stream, CancellationToken cancellationToken = default)
-        {
-            if (stream is null)
-                throw new ArgumentNullException(nameof(stream));
-
-            await SerializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deserializes the <see cref="TokenCache"/> from the specified <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> from which the serialized <see cref="TokenCache"/> will be read.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public static TokenCache Deserialize(Stream stream, CancellationToken cancellationToken = default)
-        {
-            if (stream is null)
-                throw new ArgumentNullException(nameof(stream));
-
-            return DeserializeAsync(stream, false, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
-        /// Deserializes the <see cref="TokenCache"/> from the specified <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> from which the serialized <see cref="TokenCache"/> will be read.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public static async Task<TokenCache> DeserializeAsync(Stream stream, CancellationToken cancellationToken = default)
-        {
-            if (stream is null)
-                throw new ArgumentNullException(nameof(stream));
-
-            return await DeserializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
-        }
-
-        private async Task SerializeAsync(Stream stream, bool async, CancellationToken cancellationToken)
-        {
-            if (async)
-            {
-                await stream.WriteAsync(_data, 0, _data.Length, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                stream.Write(_data, 0, _data.Length);
-            }
-        }
-
-        private static async Task<TokenCache> DeserializeAsync(Stream stream, bool async, CancellationToken cancellationToken)
-        {
-            var data = new byte[stream.Length - stream.Position];
-
-            if (async)
-            {
-                await stream.ReadAsync(data, 0, data.Length, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                stream.Read(data, 0, data.Length);
-            }
-
-            return new TokenCache(data);
-        }
 
         internal virtual async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
         {
@@ -175,7 +99,7 @@ namespace Azure.Identity
 
             try
             {
-                args.TokenCache.DeserializeMsalV3(_data, true);
+                args.TokenCache.DeserializeMsalV3(Data, true);
 
                 _cacheAccessMap.GetOrCreateValue(args.TokenCache).Update();
             }
@@ -201,11 +125,11 @@ namespace Azure.Identity
             {
                 if (!_cacheAccessMap.TryGetValue(tokenCache, out CacheTimestamp lastRead) || lastRead.Value < _lastUpdated)
                 {
-                    _data = await MergeCacheData(_data, tokenCache.SerializeMsalV3()).ConfigureAwait(false);
+                    Data = await MergeCacheData(Data, tokenCache.SerializeMsalV3()).ConfigureAwait(false);
                 }
                 else
                 {
-                    _data = tokenCache.SerializeMsalV3();
+                    Data = tokenCache.SerializeMsalV3();
                 }
 
                 _cacheAccessMap.GetOrCreateValue(tokenCache).Update();
