@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.Communication.Identity.Models
 {
     /// <summary> A TURN credentials response. </summary>
-    public partial class TurnCredentialsResponse
+    public partial class CommunicationTurnCredentialsResponse
     {
-        /// <summary> Initializes a new instance of TurnCredentialsResponse. </summary>
+        /// <summary> Initializes a new instance of CommunicationTurnCredentialsResponse. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. </param>
         /// <param name="turnServers"> An array representing the credentials and the TURN server URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="turnServers"/> is null. </exception>
-        internal TurnCredentialsResponse(DateTimeOffset expiresOn, IEnumerable<TurnServer> turnServers)
+        internal CommunicationTurnCredentialsResponse(DateTimeOffset expiresOn, IEnumerable<CommunicationTurnServer> turnServers)
         {
             if (turnServers == null)
             {
@@ -29,10 +29,10 @@ namespace Azure.Communication.Identity.Models
             TurnServers = turnServers.ToList();
         }
 
-        /// <summary> Initializes a new instance of TurnCredentialsResponse. </summary>
+        /// <summary> Initializes a new instance of CommunicationTurnCredentialsResponse. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. </param>
         /// <param name="turnServers"> An array representing the credentials and the TURN server URL. </param>
-        internal TurnCredentialsResponse(DateTimeOffset expiresOn, IReadOnlyList<TurnServer> turnServers)
+        internal CommunicationTurnCredentialsResponse(DateTimeOffset expiresOn, IReadOnlyList<CommunicationTurnServer> turnServers)
         {
             ExpiresOn = expiresOn;
             TurnServers = turnServers;
@@ -41,6 +41,6 @@ namespace Azure.Communication.Identity.Models
         /// <summary> The date for which the username and credentials are not longer valid. </summary>
         public DateTimeOffset ExpiresOn { get; }
         /// <summary> An array representing the credentials and the TURN server URL. </summary>
-        public IReadOnlyList<TurnServer> TurnServers { get; }
+        public IReadOnlyList<CommunicationTurnServer> TurnServers { get; }
     }
 }

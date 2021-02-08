@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
-    public partial class TurnCredentialsResponse
+    public partial class CommunicationTurnCredentialsResponse
     {
-        internal static TurnCredentialsResponse DeserializeTurnCredentialsResponse(JsonElement element)
+        internal static CommunicationTurnCredentialsResponse DeserializeCommunicationTurnCredentialsResponse(JsonElement element)
         {
             DateTimeOffset expiresOn = default;
-            IReadOnlyList<TurnServer> turnServers = default;
+            IReadOnlyList<CommunicationTurnServer> turnServers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiresOn"))
@@ -27,16 +27,16 @@ namespace Azure.Communication.Identity.Models
                 }
                 if (property.NameEquals("turnServers"))
                 {
-                    List<TurnServer> array = new List<TurnServer>();
+                    List<CommunicationTurnServer> array = new List<CommunicationTurnServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TurnServer.DeserializeTurnServer(item));
+                        array.Add(CommunicationTurnServer.DeserializeCommunicationTurnServer(item));
                     }
                     turnServers = array;
                     continue;
                 }
             }
-            return new TurnCredentialsResponse(expiresOn, turnServers);
+            return new CommunicationTurnCredentialsResponse(expiresOn, turnServers);
         }
     }
 }
