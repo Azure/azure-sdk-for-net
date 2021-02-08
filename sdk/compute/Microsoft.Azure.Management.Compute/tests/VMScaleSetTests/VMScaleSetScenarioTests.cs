@@ -600,6 +600,9 @@ namespace Compute.Tests
                 var listResponse = m_CrpClient.VirtualMachineScaleSets.List(rgName);
                 ValidateVMScaleSet(inputVMScaleSet, listResponse.FirstOrDefault(x => x.Name == vmssName), hasManagedDisks);
 
+                var listByLocationResponse = m_CrpClient.VirtualMachineScaleSets.ListByLocation(ComputeManagementTestUtilities.DefaultLocation);
+                ValidateVMScaleSet(inputVMScaleSet, listByLocationResponse.FirstOrDefault(x => x.Name == vmssName), hasManagedDisks);
+                
                 if (validateListSku)
                 {
                     var listSkusResponse = m_CrpClient.VirtualMachineScaleSets.ListSkus(rgName, vmssName);
