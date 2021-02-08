@@ -1,0 +1,328 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/resourceGroups/PatchStatusRg/providers/Microsoft.Compute/virtualMachines/testVmLinux/installPatches?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Jlc291cmNlR3JvdXBzL1BhdGNoU3RhdHVzUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy90ZXN0Vm1MaW51eC9pbnN0YWxsUGF0Y2hlcz9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"maximumDuration\": \"PT4H\",\r\n  \"rebootSetting\": \"IfRequired\",\r\n  \"linuxParameters\": {\r\n    \"classificationsToInclude\": [\r\n      \"Critical\",\r\n      \"Security\"\r\n    ],\r\n    \"maintenanceRunId\": \"2/8/2021 8:20:04 AM\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "265d419d-c89e-4912-9824-fb7a22281c56"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "224"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?monitor=true&api-version=2020-12-01"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?api-version=2020-12-01"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/PatchOperation3Min;188,Microsoft.Compute/PatchOperation30Min;593"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "05446525-2b41-4b4a-9a72-539b459f810e"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "48669f25-f491-4bff-aa51-8c02d3b0a151"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210208T082004Z:48669f25-f491-4bff-aa51-8c02d3b0a151"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 08 Feb 2021 08:20:03 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzA1NDQ2NTI1LTJiNDEtNGI0YS05YTcyLTUzOWI0NTlmODEwZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetOperation3Min;14992,Microsoft.Compute/GetOperation30Min;29935"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "64878b70-8051-40f6-9ca8-f6648694b520"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "5edf5c6c-a35d-4486-830e-5ae9bccd240a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210208T082034Z:5edf5c6c-a35d-4486-830e-5ae9bccd240a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 08 Feb 2021 08:20:34 GMT"
+        ],
+        "Content-Length": [
+          "134"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-02-08T00:20:04.4301095-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"05446525-2b41-4b4a-9a72-539b459f810e\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzA1NDQ2NTI1LTJiNDEtNGI0YS05YTcyLTUzOWI0NTlmODEwZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetOperation3Min;14989,Microsoft.Compute/GetOperation30Min;29932"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "910708f5-5f0d-4a30-a953-b34d8cf8d6dd"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "f2e6b74e-6142-453a-9712-989c576dc1f9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210208T082105Z:f2e6b74e-6142-453a-9712-989c576dc1f9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 08 Feb 2021 08:21:04 GMT"
+        ],
+        "Content-Length": [
+          "134"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-02-08T00:20:04.4301095-08:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"05446525-2b41-4b4a-9a72-539b459f810e\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzA1NDQ2NTI1LTJiNDEtNGI0YS05YTcyLTUzOWI0NTlmODEwZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetOperation3Min;14989,Microsoft.Compute/GetOperation30Min;29929"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8f4a9d53-e2bf-4c94-a094-4d4f1327287a"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "68918bc3-58ec-4bf0-b64e-79183b8f195c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210208T082135Z:68918bc3-58ec-4bf0-b64e-79183b8f195c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 08 Feb 2021 08:21:34 GMT"
+        ],
+        "Content-Length": [
+          "1723"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-02-08T00:20:04.4301095-08:00\",\r\n  \"endTime\": \"2021-02-08T00:21:32.3509395-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"status\": \"Succeeded\",\r\n      \"installationActivityId\": \"05446525-2b41-4b4a-9a72-539b459f810e\",\r\n      \"rebootStatus\": \"NotNeeded\",\r\n      \"maintenanceWindowExceeded\": false,\r\n      \"excludedPatchCount\": 0,\r\n      \"notSelectedPatchCount\": 0,\r\n      \"pendingPatchCount\": 0,\r\n      \"installedPatchCount\": 4,\r\n      \"failedPatchCount\": 0,\r\n      \"patches\": [\r\n        {\r\n          \"patchId\": \"ca-certificates_20210119~16.04.1_Ubuntu_16.04\",\r\n          \"name\": \"ca-certificates\",\r\n          \"version\": \"20210119~16.04.1\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"installationState\": \"Installed\"\r\n        },\r\n        {\r\n          \"patchId\": \"python3-problem-report_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n          \"name\": \"python3-problem-report\",\r\n          \"version\": \"2.20.1-0ubuntu2.30\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"installationState\": \"Installed\"\r\n        },\r\n        {\r\n          \"patchId\": \"python3-apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n          \"name\": \"python3-apport\",\r\n          \"version\": \"2.20.1-0ubuntu2.30\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"installationState\": \"Installed\"\r\n        },\r\n        {\r\n          \"patchId\": \"apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n          \"name\": \"apport\",\r\n          \"version\": \"2.20.1-0ubuntu2.30\",\r\n          \"classifications\": [\r\n            \"Security\"\r\n          ],\r\n          \"installationState\": \"Installed\"\r\n        }\r\n      ],\r\n      \"startDateTime\": \"2021-02-08T00:20:04.4613804-08:00\",\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"0\",\r\n        \"message\": \"0 error/s reported.\"\r\n      }\r\n    }\r\n  },\r\n  \"name\": \"05446525-2b41-4b4a-9a72-539b459f810e\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/28337c71-5911-4e75-8354-c4ac645e902d/providers/Microsoft.Compute/locations/southeastasia/operations/05446525-2b41-4b4a-9a72-539b459f810e?monitor=true&api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgzMzdjNzEtNTkxMS00ZTc1LTgzNTQtYzRhYzY0NWU5MDJkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzA1NDQ2NTI1LTJiNDEtNGI0YS05YTcyLTUzOWI0NTlmODEwZT9tb25pdG9yPXRydWUmYXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/43.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetOperation3Min;14988,Microsoft.Compute/GetOperation30Min;29928"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "d6288206-35d8-432f-9006-c03633832bae"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "38f144a2-11cd-45db-a291-0ee4243d84c7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20210208T082135Z:38f144a2-11cd-45db-a291-0ee4243d84c7"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 08 Feb 2021 08:21:34 GMT"
+        ],
+        "Content-Length": [
+          "1107"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"installationActivityId\": \"05446525-2b41-4b4a-9a72-539b459f810e\",\r\n  \"rebootStatus\": \"NotNeeded\",\r\n  \"maintenanceWindowExceeded\": false,\r\n  \"excludedPatchCount\": 0,\r\n  \"notSelectedPatchCount\": 0,\r\n  \"pendingPatchCount\": 0,\r\n  \"installedPatchCount\": 4,\r\n  \"failedPatchCount\": 0,\r\n  \"patches\": [\r\n    {\r\n      \"patchId\": \"ca-certificates_20210119~16.04.1_Ubuntu_16.04\",\r\n      \"name\": \"ca-certificates\",\r\n      \"version\": \"20210119~16.04.1\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"installationState\": \"Installed\"\r\n    },\r\n    {\r\n      \"patchId\": \"python3-problem-report_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n      \"name\": \"python3-problem-report\",\r\n      \"version\": \"2.20.1-0ubuntu2.30\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"installationState\": \"Installed\"\r\n    },\r\n    {\r\n      \"patchId\": \"python3-apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n      \"name\": \"python3-apport\",\r\n      \"version\": \"2.20.1-0ubuntu2.30\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"installationState\": \"Installed\"\r\n    },\r\n    {\r\n      \"patchId\": \"apport_2.20.1-0ubuntu2.30_Ubuntu_16.04\",\r\n      \"name\": \"apport\",\r\n      \"version\": \"2.20.1-0ubuntu2.30\",\r\n      \"classifications\": [\r\n        \"Security\"\r\n      ],\r\n      \"installationState\": \"Installed\"\r\n    }\r\n  ],\r\n  \"startDateTime\": \"2021-02-08T00:20:04.4613804-08:00\",\r\n  \"error\": {\r\n    \"details\": [],\r\n    \"code\": \"0\",\r\n    \"message\": \"0 error/s reported.\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "28337c71-5911-4e75-8354-c4ac645e902d"
+  }
+}
