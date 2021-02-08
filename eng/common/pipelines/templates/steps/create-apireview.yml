@@ -1,7 +1,7 @@
 parameters:
   ArtifactPath: $(Build.ArtifactStagingDirectory)
   Artifacts: []
-  ConfigFileDir: ''
+  ConfigFileDir: $(Build.ArtifactStagingDirectory)/PackageInfo
 
 steps:
   - ${{ each artifact in parameters.Artifacts }}:
@@ -14,7 +14,7 @@ steps:
           -APIKey $(azuresdk-apiview-apikey)
           -APILabel "Auto Review - $(Build.SourceVersion)"
           -PackageName ${{artifact.name}}
-          -ConfigFileDir ${{parameters.ConfigFileDir}}
+          -ConfigFileDir '${{parameters.ConfigFileDir}}'
         pwsh: true
         workingDirectory: $(Pipeline.Workspace)
       displayName: Create API Review for ${{ artifact.name}}
