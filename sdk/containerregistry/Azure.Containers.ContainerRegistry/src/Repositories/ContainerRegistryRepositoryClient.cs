@@ -311,7 +311,7 @@ namespace Azure.Containers.ContainerRegistry
         // caller confusion?
         /// <summary> List manifests of a repository. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ManifestAttributes> GetManifestsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManifestAttributes> GetManifestsAsync(GetManifestOptions options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
@@ -332,7 +332,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> List manifests of a repository. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ManifestAttributes> GetManifests(CancellationToken cancellationToken = default)
+        public virtual Pageable<ManifestAttributes> GetManifests(GetManifestOptions options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
