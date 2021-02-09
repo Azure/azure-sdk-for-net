@@ -8,11 +8,13 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: 'canadacentral'
       Preview:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+        Location: 'canadacentral'
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'centraluseuap'
+        Location: 'canadacentral'
       UsGov:
         SubscriptionConfiguration: $(sub-config-gov-test-resources-test)
         Location: 'usgovvirginia'
