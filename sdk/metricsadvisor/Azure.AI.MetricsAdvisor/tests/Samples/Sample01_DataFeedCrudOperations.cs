@@ -53,23 +53,23 @@ namespace Azure.AI.MetricsAdvisor.Samples
             DataFeed createdDataFeed = response.Value;
 
             Console.WriteLine($"Data feed ID: {createdDataFeed.Id}");
-            Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
-            Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
+            Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
+            Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
             Console.WriteLine($"Data feed administrators:");
-            foreach (string admin in dataFeed.Administrators)
+            foreach (string admin in createdDataFeed.Administrators)
             {
                 Console.WriteLine($" - {admin}");
             }
 
             Console.WriteLine($"Metric IDs:");
-            foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
+            foreach (DataFeedMetric metric in createdDataFeed.Schema.MetricColumns)
             {
                 Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
             }
 
             Console.WriteLine($"Dimension columns:");
-            foreach (DataFeedDimension dimension in dataFeed.Schema.DimensionColumns)
+            foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
             {
                 Console.WriteLine($" - {dimension.DimensionName}");
             }
