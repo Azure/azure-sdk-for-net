@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Mixed Reality STS Client</AssemblyTitle>
     <Version>1.0.0-preview.2</Version>
@@ -7,8 +7,6 @@
     <Authors>Microsoft</Authors>
     <PackageProjectUrl>https://azure.microsoft.com/topic/mixed-reality/</PackageProjectUrl>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <Nullable>enable</Nullable>
-    <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
