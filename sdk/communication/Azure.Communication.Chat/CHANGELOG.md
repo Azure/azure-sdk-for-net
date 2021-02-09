@@ -4,8 +4,7 @@
 
 ### Breaking Changes
 
-- Using common's `CommunicationUserIdentifier` and `CommmunicationIdentifier` in place of `CommunicationUser`.
-- Renamed `CommunicationUserCredential` to `CommunicationTokenCredential`.
+- Updated to Azure.Communication.Common version 1.0.0-beta.4. Now uses `CommunicationUserIdentifier` and `CommunicationIdentifier` in place of `CommunicationUser`, and `CommunicationTokenCredential` instead of `CommunicationUserCredential`.
 - Removed `Priority` field from `ChatMessage`.
 
 ### Added
