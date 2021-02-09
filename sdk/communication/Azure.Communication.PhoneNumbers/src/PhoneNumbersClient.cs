@@ -24,6 +24,8 @@ namespace Azure.Communication.PhoneNumbers
     [CodeGenSuppress("CancelOperation", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("UpdateAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("Update", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("ListPhoneNumbersAsync", typeof(int?), typeof(int?),typeof(CancellationToken))]
+    [CodeGenSuppress("ListPhoneNumbers", typeof(int?), typeof(int?), typeof(CancellationToken))]
     public partial class PhoneNumbersClient
     {
         #region public constructors - all arguments need null check
@@ -224,6 +226,80 @@ namespace Azure.Communication.PhoneNumbers
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets the list of all acquired phone numbers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<AcquiredPhoneNumber> ListPhoneNumbersAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<AcquiredPhoneNumber>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.ListPhoneNumbers");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListPhoneNumbersAsync(skip: null, top: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<AcquiredPhoneNumber>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.ListPhoneNumbers");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListPhoneNumbersNextPageAsync(nextLink, skip: null, top: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets the list of all acquired phone numbers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<AcquiredPhoneNumber> ListPhoneNumbers(CancellationToken cancellationToken = default)
+        {
+            Page<AcquiredPhoneNumber> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.ListPhoneNumbers");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListPhoneNumbers(skip: null, top: null, cancellationToken);
+                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<AcquiredPhoneNumber> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.ListPhoneNumbers");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListPhoneNumbersNextPage(nextLink, skip: null, top: null, cancellationToken);
+                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         private static T AssertNotNull<T>(T argument, string argumentName)
