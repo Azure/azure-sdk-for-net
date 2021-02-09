@@ -9,6 +9,8 @@ using Xunit;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
+using OpenTelemetry;
+using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 {
@@ -46,75 +48,76 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         }
 
         [Fact]
-        public void InitRoleInfo_Empty()
+        public void InitRoleInfo_Default()
         {
-            using var activity = new Activity("InitRoleInfo_Empty");
-            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource(null));
+            var resource = CreateTestResource();
+            TelemetryPartA.InitRoleInfo(resource);
 
-            TelemetryPartA.InitRoleInfo(activity);
-            Assert.Null(TelemetryPartA.RoleName);
+            Assert.StartsWith("unknown_service", TelemetryPartA.RoleName);
             Assert.Null(TelemetryPartA.RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_ServiceName()
         {
-            using var activity = new Activity("InitRoleInfo_ServiceName");
-            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource("my-service"));
-            TelemetryPartA.InitRoleInfo(activity);
+            var resource = CreateTestResource(serviceName: "my-service");
+            TelemetryPartA.InitRoleInfo(resource);
+
             Assert.Equal("my-service", TelemetryPartA.RoleName);
-            Assert.True(Guid.TryParse(TelemetryPartA.RoleInstance, out var guid));
+            Assert.Null(TelemetryPartA.RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_ServiceInstance()
         {
-            using var activity = new Activity("InitRoleInfo_ServiceInstance");
-            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource(null, "roleInstance_1"));
-            TelemetryPartA.InitRoleInfo(activity);
+            var resource = CreateTestResource(serviceInstance: "my-instance");
+            TelemetryPartA.InitRoleInfo(resource);
 
-            Assert.Null(TelemetryPartA.RoleName);
-            Assert.Null(TelemetryPartA.RoleInstance);
+            Assert.StartsWith("unknown_service", TelemetryPartA.RoleName);
+            Assert.Equal("my-instance", TelemetryPartA.RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_ServiceNamespace()
         {
-            using var activity = new Activity("InitRoleInfo_ServiceNamespace");
-            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource(null, null, "my-namespace"));
-            TelemetryPartA.InitRoleInfo(activity);
-            Assert.Null(TelemetryPartA.RoleName);
+            var resource = CreateTestResource(serviceNamespace: "my-namespace");
+            TelemetryPartA.InitRoleInfo(resource);
+
+            Assert.StartsWith("my-namespace.unknown_service", TelemetryPartA.RoleName);
             Assert.Null(TelemetryPartA.RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_ServiceNameAndInstance()
         {
-            using var activity = new Activity("InitRoleInfo_ServiceNameAndInstance");
-            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource("my-service", "roleInstance_1"));
-            TelemetryPartA.InitRoleInfo(activity);
+            var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
+            TelemetryPartA.InitRoleInfo(resource);
+
             Assert.Equal("my-service", TelemetryPartA.RoleName);
-            Assert.Equal("roleInstance_1", TelemetryPartA.RoleInstance);
+            Assert.Equal("my-instance", TelemetryPartA.RoleInstance);
         }
 
         [Fact]
         public void InitRoleInfo_ServiceNameAndInstanceAndNamespace()
         {
-            using var activity = new Activity("InitRoleInfo_ServiceNameAndInstanceAndNamespace");
-            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource("my-service", "roleInstance_1", "my-namespace"));
-            TelemetryPartA.InitRoleInfo(activity);
+            var resource = CreateTestResource(serviceName: "my-service", serviceNamespace: "my-namespace", serviceInstance: "my-instance");
+            TelemetryPartA.InitRoleInfo(resource);
+
             Assert.Equal("my-namespace.my-service", TelemetryPartA.RoleName);
-            Assert.Equal("roleInstance_1", TelemetryPartA.RoleInstance);
+            Assert.Equal("my-instance", TelemetryPartA.RoleInstance);
         }
 
         [Fact]
-        public void GeneratePartAEnvelope_DefaultActivity()
+        public void GeneratePartAEnvelope_DefaultActivity_DefaultResource()
         {
             var activity = CreateTestActivity();
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, null);
+            var resource = CreateTestResource();
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture), telemetryItem.Time);
-            Assert.Null(telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Null(telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
@@ -122,22 +125,57 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         }
 
         [Fact]
-        public void GeneratePartAEnvelope_ActivityWithRoleInformation()
+        public void GeneratePartAEnvelope_Activity_WithResource()
         {
-            var activity = CreateTestActivity(
-                resource: Resources.CreateServiceResource("BusyWorker", "TEST3650724"));
+            var activity = CreateTestActivity();
+            var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
 
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, null);
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture), telemetryItem.Time);
-            Assert.Equal("BusyWorker", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Equal("TEST3650724", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.Equal("my-service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal("my-instance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.Equal(activity.TraceId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
             Assert.Equal(SdkVersionUtils.SdkVersion, telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
         }
 
         // TODO: GeneratePartAEnvelope_WithActivityParent
+
+        /// <summary>
+        /// If SERVICE.NAME is not defined, it will fall-back to "unknown_service".
+        /// (https://github.com/open-telemetry/opentelemetry-specification/tree/main/specification/resource/semantic_conventions#semantic-attributes-with-sdk-provided-default-value).
+        /// </summary>
+        /// <remarks>
+        /// An alternative way to get an instance of a Resource is as follows:
+        /// <code>
+        /// var tracerProvider = Sdk.CreateTracerProviderBuilder().Build();
+        /// var resource = tracerProvider.GetResource();
+        /// </code>
+        /// </remarks>
+        private static Resource CreateTestResource(string serviceName = null, string serviceNamespace = null, string serviceInstance = null)
+        {
+            var testAttributes = new Dictionary<string, object>();
+
+            if (serviceName != null)
+            {
+                testAttributes.Add("service.name", serviceName);
+            }
+
+            if (serviceNamespace != null)
+            {
+                testAttributes.Add("service.namespace", serviceNamespace);
+            }
+
+            if (serviceInstance != null)
+            {
+                testAttributes.Add("service.instance.id", serviceInstance);
+            }
+
+            //var testAttributes = new Dictionary<string, object> { { "service.name", "my-service" }, { "service.instance.id", "my-instance" } };
+            return ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+        }
 
         private static Activity CreateTestActivity(
             bool setAttributes = true,
