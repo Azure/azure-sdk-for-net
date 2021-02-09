@@ -16,13 +16,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public bool SupportsOperation(KeyOperation operation) => true;
 
-        public DecryptResult Decrypt(DecryptOptions options, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
+        public DecryptResult Decrypt(DecryptParameters options, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
 
-        public Task<DecryptResult> DecryptAsync(DecryptOptions options, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
+        public Task<DecryptResult> DecryptAsync(DecryptParameters options, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
 
-        public EncryptResult Encrypt(EncryptOptions options, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
+        public EncryptResult Encrypt(EncryptParameters options, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
 
-        public Task<EncryptResult> EncryptAsync(EncryptOptions options, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
+        public Task<EncryptResult> EncryptAsync(EncryptParameters options, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
 
         public SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default) => throw new CryptographicException(CRYPT_E_NO_PROVIDER);
 
