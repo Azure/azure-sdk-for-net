@@ -114,7 +114,8 @@ pr:
     - sdk/postgresql/Microsoft.Azure.Management.PostgreSQL
     - sdk/powerbidedicated/Microsoft.Azure.Management.PowerBIDedicated
     - sdk/privatedns/Microsoft.Azure.Management.PrivateDns
-    - sdk/quantum/Microsoft.Azure.Management.Quantum 
+    - sdk/providerhub/Microsoft.Azure.Management.ProviderHub
+    - sdk/quantum/Microsoft.Azure.Management.Quantum
     - sdk/recoveryservices/Microsoft.Azure.Management.RecoveryServices
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery
