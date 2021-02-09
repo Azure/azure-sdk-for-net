@@ -55,7 +55,7 @@ namespace Azure.Communication.PhoneNumbers
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
             uri.AppendPath(countryCode, true);
-            uri.AppendPath("/~search", false);
+            uri.AppendPath("/:search", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -198,7 +198,7 @@ namespace Azure.Communication.PhoneNumbers
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/availablePhoneNumbers/~purchase", false);
+            uri.AppendPath("/availablePhoneNumbers/:purchase", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

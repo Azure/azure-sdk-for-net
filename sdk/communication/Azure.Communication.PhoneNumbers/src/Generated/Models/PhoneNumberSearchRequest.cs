@@ -37,7 +37,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         public PhoneNumberCapabilities Capabilities { get; }
         /// <summary> The area code of the desired phone number, e.g. 425. </summary>
         public string AreaCode { get; set; }
-        /// <summary> The quantity of phone numbers in the search. Should be at least 1. </summary>
+        /// <summary> The quantity of desired phone numbers. The default value is 1. </summary>
         public int? Quantity { get; set; }
     }
 }
