@@ -14,25 +14,23 @@ namespace Azure.Communication.PhoneNumbers.Models
     {
         /// <summary> Initializes a new instance of PhoneNumberCost. </summary>
         /// <param name="amount"> The cost amount. </param>
-        /// <param name="currencyCode"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
+        /// <param name="iSOCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="currencyCode"/> is null. </exception>
-        internal PhoneNumberCost(double amount, string currencyCode, BillingFrequency billingFrequency)
+        /// <exception cref="ArgumentNullException"> <paramref name="iSOCurrencySymbol"/> is null. </exception>
+        internal PhoneNumberCost(double amount, string iSOCurrencySymbol, BillingFrequency billingFrequency)
         {
-            if (currencyCode == null)
+            if (iSOCurrencySymbol == null)
             {
-                throw new ArgumentNullException(nameof(currencyCode));
+                throw new ArgumentNullException(nameof(iSOCurrencySymbol));
             }
 
             Amount = amount;
-            CurrencyCode = currencyCode;
+            ISOCurrencySymbol = iSOCurrencySymbol;
             BillingFrequency = billingFrequency;
         }
 
         /// <summary> The cost amount. </summary>
         public double Amount { get; }
-        /// <summary> The ISO 4217 currency code for the cost amount, e.g. USD. </summary>
-        public string CurrencyCode { get; }
         /// <summary> The frequency with which the cost gets billed. </summary>
         public BillingFrequency BillingFrequency { get; }
     }

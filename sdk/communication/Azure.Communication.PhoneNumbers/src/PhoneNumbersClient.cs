@@ -14,6 +14,16 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary>
     /// The Azure Communication Services phone numbers client.
     /// </summary>
+    [CodeGenSuppress("GetByNumberAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetByNumber", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSearchResultAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSearchResult", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetOperationAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetOperation", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CancelOperationAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CancelOperation", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("UpdateAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("Update", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class PhoneNumbersClient
     {
         #region public constructors - all arguments need null check
@@ -82,17 +92,139 @@ namespace Azure.Communication.PhoneNumbers
 
         #endregion
 
-        internal virtual Task<Response<PhoneNumberSearchResult>> GetSearchResultAsync(string searchId, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary> Gets the details of the given acquired phone number. </summary>
+        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AcquiredPhoneNumber>> GetPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetPhoneNumber");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetByNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        internal virtual Response<PhoneNumberSearchResult> GetSearchResult(string searchId, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary> Gets the details of the given acquired phone number. </summary>
+        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AcquiredPhoneNumber> GetPhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.GetPhoneNumber");
+            scope.Start();
+            try
+            {
+                return RestClient.GetByNumber(phoneNumber, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        internal virtual Task<Response<PhoneNumberOperation>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary> Purchases phone numbers. </summary>
+        /// <param name="searchId"> The search id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartPurchasePhoneNumbers");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.PurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
+                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        internal virtual Response<PhoneNumberOperation> GetOperation(string operationId, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary> Purchases phone numbers. </summary>
+        /// <param name="searchId"> The search id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartPurchasePhoneNumbers");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.PurchasePhoneNumbers(searchId, cancellationToken);
+                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        internal virtual Task<Response> CancelOperationAsync(string operationId, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <summary> Search for available phone numbers to purchase. </summary>
+        /// <param name="threeLetterISOCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="searchRequest"> The phone number search request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threeLetterISOCountryName"/> or <paramref name="searchRequest"/> is null. </exception>
+        public virtual async Task<SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string threeLetterISOCountryName, PhoneNumberSearchRequest searchRequest, CancellationToken cancellationToken = default)
+        {
+            if (threeLetterISOCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(threeLetterISOCountryName));
+            }
+            if (searchRequest == null)
+            {
+                throw new ArgumentNullException(nameof(searchRequest));
+            }
 
-        internal virtual Response CancelOperation(string operationId, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartSearchAvailablePhoneNumbers");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.SearchAvailablePhoneNumbersAsync(threeLetterISOCountryName, searchRequest, cancellationToken).ConfigureAwait(false);
+                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(threeLetterISOCountryName, searchRequest).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Search for available phone numbers to purchase. </summary>
+        /// <param name="threeLetterISOCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="searchRequest"> The phone number search request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threeLetterISOCountryName"/> or <paramref name="searchRequest"/> is null. </exception>
+        public virtual SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string threeLetterISOCountryName, PhoneNumberSearchRequest searchRequest, CancellationToken cancellationToken = default)
+        {
+            if (threeLetterISOCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(threeLetterISOCountryName));
+            }
+            if (searchRequest == null)
+            {
+                throw new ArgumentNullException(nameof(searchRequest));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PhoneNumbersClient.StartSearchAvailablePhoneNumbers");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.SearchAvailablePhoneNumbers(threeLetterISOCountryName, searchRequest, cancellationToken);
+                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(threeLetterISOCountryName, searchRequest).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         private static T AssertNotNull<T>(T argument, string argumentName)
             where T : class

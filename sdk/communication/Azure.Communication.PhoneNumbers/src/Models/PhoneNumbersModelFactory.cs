@@ -9,7 +9,7 @@ namespace Azure.Communication.PhoneNumbers.Models
     /// <summary>
     /// Model factory that enables mocking for the Administration library.
     /// </summary>
-    public static class AdministrationModelFactory
+    public static class PhoneNumbersModelFactory
     {
         /// <summary> Initializes a new instance of AcquiredPhoneNumber. </summary>
         /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>

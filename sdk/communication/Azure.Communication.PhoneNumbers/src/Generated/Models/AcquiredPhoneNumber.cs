@@ -86,10 +86,6 @@ namespace Azure.Communication.PhoneNumbers.Models
         public PhoneNumberAssignmentType AssignmentType { get; }
         /// <summary> The date and time that the phone number was purchased. </summary>
         public DateTimeOffset? PurchaseDate { get; }
-        /// <summary> The webhook for receiving incoming events, e.g. https://{{site-name}}.azurewebsites.net/api/updates. </summary>
-        public string CallbackUri { get; }
-        /// <summary> The application id of the server application the phone number is assigned to. The property is empty if the phone number is assigned to a person. </summary>
-        public string ApplicationId { get; }
         /// <summary> The incurred cost for a single phone number. </summary>
         public PhoneNumberCost Cost { get; }
     }

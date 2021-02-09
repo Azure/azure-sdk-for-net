@@ -7,28 +7,26 @@ namespace Azure.Communication.PhoneNumbers
         public PhoneNumbersClient(string connectionString, Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions options) { }
         public PhoneNumbersClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions options = null) { }
         public PhoneNumbersClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions options = null) { }
-        public virtual Azure.Response<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> GetByNumber(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber>> GetByNumberAsync(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> GetPhoneNumber(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber>> GetPhoneNumberAsync(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> ListPhoneNumbers(int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> ListPhoneNumbersAsync(int? skip = default(int?), int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.PhoneNumbers.Models.ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Communication.PhoneNumbers.Models.SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string countryCode, Azure.Communication.PhoneNumbers.Models.PhoneNumberSearchRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string countryCode, Azure.Communication.PhoneNumbers.Models.PhoneNumberSearchRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Communication.PhoneNumbers.Models.SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string threeLetterISOCountryName, Azure.Communication.PhoneNumbers.Models.PhoneNumberSearchRequest searchRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string threeLetterISOCountryName, Azure.Communication.PhoneNumbers.Models.PhoneNumberSearchRequest searchRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.PhoneNumbers.Models.UpdateCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue? calling = default(Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue?), Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue? sms = default(Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.Models.UpdateCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue? calling = default(Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue?), Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue? sms = default(Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilityValue?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber> Update(string phoneNumber, string callbackUri = null, string applicationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber>> UpdateAsync(string phoneNumber, string callbackUri = null, string applicationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PhoneNumbersClientOptions : Azure.Core.ClientOptions
     {
-        public const Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion LatestVersion = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V1;
-        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V1, Azure.Core.RetryOptions retryOptions = null, Azure.Core.Pipeline.HttpPipelineTransport transport = null) { }
+        public const Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion LatestVersion = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2021_03_07;
+        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2021_03_07) { }
         public enum ServiceVersion
         {
-            V1 = 1,
+            V2021_03_07 = 1,
         }
     }
 }
@@ -37,9 +35,7 @@ namespace Azure.Communication.PhoneNumbers.Models
     public partial class AcquiredPhoneNumber
     {
         internal AcquiredPhoneNumber() { }
-        public string ApplicationId { get { throw null; } }
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType AssignmentType { get { throw null; } }
-        public string CallbackUri { get { throw null; } }
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilities Capabilities { get { throw null; } }
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberCost Cost { get { throw null; } }
         public string CountryCode { get { throw null; } }
@@ -47,11 +43,6 @@ namespace Azure.Communication.PhoneNumbers.Models
         public string PhoneNumber { get { throw null; } }
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberType PhoneNumberType { get { throw null; } }
         public System.DateTimeOffset? PurchaseDate { get { throw null; } }
-    }
-    public static partial class AdministrationModelFactory
-    {
-        public static Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, Azure.Communication.PhoneNumbers.Models.PhoneNumberType phoneNumberType, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilities capabilities, Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType assignmentType, System.DateTimeOffset? purchaseDate, string callbackUri, string applicationId, Azure.Communication.PhoneNumbers.Models.PhoneNumberCost cost) { throw null; }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BillingFrequency : System.IEquatable<Azure.Communication.PhoneNumbers.Models.BillingFrequency>
@@ -128,7 +119,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         internal PhoneNumberCost() { }
         public double Amount { get { throw null; } }
         public Azure.Communication.PhoneNumbers.Models.BillingFrequency BillingFrequency { get { throw null; } }
-        public string CurrencyCode { get { throw null; } }
+        public string ISOCurrencySymbol { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberOperationStatus : System.IEquatable<Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus>
@@ -189,6 +180,11 @@ namespace Azure.Communication.PhoneNumbers.Models
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberType PhoneNumberType { get { throw null; } }
         public System.DateTimeOffset? SearchExpiresBy { get { throw null; } }
         public string SearchId { get { throw null; } }
+    }
+    public static partial class PhoneNumbersModelFactory
+    {
+        public static Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, Azure.Communication.PhoneNumbers.Models.PhoneNumberType phoneNumberType, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilities capabilities, Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType assignmentType, System.DateTimeOffset? purchaseDate, string callbackUri, string applicationId, Azure.Communication.PhoneNumbers.Models.PhoneNumberCost cost) { throw null; }
+        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberType : System.IEquatable<Azure.Communication.PhoneNumbers.Models.PhoneNumberType>

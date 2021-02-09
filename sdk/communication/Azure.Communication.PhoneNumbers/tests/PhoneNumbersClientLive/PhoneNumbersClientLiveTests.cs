@@ -166,17 +166,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
             // Get purchased number
             var searchedNumber = searchOperation.Value.PhoneNumbers.First();
 
-            var phoneNumberResponse = await client.GetByNumberAsync(searchedNumber);
+            var phoneNumberResponse = await client.GetPhoneNumberAsync(searchedNumber);
             var phoneNumber = phoneNumberResponse.Value;
 
             Assert.AreEqual(searchedNumber, phoneNumber.PhoneNumber);
 
-            if (assignmentType == "application")
-                Assert.IsNotNull(phoneNumber.ApplicationId);
-
             Assert.AreEqual(phoneType, phoneNumber.PhoneNumberType.ToString());
             Assert.AreEqual(assignmentType, phoneNumber.AssignmentType.ToString());
-            Assert.IsNull(phoneNumber.CallbackUri);
             Assert.AreEqual(calling, phoneNumber.Capabilities.Calling.ToString());
             Assert.AreEqual(sms, phoneNumber.Capabilities.Sms.ToString());
 

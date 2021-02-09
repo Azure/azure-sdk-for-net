@@ -15,31 +15,20 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary>
         /// The latest version of the Phone number management service.
         /// </summary>
-        public const ServiceVersion LatestVersion = ServiceVersion.V1;
+        public const ServiceVersion LatestVersion = ServiceVersion.V2021_03_07;
 
         internal string ApiVersion { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumbersClientOptions"/>.
         /// </summary>
-        public PhoneNumbersClientOptions(ServiceVersion version = LatestVersion, RetryOptions retryOptions = default, HttpPipelineTransport transport = default)
+        public PhoneNumbersClientOptions(ServiceVersion version = LatestVersion)
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V1 => "2020-07-20-preview1",
+                ServiceVersion.V2021_03_07 => "2021_03_07",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
-
-            if (transport != default)
-                Transport = transport;
-
-            if (retryOptions != null)
-            {
-                Retry.Mode = retryOptions.Mode;
-                Retry.MaxRetries = retryOptions.MaxRetries;
-                Retry.Delay = retryOptions.Delay;
-                Retry.MaxDelay = retryOptions.MaxDelay;
-            }
         }
 
         /// <summary>
@@ -48,9 +37,11 @@ namespace Azure.Communication.PhoneNumbers
         public enum ServiceVersion
         {
             /// <summary>
-            /// The V1 of the phone number configuration service.
+            /// The V2021_03_07  of the phone number configuration service.
             /// </summary>
-            V1 = 1
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+            V2021_03_07 = 1
+#pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }
 }
