@@ -1,0 +1,203 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/customRollouts/customRolloutSDK?api-version=2020-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmY1MzE4NWMtZWEwOS00ZmMzLTkwNzUtMzE4ZGVjODA1MzAzL3Byb3ZpZGVycy9NaWNyb3NvZnQuUHJvdmlkZXJIdWIvcHJvdmlkZXJSZWdpc3RyYXRpb25zL01pY3Jvc29mdC5Db250b3NvL2N1c3RvbVJvbGxvdXRzL2N1c3RvbVJvbGxvdXRTREs/YXBpLXZlcnNpb249MjAyMC0xMS0yMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"specification\": {\r\n      \"canary\": {\r\n        \"regions\": [\r\n          \"Eastus2euap\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "18d213f7-2b04-4efe-b526-88a0d52c9aba"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "145"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "47f637df-021b-460f-bd95-ca0859a356b4"
+        ],
+        "x-ms-correlation-request-id": [
+          "ad515b70-437c-4af2-ae50-f35a79930312"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20210209T092141Z:ad515b70-437c-4af2-ae50-f35a79930312"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 09 Feb 2021 09:21:41 GMT"
+        ],
+        "Content-Length": [
+          "203"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"specification\": {\r\n      \"canary\": {\r\n        \"regions\": [\r\n          \"Eastus2euap\"\r\n        ]\r\n      }\r\n    },\r\n    \"status\": {\r\n      \"completedRegions\": [\r\n        \"Eastus2euap\"\r\n      ],\r\n      \"failedOrSkippedRegions\": {}\r\n    }\r\n  },\r\n  \"name\": \"customRolloutSDK\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/customRollouts/customRolloutSDK?api-version=2020-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmY1MzE4NWMtZWEwOS00ZmMzLTkwNzUtMzE4ZGVjODA1MzAzL3Byb3ZpZGVycy9NaWNyb3NvZnQuUHJvdmlkZXJIdWIvcHJvdmlkZXJSZWdpc3RyYXRpb25zL01pY3Jvc29mdC5Db250b3NvL2N1c3RvbVJvbGxvdXRzL2N1c3RvbVJvbGxvdXRTREs/YXBpLXZlcnNpb249MjAyMC0xMS0yMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "09c5f63c-40a4-4d8e-bc2f-565b340f873a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "1b802ed6-cd13-4f37-968f-ca8ea750b33b"
+        ],
+        "x-ms-correlation-request-id": [
+          "c7a494e3-910f-4543-b97b-abd73e3143a1"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20210209T092142Z:c7a494e3-910f-4543-b97b-abd73e3143a1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 09 Feb 2021 09:21:42 GMT"
+        ],
+        "Content-Length": [
+          "203"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"specification\": {\r\n      \"canary\": {\r\n        \"regions\": [\r\n          \"Eastus2euap\"\r\n        ]\r\n      }\r\n    },\r\n    \"status\": {\r\n      \"completedRegions\": [\r\n        \"Eastus2euap\"\r\n      ],\r\n      \"failedOrSkippedRegions\": {}\r\n    }\r\n  },\r\n  \"name\": \"customRolloutSDK\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/customRollouts?api-version=2020-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmY1MzE4NWMtZWEwOS00ZmMzLTkwNzUtMzE4ZGVjODA1MzAzL3Byb3ZpZGVycy9NaWNyb3NvZnQuUHJvdmlkZXJIdWIvcHJvdmlkZXJSZWdpc3RyYXRpb25zL01pY3Jvc29mdC5Db250b3NvL2N1c3RvbVJvbGxvdXRzP2FwaS12ZXJzaW9uPTIwMjAtMTEtMjA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "03f61343-ca46-46c1-9a69-0d0174f7a7c3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ProviderHub.ProviderhubClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "7cca42de-fafa-46ad-84e1-0c789f0c7d4b"
+        ],
+        "x-ms-correlation-request-id": [
+          "ec4df37d-a045-44cb-b9c9-ed139d7db20a"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20210209T092143Z:ec4df37d-a045-44cb-b9c9-ed139d7db20a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 09 Feb 2021 09:21:42 GMT"
+        ],
+        "Content-Length": [
+          "1984"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"specification\": {\r\n          \"canary\": {\r\n            \"regions\": [\r\n              \"Eastus2euap\",\r\n              \"brazilus\",\r\n              \"centraluseuap\"\r\n            ]\r\n          }\r\n        },\r\n        \"status\": {\r\n          \"completedRegions\": [\r\n            \"Eastus2euap\",\r\n            \"centraluseuap\",\r\n            \"brazilus\"\r\n          ],\r\n          \"failedOrSkippedRegions\": {}\r\n        }\r\n      },\r\n      \"name\": \"cr1\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"specification\": {\r\n          \"canary\": {\r\n            \"regions\": [\r\n              \"centraluseuap\"\r\n            ]\r\n          }\r\n        },\r\n        \"status\": {\r\n          \"completedRegions\": [\r\n            \"centraluseuap\"\r\n          ],\r\n          \"failedOrSkippedRegions\": {}\r\n        }\r\n      },\r\n      \"name\": \"rolloutTest1\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"specification\": {\r\n          \"canary\": {\r\n            \"regions\": [\r\n              \"EastUS2EUAP\"\r\n            ]\r\n          }\r\n        },\r\n        \"status\": {\r\n          \"completedRegions\": [\r\n            \"EastUS2EUAP\"\r\n          ],\r\n          \"failedOrSkippedRegions\": {}\r\n        }\r\n      },\r\n      \"name\": \"canaryTesting01\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"specification\": {\r\n          \"canary\": {\r\n            \"regions\": [\r\n              \"centraluseuap\"\r\n            ]\r\n          }\r\n        },\r\n        \"status\": {\r\n          \"completedRegions\": [\r\n            \"centraluseuap\"\r\n          ],\r\n          \"failedOrSkippedRegions\": {}\r\n        }\r\n      },\r\n      \"name\": \"2021week2\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"specification\": {\r\n          \"canary\": {\r\n            \"regions\": [\r\n              \"centraluseuap\"\r\n            ]\r\n          }\r\n        },\r\n        \"status\": {\r\n          \"completedRegions\": [\r\n            \"centraluseuap\"\r\n          ],\r\n          \"failedOrSkippedRegions\": {}\r\n        }\r\n      },\r\n      \"name\": \"test_rollout\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"specification\": {\r\n          \"canary\": {\r\n            \"regions\": [\r\n              \"centraluseuap\"\r\n            ]\r\n          }\r\n        },\r\n        \"status\": {\r\n          \"completedRegions\": [\r\n            \"centraluseuap\"\r\n          ],\r\n          \"failedOrSkippedRegions\": {}\r\n        }\r\n      },\r\n      \"name\": \"cliRollout\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"specification\": {\r\n          \"canary\": {\r\n            \"regions\": [\r\n              \"Eastus2euap\",\r\n              \"centraluseuap\",\r\n              \"brazilus\"\r\n            ]\r\n          }\r\n        },\r\n        \"status\": {\r\n          \"completedRegions\": [\r\n            \"Eastus2euap\",\r\n            \"brazilus\",\r\n            \"centraluseuap\"\r\n          ],\r\n          \"failedOrSkippedRegions\": {}\r\n        }\r\n      },\r\n      \"name\": \"cliDefaultRollout\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"specification\": {\r\n          \"canary\": {\r\n            \"regions\": [\r\n              \"Eastus2euap\",\r\n              \"centraluseuap\",\r\n              \"brazilus\"\r\n            ]\r\n          }\r\n        },\r\n        \"status\": {\r\n          \"completedRegions\": [\r\n            \"centraluseuap\",\r\n            \"Eastus2euap\",\r\n            \"brazilus\"\r\n          ],\r\n          \"failedOrSkippedRegions\": {}\r\n        }\r\n      },\r\n      \"name\": \"2020week2\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"specification\": {\r\n          \"canary\": {\r\n            \"regions\": [\r\n              \"Eastus2euap\"\r\n            ]\r\n          }\r\n        },\r\n        \"status\": {\r\n          \"completedRegions\": [\r\n            \"Eastus2euap\"\r\n          ],\r\n          \"failedOrSkippedRegions\": {}\r\n        }\r\n      },\r\n      \"name\": \"customRolloutSDK\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "6f53185c-ea09-4fc3-9075-318dec805303"
+  }
+}
