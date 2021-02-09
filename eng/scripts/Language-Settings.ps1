@@ -156,7 +156,7 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 function Get-dotnet-GithubIoDocIndex()
 {
   # Update the main.js and docfx.json language content
-  UpdateDocIndexFiles -appTitleLang ".NET"
+  UpdateDocIndexFiles -appTitleLang $LanguageDisplayName
   # Fetch out all package metadata from csv file.
   $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
   # Get the artifacts name from blob storage
