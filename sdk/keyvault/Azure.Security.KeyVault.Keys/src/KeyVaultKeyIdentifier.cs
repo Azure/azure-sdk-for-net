@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -19,10 +20,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
         public KeyVaultKeyIdentifier(Uri id)
         {
-            if (id is null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             if (KeyVaultIdentifier.TryParse(id, out KeyVaultIdentifier identifier))
             {
