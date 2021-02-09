@@ -799,7 +799,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
   $body = "[" + ($fieldUpdates -join ',') + "]"
 
   $headers = $null
-  if ($devops_pat) 
+  if (Get-Variable -Name "devops_pat" -ValueOnly -ErrorAction "Ignore")
   {
     $encodedToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes([string]::Format("{0}:{1}", "", $devops_pat)))
     $headers = @{ Authorization = "Basic $encodedToken" }
