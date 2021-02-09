@@ -10,13 +10,6 @@ Param (
 )
 . "${PSScriptRoot}\..\scripts\common.ps1"
 
-# Given the metadata url under https://github.com/Azure/azure-sdk/tree/master/_data/releases/latest, 
-# the function will return the csv metadata back as part of response.
-function Get-CSVMetadata ([string]$MetadataUri) {
-    $metadataResponse = Invoke-RestMethod -Uri $MetadataUri -method "GET" -MaximumRetryCount 3 -RetryIntervalSec 10 | ConvertFrom-Csv
-    return $metadataResponse
-}
-  
 # Given the github io blob storage url and language regex,
 # the helper function will return a list of artifact names.
 function Get-BlobStorage-Artifacts($blobStorageUrl, $blobDirectoryRegex, $blobArtifactsReplacement) {
@@ -72,12 +65,7 @@ function Get-TocMapping {
     $orderServiceMapping = @{}
 
     foreach ($artifact in $artifacts) {
-        $packageInfo = $metadata | ? {$_.Package -eq $artifact}
-        
-        if ($packageInfo -and $packageInfo[0].Hide -eq 'true') {
-            LogDebug "The artifact $artifact set 'Hide' to 'true'."
-            continue
-        }
+        $packageInfo = $metadata | ? { $_.Package -eq $artifact -and $_.Hide -ne "true" }
         $serviceName = ""
         $displayName = ""
         if (!$packageInfo) {
@@ -165,7 +153,6 @@ function UpdateDocIndexFiles {
     Param (
         [Parameter(Mandatory=$false)] [String]$appTitleLang = $Language,
         [Parameter(Mandatory=$false)] [String]$lang = $Language,
-        [Parameter(Mandatory=$false)] [String]$indexhtmlloc = "index.html",
         [Parameter(Mandatory=$false)] [String]$packageRegex = "`"`"",
         [Parameter(Mandatory=$false)] [String]$regexReplacement = ""
     )
@@ -173,12 +160,10 @@ function UpdateDocIndexFiles {
     $docfxContent = Get-Content -Path $DocfxJsonPath -Raw
     $docfxContent = $docfxContent -replace "`"_appTitle`": `"`"", "`"_appTitle`": `"Azure SDK for $appTitleLang`""
     $docfxContent = $docfxContent -replace "`"_appFooter`": `"`"", "`"_appFooter`": `"Azure SDK for $appTitleLang`""
-    Set-Content -Path $DocfxJsonPath -Value $docfxContent
+    Set-Content -Path $DocfxJsonPath -Value $docfxContent -NoNewline
     # Update main.js var lang
     $mainJsContent = Get-Content -Path $MainJsPath -Raw
     $mainJsContent = $mainJsContent -replace "var SELECTED_LANGUAGE = ''", "var SELECTED_LANGUAGE = '$lang'"
-    # Update main.js var index html
-    $mainJsContent = $mainJsContent -replace "var INDEX_HTML = ''", "var INDEX_HTML = '$indexhtmlloc'"
     # Update main.js package regex and replacement
     $mainJsContent = $mainJsContent -replace "var PACKAGE_REGEX = ''", "var PACKAGE_REGEX = $packageRegex"
     $mainJsContent = $mainJsContent -replace "var PACKAGE_REPLACEMENT = ''", "var PACKAGE_REPLACEMENT = `"$regexReplacement`""
@@ -191,5 +176,7 @@ if ($GetGithubIoDocIndexFn -and (Test-Path "function:$GetGithubIoDocIndexFn"))
 }
 else
 {
-    LogWarning "The function 'GetGithubIoDocIndexFn' was not found."
+    LogWarning "The function for 'GetGithubIoDocIndexFn' was not found.`
+    Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
+    See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
 }

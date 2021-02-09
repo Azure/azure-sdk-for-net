@@ -8,11 +8,13 @@ using System.Linq;
 using Azure.Identity;
 using Azure.Storage;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace Azure.Storage.Blobs.Samples
 {
@@ -27,10 +29,10 @@ namespace Azure.Storage.Blobs.Samples
         [Test]
         public void AuthWithTokenCredential()
         {
-            string accountUri = this.StorageAccountBlobUri.ToString();
+            string serviceUri = this.StorageAccountBlobUri.ToString();
 
             #region Snippet:SampleSnippetsBlobMigration_TokenCredential
-            BlobServiceClient client = new BlobServiceClient(new Uri(accountUri), new DefaultAzureCredential());
+            BlobServiceClient client = new BlobServiceClient(new Uri(serviceUri), new DefaultAzureCredential());
             #endregion
 
             client.GetProperties();
@@ -606,6 +608,130 @@ namespace Azure.Storage.Blobs.Samples
             finally
             {
                 await container.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task BlobContentHash()
+        {
+            string data = "hello world";
+            using Stream contentStream = new MemoryStream(Encoding.UTF8.GetBytes(data));
+
+            // precalculate hash for sample
+            byte[] precalculatedContentHash;
+            using (var md5 = MD5.Create())
+            {
+                precalculatedContentHash = md5.ComputeHash(contentStream);
+            }
+            contentStream.Position = 0;
+
+            // setup blob
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-file");
+            var containerClient = new BlobContainerClient(ConnectionString, containerName);
+
+            try
+            {
+                containerClient.Create();
+                var blobClient = containerClient.GetBlobClient(blobName);
+
+                #region Snippet:SampleSnippetsBlobMigration_BlobContentMD5
+                // upload with blob content hash
+                await blobClient.UploadAsync(
+                    contentStream,
+                    new BlobUploadOptions()
+                    {
+                        HttpHeaders = new BlobHttpHeaders()
+                        {
+                            ContentHash = precalculatedContentHash
+                        }
+                    });
+
+                // download whole blob and validate against stored blob content hash
+                Response<BlobDownloadInfo> response = await blobClient.DownloadAsync();
+
+                Stream downloadStream = response.Value.Content;
+                byte[] blobContentMD5 = response.Value.Details.BlobContentHash ?? response.Value.ContentHash;
+                // validate stream against hash in your workflow
+                #endregion
+
+                byte[] downloadedBytes;
+                using (var memStream = new MemoryStream())
+                {
+                    await downloadStream.CopyToAsync(memStream);
+                    downloadedBytes = memStream.ToArray();
+                }
+
+                Assert.AreEqual(data, Encoding.UTF8.GetString(downloadedBytes));
+                Assert.IsTrue(Enumerable.SequenceEqual(precalculatedContentHash, blobContentMD5));
+            }
+            finally
+            {
+                await containerClient.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task TransactionalMD5()
+        {
+            string data = "hello world";
+            string blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            List<string> blockList = new List<string> { blockId };
+            using Stream blockContentStream = new MemoryStream(Encoding.UTF8.GetBytes(data));
+
+            // precalculate hash for sample
+            byte[] precalculatedBlockHash;
+            using (var md5 = MD5.Create())
+            {
+                precalculatedBlockHash = md5.ComputeHash(blockContentStream);
+            }
+            blockContentStream.Position = 0;
+
+            // setup blob
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-file");
+            var containerClient = new BlobContainerClient(ConnectionString, containerName);
+
+            try
+            {
+                containerClient.Create();
+                var blockBlobClient = containerClient.GetBlockBlobClient(blobName);
+
+                #region Snippet:SampleSnippetsBlobMigration_TransactionalMD5
+                // upload a block with transactional hash calculated by user
+                await blockBlobClient.StageBlockAsync(
+                    blockId,
+                    blockContentStream,
+                    transactionalContentHash: precalculatedBlockHash);
+
+                // upload more blocks as needed
+
+                // commit block list
+                await blockBlobClient.CommitBlockListAsync(blockList);
+
+                // download any range of blob with transactional MD5 requested (maximum 4 MB for downloads)
+                Response<BlobDownloadInfo> response = await blockBlobClient.DownloadAsync(
+                    range: new HttpRange(length: 4 * Constants.MB), // a range must be provided; here we use transactional download max size
+                    rangeGetContentHash: true);
+
+                Stream downloadStream = response.Value.Content;
+                byte[] transactionalMD5 = response.Value.ContentHash;
+                // validate stream against hash in your workflow
+                #endregion
+
+                byte[] downloadedBytes;
+                using (var memStream = new MemoryStream())
+                {
+                    await downloadStream.CopyToAsync(memStream);
+                    downloadedBytes = memStream.ToArray();
+                }
+
+                Assert.AreEqual(data, Encoding.UTF8.GetString(downloadedBytes));
+                Assert.IsTrue(Enumerable.SequenceEqual(precalculatedBlockHash, transactionalMD5));
+            }
+            finally
+            {
+                await containerClient.DeleteIfExistsAsync();
             }
         }
     }

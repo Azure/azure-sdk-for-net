@@ -5,7 +5,6 @@ containers.addClass("container-fluid");
 
 WINDOW_CONTENTS = window.location.href.split('/')
 var SELECTED_LANGUAGE = ''
-var INDEX_HTML = ''
 var PACKAGE_REGEX = ''
 var PACKAGE_REPLACEMENT = ''
 
@@ -77,7 +76,7 @@ $(function () {
     // Add text to empty links
     $("p > a").each(function () {
         var link = $(this).attr('href')
-        if ($(this).text() === "") {
+        if ($(this).text() === "" && $(this).children().attr("src") === "") {
             $(this).html(link)
         }
     });
@@ -163,8 +162,12 @@ function populateIndexList(selector, packageName) {
     httpGetLatestAsync(latestPreviewUrl, latestVersions, packageName)
     var publishedVersions = $('<ul style="display: none;"></ul>')
     var collapsible = $('<div class="versionarrow">&nbsp;&nbsp;&nbsp;Other versions</div>')
-
-    $(selector).next().after(latestVersions)
+    // Check whether it has display name tag.
+    if ($(selector).next().is('h5')) {
+        $(selector).next().after(latestVersions)
+    } else {
+        $(selector).after(latestVersions)
+    }
     $(latestVersions).after(collapsible)
     $(collapsible).after(publishedVersions)
     // Add collapsible arrows on versioned docs.
@@ -198,7 +201,7 @@ function populateIndexList(selector, packageName) {
 }
 
 function getPackageUrl(language, package, version) {
-    return "https://azuresdkdocs.blob.core.windows.net/$web/" + language + "/" + package + "/" + version + "/" + INDEX_HTML
+    return "https://azuresdkdocs.blob.core.windows.net/$web/" + language + "/" + package + "/" + version + "/index.html"
 }
 
 // Populate Versions
@@ -217,8 +220,3 @@ $(function () {
         populateOptions($('#navbar'), pkgName)
     }
 })
-
-
-
-
-

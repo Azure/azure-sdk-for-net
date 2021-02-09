@@ -131,27 +131,27 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(actual, Is.Not.Null, $"The processor options should have been created for the { constructorDescription } constructor.");
                 Assert.That(actual.ConnectionOptions.TransportType, Is.EqualTo(expected.ConnectionOptions.TransportType), $"The connection options are incorrect for the { constructorDescription } constructor.");
                 Assert.That(actual.RetryOptions.MaximumRetries, Is.EqualTo(expected.RetryOptions.MaximumRetries), $"The retry options are incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.Identifier, Is.EqualTo(expected.Identifier),  $"The identifier is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.MaximumWaitTime, Is.EqualTo(expected.MaximumWaitTime),  $"The maximum wait time is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.TrackLastEnqueuedEventProperties, Is.EqualTo(expected.TrackLastEnqueuedEventProperties),  $"The last event tracking flag is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.DefaultStartingPosition, Is.EqualTo(expected.DefaultStartingPosition),  $"The default starting position is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.LoadBalancingUpdateInterval, Is.EqualTo(expected.LoadBalancingUpdateInterval),  $"The load balancing interval is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.PartitionOwnershipExpirationInterval, Is.EqualTo(expected.PartitionOwnershipExpirationInterval),  $"The ownership expiration interval incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.PrefetchCount, Is.EqualTo(expected.PrefetchCount),  $"The prefetch count is incorrect for the { constructorDescription } constructor.");
-                Assert.That(actual.PrefetchSizeInBytes, Is.EqualTo(expected.PrefetchSizeInBytes),  $"The prefetch byte size is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.Identifier, Is.EqualTo(expected.Identifier), $"The identifier is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.MaximumWaitTime, Is.EqualTo(expected.MaximumWaitTime), $"The maximum wait time is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.TrackLastEnqueuedEventProperties, Is.EqualTo(expected.TrackLastEnqueuedEventProperties), $"The last event tracking flag is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.DefaultStartingPosition, Is.EqualTo(expected.DefaultStartingPosition), $"The default starting position is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.LoadBalancingUpdateInterval, Is.EqualTo(expected.LoadBalancingUpdateInterval), $"The load balancing interval is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.PartitionOwnershipExpirationInterval, Is.EqualTo(expected.PartitionOwnershipExpirationInterval), $"The ownership expiration interval incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.PrefetchCount, Is.EqualTo(expected.PrefetchCount), $"The prefetch count is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.PrefetchSizeInBytes, Is.EqualTo(expected.PrefetchSizeInBytes), $"The prefetch byte size is incorrect for the { constructorDescription } constructor.");
             }
 
             var clientOptions = new EventProcessorClientOptions
             {
-               ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
-               RetryOptions = new EventHubsRetryOptions { MaximumRetries = 99 },
-               Identifier = "OMG, HAI!",
-               MaximumWaitTime = TimeSpan.FromDays(54),
-               TrackLastEnqueuedEventProperties = true,
-               PrefetchCount = 5,
-               PrefetchSizeInBytes = 500,
-               LoadBalancingUpdateInterval = TimeSpan.FromDays(65),
-               PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(65)
+                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
+                RetryOptions = new EventHubsRetryOptions { MaximumRetries = 99 },
+                Identifier = "OMG, HAI!",
+                MaximumWaitTime = TimeSpan.FromDays(54),
+                TrackLastEnqueuedEventProperties = true,
+                PrefetchCount = 5,
+                PrefetchSizeInBytes = 500,
+                LoadBalancingUpdateInterval = TimeSpan.FromDays(65),
+                PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(65)
             };
 
             var expectedOptions = InvokeCreateOptions(clientOptions);
@@ -608,7 +608,7 @@ namespace Azure.Messaging.EventHubs.Tests
             processorClient.PartitionInitializingAsync += initHandler;
             processorClient.PartitionClosingAsync += closeHandler;
             processorClient.ProcessEventAsync += eventHandler;
-            processorClient.ProcessErrorAsync +=errorHandler;
+            processorClient.ProcessErrorAsync += errorHandler;
 
             Assert.That(() => processorClient.PartitionInitializingAsync -= initHandler, Throws.Nothing, "The initializing handler should allow removing registrations.");
             Assert.That(() => processorClient.PartitionClosingAsync -= closeHandler, Throws.Nothing, "The closing handler should allow removing registrations.");
@@ -630,7 +630,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
 
             var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
-            processorClient.ProcessEventAsync += eventHandler;;
+            processorClient.ProcessEventAsync += eventHandler;
+            ;
             processorClient.ProcessErrorAsync += errorHandler;
 
             // Handlers should not be allowed when the processor is running.
@@ -944,7 +945,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventBatch = Enumerable
                 .Range(0, eventCount)
-                .Select(index => new MockEventData(Array.Empty<byte>(), offset: 1000 + index,  sequenceNumber: 2000 + index))
+                .Select(index => new MockEventData(Array.Empty<byte>(), offset: 1000 + index, sequenceNumber: 2000 + index))
                 .ToList();
 
             processorClient.ProcessEventAsync += eventArgs =>
@@ -1422,16 +1423,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var clientOptions = new EventProcessorClientOptions
             {
-               ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
-               RetryOptions = new EventHubsRetryOptions { MaximumRetries = 99 },
-               Identifier = "OMG, HAI!",
-               MaximumWaitTime = TimeSpan.FromDays(54),
-               TrackLastEnqueuedEventProperties = true,
-               LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
-               PrefetchCount = 9990,
-               PrefetchSizeInBytes = 400,
-               LoadBalancingUpdateInterval = TimeSpan.FromSeconds(45),
-               PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(44)
+                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
+                RetryOptions = new EventHubsRetryOptions { MaximumRetries = 99 },
+                Identifier = "OMG, HAI!",
+                MaximumWaitTime = TimeSpan.FromDays(54),
+                TrackLastEnqueuedEventProperties = true,
+                LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
+                PrefetchCount = 9990,
+                PrefetchSizeInBytes = 400,
+                LoadBalancingUpdateInterval = TimeSpan.FromSeconds(45),
+                PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(44)
             };
 
             var defaultOptions = new EventProcessorOptions();

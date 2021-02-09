@@ -38,7 +38,6 @@ namespace Azure.Core.Buffers
                         throw new Exception("could not rent large enough buffer.");
                     await stream.WriteAsync(array, 0, buffer.Length, cancellation).ConfigureAwait(false);
                 }
-
             }
             finally
             {

@@ -32,7 +32,6 @@ namespace Azure.Identity
         public InteractiveBrowserCredential()
             : this(null, Constants.DeveloperSignOnClientId, null, null)
         {
-
         }
 
         /// <summary>
@@ -54,7 +53,6 @@ namespace Azure.Identity
         public InteractiveBrowserCredential(string clientId)
             : this(null, clientId, null, null)
         {
-
         }
 
         /// <summary>
@@ -162,7 +160,7 @@ namespace Azure.Identity
 
             try
             {
-                scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
+                scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext, async, cancellationToken).ConfigureAwait(false));
 
                 return Record;
             }
@@ -184,7 +182,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, Record, async, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
@@ -199,7 +197,7 @@ namespace Azure.Identity
                     throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, inner);
                 }
 
-                return scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
+                return scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext, async, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -207,9 +205,9 @@ namespace Azure.Identity
             }
         }
 
-        private async Task<AccessToken> GetTokenViaBrowserLoginAsync(string[] scopes, bool async, CancellationToken cancellationToken)
+        private async Task<AccessToken> GetTokenViaBrowserLoginAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await Client.AcquireTokenInteractiveAsync(scopes, Prompt.SelectAccount, async, cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await Client.AcquireTokenInteractiveAsync(context.Scopes, context.Claims, Prompt.SelectAccount, async, cancellationToken).ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
 

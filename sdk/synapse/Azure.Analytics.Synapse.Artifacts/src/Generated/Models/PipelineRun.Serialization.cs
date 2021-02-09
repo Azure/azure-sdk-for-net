@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<PipelineRunInvokedBy> invokedBy = default;
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<DateTimeOffset> runStart = default;
-            Optional<DateTimeOffset> runEnd = default;
+            Optional<DateTimeOffset?> runEnd = default;
             Optional<int> durationInMs = default;
             Optional<string> status = default;
             Optional<string> message = default;
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        runEnd = null;
                         continue;
                     }
                     runEnd = property.Value.GetDateTimeOffset("O");

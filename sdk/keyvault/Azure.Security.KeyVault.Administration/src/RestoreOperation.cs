@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,14 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class RestoreOperation : Operation<RestoreResult>
     {
-        /// <summary>
-        /// The number of seconds recommended by the service to delay before checking on completion status.
-        /// </summary>
-        private readonly int? _retryAfterSeconds;
-        private readonly KeyVaultBackupClient _client;
-        private Response _response;
-        private RestoreDetailsInternal _value;
-        private readonly string _id;
+        internal readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult, RestoreDetailsInternal> _operationInternal;
 
         /// <summary>
         /// Creates an instance of a RestoreOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
@@ -33,11 +27,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
         public RestoreOperation(KeyVaultBackupClient client, string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(client, nameof(client));
-
-            _client = client;
-            _id = id;
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult, RestoreDetailsInternal>(client, id);
         }
 
         /// <summary>
@@ -48,30 +38,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
         internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders> response)
         {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(response, nameof(response));
-
-            _id = response.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
-            _client = client;
-            _response = response.GetRawResponse();
-            _retryAfterSeconds = response.Headers.RetryAfter;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of a RestoreOperation.
-        /// </summary>
-        /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartSelectiveRestore"/> or <see cref="KeyVaultBackupClient.StartSelectiveRestoreAsync"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
-        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders> response)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(response, nameof(response));
-
-            _id = response.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
-            _client = client;
-            _response = response.GetRawResponse();
-            _retryAfterSeconds = response.Headers.RetryAfter;
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult, RestoreDetailsInternal>(client, response);
         }
 
         /// <summary>
@@ -83,90 +50,47 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="value"/> or <paramref name="response"/> or <paramref name="client"/> is null.</exception>
         internal RestoreOperation(RestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(response, nameof(response));
-            Argument.AssertNotNull(client, nameof(client));
-
-            _client = client;
-            _response = response;
-            _value = value;
-            _id = value.JobId;
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult, RestoreDetailsInternal>(value, response, client);
         }
 
         /// <summary>
         /// The start time of the restore operation.
         /// </summary>
-        public DateTimeOffset? StartTime => _value?.StartTime;
+        public DateTimeOffset? StartTime => _operationInternal.StartTime;
 
         /// <summary>
         /// The end time of the restore operation.
         /// </summary>
-        public DateTimeOffset? EndTime => _value?.EndTime;
+        public DateTimeOffset? EndTime => _operationInternal.EndTime;
 
         /// <inheritdoc/>
-        public override string Id => _id;
+        public override string Id => _operationInternal.Id;
 
         /// <inheritdoc/>
-        public override RestoreResult Value
-        {
-            get
-            {
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                if (!HasCompleted)
-                {
-                    throw new InvalidOperationException("The operation is not complete.");
-                }
-                if (_value != null && _value.EndTime.HasValue && _value.Error != null)
-                {
-                    throw new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
-                }
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                return new RestoreResult(_value.StartTime.Value, _value.EndTime.Value);
-            }
-        }
+        public override RestoreResult Value => _operationInternal.Value;
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _value?.EndTime.HasValue ?? false;
+        public override bool HasCompleted => _operationInternal.HasCompleted;
 
         /// <inheritdoc/>
-        public override bool HasValue => _response != null && _value?.Error == null && HasCompleted;
+        public override bool HasValue => _operationInternal.HasValue;
 
         /// <inheritdoc/>
-        public override Response GetRawResponse() => _response;
+        public override Response GetRawResponse() => _operationInternal.GetRawResponse();
 
         /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
-        {
-            if (!HasCompleted)
-            {
-                Response<RestoreDetailsInternal> response = _client.GetRestoreDetails(Id, cancellationToken);
-                _value = response.Value;
-                _response = response.GetRawResponse();
-            }
-
-            return GetRawResponse();
-        }
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operationInternal.UpdateStatus(cancellationToken);
 
         /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            if (!HasCompleted)
-            {
-                Response<RestoreDetailsInternal> response = await _client.GetRestoreDetailsAsync(Id, cancellationToken).ConfigureAwait(false);
-                _value = response.Value;
-                _response = response.GetRawResponse();
-            }
-
-            return GetRawResponse();
-        }
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc/>
         public override ValueTask<Response<RestoreResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            _retryAfterSeconds.HasValue ? this.DefaultWaitForCompletionAsync(TimeSpan.FromSeconds(_retryAfterSeconds.Value), cancellationToken) :
-                this.DefaultWaitForCompletionAsync(cancellationToken);
+            _operationInternal.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
         public override ValueTask<Response<RestoreResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+            _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

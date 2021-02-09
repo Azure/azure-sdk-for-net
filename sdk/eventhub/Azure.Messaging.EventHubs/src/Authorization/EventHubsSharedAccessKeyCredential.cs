@@ -164,7 +164,6 @@ namespace Azure.Messaging.EventHubs
         internal SharedAccessSignatureCredential AsSharedAccessSignatureCredential(string eventHubResource,
                                                                                    TimeSpan? signatureValidityDuration = default)
         {
-
             SharedAccessSignatureCredential = string.IsNullOrEmpty(SharedAccessSignature)
                 ? new SharedAccessSignatureCredential(new SharedAccessSignature(eventHubResource, SharedAccessKeyName, SharedAccessKey, signatureValidityDuration))
                 : new SharedAccessSignatureCredential(new SharedAccessSignature(SharedAccessSignature));

@@ -36,7 +36,6 @@ namespace Azure.Iot.Hub.Service.Tests
                 return;
             }
 
-
             string codeBase = Assembly.GetExecutingAssembly().Location;
             string workingDirectory = Path.GetDirectoryName(codeBase);
 

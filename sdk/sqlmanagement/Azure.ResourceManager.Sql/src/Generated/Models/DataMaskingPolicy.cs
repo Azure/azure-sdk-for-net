@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents a database data masking policy. </summary>
-    public partial class DataMaskingPolicy : Resource
+    public partial class DataMaskingPolicy : ProxyResource
     {
         /// <summary> Initializes a new instance of DataMaskingPolicy. </summary>
         public DataMaskingPolicy()

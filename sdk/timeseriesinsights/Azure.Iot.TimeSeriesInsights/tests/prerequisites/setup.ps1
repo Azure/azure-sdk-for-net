@@ -124,7 +124,7 @@ az deployment group create --resource-group $ResourceGroup --name $($Environment
 
 # Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
 # and we have to use that casing in order to get them from the deployment outputs.
-$dataAccessFqdn = az deployment group show -g $ResourceGroup -n $($EnvironmentName.ToLower()) --query 'properties.outputs.dataAccessFQDN.value' --output tsv
+$dataAccessFqdn = az deployment group show -g $ResourceGroup -n $($EnvironmentName.ToLower()) --query 'properties.outputs.TIMESERIESINSIGHTS_URL.value' --output tsv
 
 Write-Host("`nSet a new client secret for $appId`n")
 $appSecret = az ad app credential reset --id $appId --years 2 --query 'password' --output tsv

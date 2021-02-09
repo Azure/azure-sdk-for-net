@@ -33,7 +33,6 @@ namespace Azure.Identity
         public DeviceCodeCredential() :
             this(DefaultDeviceCodeHandler, null, Constants.DeveloperSignOnClientId, null, null)
         {
-
         }
 
         /// <summary>
@@ -55,7 +54,6 @@ namespace Azure.Identity
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, TokenCredentialOptions options = default)
             : this(deviceCodeCallback, null, clientId, options, null)
         {
-
         }
 
         /// <summary>
@@ -174,7 +172,7 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken token = await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false);
+                AccessToken token = await GetTokenViaDeviceCodeAsync(requestContext, async, cancellationToken).ConfigureAwait(false);
 
                 scope.Succeeded(token);
 
@@ -198,7 +196,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, Record, async, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
@@ -213,7 +211,7 @@ namespace Azure.Identity
                     throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, inner);
                 }
 
-                return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
+                return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext, async, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -221,9 +219,9 @@ namespace Azure.Identity
             }
         }
 
-        private async Task<AccessToken> GetTokenViaDeviceCodeAsync(string[] scopes, bool async, CancellationToken cancellationToken)
+        private async Task<AccessToken> GetTokenViaDeviceCodeAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await Client.AcquireTokenWithDeviceCodeAsync(scopes, code => DeviceCodeCallbackImpl(code, cancellationToken), async, cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await Client.AcquireTokenWithDeviceCodeAsync(context.Scopes, context.Claims, code => DeviceCodeCallbackImpl(code, cancellationToken), async, cancellationToken).ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
 
@@ -234,6 +232,5 @@ namespace Azure.Identity
         {
             return DeviceCodeCallback(new DeviceCodeInfo(deviceCode), cancellationToken);
         }
-
     }
 }

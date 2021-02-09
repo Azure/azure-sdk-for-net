@@ -37,12 +37,6 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
         /// <summary>
-        /// Gets or sets an optional session ID to scope the <see cref="ServiceBusSessionReceiver"/> to. If left blank,
-        /// the next available session returned from the service will be used.
-        /// </summary>
-        internal string SessionId { get; set; }
-
-        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///

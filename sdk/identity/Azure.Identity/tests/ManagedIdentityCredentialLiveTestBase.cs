@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Secrets;
@@ -38,28 +39,24 @@ namespace Azure.Identity.Tests
 
         private class ManagedIdenityEnvironment : IDisposable
         {
-            private readonly TestEnvVar[] _envVars;
+            private readonly TestEnvVar _envVar;
 
             public ManagedIdenityEnvironment(IdentityTestEnvironment env)
             {
-                _envVars = new TestEnvVar[]
-                {
-                    new TestEnvVar("IDENTITY_ENDPOINT", env.IdentityEndpoint),
-                    new TestEnvVar("IMDS_ENDPOINT", env.ImdsEndpoint),
-                    new TestEnvVar("MSI_ENDPOINT", env.MsiEndpoint),
-                    new TestEnvVar("MSI_SECRET", env.MsiSecret),
-                    new TestEnvVar("IDENTITY_HEADER", env.IdentityHeader),
-                    new TestEnvVar("IDENTITY_SERVER_THUMBPRINT", env.IdentityServerThumbprint)
-
-                };
+                _envVar =
+                    new TestEnvVar(
+                        new Dictionary<string, string>
+                        {
+                            { "IDENTITY_ENDPOINT", env.IdentityEndpoint },
+                            { "IMDS_ENDPOINT", env.ImdsEndpoint },
+                            { "MSI_ENDPOINT", env.MsiEndpoint },
+                            { "MSI_SECRET", env.MsiSecret },{ "IDENTITY_HEADER", env.IdentityHeader },
+                            { "IDENTITY_SERVER_THUMBPRINT", env.IdentityServerThumbprint } });
             }
 
             public void Dispose()
             {
-                foreach (TestEnvVar envVar in _envVars)
-                {
-                    envVar.Dispose();
-                }
+                _envVar.Dispose();
             }
         }
     }

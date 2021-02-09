@@ -79,6 +79,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        public void AesEncryptAlgorithmNotSupported([EnumValues(nameof(EncryptionAlgorithm.A128Gcm), nameof(EncryptionAlgorithm.A192Gcm), nameof(EncryptionAlgorithm.A256Gcm))] EncryptionAlgorithm algorithm)
+        {
+            JsonWebKey jwk = CreateKey(KeyType.Oct);
+            LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
+
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.EncryptAsync(algorithm, TestData));
+        }
+
+        [Test]
         public void DecryptOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
@@ -94,6 +103,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.DecryptAsync(new EncryptionAlgorithm("ignored"), TestData));
+        }
+
+        [Test]
+        public void AesDecryptAlgorithmNotSupported([EnumValues(nameof(EncryptionAlgorithm.A128Gcm), nameof(EncryptionAlgorithm.A192Gcm), nameof(EncryptionAlgorithm.A256Gcm))] EncryptionAlgorithm algorithm)
+        {
+            JsonWebKey jwk = CreateKey(KeyType.Oct);
+            LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
+
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.DecryptAsync(algorithm, TestData));
         }
 
         [Test]
@@ -141,7 +159,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignAsync(new SignatureAlgorithm("ignored"), TestData));
         }
-
 
         [Test]
         public void VerifyOperationNotSupported()
@@ -204,7 +221,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestData));
         }
 
-
         [Test]
         public void VerifyDataOperationNotSupported()
         {
@@ -264,7 +280,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestStream));
         }
 
-
         [Test]
         public void VerifyDataStreamOperationNotSupported()
         {
@@ -323,7 +338,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.WrapKeyAsync(new KeyWrapAlgorithm("ignored"), TestData));
         }
-
 
         [Test]
         public void UnwrapKeyOperationNotSupported()

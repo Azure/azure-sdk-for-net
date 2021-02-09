@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   routing or when using a partition key.
     /// </remarks>
     ///
-    public class PartitionPublishingOptions
+    internal class PartitionPublishingOptions
     {
         /// <summary>
         ///   The identifier of the producer group that this producer is associated with when publishing to the associated partition.
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <seealso cref="EventHubProducerClientOptions.EnableIdempotentPartitions" />
         ///
-        public long? ProducerGroupId  { get; set; }
+        public long? ProducerGroupId { get; set; }
 
         /// <summary>
         ///   The owner level indicates that a publishing is intended to be performed exclusively for events in the
@@ -68,7 +68,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The starting number that should be used for the automatic sequencing of events for the associated partition, when published by this producer.
         /// </summary>
         ///
-        /// <value>The starting sequence number to associate with the partition; if <c>null</c>, the Event Hubs service will control the value.</value>
+        /// <value>
+        ///     <para>The starting sequence number to associate with the partition; if <c>null</c>, the Event Hubs service will control the value.</para>
+        ///
+        ///     <para>The sequence number will be in the range of <c>0</c> - <see cref="int.MaxValue"/> (inclusive) and will increase as events are published.
+        ///     When more than <see cref="int.MaxValue" /> events have been published, the sequence number will roll over to <c>0</c>.</para>
+        /// </value>
         ///
         /// <remarks>
         ///   The starting sequence number is only recognized and relevant when certain features of the producer are enabled.  For example, it is used by

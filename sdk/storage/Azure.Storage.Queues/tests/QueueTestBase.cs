@@ -56,13 +56,15 @@ namespace Azure.Storage.Queues.Tests
         }
 
         public QueueServiceClient GetServiceClient_SharedKey(QueueClientOptions options = default)
-            => InstrumentClient(
-                new QueueServiceClient(
+            => InstrumentClient(GetServiceClient_SharedKey_UnInstrumented(options));
+
+        private QueueServiceClient GetServiceClient_SharedKey_UnInstrumented(QueueClientOptions options = default)
+            => new QueueServiceClient(
                     new Uri(TestConfigDefault.QueueServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
-                    options ?? GetOptions()));
+                    options ?? GetOptions());
 
         public QueueServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
@@ -153,12 +155,18 @@ namespace Azure.Storage.Queues.Tests
 
         public QueueClient GetEncodingClient(
             string queueName,
-            QueueMessageEncoding encoding)
+            QueueMessageEncoding encoding,
+            params SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs>[] messageDecodingFailedHandlers)
         {
             var options = GetOptions();
             options.MessageEncoding = encoding;
-            var service = GetServiceClient_SharedKey(options);
-            return InstrumentClient(service.GetQueueClient(queueName));
+            foreach (var messageDecodingFailedHandler in messageDecodingFailedHandlers)
+            {
+                options.MessageDecodingFailed += messageDecodingFailedHandler;
+            }
+            var service = GetServiceClient_SharedKey_UnInstrumented(options);
+            var queueClient = service.GetQueueClient(queueName);
+            return InstrumentClient(queueClient);
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
@@ -166,13 +174,15 @@ namespace Azure.Storage.Queues.Tests
                 TestConfigDefault.AccountName,
                 TestConfigDefault.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
+        public SasQueryParameters GetNewAccountSasCredentials(
+            StorageSharedKeyCredential sharedKeyCredentials = default,
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.Container)
         {
             var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Queues,
-                ResourceTypes = AccountSasResourceTypes.Container,
+                ResourceTypes = resourceTypes,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
@@ -185,7 +195,7 @@ namespace Azure.Storage.Queues.Tests
                 AccountSasPermissions.Add |
                 AccountSasPermissions.Delete |
                 AccountSasPermissions.List);
-            return builder.ToSasQueryParameters(sharedKeyCredentials);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         public SasQueryParameters GetNewQueueServiceSasCredentials(string queueName, StorageSharedKeyCredential sharedKeyCredentials = default)

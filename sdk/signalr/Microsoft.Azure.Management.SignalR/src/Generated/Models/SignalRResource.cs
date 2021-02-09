@@ -46,10 +46,6 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// pairs that describe the resource.</param>
         /// <param name="sku">The billing information of the resource.(e.g.
         /// Free, Standard)</param>
-        /// <param name="hostNamePrefix">Prefix for the hostName of the SignalR
-        /// service. Retained for future use.
-        /// The hostname will be of format:
-        /// &amp;lt;hostNamePrefix&amp;gt;.service.signalr.net.</param>
         /// <param name="features">List of SignalR featureFlags. e.g.
         /// ServiceMode.
         ///
@@ -84,14 +80,15 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// need the same or higher version of client SDKs.</param>
         /// <param name="privateEndpointConnections">Private endpoint
         /// connections to the SignalR resource.</param>
+        /// <param name="tls">TLS settings.</param>
         /// <param name="kind">The kind of the service - e.g. "SignalR", or
         /// "RawWebSockets" for "Microsoft.SignalRService/SignalR". Possible
         /// values include: 'SignalR', 'RawWebSockets'</param>
-        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>), SignalRCorsSettings cors = default(SignalRCorsSettings), ServerlessUpstreamSettings upstream = default(ServerlessUpstreamSettings), SignalRNetworkACLs networkACLs = default(SignalRNetworkACLs), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?), string version = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string kind = default(string))
+        /// <param name="identity">The managed identity response</param>
+        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), IList<SignalRFeature> features = default(IList<SignalRFeature>), SignalRCorsSettings cors = default(SignalRCorsSettings), ServerlessUpstreamSettings upstream = default(ServerlessUpstreamSettings), SignalRNetworkACLs networkACLs = default(SignalRNetworkACLs), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?), string version = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), SignalRTlsSettings tls = default(SignalRTlsSettings), string kind = default(string), ManagedIdentity identity = default(ManagedIdentity))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
-            HostNamePrefix = hostNamePrefix;
             Features = features;
             Cors = cors;
             Upstream = upstream;
@@ -103,7 +100,9 @@ namespace Microsoft.Azure.Management.SignalR.Models
             ServerPort = serverPort;
             Version = version;
             PrivateEndpointConnections = privateEndpointConnections;
+            Tls = tls;
             Kind = kind;
+            Identity = identity;
             CustomInit();
         }
 
@@ -118,15 +117,6 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public ResourceSku Sku { get; set; }
-
-        /// <summary>
-        /// Gets or sets prefix for the hostName of the SignalR service.
-        /// Retained for future use.
-        /// The hostname will be of format:
-        /// &amp;amp;lt;hostNamePrefix&amp;amp;gt;.service.signalr.net.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hostNamePrefix")]
-        public string HostNamePrefix { get; set; }
 
         /// <summary>
         /// Gets or sets list of SignalR featureFlags. e.g. ServiceMode.
@@ -211,12 +201,24 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
+        /// Gets or sets TLS settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tls")]
+        public SignalRTlsSettings Tls { get; set; }
+
+        /// <summary>
         /// Gets or sets the kind of the service - e.g. "SignalR", or
         /// "RawWebSockets" for "Microsoft.SignalRService/SignalR". Possible
         /// values include: 'SignalR', 'RawWebSockets'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
+
+        /// <summary>
+        /// Gets or sets the managed identity response
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

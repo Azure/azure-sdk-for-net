@@ -10,10 +10,6 @@ namespace Azure.Communication.Chat.Tests
     /// </summary>
     public class ChatTestEnvironment: TestEnvironment
     {
-        public ChatTestEnvironment() : base("communication")
-        {
-        }
-
         /// <summary>The name of the environment variable from which the Azure Communicion Service resource's connection string will be extracted for the live tests.</summary>
         internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
 

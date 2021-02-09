@@ -4,13 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -37,15 +35,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             {
                 BatchCheckpointFrequency = batchCheckpointFrequency
             };
-            var checkpointer = new Mock<EventHubListener.ICheckpointer>(MockBehavior.Strict);
-            checkpointer.Setup(p => p.CheckpointAsync(partitionContext)).Callback<PartitionContext>(c =>
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Callback(() =>
             {
                 checkpoints++;
             }).Returns(Task.CompletedTask);
+            partitionContext.ProcessorHost = processor.Object;
+
             var loggerMock = new Mock<ILogger>();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true, checkpointer.Object);
+            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true);
 
             for (int i = 0; i < 100; i++)
             {
@@ -68,12 +68,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             {
                 BatchCheckpointFrequency = batchCheckpointFrequency
             };
-            var checkpointer = new Mock<EventHubListener.ICheckpointer>(MockBehavior.Strict);
-            checkpointer.Setup(p => p.CheckpointAsync(partitionContext)).Returns(Task.CompletedTask);
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            partitionContext.ProcessorHost = processor.Object;
+
             var loggerMock = new Mock<ILogger>();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, false, checkpointer.Object);
+            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, false);
 
             for (int i = 0; i < 100; i++)
             {
@@ -81,7 +84,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 await eventProcessor.ProcessEventsAsync(partitionContext, events);
             }
 
-            checkpointer.Verify(p => p.CheckpointAsync(partitionContext), Times.Exactly(expected));
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(expected));
         }
 
         /// <summary>
@@ -94,8 +99,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             var partitionContext = EventHubTests.GetPartitionContext();
             var options = new EventHubOptions();
-            var checkpointer = new Mock<EventHubListener.ICheckpointer>(MockBehavior.Strict);
-            checkpointer.Setup(p => p.CheckpointAsync(partitionContext)).Returns(Task.CompletedTask);
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            partitionContext.ProcessorHost = processor.Object;
 
             List<EventData> events = new List<EventData>();
             List<FunctionResult> results = new List<FunctionResult>();
@@ -116,11 +123,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var loggerMock = new Mock<ILogger>();
 
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true, checkpointer.Object);
+            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true);
 
             await eventProcessor.ProcessEventsAsync(partitionContext, events);
 
-            checkpointer.Verify(p => p.CheckpointAsync(partitionContext), Times.Once);
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Once);
         }
 
         [Test]
@@ -128,14 +137,20 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             var partitionContext = EventHubTests.GetPartitionContext();
             var options = new EventHubOptions();
-            var checkpointer = new Mock<EventHubListener.ICheckpointer>(MockBehavior.Strict);
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            partitionContext.ProcessorHost = processor.Object;
+
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var loggerMock = new Mock<ILogger>();
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true, checkpointer.Object);
+            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true);
 
             await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown);
 
-            checkpointer.Verify(p => p.CheckpointAsync(partitionContext), Times.Never);
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Never);
         }
 
         [Test]
@@ -143,10 +158,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             var partitionContext = EventHubTests.GetPartitionContext(partitionId: "123", eventHubPath: "abc", owner: "def");
             var options = new EventHubOptions();
-            var checkpointer = new Mock<EventHubListener.ICheckpointer>(MockBehavior.Strict);
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var testLogger = new TestLogger("Test");
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, testLogger, true, checkpointer.Object);
+            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, testLogger, true);
 
             var ex = new InvalidOperationException("My InvalidOperationException!");
 
@@ -162,10 +176,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             var partitionContext = EventHubTests.GetPartitionContext(partitionId: "123", eventHubPath: "abc", owner: "def");
             var options = new EventHubOptions();
-            var checkpointer = new Mock<EventHubListener.ICheckpointer>(MockBehavior.Strict);
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var testLogger = new TestLogger("Test");
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, testLogger, true, checkpointer.Object);
+            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, testLogger, true);
 
             var disconnectedEx = new EventHubsException(true, "My ReceiverDisconnectedException!", EventHubsException.FailureReason.ConsumerDisconnected);
 
@@ -193,19 +206,26 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var eventHubName = "EventHubName";
             var consumerGroup = "ConsumerGroup";
             var testLogger = new TestLogger("Test");
-            var host = new EventProcessorHost(
-                eventHubName,
-                consumerGroup,
+            var host = new EventProcessorHost(consumerGroup,
                 "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
-                "DefaultEndpointsProtocol=https;AccountName=EventHubScaleMonitorFakeTestAccount;AccountKey=ABCDEFG;EndpointSuffix=core.windows.net", null, null);
+                eventHubName,
+                new EventProcessorOptions(),
+                3,
+                false, null);
+
+            var consumerClientMock = new Mock<IEventHubConsumerClient>();
+            consumerClientMock.SetupGet(c => c.ConsumerGroup).Returns(consumerGroup);
+            consumerClientMock.SetupGet(c => c.EventHubName).Returns(eventHubName);
+
             var listener = new EventHubListener(
                                     functionId,
-                                    new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict).Object,
+                                    Mock.Of<ITriggeredFunctionExecutor>(),
                                     host,
                                     false,
+                                    consumerClientMock.Object,
+                                    Mock.Of<BlobsCheckpointStore>(),
                                     new EventHubOptions(),
-                                    testLogger,
-                                    new Mock<BlobContainerClient>(MockBehavior.Strict).Object);
+                                    testLogger);
 
             IScaleMonitor scaleMonitor = listener.GetMonitor();
 

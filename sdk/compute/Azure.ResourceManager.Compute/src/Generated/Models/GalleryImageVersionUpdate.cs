@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> Describes the basic gallery artifact publishing profile. </summary>
-        public GalleryArtifactPublishingProfileBase PublishingProfile { get; set; }
+        /// <summary> The publishing profile of a gallery Image Version. </summary>
+        public GalleryImageVersionPublishingProfile PublishingProfile { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public GalleryImageVersionPropertiesProvisioningState? ProvisioningState { get; }
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>

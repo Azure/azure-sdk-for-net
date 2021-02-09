@@ -14,6 +14,11 @@ using Azure.Storage.Sas;
 using Azure.Core.TestFramework;
 using System.Buffers.Text;
 using System.Text;
+using Moq;
+using System.Threading;
+using System.Runtime.InteropServices;
+using Azure.Storage.Queues.Specialized;
+using Moq.Protected;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -132,6 +137,37 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task Ctor_AzureSasCredential()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingQueue test = await GetTestQueueAsync();
+            Uri uri = test.Queue.Uri;
+
+            // Act
+            var sasClient = InstrumentClient(new QueueClient(uri, new AzureSasCredential(sas), GetOptions()));
+            QueueProperties properties = await sasClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingQueue test = await GetTestQueueAsync();
+            Uri uri = test.Queue.Uri;
+            uri = new Uri(uri.ToString() + "?" + sas);
+
+            // Act
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new QueueClient(uri, new AzureSasCredential(sas)),
+                e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
@@ -231,7 +267,6 @@ namespace Azure.Storage.Queues.Test
             {
                 // Act
                 Response result = await queue.CreateAsync();
-
 
                 // Assert
                 Assert.Fail("CreateAsync unexpected success: queue service SAS should not be usable to create queue");
@@ -756,6 +791,93 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task FailsOnInvalidPeekedMessageIfNoHandlerIsProvided()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<FormatException>(
+                encodingClient.PeekMessagesAsync(),
+                e =>
+                {
+                    StringAssert.Contains("The input is not a valid Base-64 string", e.Message);
+                });
+        }
+
+        [Test]
+        public async Task CanHandleInvalidPeekedMessageAndReturnValid()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            PeekedMessage badMessage = null;
+            PeekedMessage badMessage2 = null;
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    badMessage = arg.PeekedMessage;
+                    return Task.CompletedTask;
+                },
+                arg =>
+                {
+                    badMessage2 = arg.PeekedMessage;
+                    return Task.CompletedTask;
+                });
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            PeekedMessage[] peekedMessages = await encodingClient.PeekMessagesAsync(10);
+
+            // Assert
+            Assert.AreEqual(1, peekedMessages.Count());
+            Assert.NotNull(badMessage);
+            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
+            Assert.NotNull(badMessage2);
+            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
+        }
+
+        [Test]
+        public async Task PropagatesExceptionIfInvalidPeekedMessageAndHandlerThrows()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM1");
+                },
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM2");
+                });
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<AggregateException>(
+                encodingClient.PeekMessagesAsync(10),
+                e =>
+                {
+                    Assert.AreEqual(2, e.InnerExceptions.Count);
+                    Assert.AreEqual("KABOOM1", e.InnerExceptions[0].Message);
+                    Assert.AreEqual("KABOOM2", e.InnerExceptions[1].Message);
+                });
+        }
+
+        [Test]
         public async Task CanSendAndReceiveNonUTFBytes()
         {
             // Arrange
@@ -774,6 +896,139 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             CollectionAssert.AreEqual(content, receivedMessage.Body.ToArray());
+        }
+
+        [Test]
+        public async Task FailsOnInvalidQueueMessageIfNoHandlerIsProvided()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<FormatException>(
+                encodingClient.ReceiveMessagesAsync(),
+                e =>
+                {
+                    StringAssert.Contains("The input is not a valid Base-64 string", e.Message);
+                });
+        }
+
+        [Test]
+        public async Task CanHandleInvalidMessageAndReturnValid()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            QueueMessage badMessage = null;
+            QueueMessage badMessage2 = null;
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    badMessage = arg.ReceivedMessage;
+                    return Task.CompletedTask;
+                },
+                arg =>
+                {
+                    badMessage2 = arg.ReceivedMessage;
+                    return Task.CompletedTask;
+                });
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            QueueMessage[] queueMessages = await encodingClient.ReceiveMessagesAsync(10);
+
+            // Assert
+            Assert.AreEqual(1, queueMessages.Count());
+            Assert.NotNull(badMessage);
+            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
+            Assert.NotNull(badMessage2);
+            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
+        }
+
+        [Test]
+        public async Task TakesSnapshotOfMessageDecodingFailedHandlersAtConstruction()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            QueueMessage badMessage = null;
+            QueueMessage badMessage2 = null;
+            QueueMessage badMessage3 = null;
+            var options = GetOptions();
+            options.MessageEncoding = QueueMessageEncoding.Base64;
+            options.MessageDecodingFailed += arg =>
+            {
+                badMessage = arg.ReceivedMessage;
+                return Task.CompletedTask;
+            };
+            options.MessageDecodingFailed += arg =>
+            {
+                badMessage2 = arg.ReceivedMessage;
+                return Task.CompletedTask;
+            };
+
+            var encodingClient = GetServiceClient_SharedKey(options).GetQueueClient(test.Queue.Name);
+
+            // add third handler after client creation
+            options.MessageDecodingFailed += arg =>
+            {
+                badMessage3 = arg.ReceivedMessage;
+                return Task.CompletedTask;
+            };
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            QueueMessage[] queueMessages = await encodingClient.ReceiveMessagesAsync(10);
+
+            // Assert
+            Assert.AreEqual(1, queueMessages.Count());
+            Assert.NotNull(badMessage);
+            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
+            Assert.NotNull(badMessage2);
+            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
+            Assert.Null(badMessage3);
+        }
+
+        [Test]
+        public async Task PropagatesExceptionIfInvalidQueueMessageAndHandlerThrows()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM1");
+                },
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM2");
+                });
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<AggregateException>(
+                encodingClient.ReceiveMessagesAsync(10),
+                e =>
+                {
+                    Assert.AreEqual(2, e.InnerExceptions.Count);
+                    Assert.AreEqual("KABOOM1", e.InnerExceptions[0].Message);
+                    Assert.AreEqual("KABOOM2", e.InnerExceptions[1].Message);
+                });
         }
 
         [Test]
@@ -1349,30 +1604,47 @@ namespace Azure.Storage.Queues.Test
             string connectionString = storageConnectionString.ToString(true);
 
             // Act - QueueClient(string connectionString, string blobContainerName)
-            QueueClient container = new QueueClient(
+            QueueClient container = InstrumentClient(new QueueClient(
                 connectionString,
-                GetNewQueueName());
+                GetNewQueueName()));
             Assert.IsTrue(container.CanGenerateSasUri);
 
             // Act - QueueClient(string connectionString, string blobContainerName, BlobClientOptions options)
-            QueueClient container2 = new QueueClient(
+            QueueClient container2 = InstrumentClient(new QueueClient(
                 connectionString,
                 GetNewQueueName(),
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(container2.CanGenerateSasUri);
 
             // Act - QueueClient(Uri blobContainerUri, BlobClientOptions options = default)
-            QueueClient container3 = new QueueClient(
+            QueueClient container3 = InstrumentClient(new QueueClient(
                 blobEndpoint,
-                GetOptions());
+                GetOptions()));
             Assert.IsFalse(container3.CanGenerateSasUri);
 
             // Act - QueueClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            QueueClient container4 = new QueueClient(
+            QueueClient container4 = InstrumentClient(new QueueClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
             Assert.IsTrue(container4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<QueueClient>();
+            directory.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateSasUri);
         }
 
         [Test]
@@ -1387,7 +1659,7 @@ namespace Azure.Storage.Queues.Test
             string queueName = GetNewQueueName();
             QueueSasPermissions permissions = QueueSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            QueueClient queueClient = new QueueClient(connectionString, queueName, GetOptions());
+            QueueClient queueClient = InstrumentClient(new QueueClient(connectionString, queueName, GetOptions()));
 
             // Act
             Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn);
@@ -1417,7 +1689,7 @@ namespace Azure.Storage.Queues.Test
             QueueSasPermissions permissions = QueueSasPermissions.Read;
             DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            QueueClient queueClient = new QueueClient(connectionString, queueName, GetOptions());
+            QueueClient queueClient = InstrumentClient(new QueueClient(connectionString, queueName, GetOptions()));
 
             QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
             {
@@ -1452,10 +1724,10 @@ namespace Azure.Storage.Queues.Test
             blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewQueueName();
             QueueSasPermissions permissions = QueueSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            QueueClient queueClient = new QueueClient(
+            QueueClient queueClient = InstrumentClient(new QueueClient(
                 blobUriBuilder.Uri,
                 constants.Sas.SharedKeyCredential,
-                GetOptions());
+                GetOptions()));
 
             QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
             {
@@ -1475,5 +1747,66 @@ namespace Azure.Storage.Queues.Test
             }
         }
         #endregion
+
+        [Test]
+        public void CanMockQueueServiceClientRetrieval()
+        {
+            // Arrange
+            Mock<QueueClient> queueClientMock = new Mock<QueueClient>();
+            Mock<QueueServiceClient> queueServiceClientMock = new Mock<QueueServiceClient>();
+            queueClientMock.Protected().Setup<QueueServiceClient>("GetParentQueueServiceClientCore").Returns(queueServiceClientMock.Object);
+
+            // Act
+            var queueServiceClient = queueClientMock.Object.GetParentQueueServiceClient();
+
+            // Assert
+            Assert.IsNotNull(queueServiceClient);
+            Assert.AreSame(queueServiceClientMock.Object, queueServiceClient);
+        }
+
+        [Test]
+        public async Task CanGetParentQueueServiceClient()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            var queueServiceClient = test.Queue.GetParentQueueServiceClient();
+            // make sure that client is functional
+            QueueServiceProperties queueServiceProperties = await queueServiceClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(test.Queue.AccountName, queueServiceClient.AccountName);
+        }
+
+        [Test]
+        public async Task CanGetParentQueueServiceClient_WithAccountSAS()
+        {
+            // Arrange
+            QueueClient queueClient = InstrumentClient(
+                GetServiceClient_AccountSas(
+                    sasCredentials: GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All))
+                .GetQueueClient(GetNewQueueName()));
+
+            // Act
+            var queueServiceClient = queueClient.GetParentQueueServiceClient();
+            // make sure that client is functional
+            QueueServiceProperties queueServiceProperties = await queueServiceClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(queueClient.AccountName, queueServiceClient.AccountName);
+        }
+
+        [Test]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<QueueClient>(TestConfigDefault.ConnectionString, "queuename", new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(TestConfigDefault.ConnectionString, "queuename").Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new QueueClientOptions()).Object;
+        }
     }
 }

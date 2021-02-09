@@ -16,7 +16,7 @@ namespace Azure.DigitalTwins.Core.Samples
         /// </summary>
         public static async Task Main(string[] args)
         {
-            // Parse and validate paramters
+            // Parse and validate parameters
             Options options = null;
             ParserResult<Options> result = Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(parsedOptions =>

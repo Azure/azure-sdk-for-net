@@ -33,6 +33,74 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [RecordedTest]
+        public async Task GetRoleDefinition()
+        {
+            var description = Recording.GenerateAlphaNumericId("role");
+            var name = Recording.Random.NewGuid();
+            var originalPermissions = new KeyVaultPermission();
+            originalPermissions.DataActions.Add(KeyVaultDataAction.BackupHsmKeys);
+
+            KeyVaultRoleDefinition createdDefinition = await Client.CreateOrUpdateRoleDefinitionAsync(description, originalPermissions, KeyVaultRoleScope.Global, name);
+
+            RegisterForCleanup(createdDefinition);
+
+            KeyVaultRoleDefinition fetchedRoleDefinition = await Client.GetRoleDefinitionAsync(name, KeyVaultRoleScope.Global);
+
+            Assert.That(fetchedRoleDefinition.AssignableScopes, Is.EqualTo(new[] { KeyVaultRoleScope.Global }));
+            Assert.That(fetchedRoleDefinition.Description, Is.EqualTo(description));
+            Assert.That(fetchedRoleDefinition.Name, Is.EqualTo(name.ToString()));
+            Assert.That(fetchedRoleDefinition.Permissions.First().DataActions, Is.EquivalentTo(originalPermissions.DataActions));
+            Assert.That(fetchedRoleDefinition.Type, Is.EqualTo(KeyVaultRoleDefinitionType.MicrosoftAuthorizationRoleDefinitions));
+        }
+
+        [RecordedTest]
+        public async Task CreateOrUpdateRoleDefinition()
+        {
+            var description = Recording.GenerateAlphaNumericId("role");
+            var name = Recording.Random.NewGuid();
+            var originalPermissions = new KeyVaultPermission();
+            originalPermissions.DataActions.Add(KeyVaultDataAction.BackupHsmKeys);
+
+            KeyVaultRoleDefinition createdDefinition = await Client.CreateOrUpdateRoleDefinitionAsync(description, originalPermissions, KeyVaultRoleScope.Global, name);
+
+            RegisterForCleanup(createdDefinition);
+
+            Assert.That(createdDefinition.AssignableScopes, Is.EqualTo(new[] { KeyVaultRoleScope.Global }));
+            Assert.That(createdDefinition.Description, Is.EqualTo(description));
+            Assert.That(createdDefinition.Name, Is.EqualTo(name.ToString()));
+            Assert.That(createdDefinition.Permissions.First().DataActions, Is.EquivalentTo(originalPermissions.DataActions));
+            Assert.That(createdDefinition.Type, Is.EqualTo(KeyVaultRoleDefinitionType.MicrosoftAuthorizationRoleDefinitions));
+
+            var updatedpermissions = new KeyVaultPermission();
+            updatedpermissions.DataActions.Add(KeyVaultDataAction.CreateHsmKey);
+            updatedpermissions.DataActions.Add(KeyVaultDataAction.DownloadHsmSecurityDomain);
+
+            KeyVaultRoleDefinition updatedDefinition = await Client.CreateOrUpdateRoleDefinitionAsync(description, updatedpermissions, KeyVaultRoleScope.Global, name);
+
+            Assert.That(updatedDefinition.AssignableScopes, Is.EqualTo(new[] { KeyVaultRoleScope.Global }));
+            Assert.That(updatedDefinition.Description, Is.EqualTo(description));
+            Assert.That(updatedDefinition.Name, Is.EqualTo(name.ToString()));
+            Assert.That(updatedDefinition.Permissions.First().DataActions, Is.EquivalentTo(updatedpermissions.DataActions));
+            Assert.That(updatedDefinition.Type, Is.EqualTo(KeyVaultRoleDefinitionType.MicrosoftAuthorizationRoleDefinitions));
+        }
+
+        [RecordedTest]
+        public async Task DeleteRoleDefinition()
+        {
+            var description = Recording.GenerateAlphaNumericId("role");
+            var name = Recording.Random.NewGuid();
+            var originalPermissions = new KeyVaultPermission();
+            originalPermissions.DataActions.Add(KeyVaultDataAction.BackupHsmKeys);
+
+            KeyVaultRoleDefinition createdDefinition = await Client.CreateOrUpdateRoleDefinitionAsync(description, originalPermissions, KeyVaultRoleScope.Global, name);
+            await Client.DeleteRoleDefinitionAsync(name, KeyVaultRoleScope.Global);
+
+            List<KeyVaultRoleDefinition> results = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(!results.Any(r => r.Name.ToString().Equals(name.ToString())));
+        }
+
+        [RecordedTest]
         public async Task CreateRoleAssignment()
         {
             List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
@@ -44,7 +112,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             Assert.That(result.Id, Is.Not.Null);
             Assert.That(result.Name, Is.Not.Null);
-            Assert.That(result.RoleAssignmentType, Is.Not.Null);
+            Assert.That(result.Type, Is.Not.Null);
             Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(definitionToAssign.Id));
         }
@@ -63,7 +131,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             Assert.That(result.Id, Is.EqualTo(assignment.Id));
             Assert.That(result.Name, Is.EqualTo(assignment.Name));
-            Assert.That(result.RoleAssignmentType, Is.EqualTo(assignment.RoleAssignmentType));
+            Assert.That(result.Type, Is.EqualTo(assignment.Type));
             Assert.That(result.Properties.PrincipalId, Is.EqualTo(assignment.Properties.PrincipalId));
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(assignment.Properties.RoleDefinitionId));
             Assert.That(result.Properties.Scope, Is.EqualTo(assignment.Properties.Scope));
@@ -81,7 +149,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             Assert.That(result.Id, Is.EqualTo(assignment.Id));
             Assert.That(result.Name, Is.EqualTo(assignment.Name));
-            Assert.That(result.RoleAssignmentType, Is.EqualTo(assignment.RoleAssignmentType));
+            Assert.That(result.Type, Is.EqualTo(assignment.Type));
             Assert.That(result.Properties.PrincipalId, Is.EqualTo(assignment.Properties.PrincipalId));
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(assignment.Properties.RoleDefinitionId));
             Assert.That(result.Properties.Scope, Is.EqualTo(assignment.Properties.Scope));

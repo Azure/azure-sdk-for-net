@@ -1,21 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/linking?showStats=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/linking?showStats=true\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "192",
+        "Accept": "application/json, text/json",
+        "Content-Length": "190",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-bb9979c7e7edbf42a2f72f17671f6518-e499e30eae9f154e-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201116.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "traceparent": "00-9d02bdd145e1c5429133ecc434d120aa-51b5a66c5e806647-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "07178a1f00e9eae492911a1486f7f75f",
         "x-ms-return-client-request-id": "true"
       },
@@ -28,21 +22,21 @@
           },
           {
             "id": "3",
-            "text": "Pike place market is my favorite Seattle attraction.",
-            "language": "en"
+            "text": "Microsoft fue fundado por Bill Gates y Paul Allen.",
+            "language": "es"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "29181e16-9227-4df2-a6e8-acfd2662d6aa",
+        "apim-request-id": "9efbdde0-b1bd-4832-ae5f-a4f71a1ffde9",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Tue, 17 Nov 2020 20:18:09 GMT",
+        "Date": "Sat, 06 Feb 2021 03:50:26 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "19"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "34"
       },
       "ResponseBody": {
         "statistics": {
@@ -113,40 +107,56 @@
           {
             "id": "3",
             "statistics": {
-              "charactersCount": 52,
+              "charactersCount": 50,
               "transactionsCount": 1
             },
             "entities": [
               {
-                "bingId": "38b9431e-cf91-93be-0584-c42a3ecbfdc7",
-                "name": "Pike Place Market",
+                "bingId": "a093e9b9-90f5-a3d5-c4b8-5855e1b01f85",
+                "name": "Microsoft",
                 "matches": [
                   {
-                    "text": "Pike place market",
+                    "text": "Microsoft",
                     "offset": 0,
-                    "length": 17,
-                    "confidenceScore": 0.86
+                    "length": 9,
+                    "confidenceScore": 0.38
                   }
                 ],
-                "language": "en",
-                "id": "Pike Place Market",
-                "url": "https://en.wikipedia.org/wiki/Pike_Place_Market",
+                "language": "es",
+                "id": "Microsoft",
+                "url": "https://es.wikipedia.org/wiki/Microsoft",
                 "dataSource": "Wikipedia"
               },
               {
-                "bingId": "5fbba6b8-85e1-4d41-9444-d9055436e473",
-                "name": "Seattle",
+                "bingId": "0d47c987-0042-5576-15e8-97af601614fa",
+                "name": "Bill Gates",
                 "matches": [
                   {
-                    "text": "Seattle",
-                    "offset": 33,
-                    "length": 7,
-                    "confidenceScore": 0.27
+                    "text": "Bill Gates",
+                    "offset": 26,
+                    "length": 10,
+                    "confidenceScore": 0.37
                   }
                 ],
-                "language": "en",
-                "id": "Seattle",
-                "url": "https://en.wikipedia.org/wiki/Seattle",
+                "language": "es",
+                "id": "Bill Gates",
+                "url": "https://es.wikipedia.org/wiki/Bill_Gates",
+                "dataSource": "Wikipedia"
+              },
+              {
+                "bingId": "df2c4376-9923-6a54-893f-2ee5a5badbc7",
+                "name": "Paul Allen",
+                "matches": [
+                  {
+                    "text": "Paul Allen",
+                    "offset": 39,
+                    "length": 10,
+                    "confidenceScore": 0.9
+                  }
+                ],
+                "language": "es",
+                "id": "Paul Allen",
+                "url": "https://es.wikipedia.org/wiki/Paul_Allen",
                 "dataSource": "Wikipedia"
               }
             ],
@@ -161,6 +171,6 @@
   "Variables": {
     "RandomSeed": "775198464",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
   }
 }

@@ -57,6 +57,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("isComputeIsolationEnabled");
                 writer.WriteBooleanValue(IsComputeIsolationEnabled.Value);
             }
+            if (Optional.IsDefined(SessionLevelPackagesEnabled))
+            {
+                writer.WritePropertyName("sessionLevelPackagesEnabled");
+                writer.WriteBooleanValue(SessionLevelPackagesEnabled.Value);
+            }
+            if (Optional.IsDefined(CacheSize))
+            {
+                writer.WritePropertyName("cacheSize");
+                writer.WriteNumberValue(CacheSize.Value);
+            }
+            if (Optional.IsDefined(DynamicExecutorAllocation))
+            {
+                writer.WritePropertyName("dynamicExecutorAllocation");
+                writer.WriteObjectValue(DynamicExecutorAllocation);
+            }
             if (Optional.IsDefined(SparkEventsFolder))
             {
                 writer.WritePropertyName("sparkEventsFolder");
@@ -113,6 +128,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset> creationDate = default;
             Optional<AutoPauseProperties> autoPause = default;
             Optional<bool> isComputeIsolationEnabled = default;
+            Optional<bool> sessionLevelPackagesEnabled = default;
+            Optional<int> cacheSize = default;
+            Optional<DynamicExecutorAllocation> dynamicExecutorAllocation = default;
             Optional<string> sparkEventsFolder = default;
             Optional<int> nodeCount = default;
             Optional<LibraryRequirements> libraryRequirements = default;
@@ -212,6 +230,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             isComputeIsolationEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("sessionLevelPackagesEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sessionLevelPackagesEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("cacheSize"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            cacheSize = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("dynamicExecutorAllocation"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dynamicExecutorAllocation = DynamicExecutorAllocation.DeserializeDynamicExecutorAllocation(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("sparkEventsFolder"))
                         {
                             sparkEventsFolder = property0.Value.GetString();
@@ -281,7 +329,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily));
+            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily));
         }
     }
 }

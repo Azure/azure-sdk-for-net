@@ -202,7 +202,6 @@ namespace Azure.Messaging.ServiceBus.Administration
 
         internal bool EnableSubscriptionPartitioning { get; set; }
 
-
         /// <summary>
         /// List of properties that were retrieved using GetTopic but are not understood by this version of client is stored here.
         /// The list will be sent back when an already retrieved TopicDescription will be used in UpdateTopic call.

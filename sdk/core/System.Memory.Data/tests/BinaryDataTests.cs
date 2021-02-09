@@ -288,7 +288,6 @@ namespace System.Tests
             // should not throw
 
             var data = BinaryData.FromStream(new OverFlowStream(offset: int.MaxValue - 1000));
-
         }
 
         [Fact]
@@ -364,7 +363,6 @@ namespace System.Tests
 
             ex = await Assert.ThrowsAsync<ArgumentNullException>(() => BinaryData.FromStreamAsync(null));
             Assert.Contains("stream", ex.Message);
-
         }
 
         [Fact]
@@ -524,7 +522,6 @@ namespace System.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => stream.Seek(0, (SeekOrigin)3));
         }
 
-
         [Fact]
         public async Task ValidatesReadArguments()
         {
@@ -566,7 +563,6 @@ namespace System.Tests
             Assert.Throws<ObjectDisposedException>(() => stream.Length);
             Assert.False(stream.CanRead);
             Assert.False(stream.CanSeek);
-
         }
 
         private class DerivedModel : TestModel

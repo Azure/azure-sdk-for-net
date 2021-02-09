@@ -15,14 +15,42 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("host");
-            writer.WriteStringValue(Host);
-            writer.WritePropertyName("port");
-            writer.WriteStringValue(Port);
-            writer.WritePropertyName("authHeader");
-            writer.WriteStringValue(AuthHeader);
-            writer.WritePropertyName("query");
-            writer.WriteStringValue(Query);
+            if (Host != null)
+            {
+                writer.WritePropertyName("host");
+                writer.WriteStringValue(Host);
+            }
+            else
+            {
+                writer.WriteNull("host");
+            }
+            if (Port != null)
+            {
+                writer.WritePropertyName("port");
+                writer.WriteStringValue(Port);
+            }
+            else
+            {
+                writer.WriteNull("port");
+            }
+            if (AuthHeader != null)
+            {
+                writer.WritePropertyName("authHeader");
+                writer.WriteStringValue(AuthHeader);
+            }
+            else
+            {
+                writer.WriteNull("authHeader");
+            }
+            if (Query != null)
+            {
+                writer.WritePropertyName("query");
+                writer.WriteStringValue(Query);
+            }
+            else
+            {
+                writer.WriteNull("query");
+            }
             writer.WriteEndObject();
         }
 
@@ -36,21 +64,41 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("host"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        host = null;
+                        continue;
+                    }
                     host = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("port"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        port = null;
+                        continue;
+                    }
                     port = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("authHeader"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        authHeader = null;
+                        continue;
+                    }
                     authHeader = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("query"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        query = null;
+                        continue;
+                    }
                     query = property.Value.GetString();
                     continue;
                 }

@@ -2,6 +2,9 @@
 
 ## 4.2.0-beta.4 (Unreleased)
 
+### Added
+
+- Added default constructor to `CertificatePolicy` to use when importing a PEM-encoded certificate ([#16217](https://github.com/Azure/azure-sdk-for-net/issues/16217)).
 
 ## 4.2.0-beta.3 (2020-11-12)
 

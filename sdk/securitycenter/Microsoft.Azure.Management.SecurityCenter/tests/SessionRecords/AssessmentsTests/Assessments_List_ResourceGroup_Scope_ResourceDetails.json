@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/subAssessments_sdk_tests/providers/Microsoft.Security/assessments?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL3N1YkFzc2Vzc21lbnRzX3Nka190ZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2Fzc2Vzc21lbnRzP2FwaS12ZXJzaW9uPTIwMjAtMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ab2448b3-deba-4c56-a90d-d029971c1ca7"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "66e6cded-be5f-4135-8e34-5f64052ce44d"
+        ],
+        "x-ms-correlation-request-id": [
+          "66e6cded-be5f-4135-8e34-5f64052ce44d"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201201T175334Z:66e6cded-be5f-4135-8e34-5f64052ce44d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 01 Dec 2020 17:53:33 GMT"
+        ],
+        "Content-Length": [
+          "958"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.Security/assessments\",\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/subAssessments_sdk_tests/providers/Microsoft.ContainerRegistry/registries/sdkRef/providers/Microsoft.Security/assessments/dbd0cb49-b563-45e7-9724-889e799fa648\",\r\n      \"name\": \"dbd0cb49-b563-45e7-9724-889e799fa648\",\r\n      \"properties\": {\r\n        \"resourceDetails\": {\r\n          \"Source\": \"Azure\",\r\n          \"Id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/subAssessments_sdk_tests/providers/Microsoft.ContainerRegistry/registries/sdkRef\"\r\n        },\r\n        \"displayName\": \"Vulnerabilities in Azure Container Registry images should be remediated (powered by Qualys)\",\r\n        \"status\": {\r\n          \"code\": \"Healthy\"\r\n        },\r\n        \"additionalData\": {\r\n          \"subAssessmentsLink\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/subAssessments_sdk_tests/providers/Microsoft.ContainerRegistry/registries/sdkRef/providers/Microsoft.Security/assessments/dbd0cb49-b563-45e7-9724-889e799fa648/subAssessments\"\r\n        }\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

@@ -413,7 +413,7 @@ namespace ResourceGroups.Tests
                 var listResult = client.Resources.List(new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Microsoft.Web/serverFarms"));
 
                 Assert.NotEmpty(listResult);
-                Assert.Equal(5, listResult.First().Tags.Count);
+                Assert.Equal(2, listResult.First().Tags.Count);
             }
         }
     }

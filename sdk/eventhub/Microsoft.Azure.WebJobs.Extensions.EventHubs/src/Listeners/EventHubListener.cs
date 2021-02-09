@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -24,13 +23,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 {
     internal sealed class EventHubListener : IListener, IEventProcessorFactory, IScaleMonitorProvider
     {
-        private static readonly Dictionary<string, object> EmptyScope = new Dictionary<string, object>();
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly EventProcessorHost _eventProcessorHost;
         private readonly bool _singleDispatch;
+        private readonly BlobsCheckpointStore _checkpointStore;
         private readonly EventHubOptions _options;
         private readonly ILogger _logger;
-        private bool _started;
 
         private Lazy<EventHubsScaleMonitor> _scaleMonitor;
 
@@ -39,25 +37,29 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             ITriggeredFunctionExecutor executor,
             EventProcessorHost eventProcessorHost,
             bool singleDispatch,
+            IEventHubConsumerClient consumerClient,
+            BlobsCheckpointStore checkpointStore,
             EventHubOptions options,
-            ILogger logger,
-            BlobContainerClient blobContainer = null)
+            ILogger logger)
         {
+            _logger = logger;
             _executor = executor;
             _eventProcessorHost = eventProcessorHost;
             _singleDispatch = singleDispatch;
+            _checkpointStore = checkpointStore;
             _options = options;
-            _logger = logger;
-            _scaleMonitor = new Lazy<EventHubsScaleMonitor>(() => new EventHubsScaleMonitor(
-                functionId,
-                eventProcessorHost.EventHubName,
-                eventProcessorHost.ConsumerGroupName,
-                eventProcessorHost.EventHubConnectionString,
-                eventProcessorHost.StorageConnectionString,
-                _logger,
-                blobContainer));
+
+            _scaleMonitor = new Lazy<EventHubsScaleMonitor>(
+                () => new EventHubsScaleMonitor(
+                    functionId,
+                    consumerClient,
+                    checkpointStore,
+                    _logger));
         }
 
+        /// <summary>
+        /// Cancel any in progress listen operation.
+        /// </summary>
         void IListener.Cancel()
         {
             StopAsync(CancellationToken.None).Wait();
@@ -69,17 +71,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await _eventProcessorHost.RegisterEventProcessorFactoryAsync(this, _options.MaxBatchSize, _options.InvokeProcessorAfterReceiveTimeout, _options.EventProcessorOptions).ConfigureAwait(false);
-            _started = true;
+            await _checkpointStore.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
+            await _eventProcessorHost.StartProcessingAsync(this, _checkpointStore, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (_started)
-            {
-                await _eventProcessorHost.UnregisterEventProcessorAsync().ConfigureAwait(false);
-            }
-            _started = false;
+            await _eventProcessorHost.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
         }
 
         IEventProcessor IEventProcessorFactory.CreateEventProcessor()
@@ -92,37 +90,27 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return _scaleMonitor.Value;
         }
 
-        /// <summary>
-        /// Wrapper for un-mockable checkpoint APIs to aid in unit testing
-        /// </summary>
-        internal interface ICheckpointer
-        {
-            Task CheckpointAsync(ProcessorPartitionContext context);
-        }
-
         // We get a new instance each time Start() is called.
         // We'll get a listener per partition - so they can potentialy run in parallel even on a single machine.
-        internal class EventProcessor : IEventProcessor, IDisposable, ICheckpointer
+        internal class EventProcessor : IEventProcessor, IDisposable
         {
             private readonly ITriggeredFunctionExecutor _executor;
             private readonly bool _singleDispatch;
             private readonly ILogger _logger;
             private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-            private readonly ICheckpointer _checkpointer;
             private readonly int _batchCheckpointFrequency;
             private int _batchCounter;
             private bool _disposed;
 
-            public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch, ICheckpointer checkpointer = null)
+            public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
             {
-                _checkpointer = checkpointer ?? this;
                 _executor = executor;
                 _singleDispatch = singleDispatch;
                 _batchCheckpointFrequency = options.BatchCheckpointFrequency;
                 _logger = logger;
             }
 
-            public Task CloseAsync(ProcessorPartitionContext context, ProcessingStoppedReason reason)
+            public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
             {
                 // signal cancellation for any in progress executions
                 _cts.Cancel();
@@ -131,13 +119,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return Task.CompletedTask;
             }
 
-            public Task OpenAsync(ProcessorPartitionContext context)
+            public Task OpenAsync(EventProcessorHostPartition context)
             {
                 _logger.LogDebug(GetOperationDetails(context, "OpenAsync"));
                 return Task.CompletedTask;
             }
 
-            public Task ProcessErrorAsync(ProcessorPartitionContext context, Exception error)
+            public Task ProcessErrorAsync(EventProcessorHostPartition context, Exception error)
             {
                 string errorDetails = $"Processing error (Partition Id: '{context.PartitionId}', Owner: '{context.Owner}', EventHubPath: '{context.EventHubPath}').";
 
@@ -146,11 +134,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 return Task.CompletedTask;
             }
 
-            public async Task ProcessEventsAsync(ProcessorPartitionContext context, IEnumerable<EventData> messages)
+            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages)
             {
+                var events = messages.ToArray();
+
                 var triggerInput = new EventHubTriggerInput
                 {
-                    Events = messages.ToArray(),
+                    Events = events,
                     PartitionContext = context
                 };
 
@@ -174,7 +164,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                             TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
                         };
 
-                        Task task = TryExecuteWithLoggingAsync(input, triggerInput.Events[i]);
+                        Task task = _executor.TryExecuteAsync(input, _cts.Token);
                         invocationTasks.Add(task);
                     }
 
@@ -193,10 +183,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         TriggerDetails = triggerInput.GetTriggerDetails(context)
                     };
 
-                    using (_logger.BeginScope(GetLinksScope(triggerInput.Events)))
-                    {
-                        await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
-                    }
+                    await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
                 }
 
                 // Checkpoint if we processed any events.
@@ -206,27 +193,18 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 // so that is the responsibility of the user's function currently. E.g.
                 // the function should have try/catch handling around all event processing
                 // code, and capture/log/persist failed events, since they won't be retried.
-                if (messages.Any())
+                if (events.Any())
                 {
-                    context.CheckpointEvent = messages.Last();
-                    await CheckpointAsync(context).ConfigureAwait(false);
+                    await CheckpointAsync(events.Last(), context).ConfigureAwait(false);
                 }
             }
 
-            private async Task TryExecuteWithLoggingAsync(TriggeredFunctionData input, EventData message)
-            {
-                using (_logger.BeginScope(GetLinksScope(message)))
-                {
-                    await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
-                }
-            }
-
-            private async Task CheckpointAsync(ProcessorPartitionContext context)
+            private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
             {
                 bool checkpointed = false;
                 if (_batchCheckpointFrequency == 1)
                 {
-                    await _checkpointer.CheckpointAsync(context).ConfigureAwait(false);
+                    await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
                     checkpointed = true;
                 }
                 else
@@ -235,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     if (++_batchCounter >= _batchCheckpointFrequency)
                     {
                         _batchCounter = 0;
-                        await _checkpointer.CheckpointAsync(context).ConfigureAwait(false);
+                        await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
                         checkpointed = true;
                     }
                 }
@@ -263,62 +241,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 Dispose(true);
             }
 
-            async Task ICheckpointer.CheckpointAsync(ProcessorPartitionContext context)
-            {
-                await context.CheckpointAsync().ConfigureAwait(false);
-            }
-
-            private static Dictionary<string, object> GetLinksScope(EventData message)
-            {
-                if (TryGetLinkedActivity(message, out var link))
-                {
-                    return new Dictionary<string, object> {["Links"] = new[] {link}};
-                }
-
-                return EmptyScope;
-            }
-
-            private static Dictionary<string, object> GetLinksScope(EventData[] messages)
-            {
-                List<Activity> links = null;
-
-                foreach (var message in messages)
-                {
-                    if (TryGetLinkedActivity(message, out var link))
-                    {
-                        if (links == null)
-                        {
-                            links = new List<Activity>(messages.Length);
-                        }
-
-                        links.Add(link);
-                    }
-                }
-
-                if (links != null)
-                {
-                    return new Dictionary<string, object> {["Links"] = links};
-                }
-
-                return EmptyScope;
-            }
-
-            private static bool TryGetLinkedActivity(EventData message, out Activity link)
-            {
-                link = null;
-
-                if (((message.SystemProperties != null && message.SystemProperties.TryGetValue("Diagnostic-Id", out var diagnosticIdObj)) || message.Properties.TryGetValue("Diagnostic-Id", out diagnosticIdObj))
-                    && diagnosticIdObj is string diagnosticIdString)
-                {
-                    link = new Activity("Microsoft.Azure.EventHubs.Process");
-                    link.SetParentId(diagnosticIdString);
-                    return true;
-                }
-
-                return false;
-            }
-
-            private static string GetOperationDetails(ProcessorPartitionContext context, string operation)
+            private static string GetOperationDetails(EventProcessorHostPartition context, string operation)
             {
                 StringWriter sw = new StringWriter();
                 using (JsonTextWriter writer = new JsonTextWriter(sw) { Formatting = Formatting.None })
@@ -332,24 +255,25 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     WritePropertyIfNotNull(writer, "eventHubPath", context.EventHubPath);
                     writer.WriteEndObject();
 
-                    // Log partition lease
-                    if (context.Lease != null)
+                    // Log partition checkpoint info
+                    if (context.Checkpoint != null)
                     {
+                        // leave the property name as lease for backcompat with T1
                         writer.WritePropertyName("lease");
                         writer.WriteStartObject();
-                        WritePropertyIfNotNull(writer, "offset", context.Lease.Offset.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "sequenceNumber", context.Lease.SequenceNumber.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "offset", context.Checkpoint.Value.Offset.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "sequenceNumber", context.Checkpoint.Value.SequenceNumber.ToString(CultureInfo.InvariantCulture));
                         writer.WriteEndObject();
                     }
 
                     // Log RuntimeInformation if EnableReceiverRuntimeMetric is enabled
                     if (context.LastEnqueuedEventProperties != null)
                     {
-                        writer.WritePropertyName("lastEnquedEventProperties");
+                        writer.WritePropertyName("runtimeInformation");
                         writer.WriteStartObject();
-                        WritePropertyIfNotNull(writer, "offset", context.LastEnqueuedEventProperties.Value.Offset?.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "sequenceNumber", context.LastEnqueuedEventProperties.Value.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "enqueuedTimeUtc", context.LastEnqueuedEventProperties.Value.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastEnqueuedOffset", context.LastEnqueuedEventProperties.Value.Offset?.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastSequenceNumber", context.LastEnqueuedEventProperties.Value.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastEnqueuedTimeUtc", context.LastEnqueuedEventProperties.Value.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
                         writer.WriteEndObject();
                     }
                     writer.WriteEndObject();

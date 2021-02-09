@@ -55,8 +55,8 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("max-items-per-page", queryTwinsOptions.MaxItemsPerPage.Value);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(querySpecification);
             request.Content = content;

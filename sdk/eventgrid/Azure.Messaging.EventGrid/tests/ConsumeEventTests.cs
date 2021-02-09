@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", egEvent.Topic);
             Assert.AreEqual("2d1781af-3a4c-4d7c-bd0c-e34b19da4e66", egEvent.Id);
             Assert.AreEqual("mySubject", egEvent.Subject);
-            Assert.AreEqual("Microsoft.EventGrid.SubscriptionValidationEvent", egEvent.EventType);
+            Assert.AreEqual(SystemEventNames.EventGridSubscriptionValidation, egEvent.EventType);
             Assert.AreEqual(DateTimeOffset.Parse("2018-01-25T22:12:19.4556811Z"), egEvent.EventTime);
             Assert.AreEqual("1", egEvent.DataVersion);
         }
@@ -43,8 +43,8 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 switch (egEvent.EventType)
                 {
-                    case "Microsoft.Storage.BlobDeleted":
-                        StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.GetData();
+                    case SystemEventNames.StorageBlobDeleted:
+                        StorageBlobDeletedEventData blobDeleted = egEvent.GetData<StorageBlobDeletedEventData>();
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                         Assert.AreEqual("/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount", egEvent.Topic);
                         break;
@@ -64,8 +64,8 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 switch (egEvent.EventType)
                 {
-                    case "Microsoft.Storage.BlobDeleted":
-                        StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.GetData();
+                    case SystemEventNames.StorageBlobDeleted:
+                        StorageBlobDeletedEventData blobDeleted = egEvent.GetData<StorageBlobDeletedEventData>();
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                         break;
                 }
@@ -88,12 +88,12 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 switch (egEvent.EventType)
                 {
-                    case "Microsoft.Storage.BlobCreated":
-                        StorageBlobCreatedEventData blobCreated = (StorageBlobCreatedEventData)egEvent.GetData();
+                    case SystemEventNames.StorageBlobCreated:
+                        StorageBlobCreatedEventData blobCreated = egEvent.GetData<StorageBlobCreatedEventData>();
                         Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
                         break;
-                    case "Microsoft.Storage.BlobDeleted":
-                        StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.GetData();
+                    case SystemEventNames.StorageBlobDeleted:
+                        StorageBlobDeletedEventData blobDeleted = egEvent.GetData<StorageBlobDeletedEventData>();
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                         break;
                 }
@@ -110,39 +110,10 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(egEvent);
             switch (egEvent.EventType)
             {
-                case "Microsoft.Storage.BlobDeleted":
-                    StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.GetData();
+                case SystemEventNames.StorageBlobDeleted:
+                    StorageBlobDeletedEventData blobDeleted = egEvent.GetData<StorageBlobDeletedEventData>();
                     Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                     break;
-            }
-        }
-
-        [Test]
-        public void EGEventGetDataThrowsWhenCalledWithoutParse()
-        {
-            var customSerializer = new JsonObjectSerializer(
-                new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-
-            EventGridEvent egEvent = new EventGridEvent(
-                new ContosoItemReceivedEventData()
-                {
-                    ItemSku = "512d38b6-c7b8-40c8-89fe-f46f9e9622b6"
-                },
-                "/contoso/items",
-                "Contoso.Items.ItemReceived",
-                "1");
-            Assert.That(() => egEvent.GetData<ContosoItemReceivedEventData>(customSerializer),
-                Throws.InstanceOf<InvalidOperationException>());
-
-            ContosoItemReceivedEventData eventData1 = egEvent.GetData<ContosoItemReceivedEventData>();
-            Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
-            if (egEvent.GetData() is BinaryData binaryEventData)
-            {
-                ContosoItemReceivedEventData eventData2 = binaryEventData.ToObjectFromJson<ContosoItemReceivedEventData>();
-                Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             }
         }
 
@@ -153,6 +124,20 @@ namespace Azure.Messaging.EventGrid.Tests
             string requestContent = "[{  \"subject\": \"\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"eventType\": \"Contoso.Items.ItemReceived\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\"}]";
 
             Assert.That(() => EventGridEvent.Parse(requestContent),
+                Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void EGEventParseThrowsOnNullInput()
+        {
+            Assert.That(() => EventGridEvent.Parse(null),
+                Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void CloudEventParseThrowsOnNullInput()
+        {
+            Assert.That(() => CloudEvent.Parse(null),
                 Throws.InstanceOf<ArgumentNullException>());
         }
         #endregion
@@ -171,7 +156,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    ContosoItemReceivedEventData eventData = egEvent.GetData<ContosoItemReceivedEventData>(new JsonObjectSerializer(
+                    ContosoItemReceivedEventData eventData = egEvent.GetData().ToObject<ContosoItemReceivedEventData>(new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
                             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -194,7 +179,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    ContosoItemReceivedEventData[] eventData = egEvent.GetData<ContosoItemReceivedEventData[]>(new JsonObjectSerializer(
+                    ContosoItemReceivedEventData[] eventData = egEvent.GetData().ToObject<ContosoItemReceivedEventData[]>(new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
                             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -219,7 +204,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    BinaryData binaryEventData = (BinaryData)egEvent.GetData();
+                    BinaryData binaryEventData = egEvent.GetData();
                     Assert.True(binaryEventData.ToObjectFromJson<bool>());
                 }
             }
@@ -238,7 +223,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
-                    BinaryData binaryEventData = (BinaryData)egEvent.GetData();
+                    BinaryData binaryEventData = egEvent.GetData();
                     Assert.AreEqual("stringdata", binaryEventData.ToObjectFromJson<string>());
                 }
             }
@@ -253,9 +238,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is AppConfigurationKeyValueDeletedEventData);
-            AppConfigurationKeyValueDeletedEventData eventData = (AppConfigurationKeyValueDeletedEventData)events[0].GetData();
-            Assert.AreEqual("key1", eventData.Key);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("key1", (eventData as AppConfigurationKeyValueDeletedEventData).Key);
         }
 
         [Test]
@@ -265,9 +249,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is AppConfigurationKeyValueModifiedEventData);
-            AppConfigurationKeyValueModifiedEventData eventData = (AppConfigurationKeyValueModifiedEventData)events[0].GetData();
-            Assert.AreEqual("key1", eventData.Key);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("key1", (eventData as AppConfigurationKeyValueModifiedEventData).Key);
         }
         #endregion
 
@@ -280,9 +263,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ContainerRegistryImagePushedEventData);
-            ContainerRegistryImagePushedEventData eventData = (ContainerRegistryImagePushedEventData)events[0].GetData();
-            Assert.AreEqual("127.0.0.1", eventData.Request.Addr);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("127.0.0.1", (eventData as ContainerRegistryImagePushedEventData).Request.Addr);
         }
 
         [Test]
@@ -293,9 +275,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ContainerRegistryImageDeletedEventData);
-            ContainerRegistryImageDeletedEventData eventData = (ContainerRegistryImageDeletedEventData)events[0].GetData();
-            Assert.AreEqual("testactor", eventData.Actor.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("testactor", (eventData as ContainerRegistryImageDeletedEventData).Actor.Name);
         }
 
         [Test]
@@ -306,9 +287,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ContainerRegistryChartDeletedEventData);
-            ContainerRegistryChartDeletedEventData eventData = (ContainerRegistryChartDeletedEventData)events[0].GetData();
-            Assert.AreEqual("mediatype1", eventData.Target.MediaType);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("mediatype1", (eventData as ContainerRegistryChartDeletedEventData).Target.MediaType);
         }
 
         [Test]
@@ -319,9 +299,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ContainerRegistryChartPushedEventData);
-            ContainerRegistryChartPushedEventData eventData = (ContainerRegistryChartPushedEventData)events[0].GetData();
-            Assert.AreEqual("mediatype1", eventData.Target.MediaType);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("mediatype1", (eventData as ContainerRegistryChartPushedEventData).Target.MediaType);
         }
         #endregion
 
@@ -334,9 +313,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is IotHubDeviceCreatedEventData);
-            IotHubDeviceCreatedEventData eventData = (IotHubDeviceCreatedEventData)events[0].GetData();
-            Assert.AreEqual("enabled", eventData.Twin.Status);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("enabled", (eventData as IotHubDeviceCreatedEventData).Twin.Status);
         }
 
         [Test]
@@ -347,9 +325,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is IotHubDeviceDeletedEventData);
-            IotHubDeviceDeletedEventData eventData = (IotHubDeviceDeletedEventData)events[0].GetData();
-            Assert.AreEqual("AAAAAAAAAAI=", eventData.Twin.Etag);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("AAAAAAAAAAI=", (eventData as IotHubDeviceDeletedEventData).Twin.Etag);
         }
 
         [Test]
@@ -360,9 +337,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is IotHubDeviceConnectedEventData);
-            IotHubDeviceConnectedEventData eventData = (IotHubDeviceConnectedEventData)events[0].GetData();
-            Assert.AreEqual("EGTESTHUB1", eventData.HubName);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("EGTESTHUB1", (eventData as IotHubDeviceConnectedEventData).HubName);
         }
 
         [Test]
@@ -373,9 +349,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is IotHubDeviceDisconnectedEventData);
-            IotHubDeviceDisconnectedEventData eventData = (IotHubDeviceDisconnectedEventData)events[0].GetData();
-            Assert.AreEqual("000000000000000001D4132452F67CE200000002000000000000000000000002", eventData.DeviceConnectionStateEventInfo.SequenceNumber);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("000000000000000001D4132452F67CE200000002000000000000000000000002", (eventData as IotHubDeviceDisconnectedEventData).DeviceConnectionStateEventInfo.SequenceNumber);
         }
 
         [Test]
@@ -386,9 +361,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is IotHubDeviceTelemetryEventData);
-            IotHubDeviceTelemetryEventData eventData = (IotHubDeviceTelemetryEventData)events[0].GetData();
-            Assert.AreEqual("Active", eventData.Properties["Status"]);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("Active", (eventData as IotHubDeviceTelemetryEventData).Properties["Status"]);
         }
         #endregion
 
@@ -406,9 +380,9 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("mySubject", egEvent.Subject);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is SubscriptionValidationEventData);
-            SubscriptionValidationEventData eventData = (SubscriptionValidationEventData)events[0].GetData();
-            Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData.ValidationCode);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.True(events[0].GetData<SubscriptionValidationEventData>() is SubscriptionValidationEventData);
+            Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", (eventData as SubscriptionValidationEventData).ValidationCode);
         }
 
         [Test]
@@ -419,9 +393,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is SubscriptionDeletedEventData);
-            SubscriptionDeletedEventData eventData = (SubscriptionDeletedEventData)events[0].GetData();
-            Assert.AreEqual("/subscriptions/id/resourceGroups/rg/providers/Microsoft.EventGrid/topics/topic1/providers/Microsoft.EventGrid/eventSubscriptions/eventsubscription1", eventData.EventSubscriptionId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(
+                "/subscriptions/id/resourceGroups/rg/providers/Microsoft.EventGrid/topics/topic1/providers/Microsoft.EventGrid/eventSubscriptions/eventsubscription1",
+                (eventData as SubscriptionDeletedEventData).EventSubscriptionId);
         }
         #endregion
 
@@ -434,9 +409,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is EventHubCaptureFileCreatedEventData);
-            EventHubCaptureFileCreatedEventData eventData = (EventHubCaptureFileCreatedEventData)events[0].GetData();
-            Assert.AreEqual("AzureBlockBlob", eventData.FileType);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("AzureBlockBlob", (eventData as EventHubCaptureFileCreatedEventData).FileType);
         }
         #endregion
 
@@ -448,17 +422,17 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MachineLearningServicesModelRegisteredEventData);
-            MachineLearningServicesModelRegisteredEventData eventData = (MachineLearningServicesModelRegisteredEventData)events[0].GetData();
-            Assert.AreEqual("sklearn_regression_model", eventData.ModelName);
-            Assert.AreEqual("3", eventData.ModelVersion);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var sysData = eventData as MachineLearningServicesModelRegisteredEventData;
+            Assert.AreEqual("sklearn_regression_model", sysData.ModelName);
+            Assert.AreEqual("3", sysData.ModelVersion);
 
-            Assert.True(eventData.ModelTags is IDictionary);
-            IDictionary tags = (IDictionary)eventData.ModelTags;
+            Assert.True(sysData.ModelTags is IDictionary);
+            IDictionary tags = (IDictionary)sysData.ModelTags;
             Assert.AreEqual("regression", tags["type"]);
 
-            Assert.True(eventData.ModelProperties is IDictionary);
-            IDictionary properties = (IDictionary)eventData.ModelProperties;
+            Assert.True(sysData.ModelProperties is IDictionary);
+            IDictionary properties = (IDictionary)sysData.ModelProperties;
             Assert.AreEqual("test", properties["area"]);
         }
 
@@ -469,10 +443,9 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MachineLearningServicesModelDeployedEventData);
-            MachineLearningServicesModelDeployedEventData eventData = (MachineLearningServicesModelDeployedEventData)events[0].GetData();
-            Assert.AreEqual("aciservice1", eventData.ServiceName);
-            Assert.AreEqual(2, eventData.ModelIds.Split(',').Length);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("aciservice1", (eventData as MachineLearningServicesModelDeployedEventData).ServiceName);
+            Assert.AreEqual(2, (eventData as MachineLearningServicesModelDeployedEventData).ModelIds.Split(',').Length);
         }
 
         [Test]
@@ -482,10 +455,9 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MachineLearningServicesRunCompletedEventData);
-            MachineLearningServicesRunCompletedEventData eventData = (MachineLearningServicesRunCompletedEventData)events[0].GetData();
-            Assert.AreEqual("AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc", eventData.RunId);
-            Assert.AreEqual("automl-local-regression", eventData.ExperimentName);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc", (eventData as MachineLearningServicesRunCompletedEventData).RunId);
+            Assert.AreEqual("automl-local-regression", (eventData as MachineLearningServicesRunCompletedEventData).ExperimentName);
         }
 
         [Test]
@@ -495,24 +467,22 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MachineLearningServicesRunStatusChangedEventData);
-            MachineLearningServicesRunStatusChangedEventData eventData = (MachineLearningServicesRunStatusChangedEventData)events[0].GetData();
-            Assert.AreEqual("AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc", eventData.RunId);
-            Assert.AreEqual("automl-local-regression", eventData.ExperimentName);
-            Assert.AreEqual("Running", eventData.RunStatus);
-            Assert.AreEqual("automl", eventData.RunType);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc", (eventData as MachineLearningServicesRunStatusChangedEventData).RunId);
+            Assert.AreEqual("automl-local-regression", (eventData as MachineLearningServicesRunStatusChangedEventData).ExperimentName);
+            Assert.AreEqual("Running", (eventData as MachineLearningServicesRunStatusChangedEventData).RunStatus);
+            Assert.AreEqual("automl", (eventData as MachineLearningServicesRunStatusChangedEventData).RunType);
         }
 
         [Test]
         public void ConsumeMachineLearningServicesDatasetDriftDetectedEvent()
         {
-            string requestContent = "[{\"topic\":\"/subscriptions/60582a10-b9fd-49f1-a546-c4194134bba8/resourceGroups/copetersRG/providers/Microsoft.MachineLearningServices/workspaces/driftDemoWS\",\"eventType\":\"Microsoft.MachineLearningServices.DatasetDriftDetected\",\"subject\":\"datadrift/01d29aa4-e6a4-470a-9ef3-66660d21f8ef/run/01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"eventTime\":\"2019-10-20T17:08:08.467191+00:00\",\"id\":\"2684de79-b145-4dcf-ad2e-6a1db798585f\",\"data\":{\"dataDriftId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef\",\"dataDriftName\":\"copetersDriftMonitor3\",\"runId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"baseDatasetId\":\"3c56d136-0f64-4657-a0e8-5162089a88a3\",\"targetDatasetId\":\"d7e74d2e-c972-4266-b5fb-6c9c182d2a74\",\"driftCoefficient\":0.8350349068479208,\"startTime\":\"2019-07-04T00:00:00+00:00\",\"endTime\":\"2019-07-05T00:00:00+00:00\"},\"dataVersion\":\"2\",\"metadataVersion\":\"1\"}]";
+            string requestContent = "[{\"topic\":\"/subscriptions/60582a10-b9fd-49f1-a546-c4194134bba8/resourceGroups/copetersRG/providers/Microsoft.MachineLearningServices/workspaces/driftDemoWS\",\"eventType\":\"Microsoft.MachineLearningServices.DatasetDriftDetected\",\"subject\":\"datadrift/01d29aa4-e6a4-470a-9ef3-66660d21f8ef/run/01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"eventTime\":\"2019-10-20T17:08:08.467191+00:00\",\"id\":\"2684de79-b145-4dcf-ad2e-6a1db798585f\",\"data\":{\"dataDriftId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef\",\"dataDriftName\":\"copetersDriftMonitor3\",\"runId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"baseDatasetId\":\"3c56d136-0f64-4657-a0e8-5162089a88a3\",\"tarAsSystemEventDatasetId\":\"d7e74d2e-c972-4266-b5fb-6c9c182d2a74\",\"driftCoefficient\":0.8350349068479208,\"startTime\":\"2019-07-04T00:00:00+00:00\",\"endTime\":\"2019-07-05T00:00:00+00:00\"},\"dataVersion\":\"2\",\"metadataVersion\":\"1\"}]";
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MachineLearningServicesDatasetDriftDetectedEventData);
-            MachineLearningServicesDatasetDriftDetectedEventData eventData = (MachineLearningServicesDatasetDriftDetectedEventData)events[0].GetData();
-            Assert.AreEqual("copetersDriftMonitor3", eventData.DataDriftName);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("copetersDriftMonitor3", (eventData as MachineLearningServicesDatasetDriftDetectedEventData).DataDriftName);
         }
         #endregion
 
@@ -524,9 +494,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MapsGeofenceEnteredEventData);
-            MapsGeofenceEnteredEventData eventData = (MapsGeofenceEnteredEventData)events[0].GetData();
-            Assert.AreEqual(1.0, eventData.Geometries[0].Distance);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(1.0, (eventData as MapsGeofenceEnteredEventData).Geometries[0].Distance);
         }
 
         [Test]
@@ -536,9 +505,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MapsGeofenceExitedEventData);
-            MapsGeofenceExitedEventData eventData = (MapsGeofenceExitedEventData)events[0].GetData();
-            Assert.AreEqual(1.0, eventData.Geometries[0].Distance);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(1.0, (eventData as MapsGeofenceExitedEventData).Geometries[0].Distance);
         }
 
         [Test]
@@ -548,9 +516,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MapsGeofenceResultEventData);
-            MapsGeofenceResultEventData eventData = (MapsGeofenceResultEventData)events[0].GetData();
-            Assert.AreEqual(1.0, eventData.Geometries[0].Distance);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(1.0, (eventData as MapsGeofenceResultEventData).Geometries[0].Distance);
         }
         #endregion
 
@@ -562,10 +529,9 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobStateChangeEventData);
-            MediaJobStateChangeEventData eventData = (MediaJobStateChangeEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Processing, eventData.State);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobStateChangeEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobStateChangeEventData).State);
         }
 
         [Test]
@@ -576,12 +542,11 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputStateChangeEventData);
-            MediaJobOutputStateChangeEventData eventData = (MediaJobOutputStateChangeEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Processing, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
-            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Output;
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobOutputStateChangeEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobOutputStateChangeEventData).Output.State);
+            Assert.True((eventData as MediaJobOutputStateChangeEventData).Output is MediaJobOutputAsset);
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobOutputStateChangeEventData).Output;
             Assert.AreEqual("output-2ac2fe75-6557-4de5-ab25-5713b74a6901", outputAsset.AssetName);
         }
 
@@ -593,10 +558,9 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobScheduledEventData);
-            MediaJobScheduledEventData eventData = (MediaJobScheduledEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Queued, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.State);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Queued, (eventData as MediaJobScheduledEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobScheduledEventData).State);
         }
 
         [Test]
@@ -607,10 +571,9 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobProcessingEventData);
-            MediaJobProcessingEventData eventData = (MediaJobProcessingEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Processing, eventData.State);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobProcessingEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobProcessingEventData).State);
         }
 
         [Test]
@@ -621,10 +584,9 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobCancelingEventData);
-            MediaJobCancelingEventData eventData = (MediaJobCancelingEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceling, eventData.State);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobCancelingEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Canceling, (eventData as MediaJobCancelingEventData).State);
         }
 
         [Test]
@@ -634,13 +596,12 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobFinishedEventData);
-            MediaJobFinishedEventData eventData = (MediaJobFinishedEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Finished, eventData.State);
-            Assert.AreEqual(1, eventData.Outputs.Count);
-            Assert.True(eventData.Outputs[0] is MediaJobOutputAsset);
-            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Outputs[0];
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobFinishedEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Finished, (eventData as MediaJobFinishedEventData).State);
+            Assert.AreEqual(1, (eventData as MediaJobFinishedEventData).Outputs.Count);
+            Assert.True((eventData as MediaJobFinishedEventData).Outputs[0] is MediaJobOutputAsset);
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobFinishedEventData).Outputs[0];
 
             Assert.AreEqual(MediaJobState.Finished, outputAsset.State);
             Assert.Null(outputAsset.Error);
@@ -656,14 +617,13 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobCanceledEventData);
-            MediaJobCanceledEventData eventData = (MediaJobCanceledEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Canceling, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceled, eventData.State);
-            Assert.AreEqual(1, eventData.Outputs.Count);
-            Assert.True(eventData.Outputs[0] is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Canceling, (eventData as MediaJobCanceledEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Canceled, (eventData as MediaJobCanceledEventData).State);
+            Assert.AreEqual(1, (eventData as MediaJobCanceledEventData).Outputs.Count);
+            Assert.True((eventData as MediaJobCanceledEventData).Outputs[0] is MediaJobOutputAsset);
 
-            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Outputs[0];
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobCanceledEventData).Outputs[0];
 
             Assert.AreEqual(MediaJobState.Canceled, outputAsset.State);
             Assert.AreNotEqual(100, outputAsset.Progress);
@@ -678,17 +638,16 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobErroredEventData);
-            MediaJobErroredEventData eventData = (MediaJobErroredEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Error, eventData.State);
-            Assert.AreEqual(1, eventData.Outputs.Count);
-            Assert.True(eventData.Outputs[0] is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobErroredEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Error, (eventData as MediaJobErroredEventData).State);
+            Assert.AreEqual(1, (eventData as MediaJobErroredEventData).Outputs.Count);
+            Assert.True((eventData as MediaJobErroredEventData).Outputs[0] is MediaJobOutputAsset);
 
-            Assert.AreEqual(MediaJobState.Error, eventData.Outputs[0].State);
-            Assert.NotNull(eventData.Outputs[0].Error);
-            Assert.AreEqual(MediaJobErrorCategory.Service, eventData.Outputs[0].Error.Category);
-            Assert.AreEqual(MediaJobErrorCode.ServiceError, eventData.Outputs[0].Error.Code);
+            Assert.AreEqual(MediaJobState.Error, (eventData as MediaJobErroredEventData).Outputs[0].State);
+            Assert.NotNull((eventData as MediaJobErroredEventData).Outputs[0].Error);
+            Assert.AreEqual(MediaJobErrorCategory.Service, (eventData as MediaJobErroredEventData).Outputs[0].Error.Category);
+            Assert.AreEqual(MediaJobErrorCode.ServiceError, (eventData as MediaJobErroredEventData).Outputs[0].Error.Code);
         }
 
         [Test]
@@ -699,11 +658,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputCanceledEventData);
-            MediaJobOutputCanceledEventData eventData = (MediaJobOutputCanceledEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Canceling, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceled, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Canceling, (eventData as MediaJobOutputCanceledEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Canceled, (eventData as MediaJobOutputCanceledEventData).Output.State);
+            Assert.True((eventData as MediaJobOutputCanceledEventData).Output is MediaJobOutputAsset);
         }
 
         [Test]
@@ -714,11 +672,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputCancelingEventData);
-            MediaJobOutputCancelingEventData eventData = (MediaJobOutputCancelingEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceling, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobOutputCancelingEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Canceling, (eventData as MediaJobOutputCancelingEventData).Output.State);
+            Assert.True((eventData as MediaJobOutputCancelingEventData).Output is MediaJobOutputAsset);
         }
 
         [Test]
@@ -729,14 +686,14 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputErroredEventData);
-            MediaJobOutputErroredEventData eventData = (MediaJobOutputErroredEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Error, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
-            Assert.NotNull(eventData.Output.Error);
-            Assert.AreEqual(MediaJobErrorCategory.Service, eventData.Output.Error.Category);
-            Assert.AreEqual(MediaJobErrorCode.ServiceError, eventData.Output.Error.Code);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobOutputErroredEventData sysEvent = eventData as MediaJobOutputErroredEventData;
+            Assert.AreEqual(MediaJobState.Processing, sysEvent.PreviousState);
+            Assert.AreEqual(MediaJobState.Error, sysEvent.Output.State);
+            Assert.True(sysEvent.Output is MediaJobOutputAsset);
+            Assert.NotNull(sysEvent.Output.Error);
+            Assert.AreEqual(MediaJobErrorCategory.Service, sysEvent.Output.Error.Category);
+            Assert.AreEqual(MediaJobErrorCode.ServiceError, sysEvent.Output.Error.Code);
         }
 
         [Test]
@@ -747,14 +704,15 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputFinishedEventData);
-            MediaJobOutputFinishedEventData eventData = (MediaJobOutputFinishedEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Finished, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
-            Assert.AreEqual(100, eventData.Output.Progress);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobOutputFinishedEventData sysEvent = eventData as MediaJobOutputFinishedEventData;
 
-            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Output;
+            Assert.AreEqual(MediaJobState.Processing, sysEvent.PreviousState);
+            Assert.AreEqual(MediaJobState.Finished, sysEvent.Output.State);
+            Assert.True(sysEvent.Output is MediaJobOutputAsset);
+            Assert.AreEqual(100, sysEvent.Output.Progress);
+
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)sysEvent.Output;
             Assert.AreEqual("output-2ac2fe75-6557-4de5-ab25-5713b74a6901", outputAsset.AssetName);
         }
 
@@ -766,11 +724,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputProcessingEventData);
-            MediaJobOutputProcessingEventData eventData = (MediaJobOutputProcessingEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Processing, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobOutputProcessingEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobOutputProcessingEventData).Output.State);
+            Assert.True((eventData as MediaJobOutputProcessingEventData).Output is MediaJobOutputAsset);
         }
 
         [Test]
@@ -781,11 +738,10 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputScheduledEventData);
-            MediaJobOutputScheduledEventData eventData = (MediaJobOutputScheduledEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Queued, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Queued, (eventData as MediaJobOutputScheduledEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobOutputScheduledEventData).Output.State);
+            Assert.True((eventData as MediaJobOutputScheduledEventData).Output is MediaJobOutputAsset);
         }
 
         [Test]
@@ -796,14 +752,15 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputProgressEventData);
-            MediaJobOutputProgressEventData eventData = (MediaJobOutputProgressEventData)events[0].GetData();
-            Assert.AreEqual("TestLabel", eventData.Label);
-            Assert.AreEqual(50, eventData.Progress);
-            Assert.True(eventData.JobCorrelationData.ContainsKey("Field1"));
-            Assert.AreEqual("test1", eventData.JobCorrelationData["Field1"]);
-            Assert.True(eventData.JobCorrelationData.ContainsKey("Field2"));
-            Assert.AreEqual("test2", eventData.JobCorrelationData["Field2"]);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobOutputProgressEventData sysData = eventData as MediaJobOutputProgressEventData;
+
+            Assert.AreEqual("TestLabel", sysData.Label);
+            Assert.AreEqual(50, sysData.Progress);
+            Assert.True(sysData.JobCorrelationData.ContainsKey("Field1"));
+            Assert.AreEqual("test1", sysData.JobCorrelationData["Field1"]);
+            Assert.True(sysData.JobCorrelationData.ContainsKey("Field2"));
+            Assert.AreEqual("test2", sysData.JobCorrelationData["Field2"]);
         }
 
         [Test]
@@ -814,14 +771,14 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventEncoderConnectedEventData);
-            MediaLiveEventEncoderConnectedEventData eventData = (MediaLiveEventEncoderConnectedEventData)events[0].GetData();
-            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
-            Assert.AreEqual("Mystream1", eventData.StreamId);
-            Assert.AreEqual("<ip address>", eventData.EncoderIp);
-            Assert.AreEqual("3557", eventData.EncoderPort);
-        }
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventEncoderConnectedEventData sysData = eventData as MediaLiveEventEncoderConnectedEventData;
 
+            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", sysData.IngestUrl);
+            Assert.AreEqual("Mystream1", sysData.StreamId);
+            Assert.AreEqual("<ip address>", sysData.EncoderIp);
+            Assert.AreEqual("3557", sysData.EncoderPort);
+        }
 
         [Test]
         public void ConsumeMediaLiveEventConnectionRejectedEvent()
@@ -831,12 +788,13 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventConnectionRejectedEventData);
-            MediaLiveEventConnectionRejectedEventData eventData = (MediaLiveEventConnectionRejectedEventData)events[0].GetData();
-            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
-            Assert.AreEqual("Mystream1", eventData.StreamId);
-            Assert.AreEqual("<ip address>", eventData.EncoderIp);
-            Assert.AreEqual("3557", eventData.EncoderPort);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+
+            var sysData = eventData as MediaLiveEventConnectionRejectedEventData;
+            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", sysData.IngestUrl);
+            Assert.AreEqual("Mystream1", sysData.StreamId);
+            Assert.AreEqual("<ip address>", sysData.EncoderIp);
+            Assert.AreEqual("3557", sysData.EncoderPort);
         }
 
         [Test]
@@ -846,14 +804,14 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventEncoderDisconnectedEventData);
-            MediaLiveEventEncoderDisconnectedEventData eventData = (MediaLiveEventEncoderDisconnectedEventData)events[0].GetData();
-            Assert.AreEqual("MPE_CLIENT_TERMINATED_SESSION", eventData.ResultCode);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var sysData = eventData as MediaLiveEventEncoderDisconnectedEventData;
 
-            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
-            Assert.AreEqual("Mystream1", eventData.StreamId);
-            Assert.AreEqual("<ip address>", eventData.EncoderIp);
-            Assert.AreEqual("3557", eventData.EncoderPort);
+            Assert.AreEqual("MPE_CLIENT_TERMINATED_SESSION", sysData.ResultCode);
+            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", sysData.IngestUrl);
+            Assert.AreEqual("Mystream1", sysData.StreamId);
+            Assert.AreEqual("<ip address>", sysData.EncoderIp);
+            Assert.AreEqual("3557", sysData.EncoderPort);
         }
 
         [Test]
@@ -864,20 +822,19 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventIncomingStreamReceivedEventData);
-            MediaLiveEventIncomingStreamReceivedEventData eventData = (MediaLiveEventIncomingStreamReceivedEventData)events[0].GetData();
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var sysData = eventData as MediaLiveEventIncomingStreamReceivedEventData;
 
-            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
-            Assert.AreEqual("<ip address>", eventData.EncoderIp);
-            Assert.AreEqual("3557", eventData.EncoderPort);
-            Assert.AreEqual("audio", eventData.TrackType);
-            Assert.AreEqual("audio_160000", eventData.TrackName);
-            Assert.AreEqual(160000, eventData.Bitrate);
-            Assert.AreEqual("66", eventData.Timestamp);
-            Assert.AreEqual("1950", eventData.Duration);
-            Assert.AreEqual("1000", eventData.Timescale);
+            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", sysData.IngestUrl);
+            Assert.AreEqual("<ip address>", sysData.EncoderIp);
+            Assert.AreEqual("3557", sysData.EncoderPort);
+            Assert.AreEqual("audio", sysData.TrackType);
+            Assert.AreEqual("audio_160000", sysData.TrackName);
+            Assert.AreEqual(160000, sysData.Bitrate);
+            Assert.AreEqual("66", sysData.Timestamp);
+            Assert.AreEqual("1950", sysData.Duration);
+            Assert.AreEqual("1000", sysData.Timescale);
         }
-
 
         [Test]
         public void ConsumeMediaLiveEventIncomingStreamsOutOfSyncEvent()
@@ -887,14 +844,15 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventIncomingStreamsOutOfSyncEventData);
-            MediaLiveEventIncomingStreamsOutOfSyncEventData eventData = (MediaLiveEventIncomingStreamsOutOfSyncEventData)events[0].GetData();
-            Assert.AreEqual("10999", eventData.MinLastTimestamp);
-            Assert.AreEqual("video", eventData.TypeOfStreamWithMinLastTimestamp);
-            Assert.AreEqual("100999", eventData.MaxLastTimestamp);
-            Assert.AreEqual("audio", eventData.TypeOfStreamWithMaxLastTimestamp);
-            Assert.AreEqual("1000", eventData.TimescaleOfMinLastTimestamp);
-            Assert.AreEqual("1000", eventData.TimescaleOfMaxLastTimestamp);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var sysData = eventData as MediaLiveEventIncomingStreamsOutOfSyncEventData;
+
+            Assert.AreEqual("10999", sysData.MinLastTimestamp);
+            Assert.AreEqual("video", sysData.TypeOfStreamWithMinLastTimestamp);
+            Assert.AreEqual("100999", sysData.MaxLastTimestamp);
+            Assert.AreEqual("audio", sysData.TypeOfStreamWithMaxLastTimestamp);
+            Assert.AreEqual("1000", sysData.TimescaleOfMinLastTimestamp);
+            Assert.AreEqual("1000", sysData.TimescaleOfMaxLastTimestamp);
         }
 
         [Test]
@@ -905,13 +863,14 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventIncomingVideoStreamsOutOfSyncEventData);
-            MediaLiveEventIncomingVideoStreamsOutOfSyncEventData eventData = (MediaLiveEventIncomingVideoStreamsOutOfSyncEventData)events[0].GetData();
-            Assert.AreEqual("10999", eventData.FirstTimestamp);
-            Assert.AreEqual("2000", eventData.FirstDuration);
-            Assert.AreEqual("100999", eventData.SecondTimestamp);
-            Assert.AreEqual("2000", eventData.SecondDuration);
-            Assert.AreEqual("1000", eventData.Timescale);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var sysData = eventData as MediaLiveEventIncomingVideoStreamsOutOfSyncEventData;
+
+            Assert.AreEqual("10999", sysData.FirstTimestamp);
+            Assert.AreEqual("2000", sysData.FirstDuration);
+            Assert.AreEqual("100999", sysData.SecondTimestamp);
+            Assert.AreEqual("2000", sysData.SecondDuration);
+            Assert.AreEqual("1000", sysData.Timescale);
         }
 
         [Test]
@@ -922,14 +881,15 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventIncomingDataChunkDroppedEventData);
-            MediaLiveEventIncomingDataChunkDroppedEventData eventData = (MediaLiveEventIncomingDataChunkDroppedEventData)events[0].GetData();
-            Assert.AreEqual("8999", eventData.Timestamp);
-            Assert.AreEqual("video", eventData.TrackType);
-            Assert.AreEqual("video1", eventData.TrackName);
-            Assert.AreEqual(2500000, eventData.Bitrate);
-            Assert.AreEqual("1000", eventData.Timescale);
-            Assert.AreEqual("FragmentDrop_OverlapTimestamp", eventData.ResultCode);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var sysData = eventData as MediaLiveEventIncomingDataChunkDroppedEventData;
+
+            Assert.AreEqual("8999", sysData.Timestamp);
+            Assert.AreEqual("video", sysData.TrackType);
+            Assert.AreEqual("video1", sysData.TrackName);
+            Assert.AreEqual(2500000, sysData.Bitrate);
+            Assert.AreEqual("1000", sysData.Timescale);
+            Assert.AreEqual("FragmentDrop_OverlapTimestamp", sysData.ResultCode);
         }
 
         [Test]
@@ -940,20 +900,20 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventIngestHeartbeatEventData);
-            MediaLiveEventIngestHeartbeatEventData eventData = (MediaLiveEventIngestHeartbeatEventData)events[0].GetData();
-            Assert.AreEqual("video", eventData.TrackType);
-            Assert.AreEqual("video", eventData.TrackName);
-            Assert.AreEqual(2500000, eventData.Bitrate);
-            Assert.AreEqual(500726, eventData.IncomingBitrate);
-            Assert.AreEqual("11999", eventData.LastTimestamp);
-            Assert.AreEqual("1000", eventData.Timescale);
-            Assert.AreEqual(0, eventData.OverlapCount);
-            Assert.AreEqual(0, eventData.DiscontinuityCount);
-            Assert.AreEqual(0, eventData.NonincreasingCount);
-            Assert.True(eventData.UnexpectedBitrate);
-            Assert.AreEqual("Running", eventData.State);
-            Assert.False(eventData.Healthy);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventIngestHeartbeatEventData sysData = eventData as MediaLiveEventIngestHeartbeatEventData;
+            Assert.AreEqual("video", sysData.TrackType);
+            Assert.AreEqual("video", sysData.TrackName);
+            Assert.AreEqual(2500000, sysData.Bitrate);
+            Assert.AreEqual(500726, sysData.IncomingBitrate);
+            Assert.AreEqual("11999", sysData.LastTimestamp);
+            Assert.AreEqual("1000", sysData.Timescale);
+            Assert.AreEqual(0, sysData.OverlapCount);
+            Assert.AreEqual(0, sysData.DiscontinuityCount);
+            Assert.AreEqual(0, sysData.NonincreasingCount);
+            Assert.True(sysData.UnexpectedBitrate);
+            Assert.AreEqual("Running", sysData.State);
+            Assert.False(sysData.Healthy);
         }
 
         [Test]
@@ -964,15 +924,15 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventTrackDiscontinuityDetectedEventData);
-            MediaLiveEventTrackDiscontinuityDetectedEventData eventData = (MediaLiveEventTrackDiscontinuityDetectedEventData)events[0].GetData();
-            Assert.AreEqual("video", eventData.TrackType);
-            Assert.AreEqual("video", eventData.TrackName);
-            Assert.AreEqual(2500000, eventData.Bitrate);
-            Assert.AreEqual("10999", eventData.PreviousTimestamp);
-            Assert.AreEqual("14999", eventData.NewTimestamp);
-            Assert.AreEqual("1000", eventData.Timescale);
-            Assert.AreEqual("4000", eventData.DiscontinuityGap);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventTrackDiscontinuityDetectedEventData sysData = eventData as MediaLiveEventTrackDiscontinuityDetectedEventData;
+            Assert.AreEqual("video", sysData.TrackType);
+            Assert.AreEqual("video", sysData.TrackName);
+            Assert.AreEqual(2500000, sysData.Bitrate);
+            Assert.AreEqual("10999", sysData.PreviousTimestamp);
+            Assert.AreEqual("14999", sysData.NewTimestamp);
+            Assert.AreEqual("1000", sysData.Timescale);
+            Assert.AreEqual("4000", sysData.DiscontinuityGap);
         }
         #endregion
 
@@ -985,9 +945,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceWriteSuccessData);
-            ResourceWriteSuccessData eventData = (ResourceWriteSuccessData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteSuccessData).TenantId);
         }
 
         [Test]
@@ -998,9 +957,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceWriteFailureData);
-            ResourceWriteFailureData eventData = (ResourceWriteFailureData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteFailureData).TenantId);
         }
 
         [Test]
@@ -1011,9 +969,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceWriteCancelData);
-            ResourceWriteCancelData eventData = (ResourceWriteCancelData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteCancelData).TenantId);
         }
 
         [Test]
@@ -1024,9 +981,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceDeleteSuccessData);
-            ResourceDeleteSuccessData eventData = (ResourceDeleteSuccessData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteSuccessData).TenantId);
         }
 
         [Test]
@@ -1037,9 +993,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceDeleteFailureData);
-            ResourceDeleteFailureData eventData = (ResourceDeleteFailureData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteFailureData).TenantId);
         }
 
         [Test]
@@ -1050,9 +1005,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceDeleteCancelData);
-            ResourceDeleteCancelData eventData = (ResourceDeleteCancelData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteCancelData).TenantId);
         }
 
         [Test]
@@ -1063,9 +1017,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceActionSuccessData);
-            ResourceActionSuccessData eventData = (ResourceActionSuccessData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionSuccessData).TenantId);
         }
 
         [Test]
@@ -1076,9 +1029,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceActionFailureData);
-            ResourceActionFailureData eventData = (ResourceActionFailureData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionFailureData).TenantId);
         }
 
         [Test]
@@ -1089,9 +1041,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceActionCancelData);
-            ResourceActionCancelData eventData = (ResourceActionCancelData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionCancelData).TenantId);
         }
         #endregion
 
@@ -1104,9 +1055,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ServiceBusActiveMessagesAvailableWithNoListenersEventData);
-            ServiceBusActiveMessagesAvailableWithNoListenersEventData eventData = (ServiceBusActiveMessagesAvailableWithNoListenersEventData)events[0].GetData();
-            Assert.AreEqual("testns1", eventData.NamespaceName);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("testns1", (eventData as ServiceBusActiveMessagesAvailableWithNoListenersEventData).NamespaceName);
         }
 
         [Test]
@@ -1117,9 +1067,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ServiceBusDeadletterMessagesAvailableWithNoListenersEventData);
-            ServiceBusDeadletterMessagesAvailableWithNoListenersEventData eventData = (ServiceBusDeadletterMessagesAvailableWithNoListenersEventData)events[0].GetData();
-            Assert.AreEqual("testns1", eventData.NamespaceName);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("testns1", (eventData as ServiceBusDeadletterMessagesAvailableWithNoListenersEventData).NamespaceName);
         }
         #endregion
 
@@ -1132,9 +1081,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageBlobCreatedEventData);
-            StorageBlobCreatedEventData eventData = (StorageBlobCreatedEventData)events[0].GetData();
-            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", eventData.Url);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", (eventData as StorageBlobCreatedEventData).Url);
         }
 
         [Test]
@@ -1145,9 +1093,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageBlobDeletedEventData);
-            StorageBlobDeletedEventData eventData = (StorageBlobDeletedEventData)events[0].GetData();
-            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", (eventData as StorageBlobDeletedEventData).Url);
         }
 
         [Test]
@@ -1158,9 +1105,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageBlobRenamedEventData);
-            StorageBlobRenamedEventData eventData = (StorageBlobRenamedEventData)events[0].GetData();
-            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/testfile.txt", eventData.DestinationUrl);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/testfile.txt", (eventData as StorageBlobRenamedEventData).DestinationUrl);
         }
 
         [Test]
@@ -1171,9 +1117,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageDirectoryCreatedEventData);
-            StorageDirectoryCreatedEventData eventData = (StorageDirectoryCreatedEventData)events[0].GetData();
-            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/testDir", eventData.Url);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryCreatedEventData).Url);
         }
 
         [Test]
@@ -1184,9 +1129,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageDirectoryDeletedEventData);
-            StorageDirectoryDeletedEventData eventData = (StorageDirectoryDeletedEventData)events[0].GetData();
-            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", eventData.Url);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryDeletedEventData).Url);
         }
 
         [Test]
@@ -1197,9 +1141,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageDirectoryRenamedEventData);
-            StorageDirectoryRenamedEventData eventData = (StorageDirectoryRenamedEventData)events[0].GetData();
-            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", eventData.DestinationUrl);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryRenamedEventData).DestinationUrl);
         }
         #endregion
 
@@ -1213,9 +1156,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebAppUpdatedEventData);
-            WebAppUpdatedEventData eventData = (WebAppUpdatedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebAppUpdatedEventData).Name);
         }
 
         [Test]
@@ -1227,9 +1169,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebBackupOperationStartedEventData);
-            WebBackupOperationStartedEventData eventData = (WebBackupOperationStartedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebBackupOperationStartedEventData).Name);
         }
 
         [Test]
@@ -1241,9 +1182,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebBackupOperationCompletedEventData);
-            WebBackupOperationCompletedEventData eventData = (WebBackupOperationCompletedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebBackupOperationCompletedEventData).Name);
         }
 
         [Test]
@@ -1255,9 +1195,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebBackupOperationFailedEventData);
-            WebBackupOperationFailedEventData eventData = (WebBackupOperationFailedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebBackupOperationFailedEventData).Name);
         }
 
         [Test]
@@ -1269,9 +1208,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebRestoreOperationStartedEventData);
-            WebRestoreOperationStartedEventData eventData = (WebRestoreOperationStartedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebRestoreOperationStartedEventData).Name);
         }
 
         [Test]
@@ -1283,9 +1221,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebRestoreOperationCompletedEventData);
-            WebRestoreOperationCompletedEventData eventData = (WebRestoreOperationCompletedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebRestoreOperationCompletedEventData).Name);
         }
 
         [Test]
@@ -1297,9 +1234,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebRestoreOperationFailedEventData);
-            WebRestoreOperationFailedEventData eventData = (WebRestoreOperationFailedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebRestoreOperationFailedEventData).Name);
         }
 
         [Test]
@@ -1311,9 +1247,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebSlotSwapStartedEventData);
-            WebSlotSwapStartedEventData eventData = (WebSlotSwapStartedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebSlotSwapStartedEventData).Name);
         }
 
         [Test]
@@ -1325,9 +1260,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebSlotSwapCompletedEventData);
-            WebSlotSwapCompletedEventData eventData = (WebSlotSwapCompletedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebSlotSwapCompletedEventData).Name);
         }
 
         [Test]
@@ -1339,9 +1273,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebSlotSwapFailedEventData);
-            WebSlotSwapFailedEventData eventData = (WebSlotSwapFailedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebSlotSwapFailedEventData).Name);
         }
 
         [Test]
@@ -1353,9 +1286,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebSlotSwapWithPreviewStartedEventData);
-            WebSlotSwapWithPreviewStartedEventData eventData = (WebSlotSwapWithPreviewStartedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebSlotSwapWithPreviewStartedEventData).Name);
         }
 
         [Test]
@@ -1367,9 +1299,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebSlotSwapWithPreviewCancelledEventData);
-            WebSlotSwapWithPreviewCancelledEventData eventData = (WebSlotSwapWithPreviewCancelledEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebSlotSwapWithPreviewCancelledEventData).Name);
         }
 
         [Test]
@@ -1381,9 +1312,8 @@ namespace Azure.Messaging.EventGrid.Tests
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebAppServicePlanUpdatedEventData);
-            WebAppServicePlanUpdatedEventData eventData = (WebAppServicePlanUpdatedEventData)events[0].GetData();
-            Assert.AreEqual(planName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(planName, (eventData as WebAppServicePlanUpdatedEventData).Name);
         }
         #endregion
         #endregion
@@ -1404,7 +1334,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual("994bc3f8-c90c-6fc3-9e83-6783db2221d5", cloudEvent.Id);
             Assert.AreEqual("Subject-0", cloudEvent.Source);
-            Assert.AreEqual("Microsoft.Storage.BlobDeleted", cloudEvent.Type);
+            Assert.AreEqual(SystemEventNames.StorageBlobDeleted, cloudEvent.Type);
             Assert.AreEqual("text/plain", cloudEvent.DataContentType);
             Assert.AreEqual("subject", cloudEvent.Subject);
             Assert.AreEqual("1.0", cloudEvent.DataSchema);
@@ -1421,7 +1351,7 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             Assert.NotNull(events);
 
-            if (events[0].Type == "Microsoft.Storage.BlobDeleted")
+            if (events[0].Type == SystemEventNames.StorageBlobDeleted)
             {
                 StorageBlobDeletedEventData eventData = events[0].GetData<StorageBlobDeletedEventData>();
                 Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
@@ -1441,8 +1371,8 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(cloudEvent);
             switch (cloudEvent.Type)
             {
-                case "Microsoft.Storage.BlobDeleted":
-                    StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)cloudEvent.GetData();
+                case SystemEventNames.StorageBlobDeleted:
+                    StorageBlobDeletedEventData blobDeleted =cloudEvent.GetData<StorageBlobDeletedEventData>();
                     Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                     break;
             }
@@ -1456,7 +1386,7 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            if (events[0].Type == "Microsoft.Storage.BlobDeleted")
+            if (events[0].Type == SystemEventNames.StorageBlobDeleted)
             {
                 StorageBlobDeletedEventData eventData = events[0].GetData<StorageBlobDeletedEventData>();
                 Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
@@ -1485,65 +1415,80 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual(5, events.Length);
             foreach (CloudEvent cloudEvent in events)
             {
-                switch (cloudEvent.GetData(), cloudEvent.Type)
+                if (cloudEvent.TryGetSystemEventData(out object eventData))
                 {
-                    case (StorageBlobCreatedEventData blobCreated, _):
-                        Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
-                        break;
-                    case (StorageBlobDeletedEventData blobDeleted, _):
-                        Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
-                        break;
-                    case (BinaryData binaryData, "BinaryDataType"):
-                        Assert.AreEqual(Convert.ToBase64String(binaryData.ToArray()), "ZGF0YQ==");
-                        break;
-                    case (_, "Contoso.Items.ItemReceived"):
-                        ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>(camelCaseSerializer);
-                        Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", itemReceived.ItemSku);
-                        break;
+                    switch (eventData)
+                    {
+                        case StorageBlobCreatedEventData blobCreated:
+                            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", blobCreated.Url);
+                            break;
+                        case StorageBlobDeletedEventData blobDeleted:
+                            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (cloudEvent.Type)
+                    {
+                        case "BinaryDataType":
+                            Assert.AreEqual(Convert.ToBase64String(cloudEvent.GetData().ToArray()), "ZGF0YQ==");
+                            Assert.IsFalse(cloudEvent.TryGetSystemEventData(out var _));
+                            break;
+                        case "Contoso.Items.ItemReceived":
+                            ContosoItemReceivedEventData itemReceived = cloudEvent.GetData().ToObject<ContosoItemReceivedEventData>(camelCaseSerializer);
+                            Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", itemReceived.ItemSku);
+                            Assert.IsFalse(cloudEvent.TryGetSystemEventData(out var _));
+                            break;
+                    }
                 }
             }
         }
 
         [Test]
-        public void CloudEventGetDataThrowsWhenCalledWithoutParse()
+        public void CloudEventParseDoesNotThrowIfMissingSource()
         {
-            var customSerializer = new JsonObjectSerializer(
-                new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-
-            CloudEvent cloudEvent = new CloudEvent(
-                "/contoso/items",
-                "Contoso.Items.ItemReceived",
-                new ContosoItemReceivedEventData()
-                {
-                    ItemSku = "512d38b6-c7b8-40c8-89fe-f46f9e9622b6"
-                });
-
-            Assert.That(() => cloudEvent.GetData<ContosoItemReceivedEventData>(customSerializer),
-                Throws.InstanceOf<InvalidOperationException>());
-
-            ContosoItemReceivedEventData eventData1 = cloudEvent.GetData<ContosoItemReceivedEventData>();
-            Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
-            if (cloudEvent.GetData() is BinaryData binaryEventData)
-            {
-                ContosoItemReceivedEventData eventData2 = binaryEventData.ToObjectFromJson<ContosoItemReceivedEventData>();
-                Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
-            }
-        }
-
-        [Test]
-        public void CloudEventParseDoesNotThrowIfMissingRequiredProperties()
-        {
-            // missing Id, Source, SpecVersion, and Type
-            string requestContent = "[{ \"subject\": \"Subject-0\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}]";
+            // missing Id, Source, SpecVersion
+            string requestContent = "[{ \"subject\": \"Subject-0\", \"type\": \"type\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}]";
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             var cloudEvent = events[0];
             Assert.IsNull(cloudEvent.Id);
             Assert.IsNull(cloudEvent.Source);
-            Assert.IsNull(cloudEvent.Type);
+            Assert.AreEqual("type", cloudEvent.Type);
             Assert.AreEqual("Subject-0", cloudEvent.Subject);
+        }
+
+        [Test]
+        public void ToCloudEventDoesNotThrowIfMissingSource()
+        {
+            // missing Id, Source, SpecVersion
+            BinaryData requestContent = new BinaryData("{ \"subject\": \"Subject-0\", \"type\": \"type\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}");
+            var cloudEvent = requestContent.ToCloudEvent();
+            Assert.IsNull(cloudEvent.Id);
+            Assert.IsNull(cloudEvent.Source);
+            Assert.AreEqual("type", cloudEvent.Type);
+            Assert.AreEqual("Subject-0", cloudEvent.Subject);
+        }
+
+        [Test]
+        public void CloudEventParseThrowsIfMissingType()
+        {
+            // missing Id, Source, SpecVersion, and Type
+            string requestContent = "[{ \"subject\": \"Subject-0\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}]";
+
+            Assert.That(
+                () => CloudEvent.Parse(requestContent),
+                Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void ToCloudEventThrowsIfMissingType()
+        {
+            // missing Id, Source, SpecVersion, and Type
+            BinaryData requestContent = new BinaryData("{ \"subject\": \"Subject-0\", \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}");
+            Assert.That(
+                () => requestContent.ToCloudEvent(),
+                Throws.InstanceOf<ArgumentNullException>());
         }
         #endregion
 
@@ -1576,7 +1521,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
 
-            ContosoItemReceivedEventData eventData = events[0].GetData<ContosoItemReceivedEventData>(camelCaseSerializer);
+            ContosoItemReceivedEventData eventData = events[0].GetData().ToObject<ContosoItemReceivedEventData>(camelCaseSerializer);
             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData.ItemSku);
         }
 
@@ -1595,7 +1540,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
 
-            ContosoItemReceivedEventData[] eventData = events[0].GetData<ContosoItemReceivedEventData[]>(camelCaseSerializer);
+            ContosoItemReceivedEventData[] eventData = events[0].GetData().ToObject<ContosoItemReceivedEventData[]>(camelCaseSerializer);
             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData[0].ItemSku);
         }
         #endregion
@@ -1604,7 +1549,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeCloudEventWithNoData()
         {
-            string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",\"specversion\":\"1.0\"}]";
+            string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"type\":\"type\",\"source\":\"Subject-0\",\"specversion\":\"1.0\"}]";
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             var eventData1 = events[0].GetData<object>();
@@ -1612,13 +1557,13 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual(eventData2, null);
-            Assert.IsNull(events[0].Type);
+            Assert.AreEqual("type", events[0].Type);
         }
 
         [Test]
         public void ConsumeCloudEventWithExplicitlyNullData()
         {
-            string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\", \"data\":null, \"specversion\":\"1.0\"}]";
+            string requestContent = "[{\"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\", \"type\":\"type\", \"source\":\"Subject-0\", \"data\":null, \"specversion\":\"1.0\"}]";
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             var eventData1 = events[0].GetData<object>();
@@ -1626,7 +1571,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual(eventData2, null);
-            Assert.IsNull(events[0].Type);
+            Assert.AreEqual("type", events[0].Type);
         }
         #endregion
 
@@ -1639,7 +1584,7 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            BinaryData binaryEventData = (BinaryData)events[0].GetData();
+            BinaryData binaryEventData = events[0].GetData();
             bool eventData = binaryEventData.ToObjectFromJson<bool>();
             Assert.True(eventData);
         }
@@ -1651,7 +1596,7 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            BinaryData binaryEventData = (BinaryData)events[0].GetData();
+            BinaryData binaryEventData = events[0].GetData();
             string eventData = binaryEventData.ToObjectFromJson<string>();
             Assert.AreEqual("stringdata", eventData);
         }
@@ -1665,9 +1610,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is AppConfigurationKeyValueDeletedEventData);
-            AppConfigurationKeyValueDeletedEventData eventData = (AppConfigurationKeyValueDeletedEventData)events[0].GetData();
-            Assert.AreEqual("key1", eventData.Key);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("key1", (eventData as AppConfigurationKeyValueDeletedEventData).Key);
         }
 
         [Test]
@@ -1677,9 +1621,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is AppConfigurationKeyValueModifiedEventData);
-            AppConfigurationKeyValueModifiedEventData eventData = (AppConfigurationKeyValueModifiedEventData)events[0].GetData();
-            Assert.AreEqual("key1", eventData.Key);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("key1", (eventData as AppConfigurationKeyValueModifiedEventData).Key);
         }
         #endregion
 
@@ -1692,9 +1635,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ContainerRegistryImagePushedEventData);
-            ContainerRegistryImagePushedEventData eventData = (ContainerRegistryImagePushedEventData)events[0].GetData();
-            Assert.AreEqual("127.0.0.1", eventData.Request.Addr);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("127.0.0.1", (eventData as ContainerRegistryImagePushedEventData).Request.Addr);
         }
 
         [Test]
@@ -1705,9 +1647,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ContainerRegistryImageDeletedEventData);
-            ContainerRegistryImageDeletedEventData eventData = (ContainerRegistryImageDeletedEventData)events[0].GetData();
-            Assert.AreEqual("testactor", eventData.Actor.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("testactor", (eventData as ContainerRegistryImageDeletedEventData).Actor.Name);
         }
 
         [Test]
@@ -1718,9 +1659,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ContainerRegistryChartDeletedEventData);
-            ContainerRegistryChartDeletedEventData eventData = (ContainerRegistryChartDeletedEventData)events[0].GetData();
-            Assert.AreEqual("mediatype1", eventData.Target.MediaType);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("mediatype1", (eventData as ContainerRegistryChartDeletedEventData).Target.MediaType);
         }
 
         [Test]
@@ -1731,9 +1671,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ContainerRegistryChartPushedEventData);
-            ContainerRegistryChartPushedEventData eventData = (ContainerRegistryChartPushedEventData)events[0].GetData();
-            Assert.AreEqual("mediatype1", eventData.Target.MediaType);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("mediatype1", (eventData as ContainerRegistryChartPushedEventData).Target.MediaType);
         }
         #endregion
 
@@ -1746,9 +1685,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is IotHubDeviceCreatedEventData);
-            IotHubDeviceCreatedEventData eventData = (IotHubDeviceCreatedEventData)events[0].GetData();
-            Assert.AreEqual("enabled", eventData.Twin.Status);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("enabled", (eventData as IotHubDeviceCreatedEventData).Twin.Status);
         }
 
         [Test]
@@ -1759,9 +1697,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is IotHubDeviceDeletedEventData);
-            IotHubDeviceDeletedEventData eventData = (IotHubDeviceDeletedEventData)events[0].GetData();
-            Assert.AreEqual("AAAAAAAAAAI=", eventData.Twin.Etag);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("AAAAAAAAAAI=", (eventData as IotHubDeviceDeletedEventData).Twin.Etag);
         }
 
         [Test]
@@ -1772,9 +1709,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is IotHubDeviceConnectedEventData);
-            IotHubDeviceConnectedEventData eventData = (IotHubDeviceConnectedEventData)events[0].GetData();
-            Assert.AreEqual("EGTESTHUB1", eventData.HubName);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("EGTESTHUB1", (eventData as IotHubDeviceConnectedEventData).HubName);
         }
 
         [Test]
@@ -1785,9 +1721,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is IotHubDeviceDisconnectedEventData);
-            IotHubDeviceDisconnectedEventData eventData = (IotHubDeviceDisconnectedEventData)events[0].GetData();
-            Assert.AreEqual("000000000000000001D4132452F67CE200000002000000000000000000000002", eventData.DeviceConnectionStateEventInfo.SequenceNumber);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("000000000000000001D4132452F67CE200000002000000000000000000000002", (eventData as IotHubDeviceDisconnectedEventData).DeviceConnectionStateEventInfo.SequenceNumber);
         }
 
         [Test]
@@ -1798,9 +1733,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is IotHubDeviceTelemetryEventData);
-            IotHubDeviceTelemetryEventData eventData = (IotHubDeviceTelemetryEventData)events[0].GetData();
-            Assert.AreEqual("Active", eventData.Properties["Status"]);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("Active", (eventData as IotHubDeviceTelemetryEventData).Properties["Status"]);
         }
         #endregion
 
@@ -1813,9 +1747,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is SubscriptionValidationEventData);
-            SubscriptionValidationEventData eventData = (SubscriptionValidationEventData)events[0].GetData();
-            Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData.ValidationCode);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", (eventData as SubscriptionValidationEventData).ValidationCode);
         }
 
         [Test]
@@ -1826,9 +1759,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is SubscriptionDeletedEventData);
-            SubscriptionDeletedEventData eventData = (SubscriptionDeletedEventData)events[0].GetData();
-            Assert.AreEqual("/subscriptions/id/resourceGroups/rg/providers/Microsoft.EventGrid/topics/topic1/providers/Microsoft.EventGrid/eventSubscriptions/eventsubscription1", eventData.EventSubscriptionId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("/subscriptions/id/resourceGroups/rg/providers/Microsoft.EventGrid/topics/topic1/providers/Microsoft.EventGrid/eventSubscriptions/eventsubscription1", (eventData as SubscriptionDeletedEventData).EventSubscriptionId);
         }
         #endregion
 
@@ -1841,9 +1773,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is EventHubCaptureFileCreatedEventData);
-            EventHubCaptureFileCreatedEventData eventData = (EventHubCaptureFileCreatedEventData)events[0].GetData();
-            Assert.AreEqual("AzureBlockBlob", eventData.FileType);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("AzureBlockBlob", (eventData as EventHubCaptureFileCreatedEventData).FileType);
         }
         #endregion
 
@@ -1855,17 +1786,16 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MachineLearningServicesModelRegisteredEventData);
-            MachineLearningServicesModelRegisteredEventData eventData = (MachineLearningServicesModelRegisteredEventData)events[0].GetData();
-            Assert.AreEqual("sklearn_regression_model", eventData.ModelName);
-            Assert.AreEqual("3", eventData.ModelVersion);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("sklearn_regression_model", (eventData as MachineLearningServicesModelRegisteredEventData).ModelName);
+            Assert.AreEqual("3", (eventData as MachineLearningServicesModelRegisteredEventData).ModelVersion);
 
-            Assert.True(eventData.ModelTags is IDictionary);
-            IDictionary tags = (IDictionary)eventData.ModelTags;
+            Assert.True((eventData as MachineLearningServicesModelRegisteredEventData).ModelTags is IDictionary);
+            IDictionary tags = (IDictionary)(eventData as MachineLearningServicesModelRegisteredEventData).ModelTags;
             Assert.AreEqual("regression", tags["type"]);
 
-            Assert.True(eventData.ModelProperties is IDictionary);
-            IDictionary properties = (IDictionary)eventData.ModelProperties;
+            Assert.True((eventData as MachineLearningServicesModelRegisteredEventData).ModelProperties is IDictionary);
+            IDictionary properties = (IDictionary)(eventData as MachineLearningServicesModelRegisteredEventData).ModelProperties;
             Assert.AreEqual("test", properties["area"]);
         }
 
@@ -1876,10 +1806,9 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MachineLearningServicesModelDeployedEventData);
-            MachineLearningServicesModelDeployedEventData eventData = (MachineLearningServicesModelDeployedEventData)events[0].GetData();
-            Assert.AreEqual("aciservice1", eventData.ServiceName);
-            Assert.AreEqual(2, eventData.ModelIds.Split(',').Length);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("aciservice1", (eventData as MachineLearningServicesModelDeployedEventData).ServiceName);
+            Assert.AreEqual(2, (eventData as MachineLearningServicesModelDeployedEventData).ModelIds.Split(',').Length);
         }
 
         [Test]
@@ -1889,10 +1818,9 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MachineLearningServicesRunCompletedEventData);
-            MachineLearningServicesRunCompletedEventData eventData = (MachineLearningServicesRunCompletedEventData)events[0].GetData();
-            Assert.AreEqual("AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc", eventData.RunId);
-            Assert.AreEqual("automl-local-regression", eventData.ExperimentName);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc", (eventData as MachineLearningServicesRunCompletedEventData).RunId);
+            Assert.AreEqual("automl-local-regression", (eventData as MachineLearningServicesRunCompletedEventData).ExperimentName);
         }
 
         [Test]
@@ -1902,24 +1830,23 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MachineLearningServicesRunStatusChangedEventData);
-            MachineLearningServicesRunStatusChangedEventData eventData = (MachineLearningServicesRunStatusChangedEventData)events[0].GetData();
-            Assert.AreEqual("AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc", eventData.RunId);
-            Assert.AreEqual("automl-local-regression", eventData.ExperimentName);
-            Assert.AreEqual("Running", eventData.RunStatus);
-            Assert.AreEqual("automl", eventData.RunType);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MachineLearningServicesRunStatusChangedEventData sysData = eventData as MachineLearningServicesRunStatusChangedEventData;
+            Assert.AreEqual("AutoML_ad912b2d-6467-4f32-a616-dbe4af6dd8fc", sysData.RunId);
+            Assert.AreEqual("automl-local-regression", sysData.ExperimentName);
+            Assert.AreEqual("Running", sysData.RunStatus);
+            Assert.AreEqual("automl", sysData.RunType);
         }
 
         [Test]
         public void ConsumeCloudEventMachineLearningServicesDatasetDriftDetectedEvent()
         {
-            string requestContent = "[{\"source\":\"/subscriptions/60582a10-b9fd-49f1-a546-c4194134bba8/resourceGroups/copetersRG/providers/Microsoft.MachineLearningServices/workspaces/driftDemoWS\",\"type\":\"Microsoft.MachineLearningServices.DatasetDriftDetected\",\"subject\":\"datadrift/01d29aa4-e6a4-470a-9ef3-66660d21f8ef/run/01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"time\":\"2019-10-20T17:08:08.467191+00:00\",\"id\":\"2684de79-b145-4dcf-ad2e-6a1db798585f\",\"data\":{\"dataDriftId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef\",\"dataDriftName\":\"copetersDriftMonitor3\",\"runId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"baseDatasetId\":\"3c56d136-0f64-4657-a0e8-5162089a88a3\",\"targetDatasetId\":\"d7e74d2e-c972-4266-b5fb-6c9c182d2a74\",\"driftCoefficient\":0.8350349068479208,\"startTime\":\"2019-07-04T00:00:00+00:00\",\"endTime\":\"2019-07-05T00:00:00+00:00\"}}]";
+            string requestContent = "[{\"source\":\"/subscriptions/60582a10-b9fd-49f1-a546-c4194134bba8/resourceGroups/copetersRG/providers/Microsoft.MachineLearningServices/workspaces/driftDemoWS\",\"type\":\"Microsoft.MachineLearningServices.DatasetDriftDetected\",\"subject\":\"datadrift/01d29aa4-e6a4-470a-9ef3-66660d21f8ef/run/01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"time\":\"2019-10-20T17:08:08.467191+00:00\",\"id\":\"2684de79-b145-4dcf-ad2e-6a1db798585f\",\"data\":{\"dataDriftId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef\",\"dataDriftName\":\"copetersDriftMonitor3\",\"runId\":\"01d29aa4-e6a4-470a-9ef3-66660d21f8ef_1571590300380\",\"baseDatasetId\":\"3c56d136-0f64-4657-a0e8-5162089a88a3\",\"tarAsSystemEventDatasetId\":\"d7e74d2e-c972-4266-b5fb-6c9c182d2a74\",\"driftCoefficient\":0.8350349068479208,\"startTime\":\"2019-07-04T00:00:00+00:00\",\"endTime\":\"2019-07-05T00:00:00+00:00\"}}]";
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MachineLearningServicesDatasetDriftDetectedEventData);
-            MachineLearningServicesDatasetDriftDetectedEventData eventData = (MachineLearningServicesDatasetDriftDetectedEventData)events[0].GetData();
-            Assert.AreEqual("copetersDriftMonitor3", eventData.DataDriftName);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("copetersDriftMonitor3", (eventData as MachineLearningServicesDatasetDriftDetectedEventData).DataDriftName);
         }
         #endregion
 
@@ -1931,9 +1858,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MapsGeofenceEnteredEventData);
-            MapsGeofenceEnteredEventData eventData = (MapsGeofenceEnteredEventData)events[0].GetData();
-            Assert.AreEqual(1.0, eventData.Geometries[0].Distance);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(1.0, (eventData as MapsGeofenceEnteredEventData).Geometries[0].Distance);
         }
 
         [Test]
@@ -1943,9 +1869,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MapsGeofenceExitedEventData);
-            MapsGeofenceExitedEventData eventData = (MapsGeofenceExitedEventData)events[0].GetData();
-            Assert.AreEqual(1.0, eventData.Geometries[0].Distance);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(1.0, (eventData as MapsGeofenceExitedEventData).Geometries[0].Distance);
         }
 
         [Test]
@@ -1955,9 +1880,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MapsGeofenceResultEventData);
-            MapsGeofenceResultEventData eventData = (MapsGeofenceResultEventData)events[0].GetData();
-            Assert.AreEqual(1.0, eventData.Geometries[0].Distance);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(1.0, (eventData as MapsGeofenceResultEventData).Geometries[0].Distance);
         }
         #endregion
 
@@ -1969,10 +1893,9 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobStateChangeEventData);
-            MediaJobStateChangeEventData eventData = (MediaJobStateChangeEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Processing, eventData.State);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobStateChangeEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobStateChangeEventData).State);
         }
 
         [Test]
@@ -1983,12 +1906,11 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputStateChangeEventData);
-            MediaJobOutputStateChangeEventData eventData = (MediaJobOutputStateChangeEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Processing, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
-            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Output;
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobOutputStateChangeEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobOutputStateChangeEventData).Output.State);
+            Assert.True((eventData as MediaJobOutputStateChangeEventData).Output is MediaJobOutputAsset);
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobOutputStateChangeEventData).Output;
             Assert.AreEqual("output-2ac2fe75-6557-4de5-ab25-5713b74a6901", outputAsset.AssetName);
         }
 
@@ -2000,10 +1922,9 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobScheduledEventData);
-            MediaJobScheduledEventData eventData = (MediaJobScheduledEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Queued, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.State);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Queued, (eventData as MediaJobScheduledEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobScheduledEventData).State);
         }
 
         [Test]
@@ -2014,10 +1935,9 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobProcessingEventData);
-            MediaJobProcessingEventData eventData = (MediaJobProcessingEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Processing, eventData.State);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobProcessingEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobProcessingEventData).State);
         }
 
         [Test]
@@ -2028,10 +1948,9 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobCancelingEventData);
-            MediaJobCancelingEventData eventData = (MediaJobCancelingEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceling, eventData.State);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobCancelingEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Canceling, (eventData as MediaJobCancelingEventData).State);
         }
 
         [Test]
@@ -2041,13 +1960,13 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobFinishedEventData);
-            MediaJobFinishedEventData eventData = (MediaJobFinishedEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Finished, eventData.State);
-            Assert.AreEqual(1, eventData.Outputs.Count);
-            Assert.True(eventData.Outputs[0] is MediaJobOutputAsset);
-            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Outputs[0];
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobFinishedEventData sysData = eventData as MediaJobFinishedEventData;
+            Assert.AreEqual(MediaJobState.Processing, sysData.PreviousState);
+            Assert.AreEqual(MediaJobState.Finished, sysData.State);
+            Assert.AreEqual(1, sysData.Outputs.Count);
+            Assert.True(sysData.Outputs[0] is MediaJobOutputAsset);
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)sysData.Outputs[0];
 
             Assert.AreEqual(MediaJobState.Finished, outputAsset.State);
             Assert.Null(outputAsset.Error);
@@ -2063,14 +1982,15 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobCanceledEventData);
-            MediaJobCanceledEventData eventData = (MediaJobCanceledEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Canceling, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceled, eventData.State);
-            Assert.AreEqual(1, eventData.Outputs.Count);
-            Assert.True(eventData.Outputs[0] is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobCanceledEventData sysData = eventData as MediaJobCanceledEventData;
 
-            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Outputs[0];
+            Assert.AreEqual(MediaJobState.Canceling, sysData.PreviousState);
+            Assert.AreEqual(MediaJobState.Canceled, sysData.State);
+            Assert.AreEqual(1, sysData.Outputs.Count);
+            Assert.True(sysData.Outputs[0] is MediaJobOutputAsset);
+
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)sysData.Outputs[0];
 
             Assert.AreEqual(MediaJobState.Canceled, outputAsset.State);
             Assert.AreNotEqual(100, outputAsset.Progress);
@@ -2085,17 +2005,18 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobErroredEventData);
-            MediaJobErroredEventData eventData = (MediaJobErroredEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Error, eventData.State);
-            Assert.AreEqual(1, eventData.Outputs.Count);
-            Assert.True(eventData.Outputs[0] is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobErroredEventData sysData = eventData as MediaJobErroredEventData;
 
-            Assert.AreEqual(MediaJobState.Error, eventData.Outputs[0].State);
-            Assert.NotNull(eventData.Outputs[0].Error);
-            Assert.AreEqual(MediaJobErrorCategory.Service, eventData.Outputs[0].Error.Category);
-            Assert.AreEqual(MediaJobErrorCode.ServiceError, eventData.Outputs[0].Error.Code);
+            Assert.AreEqual(MediaJobState.Processing, sysData.PreviousState);
+            Assert.AreEqual(MediaJobState.Error, sysData.State);
+            Assert.AreEqual(1, sysData.Outputs.Count);
+            Assert.True(sysData.Outputs[0] is MediaJobOutputAsset);
+
+            Assert.AreEqual(MediaJobState.Error, sysData.Outputs[0].State);
+            Assert.NotNull(sysData.Outputs[0].Error);
+            Assert.AreEqual(MediaJobErrorCategory.Service, sysData.Outputs[0].Error.Category);
+            Assert.AreEqual(MediaJobErrorCode.ServiceError, sysData.Outputs[0].Error.Code);
         }
 
         [Test]
@@ -2106,11 +2027,12 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputCanceledEventData);
-            MediaJobOutputCanceledEventData eventData = (MediaJobOutputCanceledEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Canceling, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceled, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobOutputCanceledEventData sysData = eventData as MediaJobOutputCanceledEventData;
+
+            Assert.AreEqual(MediaJobState.Canceling, sysData.PreviousState);
+            Assert.AreEqual(MediaJobState.Canceled, sysData.Output.State);
+            Assert.True(sysData.Output is MediaJobOutputAsset);
         }
 
         [Test]
@@ -2121,11 +2043,12 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputCancelingEventData);
-            MediaJobOutputCancelingEventData eventData = (MediaJobOutputCancelingEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceling, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobOutputCancelingEventData sysData = eventData as MediaJobOutputCancelingEventData;
+
+            Assert.AreEqual(MediaJobState.Processing, sysData.PreviousState);
+            Assert.AreEqual(MediaJobState.Canceling, sysData.Output.State);
+            Assert.True(sysData.Output is MediaJobOutputAsset);
         }
 
         [Test]
@@ -2136,14 +2059,15 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputErroredEventData);
-            MediaJobOutputErroredEventData eventData = (MediaJobOutputErroredEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Error, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
-            Assert.NotNull(eventData.Output.Error);
-            Assert.AreEqual(MediaJobErrorCategory.Service, eventData.Output.Error.Category);
-            Assert.AreEqual(MediaJobErrorCode.ServiceError, eventData.Output.Error.Code);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobOutputErroredEventData sysData = eventData as MediaJobOutputErroredEventData;
+
+            Assert.AreEqual(MediaJobState.Processing, sysData.PreviousState);
+            Assert.AreEqual(MediaJobState.Error, sysData.Output.State);
+            Assert.True(sysData.Output is MediaJobOutputAsset);
+            Assert.NotNull(sysData.Output.Error);
+            Assert.AreEqual(MediaJobErrorCategory.Service, sysData.Output.Error.Category);
+            Assert.AreEqual(MediaJobErrorCode.ServiceError, sysData.Output.Error.Code);
         }
 
         [Test]
@@ -2154,14 +2078,15 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputFinishedEventData);
-            MediaJobOutputFinishedEventData eventData = (MediaJobOutputFinishedEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Processing, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Finished, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
-            Assert.AreEqual(100, eventData.Output.Progress);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobOutputFinishedEventData sysData = eventData as MediaJobOutputFinishedEventData;
 
-            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Output;
+            Assert.AreEqual(MediaJobState.Processing, sysData.PreviousState);
+            Assert.AreEqual(MediaJobState.Finished, sysData.Output.State);
+            Assert.True(sysData.Output is MediaJobOutputAsset);
+            Assert.AreEqual(100, sysData.Output.Progress);
+
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)sysData.Output;
             Assert.AreEqual("output-2ac2fe75-6557-4de5-ab25-5713b74a6901", outputAsset.AssetName);
         }
 
@@ -2173,11 +2098,12 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputProcessingEventData);
-            MediaJobOutputProcessingEventData eventData = (MediaJobOutputProcessingEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Processing, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobOutputProcessingEventData sysData = eventData as MediaJobOutputProcessingEventData;
+
+            Assert.AreEqual(MediaJobState.Scheduled, sysData.PreviousState);
+            Assert.AreEqual(MediaJobState.Processing, sysData.Output.State);
+            Assert.True(sysData.Output is MediaJobOutputAsset);
         }
 
         [Test]
@@ -2188,11 +2114,10 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputScheduledEventData);
-            MediaJobOutputScheduledEventData eventData = (MediaJobOutputScheduledEventData)events[0].GetData();
-            Assert.AreEqual(MediaJobState.Queued, eventData.PreviousState);
-            Assert.AreEqual(MediaJobState.Scheduled, eventData.Output.State);
-            Assert.True(eventData.Output is MediaJobOutputAsset);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Queued, (eventData as MediaJobOutputScheduledEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobOutputScheduledEventData).Output.State);
+            Assert.True((eventData as MediaJobOutputScheduledEventData).Output is MediaJobOutputAsset);
         }
 
         [Test]
@@ -2203,14 +2128,15 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaJobOutputProgressEventData);
-            MediaJobOutputProgressEventData eventData = (MediaJobOutputProgressEventData)events[0].GetData();
-            Assert.AreEqual("TestLabel", eventData.Label);
-            Assert.AreEqual(50, eventData.Progress);
-            Assert.True(eventData.JobCorrelationData.ContainsKey("Field1"));
-            Assert.AreEqual("test1", eventData.JobCorrelationData["Field1"]);
-            Assert.True(eventData.JobCorrelationData.ContainsKey("Field2"));
-            Assert.AreEqual("test2", eventData.JobCorrelationData["Field2"]);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaJobOutputProgressEventData sysData = eventData as MediaJobOutputProgressEventData;
+
+            Assert.AreEqual("TestLabel", sysData.Label);
+            Assert.AreEqual(50, sysData.Progress);
+            Assert.True(sysData.JobCorrelationData.ContainsKey("Field1"));
+            Assert.AreEqual("test1", sysData.JobCorrelationData["Field1"]);
+            Assert.True(sysData.JobCorrelationData.ContainsKey("Field2"));
+            Assert.AreEqual("test2", sysData.JobCorrelationData["Field2"]);
         }
 
         [Test]
@@ -2221,14 +2147,14 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventEncoderConnectedEventData);
-            MediaLiveEventEncoderConnectedEventData eventData = (MediaLiveEventEncoderConnectedEventData)events[0].GetData();
-            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
-            Assert.AreEqual("Mystream1", eventData.StreamId);
-            Assert.AreEqual("<ip address>", eventData.EncoderIp);
-            Assert.AreEqual("3557", eventData.EncoderPort);
-        }
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventEncoderConnectedEventData sysData = eventData as MediaLiveEventEncoderConnectedEventData;
 
+            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", sysData.IngestUrl);
+            Assert.AreEqual("Mystream1", sysData.StreamId);
+            Assert.AreEqual("<ip address>", sysData.EncoderIp);
+            Assert.AreEqual("3557", sysData.EncoderPort);
+        }
 
         [Test]
         public void ConsumeCloudEventMediaLiveEventConnectionRejectedEvent()
@@ -2238,12 +2164,13 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventConnectionRejectedEventData);
-            MediaLiveEventConnectionRejectedEventData eventData = (MediaLiveEventConnectionRejectedEventData)events[0].GetData();
-            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
-            Assert.AreEqual("Mystream1", eventData.StreamId);
-            Assert.AreEqual("<ip address>", eventData.EncoderIp);
-            Assert.AreEqual("3557", eventData.EncoderPort);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventConnectionRejectedEventData sysData = eventData as MediaLiveEventConnectionRejectedEventData;
+
+            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", sysData.IngestUrl);
+            Assert.AreEqual("Mystream1", sysData.StreamId);
+            Assert.AreEqual("<ip address>", sysData.EncoderIp);
+            Assert.AreEqual("3557", sysData.EncoderPort);
         }
 
         [Test]
@@ -2253,14 +2180,15 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventEncoderDisconnectedEventData);
-            MediaLiveEventEncoderDisconnectedEventData eventData = (MediaLiveEventEncoderDisconnectedEventData)events[0].GetData();
-            Assert.AreEqual("MPE_CLIENT_TERMINATED_SESSION", eventData.ResultCode);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventEncoderDisconnectedEventData sysData = eventData as MediaLiveEventEncoderDisconnectedEventData;
 
-            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
-            Assert.AreEqual("Mystream1", eventData.StreamId);
-            Assert.AreEqual("<ip address>", eventData.EncoderIp);
-            Assert.AreEqual("3557", eventData.EncoderPort);
+            Assert.AreEqual("MPE_CLIENT_TERMINATED_SESSION", sysData.ResultCode);
+
+            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", sysData.IngestUrl);
+            Assert.AreEqual("Mystream1", sysData.StreamId);
+            Assert.AreEqual("<ip address>", sysData.EncoderIp);
+            Assert.AreEqual("3557", sysData.EncoderPort);
         }
 
         [Test]
@@ -2271,20 +2199,19 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventIncomingStreamReceivedEventData);
-            MediaLiveEventIncomingStreamReceivedEventData eventData = (MediaLiveEventIncomingStreamReceivedEventData)events[0].GetData();
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventIncomingStreamReceivedEventData sysData = eventData as MediaLiveEventIncomingStreamReceivedEventData;
 
-            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
-            Assert.AreEqual("<ip address>", eventData.EncoderIp);
-            Assert.AreEqual("3557", eventData.EncoderPort);
-            Assert.AreEqual("audio", eventData.TrackType);
-            Assert.AreEqual("audio_160000", eventData.TrackName);
-            Assert.AreEqual(160000, eventData.Bitrate);
-            Assert.AreEqual("66", eventData.Timestamp);
-            Assert.AreEqual("1950", eventData.Duration);
-            Assert.AreEqual("1000", eventData.Timescale);
+            Assert.AreEqual("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", sysData.IngestUrl);
+            Assert.AreEqual("<ip address>", sysData.EncoderIp);
+            Assert.AreEqual("3557", sysData.EncoderPort);
+            Assert.AreEqual("audio", sysData.TrackType);
+            Assert.AreEqual("audio_160000", sysData.TrackName);
+            Assert.AreEqual(160000, sysData.Bitrate);
+            Assert.AreEqual("66", sysData.Timestamp);
+            Assert.AreEqual("1950", sysData.Duration);
+            Assert.AreEqual("1000", sysData.Timescale);
         }
-
 
         [Test]
         public void ConsumeCloudEventMediaLiveEventIncomingStreamsOutOfSyncEvent()
@@ -2294,14 +2221,15 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventIncomingStreamsOutOfSyncEventData);
-            MediaLiveEventIncomingStreamsOutOfSyncEventData eventData = (MediaLiveEventIncomingStreamsOutOfSyncEventData)events[0].GetData();
-            Assert.AreEqual("10999", eventData.MinLastTimestamp);
-            Assert.AreEqual("video", eventData.TypeOfStreamWithMinLastTimestamp);
-            Assert.AreEqual("100999", eventData.MaxLastTimestamp);
-            Assert.AreEqual("audio", eventData.TypeOfStreamWithMaxLastTimestamp);
-            Assert.AreEqual("1000", eventData.TimescaleOfMinLastTimestamp);
-            Assert.AreEqual("1000", eventData.TimescaleOfMaxLastTimestamp);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventIncomingStreamsOutOfSyncEventData sysData = eventData as MediaLiveEventIncomingStreamsOutOfSyncEventData;
+
+            Assert.AreEqual("10999", sysData.MinLastTimestamp);
+            Assert.AreEqual("video", sysData.TypeOfStreamWithMinLastTimestamp);
+            Assert.AreEqual("100999", sysData.MaxLastTimestamp);
+            Assert.AreEqual("audio", sysData.TypeOfStreamWithMaxLastTimestamp);
+            Assert.AreEqual("1000", sysData.TimescaleOfMinLastTimestamp);
+            Assert.AreEqual("1000", sysData.TimescaleOfMaxLastTimestamp);
         }
 
         [Test]
@@ -2312,13 +2240,14 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventIncomingVideoStreamsOutOfSyncEventData);
-            MediaLiveEventIncomingVideoStreamsOutOfSyncEventData eventData = (MediaLiveEventIncomingVideoStreamsOutOfSyncEventData)events[0].GetData();
-            Assert.AreEqual("10999", eventData.FirstTimestamp);
-            Assert.AreEqual("2000", eventData.FirstDuration);
-            Assert.AreEqual("100999", eventData.SecondTimestamp);
-            Assert.AreEqual("2000", eventData.SecondDuration);
-            Assert.AreEqual("1000", eventData.Timescale);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventIncomingVideoStreamsOutOfSyncEventData sysData = eventData as MediaLiveEventIncomingVideoStreamsOutOfSyncEventData;
+
+            Assert.AreEqual("10999", sysData.FirstTimestamp);
+            Assert.AreEqual("2000", sysData.FirstDuration);
+            Assert.AreEqual("100999", sysData.SecondTimestamp);
+            Assert.AreEqual("2000", sysData.SecondDuration);
+            Assert.AreEqual("1000", sysData.Timescale);
         }
 
         [Test]
@@ -2329,14 +2258,15 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventIncomingDataChunkDroppedEventData);
-            MediaLiveEventIncomingDataChunkDroppedEventData eventData = (MediaLiveEventIncomingDataChunkDroppedEventData)events[0].GetData();
-            Assert.AreEqual("8999", eventData.Timestamp);
-            Assert.AreEqual("video", eventData.TrackType);
-            Assert.AreEqual("video1", eventData.TrackName);
-            Assert.AreEqual(2500000, eventData.Bitrate);
-            Assert.AreEqual("1000", eventData.Timescale);
-            Assert.AreEqual("FragmentDrop_OverlapTimestamp", eventData.ResultCode);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventIncomingDataChunkDroppedEventData sysData = eventData as MediaLiveEventIncomingDataChunkDroppedEventData;
+
+            Assert.AreEqual("8999", sysData.Timestamp);
+            Assert.AreEqual("video", sysData.TrackType);
+            Assert.AreEqual("video1", sysData.TrackName);
+            Assert.AreEqual(2500000, sysData.Bitrate);
+            Assert.AreEqual("1000", sysData.Timescale);
+            Assert.AreEqual("FragmentDrop_OverlapTimestamp", sysData.ResultCode);
         }
 
         [Test]
@@ -2347,20 +2277,21 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventIngestHeartbeatEventData);
-            MediaLiveEventIngestHeartbeatEventData eventData = (MediaLiveEventIngestHeartbeatEventData)events[0].GetData();
-            Assert.AreEqual("video", eventData.TrackType);
-            Assert.AreEqual("video", eventData.TrackName);
-            Assert.AreEqual(2500000, eventData.Bitrate);
-            Assert.AreEqual(500726, eventData.IncomingBitrate);
-            Assert.AreEqual("11999", eventData.LastTimestamp);
-            Assert.AreEqual("1000", eventData.Timescale);
-            Assert.AreEqual(0, eventData.OverlapCount);
-            Assert.AreEqual(0, eventData.DiscontinuityCount);
-            Assert.AreEqual(0, eventData.NonincreasingCount);
-            Assert.True(eventData.UnexpectedBitrate);
-            Assert.AreEqual("Running", eventData.State);
-            Assert.False(eventData.Healthy);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventIngestHeartbeatEventData sysData = eventData as MediaLiveEventIngestHeartbeatEventData;
+
+            Assert.AreEqual("video", sysData.TrackType);
+            Assert.AreEqual("video", sysData.TrackName);
+            Assert.AreEqual(2500000, sysData.Bitrate);
+            Assert.AreEqual(500726, sysData.IncomingBitrate);
+            Assert.AreEqual("11999", sysData.LastTimestamp);
+            Assert.AreEqual("1000", sysData.Timescale);
+            Assert.AreEqual(0, sysData.OverlapCount);
+            Assert.AreEqual(0, sysData.DiscontinuityCount);
+            Assert.AreEqual(0, sysData.NonincreasingCount);
+            Assert.True(sysData.UnexpectedBitrate);
+            Assert.AreEqual("Running", sysData.State);
+            Assert.False(sysData.Healthy);
         }
 
         [Test]
@@ -2371,15 +2302,16 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is MediaLiveEventTrackDiscontinuityDetectedEventData);
-            MediaLiveEventTrackDiscontinuityDetectedEventData eventData = (MediaLiveEventTrackDiscontinuityDetectedEventData)events[0].GetData();
-            Assert.AreEqual("video", eventData.TrackType);
-            Assert.AreEqual("video", eventData.TrackName);
-            Assert.AreEqual(2500000, eventData.Bitrate);
-            Assert.AreEqual("10999", eventData.PreviousTimestamp);
-            Assert.AreEqual("14999", eventData.NewTimestamp);
-            Assert.AreEqual("1000", eventData.Timescale);
-            Assert.AreEqual("4000", eventData.DiscontinuityGap);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            MediaLiveEventTrackDiscontinuityDetectedEventData sysData = eventData as MediaLiveEventTrackDiscontinuityDetectedEventData;
+
+            Assert.AreEqual("video", sysData.TrackType);
+            Assert.AreEqual("video", sysData.TrackName);
+            Assert.AreEqual(2500000, sysData.Bitrate);
+            Assert.AreEqual("10999", sysData.PreviousTimestamp);
+            Assert.AreEqual("14999", sysData.NewTimestamp);
+            Assert.AreEqual("1000", sysData.Timescale);
+            Assert.AreEqual("4000", sysData.DiscontinuityGap);
         }
         #endregion
 
@@ -2392,9 +2324,10 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceWriteSuccessData);
-            ResourceWriteSuccessData eventData = (ResourceWriteSuccessData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            ResourceWriteSuccessData sysData = eventData as ResourceWriteSuccessData;
+
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", sysData.TenantId);
         }
 
         [Test]
@@ -2405,9 +2338,9 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceWriteFailureData);
-            ResourceWriteFailureData eventData = (ResourceWriteFailureData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteFailureData).TenantId);
         }
 
         [Test]
@@ -2418,9 +2351,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceWriteCancelData);
-            ResourceWriteCancelData eventData = (ResourceWriteCancelData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceWriteCancelData).TenantId);
         }
 
         [Test]
@@ -2431,9 +2363,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceDeleteSuccessData);
-            ResourceDeleteSuccessData eventData = (ResourceDeleteSuccessData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteSuccessData).TenantId);
         }
 
         [Test]
@@ -2444,9 +2375,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceDeleteFailureData);
-            ResourceDeleteFailureData eventData = (ResourceDeleteFailureData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteFailureData).TenantId);
         }
 
         [Test]
@@ -2457,9 +2387,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceDeleteCancelData);
-            ResourceDeleteCancelData eventData = (ResourceDeleteCancelData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceDeleteCancelData).TenantId);
         }
 
         [Test]
@@ -2470,9 +2399,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceActionSuccessData);
-            ResourceActionSuccessData eventData = (ResourceActionSuccessData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionSuccessData).TenantId);
         }
 
         [Test]
@@ -2483,9 +2411,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceActionFailureData);
-            ResourceActionFailureData eventData = (ResourceActionFailureData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionFailureData).TenantId);
         }
 
         [Test]
@@ -2496,9 +2423,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ResourceActionCancelData);
-            ResourceActionCancelData eventData = (ResourceActionCancelData)events[0].GetData();
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", (eventData as ResourceActionCancelData).TenantId);
         }
         #endregion
 
@@ -2511,9 +2437,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ServiceBusActiveMessagesAvailableWithNoListenersEventData);
-            ServiceBusActiveMessagesAvailableWithNoListenersEventData eventData = (ServiceBusActiveMessagesAvailableWithNoListenersEventData)events[0].GetData();
-            Assert.AreEqual("testns1", eventData.NamespaceName);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("testns1", (eventData as ServiceBusActiveMessagesAvailableWithNoListenersEventData).NamespaceName);
         }
 
         [Test]
@@ -2524,9 +2449,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is ServiceBusDeadletterMessagesAvailableWithNoListenersEventData);
-            ServiceBusDeadletterMessagesAvailableWithNoListenersEventData eventData = (ServiceBusDeadletterMessagesAvailableWithNoListenersEventData)events[0].GetData();
-            Assert.AreEqual("testns1", eventData.NamespaceName);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("testns1", (eventData as ServiceBusDeadletterMessagesAvailableWithNoListenersEventData).NamespaceName);
         }
         #endregion
 
@@ -2539,9 +2463,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageBlobCreatedEventData);
-            StorageBlobCreatedEventData eventData = (StorageBlobCreatedEventData)events[0].GetData();
-            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", eventData.Url);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/file1.txt", (eventData as StorageBlobCreatedEventData).Url);
         }
 
         [Test]
@@ -2552,9 +2475,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageBlobDeletedEventData);
-            StorageBlobDeletedEventData eventData = (StorageBlobDeletedEventData)events[0].GetData();
-            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", eventData.Url);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", (eventData as StorageBlobDeletedEventData).Url);
         }
 
         [Test]
@@ -2565,9 +2487,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageBlobRenamedEventData);
-            StorageBlobRenamedEventData eventData = (StorageBlobRenamedEventData)events[0].GetData();
-            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/testfile.txt", eventData.DestinationUrl);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/testfile.txt", (eventData as StorageBlobRenamedEventData).DestinationUrl);
         }
 
         [Test]
@@ -2578,9 +2499,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageDirectoryCreatedEventData);
-            StorageDirectoryCreatedEventData eventData = (StorageDirectoryCreatedEventData)events[0].GetData();
-            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/testDir", eventData.Url);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://myaccount.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryCreatedEventData).Url);
         }
 
         [Test]
@@ -2591,9 +2511,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageDirectoryDeletedEventData);
-            StorageDirectoryDeletedEventData eventData = (StorageDirectoryDeletedEventData)events[0].GetData();
-            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", eventData.Url);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryDeletedEventData).Url);
         }
 
         [Test]
@@ -2604,9 +2523,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is StorageDirectoryRenamedEventData);
-            StorageDirectoryRenamedEventData eventData = (StorageDirectoryRenamedEventData)events[0].GetData();
-            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", eventData.DestinationUrl);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryRenamedEventData).DestinationUrl);
         }
         #endregion
 
@@ -2620,9 +2538,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebAppUpdatedEventData);
-            WebAppUpdatedEventData eventData = (WebAppUpdatedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebAppUpdatedEventData).Name);
         }
 
         [Test]
@@ -2634,9 +2551,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebBackupOperationStartedEventData);
-            WebBackupOperationStartedEventData eventData = (WebBackupOperationStartedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebBackupOperationStartedEventData).Name);
         }
 
         [Test]
@@ -2648,9 +2564,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebBackupOperationCompletedEventData);
-            WebBackupOperationCompletedEventData eventData = (WebBackupOperationCompletedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebBackupOperationCompletedEventData).Name);
         }
 
         [Test]
@@ -2661,9 +2576,8 @@ namespace Azure.Messaging.EventGrid.Tests
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebBackupOperationFailedEventData);
-            WebBackupOperationFailedEventData eventData = (WebBackupOperationFailedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebBackupOperationFailedEventData).Name);
         }
 
         [Test]
@@ -2675,9 +2589,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebRestoreOperationStartedEventData);
-            WebRestoreOperationStartedEventData eventData = (WebRestoreOperationStartedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebRestoreOperationStartedEventData).Name);
         }
 
         [Test]
@@ -2689,9 +2602,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebRestoreOperationCompletedEventData);
-            WebRestoreOperationCompletedEventData eventData = (WebRestoreOperationCompletedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebRestoreOperationCompletedEventData).Name);
         }
 
         [Test]
@@ -2703,9 +2615,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebRestoreOperationFailedEventData);
-            WebRestoreOperationFailedEventData eventData = (WebRestoreOperationFailedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebRestoreOperationFailedEventData).Name);
         }
 
         [Test]
@@ -2717,9 +2628,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebSlotSwapStartedEventData);
-            WebSlotSwapStartedEventData eventData = (WebSlotSwapStartedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebSlotSwapStartedEventData).Name);
         }
 
         [Test]
@@ -2731,9 +2641,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebSlotSwapCompletedEventData);
-            WebSlotSwapCompletedEventData eventData = (WebSlotSwapCompletedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebSlotSwapCompletedEventData).Name);
         }
 
         [Test]
@@ -2745,9 +2654,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebSlotSwapFailedEventData);
-            WebSlotSwapFailedEventData eventData = (WebSlotSwapFailedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebSlotSwapFailedEventData).Name);
         }
 
         [Test]
@@ -2759,9 +2667,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebSlotSwapWithPreviewStartedEventData);
-            WebSlotSwapWithPreviewStartedEventData eventData = (WebSlotSwapWithPreviewStartedEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebSlotSwapWithPreviewStartedEventData).Name);
         }
 
         [Test]
@@ -2773,9 +2680,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebSlotSwapWithPreviewCancelledEventData);
-            WebSlotSwapWithPreviewCancelledEventData eventData = (WebSlotSwapWithPreviewCancelledEventData)events[0].GetData();
-            Assert.AreEqual(siteName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(siteName, (eventData as WebSlotSwapWithPreviewCancelledEventData).Name);
         }
 
         [Test]
@@ -2787,9 +2693,8 @@ namespace Azure.Messaging.EventGrid.Tests
             CloudEvent[] events = CloudEvent.Parse(requestContent);
 
             Assert.NotNull(events);
-            Assert.True(events[0].GetData() is WebAppServicePlanUpdatedEventData);
-            WebAppServicePlanUpdatedEventData eventData = (WebAppServicePlanUpdatedEventData)events[0].GetData();
-            Assert.AreEqual(planName, eventData.Name);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(planName, (eventData as WebAppServicePlanUpdatedEventData).Name);
         }
         #endregion
         #endregion

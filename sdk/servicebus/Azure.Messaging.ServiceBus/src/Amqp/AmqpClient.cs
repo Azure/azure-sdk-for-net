@@ -91,7 +91,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 Scheme = options.TransportType.GetUriScheme(),
                 Host = host
-
             }.Uri;
 
             Credential = credential;
@@ -100,7 +99,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 credential,
                 options.TransportType,
                 options.WebProxy);
-
         }
 
         /// <summary>

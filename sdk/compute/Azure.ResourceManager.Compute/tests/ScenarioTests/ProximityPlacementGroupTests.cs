@@ -12,7 +12,6 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-
 namespace Azure.ResourceManager.Compute.Tests
 {
     [AsyncOnly]
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.True(outProximityPlacementGroup == null, "ProximityPlacementGroup in response should be null.");
 
             //Patch and expect success
-            UpdateResource proximityPlacementGroupUpdate = new UpdateResource();
+            ProximityPlacementGroupUpdate proximityPlacementGroupUpdate = new ProximityPlacementGroupUpdate();
             proximityPlacementGroupUpdate.Tags.InitializeFrom(inputProximityPlacementGroup.Tags);
             //Note: Same Tags object is referred in proximityPlacementGroupUpdate and expectedProximityPlacementGroup,
             //hence this will also update tags in expectedProximityPlacementGroup.
@@ -402,7 +401,6 @@ namespace Azure.ResourceManager.Compute.Tests
         private void ValidateProximityPlacementGroup(ProximityPlacementGroup expectedProximityPlacementGroup, ProximityPlacementGroup outputProximityPlacementGroup,
             string expectedProximityPlacementGroupName)
         {
-
             Assert.True(outputProximityPlacementGroup != null, "ProximityPlacementGroup is null in response.");
             Assert.True(expectedProximityPlacementGroupName == outputProximityPlacementGroup.Name, "ProximityPlacementGroup.Name in response mismatch with expected value.");
             Assert.True(

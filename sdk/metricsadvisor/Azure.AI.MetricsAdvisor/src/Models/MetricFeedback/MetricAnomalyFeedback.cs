@@ -65,9 +65,20 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset EndTime { get; set; }
 
         /// <summary>
-        /// The corresponding anomaly detection configuration of this feedback.
+        /// The ID of the <see cref="AnomalyDetectionConfiguration"/> to which this feedback applies. If
+        /// <c>null</c>, this feedback applies to all anomalies within the specified time range, defined
+        /// by <see cref="StartTime"/> and <see cref="EndTime"/>, without regard for the configuration used
+        /// to detect them.
         /// </summary>
         public string AnomalyDetectionConfigurationId { get; set; }
+
+        /// <summary>
+        /// A snapshot of the <see cref="AnomalyDetectionConfiguration"/> to which this feedback applies,
+        /// taken at the moment this feedback was created. Even if the original configuration changes, this
+        /// snapshot will remain unaltered. If no <see cref="AnomalyDetectionConfigurationId"/> was specified
+        /// during creation, this property will be <c>null</c>.
+        /// </summary>
+        public AnomalyDetectionConfiguration AnomalyDetectionConfigurationSnapshot { get; }
 
         /// <summary>
         /// The <see cref="Models.AnomalyValue"/> for the feedback.
@@ -76,10 +87,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         [CodeGenMember("Value")]
         internal AnomalyFeedbackValue ValueInternal { get; }
-
-        /// <summary>
-        /// The anomaly detection configuration snapshot.
-        /// </summary>
-        public AnomalyDetectionConfiguration AnomalyDetectionConfigurationSnapshot { get; }
     }
 }

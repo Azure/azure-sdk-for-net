@@ -116,7 +116,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("3", hotel.hotelId);
         }
 
-
         [Test]
         public async Task GetDocumentStatic()
         {

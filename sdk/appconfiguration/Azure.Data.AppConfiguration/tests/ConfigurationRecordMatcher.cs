@@ -52,7 +52,6 @@ namespace Azure.Data.AppConfiguration.Tests
                     }
                 }
             }
-
         }
     }
 }

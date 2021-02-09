@@ -241,7 +241,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 using (AmqpMessage batchMessage = messageFactory())
                 {
-
                     string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
                     ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
@@ -406,7 +405,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var sendLink = default(SendingAmqpLink);
             try
             {
-
                 var request = AmqpRequestMessage.CreateRequest(
                         ManagementConstants.Operations.ScheduleMessageOperation,
                         timeout,
@@ -465,7 +463,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
 
                     return sequenceNumbers;
-
                 }
                 else
                 {
@@ -586,9 +583,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             try
             {
                 SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
-                    _entityPath,
-                    timeout,
-                    cancellationToken).ConfigureAwait(false);
+                    entityPath: _entityPath,
+                    identifier: _identifier,
+                    timeout: timeout,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 if (!MaxMessageSize.HasValue)
                 {

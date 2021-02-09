@@ -12,14 +12,8 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A copy activity translator. </summary>
-    internal partial class CopyTranslator : IReadOnlyDictionary<string, object>
+    public partial class CopyTranslator : IReadOnlyDictionary<string, object>
     {
-        /// <summary> Initializes a new instance of CopyTranslator. </summary>
-        internal CopyTranslator()
-        {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "CopyTranslator";
-        }
 
         /// <summary> Copy translator type. </summary>
         internal string Type { get; set; }
@@ -36,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IEnumerable<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
         int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public object this[string key]

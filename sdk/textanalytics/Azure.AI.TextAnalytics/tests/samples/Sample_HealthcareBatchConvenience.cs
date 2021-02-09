@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -23,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Samples
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSampleHealthcareBatchConvenience
-            string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+            string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                                 HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
                                 The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
@@ -33,40 +32,43 @@ namespace Azure.AI.TextAnalytics.Samples
                                 minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                                 increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
+            string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
+
             List<string> batchInput = new List<string>()
             {
-                document,
+                document1,
+                document2,
             };
 
-            HealthcareOperation healthOperation = client.StartHealthcareBatch(batchInput, "en");
+            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchInput);
 
             await healthOperation.WaitForCompletionAsync();
 
-            RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
-
-            Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{results.ModelVersion}\"");
-            Console.WriteLine("");
-
-            foreach (DocumentHealthcareResult result in results)
+            foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
             {
-                Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
-
-                foreach (HealthcareEntity entity in result.Entities)
-                {
-                    Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Subcategory: {entity.Subcategory}");
-                    Console.WriteLine($"    Offset: {entity.Offset}");
-                    Console.WriteLine($"    Length: {entity.Length}");
-                    Console.WriteLine($"    IsNegated: {entity.IsNegated}");
-                    Console.WriteLine($"    Links:");
-
-                    foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
-                    {
-                        Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-                        Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
-                    }
-                }
+                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine("");
+
+                foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
+                {
+                    Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+
+                    foreach (HealthcareEntity entity in result.Entities)
+                    {
+                        Console.WriteLine($"    Entity: {entity.Text}");
+                        Console.WriteLine($"    Category: {entity.Category}");
+                        Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"    Length: {entity.Length}");
+                        Console.WriteLine($"    Links:");
+
+                        foreach (EntityDataSource entityDataSource in entity.DataSources)
+                        {
+                            Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
+                            Console.WriteLine($"        DataSource: {entityDataSource.Name}");
+                        }
+                    }
+                    Console.WriteLine("");
+                }
             }
         }
 

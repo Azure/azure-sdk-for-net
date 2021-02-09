@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// The maximum size of a block blob is therefore approximately 190.73 TiB
     /// (4,000 MB X 50,000 blocks).  If you are writing a block blob that is
     /// no more than 5,000 MB in size, you can upload it in its entirety with a
-    /// single write operation; see <see cref="BlockBlobClient.UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>.
+    /// single write operation; see <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>.
     ///
     /// When you upload a block to a blob in your storage account, it is
     /// associated with the specified block blob, but it does not become part
@@ -243,6 +243,33 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public BlockBlobClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
+            : base(blobUri, credential, options)
+        {
+            AssertNoClientSideEncryption(options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -270,6 +297,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         /// <param name="version">
         /// The version of the service to use when sending requests.
         /// </param>
@@ -279,6 +309,7 @@ namespace Azure.Storage.Blobs.Specialized
         internal BlockBlobClient(
             Uri blobUri,
             HttpPipeline pipeline,
+            StorageSharedKeyCredential storageSharedKeyCredential,
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
@@ -286,6 +317,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(
                   blobUri,
                   pipeline,
+                  storageSharedKeyCredential,
                   version,
                   clientDiagnostics,
                   customerProvidedKey,
@@ -316,7 +348,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </returns>
         protected static BlockBlobClient CreateClient(Uri blobUri, BlobClientOptions options, HttpPipeline pipeline)
         {
-            return new BlockBlobClient(blobUri, pipeline, options.Version, new ClientDiagnostics(options), null, null);
+            return new BlockBlobClient(blobUri, pipeline, null, options.Version, new ClientDiagnostics(options), null, null);
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -360,7 +392,7 @@ namespace Azure.Storage.Blobs.Specialized
         public new BlockBlobClient WithVersion(string versionId)
         {
             var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
-            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlockBlobClient(builder.ToUri(), Pipeline, SharedKeyCredential, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         /// <summary>
@@ -374,7 +406,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
 
-            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlockBlobClient(builder.ToUri(), Pipeline, SharedKeyCredential, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         ///// <summary>
@@ -2159,6 +2191,284 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion OpenWrite
+
+        #region SyncUploadFromUri
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite the existing blob.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> SyncUploadFromUri(
+            Uri copySource,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default)
+            => SyncUploadFromUriInternal(
+                copySource,
+                overwrite ? null : new BlobSyncUploadFromUriOptions{ DestinationConditions = new BlobRequestConditions
+                    { IfNoneMatch = new ETag(Constants.Wildcard) } },
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite the existing blob.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
+            Uri copySource,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default)
+            => await SyncUploadFromUriInternal(
+                copySource,
+                overwrite ? null : new BlobSyncUploadFromUriOptions { DestinationConditions = new BlobRequestConditions
+                    { IfNoneMatch = new ETag(Constants.Wildcard) } },
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> SyncUploadFromUri(
+            Uri copySource,
+            BlobSyncUploadFromUriOptions options,
+            CancellationToken cancellationToken = default)
+            => SyncUploadFromUriInternal(
+                copySource,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
+            Uri copySource,
+            BlobSyncUploadFromUriOptions options,
+            CancellationToken cancellationToken = default)
+            => await SyncUploadFromUriInternal(
+                copySource,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriInternal(
+            Uri copySource,
+            BlobSyncUploadFromUriOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlockBlobClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(options.HttpHeaders)}: {options?.HttpHeaders}\n" +
+                    $"{nameof(options.DestinationConditions)}: {options?.DestinationConditions}");
+                try
+                {
+                    return await BlobRestClient.BlockBlob.PutBlobFromUrlAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: Uri,
+                        contentLength: 0,
+                        version: Version.ToVersionString(),
+                        copySource: copySource,
+                        timeout: default,
+                        transactionalContentHash: default,
+                        blobContentType: options?.HttpHeaders?.ContentType,
+                        blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
+                        blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
+                        blobContentHash: options?.HttpHeaders?.ContentHash,
+                        blobCacheControl: options?.HttpHeaders?.CacheControl,
+                        // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
+                        // metadata: options?.Metadata,
+                        leaseId: options?.DestinationConditions?.LeaseId,
+                        blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope,
+                        tier: options?.AccessTier,
+                        ifModifiedSince: options?.DestinationConditions?.IfModifiedSince,
+                        ifUnmodifiedSince: options?.DestinationConditions?.IfUnmodifiedSince,
+                        ifMatch: options?.DestinationConditions?.IfMatch,
+                        ifNoneMatch: options?.DestinationConditions?.IfNoneMatch,
+                        ifTags: options?.DestinationConditions?.TagConditions,
+                        sourceIfModifiedSince: options?.SourceConditions?.IfModifiedSince,
+                        sourceIfUnmodifiedSince: options?.SourceConditions?.IfUnmodifiedSince,
+                        sourceIfMatch: options?.SourceConditions?.IfMatch,
+                        sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch,
+                        sourceIfTags: options?.SourceConditions?.TagConditions,
+                        requestId: default,
+                        sourceContentHash: options?.ContentHash,
+                        blobTagsString: options?.Tags?.ToTagsString(),
+                        copySourceBlobProperties: options?.CopySourceBlobProperties,
+                        async: async,
+                        operationName: $"{nameof(BlockBlobClient)}.{nameof(SyncUploadFromUri)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                }
+            }
+        }
+        #endregion UploadFromUri
 
         #region PartitionedUploader
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(

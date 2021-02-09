@@ -208,7 +208,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.True(poisonMessageHandlerCalled);
         }
 
-
         public class TestFixture : IDisposable
         {
             private const string TestQueuePrefix = "queueprocessortests";

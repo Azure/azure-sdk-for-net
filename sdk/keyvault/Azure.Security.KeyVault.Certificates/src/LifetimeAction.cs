@@ -111,7 +111,6 @@ namespace Azure.Security.KeyVault.Certificates
             json.WriteString(s_actionTypePropertyNameBytes, Action.ToString());
 
             json.WriteEndObject();
-
         }
     }
 }

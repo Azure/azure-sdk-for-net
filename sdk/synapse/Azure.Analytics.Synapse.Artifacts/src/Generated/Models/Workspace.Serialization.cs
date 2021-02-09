@@ -103,10 +103,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("workspaceRepositoryConfiguration");
                 writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
             }
-            if (Optional.IsDefined(BabylonConfiguration))
+            if (Optional.IsDefined(PurviewConfiguration))
             {
-                writer.WritePropertyName("babylonConfiguration");
-                writer.WriteObjectValue(BabylonConfiguration);
+                writer.WritePropertyName("purviewConfiguration");
+                writer.WriteObjectValue(PurviewConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -134,7 +134,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IReadOnlyDictionary<string, object>> extraProperties = default;
             Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
             Optional<WorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
-            Optional<BabylonConfiguration> babylonConfiguration = default;
+            Optional<PurviewConfiguration> purviewConfiguration = default;
+            Optional<string> adlaResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -321,21 +322,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             workspaceRepositoryConfiguration = WorkspaceRepositoryConfiguration.DeserializeWorkspaceRepositoryConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("babylonConfiguration"))
+                        if (property0.NameEquals("purviewConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            babylonConfiguration = BabylonConfiguration.DeserializeBabylonConfiguration(property0.Value);
+                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("adlaResourceId"))
+                        {
+                            adlaResourceId = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, babylonConfiguration.Value);
+            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value);
         }
     }
 }

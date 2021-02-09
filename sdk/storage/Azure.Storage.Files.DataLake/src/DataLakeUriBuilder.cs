@@ -232,7 +232,6 @@ namespace Azure.Storage.Files.DataLake
                     {
                         DirectoryOrFilePath = directoryOrFilePath.UnescapePath();
                     }
-
                 }
             }
 
@@ -317,7 +316,6 @@ namespace Azure.Storage.Files.DataLake
                         4);
                     Host = stringBuilder.ToString();
                 }
-
             }
 
             return ToUri();

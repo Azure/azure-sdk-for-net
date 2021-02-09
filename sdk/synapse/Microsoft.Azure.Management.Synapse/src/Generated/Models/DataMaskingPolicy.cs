@@ -51,7 +51,9 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// policy.</param>
         /// <param name="kind">The kind of data masking policy. Metadata, used
         /// for Azure portal.</param>
-        public DataMaskingPolicy(DataMaskingState dataMaskingState, string id = default(string), string name = default(string), string type = default(string), string exemptPrincipals = default(string), string applicationPrincipals = default(string), string maskingLevel = default(string), string location = default(string), string kind = default(string))
+        /// <param name="managedBy">Fully qualified resource ID of the sql
+        /// pool</param>
+        public DataMaskingPolicy(DataMaskingState dataMaskingState, string id = default(string), string name = default(string), string type = default(string), string exemptPrincipals = default(string), string applicationPrincipals = default(string), string maskingLevel = default(string), string location = default(string), string kind = default(string), string managedBy = default(string))
             : base(id, name, type)
         {
             DataMaskingState = dataMaskingState;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
             MaskingLevel = maskingLevel;
             Location = location;
             Kind = kind;
+            ManagedBy = managedBy;
             CustomInit();
         }
 
@@ -110,6 +113,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; private set; }
+
+        /// <summary>
+        /// Gets fully qualified resource ID of the sql pool
+        /// </summary>
+        [JsonProperty(PropertyName = "managedBy")]
+        public string ManagedBy { get; private set; }
 
         /// <summary>
         /// Validate the object.

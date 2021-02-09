@@ -35,6 +35,19 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [Test]
+        public async Task AnalyzeSentimentWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            string document = singleEnglish;
+
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document);
+
+            CheckAnalyzeSentimentProperties(docSentiment);
+            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+            Assert.AreEqual("Positive", docSentiment.Sentences.FirstOrDefault().Sentiment.ToString());
+        }
+
+        [Test]
         public async Task AnalyzeSentimentTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -442,6 +455,7 @@ namespace Azure.AI.TextAnalytics.Tests
                         Assert.AreEqual(0, minedOpinions.Aspect.ConfidenceScores.Neutral);
                         Assert.IsTrue(CheckTotalConfidenceScoreValue(minedOpinions.Aspect.ConfidenceScores));
                         Assert.IsNotNull(minedOpinions.Aspect.Offset);
+                        Assert.IsNotNull(minedOpinions.Aspect.Length);
 
                         // Opinions
                         Assert.IsNotNull(minedOpinions.Opinions);
@@ -456,6 +470,7 @@ namespace Azure.AI.TextAnalytics.Tests
                             Assert.IsTrue(CheckTotalConfidenceScoreValue(opinion.ConfidenceScores));
                             Assert.IsNotNull(opinion.IsNegated);
                             Assert.IsNotNull(opinion.Offset);
+                            Assert.IsNotNull(opinion.Length);
                         }
                     }
                 }

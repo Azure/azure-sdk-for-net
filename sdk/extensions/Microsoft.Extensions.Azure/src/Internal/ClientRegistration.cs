@@ -45,7 +45,6 @@ namespace Microsoft.Extensions.Azure
                     return _cachedClient;
                 }
 
-
                 if (RequiresTokenCredential && tokenCredential == null)
                 {
                     throw new InvalidOperationException("Client registration requires a TokenCredential. Configure it using UseCredential method.");

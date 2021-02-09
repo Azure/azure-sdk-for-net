@@ -121,6 +121,25 @@ var options = new EventHubConnectionOptions
 };
 ```
 
+### Specifying a custom endpoint address
+
+Connections to the Azure Event Hubs service are made using the fully qualified namespace assigned to the Event Hubs namespace as the connection endpoint address. Because the Event Hubs service uses the endpoint address to locate the corresponding resources, it isn't possible to specify another address in the connection string or as the fully qualified namespace.
+
+Some environments using unconventional proxy configurations or with certain configurations of an Express Route circuit require a custom address be used for proper routing, leaving are unable to connect from their on-premises network to the Event Hubs service using the assigned endpoint address. To support these scenarios, a custom endpoint address may be specified as part of the connection options.  This custom address will take precedence for establishing the connection to the Event Hubs service.
+
+```C# Snippet:EventHubs_Sample02_ConnectionOptionsCustomEndpoint
+var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
+var producerOptions = new EventHubProducerClientOptions();
+producerOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
+
+var producer = new EventHubProducerClient(
+    connectionString,
+    eventHubName,
+    producerOptions);
+```
+
 ### Configuring the client retry thresholds
 
 The built-in retry policy offers an implementation for an exponential back-off strategy by default, as this provides a good balance between making forward progress and allowing for transient issues that may take some time to resolve.  The built-in policy also offers a fixed strategy for those cases where your application requires that you have a deterministic understanding of how long an operation may take.

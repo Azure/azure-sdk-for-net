@@ -9,8 +9,29 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   A set of information for an Event Hub.
     /// </summary>
     ///
-    public class PartitionPublishingProperties
+    internal class PartitionPublishingProperties
     {
+        /// <summary>An empty set of properties.</summary>
+        private static PartitionPublishingProperties s_emptyInstance;
+
+        /// <summary>
+        ///   Returns a set of properties that represents an empty set of properties
+        ///   suitable for use when partitions are not inherently stateful.
+        /// </summary>
+        ///
+        internal static PartitionPublishingProperties Empty
+        {
+            get
+            {
+                // The race condition here is benign; because the resulting properties
+                // are not mutable, there is not impact to having the reference updated after
+                // initial creation.
+
+                s_emptyInstance ??= new PartitionPublishingProperties(false, null, null, null);
+                return s_emptyInstance;
+            }
+        }
+
         /// <summary>
         ///   Indicates whether or not idempotent publishing is enabled for the producer and, by extension, the associated partition.
         /// </summary>
@@ -23,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The identifier of the producer group for which this producer is publishing to the associated partition.
         /// </summary>
         ///
-        public long? ProducerGroupId  { get; }
+        public long? ProducerGroupId { get; }
 
         /// <summary>
         ///   The owner level of the producer publishing to the associated partition.
@@ -36,7 +57,15 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   successfully.
         /// </summary>
         ///
-        public int? LastPublishedSequenceNumber { get; }
+        /// <value>
+        ///   <para>The sequence number will be in the range of <c>-1</c> - <see cref="int.MaxValue"/> (inclusive) and will
+        ///   increase as events are published. When more than <see cref="int.MaxValue" /> events have been published,
+        ///   the sequence number will roll over to <c>0</c>.</para>
+        ///
+        ///   <para>A value of <c>-1</c> indicates that no events are known to have been published.</para>
+        /// </value>
+        ///
+        public int? LastPublishedSequenceNumber { get; } = -1;
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

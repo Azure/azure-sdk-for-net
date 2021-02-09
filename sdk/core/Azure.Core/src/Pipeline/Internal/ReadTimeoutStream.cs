@@ -49,7 +49,6 @@ namespace Azure.Core.Pipeline
             var source = StartTimeout(cancellationToken, out bool dispose);
             try
             {
-
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 return await _stream.ReadAsync(buffer, offset, count, source.Token).ConfigureAwait(false);
 #pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
@@ -93,7 +92,7 @@ namespace Azure.Core.Pipeline
         private void InitializeTokenSource()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationTokenSource.Token.Register(() => DisposeStream());
+            _cancellationTokenSource.Token.Register(static state => ((ReadTimeoutStream)state!).DisposeStream(), this);
         }
 
         private void DisposeStream()
@@ -139,7 +138,10 @@ namespace Azure.Core.Pipeline
         {
             try
             {
-                _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                if (_stream.CanTimeout)
+                {
+                    _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                }
             }
             catch
             {

@@ -40,10 +40,10 @@ foreach (CloudEvent cloudEvent in cloudEvents)
             break;
         case "MyApp.Models.CustomEventType":
             // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-            TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
+            TestPayload testPayload = cloudEvent.GetData().ToObject<TestPayload>(myCustomSerializer);
             Console.WriteLine(testPayload.Name);
             break;
-        case "Microsoft.Storage.BlobDeleted":
+        case SystemEventNames.StorageBlobDeleted:
             // Example for deserializing system events using GetData<T>
             StorageBlobDeletedEventData blobDeleted = cloudEvent.GetData<StorageBlobDeletedEventData>();
             Console.WriteLine(blobDeleted.BlobType);
@@ -52,30 +52,47 @@ foreach (CloudEvent cloudEvent in cloudEvents)
 }
 ```
 
-### Using `GetData()`
-If expecting mostly system events, it may be cleaner to switch on object `GetData()` and use pattern matching to deserialize events. In the case where there are unrecognized event types, one can use the returned `BinaryData` to deserialize the custom event data.
+### Using `TryGetSystemEventData()`
+If expecting mostly system events, it may be cleaner to switch on `TryGetSystemEventData()` and use pattern matching to act on the individual events. If an event is not a system event, the method will return false and the out parameter will be null. 
 
-```C# Snippet:DeserializePayloadUsingNonGenericGetData
+*As a caveat, if you are using a custom event type with an EventType value that later gets added as a system event by the service and SDK, the return value of `TryGetSystemEventData` would change from `false` to `true`. This could come up if you are pre-emptively creating your own custom events for events that are already being sent by the service, but have not yet been added to the SDK. In this case, it is better to use the generic `GetData<T>` method so that your code flow doesn't change automatically after upgrading (of course, you may still want to modify your code to consume the newly released system event model as opposed to your custom model).*
+
+```C# Snippet:DeserializePayloadUsingAsSystemEventData
 foreach (EventGridEvent egEvent in egEvents)
 {
-    // If the event is a system event, GetData() should return the correct system event type
-    switch (egEvent.GetData())
+    // If the event is a system event, TryGetSystemEventData() will return the deserialized system event
+    if (egEvent.TryGetSystemEventData(out object systemEvent))
     {
-        case SubscriptionValidationEventData subscriptionValidated:
-            Console.WriteLine(subscriptionValidated.ValidationCode);
-            break;
-        case StorageBlobCreatedEventData blobCreated:
-            Console.WriteLine(blobCreated.BlobType);
-            break;
-        case BinaryData unknownType:
-            // An unrecognized event type - GetData() returns BinaryData with the serialized JSON payload
-            if (egEvent.EventType == "MyApp.Models.CustomEventType")
-            {
-                // You can use BinaryData methods to deserialize the payload
-                TestPayload deserializedEventData = unknownType.ToObjectFromJson<TestPayload>();
+        switch (systemEvent)
+        {
+            case SubscriptionValidationEventData subscriptionValidated:
+                Console.WriteLine(subscriptionValidated.ValidationCode);
+                break;
+            case StorageBlobCreatedEventData blobCreated:
+                Console.WriteLine(blobCreated.BlobType);
+                break;
+            // Handle any other system event type
+            default:
+                Console.WriteLine(egEvent.EventType);
+                // we can get the raw Json for the event using GetData()
+                Console.WriteLine(egEvent.GetData().ToString());
+                break;
+        }
+    }
+    else
+    {
+        switch (egEvent.EventType)
+        {
+            case "MyApp.Models.CustomEventType":
+                TestPayload deserializedEventData = egEvent.GetData<TestPayload>();
                 Console.WriteLine(deserializedEventData.Name);
-            }
-            break;
+                break;
+            // Handle any other custom event type
+            default:
+                Console.Write(egEvent.EventType);
+                Console.WriteLine(egEvent.GetData().ToString());
+                break;
+        }
     }
 }
 ```

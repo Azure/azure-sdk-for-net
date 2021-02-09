@@ -26,6 +26,16 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Uri Uri { get; }
 
         /// <summary>
+        /// If this BlobBatchClient is scoped to a container.
+        /// </summary>
+        private readonly bool _isContainerScoped;
+
+        /// <summary>
+        /// If this BlobBatchClient is scoped to a container.
+        /// </summary>
+        internal virtual bool IsContainerScoped => _isContainerScoped;
+
+        /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
@@ -78,6 +88,34 @@ namespace Azure.Storage.Blobs.Specialized
                 Pipeline,
                 BlobServiceClientInternals.GetAuthenticationPolicy(client),
                 Version);
+
+            _isContainerScoped = false;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBatchClient"/>
+        /// class for container associated with the <see cref="BlobContainerClient"/>.
+        /// The new <see cref="BlobBatchClient"/> uses the same request policy
+        /// pipeline as the <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
+        public BlobBatchClient(BlobContainerClient client)
+        {
+            Uri = client.Uri;
+            BlobServiceClient blobServiceClient = client.GetParentBlobServiceClient();
+            Pipeline = BlobServiceClientInternals.GetHttpPipeline(blobServiceClient);
+            BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(blobServiceClient);
+            Version = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options);
+
+            // Construct a dummy pipeline for processing batch sub-operations
+            // if we don't have one cached on the service
+            BatchOperationPipeline = CreateBatchPipeline(
+                Pipeline,
+                BlobServiceClientInternals.GetAuthenticationPolicy(blobServiceClient),
+                Version);
+
+            _isContainerScoped = true;
         }
 
         /// <summary>
@@ -188,7 +226,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// failures will only throw if <paramref name="throwOnAnyFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-[ForwardsClientCalls] // TODO: Throwing exceptions fails tests
+        [ForwardsClientCalls]
         public virtual Response SubmitBatch(
             BlobBatch batch,
             bool throwOnAnyFailure = false,
@@ -196,7 +234,7 @@ namespace Azure.Storage.Blobs.Specialized
             SubmitBatchInternal(
                 batch,
                 throwOnAnyFailure,
-                false, // async
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -223,7 +261,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// failures will only throw if <paramref name="throwOnAnyFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-[ForwardsClientCalls] // TODO: Throwing exceptions fails tests
+        [ForwardsClientCalls]
         public virtual async Task<Response> SubmitBatchAsync(
             BlobBatch batch,
             bool throwOnAnyFailure = false,
@@ -231,7 +269,7 @@ namespace Azure.Storage.Blobs.Specialized
             await SubmitBatchInternal(
                 batch,
                 throwOnAnyFailure,
-                true, // async
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -267,61 +305,95 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            batch = batch ?? throw new ArgumentNullException(nameof(batch));
-            if (batch.Submitted)
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}");
+            try
             {
-                throw BatchErrors.CannotResubmitBatch(nameof(batch));
-            }
-            else if (!batch.IsAssociatedClient(this))
-            {
-                throw BatchErrors.BatchClientDoesNotMatch(nameof(batch));
-            }
+                scope.Start();
 
-            // Get the sub-operation messages to submit
-            IList<HttpMessage> messages = batch.GetMessagesToSubmit();
-            if (messages.Count == 0)
-            {
-                throw BatchErrors.CannotSubmitEmptyBatch(nameof(batch));
-            }
-            // TODO: Consider validating the upper limit of 256 messages
+                batch = batch ?? throw new ArgumentNullException(nameof(batch));
+                if (batch.Submitted)
+                {
+                    throw BatchErrors.CannotResubmitBatch(nameof(batch));
+                }
+                else if (!batch.IsAssociatedClient(this))
+                {
+                    throw BatchErrors.BatchClientDoesNotMatch(nameof(batch));
+                }
 
-            // Merge the sub-operations into a single multipart/mixed Stream
-            (Stream content, string contentType) =
-                await MergeOperationRequests(
+                // Get the sub-operation messages to submit
+                IList<HttpMessage> messages = batch.GetMessagesToSubmit();
+                if (messages.Count == 0)
+                {
+                    throw BatchErrors.CannotSubmitEmptyBatch(nameof(batch));
+                }
+                // TODO: Consider validating the upper limit of 256 messages
+
+                // Merge the sub-operations into a single multipart/mixed Stream
+                (Stream content, string contentType) =
+                    await MergeOperationRequests(
+                        messages,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+
+                // Send the batch request
+                Response<BlobBatchResult> batchResult;
+
+                if (_isContainerScoped)
+                {
+                    batchResult = await BatchRestClient.Container.SubmitBatchAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: Uri,
+                        body: content,
+                        contentLength: content.Length,
+                        multipartContentType: contentType,
+                        version: Version.ToVersionString(),
+                        async: async,
+                        operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    batchResult = await BatchRestClient.Service.SubmitBatchAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: Uri,
+                        body: content,
+                        contentLength: content.Length,
+                        multipartContentType: contentType,
+                        version: Version.ToVersionString(),
+                        async: async,
+                        operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+
+                // Split the responses apart and update the sub-operation responses
+                Response raw = batchResult.GetRawResponse();
+                await UpdateOperationResponses(
                     messages,
+                    raw,
+                    batchResult.Value.Content,
+                    batchResult.Value.ContentType,
+                    throwOnAnyFailure,
                     async,
                     cancellationToken)
                     .ConfigureAwait(false);
 
-            // Send the batch request
-            Response<BlobBatchResult> batchResult =
-                await BatchRestClient.Service.SubmitBatchAsync(
-                    ClientDiagnostics,
-                    Pipeline,
-                    Uri,
-                    body: content,
-                    contentLength: content.Length,
-                    multipartContentType: contentType,
-                    version: Version.ToVersionString(),
-                    async: async,
-                    operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-
-            // Split the responses apart and update the sub-operation responses
-            Response raw = batchResult.GetRawResponse();
-            await UpdateOperationResponses(
-                messages,
-                raw,
-                batchResult.Value.Content,
-                batchResult.Value.ContentType,
-                throwOnAnyFailure,
-                async,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-            // Return the batch result
-            return raw;
+                // Return the batch result
+                return raw;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -565,25 +637,40 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            blobUris = blobUris ?? throw new ArgumentNullException(nameof(blobUris));
-            var responses = new List<Response>();
-
-            // Create the batch
-            BlobBatch batch = CreateBatch();
-            foreach (Uri uri in blobUris)
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBatchClient)}.{nameof(DeleteBlobs)}");
+            try
             {
-                responses.Add(batch.DeleteBlob(uri, snapshotsOption));
+                scope.Start();
+
+                blobUris = blobUris ?? throw new ArgumentNullException(nameof(blobUris));
+                var responses = new List<Response>();
+
+                // Create the batch
+                BlobBatch batch = CreateBatch();
+                foreach (Uri uri in blobUris)
+                {
+                    responses.Add(batch.DeleteBlob(uri, snapshotsOption));
+                }
+
+                // Submit the batch
+                await SubmitBatchInternal(
+                    batch,
+                    true,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return responses.ToArray();
             }
-
-            // Submit the batch
-            await SubmitBatchInternal(
-                batch,
-                true,
-                async,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-            return responses.ToArray();
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion DeleteBlobs
 
@@ -703,25 +790,40 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            blobUris = blobUris ?? throw new ArgumentNullException(nameof(blobUris));
-            var responses = new List<Response>();
-
-            // Create the batch
-            BlobBatch batch = CreateBatch();
-            foreach (Uri uri in blobUris)
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBatchClient)}.{nameof(SetBlobsAccessTier)}");
+            try
             {
-                responses.Add(batch.SetBlobAccessTier(uri, accessTier, rehydratePriority));
+                scope.Start();
+
+                blobUris = blobUris ?? throw new ArgumentNullException(nameof(blobUris));
+                var responses = new List<Response>();
+
+                // Create the batch
+                BlobBatch batch = CreateBatch();
+                foreach (Uri uri in blobUris)
+                {
+                    responses.Add(batch.SetBlobAccessTier(uri, accessTier, rehydratePriority));
+                }
+
+                // Submit the batch
+                await SubmitBatchInternal(
+                    batch,
+                    true,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return responses.ToArray();
             }
-
-            // Submit the batch
-            await SubmitBatchInternal(
-                batch,
-                true,
-                async,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-            return responses.ToArray();
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion SetBlobsAccessTier
     }
@@ -741,6 +843,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
         /// <returns>A new <see cref="BlobBatchClient"/> instance.</returns>
         public static BlobBatchClient GetBlobBatchClient(this BlobServiceClient client)
+            => new BlobBatchClient(client);
+
+        /// <summary>
+        /// Create a new <see cref="BlobBatchClient"/> object for the
+        /// container associated with the  <see cref="BlobContainerClient"/>.  The new
+        /// <see cref="BlobBatchClient"/> uses the same request policy pipeline
+        /// as the <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
+        /// <returns>A new <see cref="BlobBatchClient"/> instance.</returns>
+        public static BlobBatchClient GetBlobBatchClient(this BlobContainerClient client)
             => new BlobBatchClient(client);
     }
 }

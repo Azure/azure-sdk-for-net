@@ -58,7 +58,6 @@ namespace Azure.Data.AppConfiguration.Samples
             var setupClient = new ConfigurationClient(connectionString);
             setupClient.SetConfigurationSetting("some_key", "some_value");
 
-
             #region Snippet:GetConfigurationSetting
             //@@ string connectionString = "<connection_string>";
             var client = new ConfigurationClient(connectionString);
