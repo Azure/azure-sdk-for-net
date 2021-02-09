@@ -4,8 +4,8 @@
 
 ### Breaking Changes
 
-- Replaced `CommunicationUser` with `CommunicationUserIdentifier`.
-- Replaced `CommunicationUserCredential` with `CommunicationTokenCredential`.
+- Renamed `CommunicationUser` to `CommunicationUserIdentifier`.
+- Renamed `CommunicationUserCredential` to `CommunicationTokenCredential`.
 - Removed `Priority` field from `ChatMessage`.
 
 ### Added
