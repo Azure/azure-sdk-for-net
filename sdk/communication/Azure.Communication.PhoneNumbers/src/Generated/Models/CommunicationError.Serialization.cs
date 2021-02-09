@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.Models
 {
-    public partial class CommunicationError
+    internal partial class CommunicationError
     {
         internal static CommunicationError DeserializeCommunicationError(JsonElement element)
         {
@@ -47,14 +47,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                     List<CommunicationError> array = new List<CommunicationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeserializeCommunicationError(item));
-                        }
+                        array.Add(DeserializeCommunicationError(item));
                     }
                     details = array;
                     continue;
@@ -63,7 +56,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        innererror = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innererror = DeserializeCommunicationError(property.Value);

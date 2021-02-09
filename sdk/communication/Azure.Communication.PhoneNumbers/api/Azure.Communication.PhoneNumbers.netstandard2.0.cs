@@ -61,15 +61,6 @@ namespace Azure.Communication.PhoneNumbers.Models
         public static bool operator !=(Azure.Communication.PhoneNumbers.Models.BillingFrequency left, Azure.Communication.PhoneNumbers.Models.BillingFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CommunicationError
-    {
-        internal CommunicationError() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.Models.CommunicationError> Details { get { throw null; } }
-        public Azure.Communication.PhoneNumbers.Models.CommunicationError InnerError { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberAssignmentType : System.IEquatable<Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType>
     {
