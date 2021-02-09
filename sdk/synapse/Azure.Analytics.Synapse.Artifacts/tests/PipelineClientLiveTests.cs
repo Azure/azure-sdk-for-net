@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetPipeline()
         {
             PipelineClient client = CreateClient ();
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestDeleteNotebook()
         {
             PipelineClient client = CreateClient();
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await operation.WaitAndAssertSuccessfulCompletion();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestRenameLinkedService()
         {
             PipelineClient client = CreateClient();
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await operation.WaitForCompletionAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestPipelineRun()
         {
             PipelineClient client = CreateClient();
