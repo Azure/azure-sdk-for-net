@@ -44,19 +44,19 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='granularity'>
             /// Possible values include: 'PT5M', 'PT1H', 'P1D'
             /// </param>
+            /// <param name='customDomains'>
+            /// </param>
+            /// <param name='protocols'>
+            /// </param>
             /// <param name='groupBy'>
             /// </param>
             /// <param name='continents'>
             /// </param>
             /// <param name='countryOrRegions'>
             /// </param>
-            /// <param name='customDomains'>
-            /// </param>
-            /// <param name='protocols'>
-            /// </param>
-            public static MetricsResponse GetLogAnalyticsMetrics(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, string granularity, IList<string> groupBy = default(IList<string>), IList<string> continents = default(IList<string>), IList<string> countryOrRegions = default(IList<string>), IList<string> customDomains = default(IList<string>), IList<string> protocols = default(IList<string>))
+            public static MetricsResponse GetLogAnalyticsMetrics(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, string granularity, IList<string> customDomains, IList<string> protocols, IList<string> groupBy = default(IList<string>), IList<string> continents = default(IList<string>), IList<string> countryOrRegions = default(IList<string>))
             {
-                return operations.GetLogAnalyticsMetricsAsync(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, groupBy, continents, countryOrRegions, customDomains, protocols).GetAwaiter().GetResult();
+                return operations.GetLogAnalyticsMetricsAsync(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -80,22 +80,22 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='granularity'>
             /// Possible values include: 'PT5M', 'PT1H', 'P1D'
             /// </param>
+            /// <param name='customDomains'>
+            /// </param>
+            /// <param name='protocols'>
+            /// </param>
             /// <param name='groupBy'>
             /// </param>
             /// <param name='continents'>
             /// </param>
             /// <param name='countryOrRegions'>
             /// </param>
-            /// <param name='customDomains'>
-            /// </param>
-            /// <param name='protocols'>
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<MetricsResponse> GetLogAnalyticsMetricsAsync(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, string granularity, IList<string> groupBy = default(IList<string>), IList<string> continents = default(IList<string>), IList<string> countryOrRegions = default(IList<string>), IList<string> customDomains = default(IList<string>), IList<string> protocols = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MetricsResponse> GetLogAnalyticsMetricsAsync(this ILogAnalyticsOperations operations, string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, string granularity, IList<string> customDomains, IList<string> protocols, IList<string> groupBy = default(IList<string>), IList<string> continents = default(IList<string>), IList<string> countryOrRegions = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetLogAnalyticsMetricsWithHttpMessagesAsync(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, groupBy, continents, countryOrRegions, customDomains, protocols, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetLogAnalyticsMetricsWithHttpMessagesAsync(resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
