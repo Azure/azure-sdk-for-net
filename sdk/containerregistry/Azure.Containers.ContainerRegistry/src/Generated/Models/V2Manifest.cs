@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Returns the requested Docker V2 Manifest file. </summary>
-    internal partial class V2Manifest : Manifest
+    public partial class V2Manifest : Manifest
     {
         /// <summary> Initializes a new instance of V2Manifest. </summary>
         public V2Manifest()
         {
-            Layers = new ChangeTrackingList<Descriptor>();
+            Layers = new ChangeTrackingList<ContentDescriptor>();
         }
 
         /// <summary> Initializes a new instance of V2Manifest. </summary>
@@ -24,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
-        internal V2Manifest(int? schemaVersion, string mediaType, Descriptor config, IList<Descriptor> layers) : base(schemaVersion)
+        internal V2Manifest(int? schemaVersion, string mediaType, ContentDescriptor config, IList<ContentDescriptor> layers) : base(schemaVersion)
         {
             MediaType = mediaType;
             Config = config;
@@ -34,8 +34,8 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <summary> Media type for this Manifest. </summary>
         public string MediaType { get; set; }
         /// <summary> V2 image config descriptor. </summary>
-        public Descriptor Config { get; set; }
+        public ContentDescriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
-        public IList<Descriptor> Layers { get; }
+        public IList<ContentDescriptor> Layers { get; }
     }
 }

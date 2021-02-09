@@ -11,21 +11,21 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Docker V2 image layer descriptor including config and layers. </summary>
-    public partial class Descriptor
+    public partial class ContentDescriptor
     {
-        /// <summary> Initializes a new instance of Descriptor. </summary>
-        public Descriptor()
+        /// <summary> Initializes a new instance of ContentDescriptor. </summary>
+        public ContentDescriptor()
         {
             Urls = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Descriptor. </summary>
+        /// <summary> Initializes a new instance of ContentDescriptor. </summary>
         /// <param name="mediaType"> Layer media type. </param>
         /// <param name="size"> Layer size. </param>
         /// <param name="digest"> Layer digest. </param>
         /// <param name="urls"> Specifies a list of URIs from which this object may be downloaded. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal Descriptor(string mediaType, long? size, string digest, IList<string> urls, Annotations annotations)
+        internal ContentDescriptor(string mediaType, long? size, string digest, IList<string> urls, Annotations annotations)
         {
             MediaType = mediaType;
             Size = size;
@@ -33,13 +33,6 @@ namespace Azure.Containers.ContainerRegistry.Models
             Urls = urls;
             Annotations = annotations;
         }
-
-        /// <summary> Layer media type. </summary>
-        public string MediaType { get; set; }
-        /// <summary> Layer size. </summary>
-        public long? Size { get; set; }
-        /// <summary> Layer digest. </summary>
-        public string Digest { get; set; }
         /// <summary> Specifies a list of URIs from which this object may be downloaded. </summary>
         public IList<string> Urls { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>

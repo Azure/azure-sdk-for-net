@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Models
 {
-    internal partial class OCIManifest : IUtf8JsonSerializable
+    public partial class OCIManifest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -53,8 +53,8 @@ namespace Azure.Containers.ContainerRegistry.Models
 
         internal static OCIManifest DeserializeOCIManifest(JsonElement element)
         {
-            Optional<Descriptor> config = default;
-            Optional<IList<Descriptor>> layers = default;
+            Optional<ContentDescriptor> config = default;
+            Optional<IList<ContentDescriptor>> layers = default;
             Optional<Annotations> annotations = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -66,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = Descriptor.DeserializeDescriptor(property.Value);
+                    config = ContentDescriptor.DeserializeContentDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"))
@@ -76,10 +76,10 @@ namespace Azure.Containers.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Descriptor> array = new List<Descriptor>();
+                    List<ContentDescriptor> array = new List<ContentDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Descriptor.DeserializeDescriptor(item));
+                        array.Add(ContentDescriptor.DeserializeContentDescriptor(item));
                     }
                     layers = array;
                     continue;

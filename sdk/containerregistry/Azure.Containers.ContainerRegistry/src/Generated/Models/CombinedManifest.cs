@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Returns the requested manifest file. </summary>
-    public partial class ManifestWrapper : Manifest
+    public partial class CombinedManifest : Manifest
     {
-        /// <summary> Initializes a new instance of ManifestWrapper. </summary>
-        public ManifestWrapper()
+        /// <summary> Initializes a new instance of CombinedManifest. </summary>
+        public CombinedManifest()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
-            Layers = new ChangeTrackingList<Descriptor>();
+            Layers = new ChangeTrackingList<ContentDescriptor>();
             FsLayers = new ChangeTrackingList<FsLayer>();
             History = new ChangeTrackingList<History>();
             Signatures = new ChangeTrackingList<ImageSignature>();
         }
 
-        /// <summary> Initializes a new instance of ManifestWrapper. </summary>
+        /// <summary> Initializes a new instance of CombinedManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> (ManifestList, OCIIndex) List of V2 image layer information. </param>
@@ -36,7 +36,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal ManifestWrapper(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, Descriptor config, IList<Descriptor> layers, Annotations annotations, string architecture, string name, string tag, IList<FsLayer> fsLayers, IList<History> history, IList<ImageSignature> signatures) : base(schemaVersion)
+        internal CombinedManifest(int? schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, ContentDescriptor config, IList<ContentDescriptor> layers, Annotations annotations, string architecture, string name, string tag, IList<FsLayer> fsLayers, IList<History> history, IList<ImageSignature> signatures) : base(schemaVersion)
         {
             MediaType = mediaType;
             Manifests = manifests;
@@ -56,9 +56,9 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <summary> (ManifestList, OCIIndex) List of V2 image layer information. </summary>
         public IList<ManifestListAttributes> Manifests { get; }
         /// <summary> (V2, OCI) Image config descriptor. </summary>
-        public Descriptor Config { get; set; }
+        public ContentDescriptor Config { get; set; }
         /// <summary> (V2, OCI) List of V2 image layer information. </summary>
-        public IList<Descriptor> Layers { get; }
+        public IList<ContentDescriptor> Layers { get; }
         /// <summary> (OCI, OCIIndex) Additional metadata. </summary>
         public Annotations Annotations { get; set; }
         /// <summary> (V1) CPU architecture. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Models
 {
     /// <summary> Returns the requested OCI Manifest file. </summary>
-    internal partial class OCIManifest : Manifest
+    public partial class OCIManifest : Manifest
     {
         /// <summary> Initializes a new instance of OCIManifest. </summary>
         public OCIManifest()
         {
-            Layers = new ChangeTrackingList<Descriptor>();
+            Layers = new ChangeTrackingList<ContentDescriptor>();
         }
 
         /// <summary> Initializes a new instance of OCIManifest. </summary>
@@ -24,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Models
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OCIManifest(int? schemaVersion, Descriptor config, IList<Descriptor> layers, Annotations annotations) : base(schemaVersion)
+        internal OCIManifest(int? schemaVersion, ContentDescriptor config, IList<ContentDescriptor> layers, Annotations annotations) : base(schemaVersion)
         {
             Config = config;
             Layers = layers;
@@ -32,9 +32,9 @@ namespace Azure.Containers.ContainerRegistry.Models
         }
 
         /// <summary> V2 image config descriptor. </summary>
-        public Descriptor Config { get; set; }
+        public ContentDescriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
-        public IList<Descriptor> Layers { get; }
+        public IList<ContentDescriptor> Layers { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>
         public Annotations Annotations { get; set; }
     }
