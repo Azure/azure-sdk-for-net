@@ -1,5 +1,8 @@
 # Release History
 
+## 5.4.0-beta.1 (Unreleased)
+
+
 ## 5.3.0 (2021-02-09)
 
 ### Changes
@@ -165,7 +168,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - A cleanup sweep was performed to tune small areas to be more efficient and perform fewer allocations.
 
-## 5.1.0
+## 5.1.0 
 
 ### Acknowledgments
 
@@ -194,7 +197,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Minor enhancements to reduce allocations and improve efficiency
 
-## 5.1.0-preview.1
+## 5.1.0-preview.1 
 
 ### Acknowledgments
 
@@ -233,7 +236,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - For special cases, the live tests may be instructed to use existing Azure resources instead of dynamically creating dedicated resources for the run.  (A community contribution, courtesy of [albertodenatale](https://github.com/albertodenatale))
 
-## 5.0.1
+## 5.0.1 
 
 ### Acknowledgements
 
@@ -257,7 +260,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The hierarchy of custom exceptions has been flattened, with only the `EventHubsException` remaining.  The well-known failure scenarios that had previously been represented as stand-alone types are now exposed by a new `Reason` property to allow for applying exception filtering and other logic where inspecting the text of an exception message wouldn't be ideal. 
 
-## 5.0.0-preview.6
+## 5.0.0-preview.6 
 
 ### Acknowledgements
 
@@ -341,7 +344,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 - The information about the last event enqueued to an Event Hub partition is now presented on-demand as an immutable object, if the tracking option was enabled.  This ensures that the properties are stable and consistent when being read, rather than being subject to in-place updates each time a new event is received.
 
-## 5.0.0-preview.4
+## 5.0.0-preview.4 
 
 ### Changes
 
@@ -359,7 +362,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 - Improved stability and performance with refactorings around hot paths and areas of technical debt.
 
-## 5.0.0-preview.3
+## 5.0.0-preview.3 
 
 ### Changes
 
@@ -385,7 +388,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 
 - Some public types were scoped in a way that made them difficult to mock for library consumers.  These have been re-scoped to `protected internal` for better testability.  `EventData` and metadata types were the significant instances.
 
-## 5.0.0-preview.2
+## 5.0.0-preview.2 
 
 ### Changes
 
@@ -428,7 +431,7 @@ Thank you to our developer community members who helped to make the Azure SDKs b
 - An option for fixed retry has been added to accompany the exponential retry that was in place previously.
 Operation timeouts have been moved from the associated client options and incorporated into the retry options and retry policies.
 
-## 5.0.0-preview.1
+## 5.0.0-preview.1 
 
 Version 5.0.0-preview.1 is a preview of our efforts in creating a client library that is developer-friendly, idiomatic to the .NET ecosystem, and as consistent across different languages and platforms as possible.  The principles that guide our efforts can be found in the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
