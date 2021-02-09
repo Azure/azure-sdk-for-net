@@ -13,7 +13,7 @@ if ($allPackageProperties)
     New-Item -ItemType Directory -Force -Path $outDirectory
     foreach($pkg in $allPackageProperties)
     {
-        if ($pkg.IsNewSDK)
+        if ($pkg.IsNewSdk)
         {
             Write-Host "Package Name: $($pkg.Name)"
             Write-Host "Package Version: $($pkg.Version)"

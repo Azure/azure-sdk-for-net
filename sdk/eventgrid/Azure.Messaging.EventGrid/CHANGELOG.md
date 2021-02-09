@@ -1,6 +1,20 @@
 # Release History
-## 4.0.0-beta.5 (Unreleased)
 
+## 4.0.0-beta.6 (Unreleased)
+
+
+## 4.0.0-beta.5 (2021-02-09)
+
+### New Features
+- Added `TryGetSystemEventData` that attempts to deserialize event data into a known system event.
+- Added `EventGridSasBuilder` for constructing SAS tokens.
+- Added `SystemEventNames` that contain the names that will be stamped into the event Type for system events.
+
+### Breaking Changes
+- Updated `GetData` method to always return `BinaryData` instead of `object`. It no longer deserializes system events.
+- Removed the `CloudEvent` constructor overload that took `BinaryData` and replaced with an overload that accepts `ReadOnlyMemory<byte>`
+- Replaced use of `EventGridSasCredential` with `AzureSasCredential`.
+- Removed `GenerateSharedAccessSignature` in favor of `EventGridSasBuilder`.
 
 ## 4.0.0-beta.4 (2020-11-10)
 

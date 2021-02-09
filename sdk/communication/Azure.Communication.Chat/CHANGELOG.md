@@ -1,13 +1,20 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-# Breaking
-- Support for CreateChatThreadResult and AddChatParticipantsResult to handle partial errors in batch calls.
+## 1.0.0-beta.4 (2021-02-09)
+
+### Breaking Changes
+
+- Updated to Azure.Communication.Common version 1.0.0-beta.4. Now uses `CommunicationUserIdentifier` and `CommunicationIdentifier` in place of `CommunicationUser`, and `CommunicationTokenCredential` instead of `CommunicationUserCredential`.
+- Removed `Priority` field from `ChatMessage`.
+
+### Added
+
+- Added support for `CreateChatThreadResult` and `AddChatParticipantsResult` to handle partial errors in batch calls.
 - Added idempotency identifier parameter for chat creation calls.
-- Added support for readreceipts and getparticipants pagination.
-- Added new model for messages 
-- Removed priority field
-- Added new model for errors
+- Added pagination support for `GetReadReceipts`, `GetReadReceiptsAsync` and `GetParticipants`, `GetParticipantsAsync`.
+- Added new model for messages and content types: `Text`, `Html`, `ParticipantAdded`, `ParticipantRemoved`, `TopicUpdated`.
+- Added new model for errors (`CommunicationError`).
+- Added notifications for thread level changes.
 
 
 ## 1.0.0-beta.3 (2020-11-16)

@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -12,15 +14,13 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         public RecognizeHealthcareEntitiesTests(bool isAsync) : base(isAsync) { }
 
-        private const string singleEnglish = "Subject is taking 100mg of ibuprofen twice daily";
-
-        private static List<string> batchConvenienceDocuments = new List<string>
+        private static List<string> s_batchConvenienceDocuments = new List<string>
         {
             "Subject is taking 100mg of ibuprofen twice daily",
             "Can cause rapid or irregular heartbeat, delirium, panic, psychosis, and heart failure."
         };
 
-        private static List<TextDocumentInput> batchDocuments = new List<TextDocumentInput>
+        private static List<TextDocumentInput> s_batchDocuments = new List<TextDocumentInput>
         {
             new TextDocumentInput("1", "Subject is taking 100mg of ibuprofen twice daily")
             {
@@ -32,30 +32,50 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
+        private static readonly List<string> s_document1ExpectedEntitiesOutput = new List<string>
+        {
+            "ibuprofen",
+            "100mg",
+            "twice daily"
+        };
+
+        private static readonly List<string> s_document2ExpectedEntitiesOutput = new List<string>
+        {
+            "rapid",
+            "irregular heartbeat",
+            "delirium",
+            "panic",
+            "psychosis",
+            "heart failure"
+        };
+
         [Test]
         public async Task RecognizeHealthcareEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
+            ValidateOperationProperties(operation);
 
-            Assert.AreEqual(2, resultCollection.Count);
+            List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
-            AnalyzeHealthcareEntitiesResult result = resultCollection[0];
+            //Take the first page
+            var resultCollection = resultInPages.FirstOrDefault();
+            Assert.AreEqual(s_batchDocuments.Count, resultCollection.Count);
 
-            var entitiesList = new List<string> { "100mg", "ibuprofen", "twice daily" };
+            AnalyzeHealthcareEntitiesResult result1 = resultCollection[0];
 
-            Assert.AreEqual(3, result.Entities.Count);
-            Assert.IsNotNull(result.Id);
-            Assert.AreEqual("1", result.Id);
+            Assert.AreEqual(s_document1ExpectedEntitiesOutput.Count, result1.Entities.Count);
+            Assert.IsNotNull(result1.Id);
+            Assert.AreEqual("1", result1.Id);
 
-            foreach (HealthcareEntity entity in result.Entities)
+            foreach (HealthcareEntity entity in result1.Entities)
             {
-                Assert.IsTrue(entitiesList.Contains(entity.Text));
+                Assert.IsTrue(s_document1ExpectedEntitiesOutput.Contains(entity.Text));
 
                 if (entity.Text == "ibuprofen")
                 {
@@ -73,12 +93,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
                     Assert.AreEqual("ibuprofen", relatedEntity.Text);
                     Assert.AreEqual("MedicationName", relatedEntity.Category);
-                    Assert.AreEqual(0, relatedEntity.Length);
+                    Assert.AreEqual(9, relatedEntity.Length);
                     Assert.AreEqual(27, relatedEntity.Offset);
                     Assert.AreEqual(1.0, relatedEntity.ConfidenceScore);
-
-                    // TODO - DosageOfMedication is not in relation types and is returned from the service. Need to add to swagger.
-                    //Assert.AreEqual(HealthcareEntityRelationType.DosageOfMedication, entity.RelatedEntities.ElementAt(0).Value);
+                    Assert.AreEqual(HealthcareEntityRelationType.DosageOfMedication, entity.RelatedEntities.FirstOrDefault().Value);
                 }
             }
         }
@@ -87,69 +105,23 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeHealthcareEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = singleEnglish;
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(new List<string>() { document }, "en");
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en");
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
+            ValidateOperationProperties(operation);
 
-            foreach (AnalyzeHealthcareEntitiesResult result in resultCollection)
+            //Take the first page
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            var expectedOutput = new Dictionary<string, List<string>>()
             {
-                Assert.AreEqual(3, result.Entities.Count);
-                Assert.IsNotNull(result.Id);
-            }
-        }
-
-        [Test]
-        public async Task RecognizeHealthcareEntitiesWithTopParameter()
-        {
-            TextAnalyticsClient client = GetClient();
-
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
-            {
-                Top = 1
+                { "0", s_document1ExpectedEntitiesOutput },
+                { "1", s_document2ExpectedEntitiesOutput },
             };
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, options);
-
-            await operation.WaitForCompletionAsync(PollingInterval);
-
-            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
-
-            Assert.AreEqual(1, resultCollection.Count);
-            Assert.AreEqual(3, resultCollection[0].Entities.Count);
-            Assert.IsNotNull(resultCollection[0].Id);
-            Assert.AreEqual("1", resultCollection[0].Id);
-            Assert.AreEqual("100mg", resultCollection[0].Entities.FirstOrDefault().Text);
-            Assert.AreEqual("Dosage", resultCollection[0].Entities.FirstOrDefault().Category);
-        }
-
-        [Test]
-        public async Task RecognizeHealthcareEntitiesWithSkipParameter()
-        {
-            TextAnalyticsClient client = GetClient();
-
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
-            {
-                Skip = 1
-            };
-
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, options);
-
-            await operation.WaitForCompletionAsync(PollingInterval);
-
-            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
-
-            Assert.IsFalse(resultCollection[0].HasError);
-            Assert.IsNotNull(resultCollection[0].Warnings);
-            Assert.AreEqual(1, resultCollection.Count);
-            Assert.AreEqual(6, resultCollection[0].Entities.Count);
-            Assert.IsNotNull(resultCollection[0].Id);
-            Assert.AreEqual("2", resultCollection[0].Id);
-            Assert.AreEqual("rapid", resultCollection[0].Entities.FirstOrDefault().Text);
-            Assert.AreEqual("SymptomOrSign", resultCollection[0].Entities.FirstOrDefault().Category);
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
         [Test]
@@ -167,11 +139,18 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
+            ValidateOperationProperties(operation);
+
+            //Take the first page
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             Assert.IsNotNull(resultCollection[2].Id);
 
+            Assert.IsTrue(!resultCollection[0].HasError);
+            Assert.IsTrue(!resultCollection[1].HasError);
+
             Assert.IsTrue(resultCollection[2].HasError);
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => resultCollection[2].Entities.GetType());
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[2].Error.ErrorCode.ToString());
         }
 
@@ -179,83 +158,102 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeHealthcareEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
+            ValidateOperationProperties(operation);
 
-            Assert.AreEqual(2, resultCollection.Count);
+            //Take the first page
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedEntitiesOutput },
+                { "1", s_document2ExpectedEntitiesOutput },
+            };
+
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
         [Test]
         public async Task RecognizeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
 
             AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
             {
                 IncludeStatistics = true
             };
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents, "en", options);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en", options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
+            ValidateOperationProperties(operation);
 
-            Assert.AreEqual(documents.Count, resultCollection.Statistics.DocumentCount);
+            //Take the first page
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
-            Assert.AreEqual(48, resultCollection[0].Statistics.CharacterCount);
-            Assert.AreEqual(1, resultCollection[0].Statistics.TransactionCount);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedEntitiesOutput },
+                { "1", s_document2ExpectedEntitiesOutput },
+            };
 
-            Assert.Greater(resultCollection.Statistics.DocumentCount, 0);
-            Assert.AreEqual(2, resultCollection.Statistics.DocumentCount);
-            Assert.AreEqual(2, resultCollection.Statistics.TransactionCount);
-            Assert.AreEqual(0, resultCollection.Statistics.InvalidDocumentCount);
-            Assert.AreEqual(2, resultCollection.Statistics.ValidDocumentCount);
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput, true);
         }
 
         [Test]
         public async Task RecognizeHealthcareEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = batchDocuments;
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
+            ValidateOperationProperties(operation);
 
-            Assert.AreEqual(2, resultCollection.Count);
+            //Take the first page
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedEntitiesOutput },
+                { "2", s_document2ExpectedEntitiesOutput },
+            };
+
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
         [Test]
         public async Task RecognizeHealthcareEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = batchDocuments;
 
             AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
             {
                 IncludeStatistics = true
             };
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents, options);
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, options);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
-            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value;
+            ValidateOperationProperties(operation);
 
-            Assert.AreEqual(2, resultCollection.Count);
+            //Take the first page
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
-            Assert.AreEqual(2, resultCollection.Statistics.DocumentCount);
-            Assert.AreEqual(2, resultCollection.Statistics.TransactionCount);
-            Assert.AreEqual(0, resultCollection.Statistics.InvalidDocumentCount);
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedEntitiesOutput },
+                { "2", s_document2ExpectedEntitiesOutput },
+            };
+
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput, true);
         }
 
         [Test]
@@ -275,7 +273,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             await operation.CancelAsync();
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async() => await operation.WaitForCompletionAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
             Assert.IsTrue(ex.Message.Contains("The operation was canceled so no value is available."));
 
             Assert.IsTrue(operation.HasCompleted);
@@ -294,34 +292,110 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RecognizeHealthcareEntitiesBatchWithPagination()
+        public async Task AnalyzeHealthcareEntitiesPagination()
         {
             TextAnalyticsClient client = GetClient();
-            string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.";
 
-            var list = new List<string>();
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
 
-            for (int i = 0; i < 10; i++)
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.Throws<InvalidOperationException>(() => operation.GetValues());
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+
+            ValidateOperationProperties(operation);
+
+            // try async
+            //There most be 1 page
+            List<AnalyzeHealthcareEntitiesResultCollection> asyncPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, asyncPages.Count);
+
+            // First page should have 2 results
+            Assert.AreEqual(2, asyncPages[0].Count);
+
+            // try sync
+            //There most be 1 page
+            List<AnalyzeHealthcareEntitiesResultCollection> pages = operation.GetValues().AsEnumerable().ToList();
+            Assert.AreEqual(1, pages.Count);
+
+            // First page should have 2 results
+            Assert.AreEqual(2, pages[0].Count);
+        }
+
+        private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)
+        {
+            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
+            foreach (HealthcareEntity entity in entities)
             {
-                list.Add(document);
-            };
+                Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
+                Assert.IsTrue(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase));
+                Assert.IsNotNull(entity.Category);
+                Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
+                Assert.GreaterOrEqual(entity.Offset, 0);
+                Assert.Greater(entity.Length, 0);
 
-            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
-            {
-                Top = 2
-            };
-
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(list, "en", options);
-
-            AsyncPageable<AnalyzeHealthcareEntitiesResult> results = client.GetHealthcareEntities(healthOperation);
-
-            int resultCount = 0;
-            await foreach (AnalyzeHealthcareEntitiesResult result in results)
-            {
-                resultCount += 1;
+                if (entity.SubCategory != null)
+                {
+                    Assert.IsNotEmpty(entity.SubCategory);
+                }
             }
+        }
 
-            Assert.AreEqual(10, resultCount);
+        private void ValidateBatchDocumentsResult(AnalyzeHealthcareEntitiesResultCollection results, Dictionary<string, List<string>> minimumExpectedOutput, bool includeStatistics = default)
+        {
+            Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
+
+            if (includeStatistics)
+            {
+                Assert.IsNotNull(results.Statistics);
+                Assert.Greater(results.Statistics.DocumentCount, 0);
+                Assert.Greater(results.Statistics.TransactionCount, 0);
+                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+            }
+            else
+                Assert.IsNull(results.Statistics);
+
+            foreach (AnalyzeHealthcareEntitiesResult entitiesInDocument in results)
+            {
+                Assert.That(entitiesInDocument.Id, Is.Not.Null.And.Not.Empty);
+
+                Assert.False(entitiesInDocument.HasError);
+
+                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                Assert.IsNotNull(entitiesInDocument.Statistics);
+
+                if (includeStatistics)
+                {
+                    Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
+                    Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
+                }
+                else
+                {
+                    Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
+                    Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                }
+
+                Assert.IsNotNull(entitiesInDocument.Warnings);
+                ValidateInDocumenResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
+            }
+        }
+
+        private void ValidateOperationProperties(AnalyzeHealthcareEntitiesOperation operation)
+        {
+            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+
+            if (operation.ExpiresOn.HasValue)
+            {
+                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
+            }
         }
     }
 }

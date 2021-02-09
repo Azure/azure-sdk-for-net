@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// EntityRecognitionPiiTasksItem.
     /// </summary>
     [CodeGenModel("TasksStateTasksEntityRecognitionPiiTasksItem")]
-    public partial class EntityRecognitionPiiTasksItem
+    internal partial class EntityRecognitionPiiTasksItem
     {
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
         internal EntityRecognitionPiiTasksItem(EntityRecognitionPiiTasksItem task, IDictionary<string, int> idToIndexMap) : base(task.LastUpdateDateTime, task.Name, task.Status)

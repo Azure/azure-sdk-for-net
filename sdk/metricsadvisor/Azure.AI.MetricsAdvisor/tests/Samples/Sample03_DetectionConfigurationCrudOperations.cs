@@ -28,23 +28,25 @@ namespace Azure.AI.MetricsAdvisor.Samples
             //@@ string metricId = "<metricId>";
             string configurationName = "Sample anomaly detection configuration";
 
-            var hardThresholdSuppressCondition = new SuppressCondition(1, 100);
-            var hardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardThresholdSuppressCondition)
+            var detectionConfiguration = new AnomalyDetectionConfiguration()
+            {
+                MetricId = metricId,
+                Name = configurationName,
+                WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+            };
+
+            var detectCondition = detectionConfiguration.WholeSeriesDetectionConditions;
+
+            var hardSuppress = new SuppressCondition(1, 100);
+            detectCondition.HardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardSuppress)
             {
                 LowerBound = 5.0
             };
 
-            var smartDetectionSuppressCondition = new SuppressCondition(4, 50);
-            var smartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartDetectionSuppressCondition);
+            var smartSuppress = new SuppressCondition(4, 50);
+            detectCondition.SmartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartSuppress);
 
-            var detectionCondition = new MetricWholeSeriesDetectionCondition()
-            {
-                HardThresholdCondition = hardThresholdCondition,
-                SmartDetectionCondition = smartDetectionCondition,
-                CrossConditionsOperator = DetectionConditionsOperator.Or
-            };
-
-            var detectionConfiguration = new AnomalyDetectionConfiguration(metricId, configurationName, detectionCondition);
+            detectCondition.CrossConditionsOperator = DetectionConditionsOperator.Or;
 
             Response<string> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 

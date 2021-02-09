@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class EntityRecognitionTasksItem
+    internal partial class EntityRecognitionTasksItem
     {
         internal static EntityRecognitionTasksItem DeserializeEntityRecognitionTasksItem(JsonElement element)
         {

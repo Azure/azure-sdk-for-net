@@ -17,8 +17,9 @@ namespace Azure.AI.TextAnalytics
             SubCategory = entity.Subcategory;
             ConfidenceScore = entity.ConfidenceScore;
             Offset = entity.Offset;
+            Length = entity.Length;
             DataSources = entity.Links;
-            RelatedEntities = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>(entity.RelatedEntities);
+            RelatedEntities = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>();
         }
         /// <summary>
         /// Gets the entity text as it appears in the input document.
@@ -49,7 +50,7 @@ namespace Azure.AI.TextAnalytics
         public double ConfidenceScore { get; }
 
         /// <summary>
-        /// Gets the starting position (in UTF-16 code units) for the matching text in the input document.
+        /// Gets the starting position for the matching text in the input document.
         /// </summary>
         public int Offset { get; }
 
@@ -66,6 +67,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the entities and the relationship between the entities.
         /// </summary>
-        public Dictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; }
+        public IDictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; internal set; }
     }
 }

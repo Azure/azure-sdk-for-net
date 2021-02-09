@@ -101,10 +101,10 @@ namespace Azure.Search.Documents.Batching
         protected CancellationToken PublisherCancellationToken { get; }
 
         /// <summary>
-        /// Gets a value indicating the number of actions to group into a batch
+        /// Gets or sets a value indicating the number of actions to group into a batch
         /// when tuning the behavior of the publisher.
         /// </summary>
-        protected int BatchActionCount { get; }  // TODO: Not automatically tuning yet
+        protected int BatchActionCount { get; set; }
 
         /// <summary>
         /// Gets a value indicating the number of bytes to use when tuning the
@@ -422,12 +422,14 @@ namespace Azure.Search.Documents.Batching
             // Returns whether the batch is now full.
             bool FillBatchFromQueue(List<PublisherAction<T>> batch, Queue< PublisherAction<T>> queue)
             {
-                // TODO: Consider tracking the keys in the batch and requiring
-                // them to be unique to avoid error alignment problems
+                HashSet<string> documentIdentifiers = new HashSet<string>(StringComparer.Ordinal);
 
                 while (queue.Count > 0)
                 {
-                    if (batch.Count < BatchActionCount)
+                    // Stop filling the batch if we run into an action for a document that is already in the batch.
+                    // We want to keep the actions ordered and map any errors accurately to the documents,
+                    // so we need to split the batch on encountering an action for a previously queued document.
+                    if ((batch.Count < BatchActionCount) && documentIdentifiers.Add(queue.Peek().Key))
                     {
                         batch.Add(queue.Dequeue());
                     }
