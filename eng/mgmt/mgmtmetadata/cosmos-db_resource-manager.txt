@@ -4,7 +4,7 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cosmos-db/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-2020-06-preview --csharp-sdks-folder=D:\azure-sdk-for-net-nichatur\sdk
-2021-02-09 06:48:46 UTC
+2021-02-09 06:57:46 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
