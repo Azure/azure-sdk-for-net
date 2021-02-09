@@ -1,6 +1,6 @@
 # Building a custom processor with EventProcessor&lt;TPartition&gt;
 
-This sample demonstrates using `EventProcessor<TPartition>` to build a custom event processor which manages its own load balancing and checkpoint state and then shows how to use it to consume events from Event Hubs. For most users we strongly recommend using the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) from the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor) package instead of implementing your own processor library.
+This sample demonstrates using `EventProcessor<TPartition>` to build a custom event processor which manages its own load balancing and checkpoint state and then shows how to use it to consume events from Event Hubs. For the majority of scenarios, we recommend using the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) from the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor) package instead of implementing your own processor library.
 
 ## What does a processor do?
 
