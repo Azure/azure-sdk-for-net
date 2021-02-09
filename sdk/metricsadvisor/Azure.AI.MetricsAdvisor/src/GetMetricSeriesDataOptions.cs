@@ -17,14 +17,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMetricSeriesDataOptions"/> class.
         /// </summary>
-        /// <param name="seriesToFilter">Only time series with the specified series keys will be returned. These keys uniquely identify a time series within a metric. Every dimension contained in the associated <see cref="DataFeed"/> must be assigned a value.</param>
         /// <param name="startTime">Filters the result. Only data points ingested from this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only data points ingested up to this point in time, in UTC, will be returned.</param>
-        public GetMetricSeriesDataOptions(IEnumerable<DimensionKey> seriesToFilter, DateTimeOffset startTime, DateTimeOffset endTime)
+        public GetMetricSeriesDataOptions(DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            Argument.AssertNotNull(seriesToFilter, nameof(seriesToFilter));
-
-            SeriesToFilter = seriesToFilter;
+            SeriesToFilter = new ChangeTrackingList<DimensionKey>();
             StartTime = startTime;
             EndTime = endTime;
         }
@@ -34,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor
         /// a time series within a metric. Every dimension contained in the associated <see cref="DataFeed"/>
         /// must be assigned a value.
         /// </summary>
-        public IEnumerable<DimensionKey> SeriesToFilter { get; }
+        public ICollection<DimensionKey> SeriesToFilter { get; }
 
         /// <summary>
         /// Filters the result. Only data points ingested from this point in time, in UTC, will be returned.
