@@ -42,19 +42,20 @@ All geographic phone plans within the same country are grouped into a phone plan
 
 Phone Number Administration clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
 
-```C# Snippet:CreatePhoneNumberAdministrationClient
+```C# Snippet:CreatePhoneNumbersClient
 // Get a connection string to our Azure Communication resource.
 var connectionString = "<connection_string>";
-var client = new PhoneNumberAdministrationClient(connectionString);
+var client = new PhoneNumbersClient(connectionString);
 ```
 
 Phone Number Administration clients also have the option to authenticate with Azure Active Directory Authentication. With this option,
 `AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication.
 
-```C# Snippet:CreatePhoneNumberWithTokenCredential
-var endpoint = "<endpoint_url>";
+```C# Snippet:CreatePhoneNumbersClientWithTokenCredential
+// Get an endpoint to our Azure Communication resource.
+var endpoint = new Uri("<endpoint_url>");
 TokenCredential tokenCredential = new DefaultAzureCredential();
-var client = new PhoneNumberAdministrationClient(new Uri(endpoint), tokenCredential);
+client = new PhoneNumbersClient(endpoint, tokenCredential);
 ```
 
 ### Reserving and acquiring numbers

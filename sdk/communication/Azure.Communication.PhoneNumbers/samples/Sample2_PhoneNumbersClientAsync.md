@@ -12,7 +12,7 @@ You can set `connectionString` based on an environment variable, a configuration
 ```C# Snippet:CreatePhoneNumbersClient
 // Get a connection string to our Azure Communication resource.
 var connectionString = "<connection_string>";
-var client = new PhoneNumberAdministrationClient(connectionString);
+var client = new PhoneNumbersClient(connectionString);
 ```
 
 ## Search phone numbers
@@ -20,21 +20,17 @@ var client = new PhoneNumberAdministrationClient(connectionString);
 Phone numbers need to be searched before they can be purchased. Search is a long running operation that can be started by `StartSearchAvailablePhoneNumbers` function that returns an `SearchAvailablePhoneNumbersOperation` object. `SearchAvailablePhoneNumbersOperation` can be used to update status of the operation and to check for completeness.
 
 ```C# Snippet:SearchPhoneNumbersAsync
-var reservationName = "My reservation";
-var reservationDescription = "reservation description";
-var reservationOptions = new CreateReservationOptions(reservationName, reservationDescription, new[] { phonePlanId }, areaCode);
-reservationOptions.Quantity = 1;
-
-var reserveOperation = await client.StartReservationAsync(reservationOptions);
-await reserveOperation.WaitForCompletionAsync();
+var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.Geographic, PhoneNumberAssignmentType.User,
+     new PhoneNumberCapabilities(PhoneNumberCapabilityValue.InboundOutbound, PhoneNumberCapabilityValue.None));
+await purchaseOperation.WaitForCompletionAsync();
 ```
 
 ## Purchase phone numbers
 
 Phone numbers can be acquired through purchasing a reservation.
 
-```C# Snippet:StartPurchaseReservationAsync
-var purchaseOperation = await client.StartPurchaseReservationAsync(reservationId);
+```C# Snippet:StartPurchaseSearchAsync
+var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Id);
 await purchaseOperation.WaitForCompletionAsync();
 ```
 
@@ -43,11 +39,11 @@ await purchaseOperation.WaitForCompletionAsync();
 You can list all phone numbers that have been acquired for your resource.
 
 ```C# Snippet:ListAcquiredPhoneNumbersAsync
-var acquiredPhoneNumbers = client.GetAllPhoneNumbersAsync(locale);
+var acquiredPhoneNumbers = client.ListPhoneNumbersAsync();
 
 await foreach (var phoneNumber in acquiredPhoneNumbers)
 {
-    Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, activation state: {phoneNumber.ActivationState}");
+    Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, monthly cost: {phoneNumber.Cost}");
 }
 ```
 
@@ -57,6 +53,6 @@ If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbersAsync
 var acquiredPhoneNumber = "<acquired_phone_number>";
-var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumberIdentifier(acquiredPhoneNumber));
-await releaseOperation.WaitForCompletionAsync();
+var releaseOperation = client.StartReleasePhoneNumber(acquiredPhoneNumber);
+await purchaseOperation.WaitForCompletionAsync();
 ```

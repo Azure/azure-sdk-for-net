@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 using Azure.Communication.PhoneNumbers;
 using Azure.Communication.PhoneNumbers.Models;
 using Azure.Communication.PhoneNumbers.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.PhoneNumbers.Tests.Samples
@@ -36,26 +38,22 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             const string countryCode = "US";
 
-            #region Snippet:StartSearchPhoneNumbersAsync
+            #region Snippet:SearchPhoneNumbersAsync
 
-            PhoneNumberSearchRequest searchRequest = new PhoneNumberSearchRequest(PhoneNumberType.Geographic, PhoneNumberAssignmentType.User,
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.Geographic, PhoneNumberAssignmentType.User,
                  new PhoneNumberCapabilities(PhoneNumberCapabilityValue.InboundOutbound, PhoneNumberCapabilityValue.None));
-
-            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, searchRequest);
             //@@ await purchaseOperation.WaitForCompletionAsync();
-            /*@@*/
-            await WaitForCompletionAsync(searchOperation);
+            /*@@*/ await WaitForCompletionAsync(searchOperation);
 
-            #endregion Snippet:ReservePhoneNumbersAsync
+            #endregion Snippet:SearchPhoneNumbersAsync
 
-            #region Snippet:StartPurchaseReservationAsync
+            #region Snippet:StartPurchaseSearchAsync
 
             var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Id);
             //@@ await purchaseOperation.WaitForCompletionAsync();
-            /*@@*/
-            await WaitForCompletionAsync(purchaseOperation);
+            /*@@*/ await WaitForCompletionAsync(purchaseOperation);
 
-            #endregion Snippet:StartPurchaseReservationAsync
+            #endregion Snippet:StartPurchaseSearchAsync
 
             #region Snippet:ListAcquiredPhoneNumbersAsync
             var acquiredPhoneNumbers = client.ListPhoneNumbersAsync();
@@ -76,8 +74,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             //@@var acquiredPhoneNumber = "<acquired_phone_number>";
             var releaseOperation = client.StartReleasePhoneNumber(acquiredPhoneNumber);
             //@@ await purchaseOperation.WaitForCompletionAsync();
-            /*@@*/
-            await WaitForCompletionAsync(releaseOperation);
+            /*@@*/ await WaitForCompletionAsync(releaseOperation);
 
             #endregion Snippet:ReleasePhoneNumbersAsync
 
@@ -104,23 +101,26 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var client = new PhoneNumbersClient(connectionString);
             #endregion Snippet:CreatePhoneNumbersClient
 
+            #region Snippet:CreatePhoneNumbersClientWithTokenCredential
+            // Get an endpoint to our Azure Communication resource.
+            //@@var endpoint = new Uri("<endpoint_url>");
+            //@@TokenCredential tokenCredential = new DefaultAzureCredential();
+            //@@client = new PhoneNumbersClient(endpoint, tokenCredential);
+            #endregion Snippet:CreatePhoneNumbersClientWithTokenCredential
+
             client = CreateClient(false);
 
             const string countryCode = "US";
 
             #region Snippet:SearchPhoneNumbers
 
-            PhoneNumberSearchRequest searchRequest = new PhoneNumberSearchRequest(PhoneNumberType.Geographic, PhoneNumberAssignmentType.User,
+            var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.Geographic, PhoneNumberAssignmentType.User,
                  new PhoneNumberCapabilities(PhoneNumberCapabilityValue.InboundOutbound, PhoneNumberCapabilityValue.None));
-
-            var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, searchRequest);
 
             while (!searchOperation.HasCompleted)
             {
                 //@@ Thread.Sleep(2000);
-                /*@@*/
-                SleepIfNotInPlaybackMode();
-
+                /*@@*/ SleepIfNotInPlaybackMode();
                 searchOperation.UpdateStatus();
             }
 
@@ -132,9 +132,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             while (!purchaseOperation.HasCompleted)
             {
                 //@@ Thread.Sleep(2000);
-                /*@@*/
-                SleepIfNotInPlaybackMode();
-
+                /*@@*/ SleepIfNotInPlaybackMode();
                 purchaseOperation.UpdateStatus();
             }
             #endregion Snippet:StartPurchaseSearch
@@ -159,9 +157,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             while (!releaseOperation.HasCompleted)
             {
                 //@@ Thread.Sleep(2000);
-                /*@@*/
-                SleepIfNotInPlaybackMode();
-
+                /*@@*/ SleepIfNotInPlaybackMode();
                 releaseOperation.UpdateStatus();
             }
             #endregion Snippet:ReleasePhoneNumbers

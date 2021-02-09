@@ -52,10 +52,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
             const string countryCode = "US";
 
             // User and toll free is an invalid combination
-            PhoneNumberSearchRequest searchRequest = new PhoneNumberSearchRequest(PhoneNumberType.TollFree, PhoneNumberAssignmentType.User,
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.User,
                 new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.None));
-
-            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, searchRequest);
 
             try
             {
@@ -90,10 +88,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             const string countryCode = "US";
 
-            PhoneNumberSearchRequest searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType,
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, phoneNumberType, phoneNumberAssignmentType,
                 new PhoneNumberCapabilities(calling, sms));
-
-            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, searchRequest);
 
             if (TestEnvironment.Mode == RecordedTestMode.Playback)
                 await searchOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);
@@ -128,10 +124,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             const string countryCode = "US";
 
             // Search
-            PhoneNumberSearchRequest searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType,
-                new PhoneNumberCapabilities(calling, sms));
-
-            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, searchRequest);
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, phoneNumberType, phoneNumberAssignmentType, new PhoneNumberCapabilities(calling, sms));
 
             if (TestEnvironment.Mode == RecordedTestMode.Playback)
                 await searchOperation.WaitForCompletionAsync(TimeSpan.Zero, default).ConfigureAwait(false);

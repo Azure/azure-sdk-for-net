@@ -12,26 +12,21 @@ You can set `connectionString` based on an environment variable, a configuration
 ```C# Snippet:CreatePhoneNumbersClient
 // Get a connection string to our Azure Communication resource.
 var connectionString = "<connection_string>";
-var client = new PhoneNumberAdministrationClient(connectionString);
+var client = new PhoneNumbersClient(connectionString);
 ```
 
 ## Search phone numbers
 
 Phone numbers need to be searched before they can be purchased. Search is a long running operation that can be started by `StartSearchAvailablePhoneNumbers` function that returns an `SearchAvailablePhoneNumbersOperation` object. `SearchAvailablePhoneNumbersOperation` can be used to update status of the operation and to check for completeness.
 
-```C# Snippet:ReservePhoneNumbers
-var reservationName = "My reservation";
-var reservationDescription = "reservation description";
-var reservationOptions = new CreateReservationOptions(reservationName, reservationDescription, new[] { phonePlanId }, areaCode);
-reservationOptions.Quantity = 1;
+```C# Snippet:SearchPhoneNumbers
+var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.Geographic, PhoneNumberAssignmentType.User,
+     new PhoneNumberCapabilities(PhoneNumberCapabilityValue.InboundOutbound, PhoneNumberCapabilityValue.None));
 
-var reserveOperation = client.StartReservation(reservationOptions);
-
-while (!reserveOperation.HasCompleted)
+while (!searchOperation.HasCompleted)
 {
     Thread.Sleep(2000);
-
-    reserveOperation.UpdateStatus();
+    searchOperation.UpdateStatus();
 }
 ```
 
@@ -39,13 +34,12 @@ while (!reserveOperation.HasCompleted)
 
 Phone numbers can be acquired through purchasing a reservation.
 
-```C# Snippet:StartPurchaseReservation
-var purchaseOperation = client.StartPurchaseReservation(reservationId);
+```C# Snippet:StartPurchaseSearch
+var purchaseOperation = client.StartPurchasePhoneNumbers(searchOperation.Id);
 
 while (!purchaseOperation.HasCompleted)
 {
     Thread.Sleep(2000);
-
     purchaseOperation.UpdateStatus();
 }
 ```
@@ -55,11 +49,11 @@ while (!purchaseOperation.HasCompleted)
 You can list all phone numbers that have been acquired for your resource.
 
 ```C# Snippet:ListAcquiredPhoneNumbers
-var acquiredPhoneNumbers = client.GetAllPhoneNumbers(locale);
+var acquiredPhoneNumbers = client.ListPhoneNumbers();
 
 foreach (var phoneNumber in acquiredPhoneNumbers)
 {
-    Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, activation state: {phoneNumber.ActivationState}");
+    Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, monthly cost: {phoneNumber.Cost}");
 }
 ```
 
@@ -69,12 +63,11 @@ If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbers
 var acquiredPhoneNumber = "<acquired_phone_number>";
-var releaseOperation = client.StartReleasePhoneNumber(new PhoneNumberIdentifier(acquiredPhoneNumber));
+var releaseOperation = client.StartReleasePhoneNumber(acquiredPhoneNumber);
 
 while (!releaseOperation.HasCompleted)
 {
     Thread.Sleep(2000);
-
     releaseOperation.UpdateStatus();
 }
 ```
