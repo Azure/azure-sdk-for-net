@@ -35,7 +35,7 @@
 - Results for the `StartAnalyzeBatchActions` method are now returned in a `AnalyzeHealthcareEntitiesResultCollection` object that contains information per type of action.
 - Renamed `AnalyzeOperation` to `AnalyzeBatchActionsOperation`.
 - Reuse `PiiEntityDomainType` instead of `PiiTaskParametersDomain`.
-- Removed `AnalyzeTasks`, `EntitiesTask`, `EntitiesTaskParameters`, `EntityRecognitionTasksItem`, `JobManifestTasks`, `KeyPhraseExtractionTasksItem`, `KeyPhrasesTask`, `KeyPhrasesTaskParameters`, `PiiTask`, `PiiTaskParameters`, 
+- Removed `AnalyzeTasks`, `EntitiesTask`, `EntitiesTaskParameters`, `EntityRecognitionTasksItem`, `JobManifestTasks`, `KeyPhraseExtractionTasksItem`, `KeyPhrasesTask`, `KeyPhrasesTaskParameters`, `PiiTask`, `PiiTaskParameters`.
 
 ## 5.1.0-beta.3 (2020-11-19)
 ### New Features
