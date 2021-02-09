@@ -1,6 +1,6 @@
 # Release History
 
-## 5.1.0-beta.4 (Unreleased)
+## 5.1.0-beta.4 (2021-02-10)
 ### New features
 - Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
 - `StringIndexType` has been added to all endpoints as a new option to control how the `Offset` and `Length` are calculated by the service. It is added into the `TextAnalyticsRequestOptions` class.
