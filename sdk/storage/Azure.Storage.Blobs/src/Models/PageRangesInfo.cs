@@ -46,30 +46,4 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         internal PageRangesInfo() {}
     }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new PageRangesInfo instance for mocking.
-        /// </summary>
-        public static PageRangesInfo PageRangesInfo(
-            DateTimeOffset lastModified,
-            ETag eTag,
-            long blobContentLength,
-            IEnumerable<HttpRange> pageRanges,
-            IEnumerable<HttpRange> clearRanges)
-        {
-            return new PageRangesInfo
-            {
-                LastModified = lastModified,
-                ETag = eTag,
-                BlobContentLength = blobContentLength,
-                PageRanges = pageRanges,
-                ClearRanges = clearRanges
-            };
-        }
-    }
 }
