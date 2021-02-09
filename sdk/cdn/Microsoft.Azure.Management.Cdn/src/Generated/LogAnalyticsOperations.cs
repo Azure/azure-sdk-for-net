@@ -68,15 +68,15 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='granularity'>
         /// Possible values include: 'PT5M', 'PT1H', 'P1D'
         /// </param>
+        /// <param name='customDomains'>
+        /// </param>
+        /// <param name='protocols'>
+        /// </param>
         /// <param name='groupBy'>
         /// </param>
         /// <param name='continents'>
         /// </param>
         /// <param name='countryOrRegions'>
-        /// </param>
-        /// <param name='customDomains'>
-        /// </param>
-        /// <param name='protocols'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<MetricsResponse>> GetLogAnalyticsMetricsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, string granularity, IList<string> groupBy = default(IList<string>), IList<string> continents = default(IList<string>), IList<string> countryOrRegions = default(IList<string>), IList<string> customDomains = default(IList<string>), IList<string> protocols = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MetricsResponse>> GetLogAnalyticsMetricsWithHttpMessagesAsync(string resourceGroupName, string profileName, IList<string> metrics, System.DateTime dateTimeBegin, System.DateTime dateTimeEnd, string granularity, IList<string> customDomains, IList<string> protocols, IList<string> groupBy = default(IList<string>), IList<string> continents = default(IList<string>), IList<string> countryOrRegions = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -140,6 +140,14 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "granularity");
             }
+            if (customDomains == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "customDomains");
+            }
+            if (protocols == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "protocols");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -174,33 +182,93 @@ namespace Microsoft.Azure.Management.Cdn
             }
             if (metrics != null)
             {
-                _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString(string.Join(",", metrics))));
+                if (metrics.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in metrics)
+                    {
+                        _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             _queryParameters.Add(string.Format("dateTimeBegin={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(dateTimeBegin, Client.SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("dateTimeEnd={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(dateTimeEnd, Client.SerializationSettings).Trim('"'))));
             if (granularity != null)
             {
-                _queryParameters.Add(string.Format("granularity={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(granularity, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("granularity={0}", System.Uri.EscapeDataString(granularity)));
             }
             if (groupBy != null)
             {
-                _queryParameters.Add(string.Format("groupBy={0}", System.Uri.EscapeDataString(string.Join(",", groupBy))));
+                if (groupBy.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("groupBy={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in groupBy)
+                    {
+                        _queryParameters.Add(string.Format("groupBy={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (continents != null)
             {
-                _queryParameters.Add(string.Format("continents={0}", System.Uri.EscapeDataString(string.Join(",", continents))));
+                if (continents.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("continents={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in continents)
+                    {
+                        _queryParameters.Add(string.Format("continents={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (countryOrRegions != null)
             {
-                _queryParameters.Add(string.Format("countryOrRegions={0}", System.Uri.EscapeDataString(string.Join(",", countryOrRegions))));
+                if (countryOrRegions.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("countryOrRegions={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in countryOrRegions)
+                    {
+                        _queryParameters.Add(string.Format("countryOrRegions={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (customDomains != null)
             {
-                _queryParameters.Add(string.Format("customDomains={0}", System.Uri.EscapeDataString(string.Join(",", customDomains))));
+                if (customDomains.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("customDomains={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in customDomains)
+                    {
+                        _queryParameters.Add(string.Format("customDomains={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (protocols != null)
             {
-                _queryParameters.Add(string.Format("protocols={0}", System.Uri.EscapeDataString(string.Join(",", protocols))));
+                if (protocols.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("protocols={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in protocols)
+                    {
+                        _queryParameters.Add(string.Format("protocols={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (_queryParameters.Count > 0)
             {
@@ -436,18 +504,48 @@ namespace Microsoft.Azure.Management.Cdn
             }
             if (rankings != null)
             {
-                _queryParameters.Add(string.Format("rankings={0}", System.Uri.EscapeDataString(string.Join(",", rankings))));
+                if (rankings.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("rankings={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in rankings)
+                    {
+                        _queryParameters.Add(string.Format("rankings={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (metrics != null)
             {
-                _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString(string.Join(",", metrics))));
+                if (metrics.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in metrics)
+                    {
+                        _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             _queryParameters.Add(string.Format("maxRanking={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(maxRanking, Client.SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("dateTimeBegin={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(dateTimeBegin, Client.SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("dateTimeEnd={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(dateTimeEnd, Client.SerializationSettings).Trim('"'))));
             if (customDomains != null)
             {
-                _queryParameters.Add(string.Format("customDomains={0}", System.Uri.EscapeDataString(string.Join(",", customDomains))));
+                if (customDomains.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("customDomains={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in customDomains)
+                    {
+                        _queryParameters.Add(string.Format("customDomains={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (_queryParameters.Count > 0)
             {
@@ -1099,25 +1197,65 @@ namespace Microsoft.Azure.Management.Cdn
             }
             if (metrics != null)
             {
-                _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString(string.Join(",", metrics))));
+                if (metrics.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in metrics)
+                    {
+                        _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             _queryParameters.Add(string.Format("dateTimeBegin={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(dateTimeBegin, Client.SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("dateTimeEnd={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(dateTimeEnd, Client.SerializationSettings).Trim('"'))));
             if (granularity != null)
             {
-                _queryParameters.Add(string.Format("granularity={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(granularity, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("granularity={0}", System.Uri.EscapeDataString(granularity)));
             }
             if (actions != null)
             {
-                _queryParameters.Add(string.Format("actions={0}", System.Uri.EscapeDataString(string.Join(",", actions))));
+                if (actions.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("actions={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in actions)
+                    {
+                        _queryParameters.Add(string.Format("actions={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (groupBy != null)
             {
-                _queryParameters.Add(string.Format("groupBy={0}", System.Uri.EscapeDataString(string.Join(",", groupBy))));
+                if (groupBy.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("groupBy={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in groupBy)
+                    {
+                        _queryParameters.Add(string.Format("groupBy={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (ruleTypes != null)
             {
-                _queryParameters.Add(string.Format("ruleTypes={0}", System.Uri.EscapeDataString(string.Join(",", ruleTypes))));
+                if (ruleTypes.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("ruleTypes={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in ruleTypes)
+                    {
+                        _queryParameters.Add(string.Format("ruleTypes={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (_queryParameters.Count > 0)
             {
@@ -1356,22 +1494,62 @@ namespace Microsoft.Azure.Management.Cdn
             }
             if (metrics != null)
             {
-                _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString(string.Join(",", metrics))));
+                if (metrics.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in metrics)
+                    {
+                        _queryParameters.Add(string.Format("metrics={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             _queryParameters.Add(string.Format("dateTimeBegin={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(dateTimeBegin, Client.SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("dateTimeEnd={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(dateTimeEnd, Client.SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("maxRanking={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(maxRanking, Client.SerializationSettings).Trim('"'))));
             if (rankings != null)
             {
-                _queryParameters.Add(string.Format("rankings={0}", System.Uri.EscapeDataString(string.Join(",", rankings))));
+                if (rankings.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("rankings={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in rankings)
+                    {
+                        _queryParameters.Add(string.Format("rankings={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (actions != null)
             {
-                _queryParameters.Add(string.Format("actions={0}", System.Uri.EscapeDataString(string.Join(",", actions))));
+                if (actions.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("actions={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in actions)
+                    {
+                        _queryParameters.Add(string.Format("actions={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (ruleTypes != null)
             {
-                _queryParameters.Add(string.Format("ruleTypes={0}", System.Uri.EscapeDataString(string.Join(",", ruleTypes))));
+                if (ruleTypes.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("ruleTypes={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in ruleTypes)
+                    {
+                        _queryParameters.Add(string.Format("ruleTypes={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (_queryParameters.Count > 0)
             {
