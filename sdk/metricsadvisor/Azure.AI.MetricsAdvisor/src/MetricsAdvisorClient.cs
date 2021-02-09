@@ -670,8 +670,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
-        /// containing the ID of the newly created feedback.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="MetricFeedback"/>
+        /// containing information about the newly added feedback.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
         public virtual async Task<Response<MetricFeedback>> AddFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
@@ -710,8 +710,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
-        /// containing the ID of the newly created feedback.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="MetricFeedback"/>
+        /// containing information about the newly added feedback.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
         public virtual Response<MetricFeedback> AddFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
@@ -750,7 +750,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="feedbackId">The ID of the <see cref="MetricFeedback"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the created <see cref="MetricFeedback"/>s.
+        /// A <see cref="Response{T}"/> containing the requested <see cref="MetricFeedback"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedbackId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="feedbackId"/> is empty or not a valid GUID.</exception>
@@ -778,7 +778,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="feedbackId">The ID of the <see cref="MetricFeedback"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the created <see cref="MetricFeedback"/>s.
+        /// A <see cref="Response{T}"/> containing the requested <see cref="MetricFeedback"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedbackId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="feedbackId"/> is empty or not a valid GUID.</exception>
