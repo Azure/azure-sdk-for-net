@@ -138,8 +138,8 @@ namespace DnsResolver.Tests.ScenarioTests
         protected DnsResolverModel GenerateDnsResolverWithNewlyCreatedVirtualNetwork(string location = null, string resourceGroupName = null, IDictionary<string, string> tags = null)
         {
             var dnsResolver = TestDataGenerator.GenerateDnsResolverWithoutVirtualNetwork(location: location, tags: tags);
-            //dnsResolver.VirtualNetwork = CreateVirtualNetwork(resourceGroupName: resourceGroupName);
-            dnsResolver.VirtualNetwork = TestDataGenerator.GenerateNonExistentVirtualNetwork(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
+            dnsResolver.VirtualNetwork = CreateVirtualNetwork(resourceGroupName: resourceGroupName);
+            //dnsResolver.VirtualNetwork = TestDataGenerator.GenerateNonExistentVirtualNetwork(subscriptionId: this.SubscriptionId, resourceGroupName: resourceGroupName);
             return dnsResolver;
         }
 

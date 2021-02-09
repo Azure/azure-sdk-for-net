@@ -10,6 +10,7 @@ namespace DnsResolver.Tests.Helpers
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
 
     public static class ClientFactory
     {
@@ -52,8 +53,21 @@ namespace DnsResolver.Tests.Helpers
             RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<NetworkManagementClient>(handlers: handler);
-            return client;
+
+            var nrpSimulatorUri = Environment.GetEnvironmentVariable(Constants.NrpSimulatorUriEnvironmentVariableName);
+
+            // If there environment variable does not present, uses the default nrp client uri.
+            if (string.IsNullOrEmpty(nrpSimulatorUri))
+            {
+                return context.GetServiceClient<NetworkManagementClient>(handlers: handler);
+            }
+            else 
+            {
+                var testEnv = TestEnvironmentFactory.GetTestEnvironment();
+                var credentials = testEnv.TokenInfo[TokenAudience.Graph];
+                var client = context.GetServiceClientWithCredentials<NetworkManagementClient>(testEnv, credentials, new Uri(nrpSimulatorUri), internalBaseUri: false, handlers: handler);
+                return client;
+            }
         }
     }
 }

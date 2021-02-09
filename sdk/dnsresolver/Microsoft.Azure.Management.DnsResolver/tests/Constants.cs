@@ -14,5 +14,8 @@ namespace DnsResolver.Tests
         public const string ProvisioningStateSucceeded = "Succeeded";
         public const string StaticPrivateIpAllocationMethod = "Static";
         public const string DynamicPrivateIpAllocationMethod = "Dynamic";
+
+        // Add an environment variable as NRP_SIMULATOR_URI with value https://westus2.test.azuremresolver.net:9002
+        public const string NrpSimulatorUriEnvironmentVariableName = "NRP_SIMULATOR_URI";
     }
 }

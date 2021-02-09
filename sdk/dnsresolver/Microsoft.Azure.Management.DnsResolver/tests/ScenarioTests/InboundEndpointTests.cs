@@ -56,7 +56,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PutInboundEndpoint_EndpointNotExistsWithIpConfigurationsAndMetadata_ExpectInboundEndpointCreated()
+        public void PutInboundEndpoint_EndpointNotExistsWithIpConfigurationsAndMetadata_ExpectEndpointCreated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
@@ -124,8 +124,9 @@ namespace DnsResolver.Tests.ScenarioTests
             updatedInboundEndpoint.Name.Should().Be(createdInboundEndpoint.Name);
             updatedInboundEndpoint.ProvisioningState.Should().Be(createdDnsResolver.ProvisioningState);
             updatedInboundEndpoint.Metadata.Should().BeNull();
+            updatedInboundEndpoint.Id.Should().Be(createdInboundEndpoint.Id);
+            updatedInboundEndpoint.Etag.Should().NotBe(createdInboundEndpoint.Etag);
             updatedInboundEndpoint.IpConfigurations.All(ipConfiguration => ValidateIpConfigurationIsExpected(ipConfiguration, ipConfigurationsForUpdate));
-
         }
 
         [Fact]
@@ -190,7 +191,6 @@ namespace DnsResolver.Tests.ScenarioTests
                 ipConfigurations: ipConfigurations,
                 metadata: metadata);
 
-
             var updatedInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
                 dnsResolverName: createdDnsResolver.Name,
@@ -219,7 +219,6 @@ namespace DnsResolver.Tests.ScenarioTests
                 inboundEndpointName: inboundEndpointName,
                 ipConfigurations: ipConfigurations,
                 metadata: metadata);
-
 
             Action updateInboundEndpointAction = () => this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
@@ -261,7 +260,7 @@ namespace DnsResolver.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PatchInboundEndpoint_ndpointExistsIfMatchSuccessRemoveMetadata_ExpectEndpointUpdated()
+        public void PatchInboundEndpoint_EndpointExistsIfMatchSuccessRemoveMetadata_ExpectEndpointUpdated()
         {
             var resourceGroupName = this.CreateResourceGroup().Name;
             var createdDnsResolver = this.CreateDnsResolver(resourceGroupName: resourceGroupName);
