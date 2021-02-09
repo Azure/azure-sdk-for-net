@@ -150,7 +150,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         /// <remarks>
         /// An alternative way to get an instance of a Resource is as follows:
         /// <code>
-        /// var tracerProvider = Sdk.CreateTracerProviderBuilder().Build();
+        /// var resourceAttributes = new Dictionary<string, object> { { "service.name", "my-service" }, { "service.namespace", "my-namespace" }, { "service.instance.id", "my-instance" } };
+        /// var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
+        /// var tracerProvider = Sdk.CreateTracerProviderBuilder().SetResourceBuilder(resourceBuilder).Build();
         /// var resource = tracerProvider.GetResource();
         /// </code>
         /// </remarks>
@@ -158,22 +160,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         {
             var testAttributes = new Dictionary<string, object>();
 
-            if (serviceName != null)
-            {
-                testAttributes.Add("service.name", serviceName);
-            }
+            if (serviceName != null) testAttributes.Add("service.name", serviceName);
+            if (serviceNamespace != null) testAttributes.Add("service.namespace", serviceNamespace);
+            if (serviceInstance != null) testAttributes.Add("service.instance.id", serviceInstance);
 
-            if (serviceNamespace != null)
-            {
-                testAttributes.Add("service.namespace", serviceNamespace);
-            }
-
-            if (serviceInstance != null)
-            {
-                testAttributes.Add("service.instance.id", serviceInstance);
-            }
-
-            //var testAttributes = new Dictionary<string, object> { { "service.name", "my-service" }, { "service.instance.id", "my-instance" } };
             return ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
         }
 
