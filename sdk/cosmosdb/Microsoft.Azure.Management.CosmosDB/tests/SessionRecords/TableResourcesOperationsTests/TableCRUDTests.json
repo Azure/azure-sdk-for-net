@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.DocumentDB/databaseAccountNames/db2048?api-version=2020-04-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9kYXRhYmFzZUFjY291bnROYW1lcy9kYjIwNDg/YXBpLXZlcnNpb249MjAyMC0wNC0wMQ==",
+      "RequestUri": "/providers/Microsoft.DocumentDB/databaseAccountNames/db2048?api-version=2021-01-15",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9kYXRhYmFzZUFjY291bnROYW1lcy9kYjIwNDg/YXBpLXZlcnNpb249MjAyMS0wMS0xNQ==",
       "RequestMethod": "HEAD",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "14adf149-a699-4c22-80b7-2767d50631f8"
+          "008f8b86-851d-4a30-860b-228e3bfb883e"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29518.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.CosmosDB.CosmosDBManagementClient/1.3.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.CosmosDB.CosmosDBManagementClient/1.5.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -36,19 +36,19 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "153cf3ca-a5a2-4257-97c3-08ff53393643"
+          "584f5c8e-d4c5-4eec-b704-ec3c19851b7b"
         ],
         "x-ms-correlation-request-id": [
-          "153cf3ca-a5a2-4257-97c3-08ff53393643"
+          "584f5c8e-d4c5-4eec-b704-ec3c19851b7b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200814T002936Z:153cf3ca-a5a2-4257-97c3-08ff53393643"
+          "WESTUS2:20210208T193614Z:584f5c8e-d4c5-4eec-b704-ec3c19851b7b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 14 Aug 2020 00:29:36 GMT"
+          "Mon, 08 Feb 2021 19:36:13 GMT"
         ],
         "Content-Length": [
           "148"
@@ -60,6 +60,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "12053b8f-cab5-4f5c-9c1a-870580142abd"
+    "SubscriptionId": "80be3961-0521-4a0a-8570-5cd5a4e2f98c"
   }
 }

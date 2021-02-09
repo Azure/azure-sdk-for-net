@@ -9,6 +9,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
 using System;
+using System.Collections.Specialized;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -103,11 +104,15 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
                 Assert.Equal(mongoDatabaseThroughputType, throughputSettingsGetResults.Type);
 
+                Dictionary<string, string> dict = new Dictionary<string, string>();
+                dict.Add("partitionKey", PartitionKind.Hash.ToString());
+
                 MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
                 {
                     Resource = new MongoDBCollectionResource
                     {
                         Id = collectionName,
+                        ShardKey = dict
                     },
                     Options = new CreateUpdateOptions()
                 };

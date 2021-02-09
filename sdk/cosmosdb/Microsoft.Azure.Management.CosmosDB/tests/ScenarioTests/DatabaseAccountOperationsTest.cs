@@ -156,7 +156,6 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(databaseAccount.EnableCassandraConnector, parameters.EnableCassandraConnector);
             Assert.Equal(databaseAccount.ConnectorOffer, parameters.ConnectorOffer);
             Assert.Equal(databaseAccount.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
-            Assert.Equal(databaseAccount.NetworkAclBypass, parameters.NetworkAclBypass);
             Assert.Equal(databaseAccount.NetworkAclBypassResourceIds.Count, parameters.NetworkAclBypassResourceIds.Count);
         }
 
