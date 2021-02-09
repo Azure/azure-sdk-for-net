@@ -1,5 +1,8 @@
 # Release History
 
+## 3.1.0-beta.3 (Unreleased)
+
+
 ## 3.1.0-beta.2 (2021-02-09)
 ### Breaking changes
 - Renamed the model `Appearance` to `TextAppearance`.
