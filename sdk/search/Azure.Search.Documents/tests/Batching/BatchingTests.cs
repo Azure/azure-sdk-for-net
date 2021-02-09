@@ -1062,28 +1062,31 @@ namespace Azure.Search.Documents.Tests
                         InitialBatchActionCount = numberOfDocuments + 1,
                     });
 
-            // Throw from every handler
+            List<string> sentDocumentKeys = new List<string>();
             int sent = 0, completed = 0;
             indexer.ActionSent += e =>
             {
                 sent++;
 
-                // Batch will be split at the 4th document.
-                // So, 3 documents will be sent before any are submitted, but 3 submissions will be made before the last 2 are sent
-                Assert.AreEqual((sent <= 3) ? 0 : 3, completed);
+                // All document actions should have unique keys in a batch
+                sentDocumentKeys.Add(e.Action.Document.Id);
+                CollectionAssert.AllItemsAreUnique(sentDocumentKeys);
 
-                throw new InvalidOperationException("ActionSentAsync: Should not be seen!");
+                // The documents will be split into batches as - {0, 1, 2, 4}, {3}.
+                // So, 4 documents will be sent before any are submitted, but 4 submissions will be made before the last 1 is sent
+                Assert.AreEqual((sent <= 4) ? 0 : 4, completed);
+                return Task.CompletedTask;
             };
 
             indexer.ActionCompleted += e =>
             {
                 completed++;
+                sentDocumentKeys.Remove(e.Action.Document.Id);
 
-                // Batch will be split at the 4th document.
-                // So, 3 documents will be submitted after 3 are sent, and the last 2 submissions will be made after all 5 are sent
-                Assert.AreEqual((completed <= 3) ? 3 : 5, sent);
-
-                throw new InvalidOperationException("ActionCompletedAsync: Should not be seen!");
+                // The documents will be split into batches as - {0, 1, 2, 4}, {3}.
+                // So, 4 documents will be submitted after 4 are sent, and the last submission will be made after all 5 are sent
+                Assert.AreEqual((completed <= 4) ? 4 : 5, sent);
+                return Task.CompletedTask;
             };
 
             AssertNoFailures(indexer);
@@ -1148,6 +1151,131 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
 
+            Assert.AreEqual(5, sent);
+            Assert.AreEqual(5, completed);
+        }
+
+        [Test]
+        public async Task Behavior_SplitBatchMinimally()
+        {
+            int numberOfDocuments = 5;
+
+            await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
+
+            SimpleDocument[] data = new SimpleDocument[numberOfDocuments];
+            for (int i = 0; i < numberOfDocuments; i++)
+            {
+                data[i] = new SimpleDocument() { Id = $"{i}", Name = $"Document #{i}" };
+            }
+
+            // 'SimpleDocument' has 'Id' set as its key field.
+            // Set the Ids of 2 pairs of documents in the group to be the same.
+            // We expect the first batch to pick up all actions with unique keys, including the one
+            // that occurs after the first duplicate action.
+            data[2].Id = data[0].Id;
+            data[4].Id = data[1].Id;
+
+            await using SearchIndexingBufferedSender<SimpleDocument> indexer =
+                client.CreateIndexingBufferedSender(
+                    new SearchIndexingBufferedSenderOptions<SimpleDocument>()
+                    {
+                        // Set the expected batch action count to be larger than the number of documents in the set.
+                        InitialBatchActionCount = numberOfDocuments + 1,
+                    });
+
+            List<string> sentDocumentKeys = new List<string>();
+            int sent = 0, completed = 0;
+            indexer.ActionSent += e =>
+            {
+                sent++;
+
+                // All document actions should have unique keys in a batch
+                sentDocumentKeys.Add(e.Action.Document.Id);
+                CollectionAssert.AllItemsAreUnique(sentDocumentKeys);
+
+                // The documents will be split into batches as - {0, 1, 3}, {2, 4}.
+                // So, 3 documents will be sent before any are submitted, but 3 submissions will be made before the last 2 are sent
+                Assert.AreEqual((sent <= 3) ? 0 : 3, completed);
+                return Task.CompletedTask;
+            };
+
+            indexer.ActionCompleted += e =>
+            {
+                completed++;
+                sentDocumentKeys.Remove(e.Action.Document.Id);
+
+                // The documents will be split into batches as - {0, 1, 3}, {2, 4}.
+                // So, 3 documents will be submitted after 3 are sent, and the last 2 submissions will be made after all 5 are sent
+                Assert.AreEqual((completed <= 3) ? 3 : 5, sent);
+                return Task.CompletedTask;
+            };
+
+            AssertNoFailures(indexer);
+            await indexer.UploadDocumentsAsync(data);
+            await indexer.FlushAsync();
+
+            Assert.AreEqual(5, sent);
+            Assert.AreEqual(5, completed);
+        }
+
+        [Test]
+        public async Task Behavior_SplitBatchWorstCase()
+        {
+            int numberOfDocuments = 5;
+
+            await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
+
+            // 'SimpleDocument' has 'Id' set as its key field.
+            // Set the Ids of all documents in the group to be the same.
+            // We expect the batches to have only 1 element each.
+            SimpleDocument[] data = new SimpleDocument[numberOfDocuments];
+            for (int i = 0; i < numberOfDocuments; i++)
+            {
+                data[i] = new SimpleDocument() { Id = "0", Name = $"Document #{i}" };
+            }
+
+            await using SearchIndexingBufferedSender<SimpleDocument> indexer =
+                client.CreateIndexingBufferedSender(
+                    new SearchIndexingBufferedSenderOptions<SimpleDocument>()
+                    {
+                        // Set the expected batch action count to be larger than the number of documents in the set.
+                        InitialBatchActionCount = numberOfDocuments + 1,
+                    });
+
+            List<string> sentDocumentKeys = new List<string>();
+            int sent = 0, completed = 0;
+            indexer.ActionSent += e =>
+            {
+                sent++;
+
+                // All document actions should have unique keys in a batch
+                sentDocumentKeys.Add(e.Action.Document.Id);
+                CollectionAssert.AllItemsAreUnique(sentDocumentKeys);
+
+                // The documents will be split into batches as - {0}, {1}, {2}, {3}, {4}.
+                // So, each document will be sent and submitted, before the next is batched for send
+                Assert.AreEqual(1, sent - completed);
+                return Task.CompletedTask;
+            };
+
+            indexer.ActionCompleted += e =>
+            {
+                completed++;
+                sentDocumentKeys.Remove(e.Action.Document.Id);
+
+                // The documents will be split into batches as - {0}, {1}, {2}, {3}, {4}.
+                // So, each document will be sent and submitted, before the next is batched for send
+                Assert.AreEqual(0, sent - completed);
+                return Task.CompletedTask;
+            };
+
+            AssertNoFailures(indexer);
+            await indexer.UploadDocumentsAsync(data);
+            await indexer.FlushAsync();
+
+            // Ensure all documents are sent and submitted.
             Assert.AreEqual(5, sent);
             Assert.AreEqual(5, completed);
         }

@@ -398,15 +398,48 @@ namespace Azure.Search.Documents.Batching
             // already submitting
             StopTimer();
 
+            bool batchFilled = false;
+            Queue<PublisherAction<T>> nextRetryItemsQueue = new Queue<PublisherAction<T>>();
+            Queue<PublisherAction<T>> nextPendingItemsQueue = new Queue<PublisherAction<T>>();
+
             do
             {
                 List<PublisherAction<T>> batch = new List<PublisherAction<T>>(
                     capacity: Math.Min(BatchActionCount, IndexingActionsCount));
 
-                // Prefer pulling from the _retry queue first
-                if (!FillBatchFromQueue(batch, _retry))
+                // First, pick any items from the retry queue that were skipped in the last iteration
+                if (nextRetryItemsQueue.Count > 0)
                 {
-                    FillBatchFromQueue(batch, _pending);
+                    (batchFilled, nextRetryItemsQueue) = FillBatchFromQueue(batch, nextRetryItemsQueue);
+                }
+
+                // Next, pick any items from the pending queue that were skipped in the last iteration
+                if (!batchFilled && (nextPendingItemsQueue.Count > 0))
+                {
+                    (batchFilled, nextPendingItemsQueue) = FillBatchFromQueue(batch, nextPendingItemsQueue);
+                }
+
+                if (!batchFilled)
+                {
+                    Queue<PublisherAction<T>> nextItemsQueue;
+
+                    // Now, prefer pulling from the _retry queue before the pending queue
+                    (batchFilled, nextItemsQueue) = FillBatchFromQueue(batch, _retry);
+
+                    foreach (var item in nextItemsQueue)
+                    {
+                        nextRetryItemsQueue.Enqueue(item);
+                    }
+
+                    if (!batchFilled)
+                    {
+                        (_, nextItemsQueue) = FillBatchFromQueue(batch, _pending);
+
+                        foreach (var item in nextItemsQueue)
+                        {
+                            nextPendingItemsQueue.Enqueue(item);
+                        }
+                    }
                 }
 
                 // Submit the batch
@@ -415,30 +448,39 @@ namespace Azure.Search.Documents.Batching
                     cancellationToken)
                     .ConfigureAwait(false);
 
-            // Keep going if we have more full batches ready to submit
-            } while (HasBatch(flush));
+                // Keep going if we have more full batches ready to submit
+            } while (HasBatch(flush) || (nextRetryItemsQueue.Count > 0) || (nextPendingItemsQueue.Count > 0));
 
             // Fill as much of the batch as possible from the given queue.
             // Returns whether the batch is now full.
-            bool FillBatchFromQueue(List<PublisherAction<T>> batch, Queue< PublisherAction<T>> queue)
+            (bool, Queue<PublisherAction<T>>) FillBatchFromQueue(List<PublisherAction<T>> batch, Queue< PublisherAction<T>> queue)
             {
                 HashSet<string> documentIdentifiers = new HashSet<string>(StringComparer.Ordinal);
+                Queue<PublisherAction<T>> nextQueue = new Queue<PublisherAction<T>>();
 
                 while (queue.Count > 0)
                 {
                     // Stop filling the batch if we run into an action for a document that is already in the batch.
                     // We want to keep the actions ordered and map any errors accurately to the documents,
                     // so we need to split the batch on encountering an action for a previously queued document.
-                    if ((batch.Count < BatchActionCount) && documentIdentifiers.Add(queue.Peek().Key))
+                    if (batch.Count < BatchActionCount)
                     {
-                        batch.Add(queue.Dequeue());
+                        PublisherAction<T> nextAction = queue.Dequeue();
+                        if (documentIdentifiers.Add(nextAction.Key))
+                        {
+                            batch.Add(nextAction);
+                        }
+                        else
+                        {
+                            nextQueue.Enqueue(nextAction);
+                        }
                     }
                     else
                     {
-                        return true;
+                        return (true, nextQueue);
                     }
                 }
-                return false;
+                return (false, nextQueue);
             }
         }
 
