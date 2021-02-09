@@ -625,7 +625,10 @@
                             "$ref": "#/definitions/AcrErrors"
                         }
                     }
-                }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink"
+                  }
             }
         },
         "/acr/v1/{name}": {

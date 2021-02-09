@@ -351,5 +351,78 @@ namespace Azure.Containers.ContainerRegistry
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateGetRepositoriesNextPageRequest(string nextLink, string last, int? n)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> List repositories. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
+        /// <param name="n"> query parameter for max number of items. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders>> GetRepositoriesNextPageAsync(string nextLink, string last = null, int? n = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateGetRepositoriesNextPageRequest(nextLink, last, n);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ContainerRegistryGetRepositoriesHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        Repositories value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = Repositories.DeserializeRepositories(document.RootElement);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> List repositories. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
+        /// <param name="n"> query parameter for max number of items. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> GetRepositoriesNextPage(string nextLink, string last = null, int? n = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateGetRepositoriesNextPageRequest(nextLink, last, n);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ContainerRegistryGetRepositoriesHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        Repositories value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = Repositories.DeserializeRepositories(document.RootElement);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }
