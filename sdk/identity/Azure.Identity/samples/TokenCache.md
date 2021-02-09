@@ -41,7 +41,7 @@ The `Serialize` or `SerializeAsync` methods can be used to write out content of 
 ```C# Snippet:Identity_TokenCache_CustomPersistence_Write
 using var cacheStream = new FileStream(TokenCachePath, FileMode.Create, FileAccess.Write);
 
-await tokenCache.SerializeAsync(cacheStream);
+await TokenCacheSerializer.SerializeAsync(tokenCache, cacheStream);
 ```
 
 The `Deserialize` or `DeserializeAsync` methods can be used to read the content of a `TokenCache` from any readable stream.
@@ -49,7 +49,7 @@ The `Deserialize` or `DeserializeAsync` methods can be used to read the content 
 ```C# Snippet:Identity_TokenCache_CustomPersistence_Read
 using var cacheStream = new FileStream(TokenCachePath, FileMode.OpenOrCreate, FileAccess.Read);
 
-var tokenCache = await TokenCache.DeserializeAsync(cacheStream);
+var tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
 ```
 
 Applications can combine these methods along with the `Updated` event to automatically persist and read the token from a storage solution of their choice.
@@ -58,7 +58,7 @@ public static async Task<TokenCache> ReadTokenCacheAsync()
 {
     using var cacheStream = new FileStream(TokenCachePath, FileMode.OpenOrCreate, FileAccess.Read);
 
-    var tokenCache = await TokenCache.DeserializeAsync(cacheStream);
+    var tokenCache = await TokenCacheSerializer.DeserializeAsync(cacheStream);
 
     tokenCache.Updated += WriteCacheOnUpdateAsync;
 
@@ -69,7 +69,7 @@ public static async Task WriteCacheOnUpdateAsync(TokenCacheUpdatedArgs args)
 {
     using var cacheStream = new FileStream(TokenCachePath, FileMode.Create, FileAccess.Write);
 
-    await args.Cache.SerializeAsync(cacheStream);
+    await TokenCacheSerializer.SerializeAsync(args.Cache, cacheStream);
 }
 
 public static async Task Main()

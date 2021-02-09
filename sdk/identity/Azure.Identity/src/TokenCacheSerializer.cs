@@ -62,8 +62,6 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public static async Task<TokenCache> DeserializeAsync(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream is null)
-                throw new ArgumentNullException(nameof(stream));
             Argument.AssertNotNull(stream, nameof(stream));
 
             return await DeserializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
