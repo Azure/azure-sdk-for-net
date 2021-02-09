@@ -2,6 +2,11 @@
 
 ## 1.0.0-preview.3 (Unreleased)
 
+### Added
+- Improved samples and documentation.
+
+### Changed
+- `AccessControlClient` is now split into `RoleAssignmentsClient` and a `RoleDefinitionsClient` with a changed API surface.
 
 ## 1.0.0-preview.2 (2020-09-01)
 - This release contains bug fixes to improve quality.
