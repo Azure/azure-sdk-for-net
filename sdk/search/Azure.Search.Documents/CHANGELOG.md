@@ -1,6 +1,6 @@
 # Release History
 
-## 11.2.0-beta.3 (Unreleased)
+## 11.2.0 (2021-02-10)
 
 
 ## 11.2.0-beta.2 (2020-11-10)
@@ -62,6 +62,12 @@
 - Removed `SearchServiceCounters.SkillsetCounter`.
 - Removed `new SearchOptions(string continuationToken)` overload.
 
+## 11.0.0-preview.1 (2020-03-13)
+
+- Initial preview of the Azure.Search client library enabling you to query
+  and update documents in search indexes.
+
+[net-guidelines-collection-properties]: https://docs.microsoft.com/dotnet/standard/design-guidelines/guidelines-for-collections#collection-properties-and-return-values
 ## 1.0.0-preview.4 (2020-06-09)
 
 ### Added
@@ -140,9 +146,3 @@
 - Replaced SearchApiKeyCredential with AzureKeyCredential
 - Renamed `SearchServiceClient.GetStatistics` and `SearchServiceClient.GetStatisticsAsync` to `SearchServiceClient.GetServiceStatistics` and `SearchServiceClient.GetServiceStatisticsAsync`
 
-## 11.0.0-preview.1 (2020-03-13)
-
-- Initial preview of the Azure.Search client library enabling you to query
-  and update documents in search indexes.
-
-[net-guidelines-collection-properties]: https://docs.microsoft.com/dotnet/standard/design-guidelines/guidelines-for-collections#collection-properties-and-return-values
