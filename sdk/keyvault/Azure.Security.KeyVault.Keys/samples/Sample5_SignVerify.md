@@ -20,21 +20,21 @@ First, we'll create both an RSA key and an EC key which will be used to sign and
 
 ```C# Snippet:KeysSample5CreateKey
 string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
-var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
+var rsaKeyOptions = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
 {
     KeySize = 2048,
 };
 
 string ecKeyName = $"CloudEcKey-{Guid.NewGuid()}";
-var ecKey = new CreateEcKeyOptions(ecKeyName, hardwareProtected: false)
+var ecKeyOptions = new CreateEcKeyOptions(ecKeyName, hardwareProtected: false)
 {
     CurveName = KeyCurveName.P256K,
 };
 
-KeyVaultKey cloudRsaKey = keyClient.CreateRsaKey(rsaKey);
+KeyVaultKey cloudRsaKey = keyClient.CreateRsaKey(rsaKeyOptions);
 Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
 
-KeyVaultKey cloudEcKey = keyClient.CreateEcKey(ecKey);
+KeyVaultKey cloudEcKey = keyClient.CreateEcKey(ecKeyOptions);
 Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyType}");
 ```
 
