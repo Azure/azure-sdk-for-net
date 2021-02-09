@@ -43,11 +43,10 @@ var client = new CommunicationIdentityClient(connectionString);
 
 Or alternatively using the endpoint and access key acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
 
-```C# Snippet:CreateCommunicationIdentityClient
-// Get endpoint and access key for our Azure Communication resource.
-var endpoint = "<endpoint_string>";
-var accessKey = "<access_key_string>";
-var client = new CommunicationIdentityClient(new Uri(endpoint), new AzureKeyCredential(accessKey));
+```C# Snippet:CreateCommunicationIdentityFromAccessKey
+var endpoint = new Uri("https://my-resource.communication.azure.com");
+var accessKey = "<access_key>";
+var client = new CommunicationIdentityClient(endpoint, new AzureKeyCredential(accessKey));
 ```
 
 Clients also have the option to authenticate using a valid Active Directory token.
