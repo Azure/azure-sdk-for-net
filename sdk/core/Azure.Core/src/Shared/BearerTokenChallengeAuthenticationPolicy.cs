@@ -163,8 +163,24 @@ namespace Azure.Core.Pipeline
                 return null;
             }
 
-            ReadOnlySpan<char> bearer = "Bearer".AsSpan();
-            ReadOnlySpan<char> claims = "claims".AsSpan();
+            var challenge = GetChallengeFromResponse(response, "Bearer", "claims");
+            if (challenge != null)
+            {
+                return Base64Url.DecodeString(challenge.ToString());
+            }
+
+            return null;
+        }
+
+        protected internal static string? GetChallengeFromResponse(Response response, string challengeScheme, string challengeParameter)
+        {
+            if (response.Status != (int)HttpStatusCode.Unauthorized || !response.Headers.TryGetValue(ChallengeHeader, out string? headerValue))
+            {
+                return null;
+            }
+
+            ReadOnlySpan<char> bearer = challengeScheme.AsSpan();
+            ReadOnlySpan<char> claims = challengeParameter.AsSpan();
             ReadOnlySpan<char> headerSpan = headerValue.AsSpan();
 
             // Iterate through each challenge value.
@@ -175,7 +191,7 @@ namespace Azure.Core.Pipeline
                 {
                     if (challengeKey.Equals(bearer, StringComparison.OrdinalIgnoreCase) && key.Equals(claims, StringComparison.OrdinalIgnoreCase))
                     {
-                        return Base64Url.DecodeString(value.ToString());
+                        return value.ToString();
                     }
                 }
             }
