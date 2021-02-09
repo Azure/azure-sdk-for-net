@@ -28,6 +28,6 @@
     <PackageReference Include="Microsoft.Azure.Management.Authorization" Version="2.8.0-preview" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.Management.Purview\Microsoft.Azure.Management.Purview.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.Purview.csproj" />
   </ItemGroup>
 </Project>
