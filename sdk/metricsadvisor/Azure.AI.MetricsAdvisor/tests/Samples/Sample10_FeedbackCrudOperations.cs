@@ -23,10 +23,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string metricId = MetricId;
 
-            DimensionKey groupKey = new DimensionKey();
-            groupKey.AddDimensionColumn("city", "Belo Horizonte");
+            FeedbackDimensionFilter filter = new FeedbackDimensionFilter();
 
-            FeedbackDimensionFilter filter = new FeedbackDimensionFilter(groupKey);
+            filter.DimensionFilter.AddDimensionColumn("city", "Belo Horizonte");
+
             var startTime = DateTimeOffset.Parse("2020-02-01T00:00:00Z");
             var endTime = DateTimeOffset.Parse("2020-02-03T00:00:00Z");
 

@@ -12,6 +12,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class MetricFeedbackLiveTests : MetricsAdvisorLiveTestBase
     {
+        private const string ExpectedCity = "Delhi";
+
+        private const string ExpectedCategory = "Handmade";
+
         public MetricFeedbackLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -27,17 +31,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var dimensionKey = new DimensionKey();
-            dimensionKey.AddDimensionColumn("city", "Delhi");
-            dimensionKey.AddDimensionColumn("category", "Handmade");
+            var filter = new FeedbackDimensionFilter();
 
-            var filter = new FeedbackDimensionFilter(dimensionKey);
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
 
             var feedbackToAdd = new MetricAnomalyFeedback(MetricId, filter, CreatedFeedbackStartTime, CreatedFeedbackEndTime, AnomalyValue.AutoDetect);
 
             MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            ValidateMetricFeedback(addedFeedback, dimensionKey);
+            ValidateMetricFeedback(addedFeedback);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Anomaly));
 
@@ -56,11 +59,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensionKey = new DimensionKey();
-            dimensionKey.AddDimensionColumn("city", "Delhi");
-            dimensionKey.AddDimensionColumn("category", "Handmade");
+            var filter = new FeedbackDimensionFilter();
 
-            var filter = new FeedbackDimensionFilter(dimensionKey);
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
 
             var feedbackToAdd = new MetricAnomalyFeedback(MetricId, filter, CreatedFeedbackStartTime, CreatedFeedbackEndTime, AnomalyValue.AutoDetect)
             {
@@ -69,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            ValidateMetricFeedback(addedFeedback, dimensionKey);
+            ValidateMetricFeedback(addedFeedback);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Anomaly));
 
@@ -88,17 +90,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensionKey = new DimensionKey();
-            dimensionKey.AddDimensionColumn("city", "Delhi");
-            dimensionKey.AddDimensionColumn("category", "Handmade");
+            var filter = new FeedbackDimensionFilter();
 
-            var filter = new FeedbackDimensionFilter(dimensionKey);
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
 
             var feedbackToAdd = new MetricChangePointFeedback(MetricId, filter, CreatedFeedbackStartTime, CreatedFeedbackEndTime, ChangePointValue.AutoDetect);
 
             MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            ValidateMetricFeedback(addedFeedback, dimensionKey);
+            ValidateMetricFeedback(addedFeedback);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.ChangePoint));
 
@@ -120,18 +121,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensionKey = new DimensionKey();
-            dimensionKey.AddDimensionColumn("city", "Delhi");
-            dimensionKey.AddDimensionColumn("category", "Handmade");
+            var filter = new FeedbackDimensionFilter();
 
-            var filter = new FeedbackDimensionFilter(dimensionKey);
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
+
             var comment = "Feedback created in a .NET test.";
 
             var feedbackToAdd = new MetricCommentFeedback(MetricId, filter, comment);
 
             MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            ValidateMetricFeedback(addedFeedback, dimensionKey);
+            ValidateMetricFeedback(addedFeedback);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Comment));
 
@@ -148,11 +149,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensionKey = new DimensionKey();
-            dimensionKey.AddDimensionColumn("city", "Delhi");
-            dimensionKey.AddDimensionColumn("category", "Handmade");
+            var filter = new FeedbackDimensionFilter();
 
-            var filter = new FeedbackDimensionFilter(dimensionKey);
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
+
             var comment = "Feedback created in a .NET test.";
 
             var feedbackToAdd = new MetricCommentFeedback(MetricId, filter, comment)
@@ -163,7 +164,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            ValidateMetricFeedback(addedFeedback, dimensionKey);
+            ValidateMetricFeedback(addedFeedback);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Comment));
 
@@ -180,18 +181,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensionKey = new DimensionKey();
-            dimensionKey.AddDimensionColumn("city", "Delhi");
-            dimensionKey.AddDimensionColumn("category", "Handmade");
+            var filter = new FeedbackDimensionFilter();
 
-            var filter = new FeedbackDimensionFilter(dimensionKey);
+            filter.DimensionFilter.AddDimensionColumn("city", ExpectedCity);
+            filter.DimensionFilter.AddDimensionColumn("category", ExpectedCategory);
+
             var periodValue = 10;
 
             var feedbackToAdd = new MetricPeriodFeedback(MetricId, filter, PeriodType.AutoDetect, periodValue);
 
             MetricFeedback addedFeedback = await client.AddFeedbackAsync(feedbackToAdd);
 
-            ValidateMetricFeedback(addedFeedback, dimensionKey);
+            ValidateMetricFeedback(addedFeedback);
 
             Assert.That(addedFeedback.Type, Is.EqualTo(FeedbackType.Period));
 
@@ -328,7 +329,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(feedbackCount, Is.GreaterThan(0));
         }
 
-        private void ValidateMetricFeedback(MetricFeedback feedback, DimensionKey expectedDimensionKey)
+        private void ValidateMetricFeedback(MetricFeedback feedback)
         {
             Assert.That(feedback, Is.Not.Null);
             Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
@@ -339,7 +340,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(feedback.CreatedTime, Is.GreaterThan(justNow));
 
             Assert.That(feedback.DimensionFilter, Is.Not.Null);
-            Assert.That(feedback.DimensionFilter.DimensionFilter, Is.EqualTo(expectedDimensionKey));
+            Assert.That(feedback.DimensionFilter.DimensionFilter, Is.Not.Null);
+
+            var dimensionColumns = feedback.DimensionFilter.DimensionFilter.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(2));
+            Assert.That(dimensionColumns.ContainsKey("city"));
+            Assert.That(dimensionColumns.ContainsKey("category"));
+            Assert.That(dimensionColumns["city"], Is.EqualTo(ExpectedCity));
+            Assert.That(dimensionColumns["category"], Is.EqualTo(ExpectedCategory));
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The AnalyzeHealthcareEntitiesOperation class for LRO. </summary>
+    /// <summary> Pageable operation class for analyzing multiple healthcare documents using long running operation. </summary>
     public class AnalyzeHealthcareEntitiesOperation : PageableOperation<AnalyzeHealthcareEntitiesResultCollection>
     {
         /// <summary>
