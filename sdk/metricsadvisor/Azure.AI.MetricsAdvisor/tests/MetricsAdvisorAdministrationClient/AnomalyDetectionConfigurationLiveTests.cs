@@ -932,7 +932,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             try
             {
-                configId = await adminClient.CreateDetectionConfigurationAsync(configToCreate);
+                AnomalyDetectionConfiguration createdConfig = await adminClient.CreateDetectionConfigurationAsync(configToCreate);
+                configId = createdConfig.Id;
 
                 Assert.That(configId, Is.Not.Null.And.Not.Empty);
             }

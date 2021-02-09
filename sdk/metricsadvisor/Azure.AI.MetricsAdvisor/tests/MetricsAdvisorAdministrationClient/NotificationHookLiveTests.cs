@@ -653,7 +653,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             try
             {
-                hookId = await adminClient.CreateHookAsync(hookToCreate);
+                NotificationHook createdHook = await adminClient.CreateHookAsync(hookToCreate);
+                hookId = createdHook.Id;
 
                 Assert.That(hookId, Is.Not.Null.And.Not.Empty);
             }

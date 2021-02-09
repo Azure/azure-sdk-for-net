@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2021-02-09)
 
 ### New Features
 - Added support for AAD authentication in `MetricsAdvisorClient` and `MetricsAdvisorAdministrationClient`.
@@ -14,6 +14,11 @@
 - The constructor of the `MetricSeriesGroupDetectionCondition` class is now parameterless. Dimension columns can be added directly to `SeriesGroupKey`.
 - The constructor of the `AnomalyAlertConfiguration` class is now parameterless. Required properties should be set via setters.
 - The constructor of the `EmailNotificationHook` and `WebNotificationHook` are now parameterless. Required properies should be set via setters.
+- In `MetricsAdvisorAdministratorClient`, changed return types of sync and async `CreateDataFeed` methods to a `Response<DataFeed>` containing the created data feed.
+- In `MetricsAdvisorAdministratorClient`, changed return types of sync and async `CreateDetectionConfiguration` methods to a `Response<AnomalyDetectionConfiguration>` containing the created configuration.
+- In `MetricsAdvisorAdministratorClient`, changed return types of sync and async `CreateAlertConfiguration` methods to a `Response<AnomalyAlertConfiguration>` containing the created configuration.
+- In `MetricsAdvisorAdministratorClient`, changed return types of sync and async `CreateHook` methods to a `Response<NotificationHook>` containing the created hook.
+- In `MetricsAdvisorClient`, changed return types of sync and async `AddMetricFeedback` methods to a `Response<MetricFeedback>` containing the added feedback.
 - In `DataFeed`, added property setters to `Name`, `DataSource`, `Granularity`, `IngestionSettings`, and `Schema`.
 - In `DataFeedIngestionSettings`, added a property setter to `IngestionStartTime`.
 - In `AnomalyDetectionConfiguration`, added property setters to `MetricId`, `Name`, and `WholeSeriesDetectionConditions`.
