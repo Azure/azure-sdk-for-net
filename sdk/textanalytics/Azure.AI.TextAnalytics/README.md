@@ -484,7 +484,7 @@ Text Analytics for health is a containerized service that extracts and labels re
 ### Run Analyze Operation Asynchronously
 The Analyze functionality allows to choose which of the supported Text Analytics features to execute in the same set of documents. Currently the supported features are: entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation_howto].
 
-```C# Snippet:AnalyzeOperationBatchConvenience
+```C# Snippet:AnalyzeOperationBatchConvenienceAsync
     string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
                         worth the hike! Yesterday was foggy though, so we missed the spectacular views.
                         We tried again today and it was amazing. Everyone in my family liked the trail although
@@ -517,17 +517,11 @@ The Analyze functionality allows to choose which of the supported Text Analytics
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
+    AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
-    TimeSpan pollingInterval = new TimeSpan(1000);
+    await operation.WaitForCompletionAsync();
 
-    while (!operation.HasCompleted)
-    {
-        Thread.Sleep(pollingInterval);
-        operation.UpdateStatus();
-    }
-
-    foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
+    await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
     {
         RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.FirstOrDefault().Result;
 
