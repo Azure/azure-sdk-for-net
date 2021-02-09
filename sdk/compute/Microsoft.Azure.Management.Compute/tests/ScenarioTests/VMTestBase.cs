@@ -83,6 +83,24 @@ namespace Compute.Tests
                 Version = image.Name
             };
         }
+        
+        protected List<VirtualMachineImageResource> ListVMImagesInEdgeZone(string location, string edgeZone, string publisher, string offer, string sku, int? top = null, string orderby = null)
+        {
+            var images = m_CrpClient.VirtualMachineImagesEdgeZone.List(
+                location: location, edgeZone: edgeZone, publisherName: publisher, offer: offer, skus: sku,
+                top: top, orderby: orderby);
+
+            return images.ToList();
+        }
+
+        protected VirtualMachineImageResource GetVMImageInEdgeZone(string location, string edgeZone, string publisher, string offer, string sku, string version)
+        {
+            var image = m_CrpClient.VirtualMachineImagesEdgeZone.Get(
+                location: location, edgeZone: edgeZone, publisherName: publisher, offer: offer, skus: sku,
+                version: version);
+
+            return image;
+        }
 
         protected ImageReference GetPlatformVMImage(bool useWindowsImage, string sku = null)
         {
@@ -214,9 +232,10 @@ namespace Compute.Tests
             Action<VirtualMachine> vmCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
-            bool hasManagedDisks = false)
+            bool hasManagedDisks = false,
+            CM.ExtendedLocation extendedLocation = null)
         {
-            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks);
+            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks, extendedLocation: extendedLocation);
         }
 
         protected VirtualMachine CreateVM(
@@ -237,7 +256,8 @@ namespace Compute.Tests
             bool? encryptionAtHostEnabled = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            CM.ExtendedLocation extendedLocation = null)
         {
             try
             {
@@ -250,19 +270,20 @@ namespace Compute.Tests
                         Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                     });
 
-                PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
+                PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName, extendedLocation: extendedLocation);
 
                 // Do not add Dns server for managed disks, as they cannot resolve managed disk url ( https://md-xyz ) without
                 // explicitly setting up the rules for resolution. The VMs upon booting would need to contact the
                 // DNS server to access the VMStatus agent blob. Without proper Dns resolution, The VMs cannot access the
                 // VMStatus agent blob and there by fail to boot.
                 bool addDnsServer = !hasManagedDisks;
-                Subnet subnetResponse = CreateVNET(rgName, addDnsServer);
+                Subnet subnetResponse = CreateVNET(rgName, addDnsServer, extendedLocation: extendedLocation);
 
                 NetworkInterface nicResponse = CreateNIC(
                     rgName,
                     subnetResponse,
-                    getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
+                    getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null,
+                    extendedLocation: extendedLocation);
 
                 string ppgId = ((ppgName != null) ? CreateProximityPlacementGroup(rgName, ppgName): null);
 
@@ -308,6 +329,12 @@ namespace Compute.Tests
                     inputVM.HardwareProfile.VmSize = vmSize;
                     inputVM.Zones = zones;
                 }
+                
+                if (extendedLocation != null)
+                {
+                    inputVM.AvailabilitySet = null;
+                    inputVM.ExtendedLocation = extendedLocation;
+                }
 
                 if (vmCustomizer != null)
                 {
@@ -348,7 +375,7 @@ namespace Compute.Tests
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
                 ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled,
                     hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId, encryptionAtHostEnabled: encryptionAtHostEnabled,
-                    expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
+                    expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId, extendedLocation: extendedLocation);
 
                 return getResponse;
             }
@@ -377,7 +404,7 @@ namespace Compute.Tests
             return getPublicIpPrefixResponse;
         }
 
-        protected PublicIPAddress CreatePublicIP(string rgName)
+        protected PublicIPAddress CreatePublicIP(string rgName, CM.ExtendedLocation extendedLocation = null)
         {
             // Create publicIP
             string publicIpName = ComputeManagementTestUtilities.GenerateName("pip");
@@ -396,13 +423,18 @@ namespace Compute.Tests
                     DomainNameLabel = domainNameLabel
                 }
             };
+            
+            if (extendedLocation != null)
+            {
+                publicIp.ExtendedLocation =  new NM.ExtendedLocation(extendedLocation.Name);
+            }
 
             var putPublicIpAddressResponse = m_NrpClient.PublicIPAddresses.CreateOrUpdate(rgName, publicIpName, publicIp);
             var getPublicIpAddressResponse = m_NrpClient.PublicIPAddresses.Get(rgName, publicIpName);
             return getPublicIpAddressResponse;
         }
 
-        protected Subnet CreateVNET(string rgName, bool addDnsServer = true, bool disablePEPolicies = false)
+        protected Subnet CreateVNET(string rgName, bool addDnsServer = true, bool disablePEPolicies = false, CM.ExtendedLocation extendedLocation = null)
         {
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -437,6 +469,12 @@ namespace Compute.Tests
                             }
                         }
             };
+            
+            if (extendedLocation != null)
+            {
+                vnet.ExtendedLocation = new NM.ExtendedLocation(extendedLocation.Name);
+            }
+            
             var putVnetResponse = m_NrpClient.VirtualNetworks.CreateOrUpdate(rgName, vnetName, vnet);
             var getSubnetResponse = m_NrpClient.Subnets.Get(rgName, vnetName, subnetName);
             return getSubnetResponse;
@@ -497,7 +535,8 @@ namespace Compute.Tests
             return getNsgResponse;
         }
 
-        protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null, NetworkSecurityGroup nsg = null)
+        protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null, NetworkSecurityGroup nsg = null,
+            CM.ExtendedLocation extendedLocation = null)
         {
             // Create Nic
             nicname = nicname ?? ComputeManagementTestUtilities.GenerateName("nic");
@@ -525,6 +564,11 @@ namespace Compute.Tests
             if (publicIPaddress != null)
             {
                 nicParameters.IpConfigurations[0].PublicIPAddress = new Microsoft.Azure.Management.Network.Models.PublicIPAddress() { Id = publicIPaddress };
+            }
+            
+            if (extendedLocation != null)
+            {
+                nicParameters.ExtendedLocation = new NM.ExtendedLocation(extendedLocation.Name);
             }
 
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
@@ -984,7 +1028,7 @@ namespace Compute.Tests
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
             bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null,
-            bool? encryptionAtHostEnabled = null, string expectedDedicatedHostGroupReferenceId = null)
+            bool? encryptionAtHostEnabled = null, string expectedDedicatedHostGroupReferenceId = null, CM.ExtendedLocation extendedLocation = null)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -1188,6 +1232,17 @@ namespace Compute.Tests
             else
             {
                 Assert.Null(vmOut.HostGroup);
+            }
+            
+            if (extendedLocation != null)
+            {
+                Assert.NotNull(vmOut.ExtendedLocation);
+                Assert.Equal(extendedLocation.Name, vmOut.ExtendedLocation.Name, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(extendedLocation.Type, vmOut.ExtendedLocation.Type, StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                Assert.Null(vmOut.ExtendedLocation);
             }
         }
 
