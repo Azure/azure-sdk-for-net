@@ -252,6 +252,7 @@ try
     {
         Console.WriteLine($"  Text: {entity.Text}");
         Console.WriteLine($"  Offset: {entity.Offset}");
+        Console.WriteLine($"  Length: {entity.Length}");
         Console.WriteLine($"  Category: {entity.Category}");
         if (!string.IsNullOrEmpty(entity.SubCategory))
             Console.WriteLine($"  SubCategory: {entity.SubCategory}");
@@ -333,6 +334,7 @@ try
         {
             Console.WriteLine($"    Match Text: {match.Text}");
             Console.WriteLine($"    Offset: {match.Offset}");
+            Console.WriteLine($"    Length: {match.Length}");
             Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
         }
         Console.WriteLine("");
@@ -394,6 +396,7 @@ try
     {
         Console.WriteLine($"    Text: {entity.Text}");
         Console.WriteLine($"    Offset: {entity.Offset}");
+        Console.WriteLine($"  Length: {entity.Length}");
         Console.WriteLine($"    Category: {entity.Category}");
         if (!string.IsNullOrEmpty(entity.SubCategory))
             Console.WriteLine($"    SubCategory: {entity.SubCategory}");
@@ -493,25 +496,25 @@ The Analyze functionality allows to choose which of the supported Text Analytics
 
     var batchDocuments = new List<string> { document };
 
-    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+    TextAnalyticsActions batchActions = new TextAnalyticsActions()
     {
-        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-        EntitiesTaskParameters = new EntitiesTaskParameters(),
-        PiiTaskParameters = new PiiTaskParameters(),
+        ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+        RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
+        RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
+    AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
 
     await operation.WaitForCompletionAsync();
 
-    foreach (AnalyzeOperationResult documentsInPage in operation.GetValues())
+    foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
     {
-        RecognizeEntitiesResultCollection entitiesResult = documentsInPage.Tasks.EntityRecognitionTasks[0].Results;
+        RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.FirstOrDefault().Result;
 
-        ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.Tasks.KeyPhraseExtractionTasks[0].Results;
+        ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
 
-        RecognizePiiEntitiesResultCollection piiResult = documentsInPage.Tasks.EntityRecognitionPiiTasks[0].Results;
+        RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.FirstOrDefault().Result;
 
         Console.WriteLine("Recognized Entities");
 

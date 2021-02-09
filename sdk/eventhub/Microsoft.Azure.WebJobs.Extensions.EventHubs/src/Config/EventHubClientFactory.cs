@@ -129,7 +129,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 EventHubConsumerClient client = null;
                 if (_options.RegisteredConsumerCredentials.TryGetValue(eventHubName, out var creds))
                 {
-                    client = new EventHubConsumerClient(consumerGroup, creds.EventHubConnectionString, eventHubName);
+                    client = new EventHubConsumerClient(
+                        consumerGroup,
+                        creds.EventHubConnectionString,
+                        eventHubName,
+                        new EventHubConsumerClientOptions
+                        {
+                            RetryOptions = _options.RetryOptions,
+                            ConnectionOptions = _options.ConnectionOptions
+                        });
                 }
                 else if (!string.IsNullOrEmpty(connection))
                 {
@@ -138,11 +146,27 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     if (info.FullyQualifiedEndpoint != null &&
                         info.TokenCredential != null)
                     {
-                        client = new EventHubConsumerClient(consumerGroup, info.FullyQualifiedEndpoint, eventHubName, info.TokenCredential);
+                        client = new EventHubConsumerClient(
+                            consumerGroup,
+                            info.FullyQualifiedEndpoint,
+                            eventHubName,
+                            info.TokenCredential,
+                            new EventHubConsumerClientOptions
+                            {
+                                RetryOptions = _options.RetryOptions,
+                                ConnectionOptions = _options.ConnectionOptions
+                            });
                     }
                     else
                     {
-                        client = new EventHubConsumerClient(consumerGroup, NormalizeConnectionString(info.ConnectionString, eventHubName));
+                        client = new EventHubConsumerClient(
+                            consumerGroup,
+                            NormalizeConnectionString(info.ConnectionString, eventHubName),
+                            new EventHubConsumerClientOptions
+                            {
+                                RetryOptions = _options.RetryOptions,
+                                ConnectionOptions = _options.ConnectionOptions
+                            });
                     }
                 }
 

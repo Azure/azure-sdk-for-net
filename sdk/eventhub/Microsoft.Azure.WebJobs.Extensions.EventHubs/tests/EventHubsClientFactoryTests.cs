@@ -3,7 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Azure.Identity;
+using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Producer;
+using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -25,12 +31,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubOptions options = new EventHubOptions();
 
             // Test sender
-            options.AddSender("k1", connectionString);
+            options.AddSender(expectedPathName, connectionString);
 
             var configuration = CreateConfiguration();
             var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
 
-            var client = factory.GetEventHubProducerClient("k1", null);
+            var client = factory.GetEventHubProducerClient(expectedPathName, null);
             Assert.AreEqual(expectedPathName, client.EventHubName);
         }
 
@@ -44,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
 
-            var client = factory.GetEventHubProducerClient("k1", "connection");
+            var client = factory.GetEventHubProducerClient(expectedPathName, "connection");
             Assert.AreEqual(expectedPathName, client.EventHubName);
         }
 
@@ -143,6 +149,120 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var client = factory.GetCheckpointStoreClient("k1");
             Assert.AreEqual("azure-webjobs-eventhub", client.Name);
             Assert.AreEqual("http://blobs/azure-webjobs-eventhub", client.Uri.ToString());
+        }
+
+        [TestCase("k1", ConnectionString)]
+        [TestCase("path2", ConnectionStringWithEventHub)]
+        public void RespectsConnectionOptionsForProducer(string expectedPathName, string connectionString)
+        {
+            var testEndpoint = new Uri("http://mycustomendpoint.com");
+            EventHubOptions options = new EventHubOptions
+            {
+                ConnectionOptions = new EventHubConnectionOptions
+                {
+                    CustomEndpointAddress = testEndpoint
+                },
+                RetryOptions = new EventHubsRetryOptions
+                {
+                    MaximumRetries = 10
+                }
+            };
+
+            options.AddSender(expectedPathName, connectionString);
+
+            var configuration = CreateConfiguration();
+            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
+
+            var producer = factory.GetEventHubProducerClient(expectedPathName, null);
+            EventHubConnection connection = (EventHubConnection)typeof(EventHubProducerClient).GetProperty("Connection", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(producer);
+            EventHubConnectionOptions connectionOptions = (EventHubConnectionOptions)typeof(EventHubConnection).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(connection);
+
+            Assert.AreEqual(testEndpoint, connectionOptions.CustomEndpointAddress);
+            Assert.AreEqual(expectedPathName, producer.EventHubName);
+
+            EventHubProducerClientOptions producerOptions = (EventHubProducerClientOptions)typeof(EventHubProducerClient).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(producer);
+            Assert.AreEqual(10, producerOptions.RetryOptions.MaximumRetries);
+            Assert.AreEqual(expectedPathName, producer.EventHubName);
+        }
+
+        [TestCase("k1", ConnectionString)]
+        [TestCase("path2", ConnectionStringWithEventHub)]
+        public void RespectsConnectionOptionsForConsumer(string expectedPathName, string connectionString)
+        {
+            var testEndpoint = new Uri("http://mycustomendpoint.com");
+            EventHubOptions options = new EventHubOptions
+            {
+                ConnectionOptions = new EventHubConnectionOptions
+                {
+                    CustomEndpointAddress = testEndpoint
+                },
+                RetryOptions = new EventHubsRetryOptions
+                {
+                    MaximumRetries = 10
+                }
+            };
+
+            options.AddReceiver(expectedPathName, connectionString);
+
+            var configuration = CreateConfiguration();
+            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
+
+            var consumer = factory.GetEventHubConsumerClient(expectedPathName, null, "consumer");
+            var consumerClient = (EventHubConsumerClient)typeof(EventHubConsumerClientImpl)
+                .GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(consumer);
+            EventHubConnection connection = (EventHubConnection)typeof(EventHubConsumerClient)
+                .GetProperty("Connection", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(consumerClient);
+            EventHubConnectionOptions connectionOptions = (EventHubConnectionOptions)typeof(EventHubConnection)
+                .GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(connection);
+            Assert.AreEqual(testEndpoint, connectionOptions.CustomEndpointAddress);
+
+            EventHubsRetryPolicy retryPolicy = (EventHubsRetryPolicy)typeof(EventHubConsumerClient)
+                .GetProperty("RetryPolicy", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(consumerClient);
+
+            // Reflection was still necessary here because BasicRetryOptions (which is the concrete derived type)
+            // is internal.
+            EventHubsRetryOptions retryOptions = (EventHubsRetryOptions)retryPolicy.GetType()
+                .GetProperty("Options", BindingFlags.Public | BindingFlags.Instance)
+                .GetValue(retryPolicy);
+            Assert.AreEqual(10, retryOptions.MaximumRetries);
+            Assert.AreEqual(expectedPathName, consumer.EventHubName);
+        }
+
+        [TestCase("k1", ConnectionString)]
+        [TestCase("path2", ConnectionStringWithEventHub)]
+        public void RespectsConnectionOptionsForProcessor(string expectedPathName, string connectionString)
+        {
+            var testEndpoint = new Uri("http://mycustomendpoint.com");
+            EventHubOptions options = new EventHubOptions
+            {
+                ConnectionOptions = new EventHubConnectionOptions
+                {
+                    CustomEndpointAddress = testEndpoint
+                },
+                RetryOptions = new EventHubsRetryOptions
+                {
+                    MaximumRetries = 10
+                }
+            };
+
+            options.AddReceiver(expectedPathName, connectionString);
+
+            var configuration = CreateConfiguration();
+            var factory = new EventHubClientFactory(configuration, Mock.Of<AzureComponentFactory>(), Options.Create(options), new DefaultNameResolver(configuration));
+
+            var processor = factory.GetEventProcessorHost(expectedPathName, null, "consumer");
+            EventProcessorOptions processorOptions = (EventProcessorOptions)typeof(EventProcessor<EventProcessorHostPartition>)
+                .GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(processor);
+            Assert.AreEqual(testEndpoint, processorOptions.ConnectionOptions.CustomEndpointAddress);
+
+            Assert.AreEqual(10, processorOptions.RetryOptions.MaximumRetries);
+            Assert.AreEqual(expectedPathName, processor.EventHubName);
         }
 
         private IConfiguration CreateConfiguration(params KeyValuePair<string, string>[] data)

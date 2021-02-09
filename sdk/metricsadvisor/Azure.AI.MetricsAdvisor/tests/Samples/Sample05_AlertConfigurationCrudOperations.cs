@@ -31,15 +31,18 @@ namespace Azure.AI.MetricsAdvisor.Samples
             //@@ string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
 
             string configurationName = "Sample anomaly alert configuration";
-            var idsOfHooksToAlert = new List<string>() { hookId };
 
-            var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-            var metricAlertConfigurations = new List<MetricAnomalyAlertConfiguration>()
+            AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
             {
-                new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope)
+                Name = configurationName
             };
 
-            AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration(configurationName, idsOfHooksToAlert, metricAlertConfigurations);
+            alertConfiguration.IdsOfHooksToAlert.Add(hookId);
+
+            var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+            var metricAlertConfiguration = new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope);
+
+            alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 
             Response<string> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
 

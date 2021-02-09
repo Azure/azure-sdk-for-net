@@ -48,8 +48,10 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// dependencies.</param>
         /// <param name="dependsOnOverrides">Gets or sets the move resource
         /// dependencies overrides.</param>
+        /// <param name="isResolveRequired">Gets a value indicating whether the
+        /// resolve action is required over the move collection.</param>
         /// <param name="errors">Defines the move resource errors.</param>
-        public MoveResourceProperties(string sourceId, string provisioningState = default(string), string targetId = default(string), string existingTargetId = default(string), ResourceSettings resourceSettings = default(ResourceSettings), ResourceSettings sourceResourceSettings = default(ResourceSettings), MoveResourcePropertiesMoveStatus moveStatus = default(MoveResourcePropertiesMoveStatus), IList<MoveResourceDependency> dependsOn = default(IList<MoveResourceDependency>), IList<MoveResourceDependencyOverride> dependsOnOverrides = default(IList<MoveResourceDependencyOverride>), MoveResourcePropertiesErrors errors = default(MoveResourcePropertiesErrors))
+        public MoveResourceProperties(string sourceId, string provisioningState = default(string), string targetId = default(string), string existingTargetId = default(string), ResourceSettings resourceSettings = default(ResourceSettings), ResourceSettings sourceResourceSettings = default(ResourceSettings), MoveResourcePropertiesMoveStatus moveStatus = default(MoveResourcePropertiesMoveStatus), IList<MoveResourceDependency> dependsOn = default(IList<MoveResourceDependency>), IList<MoveResourceDependencyOverride> dependsOnOverrides = default(IList<MoveResourceDependencyOverride>), bool? isResolveRequired = default(bool?), MoveResourcePropertiesErrors errors = default(MoveResourcePropertiesErrors))
         {
             ProvisioningState = provisioningState;
             SourceId = sourceId;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
             MoveStatus = moveStatus;
             DependsOn = dependsOn;
             DependsOnOverrides = dependsOnOverrides;
+            IsResolveRequired = isResolveRequired;
             Errors = errors;
             CustomInit();
         }
@@ -123,6 +126,13 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         [JsonProperty(PropertyName = "dependsOnOverrides")]
         public IList<MoveResourceDependencyOverride> DependsOnOverrides { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the resolve action is required over
+        /// the move collection.
+        /// </summary>
+        [JsonProperty(PropertyName = "isResolveRequired")]
+        public bool? IsResolveRequired { get; private set; }
 
         /// <summary>
         /// Gets defines the move resource errors.

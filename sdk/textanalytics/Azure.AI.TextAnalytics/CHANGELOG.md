@@ -1,6 +1,9 @@
 # Release History
 
 ## 5.1.0-beta.4 (Unreleased)
+### New features
+- Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
+- `StringIndexType` has been added to all endpoints as a new option to control how the `Offset` and `Length` are calculated by the service.
 
 ### Breaking changes
 - Renamed `RecognizeHealthcareEntitiesResultCollection` to `AnalyzeHealthcareEntitiesResultCollection`.
