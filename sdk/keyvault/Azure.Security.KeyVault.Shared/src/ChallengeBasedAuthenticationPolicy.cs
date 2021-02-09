@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault
 
         protected override bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)
         {
-            string authority = GetChallengeFromResponse(message.Response, "Bearer", "authorization");
+            string authority = GetRequestAuthority(message.Request);
             string scope = GetChallengeFromResponse(message.Response, "Bearer", "resource");
             if (scope != null)
             {
@@ -80,7 +80,6 @@ namespace Azure.Security.KeyVault
 
             if (scope is null)
             {
-                authority = GetRequestAuthority(message.Request);
                 if (_scopeCache.TryGetValue(authority, out _scope))
                 {
                     return false;
@@ -89,6 +88,7 @@ namespace Azure.Security.KeyVault
             else
             {
                 _scope = new AuthorityScope(authority, new string[] { scope });
+                _scopeCache[authority] = _scope;
             }
 
             context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
