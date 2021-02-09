@@ -28,6 +28,9 @@
 - In `DataFeedRollupSettings`, removed the setter of the property `AutoRollupGroupByColumnNames`.
 - In `AnomalyDetectionConfiguration`, removed the setters of the properties `SeriesDetectionConditions` and `SeriesGroupDetectionConditions`.
 - In `WebNotificationHook`, removed the setter of the property `Headers`.
+- In `GetAnomaliesForDetectionConfigurationFilter`, removed the setter of the property `SeriesGroupKeys`. Keys can be added directly to the property.
+- In `GetMetricSeriesDefinitionsOptions`, removed the setter of the property `DimensionCombinationsToFilter`. Keys combinations can be added directly to the property.
+- In `GetValuesOfDimensionWithAnomaliesOptions`, removed the setter of the property `DimensionToFilter`. Dimension columns can be added directly to the property.
 - `DataFeed.SourceType` is now nullable. It will be null whenever `DataFeed.DataSource` is null.
 - `DataFeed.IngestionStartTime` is now nullable.
 - `MetricsAdvisorAdministrationClient.CreateDataFeed` sync and async methods now throw an `ArgumentException` if required properties are not set properly.
@@ -35,6 +38,8 @@
 - `MetricsAdvisorAdministrationClient.CreateAlertConfiguration` sync and async methods now throw an `ArgumentException` if required properties are not set properly.
 - In `MetricsAdvisorKeyCredential`, renamed the parameter `key` to `subscriptionKey` in the method `UpdateSubscriptionKey`.
 - In `MetricsAdvisorKeyCredential`, renamed the parameter `key` to `apiKey` in the method `UpdateApiKey`.
+- In `GetMetricSeriesDataOptions`, removed the parameter `seriesToFilter` from the constructor. Keys can be added directly to `SeriesToFilter`.
+- In `FeedbackDimensionFilter`, removed the parameter `dimensionFilter` from the constructor. Dimension columns can be added directly to `DimensionFilter`.
 
 ### Key Bug Fixes
 - Fixed a bug in which setting `WebNotificationHook.CertificatePassword` would actually set the property `Username` instead.

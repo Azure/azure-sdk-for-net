@@ -8,13 +8,8 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The data stored in JSON format. </summary>
-    internal partial class JsonFormat : DatasetStorageFormat
+    public partial class JsonFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of JsonFormat. </summary>
-        internal JsonFormat()
-        {
-            Type = "JsonFormat";
-        }
 
         /// <summary> File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is &apos;setOfObjects&apos;. It is case-sensitive. </summary>
         public JsonFormatFilePattern? FilePattern { get; }

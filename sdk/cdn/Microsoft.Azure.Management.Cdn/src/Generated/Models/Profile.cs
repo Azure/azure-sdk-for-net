@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="provisioningState">Provisioning status of the
         /// profile.</param>
         /// <param name="frontdoorId">The Id of the frontdoor.</param>
-        public Profile(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string resourceState = default(string), string provisioningState = default(string), string frontdoorId = default(string))
-            : base(location, id, name, type, tags, systemData)
+        public Profile(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string resourceState = default(string), string provisioningState = default(string), string frontdoorId = default(string))
+            : base(location, id, name, type, systemData, tags)
         {
             Sku = sku;
             ResourceState = resourceState;

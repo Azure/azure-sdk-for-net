@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 Diagnostics =
                 {
-                    IsLoggingContentEnabled = Debugger.IsAttached,
+                    IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
                     LoggedHeaderNames =
                     {
                         "x-ms-request-id",
