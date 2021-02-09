@@ -56,7 +56,7 @@ namespace DnsResolver.Tests.Helpers
 
             var nrpSimulatorUri = Environment.GetEnvironmentVariable(Constants.NrpSimulatorUriEnvironmentVariableName);
 
-            // If there environment variable does not present, uses the default nrp client uri.
+            // If specified environment variable does not present, uses the default nrp client uri.
             if (string.IsNullOrEmpty(nrpSimulatorUri))
             {
                 return context.GetServiceClient<NetworkManagementClient>(handlers: handler);
