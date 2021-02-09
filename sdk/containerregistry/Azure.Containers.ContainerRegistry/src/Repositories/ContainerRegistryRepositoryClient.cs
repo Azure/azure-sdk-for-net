@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -47,18 +48,22 @@ namespace Azure.Containers.ContainerRegistry
             _pipeline = pipeline;
         }
 
-        /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
-        /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
+        // TODO: Confirm in FDG that IEnumerable is how to model this input collection
+        /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>        
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManifestWrapper>> GetManifestAsync(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CombinedManifest>> GetManifestAsync(string tagOrDigest, IEnumerable<ManifestMediaType> acceptMediaTypes = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifest");
             scope.Start();
+
+            // <param name="acceptMediaType"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
+            //TODO: pull media types from collection and create comma-delimited string.
+            string accept = string.Empty; // = CreateCommaDelimitedString(acceptMediaTypes)
+            // TODO: what is default behavior if accept it null/list is empty?
+
             try
             {
-                return await RestClient.GetManifestAsync(name, reference, accept, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetManifestAsync(_repositoryName, tagOrDigest, accept, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -68,17 +73,19 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
-        /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManifestWrapper> GetManifest(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
+        public virtual Response<CombinedManifest> GetManifest(string tagOrDigest, IEnumerable<ManifestMediaType> acceptMediaTypes = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetManifest");
             scope.Start();
+
+            // <param name="acceptMediaType"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
+            //TODO: pull media types from collection and create comma-delimited string.
+            string accept = string.Empty; // = CreateCommaDelimitedString(acceptMediaTypes)
+            // TODO: what is default behavior if accept it null/list is empty?
             try
             {
-                return RestClient.GetManifest(name, reference, accept, cancellationToken);
+                return RestClient.GetManifest(_repositoryName, tagOrDigest, accept, cancellationToken);
             }
             catch (Exception e)
             {
@@ -88,17 +95,18 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
-        /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
+        
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<object>> CreateManifestAsync(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateManifestAsync(string tagOrDigest, Manifest manifest, CancellationToken cancellationToken = default)
         {
+            // TODO: How should we handle the accept header?  This feels like part of the polymorphic/strong-typing story around manifests
+            ///// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
+
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.CreateManifest");
             scope.Start();
             try
             {
-                return await RestClient.CreateManifestAsync(name, reference, payload, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -108,17 +116,14 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
-        /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
-        /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<object> CreateManifest(string name, string reference, Manifest payload, CancellationToken cancellationToken = default)
+        public virtual Response CreateManifest(string tagOrDigest, Manifest manifest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.CreateManifest");
             scope.Start();
             try
             {
-                return RestClient.CreateManifest(name, reference, payload, cancellationToken);
+                return RestClient.CreateManifest(_repositoryName, tagOrDigest, manifest, cancellationToken);
             }
             catch (Exception e)
             {

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Models
 {
-    public partial class ManifestWrapper : IUtf8JsonSerializable
+    public partial class CombinedManifest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -111,12 +111,12 @@ namespace Azure.Containers.ContainerRegistry.Models
             writer.WriteEndObject();
         }
 
-        internal static ManifestWrapper DeserializeManifestWrapper(JsonElement element)
+        internal static CombinedManifest DeserializeCombinedManifest(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<IList<ManifestListAttributes>> manifests = default;
-            Optional<Descriptor> config = default;
-            Optional<IList<Descriptor>> layers = default;
+            Optional<ContentDescriptor> config = default;
+            Optional<IList<ContentDescriptor>> layers = default;
             Optional<Annotations> annotations = default;
             Optional<string> architecture = default;
             Optional<string> name = default;
@@ -154,7 +154,7 @@ namespace Azure.Containers.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = Descriptor.DeserializeDescriptor(property.Value);
+                    config = ContentDescriptor.DeserializeContentDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"))
@@ -164,10 +164,10 @@ namespace Azure.Containers.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Descriptor> array = new List<Descriptor>();
+                    List<ContentDescriptor> array = new List<ContentDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Descriptor.DeserializeDescriptor(item));
+                        array.Add(ContentDescriptor.DeserializeContentDescriptor(item));
                     }
                     layers = array;
                     continue;
@@ -253,7 +253,7 @@ namespace Azure.Containers.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ManifestWrapper(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new CombinedManifest(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
     }
 }

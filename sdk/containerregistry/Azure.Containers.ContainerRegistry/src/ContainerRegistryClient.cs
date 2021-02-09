@@ -50,39 +50,40 @@ namespace Azure.Containers.ContainerRegistry
             _pipeline = pipeline;
         }
 
-        /// <summary> Tells whether this Docker Registry instance supports Docker Registry HTTP API v2. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckDockerV2SupportAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.CheckDockerV2Support");
-            scope.Start();
-            try
-            {
-                return await RestClient.CheckDockerV2SupportAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        // TODO: I don't think these need to be part of public client API
+        ///// <summary> Tells whether this Docker Registry instance supports Docker Registry HTTP API v2. </summary>
+        ///// <param name="cancellationToken"> The cancellation token to use. </param>
+        //public virtual async Task<Response> CheckDockerV2SupportAsync(CancellationToken cancellationToken = default)
+        //{
+        //    using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.CheckDockerV2Support");
+        //    scope.Start();
+        //    try
+        //    {
+        //        return await RestClient.CheckDockerV2SupportAsync(cancellationToken).ConfigureAwait(false);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
 
-        /// <summary> Tells whether this Docker Registry instance supports Docker Registry HTTP API v2. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckDockerV2Support(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.CheckDockerV2Support");
-            scope.Start();
-            try
-            {
-                return RestClient.CheckDockerV2Support(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        ///// <summary> Tells whether this Docker Registry instance supports Docker Registry HTTP API v2. </summary>
+        ///// <param name="cancellationToken"> The cancellation token to use. </param>
+        //public virtual Response CheckDockerV2Support(CancellationToken cancellationToken = default)
+        //{
+        //    using var scope = _clientDiagnostics.CreateScope("ContainerRegistryClient.CheckDockerV2Support");
+        //    scope.Start();
+        //    try
+        //    {
+        //        return RestClient.CheckDockerV2Support(cancellationToken);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
 
         public virtual Pageable<string> GetRepositoryNames(CancellationToken cancellationToken = default)
         {

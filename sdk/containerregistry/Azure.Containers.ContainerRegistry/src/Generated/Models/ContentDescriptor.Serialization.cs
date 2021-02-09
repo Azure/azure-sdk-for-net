@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Models
 {
-    public partial class Descriptor : IUtf8JsonSerializable
+    public partial class ContentDescriptor : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -56,7 +56,7 @@ namespace Azure.Containers.ContainerRegistry.Models
             writer.WriteEndObject();
         }
 
-        internal static Descriptor DeserializeDescriptor(JsonElement element)
+        internal static ContentDescriptor DeserializeContentDescriptor(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<long> size = default;
@@ -111,7 +111,7 @@ namespace Azure.Containers.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new Descriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new ContentDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
         }
     }
 }

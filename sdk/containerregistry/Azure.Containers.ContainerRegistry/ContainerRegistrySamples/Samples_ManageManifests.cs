@@ -61,8 +61,89 @@ namespace ContainerRegistrySamples
 
             await repositoryClient.SetManifestPermissionsAsync("latest", permissions);
 
-            // TODO: show that trying to write to this manifest fails.
+            // TODO: show that trying to write to this manifest fails.  Also, what is the bigger story here?  
+            // It seems like it would be a DevOps story, since this is about being able to push to a registry.
         }
+
+        public async Task GetDockerV2Schema2Manifest()
+        {
+            // ManifestMediaType.DockerManifestV2Schema2
+
+            // TODO: how will the customer use this once retrieved?
+            // I think the answer is, to pull down the entire image represented by the manifest. 
+            // It'd be good for this sample to reflect that.
+
+            var registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
+            var repositoryClient = registryClient.GetRepositoryClient("hello-world");
+
+            // TODO: we can tidy up this having to create a list inline method = 
+            CombinedManifest manifest = await repositoryClient.GetManifestAsync("latest", new List<ManifestMediaType>() { ManifestMediaType.DockerManifestV2Schema2 });
+
+            // To use this, do we need to know what the discriminator type is?
+            if (manifest.MediaType == ManifestMediaType.DockerManifestV2Schema2)
+            {
+                // let's use it to pull the image
+                // TODO: need blobs client for this
+                // TODO: Come back and do this after blobs client is available.
+            }
+        }
+
+        public async Task GetOCIImageManifest()
+        {
+            // ManifestMediaType.OciManifest
+            // TODO: how will the customer use this once retrieved?
+            // TODO: how would the use of OCIManifest look different from the use of DockerManifestV2Schema2 schema?
+
+            var registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
+            var repositoryClient = registryClient.GetRepositoryClient("hello-world");
+
+            // TODO: we can tidy up this having to create a list inline method = 
+            CombinedManifest manifest = await repositoryClient.GetManifestAsync("latest", new List<ManifestMediaType>() { ManifestMediaType.OciManifest });
+
+            // To use this, do we need to know what the discriminator type is?
+            if (manifest.MediaType == ManifestMediaType.OciManifest)
+            {
+                // let's use it to pull the image
+                // TODO: need blobs client for this
+                // TODO: Come back and do this after blobs client is available.
+
+            }
+        }
+
+        public async Task CreateDockerV2Schema2Manifest()
+        {
+            var registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
+            var repositoryClient = registryClient.GetRepositoryClient("hello-world");
+
+            string configMediaType = "application/vnd.docker.container.image.v1+json";
+
+            ContentDescriptor config = new ContentDescriptor(configMediaType);
+
+            // TODO: do blob upload per: https://github.com/sajayantony/acr-cli/blob/main/Services/RegistryService.cs#L98
+            // TODO: upload with blob client
+
+            // TODO: investigate content descriptor polymorphism per https://github.com/Azure/azure-sdk-for-net/issues/18579
+
+            //_logger.LogInformation($"Starting Upload {filename}");
+            //var blobDescriptor = new FileInfo(filename).ToDescriptor();
+            //using (var fs = File.OpenRead(filename))
+            //{
+            //    _logger.LogInformation($"Uploading {filename} with digest {blobDescriptor.Digest}");
+            //    await _registry.UploadBlobAsync(reference, blobDescriptor.Digest, fs);
+            //}
+
+            V2Manifest manifest = new V2Manifest()
+            {
+                Config = config,
+            };
+
+            //manifest.Layers.Add(blobDescriptor);
+
+            // YOU ARE HERE - address manifest polymorphism more closely -- will this require changes to the swagger?
+
+            repositoryClient.CreateManifest("latest", manifest);
+        }
+
 
         private void PrintManifestAttributes(ManifestAttributes manifestAttributes)
         {
