@@ -233,35 +233,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
+        /// <param name="clientConfiguration">
+        /// <see cref="BlobClientConfiguration"/>.
         /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="clientDiagnostics">Client diagnostics.</param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        /// <param name="encryptionScope">Encryption scope.</param>
         internal AppendBlobClient(
             Uri blobUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            BlobClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics,
-            CustomerProvidedKey? customerProvidedKey,
-            string encryptionScope)
+            BlobClientConfiguration clientConfiguration)
             : base(
                   blobUri,
-                  pipeline,
-                  storageSharedKeyCredential,
-                  version,
-                  clientDiagnostics,
-                  customerProvidedKey,
-                  clientSideEncryption: default,
-                  encryptionScope)
+                  clientConfiguration,
+                  clientSideEncryption: default)
         {
             _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
@@ -301,12 +282,12 @@ namespace Azure.Storage.Blobs.Specialized
             // TODO we need to be able to access the underlying readonly private properties here,
             // or The AppendBlobClient won't be mockable
             return new AppendBlobRestClient(
-                clientDiagnostics: ClientDiagnostics,
-                pipeline: Pipeline,
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
+                pipeline: _clientConfiguration.Pipeline,
                 url: uriBuilder.ToUri().ToString(),
                 containerName: containerName,
                 blob: blobName,
-                version: Version.ToVersionString());
+                version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
 
@@ -334,12 +315,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new AppendBlobClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                EncryptionScope);
+                ClientConfiguration);
         }
 
         /// <summary>
@@ -363,12 +339,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new AppendBlobClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                EncryptionScope);
+                ClientConfiguration);
         }
 
         #region Create
@@ -732,16 +703,16 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
 
                 string operationName = $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 AppendBlobRequestConditions conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
 
@@ -768,13 +739,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(AppendBlobClient));
                     scope.Dispose();
                 }
             }
@@ -833,16 +804,16 @@ namespace Azure.Storage.Blobs.Specialized
             string operationName = null)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Create)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Create)}");
 
                 try
                 {
@@ -862,9 +833,9 @@ namespace Azure.Storage.Blobs.Specialized
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             blobContentDisposition: httpHeaders?.ContentDisposition,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             // TODO make these parameters ETags?
@@ -888,9 +859,9 @@ namespace Azure.Storage.Blobs.Specialized
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             blobContentDisposition: httpHeaders?.ContentDisposition,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             // TODO make these parameters ETags?
@@ -907,13 +878,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(AppendBlobClient));
                     scope.Dispose();
                 }
             }
@@ -1091,20 +1062,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
 
                 try
                 {
                     scope.Start();
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, ClientConfiguration.CustomerProvidedKey);
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     content = content?.WithNoDispose().WithProgress(progressHandler);
@@ -1120,9 +1091,9 @@ namespace Azure.Storage.Blobs.Specialized
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: conditions?.IfAppendPositionEqual,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
@@ -1140,9 +1111,9 @@ namespace Azure.Storage.Blobs.Specialized
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: conditions?.IfAppendPositionEqual,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
@@ -1157,13 +1128,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(AppendBlobClient));
                     scope.Dispose();
                 }
             }
@@ -1379,16 +1350,16 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlockFromUri)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlockFromUri)}");
 
                 try
                 {
@@ -1403,9 +1374,9 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: conditions?.IfAppendPositionEqual,
@@ -1430,9 +1401,9 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMD5: sourceContentHash,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: conditions?.IfAppendPositionEqual,
@@ -1455,13 +1426,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(AppendBlobClient));
                     scope.Dispose();
                 }
             }
@@ -1555,9 +1526,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Seal)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Seal)}");
 
                 try
                 {
@@ -1594,13 +1565,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(AppendBlobClient));
                     scope.Dispose();
                 }
             }
@@ -1703,7 +1674,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(OpenWrite)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(OpenWrite)}");
 
             try
             {

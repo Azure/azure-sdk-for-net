@@ -34,57 +34,23 @@ namespace Azure.Storage.Blobs
         public virtual Uri Uri => _uri;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="BlobClientConfiguration"/>.
         /// </summary>
-        private readonly HttpPipeline _pipeline;
+        private readonly BlobClientConfiguration _clientConfiguration;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="BlobClientConfiguration"/>.
         /// </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual BlobClientConfiguration ClientConfiguration => _clientConfiguration;
 
         /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        private readonly BlobClientOptions.ServiceVersion _version;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        internal virtual BlobClientOptions.ServiceVersion Version => _version;
-
-        /// <summary>
-        /// The authentication policy for our pipeline.  We cache it here in
+        /// The authentication policy for our ClientConfiguration.Pipeline.  We cache it here in
         /// case we need to construct a pipeline for authenticating batch
         /// operations.
         /// </summary>
         private readonly HttpPipelinePolicy _authenticationPolicy;
 
         internal virtual HttpPipelinePolicy AuthenticationPolicy => _authenticationPolicy;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
-        /// </summary>
-        internal readonly CustomerProvidedKey? _customerProvidedKey;
-
-        /// <summary>
-        /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
-        /// </summary>
-        internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
 
         /// <summary>
         /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
@@ -95,16 +61,6 @@ namespace Azure.Storage.Blobs
         /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
         /// </summary>
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
-
-        /// <summary>
-        /// The name of the Encryption Scope to be used when sending request.
-        /// </summary>
-        internal readonly string _encryptionScope;
-
-        /// <summary>
-        /// The name of the Encryption Scope to be used when sending request.
-        /// </summary>
-        internal virtual string EncryptionScope => _encryptionScope;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -127,25 +83,10 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
-        /// </summary>
-        internal virtual StorageSharedKeyCredential StorageSharedKeyCredential => _storageSharedKeyCredential;
-
-        /// <summary>
-        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
-        /// </summary>
-        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
-
-        /// <summary>
-        /// Gets the The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS.
-        /// </summary>
-        internal virtual StorageSharedKeyCredential SharedKeyCredential => _storageSharedKeyCredential;
-
-        /// <summary>
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public virtual bool CanGenerateAccountSasUri => SharedKeyCredential != null;
+        public virtual bool CanGenerateAccountSasUri => ClientConfiguration.SharedKeyCredential != null;
 
         /// <summary>
         /// <see cref="ServiceRestClient"/>.
@@ -206,16 +147,19 @@ namespace Azure.Storage.Blobs
             _uri = conn.BlobEndpoint;
             options ??= new BlobClientOptions();
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
-            _pipeline = options.Build(_authenticationPolicy);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _customerProvidedKey = options.CustomerProvidedKey;
+
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(_authenticationPolicy),
+                sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                encryptionScope: options.EncryptionScope);
+
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _encryptionScope = options.EncryptionScope;
-            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             _serviceRestClient = BuildServiceRestClient(_uri);
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
 
         /// <summary>
@@ -330,14 +274,15 @@ namespace Azure.Storage.Blobs
             StorageSharedKeyCredential storageSharedKeyCredential = default)
             : this(
                   serviceUri,
+                  new BlobClientConfiguration(
+                      pipeline: options.Build(authentication),
+                      sharedKeyCredential: storageSharedKeyCredential,
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      encryptionScope: options?.EncryptionScope),
                   authentication,
-                  options?.Version ?? BlobClientOptions.LatestVersion,
-                  new ClientDiagnostics(options),
-                  options?.CustomerProvidedKey,
-                  options?._clientSideEncryptionOptions?.Clone(),
-                  options?.EncryptionScope,
-                  options.Build(authentication),
-                  storageSharedKeyCredential)
+                  options?._clientSideEncryptionOptions?.Clone())
         {
         }
 
@@ -349,47 +294,29 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Uri"/> referencing the blob service.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
+        /// <param name="clientConfiguration">
+        /// <see cref="BlobClientConfiguration"/>.
+        /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
         /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
+        /// <param name="clientSideEncryption">
+        /// Client-side encryption options.
         /// </param>
-        /// <param name="clientDiagnostics">
-        /// The <see cref="ClientDiagnostics"/> instance used to create
-        /// diagnostic scopes every request.
-        /// </param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        /// <param name="clientSideEncryption">Client-side encryption options.</param>
-        /// <param name="encryptionScope">Encryption scope.</param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">Storage Shared Key Credential</param>
         internal BlobServiceClient(
             Uri serviceUri,
+            BlobClientConfiguration clientConfiguration,
             HttpPipelinePolicy authentication,
-            BlobClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics,
-            CustomerProvidedKey? customerProvidedKey,
-            ClientSideEncryptionOptions clientSideEncryption,
-            string encryptionScope,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential)
+            ClientSideEncryptionOptions clientSideEncryption)
         {
             Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             _uri = serviceUri;
+            _clientConfiguration = clientConfiguration;
             _authenticationPolicy = authentication;
-            _pipeline = pipeline;
-            _version = version;
-            _clientDiagnostics = clientDiagnostics;
-            _customerProvidedKey = customerProvidedKey;
             _clientSideEncryption = clientSideEncryption?.Clone();
-            _encryptionScope = encryptionScope;
-            _storageSharedKeyCredential = storageSharedKeyCredential;
             _serviceRestClient = BuildServiceRestClient(serviceUri);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -425,23 +352,24 @@ namespace Azure.Storage.Blobs
         {
             return new BlobServiceClient(
                 serviceUri,
+                new BlobClientConfiguration(
+                    pipeline: pipeline,
+                    sharedKeyCredential: null,
+                    clientDiagnostics: new ClientDiagnostics(options),
+                    version: options.Version,
+                    customerProvidedKey: null,
+                    encryptionScope: null),
                 authentication,
-                options.Version,
-                new ClientDiagnostics(options),
-                customerProvidedKey: null,
-                clientSideEncryption: null,
-                encryptionScope: null,
-                pipeline,
-                storageSharedKeyCredential: null);
+                clientSideEncryption: null);
         }
 
         // TODO this might not works.
         private ServiceRestClient BuildServiceRestClient(Uri uri)
             => new ServiceRestClient(
-                clientDiagnostics: _clientDiagnostics,
-                pipeline: _pipeline,
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
+                pipeline: _clientConfiguration.Pipeline,
                 url: uri.ToString(),
-                version: _version.ToVersionString());
+                version: _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 
         /// <summary>
@@ -459,13 +387,8 @@ namespace Azure.Storage.Blobs
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
             new BlobContainerClient(
                 Uri.AppendToPath(blobContainerName),
-                Pipeline,
-                _storageSharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                ClientSideEncryption,
-                EncryptionScope);
+                ClientConfiguration,
+                ClientSideEncryption);
 
         #region protected static accessors for Azure.Storage.Blobs.Batch
         /// <summary>
@@ -475,7 +398,7 @@ namespace Azure.Storage.Blobs
         /// <param name="client">The BlobServiceClient.</param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
         protected static HttpPipeline GetHttpPipeline(BlobServiceClient client) =>
-            client.Pipeline;
+            client.ClientConfiguration.Pipeline;
 
         /// <summary>
         /// Get a <see cref="BlobServiceClient"/>'s authentication
@@ -493,12 +416,12 @@ namespace Azure.Storage.Blobs
         /// <param name="client">The BlobServiceClient.</param>
         /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
         protected static BlobClientOptions GetClientOptions(BlobServiceClient client) =>
-            new BlobClientOptions(client.Version)
+            new BlobClientOptions(client.ClientConfiguration.Version)
             {
                 // We only use this for communicating diagnostics, at the moment
                 Diagnostics =
                 {
-                    IsDistributedTracingEnabled = client.ClientDiagnostics.IsActivityEnabled
+                    IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
                 }
             };
         #endregion protected static accessors for Azure.Storage.Blobs.Batch
@@ -721,16 +644,16 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlobServiceClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(continuationToken)}: {continuationToken}\n" +
                     $"{nameof(traits)}: {traits}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(GetBlobContainers)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(GetBlobContainers)}");
 
                 try
                 {
@@ -772,13 +695,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                     scope.Dispose();
                 }
             }
@@ -864,11 +787,11 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
+                ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(GetAccountInfo)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(GetAccountInfo)}");
 
                 try
                 {
@@ -893,13 +816,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                     scope.Dispose();
                 }
             }
@@ -991,11 +914,11 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
+                ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(GetProperties)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(GetProperties)}");
 
                 try
                 {
@@ -1020,13 +943,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                     scope.Dispose();
                 }
             }
@@ -1135,15 +1058,15 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlobServiceClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(properties)}: {properties}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(SetProperties)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(SetProperties)}");
 
                 try
                 {
@@ -1168,13 +1091,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                     scope.Dispose();
                 }
             }
@@ -1272,11 +1195,11 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
+                ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(GetStatistics)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(GetStatistics)}");
 
                 try
                 {
@@ -1301,13 +1224,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                     scope.Dispose();
                 }
             }
@@ -1419,11 +1342,11 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
+                ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(GetUserDelegationKey)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(GetUserDelegationKey)}");
 
                 try
                 {
@@ -1466,13 +1389,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                     scope.Dispose();
                 }
             }
@@ -1778,16 +1701,16 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlobContainerClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(deletedContainerName)}: {deletedContainerName}\n" +
                     $"{nameof(deletedContainerVersion)}: {deletedContainerVersion}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(UndeleteBlobContainer)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(UndeleteBlobContainer)}");
 
                 try
                 {
@@ -1824,13 +1747,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
                     scope.Dispose();
                 }
             }
@@ -1950,15 +1873,15 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlobContainerClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceContainerName)}: {sourceContainerName}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(RenameBlobContainer)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(RenameBlobContainer)}");
 
                 try
                 {
@@ -1990,13 +1913,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
                     scope.Dispose();
                 }
             }
@@ -2075,15 +1998,15 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlobServiceClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(expression)}: {expression}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(FindBlobsByTags)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobServiceClient)}.{nameof(FindBlobsByTags)}");
 
                 try
                 {
@@ -2114,13 +2037,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                     scope.Dispose();
                 }
             }
@@ -2203,7 +2126,7 @@ namespace Azure.Storage.Blobs
                     nameof(AccountSasServices.Blobs));
             }
             UriBuilder sasUri = new UriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString();
             return sasUri.Uri;
         }
         #endregion

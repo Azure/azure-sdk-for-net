@@ -52,11 +52,5 @@ namespace Azure.Storage.Blobs.Models
             SignedVersion = signedVersion;
             Value = value;
         }
-        /// <summary> Abbreviation of the Azure Storage service that accepts the key. </summary>
-        public string SignedService { get; }
-        /// <summary> The service version that created the key. </summary>
-        public string SignedVersion { get; }
-        /// <summary> The key as a base64 string. </summary>
-        public string Value { get; }
     }
 }

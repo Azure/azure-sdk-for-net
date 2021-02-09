@@ -227,35 +227,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// name of the account, the name of the blob container, and the name of
         /// the blob.
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
+        /// <param name="clientConfiguration">
+        /// <see cref="BlobClientConfiguration"/>.
         /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
-        /// </param>
-        /// <param name="clientDiagnostics">Client diagnostics.</param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        /// <param name="encryptionScope">Encryption scope.</param>
         internal PageBlobClient(
             Uri blobUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            BlobClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics,
-            CustomerProvidedKey? customerProvidedKey,
-            string encryptionScope)
+            BlobClientConfiguration clientConfiguration)
             : base(
                   blobUri,
-                  pipeline,
-                  storageSharedKeyCredential,
-                  version,
-                  clientDiagnostics,
-                  customerProvidedKey,
-                  clientSideEncryption: default,
-                  encryptionScope)
+                  clientConfiguration,
+                  clientSideEncryption: default)
         {
             _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
         }
@@ -295,12 +276,12 @@ namespace Azure.Storage.Blobs.Specialized
             // TODO we need to be able to access the underlying readonly private properties here,
             // or The AppendBlobClient won't be mockable
             return new PageBlobRestClient(
-                clientDiagnostics: ClientDiagnostics,
-                pipeline: Pipeline,
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
+                pipeline: _clientConfiguration.Pipeline,
                 url: uriBuilder.ToUri().ToString(),
                 containerName: containerName,
                 blob: blobName,
-                version: Version.ToVersionString());
+                version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
 
@@ -337,12 +318,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new PageBlobClient(
                 builder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                EncryptionScope);
+                ClientConfiguration);
         }
 
         /// <summary>
@@ -360,12 +336,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new PageBlobClient(
                 builder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                EncryptionScope);
+                ClientConfiguration);
         }
 
         #region Create
@@ -820,9 +791,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -830,7 +801,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(CreateIfNotExists)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(CreateIfNotExists)}");
 
                 PageBlobRequestConditions conditions = new PageBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
                 try
@@ -856,13 +827,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
                     scope.Dispose();
                 }
             }
@@ -931,9 +902,9 @@ namespace Azure.Storage.Blobs.Specialized
             string operationName = null)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -941,7 +912,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(Create)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(Create)}");
 
                 try
                 {
@@ -963,9 +934,9 @@ namespace Azure.Storage.Blobs.Specialized
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             blobContentDisposition: httpHeaders?.ContentDisposition,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
@@ -991,9 +962,9 @@ namespace Azure.Storage.Blobs.Specialized
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             blobContentDisposition: httpHeaders?.ContentDisposition,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
@@ -1010,13 +981,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
                     scope.Dispose();
                 }
             }
@@ -1208,16 +1179,16 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(offset)}: {offset}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPages)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPages)}");
 
                 try
                 {
@@ -1236,9 +1207,9 @@ namespace Azure.Storage.Blobs.Specialized
                             transactionalContentMD5: transactionalContentHash,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
@@ -1258,9 +1229,9 @@ namespace Azure.Storage.Blobs.Specialized
                             transactionalContentMD5: transactionalContentHash,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
@@ -1278,13 +1249,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
                     scope.Dispose();
                 }
             }
@@ -1422,15 +1393,15 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(ClearPages)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(ClearPages)}");
 
                 try
                 {
@@ -1443,9 +1414,9 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: 0,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
@@ -1463,9 +1434,9 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: 0,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
                             ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
@@ -1483,13 +1454,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
                     scope.Dispose();
                 }
             }
@@ -1635,16 +1606,16 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}");
 
                 try
                 {
@@ -1691,13 +1662,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
                     scope.Dispose();
                 }
             }
@@ -1892,9 +1863,9 @@ namespace Azure.Storage.Blobs.Specialized
             string operationName,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -1904,7 +1875,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
 
                 operationName ??= $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}";
-                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -1955,13 +1926,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
                     scope.Dispose();
                 }
             }
@@ -2223,16 +2194,16 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(size)}: {size}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(Resize)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(Resize)}");
 
                 try
                 {
@@ -2244,8 +2215,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await PageBlobRestClient.ResizeAsync(
                             blobContentLength: size,
                             leaseId: conditions?.LeaseId,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
@@ -2259,8 +2230,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = PageBlobRestClient.Resize(
                             blobContentLength: size,
                             leaseId: conditions?.LeaseId,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch.ToString(),
@@ -2275,13 +2246,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
                     scope.Dispose();
                 }
             }
@@ -2463,9 +2434,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -2473,7 +2444,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UpdateSequenceNumber)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UpdateSequenceNumber)}");
 
                 try
                 {
@@ -2514,13 +2485,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
                     scope.Dispose();
                 }
             }
@@ -2846,9 +2817,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -2856,7 +2827,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(StartCopyIncremental)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(StartCopyIncremental)}");
 
                 try
                 {
@@ -2865,12 +2836,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // Create copySource Uri
                     PageBlobClient pageBlobUri = new PageBlobClient(
                         sourceUri,
-                        Pipeline,
-                        SharedKeyCredential,
-                        Version,
-                        ClientDiagnostics,
-                        CustomerProvidedKey,
-                        EncryptionScope).WithSnapshot(snapshot);
+                        ClientConfiguration).WithSnapshot(snapshot);
 
                     ResponseWithHeaders<PageBlobCopyIncrementalHeaders> response;
 
@@ -2904,13 +2870,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
                     scope.Dispose();
                 }
             }
@@ -3143,15 +3109,15 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPagesFromUri)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPagesFromUri)}");
 
                 try
                 {
@@ -3166,9 +3132,9 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: 0,
                             range: range.ToString(),
                             sourceContentMD5: sourceContentHash,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             leaseId: conditions?.LeaseId,
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
@@ -3193,9 +3159,9 @@ namespace Azure.Storage.Blobs.Specialized
                             contentLength: 0,
                             range: range.ToString(),
                             sourceContentMD5: sourceContentHash,
-                            encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                            encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionScope: EncryptionScope,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             leaseId: conditions?.LeaseId,
                             ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
                             ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
@@ -3218,13 +3184,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
                     scope.Dispose();
                 }
             }
@@ -3341,7 +3307,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(OpenWrite)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(OpenWrite)}");
 
             try
             {

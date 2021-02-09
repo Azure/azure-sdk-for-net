@@ -36,6 +36,21 @@ namespace Azure.Storage.Blobs.Models
         public DateTimeOffset SignedStartsOn { get; internal set; }
 
         /// <summary>
+        /// Abbreviation of the Azure Storage service that accepts the key.
+        /// </summary>
+        public string SignedService { get; internal set; }
+
+        /// <summary>
+        /// The service version that created the key.
+        /// </summary>
+        public string SignedVersion { get; internal set; }
+
+        /// <summary>
+        /// The key as a base64 string.
+        /// </summary>
+        public string Value { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal UserDelegationKey() { }
