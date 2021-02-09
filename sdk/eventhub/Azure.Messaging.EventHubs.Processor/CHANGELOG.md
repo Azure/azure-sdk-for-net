@@ -1,5 +1,8 @@
 # Release History
 
+## 5.4.0-beta.1 (Unreleased)
+
+
 ## 5.3.0 (2021-02-09)
 
 ### Changes
@@ -149,7 +152,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - A cleanup sweep was performed to tune small areas to be more efficient and perform fewer allocations.
 
-## 5.1.0
+## 5.1.0 
 
 ### Changes
 
@@ -161,7 +164,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Minor enhancements to reduce allocations and improve efficiency
 
-## 5.1.0-preview.1
+## 5.1.0-preview.1 
 
 ### Acknowledgments
 
@@ -198,7 +201,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The tests for load balancing and the Event Processor client have been tuned to remove dependencies on Azure resources and run more efficiently.  (A community contribution, courtesy of [christothes](https://github.com/christothes))
 
-## 5.0.1
+## 5.0.1 
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
@@ -228,7 +231,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The protected `On[EventName]` members have been marked private to reduce the public surface and reduce confusion.  They provided no benefit over providing a handler and the cognative cost was not justified.
 
-## 5.0.0-preview.6
+## 5.0.0-preview.6 
 
 ### Acknowledgments
 
