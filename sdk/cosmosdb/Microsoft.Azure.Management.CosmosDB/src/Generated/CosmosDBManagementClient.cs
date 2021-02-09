@@ -441,7 +441,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             NotebookWorkspaces = new NotebookWorkspacesOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
-            BaseUri = new System.Uri("https://eastus2euap.management.azure.com");
+            BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2021-01-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

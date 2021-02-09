@@ -10,13 +10,51 @@
 
 namespace Microsoft.Azure.Management.CosmosDB.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for NetworkAclBypass.
     /// </summary>
-    public static class NetworkAclBypass
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum NetworkAclBypass
     {
-        public const string None = "None";
-        public const string AzureServices = "AzureServices";
+        [EnumMember(Value = "None")]
+        None,
+        [EnumMember(Value = "AzureServices")]
+        AzureServices
+    }
+    internal static class NetworkAclBypassEnumExtension
+    {
+        internal static string ToSerializedValue(this NetworkAclBypass? value)
+        {
+            return value == null ? null : ((NetworkAclBypass)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this NetworkAclBypass value)
+        {
+            switch( value )
+            {
+                case NetworkAclBypass.None:
+                    return "None";
+                case NetworkAclBypass.AzureServices:
+                    return "AzureServices";
+            }
+            return null;
+        }
+
+        internal static NetworkAclBypass? ParseNetworkAclBypass(this string value)
+        {
+            switch( value )
+            {
+                case "None":
+                    return NetworkAclBypass.None;
+                case "AzureServices":
+                    return NetworkAclBypass.AzureServices;
+            }
+            return null;
+        }
     }
 }
