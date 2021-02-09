@@ -803,6 +803,22 @@ namespace Azure.Search.Documents.Tests
                     });
             AssertNoFailures(indexer);
             await indexer.UploadDocumentsAsync(data);
+
+            // To verify the developer experience, debug this test with first
+            // chance exceptions enabled and you'll see an exception raised
+            // from the SearchIndexingBufferedSender finalizer like:
+            // "Azure.Core.ObjectNotDisposedException: 'SearchIndexingBufferedSender has 768 unsent indexing actions.'"
+            if (Debugger.IsAttached)
+            {
+                indexer = null;
+                int maxAttempts = 10;
+                for (int i = 0; i < maxAttempts; i++)
+                {
+                    GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, blocking: true);
+                    GC.WaitForPendingFinalizers();
+                    await DelayAsync(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+                }
+            }
         }
         #endregion
 
