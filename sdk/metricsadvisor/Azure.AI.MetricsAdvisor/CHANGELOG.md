@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2021-02-09)
 
 ### New Features
 - Added support for AAD authentication in `MetricsAdvisorClient` and `MetricsAdvisorAdministrationClient`.
