@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.6 (Unreleased)
+## 1.0.0-preview.6 (2021-02-10)
 
 ### Added
 - Many models classes are now public.

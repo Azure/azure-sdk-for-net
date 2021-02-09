@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0-preview.4 (2021-02-10)
 
 ### Changed
 - Changed APIs on `SparkBatchClient` and `SparkSessionClient` to provide a Long Running Operation (LRO) when operations can be long in duration.
