@@ -1,7 +1,26 @@
 # Release History
 
-## 5.3.0-beta.5 (Unreleased)
+## 5.3.0-beta.5 (2021-02-09)
 
+### Changes
+
+#### New Features
+
+- Additional options for tuning load balancing have been added to the `EventProcessorClientOptions`.
+
+- It is now possible to specify a custom endpoint to use for establishing the connection to the Event Hubs service in the `EventHubConnectionOptions` for the processor.
+
+- Interactions with Blob Storage have been tuned for better performance and more efficient resource use.  This will also improve start-up time, especially when using the `Greedy` load balancing strategy.
+
+- Errors occurring in the Event Hubs service or active transport are now preserved in full and propagated as an inner exception; this will provide deeper context for diagnosing and troubleshooting exceptions.
+
+- Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
+
+#### Key Bug Fixes
+
+- Upgraded the `Microsoft.Azure.Amqp` library to resolve crashes occurring in .NET 5.
+
+- The calculation for authorization token expiration has been fixed, resulting in fewer token refreshes and network requests.
 
 ## 5.3.0-beta.4 (2020-11-10)
 
@@ -14,6 +33,8 @@
 - Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
 
 #### Key Bug Fixes
+
+- Upgraded the `Microsoft.Azure.Amqp` library to resolve crashes occurring in .NET 5.
 
 - The calculation for authorization token expiration has been fixed, resulting in fewer token refreshes and network requests.
 
