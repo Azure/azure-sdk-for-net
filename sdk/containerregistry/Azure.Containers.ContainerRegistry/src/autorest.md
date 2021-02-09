@@ -44,3 +44,19 @@ directive:
   transform: >
     $["x-accessibility"] = "internal"
 ```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TagList
+  transform: >
+    $["x-accessibility"] = "internal"
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TagAttributesBase
+  transform: >
+    $["x-accessibility"] = "internal"
+```
