@@ -2,6 +2,20 @@
 
 ## 11.2.0 (2021-02-10)
 
+### Added
+
+- Added setters for `MaxLength` and `MinLength` in `LengthTokenFilter`.
+- Added a public constructor for `SearchIndexingBufferedSender<T>`.
+- Added `IndexActionEventArgs<T>` to track indexing actions.
+- Added `IndexActionCompletedEventArgs<T>` to track the completion of an indexing action.
+- Added `IndexActionFailedEventArgs<T>` to track the failure of an indexing action.
+
+### Breaking Changes
+
+- Renamed `SearchIndexingBufferedSenderOptions<T>.MaxRetries` to `SearchIndexingBufferedSenderOptions<T>.MaxRetriesPerIndexAction`.
+- Renamed `SearchIndexingBufferedSenderOptions<T>.MaxRetryDelay` to `SearchIndexingBufferedSenderOptions<T>.MaxThrottlingDelay`.
+- Renamed `SearchIndexingBufferedSenderOptions<T>.RetryDelay` to `SearchIndexingBufferedSenderOptions<T>.ThrottlingDelay`.
+- Removed the helper method `SearchClient.CreateIndexingBufferedSender<T>()`. Instead, callers are expected to use the public constructor of `SearchIndexingBufferedSender<T>`.
 
 ## 11.2.0-beta.2 (2020-11-10)
 
