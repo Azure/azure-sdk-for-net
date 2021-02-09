@@ -1,8 +1,5 @@
-﻿// ------------------------------------------------------------------------------------------------
-// <copyright file="InboundEndpointTests.cs" company="Microsoft Corporation">
-//   Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// ------------------------------------------------------------------------------------------------
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace DnsResolver.Tests.ScenarioTests
 {
@@ -442,12 +439,12 @@ namespace DnsResolver.Tests.ScenarioTests
                 dnsResolverName: createdDnsResolver.Name,
                 inboundEndpointName: creatednboundEndpoint.Name);
 
-            var listResult = this.DnsResolverManagementClient.InboundEndpoints.List(
+            Action getInboundEndpointAction = () => this.DnsResolverManagementClient.InboundEndpoints.Get(
                 resourceGroupName: resourceGroupName,
-                dnsResolverName: createdDnsResolver.Name);
+                dnsResolverName: createdDnsResolver.Name,
+                inboundEndpointName: TestDataGenerator.GenerateInboundEndpointName());
 
-            listResult.Should().NotBeNull();
-            listResult.Count().Should().Be(0);
+            getInboundEndpointAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -463,12 +460,12 @@ namespace DnsResolver.Tests.ScenarioTests
                 inboundEndpointName: creatednboundEndpoint.Name,
                 ifMatch: creatednboundEndpoint.Etag);
 
-            var listResult = this.DnsResolverManagementClient.InboundEndpoints.List(
+            Action getInboundEndpointAction = () => this.DnsResolverManagementClient.InboundEndpoints.Get(
                 resourceGroupName: resourceGroupName,
-                dnsResolverName: createdDnsResolver.Name);
+                dnsResolverName: createdDnsResolver.Name,
+                inboundEndpointName: TestDataGenerator.GenerateInboundEndpointName());
 
-            listResult.Should().NotBeNull();
-            listResult.Should().BeEmpty();
+            getInboundEndpointAction.Should().Throw<CloudException>().Which.Response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]

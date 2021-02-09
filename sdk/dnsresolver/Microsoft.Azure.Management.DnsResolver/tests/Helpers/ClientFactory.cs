@@ -1,8 +1,5 @@
-// ------------------------------------------------------------------------------------------------
-// <copyright file="ClientFactory.cs" company="Microsoft Corporation">
-//   Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// ------------------------------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace DnsResolver.Tests.Helpers
 {
@@ -55,19 +52,21 @@ namespace DnsResolver.Tests.Helpers
             handler.IsPassThrough = true;
 
             var nrpSimulatorUri = Environment.GetEnvironmentVariable(Constants.NrpSimulatorUriEnvironmentVariableName);
+            NetworkManagementClient networkManagementClient;
 
-            // If specified environment variable does not present, uses the default nrp client uri.
+            // If specified environment variable does not present, uses the default NRP client URI.
             if (string.IsNullOrEmpty(nrpSimulatorUri))
             {
-                return context.GetServiceClient<NetworkManagementClient>(handlers: handler);
+                networkManagementClient = context.GetServiceClient<NetworkManagementClient>(handlers: handler);
             }
             else 
             {
                 var testEnv = TestEnvironmentFactory.GetTestEnvironment();
                 var credentials = testEnv.TokenInfo[TokenAudience.Graph];
-                var client = context.GetServiceClientWithCredentials<NetworkManagementClient>(testEnv, credentials, new Uri(nrpSimulatorUri), internalBaseUri: false, handlers: handler);
-                return client;
+                networkManagementClient = context.GetServiceClientWithCredentials<NetworkManagementClient>(testEnv, credentials, new Uri(nrpSimulatorUri), internalBaseUri: false, handlers: handler);
             }
+
+            return networkManagementClient;
         }
     }
 }
