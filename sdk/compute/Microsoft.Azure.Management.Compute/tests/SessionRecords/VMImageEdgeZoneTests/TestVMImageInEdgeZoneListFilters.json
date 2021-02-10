@@ -1,0 +1,343 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/providers/Microsoft.Compute/locations/eastus2euap/edgeZones/MicrosoftRRDCLab1/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions?$top=0&api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTM5M2Y5MTktYTY4YS00M2QwLTkwNjMtNGIyYmRhNmJmZmRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvZWRnZVpvbmVzL01pY3Jvc29mdFJSRENMYWIxL3B1Ymxpc2hlcnMvTWljcm9zb2Z0V2luZG93c1NlcnZlci9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1dpbmRvd3NTZXJ2ZXIvc2t1cy8yMDE2LURhdGFjZW50ZXIvdmVyc2lvbnM/JHRvcD0wJmFwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d18c44d9-942e-4214-804d-c5bf4f89ce22"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "3707be56-376d-4281-af6f-306af28cbf16_132543204214490536"
+        ],
+        "x-ms-request-id": [
+          "e979f232-d911-4649-9e5f-7fee636a8ba0"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "2b0f4e3e-276e-4894-9728-aab46de9c6d6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210127T084520Z:2b0f4e3e-276e-4894-9728-aab46de9c6d6"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 08:45:19 GMT"
+        ],
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "[]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/providers/Microsoft.Compute/locations/eastus2euap/edgeZones/MicrosoftRRDCLab1/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions?$top=1&api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTM5M2Y5MTktYTY4YS00M2QwLTkwNjMtNGIyYmRhNmJmZmRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvZWRnZVpvbmVzL01pY3Jvc29mdFJSRENMYWIxL3B1Ymxpc2hlcnMvTWljcm9zb2Z0V2luZG93c1NlcnZlci9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1dpbmRvd3NTZXJ2ZXIvc2t1cy8yMDE2LURhdGFjZW50ZXIvdmVyc2lvbnM/JHRvcD0xJmFwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ab742d81-a8b4-4d9a-903e-8426f4123e93"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "3707be56-376d-4281-af6f-306af28cbf16_132543204214490536"
+        ],
+        "x-ms-request-id": [
+          "fcd50390-d160-4a00-a559-892c023b090f"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "0169f6d9-edb9-4fc5-bc9b-7817294f3115"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210127T084520Z:0169f6d9-edb9-4fc5-bc9b-7817294f3115"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 08:45:19 GMT"
+        ],
+        "Content-Length": [
+          "425"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"14393.4048.2011170655\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4048.2011170655\"\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/providers/Microsoft.Compute/locations/eastus2euap/edgeZones/MicrosoftRRDCLab1/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions?$orderby=name%20desc&api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTM5M2Y5MTktYTY4YS00M2QwLTkwNjMtNGIyYmRhNmJmZmRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvZWRnZVpvbmVzL01pY3Jvc29mdFJSRENMYWIxL3B1Ymxpc2hlcnMvTWljcm9zb2Z0V2luZG93c1NlcnZlci9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1dpbmRvd3NTZXJ2ZXIvc2t1cy8yMDE2LURhdGFjZW50ZXIvdmVyc2lvbnM/JG9yZGVyYnk9bmFtZSUyMGRlc2MmYXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "bc76fe3a-c5a4-4ed8-b0bc-b2b93bf78467"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "3707be56-376d-4281-af6f-306af28cbf16_132543204214490536"
+        ],
+        "x-ms-request-id": [
+          "15092bbd-7c73-4089-a91e-91cb6a21f536"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "488ea032-3470-4639-9dc3-f864a725cc5e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210127T084520Z:488ea032-3470-4639-9dc3-f864a725cc5e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 08:45:19 GMT"
+        ],
+        "Content-Length": [
+          "425"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"14393.4048.2011170655\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4048.2011170655\"\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/providers/Microsoft.Compute/locations/eastus2euap/edgeZones/MicrosoftRRDCLab1/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions?$top=1&$orderby=name%20desc&api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTM5M2Y5MTktYTY4YS00M2QwLTkwNjMtNGIyYmRhNmJmZmRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvZWRnZVpvbmVzL01pY3Jvc29mdFJSRENMYWIxL3B1Ymxpc2hlcnMvTWljcm9zb2Z0V2luZG93c1NlcnZlci9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1dpbmRvd3NTZXJ2ZXIvc2t1cy8yMDE2LURhdGFjZW50ZXIvdmVyc2lvbnM/JHRvcD0xJiRvcmRlcmJ5PW5hbWUlMjBkZXNjJmFwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "515d20fa-d296-4371-8470-5665d254a573"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "3707be56-376d-4281-af6f-306af28cbf16_132543204214490536"
+        ],
+        "x-ms-request-id": [
+          "5a525d8b-23c5-48ae-b27e-f79d68cd556a"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "0c77d1b7-b5d1-4806-9d6f-1480a4103eba"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210127T084520Z:0c77d1b7-b5d1-4806-9d6f-1480a4103eba"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 08:45:19 GMT"
+        ],
+        "Content-Length": [
+          "425"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"14393.4048.2011170655\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4048.2011170655\"\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/providers/Microsoft.Compute/locations/eastus2euap/edgeZones/MicrosoftRRDCLab1/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions?$top=1&$orderby=name%20asc&api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTM5M2Y5MTktYTY4YS00M2QwLTkwNjMtNGIyYmRhNmJmZmRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvZWRnZVpvbmVzL01pY3Jvc29mdFJSRENMYWIxL3B1Ymxpc2hlcnMvTWljcm9zb2Z0V2luZG93c1NlcnZlci9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1dpbmRvd3NTZXJ2ZXIvc2t1cy8yMDE2LURhdGFjZW50ZXIvdmVyc2lvbnM/JHRvcD0xJiRvcmRlcmJ5PW5hbWUlMjBhc2MmYXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "afb9f6a7-9979-4617-8676-880d1bc97211"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "3707be56-376d-4281-af6f-306af28cbf16_132543204214490536"
+        ],
+        "x-ms-request-id": [
+          "1feb0bf0-9d17-4e59-b130-b7e5db79f995"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-correlation-request-id": [
+          "c5266e88-fb78-475b-8297-4a16d168ad48"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210127T084520Z:c5266e88-fb78-475b-8297-4a16d168ad48"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 27 Jan 2021 08:45:19 GMT"
+        ],
+        "Content-Length": [
+          "425"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"EastUS2EUAP\",\r\n    \"extendedLocation\": {\r\n      \"type\": \"EdgeZone\",\r\n      \"name\": \"MicrosoftRRDCLab1\"\r\n    },\r\n    \"name\": \"14393.4048.2011170655\",\r\n    \"id\": \"/Subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/Providers/Microsoft.Compute/Locations/EastUS2EUAP/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4048.2011170655\"\r\n  }\r\n]",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "5393f919-a68a-43d0-9063-4b2bda6bffdf"
+  }
+}
