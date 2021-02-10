@@ -288,7 +288,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     new ServiceBusSessionProcessorOptions
                     {
                         AutoCompleteMessages = false,
-                        MaxReceiveWaitTime = TimeSpan.FromSeconds(10),
+                        SessionIdleTimeout = TimeSpan.FromSeconds(10),
                         MaxConcurrentSessions = 1
                     });
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();

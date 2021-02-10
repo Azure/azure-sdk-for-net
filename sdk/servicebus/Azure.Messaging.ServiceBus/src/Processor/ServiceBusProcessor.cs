@@ -110,6 +110,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>The maximum number of concurrent calls to the message handler.</value>
         public virtual int MaxConcurrentCalls { get; }
+        internal TimeSpan? MaxReceiveWaitTime { get; }
 
         /// <summary>
         /// Gets a value that indicates whether the processor should automatically
@@ -200,6 +201,7 @@ namespace Azure.Messaging.ServiceBus
             PrefetchCount = _options.PrefetchCount;
             MaxAutoLockRenewalDuration = _options.MaxAutoLockRenewalDuration;
             MaxConcurrentCalls = _options.MaxConcurrentCalls;
+            MaxReceiveWaitTime = _options.MaxReceiveWaitTime;
             MaxConcurrentSessions = maxConcurrentSessions;
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();

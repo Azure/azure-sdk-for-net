@@ -428,7 +428,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 var exceptionReceivedHandlerCalled = false;
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = GetClient();
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
@@ -472,7 +472,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
                 var exceptionReceivedHandlerCalled = false;
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = GetClient();
                 await using var processor = client.CreateSessionProcessor(scope.TopicName, scope.SubscriptionNames.First(), new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = 1
@@ -611,7 +611,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentSessions = numThreads,
                     AutoCompleteMessages = false,
-                    MaxConcurrentCallsPerSession = maxCallsPerSession
+                    MaxConcurrentCallsPerSession = maxCallsPerSession,
+                    SessionIdleTimeout = TimeSpan.FromSeconds(30)
                 };
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
