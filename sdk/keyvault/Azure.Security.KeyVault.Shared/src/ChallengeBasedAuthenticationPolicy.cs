@@ -72,14 +72,14 @@ namespace Azure.Security.KeyVault
         protected override bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)
         {
             string authority = GetRequestAuthority(message.Request);
-            string scope = GetChallengeFromResponse(message.Response, "Bearer", "resource");
+            string scope = AuthorizationChallengeParser.GetChallengeFromResponse(message.Response, "Bearer", "resource");
             if (scope != null)
             {
                 scope = scope + "/.default";
             }
             else
             {
-                scope = GetChallengeFromResponse(message.Response, "Bearer", "scope");
+                scope = AuthorizationChallengeParser.GetChallengeFromResponse(message.Response, "Bearer", "scope");
             }
 
             if (scope is null)
