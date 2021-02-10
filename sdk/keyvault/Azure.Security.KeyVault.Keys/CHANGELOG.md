@@ -1,6 +1,6 @@
 # Release History
 
-## 4.2.0-beta.4 (Unreleased)
+## 4.2.0-beta.4 (2021-02-10)
 
 ### Added
 
@@ -10,6 +10,7 @@
 
 ### Changed
 
+- The default service version is now "7.2" (still in preview).
 - Renamed `EncryptOptions` to `EncryptParameters`.
 - Renamed `DecryptOptions` to `DecryptParameters`.
 - Made `EncryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
