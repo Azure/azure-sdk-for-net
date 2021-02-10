@@ -3,7 +3,6 @@
 
 namespace DnsResolver.Tests
 {
-    
     internal static class Constants
     {
         public const string DnsResolverLocation = "westus2";

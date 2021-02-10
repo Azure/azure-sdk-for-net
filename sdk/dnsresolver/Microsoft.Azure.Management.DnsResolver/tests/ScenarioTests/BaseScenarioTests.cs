@@ -8,7 +8,6 @@ namespace DnsResolver.Tests.ScenarioTests
     using FluentAssertions;
     using Microsoft.Azure.Management.DnsResolver;
     using Microsoft.Azure.Management.DnsResolver.Models;
-    using Microsoft.Azure.Management.DnsResolver.Tests.Extensions;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;

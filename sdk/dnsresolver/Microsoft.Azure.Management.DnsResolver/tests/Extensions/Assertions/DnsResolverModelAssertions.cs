@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.DnsResolver.Tests.Assertions
+namespace DnsResolver.Tests
 {
     using FluentAssertions;
     using FluentAssertions.Primitives;
-    using global::DnsResolver.Tests;
     using Microsoft.Azure.Management.DnsResolver.Models;
     using System.Collections.Generic;
 

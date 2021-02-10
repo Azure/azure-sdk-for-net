@@ -3,10 +3,10 @@
 
 namespace DnsResolver.Tests.ScenarioTests
 {
+    using DnsResolver.Tests.Extensions;
     using FluentAssertions;
     using Microsoft.Azure.Management.DnsResolver;
     using Microsoft.Azure.Management.DnsResolver.Models;
-    using Microsoft.Azure.Management.DnsResolver.Tests.Extensions.Assertions;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.Azure;
     using System;
