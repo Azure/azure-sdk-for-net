@@ -235,6 +235,23 @@ namespace Azure.Containers.ContainerRegistry.Blobs
             }
         }
 
+        //// See sample UploadBlobInOneRequest_Monolithic
+        // NOTE: Not in swagger.
+        //public virtual Response Upload(string digest, Stream value, CancellationToken cancellationToken = default)
+        //{
+        //    using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.Upload");
+        //    scope.Start();
+        //    try
+        //    {
+        //        return RestClient.(uploadInfo.BlobLocation.ToString(), value, cancellationToken).GetRawResponse();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
+
         /// <summary> Upload a stream of data without completing the upload. </summary>
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

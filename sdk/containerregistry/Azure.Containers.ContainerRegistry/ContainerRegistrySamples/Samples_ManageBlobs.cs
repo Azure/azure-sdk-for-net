@@ -15,6 +15,25 @@ namespace ContainerRegistrySamples
 {
     public class Samples_ManageBlobs
     {
+        public async Task UploadBlobInOneRequest_Monolithic()
+        {
+            // Monolithic upload
+            ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
+
+            // TODO: is this the right model for Blob Client?  To have it in a separate namespace?
+            ContainerRegistryBlobClient blobClient = registryClient.GetBlobClient("hello-world");
+
+
+            //POST INITIATE BLOB UPLOAD
+            // Initiate a resumable blob upload. If successful, an upload location will be provided to complete the upload.
+            // Optionally, if the digest parameter is present, the request body will be used to **complete the upload in a single request**.
+            // See: https://docs.docker.com/registry/spec/api/#initiate-blob-upload
+
+            // TODO: Note this is not defined in the swagger, where the /v2/{name}/blobs/uploads/ takes a digest parameter.
+            // Is it worth supporting?
+        }
+
+
         public async Task UploadBlob()
         {
             // Track 1:
