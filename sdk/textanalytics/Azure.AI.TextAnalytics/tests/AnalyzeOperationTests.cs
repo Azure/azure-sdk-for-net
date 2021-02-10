@@ -389,7 +389,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("The statstics is not being returned from the service - https://github.com/Azure/azure-sdk-for-net/issues/16839")]
         public async Task AnalyzeOperationBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -401,6 +400,10 @@ namespace Azure.AI.TextAnalytics.Tests
                      Language = "en",
                 },
                 new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
+                {
+                     Language = "es",
+                },
+                new TextDocumentInput("3", "")
                 {
                      Language = "es",
                 }
@@ -428,12 +431,15 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(3, result.Count);
 
-            // TODO - Update this once service start returning statistics.
-            // TODO - Add Other request level statistics.
-            Assert.AreEqual(0, result[0].Statistics.CharacterCount);
-            Assert.AreEqual(0, result[0].Statistics.TransactionCount);
+            Assert.AreEqual(3, result.Statistics.DocumentCount);
+            Assert.AreEqual(2, result.Statistics.TransactionCount);
+            Assert.AreEqual(2, result.Statistics.ValidDocumentCount);
+            Assert.AreEqual(1, result.Statistics.InvalidDocumentCount);
+
+            Assert.AreEqual(51, result[0].Statistics.CharacterCount);
+            Assert.AreEqual(1, result[0].Statistics.TransactionCount);
         }
     }
 }
