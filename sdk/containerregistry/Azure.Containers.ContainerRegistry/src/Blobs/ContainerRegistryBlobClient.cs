@@ -255,14 +255,14 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         /// <summary> Upload a stream of data without completing the upload. </summary>
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BlobUploadInfo>> UploadChunkAsync(BlobUploadInfo uploadInfo, Stream value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BlobUploadDetails>> UploadChunkAsync(BlobUploadDetails uploadInfo, Stream value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.UploadChunk");
             scope.Start();
             try
             {
                 ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> response = await RestClient.UploadChunkAsync(uploadInfo.BlobLocation.ToString(), value, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BlobUploadInfo(response.Headers.Location.ToString()), response);
+                return Response.FromValue(new BlobUploadDetails(response.Headers.Location.ToString()), response);
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         /// <summary> Upload a stream of data without completing the upload. </summary>
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UploadChunk(BlobUploadInfo uploadInfo, Stream value, CancellationToken cancellationToken = default)
+        public virtual Response UploadChunk(BlobUploadDetails uploadInfo, Stream value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.UploadChunk");
             scope.Start();
@@ -291,9 +291,9 @@ namespace Azure.Containers.ContainerRegistry.Blobs
 
         /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
         /// <param name="digest"> Digest of a BLOB. </param>        
-        /// <param name="value"> Optional raw data of blob. </param>
+        /// <param name="value"> Raw data of final blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CompleteUploadAsync(BlobUploadInfo uploadInfo, string digest, Stream value=null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CompleteUploadAsync(BlobUploadDetails uploadInfo, string digest, Stream value, CancellationToken cancellationToken = default)
         {
             // /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
 
@@ -312,9 +312,9 @@ namespace Azure.Containers.ContainerRegistry.Blobs
 
         /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
         /// <param name="digest"> Digest of a BLOB. </param>
-        /// <param name="value"> Optional raw data of blob. </param>
+        /// <param name="value"> Raw data of final blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CompleteUpload(BlobUploadInfo uploadInfo, string digest, Stream value = null, CancellationToken cancellationToken = default)
+        public virtual Response CompleteUpload(BlobUploadDetails uploadInfo, string digest, Stream value, CancellationToken cancellationToken = default)
         {
             // /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
 
@@ -370,16 +370,22 @@ namespace Azure.Containers.ContainerRegistry.Blobs
             }
         }
 
+        // TODO: Naming here - usually Create takes an instance of the resource to create - we're asking the service to create 
+        // one for us from scratch - like getting a ticket we'll use elsewhere.  Do we have a pattern for this elsewhere?
         /// <summary> Initiate a resumable blob upload with an empty request body. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BlobUploadInfo>> StartUploadAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BlobUploadDetails>> InitiateResumableUploadAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
             try
             {
+                // Note: content length header has got to be 0 in order to start the upload
+                // See: Initiate Resumable Blob Upload
+                // in: https://docs.docker.com/registry/spec/api/#initiate-blob-upload
+                // TODO: doesn't look like we're doing this - does the service support not setting the header if the body has no content?
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> response = await RestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BlobUploadInfo(response.Headers.Location), response);
+                return Response.FromValue(new BlobUploadDetails(response.Headers.Location), response);
             }
             catch (Exception e)
             {
@@ -390,14 +396,14 @@ namespace Azure.Containers.ContainerRegistry.Blobs
 
         /// <summary> Initiate a resumable blob upload with an empty request body. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BlobUploadInfo> StartUpload(CancellationToken cancellationToken = default)
+        public virtual Response<BlobUploadDetails> InitiateResumableUpload(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
             try
             {
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> response = RestClient.StartUpload(_repositoryName, cancellationToken);
-                return Response.FromValue(new BlobUploadInfo(response.Headers.Location), response);
+                return Response.FromValue(new BlobUploadDetails(response.Headers.Location), response);
             }
             catch (Exception e)
             {
