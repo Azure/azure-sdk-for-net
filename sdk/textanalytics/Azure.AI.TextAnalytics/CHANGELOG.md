@@ -3,7 +3,7 @@
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features
 - Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
-- `StringIndexType` has been added to all endpoints that expose the new properties `Offset` and `Length` to determine the endoding the service should use. It is added into the `TextAnalyticsRequestOptions` class and default for this SDK is `UTF-16`.
+- `StringIndexType` has been added to all endpoints that expose the new properties `Offset` and `Length` to determine the encoding which service should use. It is added into the `TextAnalyticsRequestOptions` class and default for this SDK is `UTF-16` code unit.
 - `AnalyzeHealthcareEntitiesOperation` now exposes the properties `CreatedOn`, `ExpiresOn`, `LastModified`, and `Status`.
 - `AnalyzeBatchActionsOperation ` now exposes the properties `CreatedOn`, `ExpiresOn`, `LastModified`, `Status`, `ActionsFailed`, `ActionsInProgress`,  `ActionsSucceeded`,  `DisplayName`, and `TotalActions`.
 
