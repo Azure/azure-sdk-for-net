@@ -407,7 +407,7 @@ namespace Azure.Storage.Blobs
             return new ContainerRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uri.ToString(),
+                url: uriBuilder.ToString(),
                 containerName: containerName,
                 version: _clientConfiguration.Version.ToVersionString());
         }
@@ -1146,7 +1146,6 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
                     ResponseWithHeaders<ContainerCreateHeaders> response;
-                    encryptionScopeOptions ??= new BlobContainerEncryptionScopeOptions();
 
                     if (async)
                     {

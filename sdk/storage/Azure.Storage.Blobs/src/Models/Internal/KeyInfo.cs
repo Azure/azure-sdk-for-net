@@ -3,5 +3,7 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class KeyInfo {}
+    internal partial class KeyInfo
+    {
+    }
 }

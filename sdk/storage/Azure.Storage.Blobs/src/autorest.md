@@ -216,3 +216,15 @@ directive:
         "modelAsString": false
     };
 ```
+
+### Fix KeyInfo
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $.KeyInfo.required;
+    $.KeyInfo.required = [
+        "Expiry"
+    ];
+```

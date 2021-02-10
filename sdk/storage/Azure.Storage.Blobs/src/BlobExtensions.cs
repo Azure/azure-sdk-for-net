@@ -219,10 +219,18 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        // TODO
         internal static AccountInfo ToAccountInfo(this ResponseWithHeaders<ServiceGetAccountInfoHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new AccountInfo
+            {
+                SkuName = response.Headers.SkuName.GetValueOrDefault(),
+                AccountKind = response.Headers.AccountKind.GetValueOrDefault(),
+                IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
+            };
         }
 
         // TODO
@@ -234,7 +242,28 @@ namespace Azure.Storage.Blobs
         // TODO
         internal static BlobContainerProperties ToBlobContainerProperties(this ResponseWithHeaders<ContainerGetPropertiesHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerProperties
+            {
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseStatus = response.Headers.LeaseStatus,
+                LeaseState = response.Headers.LeaseState,
+                LeaseDuration = response.Headers.LeaseDuration,
+                PublicAccess = response.Headers.BlobPublicAccess,
+                HasImmutabilityPolicy = response.Headers.HasImmutabilityPolicy,
+                HasLegalHold = response.Headers.HasLegalHold,
+                DefaultEncryptionScope = response.Headers.DefaultEncryptionScope,
+                PreventEncryptionScopeOverride = response.Headers.DenyEncryptionScopeOverride,
+                // TODO
+                //DeletedOn =
+                //RemainingRetentionDays =
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                Metadata = response.Headers.Metadata
+            };
         }
 
         // TODO

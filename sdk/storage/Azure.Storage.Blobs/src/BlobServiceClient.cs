@@ -1362,10 +1362,10 @@ namespace Azure.Storage.Blobs
                         throw BlobErrors.InvalidDateTimeUtc(nameof(expiresOn));
                     }
 
-                    // TODO this probably doesn't work.
-                    KeyInfo keyInfo = new KeyInfo(
-                        startsOn.ToString(),
-                        expiresOn.ToString(CultureInfo.InvariantCulture));
+                    KeyInfo keyInfo = new KeyInfo(expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture))
+                    {
+                        Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture)
+                    };
 
                     ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;
 
