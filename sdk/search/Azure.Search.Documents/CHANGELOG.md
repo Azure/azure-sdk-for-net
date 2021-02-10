@@ -9,6 +9,7 @@
 - Added `IndexActionEventArgs<T>` to track indexing actions.
 - Added `IndexActionCompletedEventArgs<T>` to track the completion of an indexing action.
 - Added `IndexActionFailedEventArgs<T>` to track the failure of an indexing action.
+- All changes from the 11.2.0-beta.2 and 11.2.0-beta.1 releases listed below.
 
 ### Breaking Changes
 
