@@ -69,11 +69,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <remarks>
-        /// Note, SessionIds is populated and MaxConcurrentSessions is greater or equal to the number of sessions specified,
-        /// the session will not be closed when the idle timeout elapses. It will still control the amount of time each receive
-        /// call waits.
-        /// Additionally, if this value is set to be too low, it could cause new sessions to be requested
-        /// more often than necessary.
+        /// Note, if <see cref="SessionIds"/> is populated and <see cref="MaxConcurrentSessions"/> is greater or equal to
+        /// the number of sessions specified in <see cref="SessionIds"/>, the session will not be closed when the idle timeout elapses.
+        /// However, it will still control the amount of time each receive call waits.
         /// </remarks>
         public TimeSpan? SessionIdleTimeout
         {
