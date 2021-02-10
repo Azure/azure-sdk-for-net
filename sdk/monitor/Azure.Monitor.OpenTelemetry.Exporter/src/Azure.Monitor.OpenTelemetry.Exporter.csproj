@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="OpenTelemetry" VersionOverride="1.0.0-rc3"/>
+    <PackageReference Include="OpenTelemetry" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
