@@ -1,4 +1,4 @@
 # Release History
 
-## 1.0.0-beta.1 (2021-10-02)
+## 1.0.0-beta.1 (2021-02-10)
 - Initial version of client.
