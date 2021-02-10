@@ -73,6 +73,16 @@ directive:
     delete $.BlobContentDisposition["x-ms-parameter-grouping"];
 ```
 
+### Remove container-cpk-scope-info grouping
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.DefaultEncryptionScope["x-ms-parameter-grouping"];
+    delete $.DenyEncryptionScopeOverride["x-ms-parameter-grouping"];
+```
+
 ### Remove CPK and encryption scope parameter grouping
 ``` yaml
 directive:

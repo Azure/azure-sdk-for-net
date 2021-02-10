@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, PublicAccessType? access, BlobContainerEncryptionScopeOptions containerCpkScopeInfo)
+        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, PublicAccessType? access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -78,11 +78,14 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("x-ms-blob-public-access", access.Value.ToSerialString());
             }
             request.Headers.Add("x-ms-version", version);
-            if (containerCpkScopeInfo?.DefaultEncryptionScope != null)
+            if (defaultEncryptionScope != null)
             {
-                request.Headers.Add("x-ms-default-encryption-scope", containerCpkScopeInfo.DefaultEncryptionScope);
+                request.Headers.Add("x-ms-default-encryption-scope", defaultEncryptionScope);
             }
-            request.Headers.Add("x-ms-deny-encryption-scope-override", containerCpkScopeInfo.PreventEncryptionScopeOverride);
+            if (preventEncryptionScopeOverride != null)
+            {
+                request.Headers.Add("x-ms-deny-encryption-scope-override", preventEncryptionScopeOverride.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -91,11 +94,12 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="access"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
-        /// <param name="containerCpkScopeInfo"> Parameter group. </param>
+        /// <param name="defaultEncryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes. </param>
+        /// <param name="preventEncryptionScopeOverride"> Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, PublicAccessType? access = null, BlobContainerEncryptionScopeOptions containerCpkScopeInfo = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, PublicAccessType? access = null, string defaultEncryptionScope = null, bool? preventEncryptionScopeOverride = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, access, containerCpkScopeInfo);
+            using var message = CreateCreateRequest(timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -111,11 +115,12 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information. </param>
         /// <param name="access"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
-        /// <param name="containerCpkScopeInfo"> Parameter group. </param>
+        /// <param name="defaultEncryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes. </param>
+        /// <param name="preventEncryptionScopeOverride"> Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, PublicAccessType? access = null, BlobContainerEncryptionScopeOptions containerCpkScopeInfo = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, PublicAccessType? access = null, string defaultEncryptionScope = null, bool? preventEncryptionScopeOverride = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, access, containerCpkScopeInfo);
+            using var message = CreateCreateRequest(timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerCreateHeaders(message.Response);
             switch (message.Response.Status)

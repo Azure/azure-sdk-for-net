@@ -1146,13 +1146,15 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
                     ResponseWithHeaders<ContainerCreateHeaders> response;
+                    encryptionScopeOptions ??= new BlobContainerEncryptionScopeOptions();
 
                     if (async)
                     {
                         response = await ContainerRestClient.CreateAsync(
                             metadata: metadata,
-                            access: publicAccessType,
-                            containerCpkScopeInfo: encryptionScopeOptions,
+                            access: publicAccessType == PublicAccessType.None ? null : publicAccessType,
+                            defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
+                            preventEncryptionScopeOverride: encryptionScopeOptions?.PreventEncryptionScopeOverride,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1160,8 +1162,9 @@ namespace Azure.Storage.Blobs
                     {
                         response = ContainerRestClient.Create(
                             metadata: metadata,
-                            access: publicAccessType,
-                            containerCpkScopeInfo: encryptionScopeOptions,
+                            access: publicAccessType == PublicAccessType.None ? null : publicAccessType,
+                            defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
+                            preventEncryptionScopeOverride: encryptionScopeOptions?.PreventEncryptionScopeOverride,
                             cancellationToken: cancellationToken);
                     }
 
