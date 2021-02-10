@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Communication.Identity.Models;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -58,6 +59,36 @@ namespace Azure.Communication.Identity.Tests
                     JwtTokenParser.JwtPayload payload = JwtTokenParser.DecodeJwtPayload(tokenResponse.Value.Token);
                     CollectionAssert.AreEquivalent(scopes, payload.Scopes);
                 }
+            }
+        }
+
+        [Test]
+        [TestCase(AuthMethod.ConnectionString, TestName = "IssuingTurnCredentialsWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "IssuingTurnCredentialsWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "IssuingTurnCredentialsWithTokenCredential")]
+        public async Task IssuingTurnCredentialsGeneratesTurnCredentials(AuthMethod authMethod)
+        {
+            CommunicationIdentityClient client = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            Response<CommunicationTurnCredentialsResponse> turnCredentialsResponse = await client.IssueTurnCredentialsAsync(userResponse.Value);
+
+            Assert.IsNotNull(turnCredentialsResponse.Value);
+            Assert.IsNotNull(turnCredentialsResponse.Value.TurnServers);
+            // ToDo: Should we expect a set number of turn server credentials?
+            // ToDo: Are there any constraints on returned values that need to be verified?
+            // Should we sanitize credential responses or is it automatically sanitized as part of the pipeline?
+            foreach (CommunicationTurnServer serverCredential in turnCredentialsResponse.Value.TurnServers)
+            {
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Urls));
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
             }
         }
 
