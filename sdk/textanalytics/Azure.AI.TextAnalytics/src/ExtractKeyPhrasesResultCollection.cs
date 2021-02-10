@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -10,6 +11,7 @@ namespace Azure.AI.TextAnalytics
     /// Collection of <see cref="ExtractKeyPhrasesResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
+    [DebuggerTypeProxy(typeof(ExtractKeyPhrasesResultCollectionDebugView))]
     public class ExtractKeyPhrasesResultCollection : ReadOnlyCollection<ExtractKeyPhrasesResult>
     {
         internal ExtractKeyPhrasesResultCollection(IList<ExtractKeyPhrasesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
