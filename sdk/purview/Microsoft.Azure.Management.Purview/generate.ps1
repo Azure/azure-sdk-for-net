@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "purview/resource-manager" -AutoRestVersion "v2" -ConfigFileTag "package-2020-12-01-preview"
+Start-AutoRestCodeGeneration -ResourceProvider "purview/resource-manager" -AutoRestVersion "v2"

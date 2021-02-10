@@ -114,6 +114,7 @@ pr:
     - sdk/postgresql/Microsoft.Azure.Management.PostgreSQL
     - sdk/powerbidedicated/Microsoft.Azure.Management.PowerBIDedicated
     - sdk/privatedns/Microsoft.Azure.Management.PrivateDns
+    - sdk/purview/Microsoft.Azure.Management.Purview
     - sdk/quantum/Microsoft.Azure.Management.Quantum 
     - sdk/recoveryservices/Microsoft.Azure.Management.RecoveryServices
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
@@ -148,7 +149,6 @@ pr:
     - sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - sdk/workloadmonitor/Microsoft.Azure.Management.WorkloadMonitor
-    - sdk/purview/Microsoft.Azure.Management.Purview
 variables:
   - template: templates/variables/globals.yml
   - name: msBuildLogDir
