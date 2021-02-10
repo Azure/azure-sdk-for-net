@@ -1,6 +1,6 @@
 # Release History
 
-## 12.7.0-beta.1 (Unreleased)
+## 12.7.0-beta.1 (2021-02-09)
 - Fixed bug where QueueClient.CanGenerateSasUri and QueueServiceClient.CanGenerateSasUri was not mockable.
 - Added MessageDecodingFailed event to QueueClientOptions.
 
