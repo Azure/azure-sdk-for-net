@@ -191,6 +191,10 @@ namespace Azure.Search.Documents.Tests
                     RaiseNotification();
                 }
             }
+
+            public virtual SearchIndexingBufferedSender<T> CreateIndexingBufferedSender<T>(
+                SearchIndexingBufferedSenderOptions<T> options = null) =>
+                new SearchIndexingBufferedSender<T>(this, options);
         }
 
         public BatchingSearchClient GetBatchingSearchClient(SearchResources resources)
@@ -209,7 +213,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Champion_OneShotUpload()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(50000);
 
             // Wrap in a block so we DisposeAsync before getting the Count below
@@ -228,7 +232,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Champion_ContinueAddingWhileSending()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(1000);
 
             // Wrap in a block so we DisposeAsync before getting the Count below
@@ -253,7 +257,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Champion_ManualFlushing()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(1000);
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -275,7 +279,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Champion_FlushAfterInterval()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(20);
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -297,7 +301,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Champion_FineGrainedErrors()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(1000);
 
             // Don't touch the failures outside of the event handler until
@@ -333,7 +337,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Champion_BasicCheckpointing()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(1000);
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -381,7 +385,7 @@ namespace Azure.Search.Documents.Tests
         public async Task KeyFieldAccessor_Custom()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(10);
 
             bool customAccessorInvoked = false;
@@ -427,7 +431,7 @@ namespace Azure.Search.Documents.Tests
             LessSimpleDocument[] data = LessSimpleDocument.GetDocuments(10);
 
             await using SearchIndexingBufferedSender<LessSimpleDocument> indexer =
-                client.CreateIndexingBufferedSender<LessSimpleDocument>();
+                new SearchIndexingBufferedSender<LessSimpleDocument>(client);
             AssertNoFailures(indexer);
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
@@ -452,7 +456,7 @@ namespace Azure.Search.Documents.Tests
         public async Task KeyFieldAccessor_FetchIndex()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             UnbuildableDocument[] data = UnbuildableDocument.GetDocuments(10);
 
             await using SearchIndexingBufferedSender<UnbuildableDocument> indexer =
@@ -467,7 +471,7 @@ namespace Azure.Search.Documents.Tests
         public async Task KeyFieldAccessor_Error()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             Hotel[] data = SearchResources.TestDocuments;
 
             await using SearchIndexingBufferedSender<Hotel> indexer =
@@ -489,7 +493,7 @@ namespace Azure.Search.Documents.Tests
         public async Task AutoFlush_PartialBatch()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(BatchSize / 2);
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -512,7 +516,7 @@ namespace Azure.Search.Documents.Tests
         public async Task AutoFlush_FullBatch()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -535,7 +539,7 @@ namespace Azure.Search.Documents.Tests
         public async Task AutoFlush_MultipleBatches()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 3.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -631,7 +635,7 @@ namespace Azure.Search.Documents.Tests
         public async Task AutoFlushInterval_DoesNotFire(int? interval)
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(BatchSize / 2);
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -655,7 +659,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Flush_SubmitsEverything()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -675,7 +679,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Flush_Blocks()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -702,7 +706,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Dispose_Flushes()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -722,7 +726,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Dispose_Blocks()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -746,7 +750,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Dispose_DoubleDisposeIsSafe()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -767,7 +771,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Dispose_ThrowsAfterDispose()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -788,7 +792,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Dispose_UndisposedNoCrash()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -807,7 +811,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Convenience_Delete()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -823,7 +827,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Convenience_Merge()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -839,7 +843,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Convenience_MergeOrUpload()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -855,7 +859,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Convenience_Upload()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -871,7 +875,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Convenience_None()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(3);
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -893,7 +897,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Notifications_Added()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -910,7 +914,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Notifications_Sent()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -928,7 +932,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Notifications_Completed()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -946,7 +950,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Notifications_Failed()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments((int)(BatchSize * 1.5));
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -964,7 +968,7 @@ namespace Azure.Search.Documents.Tests
         public async Task Notifications_ExceptionsGetSwallowed()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
             SimpleDocument[] data = SimpleDocument.GetDocuments(BatchSize);
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
@@ -1032,6 +1036,123 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task Behavior_SplitBatchByDocumentKey()
+        {
+            int numberOfDocuments = 5;
+
+            await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
+
+            SimpleDocument[] data = new SimpleDocument[numberOfDocuments];
+            for (int i = 0; i < numberOfDocuments; i++)
+            {
+                data[i] = new SimpleDocument() { Id = $"{i}", Name = $"Document #{i}" };
+            }
+
+            // 'SimpleDocument' has 'Id' set as its key field.
+            // Set the Ids of 2 documents in the group to be the same.
+            // We expect the batch to be split at this index, even though the size of the set is smaller than the batch size.
+            data[3].Id = data[0].Id;
+
+            await using SearchIndexingBufferedSender<SimpleDocument> indexer =
+                client.CreateIndexingBufferedSender(
+                    new SearchIndexingBufferedSenderOptions<SimpleDocument>()
+                    {
+                        // Set the expected batch action count to be larger than the number of documents in the set.
+                        InitialBatchActionCount = numberOfDocuments + 1,
+                    });
+
+            // Throw from every handler
+            int sent = 0, completed = 0;
+            indexer.ActionSent += e =>
+            {
+                sent++;
+
+                // Batch will be split at the 4th document.
+                // So, 3 documents will be sent before any are submitted, but 3 submissions will be made before the last 2 are sent
+                Assert.AreEqual((sent <= 3) ? 0 : 3, completed);
+
+                throw new InvalidOperationException("ActionSentAsync: Should not be seen!");
+            };
+
+            indexer.ActionCompleted += e =>
+            {
+                completed++;
+
+                // Batch will be split at the 4th document.
+                // So, 3 documents will be submitted after 3 are sent, and the last 2 submissions will be made after all 5 are sent
+                Assert.AreEqual((completed <= 3) ? 3 : 5, sent);
+
+                throw new InvalidOperationException("ActionCompletedAsync: Should not be seen!");
+            };
+
+            AssertNoFailures(indexer);
+            await indexer.UploadDocumentsAsync(data);
+            await indexer.FlushAsync();
+
+            Assert.AreEqual(5, sent);
+            Assert.AreEqual(5, completed);
+        }
+
+        [Test]
+        public async Task Behavior_SplitBatchByDocumentKeyIgnoreCaseDifferences()
+        {
+            int numberOfDocuments = 5;
+
+            await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
+            BatchingSearchClient client = GetBatchingSearchClient(resources);
+
+            // 'SimpleDocument' has 'Id' set as its key field.
+            // Set the Ids of 2 documents in the group to differ only in case from another 2.
+            // We expect the batch to NOT be split because keys are case-sensitive and the publisher should consider them all unique.
+            SimpleDocument[] data = new SimpleDocument[]
+            {
+                new SimpleDocument() { Id = "a", Name = "Document a" },
+                new SimpleDocument() { Id = "b", Name = "Document b" },
+                new SimpleDocument() { Id = "c", Name = "Document c" },
+                new SimpleDocument() { Id = "A", Name = "Document A" },
+                new SimpleDocument() { Id = "B", Name = "Document B" },
+            };
+
+            await using SearchIndexingBufferedSender<SimpleDocument> indexer =
+                client.CreateIndexingBufferedSender(
+                    new SearchIndexingBufferedSenderOptions<SimpleDocument>()
+                    {
+                        // Make sure the expected batch action is larger than the number of documents in the set.
+                        InitialBatchActionCount = numberOfDocuments + 1,
+                    });
+
+            // Throw from every handler
+            int sent = 0, completed = 0;
+            indexer.ActionSent += e =>
+            {
+                sent++;
+
+                // Batch will not be split. So, no document will be submitted before all are sent.
+                Assert.AreEqual(0, completed);
+
+                throw new InvalidOperationException("ActionSentAsync: Should not be seen!");
+            };
+
+            indexer.ActionCompleted += e =>
+            {
+                completed++;
+
+                // Batch will not be split. So, all documents will be sent before any are submitted.
+                Assert.AreEqual(5, sent);
+
+                throw new InvalidOperationException("ActionCompletedAsync: Should not be seen!");
+            };
+
+            AssertNoFailures(indexer);
+            await indexer.UploadDocumentsAsync(data);
+            await indexer.FlushAsync();
+
+            Assert.AreEqual(5, sent);
+            Assert.AreEqual(5, completed);
+        }
+
+        [Test]
         [TestCase(409)]
         [TestCase(422)]
         [TestCase(503)]
@@ -1067,8 +1188,8 @@ namespace Azure.Search.Documents.Tests
                 client.CreateIndexingBufferedSender(
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
-                        MaxRetries = 5,
-                        MaxRetryDelay = TimeSpan.FromSeconds(1)
+                        MaxRetriesPerIndexAction = 5,
+                        MaxThrottlingDelay = TimeSpan.FromSeconds(1)
                     });
 
             // Keep 503ing to count the retries
@@ -1096,8 +1217,8 @@ namespace Azure.Search.Documents.Tests
                 client.CreateIndexingBufferedSender(
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
-                        MaxRetries = 1,
-                        RetryDelay = TimeSpan.FromSeconds(3)
+                        MaxRetriesPerIndexAction = 1,
+                        ThrottlingDelay = TimeSpan.FromSeconds(3)
                     });
 
             // Keep 503ing to trigger delays
@@ -1128,8 +1249,8 @@ namespace Azure.Search.Documents.Tests
                 client.CreateIndexingBufferedSender(
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
-                        MaxRetries = 10,
-                        MaxRetryDelay = TimeSpan.FromSeconds(1)
+                        MaxRetriesPerIndexAction = 10,
+                        MaxThrottlingDelay = TimeSpan.FromSeconds(1)
                     });
 
             // Keep 503ing to trigger delays

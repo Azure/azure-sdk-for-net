@@ -4,6 +4,8 @@
 using Azure.Core;
 using System;
 
+#nullable enable
+
 namespace Azure.MixedReality.Authentication
 {
     internal static class AuthenticationEndpoint

@@ -55,7 +55,7 @@ jobs:
     pool:
       vmImage: "$(OSVmImage)"
     steps:
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+#      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"

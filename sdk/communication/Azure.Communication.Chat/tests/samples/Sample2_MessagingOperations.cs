@@ -36,10 +36,7 @@ namespace Azure.Communication.Chat.Tests.samples
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
-            var content = "hello world";
-            var type = ChatMessageType.Html;
-            var senderDisplayName = "sender name";
-            var messageId = await chatThreadClient.SendMessageAsync(content, type, senderDisplayName);
+            var messageId = await chatThreadClient.SendMessageAsync(content:"hello world");
             #endregion Snippet:Azure_Communication_Chat_Tests_SendMessage
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage

@@ -35,6 +35,22 @@ directive:
 ``` yaml
 directive:
   from: swagger-document
+  where: $.definitions.ReadResult
+  transform: >
+    $.properties.selectionMarks["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.KeyValueType
+  transform: >
+    $["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
   where: $.definitions.AnalyzeOperationResult
   transform: >
     $.properties.analyzeResult["x-nullable"] = true;

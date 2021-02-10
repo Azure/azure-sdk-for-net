@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics
         public double ConfidenceScore { get; }
 
         /// <summary>
-        /// Gets the starting position (in UTF-16 code units) for the matching text in the input document.
+        /// Gets the starting position for the matching text in the input document.
         /// </summary>
         public int Offset { get; }
 
