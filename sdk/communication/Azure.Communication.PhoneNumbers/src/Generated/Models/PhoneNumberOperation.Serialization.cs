@@ -43,7 +43,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        error = null;
                         continue;
                     }
                     error = CommunicationError.DeserializeCommunicationError(property.Value);

@@ -10,7 +10,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 {
     public class PhoneNumbersClientLiveTestBase : RecordedTestBase<PhoneNumbersClientTestEnvironment>
     {
-        public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new CommunicationRecordedTestSanitizer();
 
         public bool IncludePhoneNumberLiveTests

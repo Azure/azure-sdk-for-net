@@ -46,14 +46,14 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         [TestCase(null)]
         [TestCase("en-US")]
-        public async Task CreateReservationErrorState(string? locale)
+        public async Task CreateSearchErrorState(string? locale)
         {
             var client = CreateClient();
             const string countryCode = "US";
 
             // User and toll free is an invalid combination
             var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.User,
-                new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.None));
+                new PhoneNumberCapabilities(PhoneNumberCapabilityValue.Outbound, PhoneNumberCapabilityValue.None), new PhoneNumberSearchOptions("212", 1));
 
             try
             {
@@ -64,7 +64,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (Exception ex)
             {
-                Assert.AreEqual("Reservation has failed.", ex.Message);
+                Assert.AreEqual("Search has failed.", ex.Message);
                 return;
             }
 

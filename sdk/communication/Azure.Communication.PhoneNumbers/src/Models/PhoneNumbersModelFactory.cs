@@ -19,13 +19,11 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
         /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
-        /// <param name="callbackUri"> The webhook for receiving incoming events, e.g. https://{{site-name}}.azurewebsites.net/api/updates. </param>
-        /// <param name="applicationId"> The application id of the server application the phone number is assigned to. The property is empty if the phone number is assigned to a person. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
 #pragma warning disable CA1054 // URI-like parameters should not be strings
-        public static AcquiredPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset? purchaseDate, string callbackUri, string applicationId, PhoneNumberCost cost)
+        public static AcquiredPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset? purchaseDate, PhoneNumberCost cost)
 #pragma warning restore CA1054 // URI-like parameters should not be strings
-            => new AcquiredPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, callbackUri, applicationId, cost);
+            => new AcquiredPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
 
         /// <summary> Initializes a new instance of PhoneNumberCost. </summary>
         /// <param name="amount"> The cost amount. </param>

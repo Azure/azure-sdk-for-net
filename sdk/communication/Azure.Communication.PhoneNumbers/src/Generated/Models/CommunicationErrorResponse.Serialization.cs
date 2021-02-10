@@ -19,6 +19,11 @@ namespace Azure.Communication.PhoneNumbers.Models
             {
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        error = null;
+                        continue;
+                    }
                     error = CommunicationError.DeserializeCommunicationError(property.Value);
                     continue;
                 }

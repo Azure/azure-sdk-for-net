@@ -55,10 +55,8 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
         /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
-        /// <param name="callbackUri"> The webhook for receiving incoming events, e.g. https://{{site-name}}.azurewebsites.net/api/updates. </param>
-        /// <param name="applicationId"> The application id of the server application the phone number is assigned to. The property is empty if the phone number is assigned to a person. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
-        internal AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset? purchaseDate, string callbackUri, string applicationId, PhoneNumberCost cost)
+        internal AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset? purchaseDate, PhoneNumberCost cost)
         {
             Id = id;
             PhoneNumber = phoneNumber;
@@ -67,8 +65,6 @@ namespace Azure.Communication.PhoneNumbers.Models
             Capabilities = capabilities;
             AssignmentType = assignmentType;
             PurchaseDate = purchaseDate;
-            CallbackUri = callbackUri;
-            ApplicationId = applicationId;
             Cost = cost;
         }
 

@@ -47,7 +47,14 @@ namespace Azure.Communication.PhoneNumbers.Models
                     List<CommunicationError> array = new List<CommunicationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCommunicationError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeCommunicationError(item));
+                        }
                     }
                     details = array;
                     continue;
@@ -56,7 +63,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        innererror = null;
                         continue;
                     }
                     innererror = DeserializeCommunicationError(property.Value);
