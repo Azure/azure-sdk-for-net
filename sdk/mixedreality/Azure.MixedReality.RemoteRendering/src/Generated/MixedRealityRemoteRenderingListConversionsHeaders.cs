@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    internal class MixedRealityRemoteRenderingListConversionsHeaders
+    internal partial class MixedRealityRemoteRenderingListConversionsHeaders
     {
         private readonly Response _response;
         public MixedRealityRemoteRenderingListConversionsHeaders(Response response)
