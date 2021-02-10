@@ -14,6 +14,10 @@ namespace Azure.Identity.Samples
 {
     public class UserAuthenticationSnippets
     {
+        #region Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache_AuthRecordPath
+        private const string AUTH_RECORD_PATH = "./tokencache.bin";
+        #endregion
+
         public void Identity_ClientSideUserAuthentication_SimpleInteractiveBrowser()
         {
             #region Snippet:Identity_ClientSideUserAuthentication_SimpleInteractiveBrowser
@@ -65,11 +69,7 @@ namespace Azure.Identity.Samples
             #endregion
         }
 
-        private Task EnsureAnimationCompleteAsync() => Task.CompletedTask;
-
-        #region Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache_AuthRecordPath
-        private const string AUTH_RECORD_PATH = @".\Data\authrecord.bin";
-        #endregion
+        private Task EnsureAnimationCompleteAsync() => Task.CompletedTask;      
 
         public static async Task<TokenCredential> GetUserCredentialAsync()
         {

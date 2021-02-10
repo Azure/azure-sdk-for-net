@@ -93,6 +93,10 @@ The `AuthenticationRecord` which is returned from the `Authenticate` and `Authen
 
 Here is an example of an application storing the `AuthenticationRecord` to the local file system after authenticating the user.
 
+```C# Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache_AuthRecordPath
+private const string AUTH_RECORD_PATH = "./tokencache.bin";
+```
+
 ```C# Snippet:Identity_ClientSideUserAuthentication_Persist_AuthRecord
 AuthenticationRecord authRecord = await credential.AuthenticateAsync();
 

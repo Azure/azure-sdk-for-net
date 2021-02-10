@@ -53,6 +53,10 @@ Some applications may require complete control of how the `TokenCache` is persis
 
 The `Serialize` or `SerializeAsync` methods can be used to write out content of a `TokenCache` to any writeable stream.
 
+```C# Snippet:Identity_TokenCache_CustomPersistence_Usage_TokenCachePath
+private const string TOKEN_CACHE_PATH = "./tokencache.bin";
+```
+
 ```C# Snippet:Identity_TokenCache_CustomPersistence_Write
 using (var cacheStream = new FileStream(TOKEN_CACHE_PATH, FileMode.Create, FileAccess.Write))
 {
