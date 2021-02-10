@@ -26,7 +26,7 @@ namespace ContainerRegistrySamples
 
         public async Task ViewManifestsInRepository()
         {
-            var client = new ContainerRegistryRepositoryClient(new Uri("myacr.azurecr.io"), "hello-world", new DefaultAzureCredential());
+            var client = new ContainerRepositoryClient(new Uri("myacr.azurecr.io"), "hello-world", new DefaultAzureCredential());
 
             //// TODO: I don't think we need name here, because we specified the image name as the repository in the constructor.  Is this correct?
             //// TODO: This should be pageable

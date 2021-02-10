@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The ContainerRegistryRepository service client. </summary>
-    public partial class ContainerRegistryRepositoryClient
+    public partial class ContainerRepositoryClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
@@ -24,24 +24,24 @@ namespace Azure.Containers.ContainerRegistry
         // Name of the image (including the namespace).
         private string _repositoryName;
 
-        public ContainerRegistryRepositoryClient(Uri endpoint, string repositoryName, TokenCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
+        public ContainerRepositoryClient(Uri endpoint, string repositoryName, TokenCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
         {
         }
 
-        public ContainerRegistryRepositoryClient(Uri endpoint, string repositoryName, TokenCredential credential, ContainerRegistryClientOptions options)
+        public ContainerRepositoryClient(Uri endpoint, string repositoryName, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             _repositoryName = repositoryName;
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryRepositoryClient for mocking. </summary>
-        protected ContainerRegistryRepositoryClient()
+        protected ContainerRepositoryClient()
         {
         }
         /// <summary> Initializes a new instance of ContainerRegistryRepositoryClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
-        internal ContainerRegistryRepositoryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
+        internal ContainerRepositoryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
             RestClient = new ContainerRegistryRepositoryRestClient(clientDiagnostics, pipeline, url);
             _clientDiagnostics = clientDiagnostics;
