@@ -23,7 +23,7 @@
   <ItemGroup>
     <Compile Include="..\src\Shared\Multipart\*.cs" LinkBase="Shared\Multipart" />
     <Compile Include="..\src\Shared\ArrayBufferWriter.cs" LinkBase="Shared" />
-    <!-- <Compile Include="..\src\Shared\AuthorizationChallengeParser.cs" LinkBase="Shared" /> -->
+    <Compile Include="..\src\Shared\ArmChallengeAuthenticationPolicy.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\BearerTokenChallengeAuthenticationPolicy.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\ConnectionString.cs" LinkBase="Shared" />

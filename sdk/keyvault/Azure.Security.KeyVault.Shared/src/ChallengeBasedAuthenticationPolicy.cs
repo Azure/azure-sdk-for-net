@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault
             if (_scope == null)
             {
                 // The body is removed from the initial request because Key Vault supports other authentication schemes which also protect the body of the request.
-                // As a result, beefore we know the auth scheme we need to avoid sending an unprotected body to Key Vault.
+                // As a result, before we know the auth scheme we need to avoid sending an unprotected body to Key Vault.
                 // We don't currently support this enhanced auth scheme in the SDK but we still don't want to send any unprotected data to vaults which require it.
 
                 RequestContent originalContent = message.Request.Content;

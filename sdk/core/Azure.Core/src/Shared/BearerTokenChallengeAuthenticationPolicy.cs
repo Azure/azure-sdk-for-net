@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
     internal class BearerTokenChallengeAuthenticationPolicy : HttpPipelinePolicy
     {
         private readonly AccessTokenCache _accessTokenCache;
-        private string[] _scopes;
+        protected string[] Scopes { get; private set; }
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -41,7 +41,7 @@ namespace Azure.Core.Pipeline
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
 
-            _scopes = scopes.ToArray();
+            Scopes = scopes.ToArray();
             _accessTokenCache = new AccessTokenCache(credential, tokenRefreshOffset, tokenRefreshRetryDelay, scopes.ToArray());
         }
 
@@ -60,22 +60,13 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
         /// </summary>
-        /// <remarks>This implementation handles common authentication challenges such as claims challenges. Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
+        /// <remarks>Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <param name="context">If the return value is <c>true</c>, a <see cref="TokenRequestContext"/>.</param>
         /// <returns>A boolean indicated whether the request contained a valid challenge and a <see cref="TokenRequestContext"/> was successfully initialized with it.</returns>
         protected virtual bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)
         {
             context = default;
-
-            var claimsChallenge = GetClaimsChallenge(message.Response);
-
-            if (claimsChallenge != null)
-            {
-                context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, claimsChallenge);
-                return true;
-            }
-
             return false;
         }
 
@@ -96,11 +87,11 @@ namespace Azure.Core.Pipeline
                     // We were unsuccessful in handling the challenge, so bail out now.
                     return;
                 }
-                _scopes = context.Scopes;
+                Scopes = context.Scopes;
             }
             else
             {
-                context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+                context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
             }
 
             await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
@@ -123,7 +114,7 @@ namespace Azure.Core.Pipeline
                 if (TryGetTokenRequestContextFromChallenge(message, out context))
                 {
                     // Ensure the scopes are consistent with what was set by <see cref="TryGetTokenRequestContextFromChallenge" />.
-                    _scopes = context.Scopes;
+                    Scopes = context.Scopes;
 
                     await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
 
