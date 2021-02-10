@@ -27,6 +27,7 @@ namespace DnsResolver.Tests
             DnsResolverModel.Should().NotBeNull();
             DnsResolverModel.Id.Should().NotBeNull();
             DnsResolverModel.Etag.Should().NotBeNullOrEmpty();
+            DnsResolverModel.ResourceGuid.Should().NotBeNullOrWhiteSpace();
             DnsResolverModel.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
 
             return new AndConstraint<DnsResolverModelAssertions>(this);
@@ -50,6 +51,7 @@ namespace DnsResolver.Tests
             DnsResolverModel.Id.Should().Be(previous.Id);
             DnsResolverModel.ProvisioningState.Should().Be(previous.ProvisioningState);
             DnsResolverModel.Location.Should().Be(previous.Location);
+            DnsResolverModel.ResourceGuid.Should().NotBeNullOrWhiteSpace();
             DnsResolverModel.VirtualNetwork.Id.Should().Be(previous.VirtualNetwork.Id);
             return new AndConstraint<DnsResolverModelAssertions>(this);
         }

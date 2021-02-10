@@ -18,11 +18,12 @@ namespace DnsResolver.Tests
 
         public AndConstraint<InboundEndpointAssertions> BeSuccessfullyCreated()
         {
-            var inboundEndpoint = this.Subject;
-            inboundEndpoint.Should().NotBeNull();
-            inboundEndpoint.Id.Should().NotBeNull();
-            inboundEndpoint.Etag.Should().NotBeNullOrEmpty();
-            inboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
+            var InboundEndpoint = this.Subject;
+            InboundEndpoint.Should().NotBeNull();
+            InboundEndpoint.Id.Should().NotBeNull();
+            InboundEndpoint.Etag.Should().NotBeNullOrEmpty();
+            InboundEndpoint.ResourceGuid.Should().NotBeNullOrWhiteSpace();
+            InboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
 
             return new AndConstraint<InboundEndpointAssertions>(this);
         }
