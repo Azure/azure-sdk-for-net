@@ -496,17 +496,30 @@ Text Analytics for health is a containerized service that extracts and labels re
 ### Run Analyze Operation Asynchronously
 The Analyze functionality allows to choose which of the supported Text Analytics features to execute in the same set of documents. Currently the supported features are: entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation_howto].
 
-```C# Snippet:AnalyzeOperationBatchConvenience
-    string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-                        and we adore the spot! They provide marvelous food and they have a great menu. The
-                        chief cook happens to be the owner (I think his name is John Doe) and he is super 
-                        nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-                        the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-                        clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-                        call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-                        I have is the food didn't come fast enough. Overall I highly recommend it!";
+```C# Snippet:AnalyzeOperationBatchConvenienceAsync
+    string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
+                        worth the hike! Yesterday was foggy though, so we missed the spectacular views.
+                        We tried again today and it was amazing. Everyone in my family liked the trail although
+                        it was too challenging for the less athletic among us.
+                        Not necessarily recommended for small children.
+                        A hotel close to the trail offers services for childcare in case you want that.";
 
-    var batchDocuments = new List<string> { document };
+    string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
+                        our anniversary so they helped me organize a little surprise for my partner.
+                        The room was clean and with the decoration I requested. It was perfect!";
+
+    string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
+                        They had great amenities that included an indoor pool, a spa, and a bar.
+                        The spa offered couples massages which were really good. 
+                        The spa was clean and felt very peaceful. Overall the whole experience was great.
+                        We will definitely come back.";
+
+    var batchDocuments = new List<string>
+    {
+        documentA,
+        documentB,
+        documentC
+    };
 
     TextAnalyticsActions batchActions = new TextAnalyticsActions()
     {
@@ -516,11 +529,11 @@ The Analyze functionality allows to choose which of the supported Text Analytics
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
+    AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
     await operation.WaitForCompletionAsync();
 
-    foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
+    await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
     {
         RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.FirstOrDefault().Result;
 
@@ -670,7 +683,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 [recognize_healthcare_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
-[analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeOperation.md
+[analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeBatchActions.md
 [analyze_operation_howto]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-call-api?tabs=analyze
 [healthcare]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner
 [language_detection]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection

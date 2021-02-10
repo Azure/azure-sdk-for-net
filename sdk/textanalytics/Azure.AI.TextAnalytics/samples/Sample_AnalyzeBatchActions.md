@@ -17,17 +17,30 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 To run analyze operation in multiple documents, call `StartAnalyzeOperationBatchAsync` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeOperation` which polls for the results from the API.
 
-```C# Snippet:AnalyzeOperationBatchConvenience
-    string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-                        and we adore the spot! They provide marvelous food and they have a great menu. The
-                        chief cook happens to be the owner (I think his name is John Doe) and he is super 
-                        nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-                        the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-                        clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-                        call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-                        I have is the food didn't come fast enough. Overall I highly recommend it!";
+```C# Snippet:AnalyzeOperationBatchConvenienceAsync
+    string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
+                        worth the hike! Yesterday was foggy though, so we missed the spectacular views.
+                        We tried again today and it was amazing. Everyone in my family liked the trail although
+                        it was too challenging for the less athletic among us.
+                        Not necessarily recommended for small children.
+                        A hotel close to the trail offers services for childcare in case you want that.";
 
-    var batchDocuments = new List<string> { document };
+    string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
+                        our anniversary so they helped me organize a little surprise for my partner.
+                        The room was clean and with the decoration I requested. It was perfect!";
+
+    string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
+                        They had great amenities that included an indoor pool, a spa, and a bar.
+                        The spa offered couples massages which were really good. 
+                        The spa was clean and felt very peaceful. Overall the whole experience was great.
+                        We will definitely come back.";
+
+    var batchDocuments = new List<string>
+    {
+        documentA,
+        documentB,
+        documentC
+    };
 
     TextAnalyticsActions batchActions = new TextAnalyticsActions()
     {
@@ -37,11 +50,11 @@ To run analyze operation in multiple documents, call `StartAnalyzeOperationBatch
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, batchActions);
+    AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
     await operation.WaitForCompletionAsync();
 
-    foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
+    await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
     {
         RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.FirstOrDefault().Result;
 
@@ -103,8 +116,8 @@ To see the full example source files, see:
 
 * [Synchronously AnalyzeOperationBatch ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperation.cs)
 * [Asynchronously AnalyzeOperationBatch ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationAsync.cs)
-* [Automatic Polling AnalyzeOperation ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationAsync_AutomaticPolling.cs)
-* [Manual Polling AnalyzeOperation ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationAsync_ManualPolling.cs)
+* [Synchronously AnalyzeBathActionsConvenience ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationBatchConvenience.cs)
+* [Asynchronously AnalyzeBathActionsConvenience ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationBatchConvenienceAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
