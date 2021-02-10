@@ -83,6 +83,14 @@ namespace Azure.Messaging.ServiceBus
         /// <inheritdoc cref="ServiceBusProcessor.FullyQualifiedNamespace"/>
         public virtual string FullyQualifiedNamespace => _innerProcessor.FullyQualifiedNamespace;
 
+        /// <summary>
+        /// Gets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        public virtual TimeSpan? SessionIdleTimeout => _innerProcessor.MaxReceiveWaitTime;
+
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,
             string entityPath,
