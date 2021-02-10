@@ -30,11 +30,10 @@ namespace ContainerRegistrySamples
             // See: https://docs.docker.com/registry/spec/api/#initiate-blob-upload
 
             // TODO: Note this is not defined in the swagger, where the /v2/{name}/blobs/uploads/ takes a digest parameter.
-            // Is it worth supporting?
+            // TODO: We will need to add this to the swagger - the service supports it.
         }
 
-
-        public async Task UploadBlob()
+        public async Task UploadBlob_ResumableUploadOnlyOneChunk()
         {
             // Track 1:
             //_logger.LogInformation($"Uploading Blob {reference} to {digest}");
@@ -49,23 +48,28 @@ namespace ContainerRegistrySamples
             // TODO: is this the right model for Blob Client?  To have it in a separate namespace?
             ContainerRegistryBlobClient blobClient = registryClient.GetBlobClient("hello-world");
 
-            BlobUploadInfo uploadInfo = await blobClient.StartUploadAsync();
+            // TODO: Will calling this "Start" name cause confusion with our LRO patterns?
+            // TODO: Naming here - what about Create?  usually Create takes an instance of the resource to create - we're asking the service to create 
+            // one for us from scratch - like getting a ticket we'll use elsewhere.  Do we have a pattern for this elsewhere?
+            // Other ideas: CreateUploadTicket() - problem with this is we're creating this Ticket concept where there was none in the ACR or Docker lit before...
+			// What about this:
+            BlobUploadDetails uploadDetails = await blobClient.InitiateResumableUploadAsync();
             // TODO: "digest"
             // TODO: "stream"
-            await blobClient.CompleteUploadAsync(uploadInfo, "digest", new MemoryStream());
+            await blobClient.CompleteUploadAsync(uploadDetails, "digest", new MemoryStream());
         }
 
-        public async Task UploadBlobInChunks()
+        public async Task UploadBlob_ResumableUploadInSeveralChunks()
         {
             ContainerRegistryClient registryClient = new ContainerRegistryClient(new Uri("myacr.azurecr.io"), new DefaultAzureCredential());
 
             ContainerRegistryBlobClient blobClient = registryClient.GetBlobClient("hello-world");
 
-            BlobUploadInfo uploadInfo = await blobClient.StartUploadAsync();
+            BlobUploadDetails uploadDetails = await blobClient.InitiateResumableUploadAsync();
             bool haveChunks = true;  // TODO: how do I know?  Who decides how to break things into chunks and why?
             while (haveChunks)
             {
-                uploadInfo = await blobClient.UploadChunkAsync(uploadInfo, new MemoryStream());
+                uploadDetails = await blobClient.UploadChunkAsync(uploadDetails, new MemoryStream());
             }
 
             // TODO: how to handle this multiplicity around sometimes you pass a blob here and sometimes you don't
