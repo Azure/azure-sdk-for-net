@@ -129,7 +129,7 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
 ```
 
 You can paste that into a new console app, install the Azure.Search.Documents
-package, add `using Azure;`, `using Azure.Search.Documents;` and `using Azure.Search.Documents.Models;` statements, and then hit Ctrl+F5 to run.
+package, add `using Azure; using Azure.Search.Documents; using Azure.Search.Documents.Models;` statements, and then hit Ctrl+F5 to run.
 
 ## Key concepts
 
