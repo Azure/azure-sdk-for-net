@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -633,7 +634,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> GetBlobContainersInternal(
+        internal async Task<Response<ListContainersSegmentResponse>> GetBlobContainersInternal(
             string continuationToken,
             BlobContainerTraits traits,
 #pragma warning disable CA1801 // Review unused parameters
@@ -666,8 +667,7 @@ namespace Azure.Storage.Blobs
                             prefix: prefix,
                             marker: continuationToken,
                             maxresults: pageSizeHint,
-                            // TODO fix this.
-                            include: null,
+                            include: BlobExtensions.AsIncludeItems(traits, states),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -677,21 +677,34 @@ namespace Azure.Storage.Blobs
                             prefix: prefix,
                             marker: continuationToken,
                             maxresults: pageSizeHint,
-                            // TODO fix this.
-                            include: null,
+                            include: BlobExtensions.AsIncludeItems(traits, states),
                             cancellationToken: cancellationToken);
                     }
 
-                    // TODO fix this.
-                    //if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
-                    //{
-                    //    IEnumerable<BlobContainerItem> containerItems = response.Value.BlobContainerItems;
-                    //    foreach (BlobContainerItem containerItem in containerItems)
-                    //    {
-                    //        containerItem.Properties.Metadata = null;
-                    //    }
-                    //}
-                    return response;
+                    ListContainersSegmentResponse listContainersResponse = response.Value;
+
+                    if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
+                    {
+                        List<ContainerItemInternal> containerItemInternals = response.Value.ContainerItems.Select(r => new ContainerItemInternal(
+                            r.Name,
+                            r.Deleted,
+                            r.Version,
+                            r.Properties,
+                            metadata: null))
+                            .ToList();
+
+                        listContainersResponse = new ListContainersSegmentResponse(
+                            response.Value.ServiceEndpoint,
+                            response.Value.Prefix,
+                            response.Value.Marker,
+                            response.Value.MaxResults,
+                            containerItemInternals.AsReadOnly(),
+                            response.Value.NextMarker);
+                    }
+
+                    return Response.FromValue(
+                        listContainersResponse,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

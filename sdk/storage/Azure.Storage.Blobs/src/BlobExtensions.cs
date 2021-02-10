@@ -529,10 +529,57 @@ namespace Azure.Storage.Blobs
             return null;
         }
 
-        // TODO
         internal static BlobContainerItem[] ToBlobContainerItems(this IReadOnlyList<ContainerItemInternal> containerItemInternals)
         {
-            return null;
+            if (containerItemInternals == null)
+            {
+                return null;
+            }
+
+            return containerItemInternals.Select(r => r.ToBlobContainerItem()).ToArray();
+        }
+
+        internal static BlobContainerItem ToBlobContainerItem(this ContainerItemInternal containerItemInternal)
+        {
+            if (containerItemInternal == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerItem
+            {
+                Name = containerItemInternal.Name,
+                IsDeleted = containerItemInternal.Deleted,
+                VersionId = containerItemInternal.Version,
+                Properties = BlobExtensions.ToBlobContainerProperties(containerItemInternal.Properties, containerItemInternal.Metadata)
+            };
+        }
+
+        internal static BlobContainerProperties ToBlobContainerProperties(
+            ContainerPropertiesInternal containerPropertiesInternal,
+            IReadOnlyDictionary<string, string> metadata)
+        {
+            if (containerPropertiesInternal == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerProperties
+            {
+                LastModified = containerPropertiesInternal.LastModified,
+                LeaseStatus = containerPropertiesInternal.LeaseStatus,
+                LeaseState = containerPropertiesInternal.LeaseState,
+                LeaseDuration = containerPropertiesInternal.LeaseDuration,
+                PublicAccess = containerPropertiesInternal.PublicAccess,
+                HasImmutabilityPolicy = containerPropertiesInternal.HasImmutabilityPolicy,
+                HasLegalHold = containerPropertiesInternal.HasLegalHold,
+                DefaultEncryptionScope = containerPropertiesInternal.DefaultEncryptionScope,
+                PreventEncryptionScopeOverride = containerPropertiesInternal.PreventEncryptionScopeOverride,
+                DeletedOn = containerPropertiesInternal.DeletedTime,
+                RemainingRetentionDays = containerPropertiesInternal.RemainingRetentionDays,
+                ETag = new ETag(containerPropertiesInternal.Etag),
+                Metadata = metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+            };
         }
     }
 }
