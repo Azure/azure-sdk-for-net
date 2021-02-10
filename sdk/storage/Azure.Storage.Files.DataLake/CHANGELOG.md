@@ -1,5 +1,8 @@
 # Release History
 
+## 12.7.0-beta.2 (Unreleased)
+
+
 ## 12.7.0-beta.1 (2021-02-09)
 - Added support for service version 2020-06-12.
 - Added support for listing deleted file systems and restoring deleted file systems.
