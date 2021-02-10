@@ -65,16 +65,11 @@ function Get-TocMapping {
     $orderServiceMapping = @{}
 
     foreach ($artifact in $artifacts) {
-        $packageInfo = $metadata | ? { $_.Package -eq $artifact }
+        $packageInfo = $metadata | ? { $_.Package -eq $artifact -and $packageInfo.Hide -ne "true"}
         $serviceName = ""
         $displayName = ""
-        if ($packageInfo.Hide -eq "true") {
-            continue
-        }
         if (!$packageInfo) {
-            LogWarning "There is no artifact $artifact. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
-            # If no service name retrieved, print out warning message, and put it into Other page.
-            $serviceName = "Other"
+            continue
         }
         elseif (!$packageInfo[0].ServiceName) {
             LogWarning "There is no service name for artifact $artifact. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
