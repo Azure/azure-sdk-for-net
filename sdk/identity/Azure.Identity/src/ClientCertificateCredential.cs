@@ -21,7 +21,7 @@ namespace Azure.Identity
     /// on how to configure certificate authentication can be found here:
     /// https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-certificate-credentials#register-your-certificate-with-azure-ad
     /// </summary>
-    public class ClientCertificateCredential : TokenCredential
+    public class ClientCertificateCredential : TokenCredential, IDisposable
     {
         /// <summary>
         /// Gets the Azure Active Directory tenant (directory) Id of the service principal
@@ -47,6 +47,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// This instance of <see cref="ClientCertificateCredential"/> should be disposed to dispose the <see cref="X509Certificate2"/> that will be loaded from the <paramref name="clientCertificatePath"/>.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -58,6 +59,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// This instance of <see cref="ClientCertificateCredential"/> should be disposed to dispose the <see cref="X509Certificate2"/> that will be loaded from the <paramref name="clientCertificatePath"/>.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -70,6 +72,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// This instance of <see cref="ClientCertificateCredential"/> should be disposed to dispose the <see cref="X509Certificate2"/> that will be loaded from the <paramref name="clientCertificatePath"/>.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -81,6 +84,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// This instance of <see cref="ClientCertificateCredential"/> does not need to be disposed as the caller is assumed to be the owner of the <see cref="X509Certificate2"/> specified by <paramref name="clientCertificate"/>.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -92,16 +96,18 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// This instance of <see cref="ClientCertificateCredential"/> does not need to be disposed as the caller is assumed to be the owner of the <see cref="X509Certificate2"/> specified by <paramref name="clientCertificate"/>.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, TokenCredentialOptions options)
-            : this(tenantId, clientId, clientCertificate, options, null, null) {}
+            : this(tenantId, clientId, clientCertificate, options, null, null) { }
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// This instance of <see cref="ClientCertificateCredential"/> does not need to be disposed as the caller is assumed to be the owner of the <see cref="X509Certificate2"/> specified by <paramref name="clientCertificate"/>.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -180,6 +186,19 @@ namespace Azure.Identity
         }
 
         /// <summary>
+        /// Disposes any <see cref="X509Certificate2"/> resource owned by this instance.
+        /// Note: <see cref="X509Certificate2"/> objects provided to this instance are not considered owned and will not be disposed.
+        /// </summary>
+        public void Dispose()
+        {
+            if (ClientCertificateProvider is X509Certificate2FromFileProvider fp)
+            {
+                fp?.Dispose();
+                GC.SuppressFinalize(this);
+            }
+        }
+
+        /// <summary>
         /// IX509Certificate2Provider provides a way to control how the X509Certificate2 object is fetched.
         /// </summary>
         internal interface IX509Certificate2Provider
@@ -209,7 +228,7 @@ namespace Azure.Identity
         /// X509Certificate2FromFileProvider provides an X509Certificate2 from a file on disk.  It supports both
         /// "pfx" and "pem" encoded certificates.
         /// </summary>
-        internal class X509Certificate2FromFileProvider : IX509Certificate2Provider
+        internal class X509Certificate2FromFileProvider : IX509Certificate2Provider, IDisposable
         {
             // Lazy initialized on the first call to GetCertificateAsync, based on CertificatePath.
             private X509Certificate2 Certificate { get; set; }
@@ -375,6 +394,11 @@ namespace Azure.Identity
                 {
                     throw new CredentialUnavailableException("Could not load certificate file", e);
                 }
+            }
+
+            public void Dispose()
+            {
+                Certificate?.Dispose();
             }
 
             private delegate void ImportPkcs8PrivateKeyDelegate(ReadOnlySpan<byte> blob, out int bytesRead);

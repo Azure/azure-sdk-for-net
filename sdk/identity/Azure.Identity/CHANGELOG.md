@@ -2,6 +2,9 @@
 
 ## 1.4.0-beta.4 (Unreleased)
 
+### Fixes and improvements
+
+- `ClientCertificateCredential` implements `IDisposable` to properly dispose of any owned `X509Certificate2` resources.
 
 ## 1.4.0-beta.3 (2021-02-09)
 
