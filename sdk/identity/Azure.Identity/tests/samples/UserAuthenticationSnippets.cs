@@ -69,7 +69,7 @@ namespace Azure.Identity.Samples
             #endregion
         }
 
-        private Task EnsureAnimationCompleteAsync() => Task.CompletedTask;      
+        private Task EnsureAnimationCompleteAsync() => Task.CompletedTask;
 
         public static async Task<TokenCredential> GetUserCredentialAsync()
         {
