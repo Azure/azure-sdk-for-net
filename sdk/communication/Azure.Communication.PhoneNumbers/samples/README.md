@@ -5,13 +5,13 @@ languages:
 products:
 - azure
 - azure-communication
-name: Azure Communication PhoneNumbers samples for .NET
+name: Azure Communication Phone Numbers samples for .NET
 description: Samples for the Azure.Communication.PhoneNumbers client library
 ---
 
-# Azure Communication PhoneNumbers SDK samples
+# Azure Communication Phone Numbers SDK samples
 
-Azure Communication PhoneNumbers is a client library that is used to do operations necessary for using different services offered by Azure Communication Services, such as calling, chat, SMS, PSTN etc.
+Azure Communication Phone Numbers is a client library that is used to do operations necessary for using different services offered by Azure Communication Services, such as calling, chat, SMS, PSTN etc.
 To get started you will need to have an Azure Subscription. Once you have this you can go into the Azure portal and create Azure Communication Services resource. The page will give you necessary information to be able to use the sample codes here such as connections string, shared access key, etc.
 
 This client library allows to do following operations:
