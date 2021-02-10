@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName);
 
@@ -62,7 +62,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName);
 
@@ -103,7 +103,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 // send 1 message for each thread and use a different session for each message
@@ -193,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: true,
                 lockDuration: lockDuration))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 // send 1 message for each thread and use a different session for each message
@@ -270,7 +270,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                enablePartitioning: false,
                enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 for (int i = 0; i < numThreads; i++)
@@ -348,7 +348,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 // send 1 message for each thread and use a different session for each message
@@ -370,7 +370,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     PrefetchCount = 5
                 };
 
-                await using ServiceBusSessionProcessor processor = GetNoRetryClient().CreateSessionProcessor(scope.QueueName, options);
+                await using ServiceBusSessionProcessor processor = CreateNoRetryClient().CreateSessionProcessor(scope.QueueName, options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
@@ -416,7 +416,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 if (!autoComplete)
                 {
                     Assert.That(async () =>
-                        await GetNoRetryClient().AcceptNextSessionAsync(scope.QueueName),
+                        await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName),
                         Throws.Exception);
                 }
             }
@@ -428,7 +428,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 var exceptionReceivedHandlerCalled = false;
-                await using var client = GetClient();
+                await using var client = CreateClient();
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
@@ -472,7 +472,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
                 var exceptionReceivedHandlerCalled = false;
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 await using var processor = client.CreateSessionProcessor(scope.TopicName, scope.SubscriptionNames.First(), new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = 1
@@ -519,7 +519,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 // send 1 message for each thread and use a different session for each message
@@ -595,7 +595,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: true,
                 lockDuration: lockDuration))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
@@ -673,7 +673,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: true,
                 lockDuration: lockDuration))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
@@ -768,7 +768,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: true,
                 lockDuration: lockDuration))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
@@ -789,7 +789,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 await processor.StopProcessingAsync();
                 Assert.That(
-                    async () => await GetNoRetryClient().AcceptNextSessionAsync(scope.QueueName),
+                    async () => await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
             }
         }
@@ -808,7 +808,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: true,
                 lockDuration: TimeSpan.FromSeconds(5)))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 await using var processor = client.CreateSessionProcessor(scope.QueueName);
@@ -863,7 +863,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     try
                     {
-                        await GetNoRetryClient().AcceptNextSessionAsync(scope.QueueName);
+                        await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName);
                     }
                     catch (ServiceBusException ex)
                     when (ex.Reason == ServiceBusFailureReason.ServiceTimeout ||
@@ -897,7 +897,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
@@ -995,7 +995,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: true,
                 lockDuration: lockDuration))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
@@ -1147,7 +1147,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: true,
                 lockDuration: lockDuration))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
@@ -1242,7 +1242,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 lockDuration: TimeSpan.FromSeconds(5)))
             {
                 var delayDuration = TimeSpan.FromSeconds(10);
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
@@ -1421,7 +1421,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: true,
                 lockDuration: lockDuration))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
@@ -1490,7 +1490,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
@@ -1576,7 +1576,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
@@ -1601,7 +1601,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Assert.IsFalse(processor.IsProcessing);
 
                 Assert.That(
-                    async () => await GetNoRetryClient().AcceptSessionAsync(
+                    async () => await CreateNoRetryClient().AcceptSessionAsync(
                         scope.QueueName,
                         "sessionId"),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).

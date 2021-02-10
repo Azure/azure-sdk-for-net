@@ -84,8 +84,9 @@ namespace Azure.Messaging.ServiceBus
         public virtual string FullyQualifiedNamespace => _innerProcessor.FullyQualifiedNamespace;
 
         /// <summary>
-        /// Gets the maximum amount of time the processor will wait before switching to a new session
-        /// after no messages have been received on the session that is currently being processed.
+        /// Gets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
         public virtual TimeSpan? SessionIdleTimeout => _innerProcessor.MaxReceiveWaitTime;

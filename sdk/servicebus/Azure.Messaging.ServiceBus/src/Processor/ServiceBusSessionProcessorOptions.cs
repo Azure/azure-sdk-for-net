@@ -63,13 +63,14 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
         /// <summary>
-        /// Gets or sets the maximum amount of time to wait before switching to a new session
-        /// after no messages have been received on the session that is currently being processed.
+        /// Gets or sets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
         ///
         /// <remarks>
-        /// Note, if <see cref="SessionIds"/> is populated and <see cref="MaxConcurrentSessions"/> is greater or equal to
+        /// If <see cref="SessionIds"/> is populated and <see cref="MaxConcurrentSessions"/> is greater or equal to
         /// the number of sessions specified in <see cref="SessionIds"/>, the session will not be closed when the idle timeout elapses.
         /// However, it will still control the amount of time each receive call waits.
         /// </remarks>
