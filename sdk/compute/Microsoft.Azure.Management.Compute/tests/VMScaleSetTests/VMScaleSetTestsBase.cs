@@ -738,6 +738,12 @@ namespace Compute.Tests
             {
                 Assert.Equal(dedicatedHostGroupReferenceId, vmScaleSetOut.HostGroup.Id, StringComparer.OrdinalIgnoreCase);
             }
+            
+            if (vmScaleSet.UpgradePolicy.Mode == UpgradeMode.Rolling && vmScaleSet.UpgradePolicy.RollingUpgradePolicy != null)
+            {
+                Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade);
+                Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.PrioritizeUnhealthyInstances == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.PrioritizeUnhealthyInstances);
+            }
         }
 
         protected void CompareVmssNicConfig(VirtualMachineScaleSetNetworkConfiguration nicconfig,
