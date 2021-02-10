@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Containers.ContainerRegistry.Models;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry.Blobs
@@ -17,7 +17,27 @@ namespace Azure.Containers.ContainerRegistry.Blobs
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
+
         internal ContainerRegistryBlobRestClient RestClient { get; }
+
+        // Name of the image (including the namespace).
+        private string _repositoryName;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerRegistryClient"/>.
+        /// </summary>
+        public ContainerRegistryBlobClient(Uri endpoint, string repositoryName, TokenCredential credential) : this(endpoint, repositoryName, credential, new ContainerRegistryClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerRegistryClient"/>.
+        /// </summary>
+        public ContainerRegistryBlobClient(Uri endpoint, string repositoryName, TokenCredential credential, ContainerRegistryClientOptions options)
+        {
+            _repositoryName = repositoryName;
+        }
+
         /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
         protected ContainerRegistryBlobClient()
         {
@@ -34,16 +54,15 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Retrieve the blob from the registry identified by digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Stream>> GetBlobAsync(string name, string digest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetBlobAsync(string digest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetBlob");
             scope.Start();
             try
             {
-                return await RestClient.GetBlobAsync(name, digest, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -53,16 +72,15 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Retrieve the blob from the registry identified by digest. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Stream> GetBlob(string name, string digest, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> GetBlob(string digest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetBlob");
             scope.Start();
             try
             {
-                return RestClient.GetBlob(name, digest, cancellationToken);
+                return RestClient.GetBlob(_repositoryName, digest, cancellationToken);
             }
             catch (Exception e)
             {
@@ -72,16 +90,15 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Same as GET, except only the headers are returned. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckBlobExistsAsync(string name, string digest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CheckBlobExistsAsync(string digest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckBlobExists");
             scope.Start();
             try
             {
-                return (await RestClient.CheckBlobExistsAsync(name, digest, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+                return (await RestClient.CheckBlobExistsAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false)).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -91,16 +108,15 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Same as GET, except only the headers are returned. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckBlobExists(string name, string digest, CancellationToken cancellationToken = default)
+        public virtual Response CheckBlobExists(string digest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckBlobExists");
             scope.Start();
             try
             {
-                return RestClient.CheckBlobExists(name, digest, cancellationToken).GetRawResponse();
+                return RestClient.CheckBlobExists(_repositoryName, digest, cancellationToken).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -110,16 +126,15 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Removes an already uploaded blob. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Stream>> DeleteBlobAsync(string name, string digest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> DeleteBlobAsync(string digest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.DeleteBlob");
             scope.Start();
             try
             {
-                return await RestClient.DeleteBlobAsync(name, digest, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -129,16 +144,15 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Removes an already uploaded blob. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Stream> DeleteBlob(string name, string digest, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> DeleteBlob(string digest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.DeleteBlob");
             scope.Start();
             try
             {
-                return RestClient.DeleteBlob(name, digest, cancellationToken);
+                return RestClient.DeleteBlob(_repositoryName, digest, cancellationToken);
             }
             catch (Exception e)
             {
@@ -148,17 +162,16 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Mount a blob identified by the `mount` parameter from another repository. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="from"> Name of the source repository. </param>
         /// <param name="mount"> Digest of blob to mount from the source repository. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> MountBlobAsync(string name, string @from, string mount, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> MountBlobAsync(string @from, string mount, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.MountBlob");
             scope.Start();
             try
             {
-                return (await RestClient.MountBlobAsync(name, @from, mount, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+                return (await RestClient.MountBlobAsync(_repositoryName, @from, mount, cancellationToken).ConfigureAwait(false)).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -168,17 +181,16 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Mount a blob identified by the `mount` parameter from another repository. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="from"> Name of the source repository. </param>
         /// <param name="mount"> Digest of blob to mount from the source repository. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response MountBlob(string name, string @from, string mount, CancellationToken cancellationToken = default)
+        public virtual Response MountBlob(string @from, string mount, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.MountBlob");
             scope.Start();
             try
             {
-                return RestClient.MountBlob(name, @from, mount, cancellationToken).GetRawResponse();
+                return RestClient.MountBlob(_repositoryName, @from, mount, cancellationToken).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -224,16 +236,16 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Upload a stream of data without completing the upload. </summary>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UploadChunkAsync(string location, Stream value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BlobUploadInfo>> UploadChunkAsync(BlobUploadInfo uploadInfo, Stream value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.UploadChunk");
             scope.Start();
             try
             {
-                return (await RestClient.UploadChunkAsync(location, value, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> response = await RestClient.UploadChunkAsync(uploadInfo.BlobLocation.ToString(), value, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new BlobUploadInfo(response.Headers.Location.ToString()), response);
             }
             catch (Exception e)
             {
@@ -243,16 +255,36 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Upload a stream of data without completing the upload. </summary>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UploadChunk(string location, Stream value, CancellationToken cancellationToken = default)
+        public virtual Response UploadChunk(BlobUploadInfo uploadInfo, Stream value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.UploadChunk");
             scope.Start();
             try
             {
-                return RestClient.UploadChunk(location, value, cancellationToken).GetRawResponse();
+                return RestClient.UploadChunk(uploadInfo.BlobLocation.ToString(), value, cancellationToken).GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
+        /// <param name="digest"> Digest of a BLOB. </param>        
+        /// <param name="value"> Optional raw data of blob. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CompleteUploadAsync(BlobUploadInfo uploadInfo, string digest, Stream value=null, CancellationToken cancellationToken = default)
+        {
+            // /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CompleteUpload");
+            scope.Start();
+            try
+            {
+                return (await RestClient.CompleteUploadAsync(digest, uploadInfo.BlobLocation.ToString(), value, cancellationToken).ConfigureAwait(false)).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -263,36 +295,20 @@ namespace Azure.Containers.ContainerRegistry.Blobs
 
         /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
         /// <param name="digest"> Digest of a BLOB. </param>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Optional raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CompleteUploadAsync(string digest, string location, Stream value, CancellationToken cancellationToken = default)
+        public virtual Response CompleteUpload(BlobUploadInfo uploadInfo, string digest, Stream value = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CompleteUpload");
-            scope.Start();
-            try
-            {
-                return (await RestClient.CompleteUploadAsync(digest, location, value, cancellationToken).ConfigureAwait(false)).GetRawResponse();
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            // /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
 
-        /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
-        /// <param name="digest"> Digest of a BLOB. </param>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
-        /// <param name="value"> Optional raw data of blob. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CompleteUpload(string digest, string location, Stream value, CancellationToken cancellationToken = default)
-        {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CompleteUpload");
             scope.Start();
             try
             {
-                return RestClient.CompleteUpload(digest, location, value, cancellationToken).GetRawResponse();
+                // TODO: in this method call, we're validating that value is not null, but it is actually an optional 
+                // parameter and should not be validated as null is a correct value.  How can we reflect this in the swagger?
+
+                return RestClient.CompleteUpload(digest, uploadInfo.BlobLocation.ToString(), value, cancellationToken).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -338,15 +354,15 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Initiate a resumable blob upload with an empty request body. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> StartUploadAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BlobUploadInfo>> StartUploadAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
             try
             {
-                return (await RestClient.StartUploadAsync(name, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+                ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> response = await RestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new BlobUploadInfo(response.Headers.Location), response);
             }
             catch (Exception e)
             {
@@ -356,15 +372,15 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Initiate a resumable blob upload with an empty request body. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response StartUpload(string name, CancellationToken cancellationToken = default)
+        public virtual Response<BlobUploadInfo> StartUpload(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.StartUpload");
             scope.Start();
             try
             {
-                return RestClient.StartUpload(name, cancellationToken).GetRawResponse();
+                ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> response = RestClient.StartUpload(_repositoryName, cancellationToken);
+                return Response.FromValue(new BlobUploadInfo(response.Headers.Location), response);
             }
             catch (Exception e)
             {
@@ -374,17 +390,16 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Retrieve the blob from the registry identified by `digest`. This endpoint may also support RFC7233 compliant range requests. Support can be detected by issuing a HEAD request. If the header `Accept-Range: bytes` is returned, range requests can be used to fetch partial content. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Stream>> GetChunkAsync(string name, string digest, string range, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetChunkAsync(string digest, string range, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetChunk");
             scope.Start();
             try
             {
-                return await RestClient.GetChunkAsync(name, digest, range, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetChunkAsync(_repositoryName, digest, range, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -394,17 +409,16 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Retrieve the blob from the registry identified by `digest`. This endpoint may also support RFC7233 compliant range requests. Support can be detected by issuing a HEAD request. If the header `Accept-Range: bytes` is returned, range requests can be used to fetch partial content. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Stream> GetChunk(string name, string digest, string range, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> GetChunk(string digest, string range, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.GetChunk");
             scope.Start();
             try
             {
-                return RestClient.GetChunk(name, digest, range, cancellationToken);
+                return RestClient.GetChunk(_repositoryName, digest, range, cancellationToken);
             }
             catch (Exception e)
             {
@@ -414,17 +428,16 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Same as GET, except only the headers are returned. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckChunkExistsAsync(string name, string digest, string range, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CheckChunkExistsAsync(string digest, string range, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckChunkExists");
             scope.Start();
             try
             {
-                return (await RestClient.CheckChunkExistsAsync(name, digest, range, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+                return (await RestClient.CheckChunkExistsAsync(_repositoryName, digest, range, cancellationToken).ConfigureAwait(false)).GetRawResponse();
             }
             catch (Exception e)
             {
@@ -434,17 +447,16 @@ namespace Azure.Containers.ContainerRegistry.Blobs
         }
 
         /// <summary> Same as GET, except only the headers are returned. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="range"> Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying blob chunk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckChunkExists(string name, string digest, string range, CancellationToken cancellationToken = default)
+        public virtual Response CheckChunkExists(string digest, string range, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContainerRegistryBlobClient.CheckChunkExists");
             scope.Start();
             try
             {
-                return RestClient.CheckChunkExists(name, digest, range, cancellationToken).GetRawResponse();
+                return RestClient.CheckChunkExists(_repositoryName, digest, range, cancellationToken).GetRawResponse();
             }
             catch (Exception e)
             {
