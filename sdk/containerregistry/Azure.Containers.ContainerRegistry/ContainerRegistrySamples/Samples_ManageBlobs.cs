@@ -51,6 +51,8 @@ namespace ContainerRegistrySamples
 
             // TODO: how to handle this multiplicity around sometimes you pass a blob here and sometimes you don't
             // and what should the return value be for each of these cases?  Do you need the location if you're done?
+            // One idea: could we not use a default parameter and instead have overloads that returned two different things?
+            // What would the different things be?
             // Do you need the progress 
             // TODO: What should we be doing with the returned digest?  Should we verify on behalf of the customer or no?
 

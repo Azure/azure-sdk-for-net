@@ -206,7 +206,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        public virtual ContainerRegistryRepositoryClient GetRepositoryClient(string repositoryName)
+        public virtual ContainerRepositoryClient GetRepositoryClient(string repositoryName)
         {
             throw new NotImplementedException();
         }
