@@ -26,6 +26,7 @@
         9. Updates to the Install Patches API.
         10. Updates to the PatchStatus in VMInstanceView, and Windows and Linux patch settings. 
         11. Added the OrchestrationMode property to VMSS resources. 
+        Note: The Cloud Service API is not part of this release, please look at the 43.0.0.0-preview.1 release. 
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
