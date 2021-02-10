@@ -353,6 +353,68 @@ namespace Compute.Tests
                 }
             }
         }
+        
+        /// <summary>
+        /// Testing setting enableCrossZoneUpgrade and prioritizeUnhealthyInstances properties in the Rolling Upgrade Policy
+        /// Since EnableCrossZoneUpgrade feature is only applicable to zonal VM Scale Set, availability zone and managed disk are enabled.
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetRollingUpgradePolicies")]
+        public void TestVMScaleSetRollingUpgradePolicies()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                var mode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: false);
+                imageRef.Version = "latest";
+                List<string> zones = new List<string> { "1" };
+                // Create resource group
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var vmssName = TestUtilities.GenerateName("vmss");
+                var vmssName_2 = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+                    var getResponse = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        null,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.Overprovision = false;
+                            vmScaleSet.UpgradePolicy.Mode = UpgradeMode.Rolling;
+                            vmScaleSet.UpgradePolicy.RollingUpgradePolicy = new RollingUpgradePolicy()
+                            {
+                                EnableCrossZoneUpgrade = true,
+                                PrioritizeUnhealthyInstances = true
+                            };
+                        },
+                        zones: new List<string> { "1", "3" },
+                        createWithManagedDisks: true);
+                    ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+
+            }
+        }
 
         // Does the following operations:
         // Create ResourceGroup
