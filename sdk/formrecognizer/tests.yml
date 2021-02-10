@@ -14,7 +14,7 @@ extends:
         Location: 'canadacentral'
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'canadacentral'
+        Location: 'centraluseuap'
       UsGov:
         SubscriptionConfiguration: $(sub-config-gov-test-resources-test)
         Location: 'usgovvirginia'
