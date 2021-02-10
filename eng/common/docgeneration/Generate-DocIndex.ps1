@@ -69,7 +69,7 @@ function Get-TocMapping {
         $serviceName = ""
         $displayName = ""
         if (!$packageInfo) {
-            LogWarning "There is no service name for artifact $artifact. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
+            LogDebug "There is no service name for artifact $artifact or it is marked as hidden. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
             continue
         }
         elseif (!$packageInfo[0].ServiceName) {
