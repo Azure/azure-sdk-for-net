@@ -1,5 +1,8 @@
 # Release History
 
+## 5.1.0-beta.5 (Unreleased)
+
+
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features
 - Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
