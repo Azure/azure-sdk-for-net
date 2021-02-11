@@ -242,8 +242,26 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(blobContainerUri, credential.AsPolicy(), options)
         {
+            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
+            HttpPipelinePolicy authPolicy = credential.AsPolicy();
+            _uri = blobContainerUri;
+            _authenticationPolicy = authPolicy;
+            options ??= new BlobClientOptions();
+
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(authPolicy),
+                sharedKeyCredential: credential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                encryptionScope: options.EncryptionScope);
+
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
+            _containerRestClient = BuildContainerRestClient(blobContainerUri);
+
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
 
         /// <summary>
@@ -321,7 +339,6 @@ namespace Azure.Storage.Blobs
 
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
-                // TODO
                 sharedKeyCredential: null,
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,

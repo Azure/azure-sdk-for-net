@@ -861,6 +861,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentDisposition: httpHeaders?.ContentDisposition,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            // TODO figure out how to now send EncryptionAlgorithm with every request.
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
