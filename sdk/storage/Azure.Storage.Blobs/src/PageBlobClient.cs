@@ -1887,7 +1887,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await PageBlobRestClient.GetPageRangesDiffAsync(
                             snapshot: snapshot,
                             prevsnapshot: previousSnapshot,
-                            prevSnapshotUrl: previousSnapshotUri.ToString(),
+                            prevSnapshotUrl: previousSnapshotUri?.ToString(),
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -1903,7 +1903,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = PageBlobRestClient.GetPageRangesDiff(
                             snapshot: snapshot,
                             prevsnapshot: previousSnapshot,
-                            prevSnapshotUrl: previousSnapshotUri.ToString(),
+                            prevSnapshotUrl: previousSnapshotUri?.ToString(),
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -1914,15 +1914,12 @@ namespace Azure.Storage.Blobs.Specialized
                             cancellationToken: cancellationToken);
                     }
 
-                    // TODO
-                    //// Return an exploding Response on 304
-                    //return response.IsUnavailable() ?
-                    //    response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>() :
-                    //    Response.FromValue(new PageRangesInfo(response.Value), response.GetRawResponse());
-
-                    return Response.FromValue(
-                        response.ToPageRangesInfo(),
-                        response.GetRawResponse());
+                    // Return an exploding Response on 304
+                    return response.IsUnavailable() ?
+                        response.GetRawResponse().AsNoBodyResponse<PageRangesInfo>() :
+                        Response.FromValue(
+                            response.ToPageRangesInfo(),
+                            response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

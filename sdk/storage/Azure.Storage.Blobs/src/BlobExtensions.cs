@@ -339,74 +339,204 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobAppendInfo
-        // TODO
         internal static BlobAppendInfo ToBlobAppendInfo(this ResponseWithHeaders<AppendBlobAppendBlockHeaders> response)
         {
-            return null;
-        }
-        #endregion
+            if (response == null)
+            {
+                return null;
+            }
 
-        #region ToBlobAppendInfo
-        // TODO
+            return new BlobAppendInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                ContentCrc64 = response.Headers.XMsContentCrc64,
+                BlobAppendOffset = response.Headers.BlobAppendOffset,
+                BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope
+            };
+        }
+
         internal static BlobAppendInfo ToBlobAppendInfo(this ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobAppendInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                ContentCrc64 = response.Headers.XMsContentCrc64,
+                BlobAppendOffset = response.Headers.BlobAppendOffset,
+                BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope
+            };
         }
         #endregion
 
         #region ToBlobInfo
-        // TODO
         internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<AppendBlobSealHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                // TODO BlobSequenceNumber.  Don't think it applies to Append Blobs
+                // TODO VersionId
+            };
         }
         #endregion
 
         #region ToPageInfo
-        // TODO
         internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobUploadPagesHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new PageInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                ContentCrc64 = response.Headers.XMsContentCrc64,
+                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope
+            };
         }
 
-        // TODO
         internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobClearPagesHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new PageInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                ContentCrc64 = response.Headers.XMsContentCrc64,
+                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
+                // TODO EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                // TODO EncryptionScope = response.Headers.EncryptionScope
+            };
         }
 
-        // TODO
         internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new PageInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                ContentCrc64 = response.Headers.XMsContentCrc64,
+                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope
+            };
         }
         #endregion
 
         #region ToPageRangesInfo
-        // TODO
         internal static PageRangesInfo ToPageRangesInfo(this ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new PageRangesInfo
+            {
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
+                PageRanges = response.Value.PageRange.Select(r => r.ToHttpRange()).ToList(),
+                ClearRanges = response.Value.ClearRange.Select(r => r.ToHttpRange()).ToList(),
+            };
         }
 
-        // TODO
         internal static PageRangesInfo ToPageRangesInfo(this ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new PageRangesInfo
+            {
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
+                PageRanges = response.Value.PageRange.Select(r => r.ToHttpRange()).ToList(),
+                ClearRanges = response.Value.ClearRange.Select(r => r.ToHttpRange()).ToList(),
+            };
         }
+
+        // TODO this might be wrong
+        internal static HttpRange ToHttpRange(this PageRange pageRange)
+            => new HttpRange(
+                offset: pageRange.Start,
+                length: pageRange.End - pageRange.Start + 1);
+
+        // TODO this might be wrong
+        internal static HttpRange ToHttpRange(this ClearRange clearRange)
+            => new HttpRange(
+                offset: clearRange.Start,
+                length: clearRange.End - clearRange.Start + 1);
+
         #endregion
 
         #region ToPageBlobInfo
-        // TODO
         internal static PageBlobInfo ToPageBlobInfo(this ResponseWithHeaders<PageBlobResizeHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new PageBlobInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault()
+            };
         }
 
-        // TODO
         internal static PageBlobInfo ToPageBlobInfo(this ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new PageBlobInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault()
+            };
         }
         #endregion
 
@@ -610,18 +740,57 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobDownloadInfo
-        // TODO
-#pragma warning disable CA1801 // Review unused parameters
-        internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobDownloadHeaders> response, Stream stream)
-#pragma warning restore CA1801 // Review unused parameters
-        {
-            return null;
-        }
-
-        // TODO
         internal static BlobDownloadInfo ToBlobDownloadInfo(this ResponseWithHeaders<Stream, BlobDownloadHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobDownloadInfo
+            {
+                BlobType = response.Headers.BlobType.GetValueOrDefault(),
+                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                Content = response.Value,
+                ContentType = response.Headers.ContentType,
+                ContentHash = response.Headers.ContentMD5,
+                Details = new BlobDownloadDetails
+                {
+                    LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                    Metadata = response.Headers.Metadata,
+                    ContentRange = response.Headers.ContentRange,
+                    ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                    ContentEncoding = response.Headers.ContentEncoding,
+                    CacheControl = response.Headers.CacheControl,
+                    ContentDisposition = response.Headers.ContentDisposition,
+                    ContentLanguage = response.Headers.ContentLanguage,
+                    BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
+                    CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
+                    CopyStatusDescription = response.Headers.CopyStatusDescription,
+                    CopyId = response.Headers.CopyId,
+                    CopyProgress = response.Headers.CopyProgress,
+                    CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
+                    CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
+                    // TODO double check this
+                    LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
+                    LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
+                    AcceptRanges = response.Headers.AcceptRanges,
+                    BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
+                    IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                    EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                    EncryptionScope = response.Headers.EncryptionScope,
+                    BlobContentHash = response.Headers.BlobContentMD5,
+                    TagCount = response.Headers.TagCount.GetValueOrDefault(),
+                    VersionId = response.Headers.VersionId,
+                    IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
+                    ObjectReplicationSourceProperties
+                        = response.Headers.ObjectReplicationRules?.Count > 0
+                        ? BlobExtensions.ParseObjectReplicationIds(response.Headers.ObjectReplicationRules)
+                        : null,
+                    ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
+                    LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
+                }
+            };
         }
         #endregion
 
