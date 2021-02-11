@@ -161,7 +161,7 @@ function populateIndexList(selector, packageName) {
     httpGetLatestAsync(latestGAUrl, latestVersions, packageName)
     httpGetLatestAsync(latestPreviewUrl, latestVersions, packageName)
     var publishedVersions = $('<ul style="display: none;"></ul>')
-    var collapsible = $('<div class="versionarrow">&nbsp;&nbsp;&nbsp;Other versions</div>')
+    var collapsible = $('<div class="versionarrow">&nbsp;&nbsp;&nbsp;All versions</div>')
     // Check whether it has display name tag.
     if ($(selector).next().is('h5')) {
         $(selector).next().after(latestVersions)
