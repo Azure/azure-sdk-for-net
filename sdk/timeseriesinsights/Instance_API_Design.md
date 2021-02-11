@@ -20,7 +20,7 @@ public virtual Response<SearchSuggestion[]> GetSearchSuggestions(string searchSt
 ```csharp
 public virtual Response<InstanceOrError[]> GetInstances(IEnumerable<TimeSeriesId> timeSeriesIds, CancellationToken cancellationToken = default);
 
-// Thoughts on renaming InstanceOrError to GetInstanceOperationResult
+// Thoughts on renaming InstanceOrError to GetInstancesOperationResult or GetInstancesResult
 ```
 
 ```csharp
@@ -54,8 +54,9 @@ public virtual Response<TsiErrorBody[]> DeleteTimeSeriesInstances(IEnumerable<st
 ### POST /timeseries/instances/search
 
 ```csharp
-public virtual Response<SearchInstancesResponsePage> Search(SearchInstancesRequest searchInstancesRequest, string continuationToken = null, CancellationToken cancellationToken = default)
+public virtual Response<SearchInstancesResponsePage> Search(string searchString, IEnumerable<string> hierarchyPath, SearchInstancesParameters instancesParameters, SearchInstancesHierarchiesParameters hierarchiesParameters, string continuationToken = null, CancellationToken cancellationToken = default)
 
-// Thoughts on renaming SearchInstancesRequest to SearchInstancesOptions
-// Thoughts on renaming SearchInstancesResponsePage to SearchInstancesResponse
+// Thoughts on renaming SearchInstancesParameters to SearchInstancesOptions
+// Thoughts on renaming SearchInstancesHierarchiesParameters to SearchHierarchiesOptions
+// Thoughts on renaming SearchInstancesResponsePage to SearchInstancesPage
 ```
