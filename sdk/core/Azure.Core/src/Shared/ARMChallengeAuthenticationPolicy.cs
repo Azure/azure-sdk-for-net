@@ -3,10 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 
 #nullable enable
 
@@ -44,14 +40,14 @@ namespace Azure.Core.Pipeline
         {
             context = default;
 
-            var challenge = AuthorizationChallengeParser.GetChallengeFromResponse(message.Response, "Bearer", "claims");
+            var challenge = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims");
             if (challenge == null)
             {
                 return false;
             }
 
             string claimsChallenge = Base64Url.DecodeString(challenge.ToString());
-            context = new TokenRequestContext(Scopes, message.Request.ClientRequestId, claimsChallenge);
+           context = new TokenRequestContext(Scopes, message.Request.ClientRequestId, claimsChallenge);
             return true;
         }
     }

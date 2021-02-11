@@ -145,22 +145,6 @@ namespace Azure.Core.Pipeline
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
 
-        private static string? GetClaimsChallenge(Response response)
-        {
-            if (response.Status != (int)HttpStatusCode.Unauthorized || !response.Headers.TryGetValue(HttpHeader.Names.WWWAuthenticate, out string? headerValue))
-            {
-                return null;
-            }
-
-            var challenge = AuthorizationChallengeParser.GetChallengeFromResponse(response, "Bearer", "claims");
-            if (challenge != null)
-            {
-                return Base64Url.DecodeString(challenge.ToString());
-            }
-
-            return null;
-        }
-
         private class AccessTokenCache
         {
             private readonly object _syncObj = new object();
