@@ -785,6 +785,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             content = content?.WithNoDispose().WithProgress(progressHandler);
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -795,6 +796,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
+                    scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     ResponseWithHeaders<BlockBlobUploadHeaders> response;
@@ -858,11 +860,13 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }

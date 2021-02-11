@@ -228,3 +228,12 @@ directive:
         "Expiry"
     ];
 ```
+
+### Fix Delimitor
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.Delimiter.required;
+```

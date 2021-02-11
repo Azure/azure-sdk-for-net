@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -2485,8 +2486,7 @@ namespace Azure.Storage.Blobs
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
-                            // TODO
-                            include: null,
+                            include: BlobExtensions.AsIncludeItems(traits, states),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2496,23 +2496,29 @@ namespace Azure.Storage.Blobs
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
-                            // TODO
-                            include: null,
+                            include: BlobExtensions.AsIncludeItems(traits, states),
                             cancellationToken: cancellationToken);
                     }
 
-                    // TODO
-                    //if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
-                    //{
-                    //    IEnumerable<BlobItem> blobItems = response.Value.BlobItems.ToBlobItems();
-                    //    foreach (BlobItem blobItem in blobItems)
-                    //    {
-                    //        blobItem.Metadata = null;
-                    //    }
-                    //}
+                    ListBlobsFlatSegmentResponse listblobFlatResponse = response.Value;
+
+                    if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
+                    {
+                        List<BlobItemInternal> blobItemInternals = response.Value.Segment.BlobItems.Select(r => new BlobItemInternal(
+                            r.Name,
+                            r.Deleted,
+                            r.Snapshot,
+                            r.VersionId,
+                            r.IsCurrentVersion,
+                            r.Properties,
+                            metadata: null,
+                            r.BlobTags,
+                            r.ObjectReplicationMetadata))
+                            .ToList();
+                    }
 
                     return Response.FromValue(
-                        response.Value,
+                        listblobFlatResponse,
                         response.GetRawResponse());
                 }
                 catch (Exception ex)

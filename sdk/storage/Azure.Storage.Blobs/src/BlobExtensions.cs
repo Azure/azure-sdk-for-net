@@ -169,7 +169,7 @@ namespace Azure.Storage.Blobs
         /// List of <see cref="ObjectReplicationPolicy"/>, which contains the Policy ID and the respective
         /// rule(s) and replication status(s) for each policy.
         /// </returns>
-        internal static IList<ObjectReplicationPolicy> ParseObjectReplicationMetadata(this IDictionary<string, string> OrMetadata)
+        internal static IList<ObjectReplicationPolicy> ParseObjectReplicationMetadata(this IReadOnlyDictionary<string, string> OrMetadata)
         {
             List<ObjectReplicationPolicy> OrProperties = new List<ObjectReplicationPolicy>();
             foreach (KeyValuePair<string, string> status in OrMetadata)
@@ -719,17 +719,90 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobItem
-        // TODO
-        internal static BlobItem[] ToBlobItems(this IReadOnlyList<BlobItemInternal> BlobItemInternals)
+        internal static BlobItem[] ToBlobItems(this IReadOnlyList<BlobItemInternal> blobItemInternals)
         {
-            return null;
+            if (blobItemInternals == null)
+            {
+                return null;
+            }
+
+            return blobItemInternals.Select(r => r.ToBlobItem()).ToArray();
         }
 
-        // TODO
         internal static BlobItem ToBlobItem(this BlobItemInternal blobItemInternal)
         {
-            return null;
+            if (blobItemInternal == null)
+            {
+                return null;
+            }
+
+            return new BlobItem
+            {
+                Name = blobItemInternal.Name,
+                Deleted = blobItemInternal.Deleted,
+                Snapshot = blobItemInternal.Snapshot,
+                VersionId = blobItemInternal.VersionId,
+                IsLatestVersion = blobItemInternal.IsCurrentVersion,
+                Properties = blobItemInternal.Properties.ToBlobItemProperties(),
+                Metadata = blobItemInternal.Metadata?.Count > 0
+                    ? blobItemInternal.Metadata.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+                    : new Dictionary<string, string>(),
+                Tags = blobItemInternal.BlobTags.ToTagDictionary(),
+                ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
+                    ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)
+                    : null
+            };
         }
+
+        internal static BlobItemProperties ToBlobItemProperties(this BlobPropertiesInternal blobPropertiesInternal)
+        {
+            if (blobPropertiesInternal == null)
+            {
+                return null;
+            }
+
+            return new BlobItemProperties
+            {
+                LastModified = blobPropertiesInternal.LastModified,
+                ContentLength = blobPropertiesInternal.ContentLength,
+                ContentType = blobPropertiesInternal.ContentType,
+                ContentEncoding = blobPropertiesInternal.ContentEncoding,
+                ContentLanguage = blobPropertiesInternal.ContentLanguage,
+                ContentHash = blobPropertiesInternal.ContentMD5,
+                ContentDisposition = blobPropertiesInternal.ContentDisposition,
+                CacheControl = blobPropertiesInternal.CacheControl,
+                BlobSequenceNumber = blobPropertiesInternal.BlobSequenceNumber,
+                BlobType = blobPropertiesInternal.BlobType,
+                LeaseStatus = blobPropertiesInternal.LeaseStatus,
+                LeaseState = blobPropertiesInternal.LeaseState,
+                LeaseDuration = blobPropertiesInternal.LeaseDuration,
+                CopyId = blobPropertiesInternal.CopyId,
+                CopyStatus = blobPropertiesInternal.CopyStatus,
+                CopySource = blobPropertiesInternal.CopySource == null ? null : new Uri(blobPropertiesInternal.CopySource),
+                CopyProgress = blobPropertiesInternal.CopyProgress,
+                CopyStatusDescription = blobPropertiesInternal.CopyStatusDescription,
+                ServerEncrypted = blobPropertiesInternal.ServerEncrypted,
+                DestinationSnapshot = blobPropertiesInternal.DestinationSnapshot,
+                RemainingRetentionDays = blobPropertiesInternal.RemainingRetentionDays,
+                AccessTier = blobPropertiesInternal.AccessTier,
+                AccessTierInferred = blobPropertiesInternal.AccessTierInferred.GetValueOrDefault(),
+                ArchiveStatus = blobPropertiesInternal.ArchiveStatus,
+                CustomerProvidedKeySha256 = blobPropertiesInternal.CustomerProvidedKeySha256,
+                EncryptionScope = blobPropertiesInternal.EncryptionScope,
+                TagCount = blobPropertiesInternal.TagCount,
+                ExpiresOn = blobPropertiesInternal.ExpiresOn,
+                IsSealed = blobPropertiesInternal.IsSealed,
+                RehydratePriority = blobPropertiesInternal.RehydratePriority,
+                LastAccessedOn = blobPropertiesInternal.LastAccessedOn,
+                // TODO fix this in autorest.md
+                ETag = new ETag(blobPropertiesInternal.Etag),
+                CreatedOn = blobPropertiesInternal.CreationTime,
+                CopyCompletedOn = blobPropertiesInternal.CopyCompletionTime,
+                DeletedOn = blobPropertiesInternal.DeletedTime,
+                AccessTierChangedOn = blobPropertiesInternal.AccessTierChangeTime
+            };
+        }
+
         #endregion
 
         #region ToBlobContainerItem

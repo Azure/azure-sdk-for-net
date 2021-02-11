@@ -1260,7 +1260,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateListBlobHierarchySegmentRequest(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        internal HttpMessage CreateListBlobHierarchySegmentRequest(string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1275,7 +1275,10 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("prefix", prefix, true);
             }
-            uri.AppendQuery("delimiter", delimiter, true);
+            if (delimiter != null)
+            {
+                uri.AppendQuery("delimiter", delimiter, true);
+            }
             if (marker != null)
             {
                 uri.AppendQuery("marker", marker, true);
@@ -1299,22 +1302,16 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
-        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
+        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="delimiter"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentAsync(string delimiter, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentAsync(string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (delimiter == null)
-            {
-                throw new ArgumentNullException(nameof(delimiter));
-            }
-
-            using var message = CreateListBlobHierarchySegmentRequest(delimiter, prefix, marker, maxresults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentRequest(prefix, delimiter, marker, maxresults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1335,22 +1332,16 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
-        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
+        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="delimiter"/> is null. </exception>
-        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> ListBlobHierarchySegment(string delimiter, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> ListBlobHierarchySegment(string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (delimiter == null)
-            {
-                throw new ArgumentNullException(nameof(delimiter));
-            }
-
-            using var message = CreateListBlobHierarchySegmentRequest(delimiter, prefix, marker, maxresults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentRequest(prefix, delimiter, marker, maxresults, include, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1505,7 +1496,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateListBlobHierarchySegmentNextPageRequest(string nextLink, string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        internal HttpMessage CreateListBlobHierarchySegmentNextPageRequest(string nextLink, string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1521,26 +1512,22 @@ namespace Azure.Storage.Blobs
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
+        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="delimiter"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentNextPageAsync(string nextLink, string delimiter, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentNextPageAsync(string nextLink, string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
-            if (delimiter == null)
-            {
-                throw new ArgumentNullException(nameof(delimiter));
-            }
 
-            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, delimiter, prefix, marker, maxresults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, prefix, delimiter, marker, maxresults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1562,26 +1549,22 @@ namespace Azure.Storage.Blobs
 
         /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
+        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="delimiter"/> is null. </exception>
-        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> ListBlobHierarchySegmentNextPage(string nextLink, string delimiter, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> ListBlobHierarchySegmentNextPage(string nextLink, string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
-            if (delimiter == null)
-            {
-                throw new ArgumentNullException(nameof(delimiter));
-            }
 
-            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, delimiter, prefix, marker, maxresults, include, timeout);
+            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, prefix, delimiter, marker, maxresults, include, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
