@@ -437,10 +437,23 @@ namespace Azure.Storage.Blobs
             return null;
         }
 
-        // TODO
         internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobUploadHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobContentInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                VersionId = response.Headers.VersionId,
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope,
+                // BlobSequenceNumber is not returned for Block Blobs.
+            };
         }
         #endregion
 
