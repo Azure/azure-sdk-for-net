@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,16 +17,16 @@ namespace Azure.Iot.TimeSeriesInsights
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _httpPipeline;
+        private readonly string _clientSessionId;
 
         private const string TsiDefaultAppId = "https://api.timeseries.azure.com/";
-
         private const string DefaultPermissionConsent = "/.default";
+        private const string ClientSessionIdkey = "ClientSessionId";
+
         private static readonly string[] s_tsiDefaultScopes = new[] { TsiDefaultAppId + DefaultPermissionConsent };
 
         private readonly ModelSettingsRestClient _modelSettingsRestClient;
-        private readonly QueryRestClient _queryRestClient;
-        private readonly TimeSeriesHierarchiesRestClient _timeSeriesHierarchiesRestClient;
-        private readonly TimeSeriesTypesRestClient _timeSeriesTypesRestClient;
+        private readonly TimeSeriesInstancesRestClient _timeSeriesInstancesRestClient;
 
         /// <summary>
         /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class.
@@ -72,8 +73,11 @@ namespace Azure.Iot.TimeSeriesInsights
         /// </remarks>
         public TimeSeriesInsightsClient(string environmentFqdn, TokenCredential credential, TimeSeriesInsightsClientOptions options)
         {
+            Argument.AssertNotNullOrEmpty(environmentFqdn, nameof(environmentFqdn));
+            Argument.AssertNotNull(credential, nameof(environmentFqdn));
             Argument.AssertNotNull(options, nameof(options));
 
+            _clientSessionId = new Guid().ToString();
             _clientDiagnostics = new ClientDiagnostics(options);
 
             options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, GetAuthorizationScopes()), HttpPipelinePosition.PerCall);
@@ -81,9 +85,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
             string versionString = options.GetVersionString();
             _modelSettingsRestClient = new ModelSettingsRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
-            _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
-            _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
-            _timeSeriesTypesRestClient = new TimeSeriesTypesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
+            _timeSeriesInstancesRestClient = new TimeSeriesInstancesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
         }
 
         /// <summary>
@@ -122,6 +124,88 @@ namespace Azure.Iot.TimeSeriesInsights
         public virtual Response<ModelSettingsResponse> Get(string clientSessionId = null, CancellationToken cancellationToken = default)
         {
             return _modelSettingsRestClient.Get(clientSessionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets Time Series instances from the environment in pages.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesInstance}"/> of Time Series instances belonging to the TSI environment and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetInstances">
+        /// </code>
+        /// </example>
+        public virtual AsyncPageable<TimeSeriesInstance> GetTimeSeriesInstancesAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesInstancesAsync)}");
+            scope.AddAttribute(ClientSessionIdkey, _clientSessionId);
+            scope.Start();
+            try
+            {
+                async Task<Page<TimeSeriesInstance>> FirstPageFunc(int? pageSizeHint)
+                {
+                    Response<GetInstancesPage> getInstancesResponse = await _timeSeriesInstancesRestClient
+                        .ListAsync(null, _clientSessionId, cancellationToken)
+                        .ConfigureAwait(false);
+                    return Page.FromValues(getInstancesResponse.Value.Instances, getInstancesResponse.Value.ContinuationToken, getInstancesResponse.GetRawResponse());
+                }
+
+                async Task<Page<TimeSeriesInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    Response<GetInstancesPage> getInstancesResponse = await _timeSeriesInstancesRestClient
+                        .ListAsync(nextLink, _clientSessionId, cancellationToken)
+                        .ConfigureAwait(false);
+                    return Page.FromValues(getInstancesResponse.Value.Instances, getInstancesResponse.Value.ContinuationToken, getInstancesResponse.GetRawResponse());
+                }
+
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series instances from the environment in pages.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="Pageable{TimeSeriesInstance}"/> of Time Series instances belonging to the TSI environment and the http response.</returns>
+        /// <seealso cref="GetTimeSeriesInstancesAsync(CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        public virtual Pageable<TimeSeriesInstance> GetTimeSeriesInstances(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesInstancesAsync)}");
+            scope.AddAttribute(ClientSessionIdkey, _clientSessionId);
+            scope.Start();
+            try
+            {
+                Page<TimeSeriesInstance> FirstPageFunc(int? pageSizeHint)
+                {
+                    Response<GetInstancesPage> getInstancesResponse = _timeSeriesInstancesRestClient
+                        .List(null, _clientSessionId, cancellationToken);
+                    return Page.FromValues(getInstancesResponse.Value.Instances, getInstancesResponse.Value.ContinuationToken, getInstancesResponse.GetRawResponse());
+                }
+
+                Page<TimeSeriesInstance> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    Response<GetInstancesPage> getInstancesResponse = _timeSeriesInstancesRestClient
+                        .List(nextLink, _clientSessionId, cancellationToken);
+                    return Page.FromValues(getInstancesResponse.Value.Instances, getInstancesResponse.Value.ContinuationToken, getInstancesResponse.GetRawResponse());
+                }
+
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
