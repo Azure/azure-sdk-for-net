@@ -346,8 +346,8 @@ namespace Azure.Storage.Blobs.Specialized
                         if (async)
                         {
                             response = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
-                                 duration: serviceDuration,
-                                 proposedLeaseId: LeaseId,
+                                duration: serviceDuration,
+                                proposedLeaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                                 cancellationToken: cancellationToken)
@@ -356,8 +356,8 @@ namespace Azure.Storage.Blobs.Specialized
                         else
                         {
                             response = BlobContainerClient.ContainerRestClient.AcquireLease(
-                                 duration: serviceDuration,
-                                 proposedLeaseId: LeaseId,
+                                duration: serviceDuration,
+                                proposedLeaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                                 cancellationToken: cancellationToken);

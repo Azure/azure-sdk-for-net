@@ -10,11 +10,13 @@ using Azure.Storage.Blobs.Models;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 using Azure.Core;
 using System.IO;
+using System.Globalization;
 
 namespace Azure.Storage.Blobs
 {
     internal static partial class BlobExtensions
     {
+        #region Tags
         internal static IDictionary<string, string> ToTagDictionary(this BlobTags blobTags)
         {
             if (blobTags?.BlobTagSet == null)
@@ -55,6 +57,40 @@ namespace Azure.Storage.Blobs
             return string.Join("&", encodedTags);
         }
 
+        internal static TaggedBlobItem ToBlobTagItem(this FilterBlobItem filterBlobItem)
+        {
+            if (filterBlobItem == null)
+            {
+                return null;
+            }
+
+            return new TaggedBlobItem
+            {
+                BlobName = filterBlobItem.Name,
+                BlobContainerName = filterBlobItem.ContainerName,
+                Tags = filterBlobItem.Tags.ToTagDictionary()
+            };
+        }
+
+        internal static List<TaggedBlobItem> ToBlobTagItems(this IEnumerable<FilterBlobItem> filterBlobItems)
+        {
+            if (filterBlobItems == null)
+            {
+                return null;
+            }
+
+            List<TaggedBlobItem> list = new List<TaggedBlobItem>();
+
+            foreach (FilterBlobItem filterBlobItem in filterBlobItems)
+            {
+                list.Add(filterBlobItem.ToBlobTagItem());
+            }
+
+            return list;
+        }
+        #endregion
+
+        #region ORS
         /// <summary>
         /// Internal. Parses Object Replication Policy ID from Rule ID and sets the Policy ID for source blobs.
         /// </summary>
@@ -169,39 +205,9 @@ namespace Azure.Storage.Blobs
             }
             return OrProperties;
         }
+        #endregion
 
-        internal static TaggedBlobItem ToBlobTagItem(this FilterBlobItem filterBlobItem)
-        {
-            if (filterBlobItem == null)
-            {
-                return null;
-            }
-
-            return new TaggedBlobItem
-            {
-                BlobName = filterBlobItem.Name,
-                BlobContainerName = filterBlobItem.ContainerName,
-                Tags = filterBlobItem.Tags.ToTagDictionary()
-            };
-        }
-
-        internal static List<TaggedBlobItem> ToBlobTagItems(this IEnumerable<FilterBlobItem> filterBlobItems)
-        {
-            if (filterBlobItems == null)
-            {
-                return null;
-            }
-
-            List<TaggedBlobItem> list = new List<TaggedBlobItem>();
-
-            foreach (FilterBlobItem filterBlobItem in filterBlobItems)
-            {
-                list.Add(filterBlobItem.ToBlobTagItem());
-            }
-
-            return list;
-        }
-
+        #region ToRehydratePriority
         internal static RehydratePriority? ToRehydratePriority(this string rehydratePriority)
         {
             if (rehydratePriority == null)
@@ -218,7 +224,9 @@ namespace Azure.Storage.Blobs
                 return RehydratePriority.Standard;
             }
         }
+        #endregion
 
+        #region ToAccountInfo
         internal static AccountInfo ToAccountInfo(this ResponseWithHeaders<ServiceGetAccountInfoHeaders> response)
         {
             if (response == null)
@@ -232,11 +240,487 @@ namespace Azure.Storage.Blobs
                 IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
             };
         }
+        #endregion
 
+        #region ToBlobContainerInfo
         // TODO
         internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerCreateHeaders> response)
         {
             return null;
+        }
+        #endregion
+
+        #region ToBlobContainerAccessPolicy
+        internal static BlobContainerAccessPolicy ToBlobContainerAccessPolicy(
+            this ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerAccessPolicy
+            {
+                BlobPublicAccess = response.Headers.BlobPublicAccess.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                SignedIdentifiers = response.Value.ToList()
+            };
+        }
+        #endregion
+
+        #region ToBlobContainerInfo
+        // TODO
+        internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerSetAccessPolicyHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerSetMetadataHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobContentInfo
+        // TODO
+        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<AppendBlobCreateHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<PageBlobCreateHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobAppendInfo
+        // TODO
+        internal static BlobAppendInfo ToBlobAppendInfo(this ResponseWithHeaders<AppendBlobAppendBlockHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobAppendInfo
+        // TODO
+        internal static BlobAppendInfo ToBlobAppendInfo(this ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobInfo
+        // TODO
+        internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<AppendBlobSealHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToPageInfo
+        // TODO
+        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobUploadPagesHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobClearPagesHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToPageRangesInfo
+        // TODO
+        internal static PageRangesInfo ToPageRangesInfo(this ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageRangesInfo ToPageRangesInfo(this ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToPageBlobInfo
+        // TODO
+        internal static PageBlobInfo ToPageBlobInfo(this ResponseWithHeaders<PageBlobResizeHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static PageBlobInfo ToPageBlobInfo(this ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlockInfo
+        // TODO
+        internal static BlockInfo ToBlockInfo(this ResponseWithHeaders<BlockBlobStageBlockHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlockInfo ToBlockInfo(this ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobContentInfo
+        // TODO
+        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobCommitBlockListHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobUploadHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlockList
+        // TODO
+        internal static BlockList ToBlockList(this ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobDownloadInfo
+        // TODO
+#pragma warning disable CA1801 // Review unused parameters
+        internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobQueryHeaders> response, Stream stream)
+#pragma warning restore CA1801 // Review unused parameters
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobSnapshotInfo ToBlobSnapshotInfo(this ResponseWithHeaders<BlobCreateSnapshotHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobInfo
+        // TODO
+        internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<BlobSetMetadataHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<BlobSetHttpHeadersHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobProperties
+        // TODO
+        internal static BlobProperties ToBlobProperties(this ResponseWithHeaders<BlobGetPropertiesHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobCopyInfo
+        // TODO
+        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<BlobCopyFromURLHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<BlobStartCopyFromURLHeaders> response)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<PageBlobCopyIncrementalHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobDownloadInfo
+        // TODO
+#pragma warning disable CA1801 // Review unused parameters
+        internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobDownloadHeaders> response, Stream stream)
+#pragma warning restore CA1801 // Review unused parameters
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobDownloadInfo ToBlobDownloadInfo(this ResponseWithHeaders<Stream, BlobDownloadHeaders> response)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobLease
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobAcquireLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
+            };
+        }
+
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerAcquireLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
+            };
+        }
+
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobRenewLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
+            };
+        }
+
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerRenewLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
+            };
+        }
+
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobChangeLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
+            };
+        }
+
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerChangeLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LeaseId = response.Headers.LeaseId,
+                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
+            };
+        }
+
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobBreakLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                // LeaseId is not returned on a broken lease.
+                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
+            };
+        }
+
+        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerBreakLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLease
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                // LeaseId is not returned on a broken lease.
+                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
+            };
+        }
+
+        internal static int? ExtractLeaseTime(this ResponseHeaders responseHeaders)
+        {
+            int? leaseTime = null;
+
+            if (responseHeaders.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
+            {
+                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
+            }
+
+            return leaseTime;
+        }
+        #endregion
+
+        #region ToReleasedObjectInfo
+        internal static ReleasedObjectInfo ToReleasedObjectInfo(this ResponseWithHeaders<BlobReleaseLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new ReleasedObjectInfo(
+                eTag: response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                lastModified: response.Headers.LastModified.GetValueOrDefault());
+        }
+
+        internal static ReleasedObjectInfo ToReleasedObjectInfo(this ResponseWithHeaders<ContainerReleaseLeaseHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new ReleasedObjectInfo(
+                eTag: response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                lastModified: response.Headers.LastModified.GetValueOrDefault());
+        }
+        #endregion
+
+        #region ToBlobItem
+        // TODO
+        internal static BlobItem[] ToBlobItems(this IReadOnlyList<BlobItemInternal> BlobItemInternals)
+        {
+            return null;
+        }
+
+        // TODO
+        internal static BlobItem ToBlobItem(this BlobItemInternal blobItemInternal)
+        {
+            return null;
+        }
+        #endregion
+
+        #region ToBlobContainerItem
+        internal static BlobContainerItem[] ToBlobContainerItems(this IReadOnlyList<ContainerItemInternal> containerItemInternals)
+        {
+            if (containerItemInternals == null)
+            {
+                return null;
+            }
+
+            return containerItemInternals.Select(r => r.ToBlobContainerItem()).ToArray();
+        }
+
+        internal static BlobContainerItem ToBlobContainerItem(this ContainerItemInternal containerItemInternal)
+        {
+            if (containerItemInternal == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerItem
+            {
+                Name = containerItemInternal.Name,
+                IsDeleted = containerItemInternal.Deleted,
+                VersionId = containerItemInternal.Version,
+                Properties = BlobExtensions.ToBlobContainerProperties(containerItemInternal.Properties, containerItemInternal.Metadata)
+            };
+        }
+        #endregion
+
+        #region ToBlobContainerProperties
+        internal static BlobContainerProperties ToBlobContainerProperties(
+            ContainerPropertiesInternal containerPropertiesInternal,
+            IReadOnlyDictionary<string, string> metadata)
+        {
+            if (containerPropertiesInternal == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerProperties
+            {
+                LastModified = containerPropertiesInternal.LastModified,
+                LeaseStatus = containerPropertiesInternal.LeaseStatus,
+                LeaseState = containerPropertiesInternal.LeaseState,
+                LeaseDuration = containerPropertiesInternal.LeaseDuration,
+                PublicAccess = containerPropertiesInternal.PublicAccess,
+                HasImmutabilityPolicy = containerPropertiesInternal.HasImmutabilityPolicy,
+                HasLegalHold = containerPropertiesInternal.HasLegalHold,
+                DefaultEncryptionScope = containerPropertiesInternal.DefaultEncryptionScope,
+                PreventEncryptionScopeOverride = containerPropertiesInternal.PreventEncryptionScopeOverride,
+                DeletedOn = containerPropertiesInternal.DeletedTime,
+                RemainingRetentionDays = containerPropertiesInternal.RemainingRetentionDays,
+                ETag = new ETag(containerPropertiesInternal.Etag),
+                Metadata = metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+            };
         }
 
         // TODO
@@ -265,321 +749,6 @@ namespace Azure.Storage.Blobs
                 Metadata = response.Headers.Metadata
             };
         }
-
-        // TODO
-        internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerSetMetadataHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobContainerAccessPolicy ToBlobContainerAccessPolicy(
-            this ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerSetAccessPolicyHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<AppendBlobCreateHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobAppendInfo ToBlobAppendInfo(this ResponseWithHeaders<AppendBlobAppendBlockHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobAppendInfo ToBlobAppendInfo(this ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<AppendBlobSealHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<PageBlobCreateHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobUploadPagesHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobClearPagesHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static PageRangesInfo ToPageRangesInfo(this ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static PageRangesInfo ToPageRangesInfo(this ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static PageBlobInfo ToPageBlobInfo(this ResponseWithHeaders<PageBlobResizeHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static PageBlobInfo ToPageBlobInfo(this ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<PageBlobCopyIncrementalHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobUploadHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlockInfo ToBlockInfo(this ResponseWithHeaders<BlockBlobStageBlockHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlockInfo ToBlockInfo(this ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobCommitBlockListHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlockList ToBlockList(this ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-#pragma warning disable CA1801 // Review unused parameters
-        internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobQueryHeaders> response, Stream stream)
-#pragma warning restore CA1801 // Review unused parameters
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobSnapshotInfo ToBlobSnapshotInfo(this ResponseWithHeaders<BlobCreateSnapshotHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<BlobSetMetadataHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<BlobSetHttpHeadersHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobProperties ToBlobProperties(this ResponseWithHeaders<BlobGetPropertiesHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<BlobCopyFromURLHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<BlobStartCopyFromURLHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-#pragma warning disable CA1801 // Review unused parameters
-        internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobDownloadHeaders> response, Stream stream)
-#pragma warning restore CA1801 // Review unused parameters
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobAcquireLeaseHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerAcquireLeaseHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobRenewLeaseHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerRenewLeaseHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static ReleasedObjectInfo ToReleasedObjectInfo(this ResponseWithHeaders<BlobReleaseLeaseHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static ReleasedObjectInfo ToReleasedObjectInfo(this ResponseWithHeaders<ContainerReleaseLeaseHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobChangeLeaseHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerChangeLeaseHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobBreakLeaseHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerBreakLeaseHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobDownloadInfo ToBlobDownloadInfo(this ResponseWithHeaders<Stream, BlobDownloadHeaders> response)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobItem[] ToBlobItems(this IReadOnlyList<BlobItemInternal> BlobItemInternals)
-        {
-            return null;
-        }
-
-        // TODO
-        internal static BlobItem ToBlobItem(this BlobItemInternal blobItemInternal)
-        {
-            return null;
-        }
-
-        internal static BlobContainerItem[] ToBlobContainerItems(this IReadOnlyList<ContainerItemInternal> containerItemInternals)
-        {
-            if (containerItemInternals == null)
-            {
-                return null;
-            }
-
-            return containerItemInternals.Select(r => r.ToBlobContainerItem()).ToArray();
-        }
-
-        internal static BlobContainerItem ToBlobContainerItem(this ContainerItemInternal containerItemInternal)
-        {
-            if (containerItemInternal == null)
-            {
-                return null;
-            }
-
-            return new BlobContainerItem
-            {
-                Name = containerItemInternal.Name,
-                IsDeleted = containerItemInternal.Deleted,
-                VersionId = containerItemInternal.Version,
-                Properties = BlobExtensions.ToBlobContainerProperties(containerItemInternal.Properties, containerItemInternal.Metadata)
-            };
-        }
-
-        internal static BlobContainerProperties ToBlobContainerProperties(
-            ContainerPropertiesInternal containerPropertiesInternal,
-            IReadOnlyDictionary<string, string> metadata)
-        {
-            if (containerPropertiesInternal == null)
-            {
-                return null;
-            }
-
-            return new BlobContainerProperties
-            {
-                LastModified = containerPropertiesInternal.LastModified,
-                LeaseStatus = containerPropertiesInternal.LeaseStatus,
-                LeaseState = containerPropertiesInternal.LeaseState,
-                LeaseDuration = containerPropertiesInternal.LeaseDuration,
-                PublicAccess = containerPropertiesInternal.PublicAccess,
-                HasImmutabilityPolicy = containerPropertiesInternal.HasImmutabilityPolicy,
-                HasLegalHold = containerPropertiesInternal.HasLegalHold,
-                DefaultEncryptionScope = containerPropertiesInternal.DefaultEncryptionScope,
-                PreventEncryptionScopeOverride = containerPropertiesInternal.PreventEncryptionScopeOverride,
-                DeletedOn = containerPropertiesInternal.DeletedTime,
-                RemainingRetentionDays = containerPropertiesInternal.RemainingRetentionDays,
-                ETag = new ETag(containerPropertiesInternal.Etag),
-                Metadata = metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
-            };
-        }
+        #endregion
     }
 }
