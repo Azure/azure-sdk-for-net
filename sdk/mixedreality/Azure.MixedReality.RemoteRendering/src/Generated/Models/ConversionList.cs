@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> The ConversionList. </summary>
+    /// <summary> List of conversions. </summary>
     internal partial class ConversionList
     {
         /// <summary> Initializes a new instance of ConversionList. </summary>
@@ -29,7 +29,7 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> Initializes a new instance of ConversionList. </summary>
         /// <param name="conversions"> The list of conversions. </param>
-        /// <param name="nextLink"> If more conversions are available this link with the same authentication header can be used to retrieve further values. </param>
+        /// <param name="nextLink"> If more conversions are available this field will contain a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </param>
         internal ConversionList(IReadOnlyList<AssetConversion> conversions, string nextLink)
         {
             Conversions = conversions;
@@ -38,7 +38,7 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> The list of conversions. </summary>
         public IReadOnlyList<AssetConversion> Conversions { get; }
-        /// <summary> If more conversions are available this link with the same authentication header can be used to retrieve further values. </summary>
+        /// <summary> If more conversions are available this field will contain a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </summary>
         public string NextLink { get; }
     }
 }

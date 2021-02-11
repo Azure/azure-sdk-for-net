@@ -15,20 +15,20 @@ using Azure.Core.Pipeline;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    internal partial class MixedRealityRemoteRenderingRestClient
+    internal partial class RemoteRenderingRestClient
     {
         private string endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of MixedRealityRemoteRenderingRestClient. </summary>
+        /// <summary> Initializes a new instance of RemoteRenderingRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The endpoint to use e.g. https://remoterendering.eastus.mixedreality.azure.com a list can be found at https://docs.microsoft.com/en-us/azure/remote-rendering/reference/regions. </param>
+        /// <param name="endpoint"> The endpoint to use e.g. https://remoterendering.eastus.mixedreality.azure.com. A list can be found at https://docs.microsoft.com/azure/remote-rendering/reference/regions. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public MixedRealityRemoteRenderingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-01-01-preview")
+        public RemoteRenderingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-01-01-preview")
         {
             if (endpoint == null)
             {
@@ -66,20 +66,13 @@ namespace Azure.MixedReality.RemoteRendering
             return message;
         }
 
-        /// <summary>
-        /// Creates a conversion using an asset stored in an Azure Blob Storage account.
-        /// If the remote rendering account has been linked with the storage account no Shared Access Signatures (storageContainerReadListSas, storageContainerWriteSas) for storage access need to be provided.
-        /// Documentation how to link your Azure Remote Rendering account with the Azure Blob Storage account can be found in the [documentation](https://docs.microsoft.com/azure/remote-rendering/how-tos/create-an-account#link-storage-accounts).
-        /// 
-        /// All files in the input container starting with the blobPrefix will be retrieved to perform the conversion. To cut down on conversion times only necessary files should be available under the blobPrefix.
-        /// .
-        /// </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Creates a conversion using an asset stored in an Azure Blob Storage account. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="conversionId"> An ID uniquely identifying the conversion for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
         /// <param name="body"> Request body configuring the settings for an asset conversion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AssetConversion, MixedRealityRemoteRenderingCreateConversionHeaders>> CreateConversionAsync(Guid accountId, string conversionId, CreateConversionSettings body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AssetConversion, RemoteRenderingCreateConversionHeaders>> CreateConversionAsync(Guid accountId, string conversionId, CreateConversionSettings body, CancellationToken cancellationToken = default)
         {
             if (conversionId == null)
             {
@@ -92,7 +85,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             using var message = CreateCreateConversionRequest(accountId, conversionId, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new MixedRealityRemoteRenderingCreateConversionHeaders(message.Response);
+            var headers = new RemoteRenderingCreateConversionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -108,20 +101,13 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
-        /// <summary>
-        /// Creates a conversion using an asset stored in an Azure Blob Storage account.
-        /// If the remote rendering account has been linked with the storage account no Shared Access Signatures (storageContainerReadListSas, storageContainerWriteSas) for storage access need to be provided.
-        /// Documentation how to link your Azure Remote Rendering account with the Azure Blob Storage account can be found in the [documentation](https://docs.microsoft.com/azure/remote-rendering/how-tos/create-an-account#link-storage-accounts).
-        /// 
-        /// All files in the input container starting with the blobPrefix will be retrieved to perform the conversion. To cut down on conversion times only necessary files should be available under the blobPrefix.
-        /// .
-        /// </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Creates a conversion using an asset stored in an Azure Blob Storage account. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="conversionId"> An ID uniquely identifying the conversion for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
         /// <param name="body"> Request body configuring the settings for an asset conversion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<AssetConversion, MixedRealityRemoteRenderingCreateConversionHeaders> CreateConversion(Guid accountId, string conversionId, CreateConversionSettings body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AssetConversion, RemoteRenderingCreateConversionHeaders> CreateConversion(Guid accountId, string conversionId, CreateConversionSettings body, CancellationToken cancellationToken = default)
         {
             if (conversionId == null)
             {
@@ -134,7 +120,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             using var message = CreateCreateConversionRequest(accountId, conversionId, body);
             _pipeline.Send(message, cancellationToken);
-            var headers = new MixedRealityRemoteRenderingCreateConversionHeaders(message.Response);
+            var headers = new RemoteRenderingCreateConversionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -167,12 +153,12 @@ namespace Azure.MixedReality.RemoteRendering
             return message;
         }
 
-        /// <summary> Gets the status of a previously created asset conversion. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Gets the status of a particular conversion. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="conversionId"> An ID uniquely identifying the conversion for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AssetConversion, MixedRealityRemoteRenderingGetConversionHeaders>> GetConversionAsync(Guid accountId, string conversionId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AssetConversion, RemoteRenderingGetConversionHeaders>> GetConversionAsync(Guid accountId, string conversionId, CancellationToken cancellationToken = default)
         {
             if (conversionId == null)
             {
@@ -181,7 +167,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             using var message = CreateGetConversionRequest(accountId, conversionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new MixedRealityRemoteRenderingGetConversionHeaders(message.Response);
+            var headers = new RemoteRenderingGetConversionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -196,12 +182,12 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
-        /// <summary> Gets the status of a previously created asset conversion. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Gets the status of a particular conversion. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="conversionId"> An ID uniquely identifying the conversion for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> is null. </exception>
-        public ResponseWithHeaders<AssetConversion, MixedRealityRemoteRenderingGetConversionHeaders> GetConversion(Guid accountId, string conversionId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AssetConversion, RemoteRenderingGetConversionHeaders> GetConversion(Guid accountId, string conversionId, CancellationToken cancellationToken = default)
         {
             if (conversionId == null)
             {
@@ -210,7 +196,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             using var message = CreateGetConversionRequest(accountId, conversionId);
             _pipeline.Send(message, cancellationToken);
-            var headers = new MixedRealityRemoteRenderingGetConversionHeaders(message.Response);
+            var headers = new RemoteRenderingGetConversionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -241,14 +227,14 @@ namespace Azure.MixedReality.RemoteRendering
             return message;
         }
 
-        /// <summary> Gets a list of all conversions. Returns a batch of conversions- if more conversions are available the @nextLink property contains the a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Gets a list of all conversions. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders>> ListConversionsAsync(Guid accountId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConversionList, RemoteRenderingListConversionsHeaders>> ListConversionsAsync(Guid accountId, CancellationToken cancellationToken = default)
         {
             using var message = CreateListConversionsRequest(accountId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new MixedRealityRemoteRenderingListConversionsHeaders(message.Response);
+            var headers = new RemoteRenderingListConversionsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -263,14 +249,14 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
-        /// <summary> Gets a list of all conversions. Returns a batch of conversions- if more conversions are available the @nextLink property contains the a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Gets a list of all conversions. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders> ListConversions(Guid accountId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConversionList, RemoteRenderingListConversionsHeaders> ListConversions(Guid accountId, CancellationToken cancellationToken = default)
         {
             using var message = CreateListConversionsRequest(accountId);
             _pipeline.Send(message, cancellationToken);
-            var headers = new MixedRealityRemoteRenderingListConversionsHeaders(message.Response);
+            var headers = new RemoteRenderingListConversionsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -307,12 +293,12 @@ namespace Azure.MixedReality.RemoteRendering
         }
 
         /// <summary> Creates a new rendering session. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
         /// <param name="body"> Settings of the session to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<RenderingSession, MixedRealityRemoteRenderingCreateSessionHeaders>> CreateSessionAsync(Guid accountId, string sessionId, RenderingSessionOptions body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<RenderingSession, RemoteRenderingCreateSessionHeaders>> CreateSessionAsync(Guid accountId, string sessionId, RenderingSessionOptions body, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -325,7 +311,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             using var message = CreateCreateSessionRequest(accountId, sessionId, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new MixedRealityRemoteRenderingCreateSessionHeaders(message.Response);
+            var headers = new RemoteRenderingCreateSessionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -342,12 +328,12 @@ namespace Azure.MixedReality.RemoteRendering
         }
 
         /// <summary> Creates a new rendering session. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
         /// <param name="body"> Settings of the session to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<RenderingSession, MixedRealityRemoteRenderingCreateSessionHeaders> CreateSession(Guid accountId, string sessionId, RenderingSessionOptions body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<RenderingSession, RemoteRenderingCreateSessionHeaders> CreateSession(Guid accountId, string sessionId, RenderingSessionOptions body, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -360,7 +346,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             using var message = CreateCreateSessionRequest(accountId, sessionId, body);
             _pipeline.Send(message, cancellationToken);
-            var headers = new MixedRealityRemoteRenderingCreateSessionHeaders(message.Response);
+            var headers = new RemoteRenderingCreateSessionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -393,8 +379,8 @@ namespace Azure.MixedReality.RemoteRendering
             return message;
         }
 
-        /// <summary> Gets properties of a particular rendering session. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Gets the properties of a particular rendering session. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
@@ -421,8 +407,8 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
-        /// <summary> Gets properties of a particular rendering session. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Gets the properties of a particular rendering session. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
@@ -470,10 +456,10 @@ namespace Azure.MixedReality.RemoteRendering
             return message;
         }
 
-        /// <summary> Updates a particular rendering session. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Updates the max lease time of a particular rendering session. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
-        /// <param name="body"> Settings of the session to be updated. </param>
+        /// <param name="body"> Settings used to update the session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<RenderingSession>> UpdateSessionAsync(Guid accountId, string sessionId, UpdateSessionOptions body, CancellationToken cancellationToken = default)
@@ -503,10 +489,10 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
-        /// <summary> Updates a particular rendering session. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Updates the max lease time of a particular rendering session. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
-        /// <param name="body"> Settings of the session to be updated. </param>
+        /// <param name="body"> Settings used to update the session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> or <paramref name="body"/> is null. </exception>
         public Response<RenderingSession> UpdateSession(Guid accountId, string sessionId, UpdateSessionOptions body, CancellationToken cancellationToken = default)
@@ -555,11 +541,11 @@ namespace Azure.MixedReality.RemoteRendering
         }
 
         /// <summary> Stops a particular rendering session. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<MixedRealityRemoteRenderingStopSessionHeaders>> StopSessionAsync(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<RemoteRenderingStopSessionHeaders>> StopSessionAsync(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -568,7 +554,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             using var message = CreateStopSessionRequest(accountId, sessionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new MixedRealityRemoteRenderingStopSessionHeaders(message.Response);
+            var headers = new RemoteRenderingStopSessionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 204:
@@ -579,11 +565,11 @@ namespace Azure.MixedReality.RemoteRendering
         }
 
         /// <summary> Stops a particular rendering session. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="sessionId"> An ID uniquely identifying the rendering session for the given account. The ID is case sensitive, can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 256 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        public ResponseWithHeaders<MixedRealityRemoteRenderingStopSessionHeaders> StopSession(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<RemoteRenderingStopSessionHeaders> StopSession(Guid accountId, string sessionId, CancellationToken cancellationToken = default)
         {
             if (sessionId == null)
             {
@@ -592,7 +578,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             using var message = CreateStopSessionRequest(accountId, sessionId);
             _pipeline.Send(message, cancellationToken);
-            var headers = new MixedRealityRemoteRenderingStopSessionHeaders(message.Response);
+            var headers = new RemoteRenderingStopSessionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 204:
@@ -618,8 +604,8 @@ namespace Azure.MixedReality.RemoteRendering
             return message;
         }
 
-        /// <summary> Get a list of all rendering sessions. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Gets a list of all rendering sessions. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<SessionsList>> ListSessionsAsync(Guid accountId, CancellationToken cancellationToken = default)
         {
@@ -639,8 +625,8 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
-        /// <summary> Get a list of all rendering sessions. </summary>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <summary> Gets a list of all rendering sessions. </summary>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<SessionsList> ListSessions(Guid accountId, CancellationToken cancellationToken = default)
         {
@@ -673,12 +659,12 @@ namespace Azure.MixedReality.RemoteRendering
             return message;
         }
 
-        /// <summary> Gets a list of all conversions. Returns a batch of conversions- if more conversions are available the @nextLink property contains the a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </summary>
+        /// <summary> Gets a list of all conversions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders>> ListConversionsNextPageAsync(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConversionList, RemoteRenderingListConversionsHeaders>> ListConversionsNextPageAsync(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -687,7 +673,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             using var message = CreateListConversionsNextPageRequest(nextLink, accountId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new MixedRealityRemoteRenderingListConversionsHeaders(message.Response);
+            var headers = new RemoteRenderingListConversionsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -702,12 +688,12 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
-        /// <summary> Gets a list of all conversions. Returns a batch of conversions- if more conversions are available the @nextLink property contains the a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </summary>
+        /// <summary> Gets a list of all conversions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ConversionList, MixedRealityRemoteRenderingListConversionsHeaders> ListConversionsNextPage(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConversionList, RemoteRenderingListConversionsHeaders> ListConversionsNextPage(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -716,7 +702,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             using var message = CreateListConversionsNextPageRequest(nextLink, accountId);
             _pipeline.Send(message, cancellationToken);
-            var headers = new MixedRealityRemoteRenderingListConversionsHeaders(message.Response);
+            var headers = new RemoteRenderingListConversionsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -744,9 +730,9 @@ namespace Azure.MixedReality.RemoteRendering
             return message;
         }
 
-        /// <summary> Get a list of all rendering sessions. </summary>
+        /// <summary> Gets a list of all rendering sessions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<SessionsList>> ListSessionsNextPageAsync(string nextLink, Guid accountId, CancellationToken cancellationToken = default)
@@ -772,9 +758,9 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
-        /// <summary> Get a list of all rendering sessions. </summary>
+        /// <summary> Gets a list of all rendering sessions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="accountId"> the Azure Remote Rendering account id. </param>
+        /// <param name="accountId"> The Azure Remote Rendering account ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<SessionsList> ListSessionsNextPage(string nextLink, Guid accountId, CancellationToken cancellationToken = default)

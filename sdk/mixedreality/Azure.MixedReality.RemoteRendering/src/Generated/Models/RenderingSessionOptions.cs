@@ -7,10 +7,10 @@
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> The CreateSessionSettings. </summary>
+    /// <summary> Settings of the session to be created. </summary>
     public partial class RenderingSessionOptions
     {
-        /// <summary> Size of the server used for the rendering session. Remote Rendering with Standard size server has a maximum scene size of 20 million polygons. Remote Rendering with Premium size does not enforce a hard maximum, but performance may be degraded if your content exceeds the rendering capabilities of the service. </summary>
+        /// <summary> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </summary>
         public RenderingServerSize Size { get; }
     }
 }

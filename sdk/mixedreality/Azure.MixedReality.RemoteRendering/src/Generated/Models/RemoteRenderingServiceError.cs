@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> The Error. </summary>
+    /// <summary> The error object containing details of why the request failed. </summary>
     public partial class RemoteRenderingServiceError
     {
         /// <summary> Initializes a new instance of RemoteRenderingServiceError. </summary>

@@ -13,7 +13,7 @@ namespace Azure.MixedReality.RemoteRendering
     internal partial class CreateConversionSettings
     {
         /// <summary> Initializes a new instance of CreateConversionSettings. </summary>
-        /// <param name="settings"> Settings for where to retrieve input files from and where to write output files. Supplied when creating the conversion. </param>
+        /// <param name="settings"> Conversion settings describe the origin of input files and destination of output files. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="settings"/> is null. </exception>
         public CreateConversionSettings(AssetConversionOptions settings)
         {
@@ -25,7 +25,7 @@ namespace Azure.MixedReality.RemoteRendering
             Settings = settings;
         }
 
-        /// <summary> Settings for where to retrieve input files from and where to write output files. Supplied when creating the conversion. </summary>
+        /// <summary> Conversion settings describe the origin of input files and destination of output files. </summary>
         public AssetConversionOptions Settings { get; }
     }
 }
