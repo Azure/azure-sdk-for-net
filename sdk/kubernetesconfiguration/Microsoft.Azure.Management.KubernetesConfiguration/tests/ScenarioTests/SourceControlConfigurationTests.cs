@@ -17,10 +17,10 @@ namespace KubernetesConfiguration.Tests.ScenarioTests
         public void CanCreateUpdateDeleteSourceControlConfiguration()
         {
             ClusterInfo cluster = new ClusterInfo(
-                name: "azure-arc5",
+                name: "nanthicluster0923",
                 type: ClusterInfo.ClusterType.connectedClusters,
                 location: "eastus2euap",
-                resourceGroup: "haikudevtesting"
+                resourceGroup: "nanthirg0923"
                 );
 
             SourceControlConfiguration configuration = new SourceControlConfiguration(
@@ -37,9 +37,9 @@ namespace KubernetesConfiguration.Tests.ScenarioTests
                     chartValues: "--set helm.versions=v3"
                 ),
                 configurationProtectedSettings: new Dictionary<string, string>(){
-                    {"dummyArg", "dummyParam"}
+                    {"dummyArg", "ZHVtbXlQYXJhbQ=="}
                 }
-                );
+            );
 
             using (var context = MockContext.Start(this.GetType()))
             {
