@@ -7,6 +7,9 @@ parameters:
 - name: MatrixConfigs
   type: object
   default: []
+- name: MatrixFilters
+  type: object
+  default: []
 
 jobs:
 - job: generate_matrix
@@ -20,23 +23,31 @@ jobs:
     - ${{ each config in parameters.MatrixConfigs }}:
       - ${{ if eq(config.GenerateVMJobs, 'true') }}:
         - pwsh: |
-            Write-Host "DISPLAY NAME FILTER: $(displayNameFilter)"
+            $extraFilters = "${{ join('","', parameters.MatrixFilters) }}"
+            $filters = ,"container=^$","SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}"
+            if ($extraFilters) { $filters = @($extraFilters) + $filters }
+            Write-Host "DISPLAY NAME FILTER: `"$(displayNameFilter)`"; FILTERS: `"$filters`""
             eng/scripts/job-matrix/Create-JobMatrix.ps1 `
               -ConfigPath ${{ config.Path }} `
               -Selection ${{ config.Selection }} `
               -DisplayNameFilter "$(displayNameFilter)" `
-              -Filters @("container=^$", "SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}")
+              -Filters $filters `
+              -NonSparseParameters "${{ join('","', config.NonSparseParameters) }}"
           name: generate_vm_job_matrix_${{ config.Name }}
           displayName: Generate VM Job Matrix
 
       - ${{ if eq(config.GenerateContainerJobs, 'true') }}:
         - pwsh: |
-            Write-Host "DISPLAY NAME FILTER: $(displayNameFilter)"
+            $extraFilters = "${{ join('","', parameters.MatrixFilters) }}"
+            $filters = ,"container=.*","SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}"
+            if ($extraFilters) { $filters = @($extraFilters) + $filters }
+            Write-Host "DISPLAY NAME FILTER: `"$(displayNameFilter)`"; FILTERS: `"$filters`""
             eng/scripts/job-matrix/Create-JobMatrix.ps1 `
               -ConfigPath ${{ config.Path }} `
               -Selection ${{ config.Selection }} `
               -DisplayNameFilter "$(displayNameFilter)" `
-              -Filters @("container=.*", "SupportedClouds=$^$|{{ parameters.CloudConfig.Cloud }}")
+              -Filters $filters `
+              -NonSparseParameters "${{ join('","', config.NonSparseParameters) }}"
           name: generate_container_job_matrix_${{ config.Name }}
           displayName: Generate Container Job Matrix
 
