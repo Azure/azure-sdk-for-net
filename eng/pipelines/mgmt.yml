@@ -62,6 +62,7 @@ pr:
     - sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs
     - sdk/digitaltwins/Microsoft.Azure.Management.DigitalTwins
     - sdk/dns/Microsoft.Azure.Management.Dns
+    - sdk/dnsresolver/Microsoft.Azure.Management.DnsResolver
     - sdk/edgegateway/Microsoft.Azure.Management.EdgeGateway
     - sdk/eng/mgmt
     - sdk/eventgrid/Microsoft.Azure.Management.EventGrid

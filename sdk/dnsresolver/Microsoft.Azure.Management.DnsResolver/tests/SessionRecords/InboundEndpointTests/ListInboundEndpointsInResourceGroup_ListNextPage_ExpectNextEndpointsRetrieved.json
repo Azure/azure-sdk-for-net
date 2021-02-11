@@ -1,0 +1,815 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourcegroups/dnsresolvertestrg774?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlZ3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a2cdbf12-7fec-4335-a924-10e0e4401a56"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "32"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "945553f7-dd09-4a48-bdb9-145a78ace87c"
+        ],
+        "x-ms-correlation-request-id": [
+          "945553f7-dd09-4a48-bdb9-145a78ace87c"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T191825Z:945553f7-dd09-4a48-bdb9-145a78ace87c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:18:25 GMT"
+        ],
+        "Content-Length": [
+          "196"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774\",\r\n  \"name\": \"dnsresolvertestrg774\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNSZXNvbHZlcnMvZG5zcmVzb2x2ZXJ0ZXN0cmVzb2x2ZXIyMjYxP2FwaS12ZXJzaW9uPTIwMjAtMDQtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"virtualNetwork\": {\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3145\"\r\n    }\r\n  },\r\n  \"location\": \"westus2\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "85e27490-6930-489e-ae00-128b6ffa1215"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "257"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/locations/westus2/dnsResolverOperationResults/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0RG5zUmVzb2x2ZXIiLCJPcGVyYXRpb25JZCI6ImQyNDRhYjA5LTI3OWEtNDdkNS1iNzI1LTUyN2Q5MTkyN2QwYyJ9?api-version=2020-04-01-preview"
+        ],
+        "x-ms-activity-id": [
+          "6ecb1014-0a4f-4a8f-a632-9172d8937124"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/locations/westus2/dnsResolverOperationStatuses/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0RG5zUmVzb2x2ZXIiLCJPcGVyYXRpb25JZCI6ImQyNDRhYjA5LTI3OWEtNDdkNS1iNzI1LTUyN2Q5MTkyN2QwYyJ9?api-version=2020-04-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "f1e9328f-15bf-4cf4-8607-ab48089369ce"
+        ],
+        "x-ms-correlation-request-id": [
+          "f1e9328f-15bf-4cf4-8607-ab48089369ce"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T191827Z:f1e9328f-15bf-4cf4-8607-ab48089369ce"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:18:27 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/locations/westus2/dnsResolverOperationStatuses/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0RG5zUmVzb2x2ZXIiLCJPcGVyYXRpb25JZCI6ImQyNDRhYjA5LTI3OWEtNDdkNS1iNzI1LTUyN2Q5MTkyN2QwYyJ9?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvd2VzdHVzMi9kbnNSZXNvbHZlck9wZXJhdGlvblN0YXR1c2VzL2V5SlBjR1Z5WVhScGIyNVVlWEJsSWpvaVZYQnpaWEowUkc1elVtVnpiMngyWlhJaUxDSlBjR1Z5WVhScGIyNUpaQ0k2SW1ReU5EUmhZakE1TFRJM09XRXRORGRrTlMxaU56STFMVFV5TjJRNU1Ua3lOMlF3WXlKOT9hcGktdmVyc2lvbj0yMDIwLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "ab10824c-d521-400c-a164-cc2d9d11024f"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "499"
+        ],
+        "x-ms-request-id": [
+          "487d5a00-5137-4a3d-a369-75d3e03183a7"
+        ],
+        "x-ms-correlation-request-id": [
+          "487d5a00-5137-4a3d-a369-75d3e03183a7"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T191858Z:487d5a00-5137-4a3d-a369-75d3e03183a7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:18:57 GMT"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNSZXNvbHZlcnMvZG5zcmVzb2x2ZXJ0ZXN0cmVzb2x2ZXIyMjYxP2FwaS12ZXJzaW9uPTIwMjAtMDQtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "492198b8-5c63-4290-ab92-0ecadba3072d"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "499"
+        ],
+        "x-ms-request-id": [
+          "eed224f7-90a5-4e82-b1be-a7acda57f009"
+        ],
+        "x-ms-correlation-request-id": [
+          "eed224f7-90a5-4e82-b1be-a7acda57f009"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T191858Z:eed224f7-90a5-4e82-b1be-a7acda57f009"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:18:58 GMT"
+        ],
+        "Content-Length": [
+          "763"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"virtualNetwork\": {\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3145\"\r\n    },\r\n    \"numberOfInboundEndpoints\": 0,\r\n    \"maxNumberOfInboundEndpoints\": 5,\r\n    \"numberOfOutboundEndpoints\": 0,\r\n    \"maxNumberOfOutboundEndpoints\": 5,\r\n    \"dnsResolverState\": \"Connected\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"4f38cedf-677b-43c2-bcf1-3e90d6cd4dc7\"\r\n  },\r\n  \"etag\": \"\\\"0b00b1dc-0000-0800-0000-601d9a0a0000\\\"\",\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261\",\r\n  \"name\": \"dnsresolvertestresolver2261\",\r\n  \"type\": \"Microsoft.Network/dnsResolvers\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints/dnsresolvertestinboundendpoint9601?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNSZXNvbHZlcnMvZG5zcmVzb2x2ZXJ0ZXN0cmVzb2x2ZXIyMjYxL2luYm91bmRFbmRwb2ludHMvZG5zcmVzb2x2ZXJ0ZXN0aW5ib3VuZGVuZHBvaW50OTYwMT9hcGktdmVyc2lvbj0yMDIwLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"subnet\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3145/subnets/dnsresolvertestsubnet712\"\r\n        },\r\n        \"privateIpAllocationMethod\": \"Static\"\r\n      }\r\n    ],\r\n    \"metadata\": {\r\n      \"tagKey0\": \"tagValue0\",\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\",\r\n      \"tagKey3\": \"tagValue3\",\r\n      \"tagKey4\": \"tagValue4\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "35446636-1fbb-4feb-88d6-5bf837ac983d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "549"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/locations/westus2/dnsResolverOperationResults/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0SW5ib3VuZEVuZHBvaW50IiwiT3BlcmF0aW9uSWQiOiJhYzIyZmIxYS1lNWRiLTRmMzYtOTQxYy0wMGZkZGUwOTkyZWEifQ==?api-version=2020-04-01-preview"
+        ],
+        "x-ms-activity-id": [
+          "b06685c9-4b31-40d4-a777-f609944799dd"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/locations/westus2/dnsResolverOperationStatuses/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0SW5ib3VuZEVuZHBvaW50IiwiT3BlcmF0aW9uSWQiOiJhYzIyZmIxYS1lNWRiLTRmMzYtOTQxYy0wMGZkZGUwOTkyZWEifQ==?api-version=2020-04-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "8e61c66f-bc21-4058-bf95-572b40f5594d"
+        ],
+        "x-ms-correlation-request-id": [
+          "8e61c66f-bc21-4058-bf95-572b40f5594d"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T191859Z:8e61c66f-bc21-4058-bf95-572b40f5594d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:18:58 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/locations/westus2/dnsResolverOperationStatuses/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0SW5ib3VuZEVuZHBvaW50IiwiT3BlcmF0aW9uSWQiOiJhYzIyZmIxYS1lNWRiLTRmMzYtOTQxYy0wMGZkZGUwOTkyZWEifQ==?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvd2VzdHVzMi9kbnNSZXNvbHZlck9wZXJhdGlvblN0YXR1c2VzL2V5SlBjR1Z5WVhScGIyNVVlWEJsSWpvaVZYQnpaWEowU1c1aWIzVnVaRVZ1WkhCdmFXNTBJaXdpVDNCbGNtRjBhVzl1U1dRaU9pSmhZekl5Wm1JeFlTMWxOV1JpTFRSbU16WXRPVFF4WXkwd01HWmtaR1V3T1RreVpXRWlmUT09P2FwaS12ZXJzaW9uPTIwMjAtMDQtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "665d14f9-f152-4d59-8cd0-188427b86ebb"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "498"
+        ],
+        "x-ms-request-id": [
+          "41a1f3b8-0c58-47ea-a89b-89baab609bd6"
+        ],
+        "x-ms-correlation-request-id": [
+          "41a1f3b8-0c58-47ea-a89b-89baab609bd6"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T191929Z:41a1f3b8-0c58-47ea-a89b-89baab609bd6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:19:28 GMT"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints/dnsresolvertestinboundendpoint9601?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNSZXNvbHZlcnMvZG5zcmVzb2x2ZXJ0ZXN0cmVzb2x2ZXIyMjYxL2luYm91bmRFbmRwb2ludHMvZG5zcmVzb2x2ZXJ0ZXN0aW5ib3VuZGVuZHBvaW50OTYwMT9hcGktdmVyc2lvbj0yMDIwLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "66572f33-d6de-4f0f-8ccc-46c4bfeba872"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "499"
+        ],
+        "x-ms-request-id": [
+          "c1652a05-d2fb-420a-a7a8-c668c9c8c09e"
+        ],
+        "x-ms-correlation-request-id": [
+          "c1652a05-d2fb-420a-a7a8-c668c9c8c09e"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T191929Z:c1652a05-d2fb-420a-a7a8-c668c9c8c09e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:19:28 GMT"
+        ],
+        "Content-Length": [
+          "859"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"subnet\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3145/subnets/dnsresolvertestsubnet712\"\r\n        },\r\n        \"privateIpAllocationMethod\": \"Static\"\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"49fa076e-af92-4502-8578-afc325860308\",\r\n    \"metadata\": {\r\n      \"tagKey0\": \"tagValue0\",\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\",\r\n      \"tagKey3\": \"tagValue3\",\r\n      \"tagKey4\": \"tagValue4\"\r\n    }\r\n  },\r\n  \"etag\": \"\\\"080002ce-0000-0800-0000-601d9a280000\\\"\",\r\n  \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints/dnsresolvertestinboundendpoint9601\",\r\n  \"name\": \"dnsresolvertestinboundendpoint9601\",\r\n  \"type\": \"Microsoft.Network/dnsResolvers/inboundEndpoints\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints/dnsresolvertestinboundendpoint3771?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNSZXNvbHZlcnMvZG5zcmVzb2x2ZXJ0ZXN0cmVzb2x2ZXIyMjYxL2luYm91bmRFbmRwb2ludHMvZG5zcmVzb2x2ZXJ0ZXN0aW5ib3VuZGVuZHBvaW50Mzc3MT9hcGktdmVyc2lvbj0yMDIwLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"subnet\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3145/subnets/dnsresolvertestsubnet3906\"\r\n        },\r\n        \"privateIpAllocationMethod\": \"Static\"\r\n      }\r\n    ],\r\n    \"metadata\": {\r\n      \"tagKey0\": \"tagValue0\",\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\",\r\n      \"tagKey3\": \"tagValue3\",\r\n      \"tagKey4\": \"tagValue4\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "33a0c32f-436e-4436-9f04-6d63d68edb74"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "550"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/locations/westus2/dnsResolverOperationResults/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0SW5ib3VuZEVuZHBvaW50IiwiT3BlcmF0aW9uSWQiOiI4ZTA0OGYyMC04NDg0LTQxNDUtYTE0MS03NGVmNDhkNzE3YWIifQ==?api-version=2020-04-01-preview"
+        ],
+        "x-ms-activity-id": [
+          "2d678d00-e87e-4a62-afee-cf2bb83aeaa2"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/locations/westus2/dnsResolverOperationStatuses/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0SW5ib3VuZEVuZHBvaW50IiwiT3BlcmF0aW9uSWQiOiI4ZTA0OGYyMC04NDg0LTQxNDUtYTE0MS03NGVmNDhkNzE3YWIifQ==?api-version=2020-04-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "7e9dfdae-f765-49a5-9c9f-691bde2ba115"
+        ],
+        "x-ms-correlation-request-id": [
+          "7e9dfdae-f765-49a5-9c9f-691bde2ba115"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T191930Z:7e9dfdae-f765-49a5-9c9f-691bde2ba115"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:19:30 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/locations/westus2/dnsResolverOperationStatuses/eyJPcGVyYXRpb25UeXBlIjoiVXBzZXJ0SW5ib3VuZEVuZHBvaW50IiwiT3BlcmF0aW9uSWQiOiI4ZTA0OGYyMC04NDg0LTQxNDUtYTE0MS03NGVmNDhkNzE3YWIifQ==?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvd2VzdHVzMi9kbnNSZXNvbHZlck9wZXJhdGlvblN0YXR1c2VzL2V5SlBjR1Z5WVhScGIyNVVlWEJsSWpvaVZYQnpaWEowU1c1aWIzVnVaRVZ1WkhCdmFXNTBJaXdpVDNCbGNtRjBhVzl1U1dRaU9pSTRaVEEwT0dZeU1DMDRORGcwTFRReE5EVXRZVEUwTVMwM05HVm1ORGhrTnpFM1lXSWlmUT09P2FwaS12ZXJzaW9uPTIwMjAtMDQtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "0ce61704-10c6-448f-98db-2266da8f9ea7"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "497"
+        ],
+        "x-ms-request-id": [
+          "38facb2c-00e0-4ec1-aee3-3d13619a6c93"
+        ],
+        "x-ms-correlation-request-id": [
+          "38facb2c-00e0-4ec1-aee3-3d13619a6c93"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T192000Z:38facb2c-00e0-4ec1-aee3-3d13619a6c93"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:20:00 GMT"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints/dnsresolvertestinboundendpoint3771?api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNSZXNvbHZlcnMvZG5zcmVzb2x2ZXJ0ZXN0cmVzb2x2ZXIyMjYxL2luYm91bmRFbmRwb2ludHMvZG5zcmVzb2x2ZXJ0ZXN0aW5ib3VuZGVuZHBvaW50Mzc3MT9hcGktdmVyc2lvbj0yMDIwLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "3cb75938-e100-441c-a0a8-1868da1b8644"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "498"
+        ],
+        "x-ms-request-id": [
+          "a896079f-6259-4ade-ba25-5e0cf2ef50c2"
+        ],
+        "x-ms-correlation-request-id": [
+          "a896079f-6259-4ade-ba25-5e0cf2ef50c2"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T192000Z:a896079f-6259-4ade-ba25-5e0cf2ef50c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:20:00 GMT"
+        ],
+        "Content-Length": [
+          "860"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"subnet\": {\r\n          \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3145/subnets/dnsresolvertestsubnet3906\"\r\n        },\r\n        \"privateIpAllocationMethod\": \"Static\"\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"612207b8-7c69-4b2e-81c2-176b8a3a5006\",\r\n    \"metadata\": {\r\n      \"tagKey0\": \"tagValue0\",\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\",\r\n      \"tagKey3\": \"tagValue3\",\r\n      \"tagKey4\": \"tagValue4\"\r\n    }\r\n  },\r\n  \"etag\": \"\\\"080018ce-0000-0800-0000-601d9a460000\\\"\",\r\n  \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints/dnsresolvertestinboundendpoint3771\",\r\n  \"name\": \"dnsresolvertestinboundendpoint3771\",\r\n  \"type\": \"Microsoft.Network/dnsResolvers/inboundEndpoints\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints?api-version=2020-04-01-preview&$top=1",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNSZXNvbHZlcnMvZG5zcmVzb2x2ZXJ0ZXN0cmVzb2x2ZXIyMjYxL2luYm91bmRFbmRwb2ludHM/YXBpLXZlcnNpb249MjAyMC0wNC0wMS1wcmV2aWV3JiR0b3A9MQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cd610060-b47d-4546-b426-11c16ad39404"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "22b5305f-4b9f-4c71-aa76-d96b2d4579b8"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "497"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-entities-read": [
+          "59999"
+        ],
+        "x-ms-request-id": [
+          "6003a64f-1511-41b0-b993-510516757be7"
+        ],
+        "x-ms-correlation-request-id": [
+          "6003a64f-1511-41b0-b993-510516757be7"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T192001Z:6003a64f-1511-41b0-b993-510516757be7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:20:01 GMT"
+        ],
+        "Content-Length": [
+          "1387"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"ipConfigurations\": [\r\n          {\r\n            \"subnet\": {\r\n              \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3145/subnets/dnsresolvertestsubnet3906\"\r\n            },\r\n            \"privateIpAllocationMethod\": \"Static\"\r\n          }\r\n        ],\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"612207b8-7c69-4b2e-81c2-176b8a3a5006\",\r\n        \"metadata\": {\r\n          \"tagKey0\": \"tagValue0\",\r\n          \"tagKey1\": \"tagValue1\",\r\n          \"tagKey2\": \"tagValue2\",\r\n          \"tagKey3\": \"tagValue3\",\r\n          \"tagKey4\": \"tagValue4\"\r\n        }\r\n      },\r\n      \"etag\": \"\\\"080018ce-0000-0800-0000-601d9a460000\\\"\",\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints/dnsresolvertestinboundendpoint3771\",\r\n      \"name\": \"dnsresolvertestinboundendpoint3771\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers/inboundEndpoints\"\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://api-dogfood.resources.windows-int.net/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints?$skipToken=%2bRID%3a~SKBOAO%2b9zXMkBwAAAAAAAA%3d%3d%23RT%3a1%23TRC%3a1%23RTD%3aqFmeJO8JOvliPd62WuFfBWpvY3B2b2Vmb2VxcGpvdX1lb3RzZnRwbXdmc3VmdHVqb2Nwdm9lZm9lcXBqb3U0ODgyAA%3d%3d%23ISV%3a2%23IEO%3a65567%23QCF%3a1%23FPC%3aASIHAAAAAAAAJAcAAAAAAAA%3d&$top=1&api-version=2020-04-01-preview\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints?$skipToken=%2bRID%3a~SKBOAO%2b9zXMkBwAAAAAAAA%3d%3d%23RT%3a1%23TRC%3a1%23RTD%3aqFmeJO8JOvliPd62WuFfBWpvY3B2b2Vmb2VxcGpvdX1lb3RzZnRwbXdmc3VmdHVqb2Nwdm9lZm9lcXBqb3U0ODgyAA%3d%3d%23ISV%3a2%23IEO%3a65567%23QCF%3a1%23FPC%3aASIHAAAAAAAAJAcAAAAAAAA%3d&$top=1&api-version=2020-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU1YTQ2YjEtZGUwYi00ZWMzLWE1ZDctZGRhOTA4YjRlMDc2L3Jlc291cmNlR3JvdXBzL2Ruc3Jlc29sdmVydGVzdHJnNzc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNSZXNvbHZlcnMvZG5zcmVzb2x2ZXJ0ZXN0cmVzb2x2ZXIyMjYxL2luYm91bmRFbmRwb2ludHM/JHNraXBUb2tlbj0lMmJSSUQlM2F+U0tCT0FPJTJiOXpYTWtCd0FBQUFBQUFBJTNkJTNkJTIzUlQlM2ExJTIzVFJDJTNhMSUyM1JURCUzYXFGbWVKTzhKT3ZsaVBkNjJXdUZmQldwdlkzQjJiMlZtYjJWeGNHcHZkWDFsYjNSelpuUndiWGRtYzNWbWRIVnFiMk53ZG05bFptOWxjWEJxYjNVME9EZ3lBQSUzZCUzZCUyM0lTViUzYTIlMjNJRU8lM2E2NTU2NyUyM1FDRiUzYTElMjNGUEMlM2FBU0lIQUFBQUFBQUFKQWNBQUFBQUFBQSUzZCYkdG9wPTEmYXBpLXZlcnNpb249MjAyMC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5e8670d4-21df-48f9-9f6a-003b0a4a10e1"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29518.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DnsResolver.DnsResolverManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-activity-id": [
+          "e5c26688-d4a1-4410-932a-08677c2b554b"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "496"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-entities-read": [
+          "59998"
+        ],
+        "x-ms-request-id": [
+          "1960b8b9-afe1-4b3b-8994-b3b3ffcf4be7"
+        ],
+        "x-ms-correlation-request-id": [
+          "1960b8b9-afe1-4b3b-8994-b3b3ffcf4be7"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20210205T192001Z:1960b8b9-afe1-4b3b-8994-b3b3ffcf4be7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 05 Feb 2021 19:20:01 GMT"
+        ],
+        "Content-Length": [
+          "871"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"ipConfigurations\": [\r\n          {\r\n            \"subnet\": {\r\n              \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/virtualNetworks/dnsresolvertestvnet3145/subnets/dnsresolvertestsubnet712\"\r\n            },\r\n            \"privateIpAllocationMethod\": \"Static\"\r\n          }\r\n        ],\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"resourceGuid\": \"49fa076e-af92-4502-8578-afc325860308\",\r\n        \"metadata\": {\r\n          \"tagKey0\": \"tagValue0\",\r\n          \"tagKey1\": \"tagValue1\",\r\n          \"tagKey2\": \"tagValue2\",\r\n          \"tagKey3\": \"tagValue3\",\r\n          \"tagKey4\": \"tagValue4\"\r\n        }\r\n      },\r\n      \"etag\": \"\\\"080002ce-0000-0800-0000-601d9a280000\\\"\",\r\n      \"id\": \"/subscriptions/0e5a46b1-de0b-4ec3-a5d7-dda908b4e076/resourceGroups/dnsresolvertestrg774/providers/Microsoft.Network/dnsResolvers/dnsresolvertestresolver2261/inboundEndpoints/dnsresolvertestinboundendpoint9601\",\r\n      \"name\": \"dnsresolvertestinboundendpoint9601\",\r\n      \"type\": \"Microsoft.Network/dnsResolvers/inboundEndpoints\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "GenerateResourceGroupName": [
+      "dnsresolvertestrg774"
+    ],
+    "GenerateDnsResolverName": [
+      "dnsresolvertestresolver2261"
+    ],
+    "GenerateVirtualNetworkName": [
+      "dnsresolvertestvnet3145"
+    ],
+    "GenerateInboundEndpointName": [
+      "dnsresolvertestinboundendpoint9601",
+      "dnsresolvertestinboundendpoint3771"
+    ],
+    "GenerateSubnetName": [
+      "dnsresolvertestsubnet712",
+      "dnsresolvertestsubnet3906"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "0e5a46b1-de0b-4ec3-a5d7-dda908b4e076"
+  }
+}
