@@ -270,16 +270,30 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobContainerInfo
-        // TODO
         internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerSetAccessPolicyHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new BlobContainerInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+            };
         }
 
-        // TODO
         internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerSetMetadataHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+            return new BlobContainerInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+            };
         }
         #endregion
 
@@ -445,7 +459,58 @@ namespace Azure.Storage.Blobs
         // TODO
         internal static BlobProperties ToBlobProperties(this ResponseWithHeaders<BlobGetPropertiesHeaders> response)
         {
-            return null;
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobProperties
+            {
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                CreatedOn = response.Headers.CreationTime.GetValueOrDefault(),
+                Metadata = response.Headers.Metadata,
+                ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
+                ObjectReplicationSourceProperties =
+                    response.Headers.ObjectReplicationRules?.Count > 0
+                    ? BlobExtensions.ParseObjectReplicationIds(response.Headers.ObjectReplicationRules)
+                    : null,
+                BlobType = response.Headers.BlobType.GetValueOrDefault(),
+                CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
+                CopyStatusDescription = response.Headers.CopyStatusDescription,
+                CopyId = response.Headers.CopyId,
+                CopyProgress = response.Headers.CopyProgress,
+                CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
+                CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
+                IsIncrementalCopy = response.Headers.IsIncrementalCopy.GetValueOrDefault(),
+                DestinationSnapshot = response.Headers.DestinationSnapshot,
+                LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),
+                LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
+                LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault(),
+                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                ContentType = response.Headers.ContentType,
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ContentHash = response.Headers.ContentMD5,
+                ContentEncoding = response.Headers.ContentEncoding,
+                ContentDisposition = response.Headers.ContentDisposition,
+                ContentLanguage = response.Headers.ContentLanguage,
+                CacheControl = response.Headers.CacheControl,
+                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
+                AcceptRanges = response.Headers.AcceptRanges,
+                BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope,
+                AccessTier = response.Headers.AccessTier,
+                AccessTierInferred = response.Headers.AccessTierInferred.GetValueOrDefault(),
+                ArchiveStatus = response.Headers.ArchiveStatus,
+                AccessTierChangedOn = response.Headers.AccessTierChangeTime.GetValueOrDefault(),
+                VersionId = response.Headers.VersionId,
+                TagCount = response.Headers.TagCount.GetValueOrDefault(),
+                ExpiresOn = response.Headers.ExpiresOn.GetValueOrDefault(),
+                IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
+                RehydratePriority = response.Headers.RehydratePriority,
+                LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
+            };
         }
         #endregion
 

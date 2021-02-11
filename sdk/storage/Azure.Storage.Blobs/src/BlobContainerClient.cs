@@ -2285,7 +2285,7 @@ namespace Azure.Storage.Blobs
                     {
                         response = await ContainerRestClient.SetAccessPolicyAsync(
                             leaseId: conditions?.LeaseId,
-                            access: accessType,
+                            access: accessType == PublicAccessType.None ? null : accessType,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             containerAcl: sanitizedPermissions,
@@ -2296,7 +2296,7 @@ namespace Azure.Storage.Blobs
                     {
                         response = ContainerRestClient.SetAccessPolicy(
                             leaseId: conditions?.LeaseId,
-                            access: accessType,
+                            access: accessType == PublicAccessType.None ? null : accessType,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             containerAcl: sanitizedPermissions,
