@@ -18,35 +18,35 @@ public virtual Response<SearchSuggestion[]> GetSearchSuggestions(string searchSt
 ### POST /timeseries/instances/$batch
 
 ```csharp
-public virtual Response<InstanceOrError[]> GetInstances(TimeSeriesId[] timeSeriesIds, CancellationToken cancellationToken = default);
+public virtual Response<InstanceOrError[]> GetInstances(IEnumerable<TimeSeriesId> timeSeriesIds, CancellationToken cancellationToken = default);
 
 // Thoughts on renaming InstanceOrError to GetInstanceOperationResult
 ```
 
 ```csharp
-public virtual Response<InstanceOrError[]> GetInstances(string[] timeSeriesNames, CancellationToken cancellationToken = default);
+public virtual Response<InstanceOrError[]> GetInstances(IEnumerable<string> timeSeriesNames, CancellationToken cancellationToken = default);
 
 // Thoughts on naming the APIs GetInstancesByIds and GetInstancesByNames
 ```
 
 ```csharp
-public virtual Response<InstanceOrError[]> CreateOrReplaceTimeSeriesInstances(TimeSeriesInstance[] timeSeriesInstances, CancellationToken cancellationToken = default);
+public virtual Response<InstanceOrError[]> CreateOrReplaceTimeSeriesInstances(IEnumerable<TimeSeriesInstance> timeSeriesInstances, CancellationToken cancellationToken = default);
 ```
 
 ```csharp
-public virtual Response<InstanceOrError[]> ReplaceTimeSeriesInstances(TimeSeriesInstance[] timeSeriesInstances, CancellationToken cancellationToken = default);
+public virtual Response<InstanceOrError[]> ReplaceTimeSeriesInstances(IEnumerable<TimeSeriesInstance> timeSeriesInstances, CancellationToken cancellationToken = default);
 
 // thoughts on only having CreateOrReplaceInstances? It's safer to have both. 
 ```
 
 ```csharp
-public virtual Response<TsiErrorBody[]> DeleteTimeSeriesInstances(TimeSeriesId[] timeSeriesIds, CancellationToken cancellationToken = default);
+public virtual Response<TsiErrorBody[]> DeleteTimeSeriesInstances(IEnumerable<TimeSeriesId> timeSeriesIds, CancellationToken cancellationToken = default);
 
 // Thoughts on renaming TsiErrorBody to DeleteInstanceOperationResponse
 ```
 
 ```csharp
-public virtual Response<TsiErrorBody[]> DeleteTimeSeriesInstances(string[] timeSeriesNames, CancellationToken cancellationToken = default);
+public virtual Response<TsiErrorBody[]> DeleteTimeSeriesInstances(IEnumerable<string> timeSeriesNames, CancellationToken cancellationToken = default);
 
 // Thoughts on naming the APIs DeleteInstancesByIds and DeleteInstancesByNames
 ```
