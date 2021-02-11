@@ -13,7 +13,7 @@ namespace Azure.Iot.ModelsRepository
         internal const ServiceVersion LatestVersion = ServiceVersion.V2021_02_11;
 
         /// <summary>
-        /// The versions of Azure Digital Twins supported by this client
+        /// The versions of Azure IoT Model Repository by this client
         /// library.
         /// </summary>
         public enum ServiceVersion
