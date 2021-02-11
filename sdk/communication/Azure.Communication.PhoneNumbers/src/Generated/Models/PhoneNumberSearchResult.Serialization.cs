@@ -21,8 +21,8 @@ namespace Azure.Communication.PhoneNumbers.Models
             PhoneNumberType phoneNumberType = default;
             PhoneNumberAssignmentType assignmentType = default;
             PhoneNumberCapabilities capabilities = default;
-            Optional<PhoneNumberCost> cost = default;
-            Optional<DateTimeOffset> searchExpiresBy = default;
+            PhoneNumberCost cost = default;
+            DateTimeOffset searchExpiresBy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("searchId"))
@@ -57,26 +57,16 @@ namespace Azure.Communication.PhoneNumbers.Models
                 }
                 if (property.NameEquals("cost"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;
                 }
                 if (property.NameEquals("searchExpiresBy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     searchExpiresBy = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost.Value, Optional.ToNullable(searchExpiresBy));
+            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresBy);
         }
     }
 }

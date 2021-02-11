@@ -20,8 +20,10 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. geographic, or tollFree. </param>
         /// <param name="assignmentType"> Phone number&apos;s assignment type. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="phoneNumbers"/>, or <paramref name="capabilities"/> is null. </exception>
-        internal PhoneNumberSearchResult(string searchId, IEnumerable<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities)
+        /// <param name="cost"> The incurred cost for a single phone number. </param>
+        /// <param name="searchExpiresBy"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="phoneNumbers"/>, <paramref name="capabilities"/>, or <paramref name="cost"/> is null. </exception>
+        internal PhoneNumberSearchResult(string searchId, IEnumerable<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresBy)
         {
             if (searchId == null)
             {
@@ -35,12 +37,18 @@ namespace Azure.Communication.PhoneNumbers.Models
             {
                 throw new ArgumentNullException(nameof(capabilities));
             }
+            if (cost == null)
+            {
+                throw new ArgumentNullException(nameof(cost));
+            }
 
             SearchId = searchId;
             PhoneNumbers = phoneNumbers.ToList();
             PhoneNumberType = phoneNumberType;
             AssignmentType = assignmentType;
             Capabilities = capabilities;
+            Cost = cost;
+            SearchExpiresBy = searchExpiresBy;
         }
 
         /// <summary> Initializes a new instance of PhoneNumberSearchResult. </summary>
@@ -51,7 +59,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <param name="searchExpiresBy"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
-        internal PhoneNumberSearchResult(string searchId, IReadOnlyList<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset? searchExpiresBy)
+        internal PhoneNumberSearchResult(string searchId, IReadOnlyList<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresBy)
         {
             SearchId = searchId;
             PhoneNumbers = phoneNumbers;
@@ -75,6 +83,6 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <summary> The incurred cost for a single phone number. </summary>
         public PhoneNumberCost Cost { get; }
         /// <summary> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </summary>
-        public DateTimeOffset? SearchExpiresBy { get; }
+        public DateTimeOffset SearchExpiresBy { get; }
     }
 }

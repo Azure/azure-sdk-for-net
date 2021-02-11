@@ -21,5 +21,9 @@ namespace Azure.Communication.PhoneNumbers
         public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
         /// <summary> Url to retrieve the final result after operation completes. </summary>
         public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
+        /// <summary> The operation id. </summary>
+        public string OperationId => _response.Headers.TryGetValue("operation-id", out string value) ? value : null;
+        /// <summary> The release operation id. </summary>
+        public string ReleaseId => _response.Headers.TryGetValue("release-id", out string value) ? value : null;
     }
 }

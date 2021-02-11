@@ -166,12 +166,12 @@ namespace Azure.Communication.PhoneNumbers.Models
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberCost Cost { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> PhoneNumbers { get { throw null; } }
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberType PhoneNumberType { get { throw null; } }
-        public System.DateTimeOffset? SearchExpiresBy { get { throw null; } }
+        public System.DateTimeOffset SearchExpiresBy { get { throw null; } }
         public string SearchId { get { throw null; } }
     }
     public static partial class PhoneNumbersModelFactory
     {
-        public static Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, Azure.Communication.PhoneNumbers.Models.PhoneNumberType phoneNumberType, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilities capabilities, Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType assignmentType, System.DateTimeOffset? purchaseDate, string callbackUri, string applicationId, Azure.Communication.PhoneNumbers.Models.PhoneNumberCost cost) { throw null; }
+        public static Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber AcquiredPhoneNumber(string id, string phoneNumber, string countryCode, Azure.Communication.PhoneNumbers.Models.PhoneNumberType phoneNumberType, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilities capabilities, Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType assignmentType, System.DateTimeOffset? purchaseDate, Azure.Communication.PhoneNumbers.Models.PhoneNumberCost cost) { throw null; }
         public static Azure.Communication.PhoneNumbers.Models.PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
