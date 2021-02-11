@@ -101,7 +101,6 @@ jobs:
       name: ${{ parameters.LinuxPool }}
       vmImage:
     steps:
-      - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
         inputs:
