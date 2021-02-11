@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Iot.TimeSeriesInsights.Customized
 {
     /// <summary>
-    /// to be added
+    /// Request to update model settings. One of &quot;name&quot; or &quot;defaultTypeId&quot; must be set.
     /// </summary>
     [CodeGenModel("UpdateModelSettingsRequest")]
     public partial class UpdateModelSettingsOptions
