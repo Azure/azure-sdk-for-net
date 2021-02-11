@@ -164,7 +164,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "245",
+        "Content-Length": "493",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-E0A747F1-6245-4307-8267-B974340677DE",
         "traceparent": "00-0b29dd3c15f1464cade45ddd6ff8c015-142d344f2476f54c-00",
@@ -179,10 +179,20 @@
         "topic": "Thread topic - ReadReceipts Async Test",
         "participants": [
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-51b6-eef0-8b3a0d00656e"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-6fd6-3ef0-8b3a0d006083",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-6fd6-3ef0-8b3a0d006083"
+              }
+            }
           },
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-541c-eef0-8b3a0d00656f"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7285-3ef0-8b3a0d006084",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7285-3ef0-8b3a0d006084"
+              }
+            }
           }
         ]
       },

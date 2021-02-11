@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.Chat
 {
@@ -27,17 +28,21 @@ namespace Azure.Communication.Chat
 
         /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
         /// <param name="id"> The id of the chat participant. </param>
+        /// <param name="identifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
         /// <param name="displayName"> Display name for the chat participant. </param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatParticipantInternal(string id, string displayName, DateTimeOffset? shareHistoryTime)
+        internal ChatParticipantInternal(string id, CommunicationIdentifierModel identifier, string displayName, DateTimeOffset? shareHistoryTime)
         {
             Id = id;
+            Identifier = identifier;
             DisplayName = displayName;
             ShareHistoryTime = shareHistoryTime;
         }
 
         /// <summary> The id of the chat participant. </summary>
         public string Id { get; set; }
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+        public CommunicationIdentifierModel Identifier { get; set; }
         /// <summary> Display name for the chat participant. </summary>
         public string DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

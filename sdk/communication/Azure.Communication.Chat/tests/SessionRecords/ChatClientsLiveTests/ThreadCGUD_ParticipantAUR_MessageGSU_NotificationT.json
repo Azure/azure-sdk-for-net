@@ -33,9 +33,14 @@
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-1d17-eef0-8b3a0d006567"
+          "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079"
+        },
+        "identifier": {
+          "communicationUser": {
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079"
+          }
         }
-      }
+      }  
     },
     {
       "RequestUri": "https://chitchat-test.communication.azure.com/identities/8%3Aacs%3Acb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-1d17-eef0-8b3a0d006567/:issueAccessToken?api-version=2021-03-07",
@@ -110,7 +115,12 @@
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-1f70-eef0-8b3a0d006568"
+          "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a"
+        },
+        "identifier": {
+          "communicationUser": {
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a"
+          }
         }
       }
     },
@@ -187,7 +197,12 @@
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-21c5-eef0-8b3a0d006569"
+          "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b"
+        },
+        "identifier": {
+          "communicationUser": {
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b"
+          }
         }
       }
     },
@@ -391,7 +406,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "319",
+        "Content-Length": "691",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-F0A747F1-6245-4307-8267-B974340677D2",
         "User-Agent": [
@@ -405,13 +420,28 @@
         "topic": "Thread sync from C# sdk",
         "participants": [
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-1d17-eef0-8b3a0d006567"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079"
+              }
+            }
           },
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-1f70-eef0-8b3a0d006568"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a"
+              }
+            }
           },
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-21c5-eef0-8b3a0d006569"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b"
+              }
+            }
           }
         ]
       },
@@ -442,7 +472,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "319",
+        "Content-Length": "691",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-A0A747F1-6245-4307-8267-B974340677DA",
         "User-Agent": [
@@ -456,13 +486,28 @@
         "topic": "Thread sync from C# sdk",
         "participants": [
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-1d17-eef0-8b3a0d006567"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-3f88-3ef0-8b3a0d006079"
+              }
+            }
           },
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-1f70-eef0-8b3a0d006568"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-4222-3ef0-8b3a0d00607a"
+              }
+            }
           },
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-21c5-eef0-8b3a0d006569"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-44c4-3ef0-8b3a0d00607b"
+              }
+            }
           }
         ]
       },
@@ -1778,7 +1823,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "107",
+        "Content-Length": "231",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Communication.Chat/1.0.0-alpha.20210218.1",
@@ -1790,7 +1835,12 @@
       "RequestBody": {
         "participants": [
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-2420-eef0-8b3a0d00656a"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-475b-3ef0-8b3a0d00607c",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-475b-3ef0-8b3a0d00607c"
+              }
+            }
           }
         ]
       },
@@ -1813,7 +1863,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "107",
+        "Content-Length": "231",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Communication.Chat/1.0.0-alpha.20210218.1",
@@ -1825,7 +1875,12 @@
       "RequestBody": {
         "participants": [
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-2678-eef0-8b3a0d00656b"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-49f9-3ef0-8b3a0d00607d",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-49f9-3ef0-8b3a0d00607d"
+              }
+            }
           }
         ]
       },

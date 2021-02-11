@@ -160,7 +160,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "239",
+        "Content-Length": "487",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-B0A747F1-6245-4307-8267-B974340677DB",
         "User-Agent": [
@@ -174,10 +174,20 @@
         "topic": "Thread topic - ReadReceipts Test",
         "participants": [
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-0c2e-eef0-8b3a0d006564"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-ebba-eef0-8b3a0d005be5",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-ebba-eef0-8b3a0d005be5"
+              }
+            }
           },
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-0e8e-eef0-8b3a0d006565"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-ee95-eef0-8b3a0d005be6",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-ee95-eef0-8b3a0d005be6"
+              }
+            }
           }
         ]
       },

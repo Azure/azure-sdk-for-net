@@ -401,7 +401,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "320",
+        "Content-Length": "692",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-C0A747F1-6245-4307-8267-B974340677DC",
         "traceparent": "00-392e58cfe8519541be7f2c6e67e8bec3-9e4df5b142ef2f4f-00",
@@ -416,13 +416,28 @@
         "topic": "Thread async from C# sdk",
         "participants": [
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-5ea0-eef0-8b3a0d006571"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7bf0-3ef0-8b3a0d006087",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7bf0-3ef0-8b3a0d006087"
+              }
+            }
           },
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-60f5-eef0-8b3a0d006573"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7e83-3ef0-8b3a0d006088",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7e83-3ef0-8b3a0d006088"
+              }
+            }
           },
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-634d-eef0-8b3a0d006575"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-811d-3ef0-8b3a0d006089",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-811d-3ef0-8b3a0d006089"
+              }
+            }
           }
         ]
       },
@@ -453,7 +468,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "320",
+        "Content-Length": "692",
         "Content-Type": "application/json",
         "repeatability-Request-ID": "contoso-D0A747F1-6245-4307-8267-B974340677DD",
         "traceparent": "00-bb0618014f4af143afac22cb7f9fe618-c921b812f6dbb043-00",
@@ -468,13 +483,28 @@
         "topic": "Thread async from C# sdk",
         "participants": [
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-5ea0-eef0-8b3a0d006571"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7bf0-3ef0-8b3a0d006087",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7bf0-3ef0-8b3a0d006087"
+              }
+            }
           },
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-60f5-eef0-8b3a0d006573"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7e83-3ef0-8b3a0d006088",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-7e83-3ef0-8b3a0d006088"
+              }
+            }
           },
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-634d-eef0-8b3a0d006575"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-811d-3ef0-8b3a0d006089",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-811d-3ef0-8b3a0d006089"
+              }
+            }
           }
         ]
       },
@@ -1817,7 +1847,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "107",
+        "Content-Length": "231",
         "Content-Type": "application/json",
         "traceparent": "00-08324670adbf8d40b2ef6cf0cf76eeab-129daacc1a038048-00",
         "User-Agent": [
@@ -1830,7 +1860,12 @@
       "RequestBody": {
         "participants": [
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-65a9-eef0-8b3a0d006576"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-83c0-3ef0-8b3a0d00608a",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-83c0-3ef0-8b3a0d00608a"
+              }
+            }
           }
         ]
       },
@@ -1853,7 +1888,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        "Content-Length": "107",
+        "Content-Length": "231",
         "Content-Type": "application/json",
         "traceparent": "00-daeaed5ca86b0b4c9b419fbbeae76ff8-90582df5a5ada941-00",
         "User-Agent": [
@@ -1866,7 +1901,12 @@
       "RequestBody": {
         "participants": [
           {
-            "id": "8:acs:cb58c3bb-a8ef-4e54-8c12-4a8e652eba58_00000008-57bf-67fe-eef0-8b3a0d006578"
+            "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-8656-3ef0-8b3a0d00608b",
+            "identifier": {
+              "communicationUser": {
+                "id": "8:acs:357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_00000008-1068-8656-3ef0-8b3a0d00608b"
+              }
+            }
           }
         ]
       },
