@@ -221,7 +221,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var expectedEvents = new HashSet<string>(expectedCollection.Split(' '));
             foreach (EventGridEvent eve in output)
             {
-                Assert.True(expectedEvents.Remove(eve.GetData<string>()));
+                Assert.True(expectedEvents.Remove(eve.EventData.ToObjectFromJson<string>()));
             }
             Assert.True(expectedEvents.Count == 0);
         }
