@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyTitle>Azure IoT Models Repository SDK</AssemblyTitle>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <!-- Nuget properties -->
+  <PropertyGroup>
+    <PackageTags>IoT;ModelsRepository;$(PackageCommonTags)</PackageTags>
+    <Description>SDK for the Azure IoT Models Repository Tools</Description>
+    <Version>1.0.0-beta.1</Version>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />
+</Project>
